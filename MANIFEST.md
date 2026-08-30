@@ -8,9 +8,8 @@ memory. The same process is repeatedly translated between people who design it,
 people who implement it, and systems that execute it. Meaning is lost at every
 translation.
 
-General Process Language (GPL) aims to make an information process a single,
-precise artifact that people can understand, software can execute, and tools
-can safely transform.
+Choreoform aims to make an information process a single, precise artifact that
+people can understand, software can execute, and tools can safely transform.
 
 ## The objective
 
@@ -186,4 +185,3 @@ This project begins with questions, not a finished notation. Early work should
 favor executable examples, falsifiable semantics, and documented decisions.
 Names, syntax, and architecture may change; the commitment to a precise,
 portable, inspectable, and free foundation should not.
-
