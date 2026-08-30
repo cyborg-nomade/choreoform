@@ -1,8 +1,9 @@
-# General Process Language
+# Choreoform
 
-General Process Language (GPL) is the working name for a family of tools for
-describing, executing, and editing information processes in equivalent textual
-and visual forms.
+Choreoform is a family of tools for describing, executing, and editing
+information processes in equivalent textual and visual forms. The name and its
+rationale are recorded in
+[ADR-0001](docs/decisions/0001-project-and-language-name.md).
 
 The project is currently in its groundwork phase. No language syntax, runtime
 architecture, or compatibility promise has been finalized yet.
@@ -31,12 +32,12 @@ repository.
 ## Status
 
 **Groundwork.** The immediate work is to validate representative use cases,
-define the semantic core, choose the permanent name and licenses, and build the
-first end-to-end language-to-execution slice.
+define the semantic core, settle licensing, and build the first end-to-end
+language-to-execution slice.
 
-## Working name
+## Name
 
-“GPL” is concise, but it is already widely understood as “GNU General Public
-License.” The project will use it only as a working name until the naming
-milestone in Phase 0 is complete.
-
+“Choreoform” combines *choreo-*—the arrangement of coordinated activity—with
+*form*, reflecting one semantic process expressed faithfully in textual and
+visual forms. The rationale, alternatives, and preliminary collision research
+are recorded in [ADR-0001](docs/decisions/0001-project-and-language-name.md).
