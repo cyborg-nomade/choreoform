@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 # Roadmap
 
 This roadmap is organized around evidence and exit criteria rather than dates.
@@ -16,8 +19,9 @@ making decisions.
 - [x] Publish the project Manifest and initial Roadmap.
 - [x] Select **Choreoform** as the permanent project and language name in
   [ADR-0001](docs/decisions/0001-project-and-language-name.md).
-- [ ] Choose compatible free-software licenses for the specification, engine,
-  studio, SDK, and examples, with a documented commercial-bundle boundary.
+- [ ] Accept the proposed licensing policy for software, specifications,
+  generated artifacts, extensions, and bundles in
+  [ADR-0002](docs/decisions/0002-licensing-policy.md).
 - [ ] Add contribution, governance, security, and code-of-conduct policies.
 - [ ] Define a lightweight architecture-decision-record process.
 - [ ] Create a glossary for process, activity, event, state, capability,
@@ -214,8 +218,8 @@ expensive to reverse:
 
 1. Reserve the required Choreoform package namespaces, domains, and public
    handles once their target ecosystems are selected.
-2. Choose the license family and document how process definitions, generated
-   code, extensions, and bundles are treated.
+2. Accept the proposed licensing policy in
+   [ADR-0002](docs/decisions/0002-licensing-policy.md).
 3. Select the initial implementation language based on parser, language-server,
    graph-modeling, runtime, and deployment requirements.
 4. Approve the canonical-model strategy and its versioning rules.
