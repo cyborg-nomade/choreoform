@@ -159,8 +159,7 @@ Key sources:
 
 - Public prose will refer to the project and language as Choreoform.
 - Future component names should use the family names in this ADR.
-- The GitHub repository may be renamed from `general-process-language` to
-  `choreoform` only after this decision is accepted.
+- The GitHub repository is named `cyborg-nomade/choreoform`.
 - Package names, domains, handles, file extensions, and visual identity remain
   uncommitted until separately selected or reserved.
 - If formal clearance finds a material conflict, Enacture is the documented
@@ -168,12 +167,12 @@ Key sources:
 
 ## Acceptance and action items
 
-The project owner approved this ADR on 2026-08-30. The repository rename and
-namespace rollout remain post-merge actions.
+The project owner approved this ADR on 2026-08-30. Package, domain, and public
+handle reservation remains a later rollout action.
 
 1. [x] Obtain project-owner approval.
 2. [x] Change this ADR’s status to Accepted.
-3. [ ] Rename the GitHub repository after the decision is merged.
+3. [x] Rename the GitHub repository after the decision is merged.
 4. [ ] Reserve required package namespaces, domains, and handles before they are
    advertised.
 5. [ ] Arrange formal trademark clearance before the first public product

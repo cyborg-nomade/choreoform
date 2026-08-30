@@ -212,7 +212,8 @@ These concerns begin early and continue through every phase:
 The first implementation work should wait only on decisions that would be
 expensive to reverse:
 
-1. Complete the Choreoform repository and namespace rollout.
+1. Reserve the required Choreoform package namespaces, domains, and public
+   handles once their target ecosystems are selected.
 2. Choose the license family and document how process definitions, generated
    code, extensions, and bundles are treated.
 3. Select the initial implementation language based on parser, language-server,
