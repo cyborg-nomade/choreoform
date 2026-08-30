@@ -3,7 +3,7 @@
 
 # ADR-0002: License the open foundation without capturing user processes
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-08-30<br>
 **Decider:** Project owner
 
@@ -215,11 +215,11 @@ family.
 
 ## Acceptance and action items
 
-This ADR remains **Proposed** until the project owner approves it. Before merge,
-change its status and `LICENSE.md` to **Accepted**.
+The project owner approved this ADR on 2026-08-30. The policy becomes effective
+when the licensing pull request is merged.
 
-1. [ ] Obtain project-owner approval.
-2. [ ] Change this ADR and `LICENSE.md` to Accepted.
+1. [x] Obtain project-owner approval.
+2. [x] Change this ADR and `LICENSE.md` to Accepted.
 3. [x] Verify every repository file has an SPDX license declaration or explicit
    coverage.
 4. [ ] Add automated REUSE compliance once implementation files are introduced.

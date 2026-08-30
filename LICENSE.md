@@ -3,12 +3,10 @@
 
 # Choreoform licensing policy
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Decision record:** [ADR-0002](docs/decisions/0002-licensing-policy.md)
 
-This repository uses standard licenses for different kinds of material. The
-policy becomes effective when ADR-0002 is accepted and the licensing pull
-request is merged.
+This repository uses standard licenses for different kinds of material.
 
 ## Default licenses
 

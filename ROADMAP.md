@@ -19,8 +19,8 @@ making decisions.
 - [x] Publish the project Manifest and initial Roadmap.
 - [x] Select **Choreoform** as the permanent project and language name in
   [ADR-0001](docs/decisions/0001-project-and-language-name.md).
-- [ ] Accept the proposed licensing policy for software, specifications,
-  generated artifacts, extensions, and bundles in
+- [x] Adopt the licensing policy for software, specifications, generated
+  artifacts, extensions, and bundles in
   [ADR-0002](docs/decisions/0002-licensing-policy.md).
 - [ ] Add contribution, governance, security, and code-of-conduct policies.
 - [ ] Define a lightweight architecture-decision-record process.
@@ -218,9 +218,7 @@ expensive to reverse:
 
 1. Reserve the required Choreoform package namespaces, domains, and public
    handles once their target ecosystems are selected.
-2. Accept the proposed licensing policy in
-   [ADR-0002](docs/decisions/0002-licensing-policy.md).
-3. Select the initial implementation language based on parser, language-server,
+2. Select the initial implementation language based on parser, language-server,
    graph-modeling, runtime, and deployment requirements.
-4. Approve the canonical-model strategy and its versioning rules.
-5. Select three representative processes for the first vertical slice.
+3. Approve the canonical-model strategy and its versioning rules.
+4. Select three representative processes for the first vertical slice.

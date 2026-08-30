@@ -35,8 +35,8 @@ repository.
 ## Status
 
 **Groundwork.** The immediate work is to validate representative use cases,
-define the semantic core, settle licensing, and build the first end-to-end
-language-to-execution slice.
+establish project governance, define the semantic core, and build the first
+end-to-end language-to-execution slice.
 
 ## Name
 
@@ -47,13 +47,13 @@ are recorded in [ADR-0001](docs/decisions/0001-project-and-language-name.md).
 
 ## Licensing
 
-The proposed licensing policy uses the Mozilla Public License 2.0 for software
-and executable or code-like project assets, and Creative Commons Attribution
-4.0 International for prose specifications and documentation. Process authors
+The licensing policy uses the Mozilla Public License 2.0 for software and
+executable or code-like project assets, and Creative Commons Attribution 4.0
+International for prose specifications and documentation. Process authors
 retain the right to choose licenses for their own process definitions,
 generated artifacts, extensions, and bundles, subject to the licenses of any
 project material they copy or modify.
 
 See [LICENSE.md](LICENSE.md) and
-[ADR-0002](docs/decisions/0002-licensing-policy.md) for the proposed boundaries
-and rationale. The policy becomes effective only after ADR-0002 is accepted.
+[ADR-0002](docs/decisions/0002-licensing-policy.md) for the boundaries and
+rationale.
