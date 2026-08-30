@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 # Choreoform
 
 Choreoform is a family of tools for describing, executing, and editing
@@ -32,8 +35,8 @@ repository.
 ## Status
 
 **Groundwork.** The immediate work is to validate representative use cases,
-define the semantic core, settle licensing, and build the first end-to-end
-language-to-execution slice.
+establish project governance, define the semantic core, and build the first
+end-to-end language-to-execution slice.
 
 ## Name
 
@@ -41,3 +44,16 @@ language-to-execution slice.
 *form*, reflecting one semantic process expressed faithfully in textual and
 visual forms. The rationale, alternatives, and preliminary collision research
 are recorded in [ADR-0001](docs/decisions/0001-project-and-language-name.md).
+
+## Licensing
+
+The licensing policy uses the Mozilla Public License 2.0 for software and
+executable or code-like project assets, and Creative Commons Attribution 4.0
+International for prose specifications and documentation. Process authors
+retain the right to choose licenses for their own process definitions,
+generated artifacts, extensions, and bundles, subject to the licenses of any
+project material they copy or modify.
+
+See [LICENSE.md](LICENSE.md) and
+[ADR-0002](docs/decisions/0002-licensing-policy.md) for the boundaries and
+rationale.

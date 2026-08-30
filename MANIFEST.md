@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 # Manifest
 
 ## Purpose

@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 # ADR-0001: Name the project and language Choreoform
 
 **Status:** Accepted<br>
