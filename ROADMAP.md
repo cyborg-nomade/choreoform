@@ -14,7 +14,7 @@ making decisions.
 
 - [x] Initialize the source repository.
 - [x] Publish the project Manifest and initial Roadmap.
-- [ ] Accept the proposed permanent project and language name, **Choreoform**, in
+- [x] Select **Choreoform** as the permanent project and language name in
   [ADR-0001](docs/decisions/0001-project-and-language-name.md).
 - [ ] Choose compatible free-software licenses for the specification, engine,
   studio, SDK, and examples, with a documented commercial-bundle boundary.
@@ -212,12 +212,10 @@ These concerns begin early and continue through every phase:
 The first implementation work should wait only on decisions that would be
 expensive to reverse:
 
-1. Accept the proposed permanent name and complete its repository and namespace
-   rollout.
+1. Complete the Choreoform repository and namespace rollout.
 2. Choose the license family and document how process definitions, generated
    code, extensions, and bundles are treated.
 3. Select the initial implementation language based on parser, language-server,
    graph-modeling, runtime, and deployment requirements.
 4. Approve the canonical-model strategy and its versioning rules.
 5. Select three representative processes for the first vertical slice.
-

@@ -1,7 +1,7 @@
 # ADR-0001: Name the project and language Choreoform
 
-**Status:** Proposed  
-**Date:** 2026-08-30  
+**Status:** Accepted<br>
+**Date:** 2026-08-30<br>
 **Decider:** Project owner
 
 ## Context
@@ -43,9 +43,8 @@ The selected name should be:
 
 ## Decision
 
-Adopt **Choreoform** as the name of the project and language, subject to project
-owner approval of this ADR and formal name clearance before the first public
-product release.
+Adopt **Choreoform** as the name of the project and language, subject to formal
+name clearance before the first public product release.
 
 The name combines:
 
@@ -169,14 +168,13 @@ Key sources:
 
 ## Acceptance and action items
 
-This ADR remains **Proposed** until the project owner approves it. Before merge,
-change its status to **Accepted**.
+The project owner approved this ADR on 2026-08-30. The repository rename and
+namespace rollout remain post-merge actions.
 
-1. [ ] Obtain project-owner approval.
-2. [ ] Change this ADR’s status to Accepted.
+1. [x] Obtain project-owner approval.
+2. [x] Change this ADR’s status to Accepted.
 3. [ ] Rename the GitHub repository after the decision is merged.
 4. [ ] Reserve required package namespaces, domains, and handles before they are
    advertised.
 5. [ ] Arrange formal trademark clearance before the first public product
    release or commercial bundle offering.
-

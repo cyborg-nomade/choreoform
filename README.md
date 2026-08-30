@@ -1,8 +1,8 @@
 # Choreoform
 
-Choreoform is a proposed name for a family of tools for describing, executing,
-and editing information processes in equivalent textual and visual forms. The
-name becomes permanent when the project owner accepts
+Choreoform is a family of tools for describing, executing, and editing
+information processes in equivalent textual and visual forms. The name and its
+rationale are recorded in
 [ADR-0001](docs/decisions/0001-project-and-language-name.md).
 
 The project is currently in its groundwork phase. No language syntax, runtime
