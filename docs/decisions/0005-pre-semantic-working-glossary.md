@@ -3,7 +3,7 @@
 
 # ADR-0005: Establish a pre-semantic working glossary
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-08-31<br>
 **Decider:** Project owner
 
@@ -139,12 +139,13 @@ glossary rather than reuse a core term with an unstated meaning.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved this ADR on 2026-08-31. The working glossary becomes
+effective when pull request #6 is merged.
 
-1. [ ] Obtain Project Owner approval.
-2. [ ] Change this ADR’s status to Accepted and record the approval.
+1. [x] Obtain Project Owner approval.
+2. [x] Change this ADR’s status to Accepted and record the approval.
 3. [x] Publish the working glossary and boundary example.
 4. [x] Add the ADR to the decision index and link the glossary from contributor
    entry points.
-5. [ ] Mark the Roadmap deliverable complete after approval.
+5. [x] Mark the Roadmap deliverable complete after approval.
 6. [ ] Revisit definitions as the formal semantic model is proposed in Phase 1.
