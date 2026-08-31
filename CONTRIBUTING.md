@@ -106,9 +106,10 @@ used under its own terms until it has been incorporated into the repository.
 ## Decisions and governance
 
 Routine changes are resolved through review. Decisions that establish durable
-project direction are recorded in architecture decision records. The detailed
-ADR process is a separate Phase 0 deliverable; until it is accepted, follow the
-pattern in `docs/decisions/` and seek Project Owner approval.
+project direction follow the
+[architecture decision record process](docs/decisions/README.md). Use its
+[template](docs/decisions/template.md) and seek approval from the decider named
+under Governance.
 
 Roles, authority, conflicts of interest, and escalation are defined in
 [GOVERNANCE.md](GOVERNANCE.md).

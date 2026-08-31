@@ -33,6 +33,8 @@ repository.
   criteria.
 - Read [Contributing](CONTRIBUTING.md) and [Governance](GOVERNANCE.md) before
   proposing or implementing a substantial change.
+- Consult the [decision-record index and process](docs/decisions/README.md) for
+  durable project choices.
 
 ## Community and security
 

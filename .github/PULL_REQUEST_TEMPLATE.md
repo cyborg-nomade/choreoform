@@ -25,6 +25,7 @@ Related issue, Roadmap item, or ADR:
 - [ ] I updated relevant tests and documentation, or explained why none are needed.
 - [ ] New files have the correct SPDX notices and third-party material is identified.
 - [ ] Every commit has my DCO `Signed-off-by` trailer.
+- [ ] This change includes or links a required ADR, or no ADR is needed.
 - [ ] The open foundation builds and operates without proprietary Choreoform assets.
 - [ ] I disclosed relevant conflicts of interest.
 
