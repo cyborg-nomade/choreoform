@@ -3,7 +3,7 @@
 
 # ADR-0004: Adopt a lightweight, repository-native ADR process
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-08-31<br>
 **Decider:** Project owner
 
@@ -126,12 +126,13 @@ check for unique identifiers, valid statuses, index coverage, and links.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved this ADR on 2026-08-31. The process becomes
+effective when pull request #5 is merged.
 
-1. [ ] Obtain Project Owner approval.
-2. [ ] Change this ADR’s status to Accepted and record the approval.
+1. [x] Obtain Project Owner approval.
+2. [x] Change this ADR’s status to Accepted and record the approval.
 3. [x] Add the ADR guide, index, and template.
 4. [x] Update Governance and Contributing to reference the process.
-5. [ ] Mark the Roadmap deliverable complete after approval.
+5. [x] Mark the Roadmap deliverable complete after approval.
 6. [ ] Consider automated validation after repeated manual errors or when
    continuous integration is introduced.

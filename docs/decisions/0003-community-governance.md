@@ -7,6 +7,9 @@
 **Date:** 2026-08-31<br>
 **Decider:** Project owner
 
+**Later decision:** [ADR-0004](0004-lightweight-adr-process.md) standardizes the
+ADR process anticipated by this record.
+
 ## Context
 
 Choreoform needs an understandable way for people to participate before design
