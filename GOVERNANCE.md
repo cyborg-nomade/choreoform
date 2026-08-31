@@ -84,8 +84,9 @@ the pull request is updated to reflect that approval before merge.
 
 Changes to language semantics, public compatibility, architecture, licensing,
 governance, or the open/commercial boundary require a public architecture
-decision record and Project Owner approval. The forthcoming ADR-process
-deliverable will standardize proposal, discussion, acceptance, and supersession.
+decision record and Project Owner approval. The
+[ADR process](docs/decisions/README.md) defines proposal, discussion,
+acceptance, and supersession.
 
 ### Resolving disagreement
 

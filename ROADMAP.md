@@ -24,7 +24,8 @@ making decisions.
   [ADR-0002](docs/decisions/0002-licensing-policy.md).
 - [x] Adopt contribution, governance, security, and code-of-conduct policies in
   [ADR-0003](docs/decisions/0003-community-governance.md).
-- [ ] Define a lightweight architecture-decision-record process.
+- [ ] Adopt the lightweight architecture-decision-record process in
+  [ADR-0004](docs/decisions/0004-lightweight-adr-process.md).
 - [ ] Create a glossary for process, activity, event, state, capability,
   instance, definition, plan, and bundle.
 - [ ] Collect 8–12 representative processes spanning multiple domains and
