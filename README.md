@@ -35,6 +35,7 @@ repository.
   proposing or implementing a substantial change.
 - Consult the [decision-record index and process](docs/decisions/README.md) for
   durable project choices.
+- Use the [working glossary](GLOSSARY.md) for core process terminology.
 
 ## Community and security
 

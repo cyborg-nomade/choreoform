@@ -18,6 +18,10 @@ substantial change. The project is still in its groundwork phase, so opening an
 issue before investing in a large implementation can avoid conflicting designs
 or premature compatibility commitments.
 
+Use the [working glossary](GLOSSARY.md) when describing processes and design
+proposals. If a core term needs a different conceptual boundary, call out the
+change explicitly and follow the ADR process.
+
 ## Ways to contribute
 
 - Describe a representative process and the hard cases it exposes.
