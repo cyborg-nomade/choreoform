@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+
+name: Capability proposal
+description: Propose a language, engine, studio, SDK, or project capability.
+title: "proposal: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the need without assuming a particular solution.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Representative process or scenario
+      description: Show where the need occurs and who is affected.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: What should become possible, observable, or safer?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and trade-offs
+      description: Note workarounds, competing designs, and compatibility or complexity costs.
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Product and licensing boundary
+      description: Identify the open component involved and any relationship to extensions or bundles.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I checked the Manifest, Roadmap, and existing proposals for related work.
+          required: true
+        - label: This proposal can be discussed and implemented without proprietary bundle access.
+          required: true

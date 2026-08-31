@@ -84,3 +84,8 @@ from the copyright licenses of the open foundation.
 
 - [Mozilla Public License 2.0](LICENSES/MPL-2.0.txt)
 - [Creative Commons Attribution 4.0 International](LICENSES/CC-BY-4.0.txt)
+
+The adapted [Code of Conduct](CODE_OF_CONDUCT.md) is third-party material under
+[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+The [Developer Certificate of Origin 1.1](DCO.txt) is reproduced verbatim under
+the permission contained in that document.
