@@ -3,7 +3,7 @@
 
 # ADR-0003: Establish lightweight community governance and contribution policy
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-08-31<br>
 **Decider:** Project owner
 
@@ -148,11 +148,12 @@ recusal handling.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved this ADR on 2026-08-31. The policy becomes effective
+when pull request #4 is merged.
 
-1. [ ] Obtain Project Owner approval.
-2. [ ] Change this ADR's status to Accepted and record the approval.
-3. [ ] Enable GitHub private vulnerability reporting and confirm the reporting
+1. [x] Obtain Project Owner approval.
+2. [x] Change this ADR's status to Accepted and record the approval.
+3. [x] Enable GitHub private vulnerability reporting and confirm the reporting
    link works.
 4. [ ] Monitor the published security and conduct channels.
 5. [ ] Add automated DCO and policy checks when continuous integration is

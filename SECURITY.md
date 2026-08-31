@@ -21,8 +21,8 @@ first public software release.
 Do not disclose a suspected vulnerability in a public issue, pull request,
 discussion, or social-media post.
 
-Use [GitHub private vulnerability reporting](https://github.com/cyborg-nomade/choreoform/security/advisories/new)
-when it is available. If that form is unavailable, email
+Use [GitHub private vulnerability reporting](https://github.com/cyborg-nomade/choreoform/security/advisories/new).
+If you cannot access that form, email
 [uriel.fiori@gmail.com](mailto:uriel.fiori@gmail.com) with the subject
 `Choreoform security report`.
 

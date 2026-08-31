@@ -22,7 +22,7 @@ making decisions.
 - [x] Adopt the licensing policy for software, specifications, generated
   artifacts, extensions, and bundles in
   [ADR-0002](docs/decisions/0002-licensing-policy.md).
-- [ ] Adopt contribution, governance, security, and code-of-conduct policies in
+- [x] Adopt contribution, governance, security, and code-of-conduct policies in
   [ADR-0003](docs/decisions/0003-community-governance.md).
 - [ ] Define a lightweight architecture-decision-record process.
 - [ ] Create a glossary for process, activity, event, state, capability,
