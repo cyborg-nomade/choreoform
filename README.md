@@ -31,6 +31,14 @@ repository.
 - Read the [Manifest](MANIFEST.md) for the project’s purpose and principles.
 - Read the [Roadmap](ROADMAP.md) for the proposed delivery sequence and exit
   criteria.
+- Read [Contributing](CONTRIBUTING.md) and [Governance](GOVERNANCE.md) before
+  proposing or implementing a substantial change.
+
+## Community and security
+
+Participation is governed by the [Code of Conduct](CODE_OF_CONDUCT.md).
+Security vulnerabilities should be reported privately according to the
+[Security Policy](SECURITY.md), never through a public issue.
 
 ## Status
 

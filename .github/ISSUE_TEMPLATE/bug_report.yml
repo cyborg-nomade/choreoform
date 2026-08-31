@@ -1,0 +1,64 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+
+name: Bug report
+description: Report a reproducible defect in the open Choreoform foundation.
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve Choreoform. Do not report security vulnerabilities here; follow SECURITY.md instead.
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: What happened? Include exact diagnostics where useful.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect, and what makes that expectation reasonable?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Give the smallest process definition or sequence that reproduces the defect.
+      placeholder: |
+        1. Use commit/version …
+        2. Run …
+        3. Observe …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Identify the release, commit SHA, or branch.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include operating system, runtime, browser, adapter, or other relevant context.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add logs, screenshots, possible causes, or workarounds after removing secrets and personal data.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched for an existing report of this defect.
+          required: true
+        - label: This report does not disclose a security vulnerability or confidential data.
+          required: true

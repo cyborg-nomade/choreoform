@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/cyborg-nomade/choreoform/security/advisories/new
+    about: Do not disclose vulnerabilities in a public issue.
+  - name: Report a Code of Conduct concern
+    url: https://github.com/cyborg-nomade/choreoform/blob/main/CODE_OF_CONDUCT.md#reporting-an-issue
+    about: Use the private reporting instructions in the Code of Conduct.
