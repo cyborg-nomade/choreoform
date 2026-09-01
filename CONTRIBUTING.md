@@ -22,6 +22,12 @@ Use the [working glossary](GLOSSARY.md) when describing processes and design
 proposals. If a core term needs a different conceptual boundary, call out the
 change explicitly and follow the ADR process.
 
+When proposing a process example, first review the
+[representative process corpus](docs/representative-processes/README.md) and use
+its [case template](docs/representative-processes/template.md). Explain which
+missing pressure the example contributes rather than changing only the domain
+vocabulary of an existing case.
+
 ## Ways to contribute
 
 - Describe a representative process and the hard cases it exposes.

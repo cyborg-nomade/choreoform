@@ -21,6 +21,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0003](0003-community-governance.md) | Accepted | Establish lightweight community governance and contribution policy |
 | [0004](0004-lightweight-adr-process.md) | Accepted | Adopt a lightweight, repository-native ADR process |
 | [0005](0005-pre-semantic-working-glossary.md) | Accepted | Establish a pre-semantic working glossary |
+| [0006](0006-representative-process-corpus.md) | Proposed | Adopt a representative process corpus |
 
 ## When an ADR is required
 
