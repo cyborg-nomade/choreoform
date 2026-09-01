@@ -14,9 +14,9 @@ security vulnerabilities through the private channels in
 [SECURITY.md](SECURITY.md), not through a public issue.
 
 Read the [Manifest](MANIFEST.md) and [Roadmap](ROADMAP.md) before proposing a
-substantial change. The project is still in its groundwork phase, so opening an
-issue before investing in a large implementation can avoid conflicting designs
-or premature compatibility commitments.
+substantial change. The project is entering its semantic-core phase, so opening
+an issue before investing in a large implementation can avoid conflicting
+designs or premature compatibility commitments.
 
 Use the [working glossary](GLOSSARY.md) when describing processes and design
 proposals. If a core term needs a different conceptual boundary, call out the

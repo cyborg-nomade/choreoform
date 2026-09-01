@@ -8,8 +8,8 @@ information processes in equivalent textual and visual forms. The name and its
 rationale are recorded in
 [ADR-0001](docs/decisions/0001-project-and-language-name.md).
 
-The project is currently in its groundwork phase. No language syntax, runtime
-architecture, or compatibility promise has been finalized yet.
+The groundwork decisions are complete, and Phase 1 is next. No language syntax,
+runtime architecture, or compatibility promise has been finalized yet.
 
 ## Product family
 
@@ -51,9 +51,9 @@ Security vulnerabilities should be reported privately according to the
 
 ## Status
 
-**Groundwork.** The immediate work is to validate representative use cases,
-establish project governance, define the semantic core, and build the first
-end-to-end language-to-execution slice.
+**Phase 1 next.** Groundwork established the project's identity, policies,
+representative evidence, and design-evaluation method. The next work will define
+the semantic core and build the first language prototype; it has not begun yet.
 
 ## Name
 
@@ -73,4 +73,7 @@ project material they copy or modify.
 
 See [LICENSE.md](LICENSE.md) and
 [ADR-0002](docs/decisions/0002-licensing-policy.md) for the boundaries and
-rationale.
+rationale. The
+[commercial-boundary review gate](docs/legal-review/README.md) defers qualified
+legal review until the proprietary product boundary is concrete, while keeping
+it mandatory before proprietary bundle development.

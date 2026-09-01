@@ -66,6 +66,10 @@ These statements describe project policy, not a conclusion that any particular
 third-party work is or is not legally derivative. Seek qualified legal advice
 for a specific distribution or commercial offering.
 
+The [commercial-boundary legal-review gate](docs/legal-review/README.md)
+defines when that review becomes blocking for Choreoform's proprietary bundle
+work.
+
 ## Contributions
 
 Unless a file states otherwise, contributions are licensed under the existing

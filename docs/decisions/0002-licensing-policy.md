@@ -211,7 +211,7 @@ family.
 - [Apache guidance for applying Apache 2.0](https://www.apache.org/legal/apply-license)
 - [GNU guidance on AGPL network source offers](https://www.gnu.org/licenses/gpl-howto.html#The-Affero-notice)
 - [FSF license classification and MPL compatibility notes](https://www.gnu.org/licenses/license-list.html)
-- [REUSE Specification 3.0](https://reuse.software/spec-3.0/)
+- [REUSE Specification 3.3](https://reuse.software/spec/)
 
 ## Acceptance and action items
 
@@ -223,6 +223,8 @@ when the licensing pull request is merged.
 3. [x] Verify every repository file has an SPDX license declaration or explicit
    coverage.
 4. [ ] Add automated REUSE compliance once implementation files are introduced.
-5. [ ] Obtain qualified legal review before proprietary bundle development.
+5. [ ] Complete the
+   [qualified legal-review gate](../legal-review/README.md) before proprietary
+   bundle development.
 6. [ ] Revisit generated-output licensing before releasing a backend that
    copies covered templates or runtime code.

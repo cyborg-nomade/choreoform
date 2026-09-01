@@ -39,8 +39,9 @@ making decisions.
 ### Exit criteria
 
 - The permanent name and licenses are decided and documented.
-- The open/commercial boundary has received legal review before proprietary
-  bundle development begins.
+- The [legal-review trigger](docs/legal-review/README.md) for the
+  open/commercial boundary is documented, and proprietary bundle development
+  remains gated on qualified review.
 - Representative use cases expose the minimum concepts required of the core.
 - Contributors can understand how decisions are proposed, recorded, and
   changed.
@@ -157,6 +158,9 @@ remaining clean consumers of the open platform.
 
 ### Deliverables
 
+- [ ] Complete qualified legal review of the implemented open/commercial
+  boundary before creating proprietary bundle material or accepting a paid
+  bundle pilot.
 - [ ] Select two sharply defined pilot segments rather than attempting every
   business size and type at once.
 - [ ] Research each segment’s jobs, constraints, regulations, integrations, and
