@@ -78,8 +78,9 @@ into every example.
 Together the cases also cover sequence, exclusive and inclusive decisions,
 loops, fan-out/fan-in, races between work and deadlines, partial completion,
 manual intervention, resource assignment, messages, and explainable history.
-This is a coverage inventory, not yet the scoring model for design proposals;
-the next Roadmap deliverable defines that evaluation method.
+This matrix is a coverage inventory, not an evaluation score. The proposed
+[design-evaluation framework](../evaluation/README.md) defines how candidate
+designs map and exercise this evidence.
 
 ## How to read a case
 
