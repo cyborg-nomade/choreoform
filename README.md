@@ -36,6 +36,9 @@ repository.
 - Consult the [decision-record index and process](docs/decisions/README.md) for
   durable project choices.
 - Use the [working glossary](GLOSSARY.md) for core process terminology.
+- Explore the
+  [representative process corpus](docs/representative-processes/README.md) for
+  the cases that will test semantic and notation proposals.
 
 ## Community and security
 

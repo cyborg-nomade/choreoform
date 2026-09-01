@@ -29,8 +29,9 @@ making decisions.
 - [x] Adopt the working glossary for process, activity, event, state,
   capability, instance, definition, plan, and bundle in
   [ADR-0005](docs/decisions/0005-pre-semantic-working-glossary.md).
-- [ ] Collect 8–12 representative processes spanning multiple domains and
-  complexity levels.
+- [x] Adopt a corpus of ten representative processes spanning multiple domains
+  and complexity levels in
+  [ADR-0006](docs/decisions/0006-representative-process-corpus.md).
 - [ ] Define evaluation criteria for competing semantic and notation designs.
 
 ### Exit criteria
