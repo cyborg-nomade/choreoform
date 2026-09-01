@@ -39,6 +39,9 @@ repository.
 - Explore the
   [representative process corpus](docs/representative-processes/README.md) for
   the cases that will test semantic and notation proposals.
+- Use the
+  [design-evaluation framework](docs/evaluation/README.md) to compare competing
+  semantic and notation designs against common evidence.
 
 ## Community and security
 

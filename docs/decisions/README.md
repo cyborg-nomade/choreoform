@@ -22,6 +22,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0004](0004-lightweight-adr-process.md) | Accepted | Adopt a lightweight, repository-native ADR process |
 | [0005](0005-pre-semantic-working-glossary.md) | Accepted | Establish a pre-semantic working glossary |
 | [0006](0006-representative-process-corpus.md) | Accepted | Adopt a representative process corpus |
+| [0007](0007-design-evaluation-framework.md) | Accepted | Evaluate semantic and notation designs with evidence profiles |
 
 ## When an ADR is required
 

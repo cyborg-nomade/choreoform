@@ -28,6 +28,12 @@ its [case template](docs/representative-processes/template.md). Explain which
 missing pressure the example contributes rather than changing only the domain
 vocabulary of an existing case.
 
+Competing semantic and notation proposals should use the
+[design-evaluation framework](docs/evaluation/README.md) and its
+[scorecard template](docs/evaluation/scorecard-template.md). Freeze common
+evidence and priorities before reviewing candidate results, and preserve
+criterion-level trade-offs rather than reporting only an aggregate score.
+
 ## Ways to contribute
 
 - Describe a representative process and the hard cases it exposes.
