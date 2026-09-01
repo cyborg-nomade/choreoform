@@ -32,7 +32,7 @@ making decisions.
 - [x] Adopt a corpus of ten representative processes spanning multiple domains
   and complexity levels in
   [ADR-0006](docs/decisions/0006-representative-process-corpus.md).
-- [ ] Adopt criteria and a repeatable procedure for evaluating competing
+- [x] Adopt criteria and a repeatable procedure for evaluating competing
   semantic and notation designs in
   [ADR-0007](docs/decisions/0007-design-evaluation-framework.md).
 

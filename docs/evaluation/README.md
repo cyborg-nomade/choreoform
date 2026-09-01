@@ -3,7 +3,7 @@
 
 # Choreoform design-evaluation framework
 
-**Status:** Proposed<br>
+**Status:** Adopted<br>
 **Decision record:** [ADR-0007](../decisions/0007-design-evaluation-framework.md)
 
 This framework compares candidate semantic models, textual languages, visual

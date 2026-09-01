@@ -3,7 +3,7 @@
 
 # ADR-0007: Evaluate semantic and notation designs with evidence profiles
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-09-01<br>
 **Decider:** Project owner
 
@@ -189,12 +189,13 @@ The decision is implemented when:
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved this ADR on 2026-09-01. The design-evaluation
+framework becomes effective when pull request #8 is merged.
 
-1. [ ] Obtain Project Owner approval.
-2. [ ] Change this ADR's status to Accepted and record the approval.
+1. [x] Obtain Project Owner approval.
+2. [x] Change this ADR's status to Accepted and record the approval.
 3. [x] Publish the evaluation framework and scorecard template.
 4. [x] Link the framework from contributor entry points and the decision index.
-5. [ ] Mark the Phase 0 Roadmap deliverable complete after approval.
+5. [x] Mark the Phase 0 Roadmap deliverable complete after approval.
 6. [ ] Use and calibrate the framework during the first Phase 1 design
    comparison.

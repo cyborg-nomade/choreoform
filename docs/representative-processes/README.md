@@ -78,7 +78,7 @@ into every example.
 Together the cases also cover sequence, exclusive and inclusive decisions,
 loops, fan-out/fan-in, races between work and deadlines, partial completion,
 manual intervention, resource assignment, messages, and explainable history.
-This matrix is a coverage inventory, not an evaluation score. The proposed
+This matrix is a coverage inventory, not an evaluation score. The adopted
 [design-evaluation framework](../evaluation/README.md) defines how candidate
 designs map and exercise this evidence.
 
