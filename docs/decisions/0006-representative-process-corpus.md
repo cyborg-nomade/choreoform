@@ -3,7 +3,7 @@
 
 # ADR-0006: Adopt a representative process corpus
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-09-01<br>
 **Decider:** Project owner
 
@@ -140,13 +140,14 @@ The decision is implemented when:
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved this ADR on 2026-09-01. The representative process
+corpus becomes effective when pull request #7 is merged.
 
-1. [ ] Obtain Project Owner approval.
-2. [ ] Change this ADR's status to Accepted and record the approval.
+1. [x] Obtain Project Owner approval.
+2. [x] Change this ADR's status to Accepted and record the approval.
 3. [x] Publish the corpus index, template, coverage matrix, and ten cases.
 4. [x] Link the corpus from contributor entry points and the decision index.
-5. [ ] Mark the Roadmap deliverable complete after approval.
+5. [x] Mark the Roadmap deliverable complete after approval.
 6. [ ] Define design-evaluation criteria in the next Phase 0 deliverable.
 7. [ ] Validate and extend the cases with practitioners as implementation
    domains are selected.

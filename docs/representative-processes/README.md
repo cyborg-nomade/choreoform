@@ -3,7 +3,7 @@
 
 # Representative process corpus
 
-**Status:** Proposed and non-normative<br>
+**Status:** Adopted and non-normative<br>
 **Decision record:** [ADR-0006](../decisions/0006-representative-process-corpus.md)
 
 This corpus gives Choreoform design proposals a stable set of realistic
