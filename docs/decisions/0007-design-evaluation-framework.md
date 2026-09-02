@@ -197,5 +197,6 @@ framework becomes effective when pull request #8 is merged.
 3. [x] Publish the evaluation framework and scorecard template.
 4. [x] Link the framework from contributor entry points and the decision index.
 5. [x] Mark the Phase 0 Roadmap deliverable complete after approval.
-6. [ ] Use and calibrate the framework during the first Phase 1 design
-   comparison.
+6. [x] Use and calibrate the framework during the first Phase 1 design review,
+   recorded in the
+   [ADR-0008 semantic-core evaluation](../evaluation/0008-core-process-semantics.md).

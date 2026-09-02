@@ -23,6 +23,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0005](0005-pre-semantic-working-glossary.md) | Accepted | Establish a pre-semantic working glossary |
 | [0006](0006-representative-process-corpus.md) | Accepted | Adopt a representative process corpus |
 | [0007](0007-design-evaluation-framework.md) | Accepted | Evaluate semantic and notation designs with evidence profiles |
+| [0008](0008-core-process-semantics.md) | Proposed | Define the core process semantics as explicit state transitions |
 
 ## When an ADR is required
 
