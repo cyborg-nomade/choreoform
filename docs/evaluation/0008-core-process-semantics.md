@@ -10,7 +10,9 @@
 
 This is a single-candidate admissibility review, not a competitive ranking. No
 other complete Phase 1 semantic proposal was available at the same maturity.
-The alternatives in
+The Project Owner independently reviewed the proposal and required corrections
+to its cross-form gate, dynamic-scope rules, post-closure reconciliation, and
+four open design questions before approval. The alternatives in
 [ADR-0008](../decisions/0008-core-process-semantics.md) are architectural
 families, not scored candidates. This limitation lowers confidence and makes
 independent review and executable evidence important follow-up work.
@@ -33,7 +35,7 @@ independent review and executable evidence important follow-up work.
 
 | Candidate | Revision | Maturity | Authors | Declared limits |
 | --- | --- | --- | --- | --- |
-| HTS — hierarchical transition system with explicit obligations | [ADR-0008 proposal](../decisions/0008-core-process-semantics.md) | Paper design with worked mappings | Proposal author | No executable rules, notation, IR, or independent review yet |
+| HTS — hierarchical transition system with explicit obligations | [ADR-0008 decision](../decisions/0008-core-process-semantics.md) | Paper design with worked mappings | Proposal author | No executable rules, notation, IR, or independent criterion profile yet |
 
 ## Roles and activities
 
@@ -66,6 +68,7 @@ independent review and executable evidence important follow-up work.
 | Evaluator | Role or relevant experience | Candidate relationship | Conflict or limitation |
 | --- | --- | --- | --- |
 | Proposal author | Architecture and semantic analysis | Authored candidate | Not independent; no representative-user study or second reviewer |
+| Project Owner | Selection authority and design reviewer | Independent of proposal authorship | Reviewed gates and semantic gaps; did not produce a separate twelve-criterion score profile |
 
 ## Corpus traceability
 
@@ -95,7 +98,7 @@ semantic account, not that implementation or conformance has been demonstrated.
 | RP-05-C | Supported | New evidence revision creates a new attributable decision while retaining the former one | View design remains |
 | RP-05-D | Supported | Message delivery and responsibility acceptance are distinct effects/observations | Adapter contract remains |
 | RP-06-A | Supported | Dynamic per-unit obligations, independent system/physical facts, and completion predicate over disposition | Dynamic-scope IR remains |
-| RP-06-B | Supported | Versioned collection fan-out adds identified child scopes while retaining valid prior work | Collection-diff semantics need formal rules |
+| RP-06-B | Supported | Stable item keys retain existing child identities and valid work across collection revisions; new keys add work and removed keys require explicit settlement | IR encoding and executable collection-diff tests remain |
 | RP-06-C | Supported | Conflicting observations coexist; invariants prevent digital status from satisfying physical containment | Conflict-resolution policy remains domain data |
 | RP-06-D | Supported | Unknown release outcome forces reconciliation before another effect | Capability protocol remains |
 | RP-07-A | Supported | Deterministic dynamic fan-out; scheduling limits do not change semantic child identity | Scale prototype remains |
@@ -103,7 +106,7 @@ semantic account, not that implementation or conformance has been demonstrated.
 | RP-07-C | Supported | Pause stops selected scheduling; exact definition/artifact binding permits reuse of completed items | Planning rules remain |
 | RP-07-D | Supported | Cancellation cannot erase confirmed publication and creates explicit restoration/correction work | Recovery backend remains |
 | RP-08-A | Supported | Parallel objectives and work settle before closure; remaining obligations can transfer explicitly | Dynamic-work notation remains |
-| RP-08-B | Supported | Versioned scope data instantiates declared templates without invalidating unrelated completed work | Template system remains |
+| RP-08-B | Supported | Versioned scope data and stable item keys instantiate declared templates without invalidating unrelated completed work | Template system and executable tests remain |
 | RP-08-C | Supported | Capability authority is checked independently of control eligibility; recommendation is only data | Authorization system remains |
 | RP-08-D | Supported | Imported observations preserve provenance and partial order; acceptance order does not invent outside chronology | Reconciliation UX remains |
 | RP-09-A | Supported | Parallel decisions bind to one artifact/fact snapshot and a join predicate gates signature | Formal snapshot typing remains |
@@ -113,7 +116,7 @@ semantic account, not that implementation or conformance has been demonstrated.
 | RP-10-A | Supported | One stable cycle/payment effect and a separate entitlement effect; duplicate application is prohibited | Capability details remain |
 | RP-10-B | Supported | Attempts share logical effect identity; success cancels remaining timer obligations | Retry policy syntax remains |
 | RP-10-C | Supported | Timer and cancellation race through atomic accepted observations and policy-bound guards | Exact policy remains configuration |
-| RP-10-D | Supported | Late facts remain admissible after ordinary closure and create an explicit reconciliation outcome | Terminal-instance intake architecture remains |
+| RP-10-D | Supported | Ordinary closure may retain a reconciliation subscription whose late fact creates an explicit outcome; fully terminal instances require a linked new instance | Persistence and intake architecture remain |
 
 | Candidate | Supported | Partial | Outside scope | Unknown | Material interactions or notes |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -125,9 +128,9 @@ semantic account, not that implementation or conformance has been demonstrated.
 | --- | --- | --- | --- |
 | G1 — Corpus accountability | Pass | Every adopted scenario is mapped above, including failure, race, revision, and recovery paths | Convert mappings into conformance cases |
 | G2 — Semantic accountability | Pass | ADR-0008 defines configuration, atomic step, invalidity, ordering, nondeterminism, data change, actor work, fault, cancellation, and effect observability | Publish formal transition rules and counterexamples |
-| G3 — Cross-form parity | Pass at semantic-model scope | Stable identities, labeled relationships, explicit attributes, and representation-neutral ordering give every distinction a structured textual and graph projection; neither source order nor layout has meaning | Textual and visual proposals must re-run this gate with actual round trips |
-| G4 — Protected and accessible meaning | Pass at semantic-model scope | Authority, sensitive data, capability boundaries, uncertainty, and irreversible action are semantic attributes; no core rule depends on color, shape, position, pointing, or spatial reading | Policy enforcement and notation accessibility require separate evidence |
-| G5 — Reproducible comparison | Pass | Revision, scope, scenario rows, assumptions, observations, limitations, and risks are repository-visible | Independent review is still needed for confidence |
+| G3 — Cross-form parity | Conditional | The semantic model is representation-neutral, but no textual or visual notation or round trip exists, so parity has not been demonstrated | IR, textual, and visual owners must provide equivalent benchmark representations and passing round trips before the Phase 1 exit review |
+| G4 — Protected and accessible meaning | Pass | Authority, a minimum protection envelope, capability boundaries, uncertainty, and irreversible action are semantic attributes; no core rule depends on color, shape, position, pointing, or spatial reading | Policy enforcement and notation accessibility require separate evidence |
+| G5 — Reproducible comparison | Pass | Revision, scope, scenario rows, assumptions, observations, limitations, risks, and Project Owner corrections are repository-visible | Independent reproduction and executable evidence are still needed for confidence |
 
 ## Raw task and perturbation observations
 
@@ -166,27 +169,30 @@ or implementations.
 | V2 — Visual complexity management | 2 | A | Low | Hierarchy and dynamic templates avoid mandatory expansion; navigation and filtering remain untested |
 | X1 — Cross-form and engineering integrity | 2 | B | Low | One canonical transition relation is a strong synchronization boundary, but no IR or round trip exists |
 
-No independent scores or differences are available to reconcile. The absence
-of disagreement is not evidence of consensus.
+No second criterion profile is available to reconcile. The Project Owner's
+independent review identified the gate and semantic gaps recorded in this
+revision; their resolution does not substitute for representative-user or
+implementation evidence.
 
 ## Risks, unknowns, and reversibility
 
 | Risk or unknown | Likelihood or uncertainty | Impact | Reversibility | Mitigation or next evidence |
 | --- | --- | --- | --- | --- |
 | Obligations become too abstract for authors | Medium uncertainty | High | Medium before syntax | Prototype RP-01, RP-03, and RP-08 in both forms and test comprehension |
-| Atomic acceptance order hides a needed domain race policy | Medium | High | Medium | Require explicit resolver rules where corpus tests find acceptance order insufficient |
-| General join predicates are difficult to validate or visualize | Medium | Medium–high | Medium | Restrict the first IR to an analyzable predicate subset and add counterexamples |
-| Protection metadata outruns the Phase 1 type and policy systems | Medium | High | High if omitted from IR | Define a minimum retained metadata envelope in the IR ADR |
+| Atomic acceptance order hides a needed domain race policy | Medium | High | Medium | Enforce the accepted rule that consequential races require commutativity, invariant protection, or explicit policy; add counterexamples |
+| Monotone join predicates remain difficult to validate or visualize | Medium | Medium–high | Medium | Encode only the accepted all, any, threshold, named-outcome, and monotone-composition subset in the first IR and test explanations |
+| Protection metadata outruns the Phase 1 type and policy systems | Medium | High | High if enforcement silently widens access | Preserve the accepted minimum protection envelope in the IR and require targets to fail closed |
 | History requirements impose excessive runtime cost | Medium uncertainty | Medium | Medium | Separate required semantic fields from optional telemetry and benchmark snapshots/journals |
 | Definition-bounded dynamic work is too restrictive for adaptive cases | Low–medium | Medium | Medium | Work RP-08 ad hoc-response examples before freezing the grammar |
 | Single-author paper evidence misses contradictions | High | High | High before implementation | Obtain Project Owner and independent contributor review; add model-based tests |
 
 ## Synthesis and recommendation
 
-- **Gate result:** All five gates pass at the paper semantic-model scope. The
-  cross-form, accessibility, and reproducibility gates must be repeated for
-  the concrete IR and notation candidates; this review does not pre-approve
-  them.
+- **Gate result:** G1, G2, G4, and G5 pass at paper semantic-model scope. G3 is
+  Conditional until equivalent textual and visual benchmark representations
+  and round trips exist. Accepting ADR-0008 establishes a working semantic
+  foundation; it does not select a final cross-form design or satisfy the
+  Phase 1 exit criteria.
 - **Dominant strengths:** One atomic-transition account spans concurrency,
   revisions, human authority, timers, failure, cancellation, and uncertain
   effects. The corpus mapping does not require domain-specific core features.
@@ -196,9 +202,9 @@ of disagreement is not evidence of consensus.
   shows obligations cannot express joins locally, if notation prototypes need
   hidden semantics, or if representative cases require runtime-injected control
   behavior rather than declared templates.
-- **Recommendation:** Advance ADR-0008 for public review as the Phase 1 semantic
-  foundation, conditioned on resolving or explicitly deferring its four open
-  review questions before acceptance.
+- **Recommendation:** Accept ADR-0008 as the working Phase 1 semantic
+  foundation after incorporating the Project Owner's review resolutions. Keep
+  G3 Conditional and re-evaluate the model before the Phase 1 exit review.
 - **What would change this recommendation:** A smaller model that accounts for
   the same forty scenarios with clearer operational rules, or a worked
   counterexample showing irreconcilable ambiguity or inaccessible meaning.
@@ -214,8 +220,8 @@ proposed until another use shows whether this distinction recurs.
 
 ## Decision follow-through
 
-- [ ] Link the accepted outcome of ADR-0008.
-- [ ] Obtain at least one independent review and preserve material disagreement.
+- [x] Link the accepted outcome of ADR-0008.
+- [x] Obtain at least one independent review and preserve its required corrections.
 - [ ] Convert accepted claims into formal rules and conformance tests.
 - [ ] Re-run cross-form and accessibility gates for textual and visual designs.
 - [ ] Record later framework calibration without rewriting this evaluation.

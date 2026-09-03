@@ -148,4 +148,5 @@ effective when pull request #6 is merged.
 4. [x] Add the ADR to the decision index and link the glossary from contributor
    entry points.
 5. [x] Mark the Roadmap deliverable complete after approval.
-6. [ ] Revisit definitions as the formal semantic model is proposed in Phase 1.
+6. [x] Revisit definitions as the formal semantic model is accepted in
+   [ADR-0008](0008-core-process-semantics.md).

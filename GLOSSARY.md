@@ -5,18 +5,17 @@
 
 **Status:** Working, conceptual, and non-normative<br>
 **Decision record:** [ADR-0005](docs/decisions/0005-pre-semantic-working-glossary.md)<br>
-**Proposed formal semantics:**
+**Formal semantic foundation:**
 [ADR-0008](docs/decisions/0008-core-process-semantics.md)
 
-This glossary gives contributors a shared vocabulary before the formal
-semantic model exists. It defines conceptual boundaries for discussion,
-examples, and early design work; it does not define language syntax, a storage
-schema, or final execution semantics.
+This glossary gives contributors a shared conceptual vocabulary. It defines
+boundaries for discussion, examples, and early design work; ADR-0008 now
+supplies the accepted semantic foundation, while this glossary still does not
+define language syntax or a storage schema.
 
-Phase 1 specifications and later ADRs may refine these meanings. ADR-0008 is
-the first such proposal, but it is not binding while its status remains
-Proposed. Until then, use the qualified terms in this document whenever the
-shorter word would be ambiguous.
+Phase 1 specifications and later ADRs may refine these meanings consistently
+with ADR-0008 or explicitly supersede the affected decision. Use the qualified
+terms in this document whenever the shorter word would be ambiguous.
 
 ## Concept map
 

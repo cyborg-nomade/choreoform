@@ -3,7 +3,7 @@
 
 # ADR-0008: Define the core process semantics as explicit state transitions
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-09-02<br>
 **Decider:** Project owner
 
@@ -104,6 +104,13 @@ that a worker thread is currently running. This distinction permits durable
 waits, bounded concurrency, pause and resume, and external work without making
 scheduler behavior part of process meaning.
 
+The semantic core has one obligation concept. Activity, wait, effect,
+reconciliation, and other obligation kinds share identity, ownership, scope,
+lifecycle, and settlement rules; each kind carries a typed payload and the
+additional validity rules appropriate to it. The first IR must preserve this
+common envelope and may use distinct encodings for the typed payloads without
+creating separate sources of control meaning.
+
 Each runtime occurrence has a stable identity. This includes scope
 occurrences, activity executions, attempts, dynamic items, timers, decisions,
 data and artifact revisions, observations, and effects. Repetition creates new
@@ -132,6 +139,13 @@ messages, cancellations, and completions without claiming to reconstruct an
 unknown order in the outside world. Provider timestamps and provenance remain
 data that a rule may inspect; they do not silently replace acceptance order.
 
+Acceptance position is the mandatory baseline when no stronger domain rule is
+declared. A definition may instead declare a pure resolver over accepted facts.
+A potentially consequential race is valid only when its competing outcomes are
+commutative, an invariant prevents unsafe effects, or the definition declares
+an explicit conflict policy. Irreversible effects may not rely only on an
+accidental scheduler choice.
+
 Given the same definition, initial inputs, accepted observation sequence, and
 recorded nondeterministic choices, the semantic transition sequence and
 resulting configuration are deterministic.
@@ -158,10 +172,24 @@ which child outcomes are sufficient and what happens to other children.
 Runtime concurrency limits affect scheduling, not which child scope occurrences
 exist or what their outcomes mean.
 
+The initial core admits only monotone join predicates over identified child
+terminal outcomes: all, any, a threshold such as k-of-n, named-outcome counts or
+sets, and monotone compositions of those forms. Negation, absence of an event,
+arbitrary data expressions, time-dependent tests, and effectful tests are not
+join predicates. Every early-completing join declares how unfinished children
+are cancelled, transferred, or retained as visible obligations.
+
 Dynamic work is definition-bounded. A definition may instantiate declared
 activity or scope templates from versioned data, including an actor-authorized
 generic task whose instructions are data. Runtime input may not inject new
 control semantics or undeclared capabilities into an instance.
+
+A fan-out collection declares a stable item key. When a later collection
+revision changes scope, existing keys retain their child occurrence identities
+and completed valid work; new keys create new child occurrences. A removed key
+does not erase its child: the definition must retain, cancel, transfer, or
+otherwise settle it explicitly. Reordering a collection has no semantic effect
+unless order is separately declared as data.
 
 ### Data and state
 
@@ -184,11 +212,13 @@ they used. A definition may declare invalidation dependencies so a new revision
 withdraws the sufficiency of affected approvals or work without deleting their
 records.
 
-Data declarations carry protection metadata sufficient to express sensitivity,
-purpose, and permitted participant or capability access. This metadata is
-semantic: validation and execution must not silently widen access. The concrete
-type system, information-flow analysis, redaction scheme, and policy language
-are deferred.
+Data declarations carry a minimum protection envelope containing sensitivity,
+purpose, permitted participant requirements, permitted capabilities, and a
+stable policy reference when an external policy supplies the rule. This
+metadata is semantic: validation and execution must not silently widen access,
+and a target that cannot enforce a required constraint must reject the plan or
+execution rather than proceed with broader access. The concrete type system,
+information-flow analysis, redaction scheme, and policy language are deferred.
 
 ### Actors and human work
 
@@ -278,6 +308,16 @@ all its obligations are settled, explicitly transferred to another scope, or
 recorded as outstanding follow-up owned outside the closing scope. Late
 observations remain admissible for reconciliation even after ordinary work has
 stopped.
+
+Ordinary closure and terminal disposal are distinct. An instance may publish a
+named ordinary outcome while retaining declared reconciliation subscriptions
+for unresolved effects. Each subscription is an obligation in a reconciliation
+scope; a correlated late observation can enable a transition there and produce
+an explicit reinstate, credit, refund, correction, or human-review outcome. A
+fully terminal instance has no obligations or subscriptions and cannot
+transition; later facts must start or correlate to a separately identified
+instance. A definition must choose which lifecycle applies instead of relying
+on an implementation to reopen an instance implicitly.
 
 Compensation is new, explicit work linked to a prior confirmed or possibly
 completed effect. It has its own authority, effects, attempts, failures, and
@@ -375,6 +415,10 @@ techniques, not competing sources of meaning.
   operators must handle completed, in-flight, and unknown work explicitly.
 - Protection metadata becomes semantic even though its concrete policy and
   enforcement language remain later work.
+- Dynamic collection revisions preserve keyed child identity and require
+  explicit settlement for removed work rather than recreating or deleting it.
+- Ordinary closure may retain declared reconciliation obligations, while a
+  fully terminal instance cannot reopen implicitly.
 - Implementations must preserve an explanatory history, but are free to choose
   persistence and scheduling architectures.
 - The model is still a paper design with worked corpus evidence. Formal
@@ -399,7 +443,7 @@ This decision is implemented and remains respected when:
   acceptance sequence, and recorded choices produce equivalent outcomes and
   required history.
 
-## Open questions and deferred choices
+## Resolved review questions and deferred choices
 
 The following choices are intentionally not made by this ADR:
 
@@ -423,27 +467,28 @@ The following choices are intentionally not made by this ADR:
 11. migration of a running instance to another definition or plan. Until
     separately decided, it is prohibited rather than implicit.
 
-Open review questions for this proposal are:
+The Project Owner resolved the proposal's four review questions on 2026-09-03:
 
-- Is the obligation model sufficiently small to serve both human-readable
-  notation and formal transition rules, or should activity, wait, and effect
-  obligations have separate core kinds?
-- Should acceptance position be the mandatory race-resolution baseline, or
-  should definitions be required to declare a resolver for every potentially
-  consequential race?
-- Is semantic protection metadata feasible in Phase 1 before the authorization
-  and type systems are chosen, and what minimum fields must the first IR retain?
-- Which join predicates can be admitted while keeping validation and visual
-  explanation tractable?
+- retain one obligation concept with typed kinds and a common semantic
+  envelope;
+- use acceptance position as the baseline, while requiring commutativity,
+  invariant protection, or explicit policy for consequential races;
+- require the minimum protection envelope defined above and fail closed when a
+  target cannot enforce it; and
+- restrict the initial join language to monotone predicates over identified
+  child terminal outcomes with explicit disposition of unfinished work.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved this ADR on 2026-09-03. The semantic model becomes
+effective when pull request #10 is merged. Acceptance establishes the working
+semantic foundation for subsequent Phase 1 design; it does not claim that the
+conditional cross-form evaluation gate or Phase 1 exit criteria have passed.
 
-1. [ ] Obtain Project Owner approval.
-2. [ ] Resolve or explicitly defer the open review questions.
-3. [ ] Change this ADR's status to Accepted and record the approval.
-4. [ ] Mark the linked Roadmap deliverable complete.
+1. [x] Obtain Project Owner approval.
+2. [x] Resolve or explicitly defer the review questions.
+3. [x] Change this ADR's status to Accepted and record the approval.
+4. [x] Mark the linked Roadmap deliverable complete.
 5. [ ] Convert the semantic commitments into formal rules and conformance
    examples alongside the canonical IR work.
 6. [ ] Re-evaluate the model with executable and cross-form evidence before the

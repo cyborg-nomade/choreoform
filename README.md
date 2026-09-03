@@ -9,7 +9,7 @@ rationale are recorded in
 [ADR-0001](docs/decisions/0001-project-and-language-name.md).
 
 The groundwork decisions are complete, and Phase 1 is underway. The core
-semantic model is proposed in
+semantic model is accepted in
 [ADR-0008](docs/decisions/0008-core-process-semantics.md); no language syntax,
 runtime architecture, or compatibility promise has been finalized yet.
 
@@ -54,10 +54,10 @@ Security vulnerabilities should be reported privately according to the
 ## Status
 
 **Phase 1 underway.** Groundwork established the project's identity, policies,
-representative evidence, and design-evaluation method. The first Phase 1
-proposal defines the semantic core in
-[ADR-0008](docs/decisions/0008-core-process-semantics.md); it remains under
-review and is not yet an accepted language or compatibility commitment.
+representative evidence, and design-evaluation method. The semantic core is
+accepted in [ADR-0008](docs/decisions/0008-core-process-semantics.md) as the
+working foundation for the remaining Phase 1 designs; language syntax, runtime
+architecture, cross-form conformance, and compatibility remain future work.
 
 ## Name
 

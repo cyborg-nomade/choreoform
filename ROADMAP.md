@@ -53,10 +53,9 @@ validated, and round-tripped.
 
 ### Deliverables
 
-- [ ] Define the semantic model for control flow, data, actors, time, errors,
-  cancellation, and side effects; the model is proposed in
-  [ADR-0008](docs/decisions/0008-core-process-semantics.md) and remains pending
-  Project Owner approval.
+- [x] Define the semantic model for control flow, data, actors, time, errors,
+  cancellation, and side effects in
+  [ADR-0008](docs/decisions/0008-core-process-semantics.md).
 - [ ] Specify a canonical, versioned intermediate representation (IR).
 - [ ] Design an initial textual grammar and parser.
 - [ ] Design an initial visual notation and serialization of layout metadata.
