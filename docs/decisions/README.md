@@ -24,6 +24,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0006](0006-representative-process-corpus.md) | Accepted | Adopt a representative process corpus |
 | [0007](0007-design-evaluation-framework.md) | Accepted | Evaluate semantic and notation designs with evidence profiles |
 | [0008](0008-core-process-semantics.md) | Accepted | Define the core process semantics as explicit state transitions |
+| [0009](0009-canonical-versioned-ir.md) | Proposed | Specify a typed graph IR with explicit version and identity boundaries |
 
 ## When an ADR is required
 

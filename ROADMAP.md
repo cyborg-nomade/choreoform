@@ -56,7 +56,10 @@ validated, and round-tripped.
 - [x] Define the semantic model for control flow, data, actors, time, errors,
   cancellation, and side effects in
   [ADR-0008](docs/decisions/0008-core-process-semantics.md).
-- [ ] Specify a canonical, versioned intermediate representation (IR).
+- [ ] Specify a canonical, versioned intermediate representation (IR); the
+  structural contract is proposed in
+  [ADR-0009](docs/decisions/0009-canonical-versioned-ir.md), pending Project
+  Owner review of its scope and deferred executable dialects.
 - [ ] Design an initial textual grammar and parser.
 - [ ] Design an initial visual notation and serialization of layout metadata.
 - [ ] Define names, types, scopes, imports, parameters, and composition.

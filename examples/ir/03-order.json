@@ -1,0 +1,328 @@
+{
+  "format": "choreoform-ir",
+  "version": "0.1.0",
+  "kind": "definition",
+  "revision": "sha256:4089e28a5c025ce4814f7f518a1d9619ac48a940e9f82c9d2400956312e67faf",
+  "body": {
+    "id": "urn:choreoform:example:order-excerpt",
+    "semantics": {
+      "id": "urn:choreoform:semantics:adr-0008",
+      "revision": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "dialects": {
+      "illustrative": {
+        "id": "urn:choreoform:examples:illustrative-dialect",
+        "revision": "sha256:282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9"
+      }
+    },
+    "root": "root",
+    "scopes": {
+      "root": {
+        "parent": null,
+        "entry": "fork",
+        "outcomes": {
+          "accepted": true
+        },
+        "cancellation": "p_cancel",
+        "faults": "p_faults",
+        "closure": "p_closure",
+        "race": "p_race",
+        "inputs": {
+          "order": "order"
+        },
+        "outputs": {}
+      },
+      "inventory_scope": {
+        "parent": "root",
+        "entry": "reserve",
+        "outcomes": {
+          "success": true
+        },
+        "cancellation": "p_cancel",
+        "faults": "p_faults",
+        "closure": "p_closure",
+        "race": "p_race",
+        "inputs": {},
+        "outputs": {}
+      },
+      "payment_scope": {
+        "parent": "root",
+        "entry": "authorize",
+        "outcomes": {
+          "success": true
+        },
+        "cancellation": "p_cancel",
+        "faults": "p_faults",
+        "closure": "p_closure",
+        "race": "p_race",
+        "inputs": {},
+        "outputs": {}
+      }
+    },
+    "data": {
+      "order": {
+        "scope": "root",
+        "type": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Order"
+          }
+        },
+        "protection": {
+          "sensitivity": "restricted",
+          "purposes": {
+            "process-operation": true
+          },
+          "participants": {
+            "operator": true
+          },
+          "capabilities": {
+            "inventory": true,
+            "payment": true
+          },
+          "policy": "p_protection"
+        },
+        "invalidates": {}
+      }
+    },
+    "expressions": {
+      "order_input": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "resultType": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Order"
+          }
+        },
+        "reads": {
+          "order": true
+        },
+        "body": {
+          "form": "read",
+          "data": "order"
+        },
+        "parameters": {}
+      }
+    },
+    "actors": {
+      "operator": {
+        "scope": "root",
+        "requirement": "p_authority"
+      }
+    },
+    "capabilities": {
+      "inventory": {
+        "scope": "root",
+        "contract": "p_effect",
+        "input": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Order"
+          }
+        },
+        "output": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Reservation"
+          }
+        },
+        "authority": "operator",
+        "effects": "p_effect"
+      },
+      "payment": {
+        "scope": "root",
+        "contract": "p_effect",
+        "input": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Order"
+          }
+        },
+        "output": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Authorization"
+          }
+        },
+        "authority": "operator",
+        "effects": "p_effect"
+      }
+    },
+    "policies": {
+      "p_cancel": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "withdrawal-policy",
+          "case": "RP-03"
+        }
+      },
+      "p_faults": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "settle-remaining-work",
+          "case": "RP-03"
+        }
+      },
+      "p_closure": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "ordinary-closure-reconcile",
+          "case": "RP-03"
+        }
+      },
+      "p_race": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "explicit-consequential-race",
+          "case": "RP-03"
+        }
+      },
+      "p_authority": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "authority-at-acceptance",
+          "case": "RP-03"
+        }
+      },
+      "p_protection": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "purpose-limited-access",
+          "case": "RP-03"
+        }
+      },
+      "p_work": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "revision-bound-work",
+          "case": "RP-03"
+        }
+      },
+      "p_effect": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "reconcile-effects",
+          "case": "RP-03"
+        }
+      }
+    },
+    "nodes": {
+      "fork": {
+        "kind": "split",
+        "scope": "root",
+        "outcomes": {},
+        "reads": {},
+        "writes": {},
+        "children": {
+          "stock": "inventory_scope",
+          "funds": "payment_scope"
+        },
+        "join": "acceptance_join"
+      },
+      "acceptance_join": {
+        "kind": "join",
+        "scope": "root",
+        "outcomes": {
+          "accepted": true
+        },
+        "reads": {},
+        "writes": {},
+        "source": "fork",
+        "predicate": {
+          "op": "all",
+          "outcomes": {
+            "success": true
+          }
+        },
+        "remaining": "p_faults"
+      },
+      "reserve": {
+        "kind": "activity",
+        "scope": "inventory_scope",
+        "outcomes": {
+          "confirmed": true
+        },
+        "reads": {
+          "order": true
+        },
+        "writes": {},
+        "mode": "capability",
+        "target": "inventory",
+        "input": "order_input",
+        "policy": "p_work",
+        "result": null
+      },
+      "authorize": {
+        "kind": "activity",
+        "scope": "payment_scope",
+        "outcomes": {
+          "confirmed": true
+        },
+        "reads": {
+          "order": true
+        },
+        "writes": {},
+        "mode": "capability",
+        "target": "payment",
+        "input": "order_input",
+        "policy": "p_work",
+        "result": null
+      },
+      "stock_done": {
+        "kind": "finish",
+        "scope": "inventory_scope",
+        "outcomes": {},
+        "reads": {},
+        "writes": {},
+        "outcome": "success"
+      },
+      "funds_done": {
+        "kind": "finish",
+        "scope": "payment_scope",
+        "outcomes": {},
+        "reads": {},
+        "writes": {},
+        "outcome": "success"
+      },
+      "accepted": {
+        "kind": "finish",
+        "scope": "root",
+        "outcomes": {},
+        "reads": {},
+        "writes": {},
+        "outcome": "accepted"
+      }
+    },
+    "flows": {
+      "stock_confirmed": {
+        "source": "reserve",
+        "outcome": "confirmed",
+        "target": "stock_done"
+      },
+      "funds_confirmed": {
+        "source": "authorize",
+        "outcome": "confirmed",
+        "target": "funds_done"
+      },
+      "accept_join": {
+        "source": "acceptance_join",
+        "outcome": "accepted",
+        "target": "accepted"
+      }
+    }
+  },
+  "annotations": {
+    "license": "SPDX-FileCopyrightText: 2026 Choreoform contributors; SPDX-License-Identifier: MPL-2.0",
+    "evidence": "Non-executable benchmark excerpt; see docs/ir/examples.md",
+    "case": "RP-03"
+  }
+}
