@@ -14,6 +14,12 @@ repeatable review method without pretending that design judgment is arithmetic.
 Use [the scorecard template](scorecard-template.md) for each comparison. Use the
 same frozen plan and benchmark inputs for every candidate in that comparison.
 
+## Completed evaluations
+
+- [ADR-0008 core process semantic model](0008-core-process-semantics.md) — a
+  single-candidate paper-design review with full corpus traceability and an
+  explicit independent-review limitation.
+
 ## What the framework answers
 
 The framework helps reviewers answer four different questions without

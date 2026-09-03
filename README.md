@@ -8,7 +8,9 @@ information processes in equivalent textual and visual forms. The name and its
 rationale are recorded in
 [ADR-0001](docs/decisions/0001-project-and-language-name.md).
 
-The groundwork decisions are complete, and Phase 1 is next. No language syntax,
+The groundwork decisions are complete, and Phase 1 is underway. The core
+semantic model is accepted in
+[ADR-0008](docs/decisions/0008-core-process-semantics.md); no language syntax,
 runtime architecture, or compatibility promise has been finalized yet.
 
 ## Product family
@@ -51,9 +53,11 @@ Security vulnerabilities should be reported privately according to the
 
 ## Status
 
-**Phase 1 next.** Groundwork established the project's identity, policies,
-representative evidence, and design-evaluation method. The next work will define
-the semantic core and build the first language prototype; it has not begun yet.
+**Phase 1 underway.** Groundwork established the project's identity, policies,
+representative evidence, and design-evaluation method. The semantic core is
+accepted in [ADR-0008](docs/decisions/0008-core-process-semantics.md) as the
+working foundation for the remaining Phase 1 designs; language syntax, runtime
+architecture, cross-form conformance, and compatibility remain future work.
 
 ## Name
 
