@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+[workspace]
+members = ["crates/ir-probe-core", "tools/portability"]
+resolver = "3"
+
+[workspace.package]
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.98.1"
+license = "MPL-2.0"
+publish = false
+
+[workspace.dependencies]
+serde_json = "=1.0.151"
+sha2 = "=0.11.0"
+wasm-bindgen = "=0.2.127"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"

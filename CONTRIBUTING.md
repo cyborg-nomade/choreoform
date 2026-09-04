@@ -62,9 +62,11 @@ For other changes:
 6. Open a pull request and respond to review without rewriting another
    contributor's work without their consent.
 
-Until component-specific build and test commands exist, a pull request should
-describe how its claims were checked. The repository will document required
-commands as implementation tooling is introduced.
+The [Rust portability probe guide](tools/portability/README.md) documents the
+pinned toolchain, native/Wasm checks and independent Python fixture oracle.
+Changes to the shared wire code require those checks; browser parity must be
+recorded separately because the CI job does not execute a browser. Other pull
+requests should describe how their claims were checked.
 
 ## Developer Certificate of Origin
 

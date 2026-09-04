@@ -1,0 +1,21 @@
+<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Choreoform — Rust portability probe</title>
+<style>
+  body { max-width: 75rem; margin: 3rem auto; padding: 0 1rem; font: 17px/1.5 system-ui; }
+  button { padding: .6rem 1rem; font: inherit; }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #f3f4f5; padding: 1rem; }
+  td, th { padding: .3rem 1rem; text-align: left; border-bottom: 1px solid #ddd; }
+</style>
+<h1>Rust native/browser confirmation</h1>
+<p>Bounded ADR-0010 evidence. This is not a Studio, production validator or interpreter.</p>
+<button id="run">Run browser parity checks</button>
+<p id="status" role="status">Ready. Build the generated artifacts before running.</p>
+<pre id="summary" aria-label="Evidence summary"></pre>
+<table><thead><tr><th>Case</th><th>Expected</th><th>Browser result</th><th>Parity</th></tr></thead><tbody id="cases"></tbody></table>
+<script type="module" src="./browser.mjs"></script>
+</html>

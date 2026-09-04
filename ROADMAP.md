@@ -69,6 +69,8 @@ validated, and round-tripped.
   before substantial parser work: strict IR admission and canonical revisions,
   typed variants/references, native/Wasm parity, explicit host boundaries, and
   repeatable builds with a pinned stable toolchain and locked dependencies.
+  [Probe and evidence](docs/evaluation/0010-rust-portability.md) are available
+  for review; this item remains open until Project Owner approval and merge.
 - [ ] Design an initial textual grammar and parser.
 - [ ] Design an initial visual notation and serialization of layout metadata.
 - [ ] Define names, types, scopes, imports, parameters, and composition.

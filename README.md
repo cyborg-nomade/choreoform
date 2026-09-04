@@ -67,8 +67,10 @@ Executable dialects, semantic validation, and round-trip evidence remain open.
 [ADR-0010](docs/decisions/0010-initial-implementation-language.md) selects Rust
 for the shared semantic core and native tools, with a requirements-led
 [comparison of alternatives](docs/evaluation/0010-implementation-language.md).
-The next step is a bounded native/browser confirmation before substantial parser
-work. No product language tooling has been added by the language-selection ADR.
+The [bounded Rust native/browser probe](tools/portability/README.md) provides
+strict wire checks, canonical revisions and portability evidence for review
+before substantial parser work. It is not a production validator or interpreter;
+the [evidence record](docs/evaluation/0010-rust-portability.md) lists its limits.
 
 ## Name
 

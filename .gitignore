@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+/target/
+/.tools/
+/tools/portability/generated/
+__pycache__/
