@@ -1,0 +1,287 @@
+{
+  "format": "choreoform-ir",
+  "version": "0.1.0",
+  "kind": "definition",
+  "revision": "sha256:4c9c8bbad9f0c05523262979eca8f8b6449e3f310004d83c39ffaee1670eae62",
+  "body": {
+    "id": "urn:choreoform:example:reimbursement-excerpt",
+    "semantics": {
+      "id": "urn:choreoform:semantics:adr-0008",
+      "revision": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "dialects": {
+      "illustrative": {
+        "id": "urn:choreoform:examples:illustrative-dialect",
+        "revision": "sha256:282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9"
+      }
+    },
+    "root": "root",
+    "scopes": {
+      "root": {
+        "parent": null,
+        "entry": "review",
+        "outcomes": {
+          "paid": true,
+          "rejected": true
+        },
+        "cancellation": "p_cancel",
+        "faults": "p_faults",
+        "closure": "p_closure",
+        "race": "p_race",
+        "inputs": {
+          "expense": "expense"
+        },
+        "outputs": {}
+      }
+    },
+    "data": {
+      "expense": {
+        "scope": "root",
+        "type": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Expense"
+          }
+        },
+        "protection": {
+          "sensitivity": "restricted",
+          "purposes": {
+            "process-operation": true
+          },
+          "participants": {
+            "operator": true
+          },
+          "capabilities": {
+            "payable": true
+          },
+          "policy": "p_protection"
+        },
+        "invalidates": {
+          "review": true
+        }
+      }
+    },
+    "expressions": {
+      "expense_input": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "resultType": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Expense"
+          }
+        },
+        "reads": {
+          "expense": true
+        },
+        "body": {
+          "form": "read",
+          "data": "expense"
+        },
+        "parameters": {}
+      }
+    },
+    "actors": {
+      "operator": {
+        "scope": "root",
+        "requirement": "p_authority"
+      }
+    },
+    "capabilities": {
+      "payable": {
+        "scope": "root",
+        "contract": "p_pay",
+        "input": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "Expense"
+          }
+        },
+        "output": {
+          "dialect": "illustrative",
+          "body": {
+            "name": "PaymentResult"
+          }
+        },
+        "authority": "operator",
+        "effects": "p_effect"
+      }
+    },
+    "policies": {
+      "p_cancel": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "withdrawal-policy",
+          "case": "RP-01"
+        }
+      },
+      "p_faults": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "settle-remaining-work",
+          "case": "RP-01"
+        }
+      },
+      "p_closure": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "ordinary-closure-reconcile",
+          "case": "RP-01"
+        }
+      },
+      "p_race": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "explicit-consequential-race",
+          "case": "RP-01"
+        }
+      },
+      "p_authority": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "authority-at-acceptance",
+          "case": "RP-01"
+        }
+      },
+      "p_protection": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "purpose-limited-access",
+          "case": "RP-01"
+        }
+      },
+      "p_work": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "revision-bound-work",
+          "case": "RP-01"
+        }
+      },
+      "p_effect": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "reconcile-effects",
+          "case": "RP-01"
+        }
+      },
+      "p_pay": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "approved-revision-payment",
+          "case": "RP-01"
+        }
+      },
+      "p_reconcile": {
+        "scope": "root",
+        "dialect": "illustrative",
+        "body": {
+          "rule": "reconcile-existing-payment",
+          "case": "RP-01"
+        }
+      }
+    },
+    "nodes": {
+      "review": {
+        "kind": "activity",
+        "scope": "root",
+        "outcomes": {
+          "approved": true,
+          "rejected": true
+        },
+        "reads": {
+          "expense": true
+        },
+        "writes": {},
+        "mode": "human",
+        "target": "operator",
+        "input": "expense_input",
+        "policy": "p_work",
+        "result": null
+      },
+      "pay": {
+        "kind": "activity",
+        "scope": "root",
+        "outcomes": {
+          "confirmed": true,
+          "unknown": true
+        },
+        "reads": {
+          "expense": true
+        },
+        "writes": {},
+        "mode": "capability",
+        "target": "payable",
+        "input": "expense_input",
+        "policy": "p_work",
+        "result": null
+      },
+      "reconcile": {
+        "kind": "wait",
+        "scope": "root",
+        "outcomes": {
+          "confirmed": true
+        },
+        "reads": {},
+        "writes": {},
+        "policy": "p_reconcile"
+      },
+      "paid": {
+        "kind": "finish",
+        "scope": "root",
+        "outcomes": {},
+        "reads": {},
+        "writes": {},
+        "outcome": "paid"
+      },
+      "rejected": {
+        "kind": "finish",
+        "scope": "root",
+        "outcomes": {},
+        "reads": {},
+        "writes": {},
+        "outcome": "rejected"
+      }
+    },
+    "flows": {
+      "review_approved": {
+        "source": "review",
+        "outcome": "approved",
+        "target": "pay"
+      },
+      "review_rejected": {
+        "source": "review",
+        "outcome": "rejected",
+        "target": "rejected"
+      },
+      "pay_confirmed": {
+        "source": "pay",
+        "outcome": "confirmed",
+        "target": "paid"
+      },
+      "pay_unknown": {
+        "source": "pay",
+        "outcome": "unknown",
+        "target": "reconcile"
+      },
+      "late_confirmed": {
+        "source": "reconcile",
+        "outcome": "confirmed",
+        "target": "paid"
+      }
+    }
+  },
+  "annotations": {
+    "license": "SPDX-FileCopyrightText: 2026 Choreoform contributors; SPDX-License-Identifier: MPL-2.0",
+    "evidence": "Non-executable benchmark excerpt; see docs/ir/examples.md",
+    "case": "RP-01"
+  }
+}

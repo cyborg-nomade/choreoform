@@ -1,0 +1,1000 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:schema:definition:0.1.0",
+  "$comment": "Working structural schema; not a semantic or execution validator. Licensing metadata is in definition-0.1.schema.json.license.",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "choreoform-ir"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "kind": {
+      "const": "definition"
+    },
+    "revision": {
+      "$ref": "#/$defs/digest"
+    },
+    "body": {
+      "$ref": "#/$defs/body"
+    },
+    "annotations": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "format",
+    "version",
+    "kind",
+    "revision",
+    "body",
+    "annotations"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+    },
+    "symbols": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/id"
+      },
+      "additionalProperties": {
+        "const": true
+      },
+      "minProperties": 0
+    },
+    "nonemptySymbols": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/id"
+      },
+      "additionalProperties": {
+        "const": true
+      },
+      "minProperties": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "external": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "id",
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "dialectValue": {
+      "type": "object",
+      "properties": {
+        "dialect": {
+          "$ref": "#/$defs/id"
+        },
+        "body": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "dialect",
+        "body"
+      ],
+      "additionalProperties": false
+    },
+    "protection": {
+      "type": "object",
+      "properties": {
+        "sensitivity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purposes": {
+          "$ref": "#/$defs/nonemptySymbols"
+        },
+        "participants": {
+          "$ref": "#/$defs/symbols"
+        },
+        "capabilities": {
+          "$ref": "#/$defs/symbols"
+        },
+        "policy": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "sensitivity",
+        "purposes",
+        "participants",
+        "capabilities",
+        "policy"
+      ],
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "entry": {
+          "$ref": "#/$defs/id"
+        },
+        "outcomes": {
+          "$ref": "#/$defs/nonemptySymbols"
+        },
+        "cancellation": {
+          "$ref": "#/$defs/id"
+        },
+        "faults": {
+          "$ref": "#/$defs/id"
+        },
+        "closure": {
+          "$ref": "#/$defs/id"
+        },
+        "race": {
+          "$ref": "#/$defs/id"
+        },
+        "inputs": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "outputs": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      },
+      "required": [
+        "parent",
+        "entry",
+        "outcomes",
+        "cancellation",
+        "faults",
+        "closure",
+        "race",
+        "inputs",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "$ref": "#/$defs/dialectValue"
+        },
+        "protection": {
+          "$ref": "#/$defs/protection"
+        },
+        "invalidates": {
+          "$ref": "#/$defs/symbols"
+        },
+        "initial": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "scope",
+        "type",
+        "protection",
+        "invalidates"
+      ],
+      "additionalProperties": false
+    },
+    "expression": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/id"
+        },
+        "dialect": {
+          "$ref": "#/$defs/id"
+        },
+        "resultType": {
+          "$ref": "#/$defs/dialectValue"
+        },
+        "reads": {
+          "$ref": "#/$defs/symbols"
+        },
+        "body": {
+          "type": "object"
+        },
+        "parameters": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/dialectValue"
+          }
+        }
+      },
+      "required": [
+        "scope",
+        "dialect",
+        "resultType",
+        "reads",
+        "body",
+        "parameters"
+      ],
+      "additionalProperties": false
+    },
+    "actor": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/id"
+        },
+        "requirement": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "scope",
+        "requirement"
+      ],
+      "additionalProperties": false
+    },
+    "capability": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/id"
+        },
+        "contract": {
+          "$ref": "#/$defs/id"
+        },
+        "input": {
+          "$ref": "#/$defs/dialectValue"
+        },
+        "output": {
+          "$ref": "#/$defs/dialectValue"
+        },
+        "authority": {
+          "$ref": "#/$defs/id"
+        },
+        "effects": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "scope",
+        "contract",
+        "input",
+        "output",
+        "authority",
+        "effects"
+      ],
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/id"
+        },
+        "dialect": {
+          "$ref": "#/$defs/id"
+        },
+        "body": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "scope",
+        "dialect",
+        "body"
+      ],
+      "additionalProperties": false
+    },
+    "flow": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/id"
+        },
+        "outcome": {
+          "$ref": "#/$defs/id"
+        },
+        "target": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "source",
+        "outcome",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "joinPredicate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "all",
+                "any"
+              ]
+            },
+            "outcomes": {
+              "$ref": "#/$defs/nonemptySymbols"
+            }
+          },
+          "required": [
+            "op",
+            "outcomes"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "atLeast"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "outcomes": {
+              "$ref": "#/$defs/nonemptySymbols"
+            }
+          },
+          "required": [
+            "op",
+            "count",
+            "outcomes"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "and",
+                "or"
+              ]
+            },
+            "terms": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/joinPredicate"
+              },
+              "minProperties": 1
+            }
+          },
+          "required": [
+            "op",
+            "terms"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "activity"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "$ref": "#/$defs/nonemptySymbols"
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "mode": {
+              "enum": [
+                "human",
+                "capability"
+              ]
+            },
+            "target": {
+              "$ref": "#/$defs/id"
+            },
+            "input": {
+              "$ref": "#/$defs/id"
+            },
+            "policy": {
+              "$ref": "#/$defs/id"
+            },
+            "result": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/id"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "mode",
+            "target",
+            "input",
+            "policy",
+            "result"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "invoke"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "$ref": "#/$defs/nonemptySymbols"
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "body": {
+              "$ref": "#/$defs/id"
+            },
+            "inputs": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/id"
+              }
+            },
+            "outputs": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "body",
+            "inputs",
+            "outputs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "decision"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "$ref": "#/$defs/nonemptySymbols"
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "guards": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/id"
+              },
+              "minProperties": 1
+            },
+            "default": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/id"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "guards",
+            "default"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "split"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "const": {}
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "children": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/id"
+              },
+              "minProperties": 1
+            },
+            "join": {
+              "$ref": "#/$defs/id"
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "children",
+            "join"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "join"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "const": true
+              },
+              "minProperties": 1,
+              "maxProperties": 1
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "source": {
+              "$ref": "#/$defs/id"
+            },
+            "predicate": {
+              "$ref": "#/$defs/joinPredicate"
+            },
+            "remaining": {
+              "$ref": "#/$defs/id"
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "source",
+            "predicate",
+            "remaining"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "wait"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "$ref": "#/$defs/nonemptySymbols"
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "policy": {
+              "$ref": "#/$defs/id"
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "policy"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "repeat"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "const": true
+              },
+              "minProperties": 1,
+              "maxProperties": 1
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "body": {
+              "$ref": "#/$defs/id"
+            },
+            "condition": {
+              "$ref": "#/$defs/id"
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "body",
+            "condition"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "fanout"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "const": {}
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "collection": {
+              "$ref": "#/$defs/id"
+            },
+            "itemKey": {
+              "$ref": "#/$defs/id"
+            },
+            "body": {
+              "$ref": "#/$defs/id"
+            },
+            "join": {
+              "$ref": "#/$defs/id"
+            },
+            "seal": {
+              "$ref": "#/$defs/id"
+            },
+            "changes": {
+              "$ref": "#/$defs/id"
+            },
+            "item": {
+              "$ref": "#/$defs/id"
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "collection",
+            "itemKey",
+            "body",
+            "join",
+            "seal",
+            "changes",
+            "item"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "finish"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "const": {}
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "outcome": {
+              "$ref": "#/$defs/id"
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "outcome"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "compute"
+            },
+            "scope": {
+              "$ref": "#/$defs/id"
+            },
+            "outcomes": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "const": true
+              },
+              "minProperties": 1,
+              "maxProperties": 1
+            },
+            "reads": {
+              "$ref": "#/$defs/symbols"
+            },
+            "writes": {
+              "$ref": "#/$defs/symbols"
+            },
+            "assignments": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/id"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/id"
+              },
+              "minProperties": 1
+            }
+          },
+          "required": [
+            "kind",
+            "scope",
+            "outcomes",
+            "reads",
+            "writes",
+            "assignments"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "body": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "semantics": {
+          "$ref": "#/$defs/external"
+        },
+        "dialects": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/external"
+          },
+          "minProperties": 0
+        },
+        "root": {
+          "$ref": "#/$defs/id"
+        },
+        "scopes": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/scope"
+          },
+          "minProperties": 1
+        },
+        "data": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/data"
+          },
+          "minProperties": 0
+        },
+        "expressions": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/expression"
+          },
+          "minProperties": 0
+        },
+        "actors": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/actor"
+          },
+          "minProperties": 0
+        },
+        "capabilities": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/capability"
+          },
+          "minProperties": 0
+        },
+        "policies": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/policy"
+          },
+          "minProperties": 0
+        },
+        "nodes": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/node"
+          },
+          "minProperties": 1
+        },
+        "flows": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/flow"
+          },
+          "minProperties": 0
+        }
+      },
+      "required": [
+        "id",
+        "semantics",
+        "dialects",
+        "root",
+        "scopes",
+        "data",
+        "expressions",
+        "actors",
+        "capabilities",
+        "policies",
+        "nodes",
+        "flows"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

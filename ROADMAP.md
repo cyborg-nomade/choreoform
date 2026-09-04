@@ -56,7 +56,15 @@ validated, and round-tripped.
 - [x] Define the semantic model for control flow, data, actors, time, errors,
   cancellation, and side effects in
   [ADR-0008](docs/decisions/0008-core-process-semantics.md).
-- [ ] Specify a canonical, versioned intermediate representation (IR).
+- [x] Specify the structural foundation of a canonical, versioned intermediate
+  representation (IR) in
+  [ADR-0009](docs/decisions/0009-canonical-versioned-ir.md).
+- [ ] Complete the executable IR contract with accepted type, expression, and
+  policy dialects, semantic validation, and complete benchmark evidence;
+  structural approval does not close the conditional gates or Phase 1 exit.
+- [ ] Select the initial implementation language in a dedicated ADR/PR before
+  parser implementation, considering parser, language-server, graph-modeling,
+  runtime, and deployment requirements.
 - [ ] Design an initial textual grammar and parser.
 - [ ] Design an initial visual notation and serialization of layout metadata.
 - [ ] Define names, types, scopes, imports, parameters, and composition.
@@ -231,5 +239,6 @@ expensive to reverse:
    handles once their target ecosystems are selected.
 2. Select the initial implementation language based on parser, language-server,
    graph-modeling, runtime, and deployment requirements.
-3. Approve the canonical-model strategy and its versioning rules.
+3. Complete the executable contracts building on the structural canonical-model
+   strategy and versioning rules accepted in ADR-0009.
 4. Select three representative processes for the first vertical slice.

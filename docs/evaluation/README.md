@@ -16,6 +16,8 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## Completed evaluations
 
+- [ADR-0009 canonical IR](0009-canonical-ir.md) — structural wire evidence,
+  three non-executable benchmark excerpts, and explicit conditional gates.
 - [ADR-0008 core process semantic model](0008-core-process-semantics.md) — a
   single-candidate paper-design review with full corpus traceability and an
   explicit independent-review limitation.
