@@ -65,6 +65,10 @@ The structural foundation of the canonical versioned IR is accepted in
 inspection; the examples are structural evidence, not executable processes.
 Executable dialects, semantic validation, and round-trip evidence remain open.
 Implementation-language selection is the next decision before parser work.
+[ADR-0010](docs/decisions/0010-initial-implementation-language.md) proposes Rust
+for the shared semantic core and native tools, with a requirements-led
+[comparison of alternatives](docs/evaluation/0010-implementation-language.md).
+The proposal is not yet accepted; no product language tooling has been added.
 
 ## Name
 

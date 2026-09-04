@@ -22,6 +22,12 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
   single-candidate paper-design review with full corpus traceability and an
   explicit independent-review limitation.
 
+## Related technology decision evidence
+
+- [ADR-0010 implementation language](0010-implementation-language.md) —
+  requirements-led desk research, not a semantic/notation scorecard or a
+  comparative implementation benchmark; owner review pending.
+
 ## What the framework answers
 
 The framework helps reviewers answer four different questions without

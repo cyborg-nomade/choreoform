@@ -64,7 +64,9 @@ validated, and round-tripped.
   structural approval does not close the conditional gates or Phase 1 exit.
 - [ ] Select the initial implementation language in a dedicated ADR/PR before
   parser implementation, considering parser, language-server, graph-modeling,
-  runtime, and deployment requirements.
+  runtime, and deployment requirements; Rust is proposed in
+  [ADR-0010](docs/decisions/0010-initial-implementation-language.md), pending
+  Project Owner review.
 - [ ] Design an initial textual grammar and parser.
 - [ ] Design an initial visual notation and serialization of layout metadata.
 - [ ] Define names, types, scopes, imports, parameters, and composition.
