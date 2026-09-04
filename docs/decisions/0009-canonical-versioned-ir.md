@@ -201,5 +201,6 @@ Conditional; approval must not be described as final executable conformance.
 4. [x] Mark the Roadmap structural IR milestone complete only for the approved scope.
 5. [ ] Replace illustrative dialects with accepted type/expression/policy contracts.
 6. [ ] Complete semantic validation and full text/visual benchmark evidence.
-7. [ ] Prompt and resolve the implementation-language decision in its own ADR/PR
-   before parser implementation. The Python evidence harness does not select it.
+7. [x] Prompt and resolve the implementation-language decision in its own ADR/PR
+   before parser implementation: [ADR-0010](0010-initial-implementation-language.md)
+   selects Rust. The Python evidence harness remains separate.
