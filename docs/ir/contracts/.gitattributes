@@ -1,0 +1,5 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+
+# Contract digests cover exact bytes, including line endings.
+sha256-*.txt -text

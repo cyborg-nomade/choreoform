@@ -5,10 +5,9 @@
 
 These are **non-executable benchmark excerpts**, not complete implementations
 of the corpus. Their policies and types use an illustrative dialect pinned to
-an [immutable snapshot of this document](contracts/README.md). The checker
-recognizes its serialization but does not implement its meaning. No tool may
-plan or execute these examples just because their JSON Schema and digest checks
-pass.
+the exact bytes of this document. The checker recognizes its serialization but
+does not implement its meaning. No tool may plan or execute these examples just
+because their JSON Schema and digest checks pass.
 
 ## Illustrative dialect contract and limitations
 
@@ -99,9 +98,8 @@ resolution of schema IDs, semantic references, or dialects. Dependency
 installation is the only network need; after caching, `uv run --offline` works.
 
 The script checks the schema itself, the three fixtures, exact pinned local
-contract identities and snapshot digests, selected linking rules,
-canonicalization invariants, malformed JSON, and negative mutations. Its
-`--revisions` option prints recalculated fixture digests for review; it never
-rewrites fixtures. It does not implement
+source digests, selected linking rules, canonicalization invariants, malformed
+JSON, and negative mutations. Its `--revisions` option prints recalculated
+fixture digests for review; it never rewrites fixtures. It does not implement
 semantic-contract validation, execution, full control-flow analysis, performance
 limits, or text/visual round trips.

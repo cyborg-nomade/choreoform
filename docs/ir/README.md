@@ -10,6 +10,7 @@ Nothing in this directory is an accepted language or compatibility release.
   semantic digests, version admission, and validation boundaries.
 - [Structural JSON Schema](../../schemas/ir/definition-0.1.schema.json).
 - [Worked examples and verification](examples.md).
+- [Immutable contract artifacts and provenance](contracts/README.md).
 - [Evaluation and remaining gates](../evaluation/0009-canonical-ir.md).
 
 The IR is the interchange contract between future text/visual frontends and

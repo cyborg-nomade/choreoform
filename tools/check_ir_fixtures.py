@@ -12,22 +12,33 @@ import json
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 import jsonschema
 import rfc8785
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = sorted((ROOT / "examples/ir").glob("*.json"))
-SCHEMA = json.loads((ROOT / "schemas/ir/definition-0.1.schema.json").read_text())
+SCHEMA = json.loads((ROOT / "schemas/ir/definition-0.1.schema.json").read_text(encoding="utf-8"))
+CONTRACTS = {
+    ("urn:choreoform:semantics:adr-0008",
+     "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"):
+        ROOT / "docs/ir/contracts/sha256-0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141.txt",
+    ("urn:choreoform:examples:illustrative-dialect",
+     "sha256:282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9"):
+        ROOT / "docs/ir/contracts/sha256-282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9.txt",
+}
 MAPS = ("scopes", "data", "expressions", "actors", "capabilities", "policies", "nodes", "flows")
 MAX_INT = 9007199254740991
 
 
 def reject(message):
+    """Refuse evidence input without repairing or silently dropping content."""
     raise ValueError(message)
 
 
 def pairs(items):
+    """Build a JSON object while rejecting duplicate keys at any nesting level."""
     result = {}
     for key, value in items:
         if key in result:
@@ -37,6 +48,7 @@ def pairs(items):
 
 
 def scalars(value, depth=0):
+    """Check the prototype depth bound and IR integer/Unicode restrictions."""
     if depth > 64:
         reject("prototype nesting limit")
     if isinstance(value, str):
@@ -59,6 +71,7 @@ def scalars(value, depth=0):
 
 
 def load(raw):
+    """Decode bounded UTF-8 JSON without lossy key or number coercion."""
     if len(raw) > 1024 * 1024:
         reject("prototype byte limit")
     value = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
@@ -69,16 +82,30 @@ def load(raw):
 
 
 def canonical(document):
+    """Return JCS bytes of the semantic projection, excluding annotations."""
     scalars(document)
     return rfc8785.dumps({k: document[k] for k in ("format", "version", "kind", "body")})
 
 
 def revision(document):
+    """Hash semantic bytes; this is neither equivalence proof nor signature."""
     return "sha256:" + hashlib.sha256(canonical(document)).hexdigest()
 
 
 def source_revision(path):
+    """Hash exact artifact bytes without text decoding or normalization."""
     return "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def check_contracts(document):
+    """Verify fixture bindings against local snapshots, not dialect meaning."""
+    bindings = [document["body"]["semantics"], *document["body"]["dialects"].values()]
+    for binding in bindings:
+        path = CONTRACTS.get((binding["id"], binding["revision"]))
+        if path is None:
+            reject("unsupported local contract identity/revision")
+        if source_revision(path) != binding["revision"]:
+            reject("contract artifact digest mismatch")
 
 
 def check(document, verify_revision=True):
@@ -94,6 +121,7 @@ def check(document, verify_revision=True):
         reject("ID reused across maps")
 
     def ref(name, key):
+        """Resolve a local ID in the expected declaration map."""
         if key not in b[name]:
             reject(f"missing {name} reference: {key}")
         return b[name][key]
@@ -122,6 +150,7 @@ def check(document, verify_revision=True):
                     reject("input cell has independent initializer")
 
     def visible(scope_id, name, key):
+        """Resolve a declaration visible in this scope or a lexical ancestor."""
         target = ref(name, key)
         current = scope_id
         while current is not None:
@@ -131,6 +160,7 @@ def check(document, verify_revision=True):
         reject(f"out-of-scope reference: {key}")
 
     def dialect(value):
+        """Require a declared dialect ID without interpreting its payload."""
         ref("dialects", value["dialect"])
 
     for name in MAPS[1:-1]:
@@ -173,6 +203,7 @@ def check(document, verify_revision=True):
                 visible(scope_id, name, key)
 
     def child(node, key):
+        """Require an invocation target owned directly by the caller's scope."""
         if ref("scopes", key)["parent"] != node["scope"]:
             reject("invocation target is not a direct child template")
 
@@ -287,6 +318,7 @@ def check(document, verify_revision=True):
     visiting, visited = set(), set()
 
     def acyclic(key):
+        """Reject implicit control cycles, including split/join return edges."""
         if key in visiting:
             reject("graph cycle outside repeat")
         if key in visited:
@@ -299,27 +331,76 @@ def check(document, verify_revision=True):
 
     for key in adjacency:
         acyclic(key)
+    check_contracts(document)
     if verify_revision and document["revision"] != revision(document):
         reject("semantic revision mismatch")
 
 
 class WireEvidence(unittest.TestCase):
+    """Serialization and selected linkage regressions, not conformance tests."""
+
     def setUp(self):
+        """Load fresh fixture objects so mutations cannot leak between tests."""
         self.documents = [load(path.read_bytes()) for path in FIXTURES]
 
     def test_schema_and_three_fixtures(self):
+        """Check the schema and all three structurally valid benchmark excerpts."""
         jsonschema.Draft202012Validator.check_schema(SCHEMA)
         self.assertEqual(len(self.documents), 3)
         for d in self.documents:
             check(d)
 
     def test_local_contract_digests(self):
+        """Verify exact registered identities and content-addressed filenames."""
         for d in self.documents:
-            self.assertEqual(d["body"]["semantics"]["revision"], source_revision(ROOT / "docs/decisions/0008-core-process-semantics.md"))
-            self.assertEqual(d["body"]["dialects"]["illustrative"]["revision"], source_revision(ROOT / "docs/ir/examples.md"))
+            check_contracts(d)
+        for (_, digest), path in CONTRACTS.items():
+            self.assertEqual(digest, source_revision(path))
+            self.assertEqual(path.stem, digest.replace(":", "-"))
+
+    def test_editorial_source_edits_preserve_bindings(self):
+        """Simulate live-document edits; admission must read only frozen bytes."""
+        read_bytes = Path.read_bytes
+        live = {ROOT / "docs/decisions/0008-core-process-semantics.md",
+                ROOT / "docs/ir/examples.md"}
+        observed = set()
+
+        def edited_source(path):
+            """Model an editorial change in memory, leaving disk untouched."""
+            observed.add(path)
+            raw = read_bytes(path)
+            return raw + b"\nEditorial correction.\n" if path in live else raw
+
+        with patch.object(Path, "read_bytes", edited_source):
+            for d in self.documents:
+                check(d)
+                self.assertEqual(d["revision"], revision(d))
+        self.assertEqual(observed, set(CONTRACTS.values()))
+
+    def test_contract_binding_and_corruption_failures(self):
+        """Refuse unknown IDs/digests and tampered snapshots for both bindings."""
+        for kind in ("semantics", "dialect"):
+            for field, value in (("id", "urn:unknown"), ("revision", "sha256:" + "0" * 64)):
+                d = copy.deepcopy(self.documents[0])
+                binding = d["body"]["semantics"] if kind == "semantics" else d["body"]["dialects"]["illustrative"]
+                binding[field] = value
+                with self.subTest(kind=kind, field=field), self.assertRaisesRegex(ValueError, "unsupported local contract"):
+                    check(d, verify_revision=False)
+        read_bytes = Path.read_bytes
+        for artifact in CONTRACTS.values():
+            def corrupt_snapshot(path):
+                """Change one registered artifact's bytes without editing disk."""
+                raw = read_bytes(path)
+                return raw + b"\n" if path == artifact else raw
+
+            with patch.object(Path, "read_bytes", corrupt_snapshot):
+                with self.subTest(artifact=artifact.name), self.assertRaisesRegex(ValueError, "artifact digest mismatch"):
+                    check(self.documents[0])
 
     def test_map_order_and_pretty_print_preserve_revision(self):
+        """Object insertion order and transport formatting are non-semantic."""
         def reverse(value):
+            """Reverse object insertion order recursively, preserving arrays."""
             if isinstance(value, dict):
                 return {k: reverse(v) for k, v in reversed(list(value.items()))}
             if isinstance(value, list):
@@ -330,12 +411,14 @@ class WireEvidence(unittest.TestCase):
             self.assertEqual(revision(d), revision(load(json.dumps(d, indent=4).encode())))
 
     def test_annotation_edit_preserves_revision(self):
+        """Unknown editor metadata stays outside the semantic projection."""
         for d in self.documents:
             before = revision(d)
             d["annotations"]["unknown-editor"] = {"label": "changed", "x": 123}
             self.assertEqual(before, revision(d))
 
     def test_semantic_edit_changes_revision(self):
+        """Protection, policy, expression, and definition identity affect hashes."""
         for field, value in (("sensitivity", "public"), ("policy", "p_cancel")):
             d = copy.deepcopy(self.documents[0])
             d["body"]["data"]["expense"]["protection"][field] = value
@@ -348,6 +431,7 @@ class WireEvidence(unittest.TestCase):
         self.assertNotEqual(self.documents[0]["revision"], revision(d))
 
     def test_array_order_is_significant(self):
+        """Canonicalization must not sort ordered dialect payload arrays."""
         d = self.documents[0]
         payload = d["body"]["expressions"]["expense_input"]["body"]
         payload["arguments"] = ["a", "b"]
@@ -356,16 +440,19 @@ class WireEvidence(unittest.TestCase):
         self.assertNotEqual(before, revision(d))
 
     def test_jcs_utf16_key_order_and_escaping(self):
+        """Exercise JCS ordering across BMP boundaries and string escaping."""
         self.assertEqual(rfc8785.dumps({"\ue000": 1, "😀": 2}), '{"😀":2,"\ue000":1}'.encode())
         self.assertEqual(rfc8785.dumps({"q": '\n"'}), b'{"q":"\\n\\\""}')
 
     def test_invalid_transport(self):
+        """Reject duplicate keys, unsafe numbers, BOMs, and invalid Unicode."""
         for raw in (b'{"x":1,"x":2}', b'{"x":1.0}', b'{"x":1e0}', b'{"x":NaN}',
                     b'{"x":9007199254740992}', b'{"x":"\\ud800"}', b'\xef\xbb\xbf{}', b'\xff'):
             with self.subTest(raw=raw), self.assertRaises(ValueError):
                 load(raw)
 
     def test_negative_mutations(self):
+        """Reject selected shape, reference, dependency, and revision defects."""
         mutations = {
             "unknown version": lambda d: d.update(version="0.2.0"),
             "unknown core field": lambda d: d["body"].update(hiddenPriority=1),
@@ -392,6 +479,7 @@ class WireEvidence(unittest.TestCase):
             check(d)
 
     def test_join_and_cross_scope_failures(self):
+        """Require reciprocal joins, closed predicates, and lexical flows."""
         for label, mutate in {
             "unpaired join": lambda b: b["nodes"]["acceptance_join"].update(source="reserve"),
             "nonmonotone join": lambda b: b["nodes"]["acceptance_join"].update(predicate={"op": "not", "outcomes": {"success": True}}),
@@ -403,6 +491,7 @@ class WireEvidence(unittest.TestCase):
                 check(d, verify_revision=False)
 
     def test_fanout_binding_failures(self):
+        """Require a child item cell and a key based solely on its item argument."""
         for label, mutate in {
             "parent item cell": lambda b: b["nodes"]["assets_fanout"].update(item="assets"),
             "mutable key dependency": lambda b: b["expressions"]["item_key"].update(reads={"assets": True}),
@@ -414,6 +503,7 @@ class WireEvidence(unittest.TestCase):
                 check(d, verify_revision=False)
 
     def test_interfaces_and_compute(self):
+        """Check pure assignment writes, activity results, and port ownership."""
         d = copy.deepcopy(self.documents[0])
         d["body"]["nodes"]["review"] = {
             "kind": "compute", "scope": "root", "outcomes": {"approved": True},

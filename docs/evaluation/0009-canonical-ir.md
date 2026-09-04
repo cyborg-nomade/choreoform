@@ -141,6 +141,7 @@ forward the correction made during PR #10's review.
 | Change expression payload or definition ID | Digest changes | Semantic dependencies and identity are revision-bound |
 | Reverse dialect argument array | Digest changes | No accidental sorting of ordered semantic content |
 | Malformed JSON and negative graph mutations | Rejected by the fixture harness | Selected transport/shape/link rules only, not complete validation |
+| Editorial source edits / changed contract artifact | Frozen local bindings retain the original revisions; altered snapshot bytes and unknown identity/digest pairs are rejected | Integrity and local registry evidence, not authenticity or executable dialect support |
 | Unknown declared dialect | May be retained as data, but has no executable implementation here | Inert preservation is distinct from semantic admission |
 | Cancellation, retries, late success, large fanout | Policy and identity slots inspected only | No operational trace, timing, performance or recovery result claimed |
 

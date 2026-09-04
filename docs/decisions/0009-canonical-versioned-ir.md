@@ -135,7 +135,10 @@ authority proposed here.
 ## Confirmation
 
 - The structural schema and three labeled excerpts validate, with current
-  semantic/dialect document digests and reproducible canonical revisions.
+  immutable semantic/dialect snapshot digests and reproducible canonical revisions.
+  [Published local snapshots](../ir/contracts/README.md) decouple bindings from
+  editorial changes to the source documents; identity and digest checks reject
+  substitution or artifact corruption.
 - Negative checks reject malformed transport, unknown format/core fields,
   wrong-kind/dangling references, cross-scope flows, implicit forks, invalid
   item binding, nonmonotone joins, and revision mismatches.

@@ -101,9 +101,14 @@ verify both identity and digest against an explicitly supplied local resource
 registry. A URI is an identity, not permission to access the network.
 
 `body.semantics` pins the semantic contract. In these examples it identifies
-ADR-0008 and hashes that document's exact repository bytes. `body.dialects` maps
-local dialect IDs to immutable contract references. These are independent of
-the wire version and a tool's own version.
+ADR-0008 and hashes the exact bytes of its published
+[content-addressed snapshot](contracts/README.md), not the editable ADR source.
+The snapshot preserves the original ID and digest; editorial changes to the
+source never rebind existing definitions. `body.dialects` maps local dialect IDs
+to immutable contract references; the illustrative dialect also uses a frozen
+snapshot. New contract bytes require a new artifact and explicit binding, with
+old artifacts retained. These are independent of the wire version and a tool's
+own version.
 
 ## 4. Definition records
 

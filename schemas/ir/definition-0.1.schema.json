@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:choreoform:schema:definition:0.1.0",
-  "$comment": "SPDX-FileCopyrightText: 2026 Choreoform contributors; SPDX-License-Identifier: MPL-2.0. Proposed structural schema; not a semantic or execution validator.",
+  "$comment": "Proposed structural schema; not a semantic or execution validator. Licensing metadata is in definition-0.1.schema.json.license.",
   "type": "object",
   "properties": {
     "format": {
