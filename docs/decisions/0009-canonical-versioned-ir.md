@@ -3,9 +3,11 @@
 
 # ADR-0009: Specify a typed graph IR with explicit version and identity boundaries
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-09-03<br>
-**Decider:** Project owner
+**Decider:** Project owner<br>
+**Approval:** Project Owner approved the ADR and PR #11 on 2026-09-04;
+effective upon merge of [PR #11](https://github.com/cyborg-nomade/choreoform/pull/11).
 
 ## Context
 
@@ -37,9 +39,9 @@ this deliverable would pre-empt later Roadmap decisions.
 
 ## Decision
 
-Propose **Definition IR 0.1.0** as a typed, ID-addressed graph with a strict JSON
+Adopt **Definition IR 0.1.0** as a working structural, ID-addressed typed graph with a strict JSON
 wire format, separate non-semantic annotations, and exact artifact bindings.
-The [wire specification](../ir/definition-v0.1.md) is the detailed candidate
+The [wire specification](../ir/definition-v0.1.md) is the detailed structural
 contract; the [JSON Schema](../../schemas/ir/definition-0.1.schema.json) checks
 shape but is deliberately not advertised as an execution validator.
 
@@ -75,7 +77,7 @@ validation, planning, and execution require the complete understood contract.
 
 The three benchmark excerpts use a pinned illustrative dialect. This is a
 declared evidence gap, not a back door for executing arbitrary JSON or prose.
-The proposal specifies the structural IR boundary; it does not claim the
+This decision specifies the structural IR boundary; it does not claim the
 complete executable language is already specified.
 
 ### Explicit refinements of the accepted model
@@ -87,7 +89,7 @@ complete executable language is already specified.
   Its key expression receives only that item parameter; duplicate keys are
   invalid. Existing keys retain occurrence identity as scope changes.
 - Membership must be explicitly sealed before that fan-out's join evaluates.
-  After sealing, added work requires another occurrence. This is a proposed
+  After sealing, added work requires another occurrence. This is an accepted
   refinement of ADR-0008's monotonicity rule, not a claim that open-ended
   membership and an already-settled join commute.
 - General control cycles normalize to explicit repeat scopes; this first
@@ -104,7 +106,7 @@ numerical benchmark results. The costs are design judgments for this project.
 
 | Option | Advantages | Costs and risks | Outcome |
 | --- | --- | --- | --- |
-| **Typed graph in strict JSON** | Explicit references and scope; small edits preserve unrelated IDs; inspectable with ordinary tools; one projection for semantic hashing | Verbose; linking and scope checks exceed JSON Schema; canonical bytes do not prove semantic equivalence | Propose |
+| **Typed graph in strict JSON** | Explicit references and scope; small edits preserve unrelated IDs; inspectable with ordinary tools; one projection for semantic hashing | Verbose; linking and scope checks exceed JSON Schema; canonical bytes do not prove semantic equivalence | Adopt for the structural milestone |
 | Nested syntax-shaped tree with references | Natural fit for a structured textual frontend; ownership is visually local; many traversals are simple | Still needs references for joins, invalidation, and shared policies; structural movement risks identity churn; can favor one frontend's decomposition | Do not select as the interchange contract; allow frontend-internal trees |
 | Binary IDL-backed graph | Can offer compact transport and generated bindings while retaining the same abstract graph | Adds toolchain and canonical-byte decisions before requirements justify them; harder direct review; unknown-field behavior still needs a safe semantic policy | Defer as a possible transport, never a second meaning |
 | Engine-owned serialized object model | Fastest path for one engine to save its own state | Couples definition meaning to runtime implementation and object lifetime; weak independent frontend/backend contract | Reject as canonical definition IR |
@@ -114,7 +116,7 @@ notation must look like JSON. A future binary transport could be acceptable
 only if it preserves this abstract meaning and has its own unambiguous revision
 rules. A nested tree can still be a useful frontend projection. These options
 are not incompatible implementation techniques; only one is the interchange
-authority proposed here.
+authority adopted here.
 
 ## Consequences
 
@@ -127,8 +129,9 @@ authority proposed here.
 - Strict 0.x admission makes evolution noisy but prevents accidental compatibility.
 - Stable graph IDs improve traceability but require future editors to preserve
   author identity intent; this proposal does not solve textual ID ergonomics.
-- Keyed dynamic templates stay compact, but the seal rule needs adaptive-case
-  review before becoming binding.
+- Keyed dynamic templates stay compact, but sealing limits completion to finite
+  occurrences; continuously discovering processes need explicit later occurrences
+  or batches. Adaptive-case execution evidence remains outstanding.
 - The wire schema is MPL-2.0; prose is CC-BY-4.0; the Python fixture checker is
   a disposable evidence tool, not a project implementation-language decision.
 
@@ -150,17 +153,31 @@ authority proposed here.
   text/visual round trips, and independent review close the conditional gates
   before this is treated as a final executable IR or the Phase 1 exit is passed.
 
-## Review questions and deferred choices
+## Review decisions and deferred choices
 
-1. Is strict JSON plus a semantic JCS projection an appropriate first transport,
-   including its integer/string restriction and annotation boundary?
-2. Should exact-version admission remain mandatory throughout 0.x, or is an
-   explicit capability-negotiation scheme worth specifying before any release?
-3. Is the explicit non-executable dialect boundary the right sequencing trade-off,
-   or should this deliverable remain incomplete until type/expression policies
-   can be specified alongside it?
-4. Does the proposed seal-before-join rule fit adaptive cases, or should dynamic
-   membership and completion be modeled by a different explicit protocol?
+The Project Owner accepted these recommendations on 2026-09-04:
+
+1. **JSON/JCS and semantic boundary:** retain strict JSON, safe integer tokens,
+   and the semantic-only JCS projection. Decimal and larger numeric values need
+   explicit typed dialect representations, not implicit coercion. Instructions
+   that define required human behavior belong in the semantic body, not solely
+   in annotations. Layout and formatting remain non-semantic; metadata privacy
+   and artifact authenticity remain separate obligations.
+2. **Exact 0.x admission:** require explicit support for each exact format and
+   contract binding. A tool may support multiple versions, but must not infer
+   compatibility from a version range. Defer capability negotiation until actual
+   consumers and interoperability requirements justify its complexity.
+3. **Bounded structural milestone:** approve the structural IR foundation now,
+   with executable completion tracked separately in the Roadmap. Accepted type,
+   expression and policy contracts, semantic validation, complete benchmarks,
+   and text/visual round trips remain open. G1–G4 remain Conditional; neither
+   executable conformance nor the Phase 1 exit is approved by this decision.
+4. **Finite fan-out sealing:** retain seal-before-join for the initial profile,
+   including `any` and threshold predicates. Child work may start before sealing;
+   only join evaluation waits. Later discoveries require explicit new occurrences
+   or batches, never silently reopened joins. Processes whose discovery may not
+   finish need declared deadline, cancellation, escalation, or other outcome
+   policies. No execution evidence for these policies is claimed here.
 
 This ADR does not select grammar, symbols/layout, full types/expressions/imports,
 semantic policy implementations, production diagnostic codes, an execution
@@ -174,13 +191,15 @@ language, checkpoint schema, migration, package registry, or signing protocol.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
-It remains a working structural proposal while the documented gates are
+The Project Owner approved this decision and PR #11 on 2026-09-04; merge makes
+it effective. It remains a working structural foundation while the gates are
 Conditional; approval must not be described as final executable conformance.
 
-1. [ ] Obtain Project Owner review and resolve the four review questions.
-2. [ ] Change status to Accepted and record approval.
-3. [ ] Complete or explicitly defer the structural-versus-executable scope decision.
-4. [ ] Mark the Roadmap IR deliverable complete only for the approved scope.
+1. [x] Obtain Project Owner review and resolve the four review questions.
+2. [x] Change status to Accepted and record approval.
+3. [x] Approve structural scope and explicitly defer executable completion.
+4. [x] Mark the Roadmap structural IR milestone complete only for the approved scope.
 5. [ ] Replace illustrative dialects with accepted type/expression/policy contracts.
 6. [ ] Complete semantic validation and full text/visual benchmark evidence.
+7. [ ] Prompt and resolve the implementation-language decision in its own ADR/PR
+   before parser implementation. The Python evidence harness does not select it.

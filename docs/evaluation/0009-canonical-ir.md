@@ -194,12 +194,21 @@ system, not to relabel these excerpts or Conditional gates as complete.
 
 ## Recommendation and follow-through
 
-Advance ADR-0009 for review as a **working structural IR proposal**, not final
-executable-language selection. Resolve its four review questions before
-acceptance; retain conditional gates and explicit follow-up owners.
+The Project Owner approved ADR-0009 and PR #11 on 2026-09-04 as a **working
+structural IR foundation**, not final executable-language selection. The four
+decisions are recorded in the ADR: JSON/JCS, exact 0.x admission, a separately
+tracked executable-completion obligation, and finite fan-out sealing. No
+remaining owner objection was raised. The frozen evaluation and scores above
+are retained; approval supplies no new execution or independent scoring evidence.
+G1–G4 remain Conditional and all forty scenario rows remain Partial.
 
-- [ ] Record Project Owner review and any disagreement.
-- [ ] Resolve structural-versus-executable scope, version policy, hashing and seal.
-- [ ] Record acceptance only after approval; Roadmap remains unchecked.
+The seal risk remains an executable-evidence obligation: child work can start
+before sealing, but joins wait; ongoing discovery requires explicit later
+occurrences/batches and declared handling for discovery that never completes.
+Follow-up work requires its own deliverable review by the Project Owner.
+
+- [x] Record Project Owner review and any disagreement.
+- [x] Resolve structural-versus-executable scope, version policy, hashing and seal.
+- [x] Record acceptance and mark only the structural Roadmap milestone complete.
 - [ ] Provide accepted dialects and complete benchmark models.
 - [ ] Implement semantic validation, frontend round trips and independent tests.

@@ -1,10 +1,11 @@
 <!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# Canonical IR proposal
+# Canonical IR structural foundation
 
-**Status:** Proposed by [ADR-0009](../decisions/0009-canonical-versioned-ir.md).
-Nothing in this directory is an accepted language or compatibility release.
+**Status:** Accepted structural foundation under
+[ADR-0009](../decisions/0009-canonical-versioned-ir.md).
+This is not a complete executable language or a compatibility release.
 
 - [Wire specification](definition-v0.1.md): identities, records, ordering,
   semantic digests, version admission, and validation boundaries.

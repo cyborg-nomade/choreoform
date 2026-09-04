@@ -1,15 +1,15 @@
 <!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# Definition IR 0.1.0 — proposed wire specification
+# Definition IR 0.1.0 — structural wire specification
 
-**Status:** Proposed; governed by [ADR-0009](../decisions/0009-canonical-versioned-ir.md).<br>
+**Status:** Accepted structural foundation; governed by [ADR-0009](../decisions/0009-canonical-versioned-ir.md).<br>
 **Semantic foundation:** [ADR-0008](../decisions/0008-core-process-semantics.md).
 
-The requirements below describe the candidate format, not an already released
+The requirements below describe the working structural format, not a released
 language. The [schema](../../schemas/ir/definition-0.1.schema.json) checks record
 shape. This prose additionally defines reference, scope, ordering, identity,
-and admission rules. If they disagree, the proposal is defective; neither a
+and admission rules. If they disagree, the specification is defective; neither a
 successful schema check nor an implementation may silently resolve the conflict.
 
 ## 1. Scope and pipeline
@@ -243,6 +243,13 @@ new occurrence, not silently reopening a completed join. This fixed-member
 boundary makes monotonicity well-defined; the seal is an explicit design rule,
 not an inference from temporary absence of incoming data.
 
+Child work may start before sealing; only join evaluation waits, including for
+`any` and threshold predicates. This initial profile closes finite occurrences,
+not an unbounded stream. Continuously discovering processes need explicit later
+occurrences or batches, with declared deadline, cancellation, escalation, or
+other outcome policies when discovery may never finish. Executable evidence for
+those policies remains a follow-up obligation under ADR-0009.
+
 The key expression declares exactly one typed parameter named `item`. It is
 evaluated once per collection item with that argument bound to the item's
 immutable value; its result is a stable string key. It cannot depend on other
@@ -276,7 +283,9 @@ work. Merely having these policy references does not prove the policy correct.
 `annotations` may store labels, source spans, comments, and layout as
 namespaced objects keyed by stable IDs. Its internal format is deliberately
 not a visual-notation decision. It must not carry sole copies of guard rules,
-actor authority, effects, protection, deadlines, or other semantics. Unknown
+actor authority, effects, protection, deadlines, or other semantics. Instructions
+defining required human behavior belong in the semantic body, not solely in
+annotations. Unknown
 annotations must survive a lossless editing operation; a lossy export must be
 explicitly labeled and must not replace the source artifact automatically.
 
@@ -362,5 +371,5 @@ concrete runtime schema and recovery tests before claiming portable checkpoints.
 - [RFC 8785 — JCS](https://www.rfc-editor.org/rfc/rfc8785): canonical JSON bytes.
 - [JSON Schema Draft 2020-12](https://json-schema.org/draft/2020-12/json-schema-core): structural schema dialect.
 
-The graph, projection, limits, and admission rules are Choreoform proposals,
+The graph, projection, limits, and admission rules are Choreoform decisions,
 not requirements attributed to those standards.

@@ -59,10 +59,12 @@ accepted in [ADR-0008](docs/decisions/0008-core-process-semantics.md) as the
 working foundation for the remaining Phase 1 designs; language syntax, runtime
 architecture, cross-form conformance, and compatibility remain future work.
 
-The next deliverable, a canonical versioned IR, is proposed in
+The structural foundation of the canonical versioned IR is accepted in
 [ADR-0009](docs/decisions/0009-canonical-versioned-ir.md). Its
 [wire specification, schema, and examples](docs/ir/README.md) are available for
-review; the examples are structural evidence, not executable processes.
+inspection; the examples are structural evidence, not executable processes.
+Executable dialects, semantic validation, and round-trip evidence remain open.
+Implementation-language selection is the next decision before parser work.
 
 ## Name
 

@@ -4,7 +4,7 @@
 # requires-python = ">=3.11"
 # dependencies = ["jsonschema==4.25.1", "rfc8785==0.1.4"]
 # ///
-"""Proposed IR wire/linkage evidence, NOT a semantic or execution validator."""
+"""Working IR wire/linkage evidence, NOT a semantic or execution validator."""
 
 import copy
 import hashlib
