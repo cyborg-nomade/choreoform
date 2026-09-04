@@ -3,7 +3,9 @@
 
 # Rust native/browser confirmation
 
-**Status:** Bounded evidence passes locally; Project Owner review required<br>
+**Status:** Accepted bounded confirmation<br>
+**Approval:** Project Owner approved PR #13 on 2026-09-04;
+effective upon [merge](https://github.com/cyborg-nomade/choreoform/pull/13).<br>
 **Baseline:** `7f2091b27484723506ce76b63ac4c105dfb1f86d`<br>
 **Plan recorded:** 2026-09-04, before implementation
 
@@ -38,12 +40,14 @@ The bounded confirmation supports retaining Rust for the selected shared-core
 direction. The same core produced identical canonical bytes, revisions and
 probe error categories on native macOS ARM64 and actual browser WebAssembly.
 This is feasibility evidence, not production validation, language conformance,
-performance certification or a Studio decision. The Roadmap checkbox remains
-open until owner approval and merge of this deliverable.
+performance certification or a Studio decision. The Project Owner approved this
+bounded deliverable on 2026-09-04; its Roadmap item closes upon merge of PR #13.
+The broader structural/semantic validation and conformance obligations remain open.
 
 Use the [reproduction guide](../../tools/portability/README.md) and the exact
-toolchain/lock in this PR. No existing fixture, contract snapshot, schema or
-accepted ADR was changed. No parser or interpreter was started.
+toolchain/lock in this PR. No existing fixture, contract snapshot or schema was
+changed. ADR-0010's confirmation status is updated without changing its decision.
+No parser or interpreter was started.
 
 ## Verification record — 2026-09-04 (including review fixes)
 
@@ -60,7 +64,7 @@ accepted ADR was changed. No parser or interpreter was started.
 | Compile-fail doctests | Three pass: node/data distinction, node/occurrence distinction, missing enum arms |
 | Formatting and Clippy | Pass on native and Wasm code, warnings treated as errors |
 | Wasm release build and bindings | Pass with the pinned toolchain and CLI |
-| CI | Added native tests/oracle and Wasm compile/lint job; not a browser-execution claim |
+| CI | Native tests/oracle and Wasm compile/lint job pass; not a browser-execution claim |
 
 The native decoder test examines all 65,536 combinations of two arbitrary bytes
 inside a quoted string, checking accepted values against the library decoder;
@@ -286,6 +290,10 @@ The concrete inventory and host-access observations above come from the locked
 local package sources and generated module, not only their documentation.
 
 ## Review questions and recommendations
+
+The Project Owner reviewed and approved the PR on 2026-09-04. The recommendations
+below are retained as the reviewed scope; approval does not expand the probe into
+a product validator or authorize starting the next Roadmap item automatically.
 
 1. **Accept this bounded confirmation?** Recommend yes: the required native/
    browser feasibility, exact wire/hash parity, typed modeling and explicit host
