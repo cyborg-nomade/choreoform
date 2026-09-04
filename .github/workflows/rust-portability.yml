@@ -1,0 +1,39 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+name: Rust portability probe
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  native-and-wasm-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Install exact Rust toolchain
+        run: rustup toolchain install 1.98.1 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Format, native tests and compile-fail tests
+        run: |
+          cargo fmt --all -- --check
+          cargo test --workspace --locked
+      - name: Lint both targets and compile browser core
+        run: |
+          cargo clippy --workspace --all-targets --locked -- -D warnings
+          cargo clippy -p choreoform-portability --lib --target wasm32-unknown-unknown --locked -- -D warnings
+          cargo build -p choreoform-portability --lib --release --target wasm32-unknown-unknown --locked
+      - name: Native report and independent wire oracle
+        run: |
+          cargo run -p choreoform-portability --locked -- suite target/native.json
+          python3 -m venv .tools/ir-check
+          .tools/ir-check/bin/pip install --require-hashes --only-binary=:all: -r tools/portability/requirements.txt
+          .tools/ir-check/bin/python tools/check_ir_fixtures.py
+          .tools/ir-check/bin/python tools/portability/check_report.py target/native.json
+      # Browser execution is a separate manual evidence step, not implied by CI.

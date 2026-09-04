@@ -65,10 +65,14 @@ validated, and round-tripped.
 - [x] Select Rust for the initial shared semantic implementation in
   [ADR-0010](docs/decisions/0010-initial-implementation-language.md), based on
   parser, language-server, graph-modeling, runtime, and deployment requirements.
-- [ ] Complete ADR-0010's bounded native/browser confirmation in a separate PR
+- [x] Complete ADR-0010's bounded native/browser confirmation in a separate PR
   before substantial parser work: strict IR admission and canonical revisions,
   typed variants/references, native/Wasm parity, explicit host boundaries, and
   repeatable builds with a pinned stable toolchain and locked dependencies.
+  [Probe and evidence](docs/evaluation/0010-rust-portability.md) approved by the
+  Project Owner on 2026-09-04, effective upon merge of
+  [PR #13](https://github.com/cyborg-nomade/choreoform/pull/13).
+  Complete structural/semantic validation and ADR-0009's conditional gates remain open.
 - [ ] Design an initial textual grammar and parser.
 - [ ] Design an initial visual notation and serialization of layout metadata.
 - [ ] Define names, types, scopes, imports, parameters, and composition.

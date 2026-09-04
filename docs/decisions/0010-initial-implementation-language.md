@@ -169,6 +169,18 @@ This probe is not the parser, Studio, production validator, or engine. Parser
 recovery, source/trivia preservation, LSP behavior, full processes, and execution
 remain separately reviewed deliverables. Nothing here closes G1–G4 from ADR-0009.
 
+### Confirmation result
+
+The Project Owner approved the [bounded evidence](../evaluation/0010-rust-portability.md)
+on 2026-09-04, effective upon merge of
+[PR #13](https://github.com/cyborg-nomade/choreoform/pull/13). The probe reproduces
+the three frozen revisions, passes 89 shared native/browser cases and six
+JavaScript/Wasm byte-boundary checks, and records typed reference/variant and
+host-boundary evidence. This satisfies the bounded confirmation requirement,
+not complete structural/semantic validation, universal target support or
+ADR-0009's conditional conformance gates. Subsequent Roadmap work remains a
+separate deliverable.
+
 ## Review decisions
 
 The Project Owner reviewed and approved the ADR and PR on 2026-09-04, explicitly
@@ -204,12 +216,15 @@ comparison to its source. In particular:
 
 The Project Owner approved this decision on 2026-09-04; merge of PR #12 makes it
 effective.
-No product tooling, parser, or runtime implementation is added by this PR.
+No product tooling, parser, or runtime implementation was added by the
+language-decision PR #12; the bounded probe is delivered separately in PR #13.
 
 1. [x] Confirm the requirements-led Rust choice and resolve review questions;
    detailed deployment constraints remain future work.
 2. [x] Obtain approval, record Accepted status and update the ADR index/Roadmap.
-3. [ ] Complete the bounded confirmation in a separately reviewed implementation PR.
+3. [x] Complete the bounded confirmation in the separately reviewed
+   [PR #13](https://github.com/cyborg-nomade/choreoform/pull/13), approved on
+   2026-09-04 and effective upon merge.
 4. [ ] Record any failed assumption and obtain owner direction before expanding work.
 5. [ ] Select grammar/parser approach and implement the next deliverable only
    after the language decision and required confirmation are settled.
