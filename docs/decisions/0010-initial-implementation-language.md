@@ -3,9 +3,11 @@
 
 # ADR-0010: Use Rust for the initial shared semantic implementation
 
-**Status:** Proposed<br>
+**Status:** Accepted<br>
 **Date:** 2026-09-04<br>
-**Decider:** Project Owner
+**Decider:** Project Owner<br>
+**Approval:** Project Owner approved the ADR and selected Rust on 2026-09-04;
+effective upon merge of [PR #12](https://github.com/cyborg-nomade/choreoform/pull/12).
 
 ## Context
 
@@ -47,7 +49,7 @@ runtime substitutes for Choreoform's operational semantics or conformance tests.
 
 ## Decision
 
-Propose **Rust, using a pinned stable toolchain and Cargo**, for the first shared
+Use **Rust, using a pinned stable toolchain and Cargo**, for the first shared
 semantic implementation: IR loading/linking/validation, parser and normalization
 logic, native CLI, language-service backend, and the initial reference interpreter.
 This selects an implementation direction, not grammar, expression semantics,
@@ -55,7 +57,7 @@ an async runtime, a parser generator, or a production deployment architecture.
 
 Maintain one semantic implementation behind explicit host boundaries:
 
-| Component | Proposed responsibility and boundary |
+| Component | Responsibility and boundary |
 | --- | --- |
 | Portable Rust core | Typed IDs and graph records, strict transport/admission, pure analysis and transformations; no hidden host I/O or scheduling semantics |
 | Native Rust adapters/tools | CLI and LSP transport; later capability, time, persistence and execution adapters supply explicit inputs and consume explicit effects |
@@ -102,7 +104,7 @@ are project judgments supported by the linked evidence, not speed or cost scores
 
 | Option | Advantages for Choreoform | Costs and risks | Recommendation |
 | --- | --- | --- | --- |
-| **Rust shared core** | Closed variants and exhaustive matching; ownership makes mutation boundaries explicit; native and Wasm targets can reuse core code | Ownership-oriented graph design and contributor learning; parser/LSP components need assembly; browser bindings and dependency compatibility need proof | Propose for the initial core and native tools |
+| **Rust shared core** | Closed variants and exhaustive matching; ownership makes mutation boundaries explicit; native and Wasm targets can reuse core code | Ownership-oriented graph design and contributor learning; parser/LSP components need assembly; browser bindings and dependency compatibility need proof | Adopt for the initial core and native tools |
 | **TypeScript core with Node.js tooling** | Discriminated unions; direct JS/browser reuse; concrete integrated language-tooling and LSP options | Static types are erased; strict checking and runtime admission discipline are essential; host APIs and long synchronous analysis require care; distribution includes a JS runtime strategy | Strongest alternative if editor-first delivery dominates |
 | **Go core** | Native tooling and explicit service/adaptor code; structs/interfaces, concurrency facilities, parser libraries and Wasm targets | Closed variants/exhaustiveness need conventions or extra checks; browser integration and rich language tooling still need assembly | Prefer if native service operations are the dominant constraint |
 | **Kotlin/JVM core** | Sealed state hierarchies and Java tooling interoperability; credible JVM interpreter and language-service route | JVM-oriented dependencies do not directly carry into a browser; runtime packaging and a possible multiplatform split add decisions | Prefer if JVM deployment is required |
@@ -167,15 +169,22 @@ This probe is not the parser, Studio, production validator, or engine. Parser
 recovery, source/trivia preservation, LSP behavior, full processes, and execution
 remain separately reviewed deliverables. Nothing here closes G1–G4 from ADR-0009.
 
-## Review questions
+## Review decisions
 
-1. Does Rust's shared-core benefit justify the ownership and integration costs,
-   or should integrated editor/browser tooling take priority?
-2. Accept the scope as core/native tooling/initial interpreter, leaving Studio,
-   adapters, parser framework and runtime infrastructure to later decisions?
-3. Accept the bounded native/browser confirmation before broad parser work, or
-   is browser-local execution sufficiently unlikely to defer that probe? Deferral
-   would weaken the portability evidence and must be recorded, not called a pass.
+The Project Owner reviewed and approved the ADR and PR on 2026-09-04, explicitly
+selecting Rust. The approved decision is:
+
+1. Adopt Rust on project requirements, accepting the ownership and integration
+   costs for the shared-core direction. Personal familiarity remains excluded.
+2. Retain the core/native tooling/initial interpreter scope. Studio presentation,
+   adapter implementations, parser framework, runtime infrastructure and specific
+   deployment targets remain separate decisions.
+3. Retain the bounded native/browser confirmation before broad parser work;
+   browser evidence is not deferred. It must be produced in a separately reviewed
+   implementation PR. Approval is not a claim that this probe has passed.
+
+Minimum hardware and performance budgets remain unestablished. The approval
+does not invent these constraints or close any existing conformance gate.
 
 ## Sources
 
@@ -193,11 +202,13 @@ comparison to its source. In particular:
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved this decision on 2026-09-04; merge of PR #12 makes it
+effective.
 No product tooling, parser, or runtime implementation is added by this PR.
 
-1. [ ] Confirm project priorities/deployment constraints and resolve review questions.
-2. [ ] Obtain approval, record Accepted status and update the ADR index/Roadmap.
+1. [x] Confirm the requirements-led Rust choice and resolve review questions;
+   detailed deployment constraints remain future work.
+2. [x] Obtain approval, record Accepted status and update the ADR index/Roadmap.
 3. [ ] Complete the bounded confirmation in a separately reviewed implementation PR.
 4. [ ] Record any failed assumption and obtain owner direction before expanding work.
 5. [ ] Select grammar/parser approach and implement the next deliverable only

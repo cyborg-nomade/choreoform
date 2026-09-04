@@ -26,7 +26,8 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 - [ADR-0010 implementation language](0010-implementation-language.md) —
   requirements-led desk research, not a semantic/notation scorecard or a
-  comparative implementation benchmark; owner review pending.
+  comparative implementation benchmark; Rust accepted, implementation evidence
+  still pending.
 
 ## What the framework answers
 

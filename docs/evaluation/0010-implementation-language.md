@@ -6,7 +6,7 @@
 **Status:** Desk research complete; implementation evidence pending<br>
 **Plan frozen:** 2026-09-04<br>
 **Repository baseline:** `9ad094264a10a636ed90a866b061560102518959`<br>
-**Evaluator:** Proposal author; Project Owner approval pending
+**Evaluator:** Proposal author; Project Owner approved the decision on 2026-09-04
 
 ## Question and method
 
@@ -183,3 +183,17 @@ No candidate compiler, parser, Wasm program, language server, or interpreter was
 installed or executed for this desk comparison. The existing Python fixture
 suite is run only as a regression check for the documentation PR. These limits
 prevent this recommendation from upgrading ADR-0009's conformance status.
+
+## Owner decision and follow-through
+
+On 2026-09-04 the Project Owner reviewed and approved ADR-0010 and PR #12,
+explicitly selecting Rust. The requirements-led recommendation and its scoped
+native/core/interpreter boundary are accepted; personal familiarity is not a
+selection factor. The bounded native/browser confirmation remains required
+before substantial parser work and must be reviewed in its own implementation PR.
+
+The desk-research record above is retained as the evidence available at decision
+time. Approval supplies no new compiler, parser, browser, performance, or engine
+results. The implementation author must produce the listed confirmation checks;
+the Project Owner reviews their closure. No ADR-0009 gate or scenario status is
+upgraded by accepting the implementation language.

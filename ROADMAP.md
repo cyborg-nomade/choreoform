@@ -62,11 +62,13 @@ validated, and round-tripped.
 - [ ] Complete the executable IR contract with accepted type, expression, and
   policy dialects, semantic validation, and complete benchmark evidence;
   structural approval does not close the conditional gates or Phase 1 exit.
-- [ ] Select the initial implementation language in a dedicated ADR/PR before
-  parser implementation, considering parser, language-server, graph-modeling,
-  runtime, and deployment requirements; Rust is proposed in
-  [ADR-0010](docs/decisions/0010-initial-implementation-language.md), pending
-  Project Owner review.
+- [x] Select Rust for the initial shared semantic implementation in
+  [ADR-0010](docs/decisions/0010-initial-implementation-language.md), based on
+  parser, language-server, graph-modeling, runtime, and deployment requirements.
+- [ ] Complete ADR-0010's bounded native/browser confirmation in a separate PR
+  before substantial parser work: strict IR admission and canonical revisions,
+  typed variants/references, native/Wasm parity, explicit host boundaries, and
+  repeatable builds with a pinned stable toolchain and locked dependencies.
 - [ ] Design an initial textual grammar and parser.
 - [ ] Design an initial visual notation and serialization of layout metadata.
 - [ ] Define names, types, scopes, imports, parameters, and composition.
@@ -239,8 +241,8 @@ expensive to reverse:
 
 1. Reserve the required Choreoform package namespaces, domains, and public
    handles once their target ecosystems are selected.
-2. Select the initial implementation language based on parser, language-server,
-   graph-modeling, runtime, and deployment requirements.
+2. Confirm Rust's native/browser implementation boundary through ADR-0010's
+   bounded probe before substantial parser work; the language choice is accepted.
 3. Complete the executable contracts building on the structural canonical-model
    strategy and versioning rules accepted in ADR-0009.
 4. Select three representative processes for the first vertical slice.
