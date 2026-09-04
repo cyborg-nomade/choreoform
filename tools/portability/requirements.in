@@ -1,0 +1,5 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+# Shared oracle dependencies; regenerate the hash lock as documented in README.md.
+jsonschema==4.25.1
+rfc8785==0.1.4

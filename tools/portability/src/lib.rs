@@ -33,6 +33,10 @@ const ARTIFACTS: [&[u8]; 2] = [
     ),
 ];
 
+// zip truncates to the shorter input; a missing artifact must fail the build.
+const _: () = assert!(SUPPORTED_CONTRACTS.len() == ARTIFACTS.len());
+
+/// Pair every supported contract with its explicitly embedded test artifact.
 pub fn resources() -> Vec<Resource<'static>> {
     SUPPORTED_CONTRACTS
         .into_iter()

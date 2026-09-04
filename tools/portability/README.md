@@ -11,22 +11,25 @@ See the [evidence and limits](../../docs/evaluation/0010-rust-portability.md).
 
 ## Reproduce
 
-Prerequisites: [rustup](https://rust-lang.org/tools/install/), Python 3.11+,
-and `uv` for the independent Python scripts. Cargo reads the committed exact
+Prerequisites: [rustup](https://rust-lang.org/tools/install/) and Python 3.11+
+with `venv`/`pip` for the independent Python scripts. Cargo reads the committed exact
 toolchain from `rust-toolchain.toml`; dependencies are in `Cargo.lock`.
 The browser glue generator must exactly match the pinned crate version:
 
 ```sh
 cargo install wasm-bindgen-cli --version 0.2.127 --locked
 sh tools/portability/prepare.sh
-uv run tools/check_ir_fixtures.py
-uv run tools/portability/check_report.py
+python3 -m venv .tools/ir-check
+.tools/ir-check/bin/python -m pip install --require-hashes --only-binary=:all: -r tools/portability/requirements.txt
+.tools/ir-check/bin/python tools/check_ir_fixtures.py
+.tools/ir-check/bin/python tools/portability/check_report.py
 python3 -m http.server 8765 --bind 127.0.0.1 --directory tools/portability
 ```
 
 All commands start at the repository root. Installation and the first dependency
-fetch need network access. With dependencies cached, set `CARGO_NET_OFFLINE=true`
-and pass `--offline` to `uv run`. The optional local installation used for the
+fetch need network access. After the Python environment is installed, its checks
+run without network access; set `CARGO_NET_OFFLINE=true` for cached Rust builds.
+The optional local installation used for the
 recorded run is ignored under `.tools/`; `prepare.sh` selects it automatically.
 For individual Cargo commands with that installation:
 
@@ -35,6 +38,25 @@ export CARGO_HOME="$PWD/.tools/cargo"
 export RUSTUP_HOME="$PWD/.tools/rustup"
 export PATH="$CARGO_HOME/bin:$PATH"
 ```
+
+CI and the commands above use the same committed Python lock: `requirements.txt`
+pins the two direct dependencies and all transitive dependencies, with hashes
+for published artifacts and Python-version markers where needed. Pip must use
+`--require-hashes`; `--only-binary=:all:` avoids unpinned source-build dependencies
+and fails if no permitted wheel is available. Hashes establish artifact integrity,
+not that a package is safe. The script-level metadata remains a convenience for
+standalone `uv run` use, not the locked evidence-reproduction path.
+
+To intentionally refresh the lock, use `uv` (recorded generator: 0.11.14):
+
+```sh
+uv pip compile tools/portability/requirements.in --generate-hashes --universal --python-version 3.11 --index-url https://pypi.org/simple --no-emit-index-url --output-file tools/portability/requirements.txt
+```
+
+Review every version/hash change and rerun both Python checks in a fresh virtual
+environment before committing. Keep the direct pins synchronized with the two
+scripts' inline dependency metadata. `requirements.txt.license` supplies the
+generated lock's SPDX notice without modifying generator output.
 
 Open `http://127.0.0.1:8765/` in an actual browser, then click **Run browser
 parity checks**. The page must report PASS, exact report parity, repeated-run
@@ -65,7 +87,8 @@ the corresponding source, license and attribution notices plus dependency notice
   uses the test adapter's two pinned contracts. Rust memory layout is not an ABI.
 - `src/main.rs`: native test adapter. `suite [path]` writes the report and exits
   unsuccessfully on failed expectations. `inspect` reads bounded standard input,
-  returns canonical semantic bytes without a newline on success, and writes a
+  returns canonical semantic bytes without a newline, explicitly flushes stdout
+  before success (propagating write/flush failures), and writes a
   probe error category to stderr with nonzero exit status on failure.
 - `browser.mjs`: loads only local test artifacts, audits imports, calls the same
   Wasm core, checks the complete report twice and tests six JS/Wasm byte transfers.

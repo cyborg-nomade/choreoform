@@ -45,7 +45,7 @@ Use the [reproduction guide](../../tools/portability/README.md) and the exact
 toolchain/lock in this PR. No existing fixture, contract snapshot, schema or
 accepted ADR was changed. No parser or interpreter was started.
 
-## Verification record — 2026-09-04
+## Verification record — 2026-09-04 (including review fixes)
 
 | Check | Observed result |
 | --- | --- |
@@ -56,7 +56,7 @@ accepted ADR was changed. No parser or interpreter was started.
 | Independent Python oracle | 15 JCS/SHA-256 comparisons, all three unchanged fixtures, all ten kinds, policy/access/array/map invariants |
 | Native CLI checks | Three exact canonical stdout results and four failure/exit-code cases |
 | Original Python checker | All 14 test groups pass |
-| Rust unit tests | Four pass: shared corpus plus integer, generated string and arbitrary-byte tests |
+| Rust unit tests | Seven pass: shared corpus, three decoder tests and three CLI output/write/flush tests |
 | Compile-fail doctests | Three pass: node/data distinction, node/occurrence distinction, missing enum arms |
 | Formatting and Clippy | Pass on native and Wasm code, warnings treated as errors |
 | Wasm release build and bindings | Pass with the pinned toolchain and CLI |
@@ -105,7 +105,8 @@ Observed SHA-256 values (without the IR `sha256:` prefix):
 | Artifact | Bytes | Digest |
 | --- | ---: | --- |
 | `Cargo.lock` | — | `fd3d27efb8927baeb5bf5160b30f2bcd09301c547dcc85cb817fa5eb9c74656d` |
-| Generated browser module | 594772 | `319d8ef2448e324a079de45e2a8d770a51b59f0188b599415fedbf6bc375e05d` |
+| Python `requirements.txt` | — | `7585dfe55627ac2a68848a8357a3840dfd287b5e631d3a83fde66c7c0b904c75` |
+| Generated browser module | 594772 | `ad42cd379f4418bbcb9a2427d213c061324cf222940628de24cfc7b311d88efc` |
 | Native report | 132877 | `0a7f12f49ebda3ef66effcd54a26e5a9e942d0e72583b6abe50ab4ce6044755c` |
 | Browser report | 132877 | `0a7f12f49ebda3ef66effcd54a26e5a9e942d0e72583b6abe50ab4ce6044755c` |
 
@@ -117,6 +118,47 @@ The compiler, linker, build scripts, environment and binding generator remain
 part of the build trust boundary. No supported-platform or latency budget is
 inferred from this one browser run. Safari, Firefox, Windows and other CPU
 architectures have not been tested by this local evidence record.
+
+### PR #13 review follow-up
+
+All three unresolved inline findings at the start of this pass were independently
+checked and accepted:
+
+- [Python dependency integrity](https://github.com/cyborg-nomade/choreoform/pull/13#discussion_r3935333435):
+  the original CI pinned only direct versions. CI and the documented local
+  reproduction path now install the same complete hash lock with pip
+  `--require-hashes --only-binary=:all:`. Direct versions remain unchanged.
+  The lock includes `attrs 26.1.0`, `jsonschema 4.25.1`,
+  `jsonschema-specifications 2025.9.1`, `referencing 0.37.0`, `rfc8785 0.1.4`,
+  `rpds-py 2026.6.3`, and `typing-extensions 4.16.0` on Python <3.13.
+  A fresh Python 3.14.6/pip 26.1.2 environment installed the applicable wheels
+  with enforced hashes; `pip check`, both Python checks, and CLI checks passed.
+  Package hashes do not replace source review, interpreter trust or a security audit.
+- [Contract/artifact lengths](https://github.com/cyborg-nomade/choreoform/pull/13#discussion_r3935333446):
+  the current two-element arrays agree, but `zip` would silently truncate a
+  future mismatch. A compile-time assertion now rejects different lengths.
+  The original zipped construction and content-digest checks remain intact.
+- [Output flush failures](https://github.com/cyborg-nomade/choreoform/pull/13#discussion_r3935333463):
+  successful writes to buffered stdout do not establish successful flushing.
+  The CLI now locks stdout, writes the exact canonical bytes and explicitly
+  flushes before returning success. Fault-injection tests cover short writes,
+  write failure and a flush failure after successful writes; errors propagate
+  through the existing nonzero-exit path.
+
+The separate CodeRabbit 80% docstring-coverage warning is not adopted as a blanket
+merge gate: no repository policy establishes that percentage, and the warning
+does not identify a specific missing behavioral contract. This is not a claim
+that documentation is complete. The resource constructor and output helper have
+purpose-specific documentation, and the guide now distinguishes locked evidence
+reproduction from convenience inline-script dependency resolution. No bot or
+repository configuration was changed to suppress the warning.
+
+The complete native/Wasm checks and actual browser run were repeated after these
+changes. All 89 reports, six byte-boundary checks and the import allowlist still
+pass. The report hash is unchanged; the rebuilt module's updated hash appears
+above (the original `ffa1027` module hash was
+`319d8ef2448e324a079de45e2a8d770a51b59f0188b599415fedbf6bc375e05d`).
+The scope and all previously documented validation gaps remain unchanged.
 
 ## Implementation boundary and known omissions
 
