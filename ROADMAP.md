@@ -73,7 +73,9 @@ validated, and round-tripped.
   Project Owner on 2026-09-04, effective upon merge of
   [PR #13](https://github.com/cyborg-nomade/choreoform/pull/13).
   Complete structural/semantic validation and ADR-0009's conditional gates remain open.
-- [ ] Design an initial textual grammar and parser.
+- [ ] Design an initial textual grammar and parser. Proposed in
+  [ADR-0011](docs/decisions/0011-initial-textual-grammar.md), with a bounded
+  [syntax and parser prototype](docs/text/README.md); awaiting owner review.
 - [ ] Design an initial visual notation and serialization of layout metadata.
 - [ ] Define names, types, scopes, imports, parameters, and composition.
 - [ ] Implement validation and stable diagnostics.

@@ -1,0 +1,396 @@
+// SPDX-FileCopyrightText: 2026 Choreoform contributors
+// SPDX-License-Identifier: MPL-2.0
+// Benchmark excerpt only; illustrative contracts are not executable.
+choreoform "0.1.0";
+id = "urn:choreoform:example:incident-excerpt";
+semantics = {
+  "id": "urn:choreoform:semantics:adr-0008",
+  "revision": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+};
+dialects = {
+  "illustrative": {
+    "id": "urn:choreoform:examples:illustrative-dialect",
+    "revision": "sha256:282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9"
+  }
+};
+root = "root";
+annotations = {
+  "case": "RP-08",
+  "evidence": "Non-executable benchmark excerpt; see docs/ir/examples.md",
+  "license": "SPDX-FileCopyrightText: 2026 Choreoform contributors; SPDX-License-Identifier: MPL-2.0"
+};
+
+scopes {
+  response_scope = {
+  "cancellation": "p_cancel",
+  "closure": "p_closure",
+  "entry": "authorize_action",
+  "faults": "p_faults",
+  "inputs": {
+    "item": "asset_item"
+  },
+  "outcomes": {
+    "checked": true
+  },
+  "outputs": {},
+  "parent": "root",
+  "race": "p_race"
+};
+  root = {
+  "cancellation": "p_cancel",
+  "closure": "p_closure",
+  "entry": "assets_fanout",
+  "faults": "p_faults",
+  "inputs": {
+    "assets": "assets"
+  },
+  "outcomes": {
+    "closed": true
+  },
+  "outputs": {},
+  "parent": null,
+  "race": "p_race"
+};
+}
+
+data {
+  asset_item = {
+  "invalidates": {
+    "authorize_action": true
+  },
+  "protection": {
+    "capabilities": {
+      "isolation": true
+    },
+    "participants": {
+      "operator": true
+    },
+    "policy": "p_protection",
+    "purposes": {
+      "process-operation": true
+    },
+    "sensitivity": "restricted"
+  },
+  "scope": "response_scope",
+  "type": {
+    "body": {
+      "name": "Asset"
+    },
+    "dialect": "illustrative"
+  }
+};
+  assets = {
+  "invalidates": {},
+  "protection": {
+    "capabilities": {
+      "isolation": true
+    },
+    "participants": {
+      "operator": true
+    },
+    "policy": "p_protection",
+    "purposes": {
+      "process-operation": true
+    },
+    "sensitivity": "restricted"
+  },
+  "scope": "root",
+  "type": {
+    "body": {
+      "name": "AssetCollection"
+    },
+    "dialect": "illustrative"
+  }
+};
+}
+
+expressions {
+  asset_input = {
+  "body": {
+    "data": "asset_item",
+    "form": "read"
+  },
+  "dialect": "illustrative",
+  "parameters": {},
+  "reads": {
+    "asset_item": true
+  },
+  "resultType": {
+    "body": {
+      "name": "Asset"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "response_scope"
+};
+  assets_input = {
+  "body": {
+    "data": "assets",
+    "form": "read"
+  },
+  "dialect": "illustrative",
+  "parameters": {},
+  "reads": {
+    "assets": true
+  },
+  "resultType": {
+    "body": {
+      "name": "AssetCollection"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+  item_key = {
+  "body": {
+    "form": "symbol",
+    "name": "stable-asset-key"
+  },
+  "dialect": "illustrative",
+  "parameters": {
+    "item": {
+      "body": {
+        "name": "Asset"
+      },
+      "dialect": "illustrative"
+    }
+  },
+  "reads": {},
+  "resultType": {
+    "body": {
+      "name": "StableKey"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+  scope_sealed = {
+  "body": {
+    "form": "symbol",
+    "name": "authorized-scope-seal"
+  },
+  "dialect": "illustrative",
+  "parameters": {},
+  "reads": {
+    "assets": true
+  },
+  "resultType": {
+    "body": {
+      "name": "Boolean"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+}
+
+actors {
+  operator = {
+  "requirement": "p_authority",
+  "scope": "root"
+};
+}
+
+capabilities {
+  isolation = {
+  "authority": "operator",
+  "contract": "p_effect",
+  "effects": "p_effect",
+  "input": {
+    "body": {
+      "name": "Asset"
+    },
+    "dialect": "illustrative"
+  },
+  "output": {
+    "body": {
+      "name": "IsolationResult"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+}
+
+policies {
+  p_authority = {
+  "body": {
+    "case": "RP-08",
+    "rule": "authority-at-acceptance"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_cancel = {
+  "body": {
+    "case": "RP-08",
+    "rule": "withdrawal-policy"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_changes = {
+  "body": {
+    "case": "RP-08",
+    "rule": "keyed-add-retain-settle"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_closure = {
+  "body": {
+    "case": "RP-08",
+    "rule": "ordinary-closure-reconcile"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_effect = {
+  "body": {
+    "case": "RP-08",
+    "rule": "reconcile-effects"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_faults = {
+  "body": {
+    "case": "RP-08",
+    "rule": "settle-remaining-work"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_protection = {
+  "body": {
+    "case": "RP-08",
+    "rule": "purpose-limited-access"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_race = {
+  "body": {
+    "case": "RP-08",
+    "rule": "explicit-consequential-race"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_work = {
+  "body": {
+    "case": "RP-08",
+    "rule": "revision-bound-work"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+}
+
+nodes {
+  asset_done = {
+  "kind": "finish",
+  "outcome": "checked",
+  "outcomes": {},
+  "reads": {},
+  "scope": "response_scope",
+  "writes": {}
+};
+  assets_fanout = {
+  "body": "response_scope",
+  "changes": "p_changes",
+  "collection": "assets_input",
+  "item": "asset_item",
+  "itemKey": "item_key",
+  "join": "assets_join",
+  "kind": "fanout",
+  "outcomes": {},
+  "reads": {
+    "assets": true
+  },
+  "scope": "root",
+  "seal": "scope_sealed",
+  "writes": {}
+};
+  assets_join = {
+  "kind": "join",
+  "outcomes": {
+    "settled": true
+  },
+  "predicate": {
+    "op": "all",
+    "outcomes": {
+      "checked": true
+    }
+  },
+  "reads": {},
+  "remaining": "p_faults",
+  "scope": "root",
+  "source": "assets_fanout",
+  "writes": {}
+};
+  authorize_action = {
+  "input": "asset_input",
+  "kind": "activity",
+  "mode": "human",
+  "outcomes": {
+    "approved": true,
+    "not_required": true
+  },
+  "policy": "p_work",
+  "reads": {
+    "asset_item": true
+  },
+  "result": null,
+  "scope": "response_scope",
+  "target": "operator",
+  "writes": {}
+};
+  closed = {
+  "kind": "finish",
+  "outcome": "closed",
+  "outcomes": {},
+  "reads": {},
+  "scope": "root",
+  "writes": {}
+};
+  isolate = {
+  "input": "asset_input",
+  "kind": "activity",
+  "mode": "capability",
+  "outcomes": {
+    "confirmed": true
+  },
+  "policy": "p_work",
+  "reads": {
+    "asset_item": true
+  },
+  "result": null,
+  "scope": "response_scope",
+  "target": "isolation",
+  "writes": {}
+};
+}
+
+flows {
+  action_approved = {
+  "outcome": "approved",
+  "source": "authorize_action",
+  "target": "isolate"
+};
+  action_omitted = {
+  "outcome": "not_required",
+  "source": "authorize_action",
+  "target": "asset_done"
+};
+  all_assets_settled = {
+  "outcome": "settled",
+  "source": "assets_join",
+  "target": "closed"
+};
+  isolated = {
+  "outcome": "confirmed",
+  "source": "isolate",
+  "target": "asset_done"
+};
+}

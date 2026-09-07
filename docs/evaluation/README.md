@@ -16,6 +16,8 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## Completed evaluations
 
+- [ADR-0011 initial textual grammar](0011-textual-grammar.md) — bounded parser
+  evidence and explicit authoring/visual limitations; proposal awaiting review.
 - [ADR-0009 canonical IR](0009-canonical-ir.md) — structural wire evidence,
   three non-executable benchmark excerpts, and explicit conditional gates.
 - [ADR-0008 core process semantic model](0008-core-process-semantics.md) — a
@@ -26,8 +28,8 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 - [ADR-0010 implementation language](0010-implementation-language.md) —
   requirements-led desk research, not a semantic/notation scorecard or a
-  comparative implementation benchmark; Rust accepted, implementation evidence
-  still pending.
+  comparative implementation benchmark; Rust accepted, with the bounded
+  [native/browser confirmation](0010-rust-portability.md) accepted in PR #13.
 
 ## What the framework answers
 

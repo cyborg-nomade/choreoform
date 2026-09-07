@@ -73,6 +73,12 @@ strict wire checks, canonical revisions and portability evidence accepted in
 confirmation before substantial parser work. It is not a production validator or interpreter;
 the [evidence record](docs/evaluation/0010-rust-portability.md) lists its limits.
 
+The [initial textual grammar and parser](docs/text/README.md) are proposed in
+[ADR-0011](docs/decisions/0011-initial-textual-grammar.md). The prototype lowers
+explicit declarations to unvalidated IR and retains source spans; its three
+excerpts preserve the existing IR revisions. It is not final authoring syntax,
+a semantic validator, or a text/visual editor.
+
 ## Name
 
 “Choreoform” combines *choreo-*—the arrangement of coordinated activity—with

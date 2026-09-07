@@ -1,0 +1,291 @@
+// SPDX-FileCopyrightText: 2026 Choreoform contributors
+// SPDX-License-Identifier: MPL-2.0
+// Benchmark excerpt only; illustrative contracts are not executable.
+choreoform "0.1.0";
+id = "urn:choreoform:example:reimbursement-excerpt";
+semantics = {
+  "id": "urn:choreoform:semantics:adr-0008",
+  "revision": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+};
+dialects = {
+  "illustrative": {
+    "id": "urn:choreoform:examples:illustrative-dialect",
+    "revision": "sha256:282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9"
+  }
+};
+root = "root";
+annotations = {
+  "case": "RP-01",
+  "evidence": "Non-executable benchmark excerpt; see docs/ir/examples.md",
+  "license": "SPDX-FileCopyrightText: 2026 Choreoform contributors; SPDX-License-Identifier: MPL-2.0"
+};
+
+scopes {
+  root = {
+  "cancellation": "p_cancel",
+  "closure": "p_closure",
+  "entry": "review",
+  "faults": "p_faults",
+  "inputs": {
+    "expense": "expense"
+  },
+  "outcomes": {
+    "paid": true,
+    "rejected": true
+  },
+  "outputs": {},
+  "parent": null,
+  "race": "p_race"
+};
+}
+
+data {
+  expense = {
+  "invalidates": {
+    "review": true
+  },
+  "protection": {
+    "capabilities": {
+      "payable": true
+    },
+    "participants": {
+      "operator": true
+    },
+    "policy": "p_protection",
+    "purposes": {
+      "process-operation": true
+    },
+    "sensitivity": "restricted"
+  },
+  "scope": "root",
+  "type": {
+    "body": {
+      "name": "Expense"
+    },
+    "dialect": "illustrative"
+  }
+};
+}
+
+expressions {
+  expense_input = {
+  "body": {
+    "data": "expense",
+    "form": "read"
+  },
+  "dialect": "illustrative",
+  "parameters": {},
+  "reads": {
+    "expense": true
+  },
+  "resultType": {
+    "body": {
+      "name": "Expense"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+}
+
+actors {
+  operator = {
+  "requirement": "p_authority",
+  "scope": "root"
+};
+}
+
+capabilities {
+  payable = {
+  "authority": "operator",
+  "contract": "p_pay",
+  "effects": "p_effect",
+  "input": {
+    "body": {
+      "name": "Expense"
+    },
+    "dialect": "illustrative"
+  },
+  "output": {
+    "body": {
+      "name": "PaymentResult"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+}
+
+policies {
+  p_authority = {
+  "body": {
+    "case": "RP-01",
+    "rule": "authority-at-acceptance"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_cancel = {
+  "body": {
+    "case": "RP-01",
+    "rule": "withdrawal-policy"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_closure = {
+  "body": {
+    "case": "RP-01",
+    "rule": "ordinary-closure-reconcile"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_effect = {
+  "body": {
+    "case": "RP-01",
+    "rule": "reconcile-effects"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_faults = {
+  "body": {
+    "case": "RP-01",
+    "rule": "settle-remaining-work"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_pay = {
+  "body": {
+    "case": "RP-01",
+    "rule": "approved-revision-payment"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_protection = {
+  "body": {
+    "case": "RP-01",
+    "rule": "purpose-limited-access"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_race = {
+  "body": {
+    "case": "RP-01",
+    "rule": "explicit-consequential-race"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_reconcile = {
+  "body": {
+    "case": "RP-01",
+    "rule": "reconcile-existing-payment"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_work = {
+  "body": {
+    "case": "RP-01",
+    "rule": "revision-bound-work"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+}
+
+nodes {
+  paid = {
+  "kind": "finish",
+  "outcome": "paid",
+  "outcomes": {},
+  "reads": {},
+  "scope": "root",
+  "writes": {}
+};
+  pay = {
+  "input": "expense_input",
+  "kind": "activity",
+  "mode": "capability",
+  "outcomes": {
+    "confirmed": true,
+    "unknown": true
+  },
+  "policy": "p_work",
+  "reads": {
+    "expense": true
+  },
+  "result": null,
+  "scope": "root",
+  "target": "payable",
+  "writes": {}
+};
+  reconcile = {
+  "kind": "wait",
+  "outcomes": {
+    "confirmed": true
+  },
+  "policy": "p_reconcile",
+  "reads": {},
+  "scope": "root",
+  "writes": {}
+};
+  rejected = {
+  "kind": "finish",
+  "outcome": "rejected",
+  "outcomes": {},
+  "reads": {},
+  "scope": "root",
+  "writes": {}
+};
+  review = {
+  "input": "expense_input",
+  "kind": "activity",
+  "mode": "human",
+  "outcomes": {
+    "approved": true,
+    "rejected": true
+  },
+  "policy": "p_work",
+  "reads": {
+    "expense": true
+  },
+  "result": null,
+  "scope": "root",
+  "target": "operator",
+  "writes": {}
+};
+}
+
+flows {
+  late_confirmed = {
+  "outcome": "confirmed",
+  "source": "reconcile",
+  "target": "paid"
+};
+  pay_confirmed = {
+  "outcome": "confirmed",
+  "source": "pay",
+  "target": "paid"
+};
+  pay_unknown = {
+  "outcome": "unknown",
+  "source": "pay",
+  "target": "reconcile"
+};
+  review_approved = {
+  "outcome": "approved",
+  "source": "review",
+  "target": "pay"
+};
+  review_rejected = {
+  "outcome": "rejected",
+  "source": "review",
+  "target": "rejected"
+};
+}
