@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+[package]
+name = "choreoform-text-prototype"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+choreoform-ir-probe-core = { path = "../ir-probe-core" }
+serde_json.workspace = true
+
+[lints]
+workspace = true

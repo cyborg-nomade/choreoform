@@ -1,0 +1,332 @@
+// SPDX-FileCopyrightText: 2026 Choreoform contributors
+// SPDX-License-Identifier: MPL-2.0
+// Benchmark excerpt only; illustrative contracts are not executable.
+choreoform "0.1.0";
+id = "urn:choreoform:example:order-excerpt";
+semantics = {
+  "id": "urn:choreoform:semantics:adr-0008",
+  "revision": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+};
+dialects = {
+  "illustrative": {
+    "id": "urn:choreoform:examples:illustrative-dialect",
+    "revision": "sha256:282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9"
+  }
+};
+root = "root";
+annotations = {
+  "case": "RP-03",
+  "evidence": "Non-executable benchmark excerpt; see docs/ir/examples.md",
+  "license": "SPDX-FileCopyrightText: 2026 Choreoform contributors; SPDX-License-Identifier: MPL-2.0"
+};
+
+scopes {
+  inventory_scope = {
+  "cancellation": "p_cancel",
+  "closure": "p_closure",
+  "entry": "reserve",
+  "faults": "p_faults",
+  "inputs": {},
+  "outcomes": {
+    "success": true
+  },
+  "outputs": {},
+  "parent": "root",
+  "race": "p_race"
+};
+  payment_scope = {
+  "cancellation": "p_cancel",
+  "closure": "p_closure",
+  "entry": "authorize",
+  "faults": "p_faults",
+  "inputs": {},
+  "outcomes": {
+    "success": true
+  },
+  "outputs": {},
+  "parent": "root",
+  "race": "p_race"
+};
+  root = {
+  "cancellation": "p_cancel",
+  "closure": "p_closure",
+  "entry": "fork",
+  "faults": "p_faults",
+  "inputs": {
+    "order": "order"
+  },
+  "outcomes": {
+    "accepted": true
+  },
+  "outputs": {},
+  "parent": null,
+  "race": "p_race"
+};
+}
+
+data {
+  order = {
+  "invalidates": {},
+  "protection": {
+    "capabilities": {
+      "inventory": true,
+      "payment": true
+    },
+    "participants": {
+      "operator": true
+    },
+    "policy": "p_protection",
+    "purposes": {
+      "process-operation": true
+    },
+    "sensitivity": "restricted"
+  },
+  "scope": "root",
+  "type": {
+    "body": {
+      "name": "Order"
+    },
+    "dialect": "illustrative"
+  }
+};
+}
+
+expressions {
+  order_input = {
+  "body": {
+    "data": "order",
+    "form": "read"
+  },
+  "dialect": "illustrative",
+  "parameters": {},
+  "reads": {
+    "order": true
+  },
+  "resultType": {
+    "body": {
+      "name": "Order"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+}
+
+actors {
+  operator = {
+  "requirement": "p_authority",
+  "scope": "root"
+};
+}
+
+capabilities {
+  inventory = {
+  "authority": "operator",
+  "contract": "p_effect",
+  "effects": "p_effect",
+  "input": {
+    "body": {
+      "name": "Order"
+    },
+    "dialect": "illustrative"
+  },
+  "output": {
+    "body": {
+      "name": "Reservation"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+  payment = {
+  "authority": "operator",
+  "contract": "p_effect",
+  "effects": "p_effect",
+  "input": {
+    "body": {
+      "name": "Order"
+    },
+    "dialect": "illustrative"
+  },
+  "output": {
+    "body": {
+      "name": "Authorization"
+    },
+    "dialect": "illustrative"
+  },
+  "scope": "root"
+};
+}
+
+policies {
+  p_authority = {
+  "body": {
+    "case": "RP-03",
+    "rule": "authority-at-acceptance"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_cancel = {
+  "body": {
+    "case": "RP-03",
+    "rule": "withdrawal-policy"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_closure = {
+  "body": {
+    "case": "RP-03",
+    "rule": "ordinary-closure-reconcile"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_effect = {
+  "body": {
+    "case": "RP-03",
+    "rule": "reconcile-effects"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_faults = {
+  "body": {
+    "case": "RP-03",
+    "rule": "settle-remaining-work"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_protection = {
+  "body": {
+    "case": "RP-03",
+    "rule": "purpose-limited-access"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_race = {
+  "body": {
+    "case": "RP-03",
+    "rule": "explicit-consequential-race"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+  p_work = {
+  "body": {
+    "case": "RP-03",
+    "rule": "revision-bound-work"
+  },
+  "dialect": "illustrative",
+  "scope": "root"
+};
+}
+
+nodes {
+  acceptance_join = {
+  "kind": "join",
+  "outcomes": {
+    "accepted": true
+  },
+  "predicate": {
+    "op": "all",
+    "outcomes": {
+      "success": true
+    }
+  },
+  "reads": {},
+  "remaining": "p_faults",
+  "scope": "root",
+  "source": "fork",
+  "writes": {}
+};
+  accepted = {
+  "kind": "finish",
+  "outcome": "accepted",
+  "outcomes": {},
+  "reads": {},
+  "scope": "root",
+  "writes": {}
+};
+  authorize = {
+  "input": "order_input",
+  "kind": "activity",
+  "mode": "capability",
+  "outcomes": {
+    "confirmed": true
+  },
+  "policy": "p_work",
+  "reads": {
+    "order": true
+  },
+  "result": null,
+  "scope": "payment_scope",
+  "target": "payment",
+  "writes": {}
+};
+  fork = {
+  "children": {
+    "funds": "payment_scope",
+    "stock": "inventory_scope"
+  },
+  "join": "acceptance_join",
+  "kind": "split",
+  "outcomes": {},
+  "reads": {},
+  "scope": "root",
+  "writes": {}
+};
+  funds_done = {
+  "kind": "finish",
+  "outcome": "success",
+  "outcomes": {},
+  "reads": {},
+  "scope": "payment_scope",
+  "writes": {}
+};
+  reserve = {
+  "input": "order_input",
+  "kind": "activity",
+  "mode": "capability",
+  "outcomes": {
+    "confirmed": true
+  },
+  "policy": "p_work",
+  "reads": {
+    "order": true
+  },
+  "result": null,
+  "scope": "inventory_scope",
+  "target": "inventory",
+  "writes": {}
+};
+  stock_done = {
+  "kind": "finish",
+  "outcome": "success",
+  "outcomes": {},
+  "reads": {},
+  "scope": "inventory_scope",
+  "writes": {}
+};
+}
+
+flows {
+  accept_join = {
+  "outcome": "accepted",
+  "source": "acceptance_join",
+  "target": "accepted"
+};
+  funds_confirmed = {
+  "outcome": "confirmed",
+  "source": "authorize",
+  "target": "funds_done"
+};
+  stock_confirmed = {
+  "outcome": "confirmed",
+  "source": "reserve",
+  "target": "stock_done"
+};
+}
