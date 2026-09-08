@@ -3,6 +3,7 @@
 """Independent native text CLI oracle; use the portability hash-locked venv."""
 
 import hashlib
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -20,17 +21,20 @@ BINARY = ROOT / "target/debug" / (
 
 
 def require(condition, message):
+    """Fail the oracle on an observed contract violation."""
     if not condition:
         raise ValueError(message)
 
 
 def run(command, raw):
+    """Invoke the native adapter with bounded test input and a timeout."""
     return subprocess.run(
         [str(BINARY), command], input=raw, capture_output=True, timeout=10,
     )
 
 
 def main():
+    """Compare complete fixtures, independent hashes, and CLI refusal paths."""
     for path in wire.FIXTURES:
         expected = wire.load(path.read_bytes())
         source = ROOT / "examples/text" / (path.stem + ".choreo")
@@ -59,7 +63,17 @@ def main():
         result = run(command, raw)
         require(result.returncode != 0 and not result.stdout and result.stderr,
                 f"CLI must refuse without partial stdout: {command}, {raw[:30]!r}")
-    print("Text oracle passed: 3 complete IR/schema/JCS comparisons, 3 stable export cycles, 6 CLI refusals.")
+    oversized = wire.load(wire.FIXTURES[0].read_bytes())
+    oversized["annotations"] = {"large": [0] * 200_000}
+    raw = json.dumps(oversized, separators=(",", ":")).encode("utf-8")
+    require(len(raw) < 1024 * 1024, "oversized-export fixture must fit the IR input limit")
+    wire.check(oversized)
+    result = run("export", raw)
+    require(result.returncode != 0 and not result.stdout,
+            "oversized generated source must not produce partial output")
+    require(result.stderr.decode().strip() == f"source size limit at bytes 0..{len(raw)}",
+            "generated-source limit must retain input span and not imply unrepresentability")
+    print("Text oracle passed: 3 complete IR/schema/JCS comparisons, 3 stable export cycles, 7 CLI refusals (including generated-source expansion).")
 
 
 if __name__ == "__main__":

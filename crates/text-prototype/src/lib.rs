@@ -71,6 +71,8 @@ pub struct SourceBinding {
 }
 
 impl Syntax<'_> {
+    /// Bind source spans to exact source bytes and the candidate's semantic
+    /// revision. Returns an error if the complete lowered envelope exceeds limits.
     pub fn binding(&self) -> Result<SourceBinding> {
         let document = self.lower()?;
         Ok(SourceBinding {
@@ -81,9 +83,11 @@ impl Syntax<'_> {
                 .to_owned(),
         })
     }
+    /// Return the original source verbatim, including comments and whitespace.
     pub fn source(&self) -> &str {
         self.source
     }
+    /// Return immutable items in original source order, with byte spans.
     pub fn items(&self) -> &[Item] {
         &self.items
     }
@@ -353,6 +357,11 @@ pub fn export(raw: &[u8]) -> Result<String> {
             ));
         }
         source.push_str("}\n");
+    }
+    // Pretty-printing can expand bounded IR beyond the source limit. This is
+    // resource refusal, not evidence that the artifact loses information.
+    if source.len() > MAX_BYTES {
+        return Err(error("source size limit", 0..raw.len()));
     }
     // Any export diagnostic belongs to the supplied IR artifact, not to byte
     // offsets in an internal generated source the caller has never received.

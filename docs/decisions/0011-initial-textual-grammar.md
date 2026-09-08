@@ -60,13 +60,39 @@ This is a working prototype proposal, not final syntax selection or completion
 of Phase 1's cross-form round-trip deliverable. G1–G4 remain conditional. Do not
 introduce syntax compatibility commitments until the missing evidence is closed.
 
+### Authoring goal clarified during review — 2026-09-08
+
+The Project Owner wants the authoring language as close to plain English as
+possible, for broad accessibility. This prototype does not meet that goal and
+must not become final syntax by default. The proposed follow-up is controlled
+English: familiar sentences with precisely defined constructs, deterministic
+parsing, and explicit handling of ambiguous meaning. Ordinary authors should
+not need JSON records or manual wire-format bookkeeping. Tool-managed stable
+IDs must still survive edits and text/visual transformations; convenient wording
+must not hide policy, authority, or consequential effect choices.
+
+The [Roadmap](../../ROADMAP.md#phase-1--semantic-core-and-language-prototype)
+now makes near-plain-English design and representative-user evaluation a
+dedicated required deliverable before final syntax/Phase 1 exit. Rich authoring
+syntax is therefore required follow-up work, not merely an optional alternative.
+The exact grammar and parser framework remain a later reviewed decision. No
+human-usability evidence is retroactively attributed to this JSON-based probe.
+
+The executable IR completion obligation remains unchecked. It was deliberately
+split from structural approval in PR #11, but its placement obscured its later
+dependencies. The Roadmap now separates that aggregate gate from its concrete
+deliverables. Proposed next work is binding/type foundations, then accepted
+executable dialect contracts, before English-like and visual authoring designs.
+Neither this clarification nor tentative agreement constitutes owner approval
+of PR #14 or permission to start the next deliverable.
+
 ## Options considered
 
 | Text option | Advantages | Costs and risks | Proposed disposition |
 | --- | --- | --- | --- |
 | Continue authoring raw IR JSON | No second notation to learn; complete representation; existing tools | Wire envelope and declaration-map punctuation remain exposed; no source-tree prototype | Retain as interchange and baseline |
 | Explicit declaration sections with JSON records | Visible section/ID boundaries; exact mapping; comments between items; small replaceable parser | Still verbose and reference-heavy; two punctuation conventions; no evidence of improved comprehension | Prototype now |
-| High-level behavioral DSL with nested control flow and expressions | Potentially much shorter and closer to an author's task | Requires decisions about identity allocation, scope, implicit flows, policy visibility, and expression contracts; attractive examples may hide required semantics | Revisit after worked authoring and visual comparisons; do not reject permanently |
+| Near-plain-English behavioral DSL with explicit control flow and expressions | Familiar wording and potentially much less wire-format work for authors | Requires decisions about identity allocation, scope, ambiguity, policy visibility, and expression contracts; attractive examples may hide required semantics | Required dedicated follow-up design and user evaluation; this prototype does not fulfill it |
 
 These alternatives have unequal maturity. Only the proposed surface has a
 parser experiment here; no comparative usability ranking is claimed.
@@ -115,4 +141,5 @@ This proposal becomes effective only after Project Owner approval and merge.
 4. [ ] Carry the conditional gates and explicitly deferred work into subsequent
    Phase 1 decisions; approval here does not close them.
 
-Pause before starting the next Roadmap item (visual notation and layout metadata).
+Pause before starting the next Roadmap item. The revised sequence proposes
+binding/type foundations and executable contracts before authoring/visual design.

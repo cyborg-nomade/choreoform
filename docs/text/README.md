@@ -6,6 +6,12 @@
 **Status:** Proposed in [ADR-0011](../decisions/0011-initial-textual-grammar.md).
 This is experimental syntax, not a released language or executable format.
 
+The intended authoring language should be as close to plain English as possible.
+This low-level JSON-record surface is only a parser/IR baseline. A dedicated
+[Roadmap deliverable](../../ROADMAP.md#phase-1--semantic-core-and-language-prototype)
+requires near-plain-English design and representative-user evaluation before
+final syntax selection; accepting this prototype will not satisfy that goal.
+
 ## Reading it
 
 A file starts with `choreoform "0.1.0";`. Metadata uses `name = JSON;`.
@@ -129,8 +135,12 @@ sole copy of required human instructions.
 and exact representability. It emits normalized text in a fixed section order
 with deterministic record ordering, then checks that parsing/lowering it returns
 the entire input IR value. It preserves ordered arrays and all annotations.
-It rejects information loss and revision mismatch. This is a normalizing
-**IR-only export**, not a comment-preserving formatter: it cannot reconstruct
+It rejects information loss and revision mismatch. A separate resource limit
+applies to export: pretty output can exceed 1 MiB even when
+the input IR fits. That case reports `source size limit` against the input IR
+span, without claiming the IR is unrepresentable or emitting partial output.
+The operation is a normalizing **IR-only export**, not a comment-preserving
+formatter: it cannot reconstruct
 comments that were only in a previous source artifact. Repeated exports are
 stable; retaining `Syntax::source()` preserves original source separately.
 

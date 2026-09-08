@@ -219,3 +219,42 @@ with later validation work. No user-familiarity argument was used.
 
 No accepted IR semantics or corpus scope changes. Do not start the next
 Roadmap item until the owner authorizes it.
+
+## PR #14 review follow-up — 2026-09-08
+
+Reviewed all GitHub review threads, submitted review bodies, and top-level
+comments at head `50cf3b4`. Pagination was exhausted: one unresolved inline
+thread, by CodeRabbit, and its separate docstring coverage warning.
+
+- **Generated-source size classification: valid, fixed.** A compact valid IR
+  with 200,000 zero-valued annotation array entries fits the input limit but its
+  pretty source exceeds 1 MiB. A regression test first reproduced the erroneous
+  `unrepresentable text export: source size limit` result. Export now checks the
+  generated size before internal parsing and reports `source size limit` with
+  the supplied IR's span. The Python oracle independently checks the fixture's
+  structural validity, nonzero CLI exit, exact diagnostic, and empty stdout.
+- **Inline suggested input-size patch: not applied.** Input is already bounded
+  by strict transport; a second input-length check does not fix generated-output
+  expansion. The fix follows the finding's actual cause instead.
+- **Blanket 80% docstring threshold: not adopted as a merge requirement.** No
+  repository policy specifies that threshold. Added useful API documentation for
+  source binding/source access/item spans and the oracle helpers; did not add
+  repetitive test/helper prose merely to satisfy an external percentage.
+
+The updated local suite has 15 parser integration tests and the text oracle has
+7 refusal cases. No wire semantics, dependency versions, or frozen revisions
+change. The output check classifies resource refusal; it does not claim streaming
+or an allocation cap during pretty-print generation.
+
+The owner's near-plain-English direction is a review requirement added after
+the original frozen evaluation. It is recorded in ADR-0011 and the Roadmap as a
+required separate authoring-language deliverable with representative-user tasks,
+not evidence this prototype has met that goal. No scores have been upgraded.
+
+Roadmap history (`1a70b29`, PR #11 structural acceptance) confirms that executable
+completion was explicitly deferred, not delivered. Its previous linear placement
+obscured dependencies on later contracts, validation and benchmark work. The
+revised Roadmap retains the exact unchecked obligation as an aggregate gate,
+names its prerequisite deliverables and closure authority, and proposes
+binding/type foundations followed by executable dialect contracts before
+authoring/visual design. This does not check off or implement the missing work.

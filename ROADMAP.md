@@ -59,9 +59,6 @@ validated, and round-tripped.
 - [x] Specify the structural foundation of a canonical, versioned intermediate
   representation (IR) in
   [ADR-0009](docs/decisions/0009-canonical-versioned-ir.md).
-- [ ] Complete the executable IR contract with accepted type, expression, and
-  policy dialects, semantic validation, and complete benchmark evidence;
-  structural approval does not close the conditional gates or Phase 1 exit.
 - [x] Select Rust for the initial shared semantic implementation in
   [ADR-0010](docs/decisions/0010-initial-implementation-language.md), based on
   parser, language-server, graph-modeling, runtime, and deployment requirements.
@@ -76,12 +73,56 @@ validated, and round-tripped.
 - [ ] Design an initial textual grammar and parser. Proposed in
   [ADR-0011](docs/decisions/0011-initial-textual-grammar.md), with a bounded
   [syntax and parser prototype](docs/text/README.md); awaiting owner review.
-- [ ] Design an initial visual notation and serialization of layout metadata.
 - [ ] Define names, types, scopes, imports, parameters, and composition.
-- [ ] Implement validation and stable diagnostics.
+  This is the proposed next deliverable after PR #14, establishing the binding
+  and type foundations needed by the executable contracts below.
+- [ ] Specify and obtain approval for executable type, expression, and policy
+  dialect contracts replacing the illustrative payloads: exact values and
+  operations, purity/dependencies, authority/protection, time, effects,
+  cancellation, reconciliation, and settlement. Include worked positive and
+  negative semantic cases; a JSON slot or prose label is not an implementation.
+- [ ] Design and evaluate the **near-plain-English authoring language** as a
+  dedicated ADR/PR. Aim for the broadest practical accessibility with a precise,
+  deterministic grammar (controlled English), not unrestricted natural-language
+  interpretation. Ordinary authoring must not require JSON records or manual
+  wire-format bookkeeping. Preserve explicit meaning, stable identity and policy
+  visibility through lowering; reject ambiguity rather than guessing intent.
+  Compare worked alternatives on complete RP-01, RP-03 and RP-08 processes and
+  representative non-programmer comprehension, authoring, correction and review
+  tasks. Document accessibility evidence and unresolved gaps. PR #14's low-level
+  declaration prototype does **not** satisfy this item or settle final syntax.
+- [ ] Design an initial visual notation and serialization of layout metadata,
+  using the same contracts and full benchmarks as the authoring language.
+- [ ] Implement complete structural/link/semantic validation of the accepted
+  contracts and stable diagnostics; include negative cases and fail-closed
+  handling of unknown dialects and unenforceable policies. Parsing/hashing and
+  the existing partial probe are not substitutes.
 - [ ] Build text → IR → text and visual → IR → visual round trips.
 - [ ] Publish small executable examples and negative examples.
 - [ ] Start a language conformance suite.
+
+### Executable IR completion gate (still open)
+
+- [ ] Complete the executable IR contract with accepted type, expression, and
+  policy dialects, semantic validation, and complete benchmark evidence;
+  structural approval does not close the conditional gates or Phase 1 exit.
+
+This is an aggregate completion gate, not a finished or silently skipped task.
+It was separated from structural approval in PR #11. Its prerequisites are the
+binding/type foundations, accepted executable dialects, complete validator,
+full benchmark examples, and conformance/round-trip evidence listed above.
+ADR-0009's G1–G4 remain conditional, including protected accessible editing and
+text/visual parity. The Phase 1 author supplies the evidence and the Project
+Owner approves closure. The Phase 2 reference engine remains a separate delivery;
+an executable contract here requires precise semantics and checkable evidence,
+not a claim that a production engine already exists.
+
+**Sequencing proposal in PR #14:** finish review of the bounded parser, then
+address binding/type foundations and executable contracts before advancing to
+the near-English and visual authoring designs. Each deliverable still requires
+its own review and permission to start. Authoring studies may feed back into the
+contracts; no final language selection or compatibility commitment is made
+while the gates remain conditional.
 
 ### Exit criteria
 
@@ -89,6 +130,8 @@ validated, and round-tripped.
 - Round-tripping preserves semantics and produces stable output.
 - Invalid constructs fail with actionable diagnostics.
 - Every accepted core construct has written operational semantics and tests.
+- Near-plain-English authoring has been evaluated with representative users;
+  raw JSON/declaration syntax alone does not meet the authoring-language goal.
 
 ## Phase 2 — Reference execution engine
 
@@ -247,8 +290,11 @@ expensive to reverse:
 
 1. Reserve the required Choreoform package namespaces, domains, and public
    handles once their target ecosystems are selected.
-2. Confirm Rust's native/browser implementation boundary through ADR-0010's
-   bounded probe before substantial parser work; the language choice is accepted.
-3. Complete the executable contracts building on the structural canonical-model
-   strategy and versioning rules accepted in ADR-0009.
-4. Select three representative processes for the first vertical slice.
+2. Review PR #14 as a low-level parser baseline, not the final authoring language.
+   Rust's bounded native/browser confirmation was completed in PR #13.
+3. Resolve binding/type foundations and accepted executable dialect contracts,
+   then the near-plain-English authoring language and visual notation, as proposed
+   in the Phase 1 sequence above. Keep the executable IR completion gate open
+   until its validation and full benchmark obligations are met.
+4. Expand RP-01, RP-03 and RP-08 from excerpts to complete benchmark processes;
+   retain all forty corpus scenarios in the coverage/gap accounting.

@@ -76,6 +76,19 @@ fn source() -> String {
     export(FIXTURES[0]).unwrap()
 }
 
+#[test]
+fn generated_source_limit_is_not_a_representability_error() {
+    let mut document: Value = serde_json::from_slice(FIXTURES[0]).unwrap();
+    // Annotations do not change the semantic revision. Compact input fits;
+    // pretty output expands this array well beyond the source byte limit.
+    document["annotations"] = json!({"large": vec![0; 200_000]});
+    let raw = serde_json::to_vec(&document).unwrap();
+    assert!(raw.len() < MAX_BYTES);
+    let diagnostic = export(&raw).unwrap_err();
+    assert_eq!(diagnostic.message, "source size limit");
+    assert_eq!(diagnostic.span, 0..raw.len());
+}
+
 fn with_annotations(payload: &str) -> String {
     let mut text = source();
     let span = parse(text.as_bytes())
