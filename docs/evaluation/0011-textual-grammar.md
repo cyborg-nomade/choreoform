@@ -3,7 +3,7 @@
 
 # Evaluation plan: Initial textual grammar and parser
 
-**Status:** Complete bounded evaluation; proposal awaiting review<br>
+**Status:** Complete bounded evaluation; owner approved 2026-09-08 in PR #14<br>
 **Framework and corpus revision:** `fe4695fe4c2f3040117d23c98752da4e45a24f0b`<br>
 **Plan frozen:** 2026-09-07<br>
 **Evaluation owner:** Proposal author; selection authority: Project Owner

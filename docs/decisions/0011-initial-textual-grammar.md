@@ -3,7 +3,7 @@
 
 # ADR-0011: Prototype an explicit declaration-oriented textual grammar
 
-**Status:** Proposed<br>
+**Status:** Accepted — bounded parser prototype only<br>
 **Date:** 2026-09-07<br>
 **Decider:** Project Owner
 
@@ -133,10 +133,15 @@ and stronger diagnostics remain required before final language selection.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved ADR-0011 and PR #14 on 2026-09-08; merge makes this
+decision effective. Approval covers the bounded parser baseline and revised
+Roadmap sequence, not final authoring syntax or executable IR completion.
+Near-plain-English authoring remains a required dedicated deliverable. G1–G4,
+the executable contracts, full validation and benchmark/visual evidence remain
+open. No next-deliverable work is authorized by this acceptance record.
 
-1. [ ] Obtain owner review of the explicit/verbose baseline versus richer syntax.
-2. [ ] Record approval, mark Accepted, and update the index and Roadmap.
+1. [x] Obtain owner review of the explicit/verbose baseline versus richer syntax.
+2. [x] Record approval, mark Accepted, and update the index and Roadmap.
 3. [x] Supply the disposable parser, exact specification, excerpts, and tests.
 4. [ ] Carry the conditional gates and explicitly deferred work into subsequent
    Phase 1 decisions; approval here does not close them.

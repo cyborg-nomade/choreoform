@@ -3,7 +3,7 @@
 
 # Text profile 0.1.0 — initial parser prototype
 
-**Status:** Proposed in [ADR-0011](../decisions/0011-initial-textual-grammar.md).
+**Status:** Accepted bounded prototype in [ADR-0011](../decisions/0011-initial-textual-grammar.md).
 This is experimental syntax, not a released language or executable format.
 
 The intended authoring language should be as close to plain English as possible.

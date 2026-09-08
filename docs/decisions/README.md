@@ -26,7 +26,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0008](0008-core-process-semantics.md) | Accepted | Define the core process semantics as explicit state transitions |
 | [0009](0009-canonical-versioned-ir.md) | Accepted | Specify a typed graph IR with explicit version and identity boundaries |
 | [0010](0010-initial-implementation-language.md) | Accepted | Use Rust for the initial shared semantic implementation |
-| [0011](0011-initial-textual-grammar.md) | Proposed | Prototype an explicit declaration-oriented textual grammar |
+| [0011](0011-initial-textual-grammar.md) | Accepted | Prototype an explicit declaration-oriented textual grammar |
 
 ## When an ADR is required
 

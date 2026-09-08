@@ -70,11 +70,13 @@ validated, and round-tripped.
   Project Owner on 2026-09-04, effective upon merge of
   [PR #13](https://github.com/cyborg-nomade/choreoform/pull/13).
   Complete structural/semantic validation and ADR-0009's conditional gates remain open.
-- [ ] Design an initial textual grammar and parser. Proposed in
+- [x] Design an initial textual grammar and parser. Accepted as a bounded prototype in
   [ADR-0011](docs/decisions/0011-initial-textual-grammar.md), with a bounded
-  [syntax and parser prototype](docs/text/README.md); awaiting owner review.
+  [syntax and parser prototype](docs/text/README.md); Project Owner approved
+  2026-09-08, effective upon merge of
+  [PR #14](https://github.com/cyborg-nomade/choreoform/pull/14).
 - [ ] Define names, types, scopes, imports, parameters, and composition.
-  This is the proposed next deliverable after PR #14, establishing the binding
+  This is the next deliverable after PR #14, establishing the binding
   and type foundations needed by the executable contracts below.
 - [ ] Specify and obtain approval for executable type, expression, and policy
   dialect contracts replacing the illustrative payloads: exact values and
@@ -117,7 +119,7 @@ Owner approves closure. The Phase 2 reference engine remains a separate delivery
 an executable contract here requires precise semantics and checkable evidence,
 not a claim that a production engine already exists.
 
-**Sequencing proposal in PR #14:** finish review of the bounded parser, then
+**Sequence approved in PR #14:** after the bounded parser,
 address binding/type foundations and executable contracts before advancing to
 the near-English and visual authoring designs. Each deliverable still requires
 its own review and permission to start. Authoring studies may feed back into the
@@ -290,10 +292,10 @@ expensive to reverse:
 
 1. Reserve the required Choreoform package namespaces, domains, and public
    handles once their target ecosystems are selected.
-2. Review PR #14 as a low-level parser baseline, not the final authoring language.
-   Rust's bounded native/browser confirmation was completed in PR #13.
+2. The low-level parser baseline was approved in PR #14, not the final authoring
+   language. Rust's bounded native/browser confirmation was completed in PR #13.
 3. Resolve binding/type foundations and accepted executable dialect contracts,
-   then the near-plain-English authoring language and visual notation, as proposed
+   then the near-plain-English authoring language and visual notation, as approved
    in the Phase 1 sequence above. Keep the executable IR completion gate open
    until its validation and full benchmark obligations are met.
 4. Expand RP-01, RP-03 and RP-08 from excerpts to complete benchmark processes;

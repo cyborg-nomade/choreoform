@@ -17,7 +17,8 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 ## Completed evaluations
 
 - [ADR-0011 initial textual grammar](0011-textual-grammar.md) — bounded parser
-  evidence and explicit authoring/visual limitations; proposal awaiting review.
+  evidence and explicit authoring/visual limitations; bounded prototype approved
+  in PR #14, with final authoring and executable completion still open.
 - [ADR-0009 canonical IR](0009-canonical-ir.md) — structural wire evidence,
   three non-executable benchmark excerpts, and explicit conditional gates.
 - [ADR-0008 core process semantic model](0008-core-process-semantics.md) — a
