@@ -125,6 +125,16 @@ are half-open byte offsets into UTF-8, not characters or display columns.
 cover the whole payload; missing-token diagnostics can be zero-width.
 Diagnostic wording and codes are prototype-local, not the later stable API.
 
+Items are typed `Metadata` or `Section` variants. Each section holds one ordered
+list of records; each record borrows its ID from the source and owns its decoded
+payload once. Use `Item::name()`, `span()`, and `records()` to inspect them.
+
+Prefer `Syntax::into_lowered()` when the tree is no longer needed: it moves
+payloads into the IR and returns a `Lowered` containing the document, binding,
+original borrowed source, and item/declaration spans. `lower_with_binding()`
+retains the tree by cloning once. The convenience `lower()` and `binding()`
+methods remain, but calling them separately repeats lowering work.
+
 `binding()` returns the SHA-256 of exact source bytes and the lowered semantic
 revision. Store both with extracted spans; a comment-only edit changes the
 source digest even though it leaves the semantic revision unchanged. No source
@@ -139,6 +149,9 @@ It rejects information loss and revision mismatch. A separate resource limit
 applies to export: pretty output can exceed 1 MiB even when
 the input IR fits. That case reports `source size limit` against the input IR
 span, without claiming the IR is unrepresentable or emitting partial output.
+The byte budget is enforced while writing, before forwarding an over-budget
+chunk, rather than after constructing the entire pretty output. It limits
+written bytes, not allocator capacity or total process memory.
 The operation is a normalizing **IR-only export**, not a comment-preserving
 formatter: it cannot reconstruct
 comments that were only in a previous source artifact. Repeated exports are
@@ -179,3 +192,7 @@ its README to provision `.tools/ir-check`). It independently compares the CLI's
 lowered outputs with the frozen IR, structural checker, and RFC 8785 hash, then
 exercises repeat export and refusal behavior. It is test tooling, not a second
 product parser or a complete semantic validator.
+
+See the [bounded refactoring evidence](../reviews/2026-09-14-prototype-refactoring.md)
+for the source-tree changes, shared envelope admission boundary, regression
+coverage, and informational before/after timings.

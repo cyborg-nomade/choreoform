@@ -18,10 +18,10 @@ fn run() -> Result<(), String> {
     let output = if args[0] == "lower" {
         let syntax = choreoform_text_prototype::parse(&bytes)
             .map_err(|e| format!("{} at bytes {:?}", e.message, e.span))?;
-        let document = syntax
-            .lower()
+        let lowered = syntax
+            .into_lowered()
             .map_err(|e| format!("{} at bytes {:?}", e.message, e.span))?;
-        serde_json::to_string_pretty(&document).map_err(|e| e.to_string())?
+        serde_json::to_string_pretty(&lowered.document).map_err(|e| e.to_string())?
     } else {
         choreoform_text_prototype::export(&bytes)
             .map_err(|e| format!("{} at bytes {:?}", e.message, e.span))?

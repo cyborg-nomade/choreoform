@@ -129,16 +129,18 @@ def check(document, verify_revision=True):
     root = ref("scopes", b["root"])
     if root["parent"] is not None:
         reject("root has parent")
+    rooted = {b["root"]}
     for key, scope in b["scopes"].items():
         seen = set()
         current = key
-        while current is not None:
+        while current not in rooted:
+            if current is None:
+                reject("disconnected scope")
             if current in seen:
                 reject("scope cycle")
             seen.add(current)
             current = ref("scopes", current)["parent"]
-        if b["root"] not in seen:
-            reject("disconnected scope")
+        rooted.update(seen)
         if ref("nodes", scope["entry"])["scope"] != key:
             reject("scope entry belongs elsewhere")
         for field in ("inputs", "outputs"):
@@ -315,29 +317,45 @@ def check(document, verify_revision=True):
     for key, node in b["nodes"].items():
         if node["kind"] in ("split", "fanout"):
             adjacency[key].append(node["join"])
-    visiting, visited = set(), set()
-
-    def acyclic(key):
-        """Reject implicit control cycles, including split/join return edges."""
-        if key in visiting:
-            reject("graph cycle outside repeat")
-        if key in visited:
-            return
-        visiting.add(key)
-        for target in adjacency[key]:
-            acyclic(target)
-        visiting.remove(key)
-        visited.add(key)
-
-    for key in adjacency:
-        acyclic(key)
+    check_acyclic(adjacency)
     check_contracts(document)
     if verify_revision and document["revision"] != revision(document):
         reject("semantic revision mismatch")
 
 
+def check_acyclic(adjacency):
+    """Iterative DFS: graph-edge depth is independent of JSON nesting depth."""
+    visiting, visited = set(), set()
+    for start in adjacency:
+        if start in visited:
+            continue
+        visiting.add(start)
+        stack = [(start, iter(adjacency[start]))]
+        while stack:
+            node, targets = stack[-1]
+            target = next(targets, None)
+            if target is None:
+                stack.pop()
+                visiting.remove(node)
+                visited.add(node)
+            elif target in visiting:
+                reject("graph cycle outside repeat")
+            elif target not in visited:
+                visiting.add(target)
+                stack.append((target, iter(adjacency[target])))
+
+
 class WireEvidence(unittest.TestCase):
     """Serialization and selected linkage regressions, not conformance tests."""
+
+    def test_deep_graph_traversal(self):
+        """Long chains and deep back-edges must not hit Python recursion limits."""
+        adjacency = {f"n{i}": [f"n{i+1}"] for i in range(4999)}
+        adjacency["n4999"] = []
+        check_acyclic(adjacency)
+        adjacency["n4999"] = ["n100"]
+        with self.assertRaisesRegex(ValueError, "graph cycle outside repeat"):
+            check_acyclic(adjacency)
 
     def setUp(self):
         """Load fresh fixture objects so mutations cannot leak between tests."""
@@ -349,6 +367,34 @@ class WireEvidence(unittest.TestCase):
         self.assertEqual(len(self.documents), 3)
         for d in self.documents:
             check(d)
+
+    def test_long_flow_chain_through_full_checker(self):
+        """A shallow wire document may contain more than 1000 graph edges."""
+        document = self.documents[0]
+        body = document["body"]
+        scope = next(iter(body["scopes"].values())).copy()
+        for name in MAPS:
+            if name != "policies":
+                body[name] = {}
+        body["root"] = "s0"
+        scope.update(parent=None, entry="n0", inputs={}, outputs={}, outcomes={"done": True})
+        body["scopes"]["s0"] = scope
+        for policy in body["policies"].values():
+            policy["scope"] = "s0"
+        policy_id = next(iter(body["policies"]))
+        for i in range(1100):
+            node = dict(kind="wait", scope="s0", reads={}, writes={},
+                        outcomes={"done": True}, policy=policy_id)
+            if i == 1099:
+                node = dict(kind="finish", scope="s0", reads={}, writes={},
+                            outcomes={}, outcome="done")
+            else:
+                body["flows"][f"f{i}"] = dict(source=f"n{i}", target=f"n{i+1}", outcome="done")
+            body["nodes"][f"n{i}"] = node
+        document["revision"] = revision(document)
+        raw = json.dumps(document, separators=(",", ":")).encode()
+        self.assertLess(len(raw), 1024 * 1024)
+        check(load(raw))
 
     def test_local_contract_digests(self):
         """Verify exact registered identities and content-addressed filenames."""

@@ -4,22 +4,27 @@
 //! Disposable ADR-0011 syntax prototype. Lowering produces UNVALIDATED IR.
 //! No IO, registry lookup, policy interpretation, or execution in this library.
 
-use choreoform_ir_probe_core::{digest, semantic_bytes, transport};
-use serde_json::{Map, Value, json};
-use std::{collections::BTreeSet, ops::Range};
+use choreoform_ir_probe_core::bounded::LimitedWriter;
+use choreoform_ir_probe_core::{DefinitionEnvelope, digest, transport};
+use serde_json::{Map, Value};
+use std::{collections::BTreeSet, io::Write, ops::Range};
 
-pub const MAX_BYTES: usize = 1024 * 1024;
-const SECTIONS: [&str; 8] = [
-    "scopes",
-    "data",
-    "expressions",
-    "actors",
-    "capabilities",
-    "policies",
-    "nodes",
-    "flows",
-];
-const VALUES: [&str; 5] = ["id", "semantics", "dialects", "root", "annotations"];
+pub const MAX_BYTES: usize = transport::MAX_BYTES;
+
+// One fixed spelling table per vocabulary, shared by parsing and export.
+macro_rules! vocabulary {
+    ($name:ident { $($variant:ident => $word:literal),+ $(,)? }) => {
+        #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+        pub enum $name { $($variant),+ }
+        impl $name {
+            const ALL: &'static [Self] = &[$(Self::$variant),+];
+            pub fn as_str(self) -> &'static str { match self { $(Self::$variant => $word),+ } }
+            fn parse(word: &str) -> Option<Self> { match word { $($word => Some(Self::$variant)),+, _ => None } }
+        }
+    };
+}
+vocabulary!(MetadataKind { Id => "id", Semantics => "semantics", Dialects => "dialects", Root => "root", Annotations => "annotations" });
+vocabulary!(SectionKind { Scopes => "scopes", Data => "data", Expressions => "expressions", Actors => "actors", Capabilities => "capabilities", Policies => "policies", Nodes => "nodes", Flows => "flows" });
 
 /// Prototype-local diagnostic; spans are half-open UTF-8 byte offsets.
 /// JSON payload errors cover the whole payload; codes are not a stable API.
@@ -39,27 +44,72 @@ fn error(message: impl Into<String>, span: Range<usize>) -> Diagnostic {
 }
 
 /// Stable declaration identity and its original-source record extent.
-#[derive(Debug)]
-pub struct RecordSpan {
-    pub id: String,
+#[derive(Debug, Clone)]
+pub struct Record<'a> {
+    pub id: &'a str,
     pub span: Range<usize>,
+    payload: Value,
 }
 
 /// Source-level item, distinct from an IR declaration or runtime occurrence.
-#[derive(Debug)]
-pub struct Item {
-    pub name: String,
-    pub span: Range<usize>,
-    pub records: Vec<RecordSpan>,
-    value: Value,
+#[derive(Debug, Clone)]
+pub enum Item<'a> {
+    Metadata {
+        kind: MetadataKind,
+        value: Value,
+        span: Range<usize>,
+    },
+    Section {
+        kind: SectionKind,
+        records: Vec<Record<'a>>,
+        span: Range<usize>,
+    },
+}
+
+impl<'a> Item<'a> {
+    pub fn name(&self) -> &'static str {
+        match self {
+            Self::Metadata { kind, .. } => kind.as_str(),
+            Self::Section { kind, .. } => kind.as_str(),
+        }
+    }
+    pub fn span(&self) -> &Range<usize> {
+        match self {
+            Self::Metadata { span, .. } | Self::Section { span, .. } => span,
+        }
+    }
+    pub fn records(&self) -> &[Record<'a>] {
+        match self {
+            Self::Metadata { .. } => &[],
+            Self::Section { records, .. } => records,
+        }
+    }
 }
 
 /// Retains the exact borrowed source (including trivia) and parsed item spans.
 /// It is immutable through this API. No incremental editing/recovery is implied.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Syntax<'a> {
     source: &'a str,
-    items: Vec<Item>,
+    items: Vec<Item<'a>>,
+}
+
+/// Original-source locations retained when payloads are moved into candidate IR.
+#[derive(Debug)]
+pub struct ItemSpan<'a> {
+    pub name: &'static str,
+    pub span: Range<usize>,
+    pub records: Vec<(&'a str, Range<usize>)>,
+}
+
+/// One lowering operation returns the candidate, both identities and source map.
+/// These are evidence artifacts, not a semantic validation certificate.
+#[derive(Debug)]
+pub struct Lowered<'a> {
+    pub document: Value,
+    pub binding: SourceBinding,
+    pub source: &'a str,
+    pub spans: Vec<ItemSpan<'a>>,
 }
 
 /// Persist these two identities with any extracted spans. Never reuse a map
@@ -70,54 +120,91 @@ pub struct SourceBinding {
     pub semantic_revision: String,
 }
 
-impl Syntax<'_> {
+impl<'a> Syntax<'a> {
     /// Bind source spans to exact source bytes and the candidate's semantic
     /// revision. Returns an error if the complete lowered envelope exceeds limits.
     pub fn binding(&self) -> Result<SourceBinding> {
-        let document = self.lower()?;
-        Ok(SourceBinding {
-            source_digest: digest(self.source.as_bytes()),
-            semantic_revision: document["revision"]
-                .as_str()
-                .expect("lower computes revision")
-                .to_owned(),
-        })
+        Ok(self.lower_with_binding()?.binding)
     }
     /// Return the original source verbatim, including comments and whitespace.
     pub fn source(&self) -> &str {
         self.source
     }
     /// Return immutable items in original source order, with byte spans.
-    pub fn items(&self) -> &[Item] {
+    pub fn items(&self) -> &[Item<'a>] {
         &self.items
     }
 
     /// Produce a revision-bearing candidate, NOT a validation/admission result.
     /// Source comments/spans stay in Syntax; supplied annotations survive exactly.
     pub fn lower(&self) -> Result<Value> {
+        Ok(self.lower_with_binding()?.document)
+    }
+
+    /// Retain this immutable syntax while producing candidate and binding once.
+    pub fn lower_with_binding(&self) -> Result<Lowered<'a>> {
+        self.clone().into_lowered()
+    }
+
+    /// Move decoded payloads without cloning them; retain original source/spans.
+    pub fn into_lowered(self) -> Result<Lowered<'a>> {
         let mut body = Map::new();
         let mut annotations = Value::Null;
-        for item in &self.items {
-            if item.name == "annotations" {
-                annotations = item.value.clone();
-            } else {
-                body.insert(item.name.clone(), item.value.clone());
+        let mut spans = Vec::new();
+        for item in self.items {
+            let location = ItemSpan {
+                name: item.name(),
+                span: item.span().clone(),
+                records: item
+                    .records()
+                    .iter()
+                    .map(|r| (r.id, r.span.clone()))
+                    .collect(),
+            };
+            match item {
+                Item::Metadata {
+                    kind: MetadataKind::Annotations,
+                    value,
+                    ..
+                } => annotations = value,
+                Item::Metadata { kind, value, .. } => {
+                    body.insert(kind.as_str().into(), value);
+                }
+                Item::Section { kind, records, .. } => {
+                    body.insert(
+                        kind.as_str().into(),
+                        Value::Object(
+                            records
+                                .into_iter()
+                                .map(|r| (r.id.to_owned(), r.payload))
+                                .collect(),
+                        ),
+                    );
+                }
             }
+            spans.push(location);
         }
-        let mut document = json!({
-            "format": "choreoform-ir", "version": "0.1.0", "kind": "definition",
-            "revision": format!("sha256:{}", "0".repeat(64)),
-            "body": body, "annotations": annotations
-        });
-        let raw = serde_json::to_vec(&document).expect("JSON values serialize");
-        let canonical = semantic_bytes(&raw).map_err(|e| {
-            error(
-                format!("lowered IR: {}", e.category()),
-                0..self.source.len(),
-            )
-        })?;
-        document["revision"] = Value::String(digest(canonical.as_bytes()));
-        Ok(document)
+        let document = DefinitionEnvelope::from_parts(Value::Object(body), annotations)
+            .map_err(|e| {
+                error(
+                    format!("lowered IR: {}", e.category()),
+                    0..self.source.len(),
+                )
+            })?
+            .into_document();
+        let binding = SourceBinding {
+            source_digest: digest(self.source.as_bytes()),
+            semantic_revision: document["revision"]
+                .as_str()
+                .expect("constructor computes revision")
+                .to_owned(),
+        };
+        Ok(Lowered {
+            document,
+            binding,
+            source: self.source,
+            spans,
+        })
     }
 }
 
@@ -126,7 +213,7 @@ struct Parser<'a> {
     pos: usize,
 }
 
-impl Parser<'_> {
+impl<'a> Parser<'a> {
     fn skip(&mut self) {
         loop {
             while self
@@ -156,7 +243,7 @@ impl Parser<'_> {
         Ok(())
     }
 
-    fn word(&mut self) -> Result<String> {
+    fn word(&mut self) -> Result<&'a str> {
         self.skip();
         let start = self.pos;
         while self
@@ -174,7 +261,7 @@ impl Parser<'_> {
                 start..self.pos,
             ));
         }
-        Ok(word.to_owned())
+        Ok(word)
     }
 
     // Find the semicolon outside strings/containers, then reuse strict JSON
@@ -252,13 +339,12 @@ pub fn parse(raw: &[u8]) -> Result<Syntax<'_>> {
             break;
         }
         let name = p.word()?;
-        if !names.insert(name.clone()) {
+        if !names.insert(name) {
             return Err(error("duplicate item", start..p.pos));
         }
-        let mut records = Vec::new();
-        let value = if SECTIONS.contains(&name.as_str()) {
+        let item = if let Some(kind) = SectionKind::parse(name) {
             p.expect("{")?;
-            let mut map = Map::new();
+            let mut records = Vec::new();
             loop {
                 p.skip();
                 if p.source[p.pos..].starts_with('}') {
@@ -267,7 +353,7 @@ pub fn parse(raw: &[u8]) -> Result<Syntax<'_>> {
                 }
                 let record_start = p.pos;
                 let id = p.word()?;
-                if !ids.insert(id.clone()) {
+                if !ids.insert(id) {
                     return Err(error("duplicate declaration ID", record_start..p.pos));
                 }
                 p.expect("=")?;
@@ -275,36 +361,45 @@ pub fn parse(raw: &[u8]) -> Result<Syntax<'_>> {
                 if !value.is_object() {
                     return Err(error("record must be a JSON object", record_start..p.pos));
                 }
-                records.push(RecordSpan {
-                    id: id.clone(),
+                records.push(Record {
+                    id,
                     span: record_start..p.pos,
+                    payload: value,
                 });
-                map.insert(id, value);
             }
-            Value::Object(map)
-        } else if VALUES.contains(&name.as_str()) {
+            Item::Section {
+                kind,
+                records,
+                span: start..p.pos,
+            }
+        } else if let Some(kind) = MetadataKind::parse(name) {
             p.expect("=")?;
             let value = p.payload()?;
-            let valid = match name.as_str() {
-                "id" | "root" => value.as_str().is_some_and(|s| !s.is_empty()),
+            let valid = match kind {
+                MetadataKind::Id | MetadataKind::Root => {
+                    value.as_str().is_some_and(|s| !s.is_empty())
+                }
                 _ => value.is_object(),
             };
             if !valid {
                 return Err(error("wrong metadata value shape", start..p.pos));
             }
-            value
+            Item::Metadata {
+                kind,
+                value,
+                span: start..p.pos,
+            }
         } else {
             return Err(error("unknown item", start..p.pos));
         };
-        items.push(Item {
-            name,
-            span: start..p.pos,
-            records,
-            value,
-        });
+        items.push(item);
     }
-    for name in VALUES.iter().chain(SECTIONS.iter()) {
-        if !names.contains(*name) {
+    for name in MetadataKind::ALL
+        .iter()
+        .map(|k| k.as_str())
+        .chain(SectionKind::ALL.iter().map(|k| k.as_str()))
+    {
+        if !names.contains(name) {
             return Err(error(
                 format!("missing item {name}"),
                 source.len()..source.len(),
@@ -318,8 +413,10 @@ pub fn parse(raw: &[u8]) -> Result<Syntax<'_>> {
 /// this syntax cannot preserve. Comments from a previous source are NOT restored.
 /// This is not a formatter or an overwrite operation, nor semantic validation.
 pub fn export(raw: &[u8]) -> Result<String> {
-    let canonical = semantic_bytes(raw).map_err(|e| error(e.category(), 0..raw.len()))?;
-    let document = transport::decode(raw).map_err(|e| error(e.category(), 0..raw.len()))?;
+    let admitted =
+        DefinitionEnvelope::decode(raw).map_err(|e| error(e.category(), 0..raw.len()))?;
+    let canonical = admitted.canonical();
+    let document = admitted.document();
     if document["revision"] != digest(canonical.as_bytes()) {
         return Err(error("revision mismatch", 0..raw.len()));
     }
@@ -327,53 +424,85 @@ pub fn export(raw: &[u8]) -> Result<String> {
         .as_object()
         .ok_or_else(|| error("body must be object", 0..raw.len()))?;
     if body.len() != 12
-        || body
-            .keys()
-            .any(|k| !SECTIONS.contains(&k.as_str()) && !VALUES[..4].contains(&k.as_str()))
+        || body.keys().any(|k| {
+            SectionKind::parse(k).is_none()
+                && !matches!(
+                    MetadataKind::parse(k),
+                    Some(
+                        MetadataKind::Id
+                            | MetadataKind::Semantics
+                            | MetadataKind::Dialects
+                            | MetadataKind::Root
+                    )
+                )
+        })
     {
         return Err(error("unknown or missing body field", 0..raw.len()));
     }
-    let mut source = String::from("choreoform \"0.1.0\";\n");
-    for name in VALUES {
-        let value = if name == "annotations" {
-            &document[name]
-        } else {
-            &body[name]
-        };
-        source.push_str(&format!(
-            "{name} = {};\n",
-            serde_json::to_string_pretty(value).expect("JSON values serialize")
+    // Buffer under a byte budget; nothing reaches the host until the complete
+    // export and its self-round-trip guard succeed.
+    let mut output = LimitedWriter::new(Vec::new(), MAX_BYTES);
+    let mut emit = || -> std::result::Result<(), serde_json::Error> {
+        output
+            .write_all(b"choreoform \"0.1.0\";\n")
+            .map_err(serde_json::Error::io)?;
+        for kind in MetadataKind::ALL {
+            let name = kind.as_str();
+            let value = if name == "annotations" {
+                &document[name]
+            } else {
+                &body[name]
+            };
+            write!(output, "{name} = ").map_err(serde_json::Error::io)?;
+            serde_json::to_writer_pretty(&mut output, value)?;
+            output.write_all(b";\n").map_err(serde_json::Error::io)?;
+        }
+        for kind in SectionKind::ALL {
+            let name = kind.as_str();
+            let map = body[name]
+                .as_object()
+                .expect("section shape checked before writing");
+            write!(output, "\n{name} {{\n").map_err(serde_json::Error::io)?;
+            for (id, value) in map {
+                write!(output, "  {id} = ").map_err(serde_json::Error::io)?;
+                serde_json::to_writer_pretty(&mut output, value)?;
+                output.write_all(b";\n").map_err(serde_json::Error::io)?;
+            }
+            output.write_all(b"}\n").map_err(serde_json::Error::io)?;
+        }
+        Ok(())
+    };
+    // Check shapes before the closure's infallible indexing, without generating
+    // oversized intermediates or converting semantic fields to defaults.
+    for kind in SectionKind::ALL {
+        let name = kind.as_str();
+        if !body[name].is_object() {
+            return Err(error("section must be object", 0..raw.len()));
+        }
+    }
+    if let Err(e) = emit() {
+        return Err(error(
+            if output.exceeded() {
+                "source size limit".to_owned()
+            } else {
+                e.to_string()
+            },
+            0..raw.len(),
         ));
     }
-    for name in SECTIONS {
-        let map = body[name]
-            .as_object()
-            .ok_or_else(|| error("section must be object", 0..raw.len()))?;
-        source.push_str(&format!("\n{name} {{\n"));
-        for (id, value) in map {
-            source.push_str(&format!(
-                "  {id} = {};\n",
-                serde_json::to_string_pretty(value).expect("JSON values serialize")
-            ));
-        }
-        source.push_str("}\n");
-    }
-    // Pretty-printing can expand bounded IR beyond the source limit. This is
-    // resource refusal, not evidence that the artifact loses information.
-    if source.len() > MAX_BYTES {
-        return Err(error("source size limit", 0..raw.len()));
-    }
+    let source =
+        String::from_utf8(output.into_inner()).expect("writer emits UTF-8 JSON and ASCII syntax");
     // Any export diagnostic belongs to the supplied IR artifact, not to byte
     // offsets in an internal generated source the caller has never received.
     let roundtrip = parse(source.as_bytes())
-        .and_then(|syntax| syntax.lower())
+        .and_then(|syntax| syntax.into_lowered())
         .map_err(|e| {
             error(
                 format!("unrepresentable text export: {}", e.message),
                 0..raw.len(),
             )
         })?;
-    if roundtrip != document {
+    if &roundtrip.document != document {
         return Err(error("export would lose information", 0..raw.len()));
     }
     Ok(source)

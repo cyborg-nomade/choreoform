@@ -22,7 +22,66 @@ fn checked_in_sources_match_frozen_ir() {
     for (source, raw) in TEXTS.into_iter().zip(FIXTURES) {
         let expected: Value = serde_json::from_slice(raw).unwrap();
         assert_eq!(parse(source).unwrap().lower().unwrap(), expected);
+        let normalized = std::str::from_utf8(source)
+            .unwrap()
+            .splitn(4, '\n')
+            .nth(3)
+            .unwrap();
+        assert_eq!(
+            export(raw).unwrap(),
+            normalized,
+            "normalized export must remain byte-stable"
+        );
     }
+}
+
+#[test]
+fn combined_and_consuming_lowering_retain_source_identity_and_spans() {
+    let source = TEXTS[0];
+    let syntax = parse(source).unwrap();
+    let combined = syntax.lower_with_binding().unwrap();
+    let expected: Vec<_> = syntax
+        .items()
+        .iter()
+        .map(|i| {
+            (
+                i.name(),
+                i.span().clone(),
+                i.records()
+                    .iter()
+                    .map(|r| (r.id, r.span.clone()))
+                    .collect::<Vec<_>>(),
+            )
+        })
+        .collect();
+    let consumed = syntax.into_lowered().unwrap();
+    assert_eq!(combined.document, consumed.document);
+    assert_eq!(combined.binding, consumed.binding);
+    assert_eq!(consumed.source.as_bytes(), source);
+    let actual: Vec<_> = consumed
+        .spans
+        .iter()
+        .map(|i| (i.name, i.span.clone(), i.records.clone()))
+        .collect();
+    assert_eq!(actual, expected);
+}
+
+#[test]
+fn exact_export_output_limit_and_one_byte_over() {
+    let mut document: Value = serde_json::from_slice(FIXTURES[0]).unwrap();
+    document["annotations"] = json!({"padding":""});
+    let base = export(&serde_json::to_vec(&document).unwrap())
+        .unwrap()
+        .len();
+    document["annotations"]["padding"] = "x".repeat(MAX_BYTES - base).into();
+    let raw = serde_json::to_vec(&document).unwrap();
+    assert!(raw.len() < MAX_BYTES);
+    assert_eq!(export(&raw).unwrap().len(), MAX_BYTES);
+    document["annotations"]["padding"] = "x".repeat(MAX_BYTES - base + 1).into();
+    let raw = serde_json::to_vec(&document).unwrap();
+    let diagnostic = export(&raw).unwrap_err();
+    assert_eq!(diagnostic.message, "source size limit");
+    assert_eq!(diagnostic.span, 0..raw.len());
 }
 
 #[test]
@@ -47,20 +106,20 @@ fn syntax_success_does_not_claim_structural_validity() {
 fn record_order_preserves_identity_but_id_changes_do_not() {
     let text = source();
     let tree = parse(text.as_bytes()).unwrap();
-    let section = tree.items().iter().find(|i| i.name == "nodes").unwrap();
+    let section = tree.items().iter().find(|i| i.name() == "nodes").unwrap();
     let mut replacement = String::from("nodes {\n");
-    for record in section.records.iter().rev() {
+    for record in section.records().iter().rev() {
         replacement.push_str(&text[record.span.clone()]);
         replacement.push('\n');
     }
     replacement.push('}');
     let mut reordered = text.clone();
-    reordered.replace_range(section.span.clone(), &replacement);
+    reordered.replace_range(section.span().clone(), &replacement);
     assert_eq!(
         parse(reordered.as_bytes()).unwrap().lower().unwrap(),
         tree.lower().unwrap()
     );
-    let record = &section.records[0];
+    let record = &section.records()[0];
     let mut renamed = text.clone();
     renamed.replace_range(
         record.span.start..record.span.start + record.id.len(),
@@ -95,9 +154,9 @@ fn with_annotations(payload: &str) -> String {
         .unwrap()
         .items()
         .iter()
-        .find(|i| i.name == "annotations")
+        .find(|i| i.name() == "annotations")
         .unwrap()
-        .span
+        .span()
         .clone();
     text.replace_range(span, &format!("annotations = {payload};"));
     text
@@ -160,9 +219,9 @@ fn fixtures_repeat_losslessly_with_identical_canonical_bytes() {
         assert_eq!(semantic_bytes(&wire), semantic_bytes(raw));
         assert_eq!(export(&wire).unwrap(), text);
         for item in syntax.items() {
-            assert!(syntax.source()[item.span.clone()].starts_with(&item.name));
-            for record in &item.records {
-                assert!(syntax.source()[record.span.clone()].starts_with(&record.id));
+            assert!(syntax.source()[item.span().clone()].starts_with(item.name()));
+            for record in item.records() {
+                assert!(syntax.source()[record.span.clone()].starts_with(record.id));
             }
         }
     }
@@ -178,7 +237,7 @@ fn comments_whitespace_and_item_order_are_not_semantic() {
     assert_eq!(syntax.lower().unwrap(), expected);
     let mut reversed = String::from("choreoform \"0.1.0\";\n");
     for item in syntax.items().iter().rev() {
-        reversed.push_str(&syntax.source()[item.span.clone()]);
+        reversed.push_str(&syntax.source()[item.span().clone()]);
         reversed.push('\n');
     }
     assert_eq!(
@@ -225,23 +284,6 @@ fn malformed_source_is_rejected_without_silent_recovery() {
         format!("{text}\nother {{}}"),
         text.replacen("id =", "id", 1),
         text.replacen("id =", "unknown =", 1),
-        text.replacen(
-            "annotations =",
-            "annotations = {\"x\":1,\"\\u0078\":2}; ignored =",
-            1,
-        ),
-        text.replacen("annotations =", "annotations = {\"x\":1e0}; ignored =", 1),
-        text.replacen(
-            "annotations =",
-            "annotations = {\"x\":9007199254740992}; ignored =",
-            1,
-        ),
-        text.replacen(
-            "annotations =",
-            "annotations = {\"x\":\"\\ud800\"}; ignored =",
-            1,
-        ),
-        text.replacen("annotations =", "annotations = []; ignored =", 1),
         text.replacen("scopes {", "scopes { bad = [];", 1),
         text.replacen("scopes {", "scopes { 1bad = {};", 1),
         text.replacen("scopes {", "scopes { duplicate = {}; duplicate = {};", 1),
@@ -255,28 +297,31 @@ fn malformed_source_is_rejected_without_silent_recovery() {
     assert!(parse(&vec![b' '; MAX_BYTES + 1]).is_err());
     for item in parse(text.as_bytes()).unwrap().items() {
         let mut missing = text.clone();
-        missing.replace_range(item.span.clone(), "");
+        missing.replace_range(item.span().clone(), "");
         assert!(parse(missing.as_bytes()).is_err());
     }
 }
 
 #[test]
 fn bounded_depth_and_truncation_are_safe() {
-    let text = source();
-    let deep = text.replacen(
-        "annotations =",
-        &format!(
-            "annotations = {}0{}; ignored =",
-            "[".repeat(65),
-            "]".repeat(65)
-        ),
-        1,
+    let text = with_annotations(r#"{"unicode":"λ😀"}"#);
+    let deep = with_annotations(&format!(
+        "{{\"nest\":{}0{}}}",
+        "[".repeat(65),
+        "]".repeat(65)
+    ));
+    assert_eq!(
+        parse(deep.as_bytes()).unwrap_err().message,
+        "payload nesting limit"
     );
-    assert!(parse(deep.as_bytes()).is_err());
     for index in 0..text.len() {
-        // The exporter emits ASCII fixtures. Every strict prefix lacks a section
-        // terminator or later required item (except trailing whitespace).
-        let _ = parse(&text.as_bytes()[..index]);
+        // Includes cuts inside UTF-8 scalars. Only trailing whitespace may be
+        // truncated while retaining a complete document.
+        assert_eq!(
+            parse(&text.as_bytes()[..index]).is_ok(),
+            index >= text.trim_end().len(),
+            "prefix {index}"
+        );
     }
     for byte in 0..=255 {
         let _ = parse(&[byte]);
