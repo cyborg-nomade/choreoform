@@ -242,6 +242,7 @@ impl Graph {
         if !body["scopes"][&root]["parent"].is_null() {
             return Err(Error::Scope);
         }
+        let mut rooted = BTreeSet::from([root.clone()]);
         for (key, scope) in object(&body["scopes"])? {
             fields(
                 scope,
@@ -258,22 +259,7 @@ impl Graph {
                 ],
                 &[],
             )?;
-            let mut seen = BTreeSet::new();
-            let mut current = Some(key.clone());
-            while let Some(cursor) = current {
-                if !seen.insert(cursor.clone()) {
-                    return Err(Error::Scope);
-                }
-                let parent = &body["scopes"][&cursor]["parent"];
-                current = if parent.is_null() {
-                    None
-                } else {
-                    Some(reference(body, "scopes", parent)?)
-                };
-            }
-            if !seen.contains(&root) {
-                return Err(Error::Scope);
-            }
+            trace_scope(body, key, &mut rooted)?;
             let entry = reference(body, "nodes", &scope["entry"])?;
             reference(body, "scopes", &body["nodes"][&entry]["scope"])?;
             if body["nodes"][entry]["scope"] != *key {
@@ -417,6 +403,27 @@ impl Graph {
     }
 }
 
+// Memoize only paths proven to reach the sole root. Every non-root parent is
+// resolved once across a successful graph check, independent of traversal order.
+// The returned edge count lets tests check scaling without wall-clock thresholds.
+fn trace_scope(body: &Value, start: &str, rooted: &mut BTreeSet<String>) -> Result<usize> {
+    let mut path = BTreeSet::new();
+    let mut cursor = start.to_owned();
+    while !rooted.contains(&cursor) {
+        if !path.insert(cursor.clone()) {
+            return Err(Error::Scope);
+        }
+        let parent = &body["scopes"][&cursor]["parent"];
+        if parent.is_null() {
+            return Err(Error::Scope);
+        }
+        cursor = reference(body, "scopes", parent)?;
+    }
+    let edges = path.len();
+    rooted.extend(path);
+    Ok(edges)
+}
+
 fn read_kind(body: &Value, node: &Value) -> Result<NodeKind> {
     let name = string(&node["kind"])?;
     let extra: &[&str] = match name {
@@ -537,4 +544,47 @@ fn read_kind(body: &Value, node: &Value) -> Result<NodeKind> {
         },
         _ => return Err(Error::UnknownNodeKind),
     })
+}
+
+#[cfg(test)]
+mod scope_tests {
+    use super::*;
+    use serde_json::json;
+
+    fn chain(n: usize) -> Value {
+        let mut body = json!({"scopes": {"s0": {"parent": null}}});
+        for i in 1..n {
+            body["scopes"][format!("s{i}")] = json!({"parent":format!("s{}", i-1)});
+        }
+        body
+    }
+
+    #[test]
+    fn parent_edges_are_visited_once_even_deepest_first() {
+        for n in [128, 512, 2048] {
+            let body = chain(n);
+            let mut rooted = BTreeSet::from(["s0".to_owned()]);
+            let mut edges = 0;
+            for i in (0..n).rev() {
+                edges += trace_scope(&body, &format!("s{i}"), &mut rooted).unwrap();
+            }
+            assert_eq!(edges, n - 1);
+            assert_eq!(rooted.len(), n);
+        }
+    }
+
+    #[test]
+    fn invalid_deep_paths_are_not_cached() {
+        for (parent, expected) in [
+            (json!("s2047"), Error::Scope),
+            (Value::Null, Error::Scope),
+            (json!("missing"), Error::Reference),
+        ] {
+            let mut body = chain(2048);
+            body["scopes"]["s1"]["parent"] = parent;
+            let mut rooted = BTreeSet::from(["s0".to_owned()]);
+            assert_eq!(trace_scope(&body, "s2047", &mut rooted), Err(expected));
+            assert_eq!(rooted.len(), 1);
+        }
+    }
 }

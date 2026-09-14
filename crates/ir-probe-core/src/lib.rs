@@ -4,6 +4,7 @@
 //! Bounded ADR-0010 evidence, NOT a production structural/semantic validator.
 //! No filesystem, network, clock, randomness, threads or execution in this API.
 
+pub mod bounded;
 pub mod model;
 pub mod transport;
 
@@ -147,21 +148,72 @@ fn envelope(document: &Value) -> Result<()> {
     Ok(())
 }
 
-fn projection(document: &Value) -> Value {
-    Value::Object(
+fn canonical_definition(document: &Value) -> String {
+    transport::canonical_members(
         ["format", "version", "kind", "body"]
             .into_iter()
-            .map(|key| (key.to_owned(), document[key].clone()))
+            .map(|key| (key, &document[key]))
             .collect(),
     )
+}
+
+/// Transport-admitted envelope only, NOT a structurally/semantically validated
+/// definition. Private fields prevent mutation from bypassing admission checks.
+#[derive(Debug)]
+pub struct DefinitionEnvelope {
+    document: Value,
+}
+
+impl DefinitionEnvelope {
+    /// Strict lexical transport and envelope checks. Supplied revision is not
+    /// verified here; callers explicitly compare it with the canonical digest.
+    pub fn decode(raw: &[u8]) -> Result<Self> {
+        let document = transport::decode(raw)?;
+        envelope(&document)?;
+        Ok(Self { document })
+    }
+
+    /// Construct an envelope, admit the complete in-memory value and compute its
+    /// revision without serializing and reparsing it. Body semantics stay opaque.
+    pub fn from_parts(body: Value, annotations: Value) -> Result<Self> {
+        let mut document = Value::Object(
+            [
+                ("format".into(), Value::from("choreoform-ir")),
+                ("version".into(), Value::from("0.1.0")),
+                ("kind".into(), Value::from("definition")),
+                (
+                    "revision".into(),
+                    Value::from(format!("sha256:{}", "0".repeat(64))),
+                ),
+                ("body".into(), body),
+                ("annotations".into(), annotations),
+            ]
+            .into_iter()
+            .collect(),
+        );
+        transport::admit_value(&document)?;
+        envelope(&document)?;
+        document["revision"] = digest(canonical_definition(&document).as_bytes()).into();
+        Ok(Self { document })
+    }
+    /// Borrow the admitted value without granting mutation access.
+    pub fn document(&self) -> &Value {
+        &self.document
+    }
+    /// Consume the wrapper; mutations of the returned value confer no admission.
+    pub fn into_document(self) -> Value {
+        self.document
+    }
+    /// Canonical semantic projection; does not verify the supplied revision.
+    pub fn canonical(&self) -> String {
+        canonical_definition(&self.document)
+    }
 }
 
 /// Transport and envelope only; useful to prepare mutated evidence fixtures.
 /// This intentionally does NOT certify even the selected graph/contract checks.
 pub fn semantic_bytes(raw: &[u8]) -> Result<String> {
-    let document = transport::decode(raw)?;
-    envelope(&document)?;
-    Ok(transport::canonical(&projection(&document)))
+    Ok(DefinitionEnvelope::decode(raw)?.canonical())
 }
 
 pub fn inspect(raw: &[u8], resources: &[Resource<'_>]) -> Result<Inspected> {
@@ -216,7 +268,7 @@ pub fn inspect(raw: &[u8], resources: &[Resource<'_>]) -> Result<Inspected> {
         return Err(Error::ContractUnsupported);
     }
     let graph = model::Graph::read(body)?;
-    let canonical = transport::canonical(&projection(&document));
+    let canonical = canonical_definition(&document);
     let revision = digest(canonical.as_bytes());
     if document["revision"] != revision {
         return Err(Error::Revision);

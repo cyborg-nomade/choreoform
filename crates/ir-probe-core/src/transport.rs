@@ -3,6 +3,7 @@
 
 use crate::{Error, Result};
 use serde_json::{Map, Value};
+use std::io::{self, Write};
 
 pub const MAX_BYTES: usize = 1024 * 1024;
 pub const MAX_DEPTH: usize = 64;
@@ -173,29 +174,98 @@ impl Parser<'_> {
 
 /// JCS for the IR's restricted integer-only JSON domain (not general float JCS).
 /// Private: callers cannot bypass strict decoding with arbitrary serde Values.
+#[cfg(test)]
 pub(crate) fn canonical(value: &Value) -> String {
+    let mut bytes = Vec::new();
+    write_canonical(value, &mut bytes).expect("admitted value and in-memory writer");
+    String::from_utf8(bytes).expect("JSON is UTF-8")
+}
+
+/// Sort borrowed members by UTF-16, including projections without cloning bodies.
+pub(crate) fn canonical_members(members: Vec<(&str, &Value)>) -> String {
+    let mut bytes = Vec::new();
+    write_members(members, &mut bytes).expect("admitted members and in-memory writer");
+    String::from_utf8(bytes).expect("JSON is UTF-8")
+}
+
+fn write_members(mut members: Vec<(&str, &Value)>, out: &mut impl Write) -> io::Result<()> {
+    members.sort_by(|(a, _), (b, _)| a.encode_utf16().cmp(b.encode_utf16()));
+    out.write_all(b"{")?;
+    for (i, (key, value)) in members.into_iter().enumerate() {
+        if i > 0 {
+            out.write_all(b",")?;
+        }
+        serde_json::to_writer(&mut *out, key).map_err(io::Error::other)?;
+        out.write_all(b":")?;
+        write_canonical(value, out)?;
+    }
+    out.write_all(b"}")
+}
+
+fn write_canonical(value: &Value, out: &mut impl Write) -> io::Result<()> {
     match value {
         Value::Object(map) => {
-            let mut keys: Vec<_> = map.keys().collect();
-            keys.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
-            let fields: Vec<_> = keys
-                .into_iter()
-                .map(|key| {
-                    format!(
-                        "{}:{}",
-                        serde_json::to_string(key).expect("string serialization"),
-                        canonical(&map[key])
-                    )
-                })
-                .collect();
-            format!("{{{}}}", fields.join(","))
+            write_members(map.iter().map(|(k, v)| (k.as_str(), v)).collect(), out)
         }
-        Value::Array(list) => format!(
-            "[{}]",
-            list.iter().map(canonical).collect::<Vec<_>>().join(",")
-        ),
-        _ => serde_json::to_string(value).expect("decoded JSON serialization"),
+        Value::Array(list) => {
+            out.write_all(b"[")?;
+            for (i, value) in list.iter().enumerate() {
+                if i > 0 {
+                    out.write_all(b",")?;
+                }
+                write_canonical(value, out)?;
+            }
+            out.write_all(b"]")
+        }
+        _ => serde_json::to_writer(out, value).map_err(io::Error::other),
     }
+}
+
+/// In-memory construction cannot contain duplicate keys or surrogate strings,
+/// but still must check numbers, whole-envelope depth and exact encoded size.
+/// Private so only checked constructors can establish the admission invariant.
+pub(crate) fn admit_value(value: &Value) -> Result<()> {
+    fn walk(value: &Value, depth: usize) -> Result<()> {
+        if depth > MAX_DEPTH {
+            return Err(Error::Depth);
+        }
+        match value {
+            Value::Object(map) => {
+                if depth == MAX_DEPTH && !map.is_empty() {
+                    return Err(Error::Depth);
+                }
+                for value in map.values() {
+                    walk(value, depth + 1)?;
+                }
+            }
+            Value::Array(list) => {
+                for value in list {
+                    walk(value, depth + 1)?;
+                }
+            }
+            Value::Number(number) => {
+                if number.is_f64() {
+                    return Err(Error::NumberToken);
+                }
+                let integer = number.as_i64().ok_or(Error::IntegerRange)?;
+                if !(-MAX_INT..=MAX_INT).contains(&integer) {
+                    return Err(Error::IntegerRange);
+                }
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+    // Bound depth before invoking the recursive serializer on caller-built data.
+    walk(value, 0)?;
+    let mut counter = crate::bounded::LimitedWriter::new(io::sink(), MAX_BYTES);
+    serde_json::to_writer(&mut counter, value).map_err(|_| {
+        if counter.exceeded() {
+            Error::Size
+        } else {
+            Error::Json
+        }
+    })
 }
 
 #[cfg(test)]
