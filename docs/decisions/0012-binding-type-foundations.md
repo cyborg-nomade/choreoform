@@ -3,7 +3,7 @@
 
 # ADR-0012: Bind names and typed interfaces explicitly across closed composition boundaries
 
-**Status:** Proposed<br>
+**Status:** Accepted — working binding/type foundation<br>
 **Date:** 2026-09-15<br>
 **Decider:** Project Owner
 
@@ -132,10 +132,20 @@ implemented. The evaluation retains all forty corpus gaps and G1–G4 conditions
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved ADR-0012 and PR #16 on 2026-09-15 with all four
+recommended decisions: explicit disambiguation without implicit shadowing;
+exact anonymous structural and nominal domain-type compatibility; required
+named value parameters without implicit defaults or general generics; and
+closed, pinned, acyclic reusable composition without ambient capture.
 
-1. [ ] Resolve the four review questions and obtain approval.
-2. [ ] Mark the ADR Accepted, record approval and update index/Roadmap.
+Merge of [PR #16](https://github.com/cyborg-nomade/choreoform/pull/16) makes this
+working foundation effective. Approval covers the definition deliverable, not
+an implemented module system, executable dialect, final authoring syntax or
+closure of G1–G4. The immediate documentation and worked-evidence actions are
+complete; implementation and versioned linkage remain explicitly deferred below.
+
+1. [x] Resolve the four review questions and obtain approval.
+2. [x] Mark the ADR Accepted, record approval and update index/Roadmap.
 3. [x] Supply a precise paper specification, worked cases, compatibility map
    and explicitly limited evaluation.
 4. [ ] In the separately authorized executable-contract deliverable, specify

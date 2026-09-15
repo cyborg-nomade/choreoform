@@ -3,7 +3,7 @@
 
 # Evaluation: Binding and type foundations
 
-**Status:** Worked paper evaluation complete; owner review pending<br>
+**Status:** Worked paper evaluation complete; owner approved 2026-09-15 in PR #16<br>
 **Framework and corpus revision:** `39cebcc2401f12552a034c75a3cba3e075c8ce50`<br>
 **Plan frozen:** 2026-09-15<br>
 **Owner:** Proposal author; selection authority: Project Owner
@@ -218,7 +218,7 @@ external-link or rendered-accessibility validation.
 
 ## Follow-through
 
-- [ ] Obtain Project Owner review of the four ADR questions; record decisions.
+- [x] Obtain Project Owner review of the four ADR questions; record decisions.
 - [ ] On approval, update ADR/index/Roadmap and merge this deliverable only.
 - [ ] Convert B01–B36 into executable conformance cases with accepted contracts.
 - [ ] Review versioned source/module/linkage mappings before implementation.
@@ -252,3 +252,13 @@ targets, B01–B36 uniqueness/order, all forty unchanged inherited scenario rows
 and `git diff --check` passed. This follow-up changes prose only; no new linker
 execution, Rust/browser result or higher evidence grade is claimed. The ADR
 remains Proposed, with all previously conditional gates open.
+
+## Owner acceptance — 2026-09-15
+
+The Project Owner approved the ADR and PR with all four recommended decisions.
+The acceptance metadata, index and Roadmap now record the completed definition
+deliverable; PR #16's merge makes acceptance effective. Earlier Proposed/unchecked
+statements above describe the historical verification and review stages.
+Approval does not raise the evidence grade or close any conditional gate.
+Executable contracts, module/linkage formats, validation and representative
+authoring studies remain deferred. Pause before the next Roadmap deliverable.

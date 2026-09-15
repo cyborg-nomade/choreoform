@@ -3,7 +3,7 @@
 
 # Binding and type foundations
 
-**Status:** Proposed working foundation under [ADR-0012](../decisions/0012-binding-type-foundations.md).
+**Status:** Accepted working foundation under [ADR-0012](../decisions/0012-binding-type-foundations.md), effective upon merge of PR #16.
 Not a supported source grammar, wire format, executable dialect, or validator.
 
 This document defines semantic constraints for the next contracts. Words such

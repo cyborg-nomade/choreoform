@@ -3,7 +3,7 @@
 
 # Worked binding and interface judgments
 
-**Status:** Paper evidence for proposed [ADR-0012](../decisions/0012-binding-type-foundations.md).
+**Status:** Paper evidence for accepted [ADR-0012](../decisions/0012-binding-type-foundations.md), effective upon merge of PR #16.
 These are reasoned judgments against [the numbered rules](README.md), not
 executed tests, valid source files, complete processes, or executable contracts.
 Names, type abbreviations and arrows below are explanatory notation only.

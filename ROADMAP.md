@@ -75,9 +75,11 @@ validated, and round-tripped.
   [syntax and parser prototype](docs/text/README.md); Project Owner approved
   2026-09-08, effective upon merge of
   [PR #14](https://github.com/cyborg-nomade/choreoform/pull/14).
-- [ ] Define names, types, scopes, imports, parameters, and composition.
-  Proposed in [ADR-0012](docs/decisions/0012-binding-type-foundations.md), with
-  [rules and worked cases](docs/bindings/README.md); owner review pending.
+- [x] Define names, types, scopes, imports, parameters, and composition.
+  Accepted in [ADR-0012](docs/decisions/0012-binding-type-foundations.md), with
+  [rules and worked cases](docs/bindings/README.md); Project Owner approved
+  2026-09-15, effective upon merge of
+  [PR #16](https://github.com/cyborg-nomade/choreoform/pull/16).
   This establishes the binding and type foundations needed by the executable
   contracts below, not an implemented module system or executable type dialect.
 - [ ] Specify and obtain approval for executable type, expression, and policy
