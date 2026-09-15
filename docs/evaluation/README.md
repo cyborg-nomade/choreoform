@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## Completed evaluations
 
+- [ADR-0012 binding/type foundations](0012-binding-type-foundations.md) —
+  worked paper judgments only; owner review pending, executable contracts and
+  module/linkage formats remain open.
+
 - [ADR-0011 initial textual grammar](0011-textual-grammar.md) — bounded parser
   evidence and explicit authoring/visual limitations; bounded prototype approved
   in PR #14, with final authoring and executable completion still open.
