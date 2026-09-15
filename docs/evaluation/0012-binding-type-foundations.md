@@ -225,3 +225,30 @@ external-link or rendered-accessibility validation.
 - [ ] Carry all conditional gates and representative-user studies forward.
 
 Pause before starting executable dialect work.
+
+## PR #16 review follow-up
+
+Reviewed head `2a0a580` across all review threads, submitted review bodies and
+top-level comments; pagination was exhausted. One unresolved actionable finding
+was present, from CodeRabbit; the submitted review repeats that same finding.
+
+- **Import digest ambiguity: valid, fixed.** M1 previously left the relationship
+  between `revision` and the verified digest implicit. It now defines the pin
+  itself as the expected SHA-256 digest, requires recomputation using an explicitly
+  supported exact-format rule, and distinguishes IR semantic-projection bytes
+  from exact contract-snapshot bytes. Unknown future module hash rules fail
+  closed until approved; no second unstated digest or new module encoding is
+  introduced. B30 now identifies the actual comparison and gives worked
+  reformatting, semantic-tampering, snapshot-byte and unsupported-format checks.
+- **Rejected findings: none.** Generic bot suggestions to generate tests or use
+  its CLI are optional workflow offers, not additional defect reports; no new
+  tool or unrelated implementation was added.
+
+Verification: all 16 existing Python wire tests passed, including canonical
+projection invariance, semantic changes, frozen snapshot integrity and corrupt
+contract refusal. The independent text oracle passed three IR/schema/JCS
+comparisons, three stable export cycles and seven CLI refusals. Relative link
+targets, B01–B36 uniqueness/order, all forty unchanged inherited scenario rows,
+and `git diff --check` passed. This follow-up changes prose only; no new linker
+execution, Rust/browser result or higher evidence grade is claimed. The ADR
+remains Proposed, with all previously conditional gates open.

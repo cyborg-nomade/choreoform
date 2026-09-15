@@ -121,13 +121,34 @@ silently reinterpret those obligations as name resolution.
 | B27 | `List<Text>` vs `Option<Text>` | Unequal constructors | T2 |
 | B28 | Named domain type versus its anonymous underlying shape | Unequal; a transparent alias would instead expand | T1–T2 |
 | B29 | Composed versus decomposed Unicode spelling in a binding | Distinct names; no implicit normalization; frontend should expose potential confusion | N2 |
-| B30 | Registry entry has correct ID but wrong digest or kind | Reject before using declarations | M1 |
+| B30 | Correct ID, but recomputed format-defined SHA-256 differs from the import's `revision`, or artifact kind/version is unsupported or wrong | Reject before using declarations; never trust the registry key/self-reported checksum or guess the hash input | M1 |
 | B31 | Direct module exists but its transitive dependency is absent | Reject closure; do not fetch from a URI | M1 |
 | B32 | Alias A refers to itself as a type, or a record recursively contains itself | Reject cyclic descriptor/alias | T1 |
 | B33 | Present `Option<T>` value is explicitly absent, on a permitted input | Initialized typed value; not a missing argument | T4, P1 |
 | B34 | Same label, different stable declaration ID | Different identity; never merge based on display text | N1 |
 | B35 | Imported type revision changes while an instance runs | Existing binding unchanged; upgrade requires new validated definition, not instance migration | M4 |
 | B36 | Known type, but an unenforceable protection policy on its transfer | Refuse admission/transfer; type success cannot waive policy | T2, P3 |
+
+### B30 hash-domain checks
+
+For each supported resource, the expected digest is the importing reference's
+`revision`; there is no unstated second expected digest. Apply these worked
+checks before exposing its declarations:
+
+- Reformat an otherwise valid definition IR or change only its annotations:
+  the semantic projection and expected revision stay equal. This passes the
+  digest check, not necessarily all other admission checks.
+- Change its semantic body while keeping both the import pin and the artifact's
+  self-reported revision unchanged: recomputation differs, so reject even if
+  the registry indexes those bytes under the expected pin.
+- Change a byte or final newline of an existing contract snapshot: its exact-byte
+  digest must match the pin; changed bytes cannot be silently reformatted back
+  or checked with the definition-IR projection.
+- Supply a proposed module with no supported exact-format hash rule: reject as
+  unsupported even if its producer supplies a plausible SHA-256 string.
+
+These are paper expectations using M1's artifact-specific rules. Existing wire
+regressions exercise the first three hash distinctions, not a new module linker.
 
 ## Perturbation accounting and future test obligations
 

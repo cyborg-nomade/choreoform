@@ -187,9 +187,32 @@ containing an account name or URI grants no authority.
 **M1 — Imports are immutable resources, not commands.** A proposed module is a
 finite set of declarations, explicit exports and exact dependency references.
 Imports name a local alias, expected artifact kind and immutable `{id, revision}`.
-The artifact's own format specifies its revision calculation. Definition IR
-uses its accepted semantic projection; type/module contract bytes need their
-own specified hash domain. Never assume every `revision` hashes whole-file bytes.
+`revision` is the expected digest itself: `sha256:` followed by 64 lowercase
+hex digits, not a version label or a lookup key for another expected digest.
+No separate expected content digest is implied by this import reference.
+
+Before using declarations, the resolver must identify a supported artifact
+kind and exact format version, check the referenced identity, and recompute
+`sha256:` plus SHA-256 of that format's specified hash input. Compare the result
+with the **import reference's** `revision`, not merely a registry key or an
+artifact's self-reported checksum. The calculation rule comes from the resolver's
+explicitly supported format contract, not a rule supplied by untrusted content.
+
+The existing hash inputs are deliberately different:
+
+- Definition IR 0.1.0: UTF-8 JCS bytes of exactly `format`, `version`, `kind`,
+  and `body`, without a trailing newline, as specified in
+  [IR section 2](../ir/definition-v0.1.md#2-transport-and-envelope). Exclude
+  `revision` and `annotations`; retain the existing envelope/revision checks.
+- Existing immutable contract snapshots: every stored byte, including notices
+  and the final newline, without reformatting or line-ending conversion, as
+  specified by [the snapshot contract](../ir/contracts/README.md).
+
+New type/module artifact formats must obtain an approved exact hash-input and
+canonicalization rule before they can be supported by a linker. Until then,
+reject them as unsupported; do not guess whole-file hashing or reuse the IR
+projection. Any future transport-file checksum is a separate explicitly
+specified check and cannot replace comparison with the pinned semantic revision.
 
 The host supplies a closed local resource registry. Resolution verifies expected
 identity, kind and digest for every transitive dependency. Missing, unsupported,
