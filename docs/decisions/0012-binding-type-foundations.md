@@ -33,7 +33,7 @@ controlled English, not permanent JSON authoring.
 
 ## Decision
 
-Propose the [binding and type foundation](../bindings/README.md) as the working
+Adopt the [binding and type foundation](../bindings/README.md) as the working
 semantic constraints for subsequent Phase 1 deliverables. It defines:
 
 - three separate concepts: semantic declaration identity, source binding name,
@@ -63,7 +63,7 @@ implementation. No import is hidden in annotations, strings or opaque payloads
 and then treated as executable. Unknown or unimplemented contracts still block
 semantic admission. Existing frozen fixture revisions remain unchanged.
 
-### Review questions and recommended defaults
+### Resolved review questions — approved 2026-09-15
 
 1. **Names:** require explicit disambiguation rather than implicit shadowing.
    This catches accidental rebinding during edits, at the cost of more visible
@@ -83,8 +83,8 @@ semantic admission. Existing frozen fixture revisions remain unchanged.
    caller cells, actors or capabilities. Initial imports and composition are
    acyclic; repetition uses the accepted repeat/fan-out model.
 
-These are proposals for owner review, not choices already approved by starting
-this deliverable. Accepting them does not select final text/visual notation.
+The Project Owner approved these four decisions. Their acceptance does not
+select final text/visual notation or claim the rules are implemented.
 
 ## Options considered
 
