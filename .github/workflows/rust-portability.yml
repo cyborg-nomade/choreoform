@@ -30,6 +30,7 @@ jobs:
           cargo clippy -p choreoform-portability --lib --target wasm32-unknown-unknown --locked -- -D warnings
           cargo build -p choreoform-portability --lib --release --target wasm32-unknown-unknown --locked
           cargo clippy -p choreoform-text-prototype --lib --target wasm32-unknown-unknown --locked -- -D warnings
+          cargo clippy -p choreoform-contract-probe --lib --target wasm32-unknown-unknown --locked -- -D warnings
       - name: Native report and independent wire oracle
         run: |
           cargo run -p choreoform-portability --locked -- suite target/native.json

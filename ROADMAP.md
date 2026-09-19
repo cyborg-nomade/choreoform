@@ -87,6 +87,9 @@ validated, and round-tripped.
   operations, purity/dependencies, authority/protection, time, effects,
   cancellation, reconciliation, and settlement. Include worked positive and
   negative semantic cases; a JSON slot or prose label is not an implementation.
+  Proposed in [ADR-0013](docs/decisions/0013-executable-dialect-contracts.md), with
+  [contract rules and bounded evidence](docs/dialects/README.md); owner review
+  pending. The subset probe is not the complete validator or reference engine.
 - [ ] Design and evaluate the **near-plain-English authoring language** as a
   dedicated ADR/PR. Aim for the broadest practical accessibility with a precise,
   deterministic grammar (controlled English), not unrestricted natural-language
