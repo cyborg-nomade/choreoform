@@ -219,10 +219,31 @@ core IR/semantics must be explicit rather than smuggled into dialect support.
 ## Follow-through
 
 - [x] Owner review of ADR-0013 and its four recommended decisions.
-- [ ] After approval, publish/register the exact accepted snapshot and update
+- [x] After approval, publish/register the exact accepted snapshot and update
   status/index/Roadmap; retain illustrative artifacts unchanged.
 - [ ] Translate every paper rule into validator/conformance tests and full
   benchmarks in separately authorized deliverables.
 - [ ] Obtain real host contract/enforcement and representative-user evidence.
 
 Pause before the next Roadmap item.
+
+## Owner acceptance and publication — 2026-09-21
+
+The Project Owner approved ADR-0013 and PR #17 with all four recommended
+decisions. Acceptance/status records and the Roadmap now reflect the completed
+contract-definition deliverable, effective on merge. This does not upgrade the
+evidence grades or close G1–G4, full validation or the aggregate executable-IR gate.
+
+The [published snapshot registry](../ir/contracts/README.md#adr-0013-publication)
+pins `sha256:323e6a1333efe412088e52e2fda5cf37c4651dfff3f36b284d95020ea2753bab` from accepted source commit
+`8f71da41233dfc0834118c54bf1ab8b7110ccc79`. Framing and digest verification have
+their own publication-only registry/check, not new executable support.
+CodeRabbit's latest substantive review found no actionable issues; its generic
+docstring-percentage warning is not a repository merge requirement and does not
+justify unrelated filler comments.
+
+Publication verification on 2026-09-21: all four snapshot integrity test groups,
+16 Python wire tests, and the text oracle passed. All 40 Rust unit/integration
+tests and three compile-fail doc tests passed again, as did formatting and
+`git diff --check`. Each framed source was also compared byte-for-byte with the
+accepted source commit; existing illustrative snapshots and bindings are unchanged.

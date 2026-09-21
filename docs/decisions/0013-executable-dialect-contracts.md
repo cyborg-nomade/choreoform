@@ -144,8 +144,9 @@ aggregate executable-IR completion gate remain open.
 
 1. [x] Obtain approval and resolve the four review questions.
 2. [x] Mark Accepted, record approval and update index/Roadmap.
-3. [ ] Publish/register the approved content-addressed suite snapshot using the
+3. [x] Publish/register the approved content-addressed suite snapshot using the
    exact declared hash domain; never edit old illustrative snapshots.
+   See the [artifact registry](../ir/contracts/README.md#adr-0013-publication).
 4. [ ] Convert remaining paper rules into validator/conformance tests and full
    benchmark fixtures in their separately authorized deliverables.
 5. [ ] Obtain actual supported host contracts/adapter evidence before execution;
