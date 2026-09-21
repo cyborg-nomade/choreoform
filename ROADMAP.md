@@ -82,14 +82,16 @@ validated, and round-tripped.
   [PR #16](https://github.com/cyborg-nomade/choreoform/pull/16).
   This establishes the binding and type foundations needed by the executable
   contracts below, not an implemented module system or executable type dialect.
-- [ ] Specify and obtain approval for executable type, expression, and policy
+- [x] Specify and obtain approval for executable type, expression, and policy
   dialect contracts replacing the illustrative payloads: exact values and
   operations, purity/dependencies, authority/protection, time, effects,
   cancellation, reconciliation, and settlement. Include worked positive and
   negative semantic cases; a JSON slot or prose label is not an implementation.
-  Proposed in [ADR-0013](docs/decisions/0013-executable-dialect-contracts.md), with
-  [contract rules and bounded evidence](docs/dialects/README.md); owner review
-  pending. The subset probe is not the complete validator or reference engine.
+  Accepted in [ADR-0013](docs/decisions/0013-executable-dialect-contracts.md), with
+  [contract rules and bounded evidence](docs/dialects/README.md); Project Owner
+  approved 2026-09-21, effective upon merge of
+  [PR #17](https://github.com/cyborg-nomade/choreoform/pull/17).
+  The subset probe is not the complete validator or reference engine.
 - [ ] Design and evaluate the **near-plain-English authoring language** as a
   dedicated ADR/PR. Aim for the broadest practical accessibility with a precise,
   deterministic grammar (controlled English), not unrestricted natural-language

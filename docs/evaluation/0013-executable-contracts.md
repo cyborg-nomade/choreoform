@@ -3,7 +3,7 @@
 
 # Evaluation: Initial executable dialect contracts
 
-**Status:** Bounded evaluation complete; owner review pending<br>
+**Status:** Bounded evaluation complete; owner approved 2026-09-21 in PR #17<br>
 **Plan frozen:** 2026-09-19<br>
 **Framework/corpus baseline:** `3e5f79fe23bb5b9ce2490d50fe9c8db376fd7d7a`<br>
 **Owner:** Proposal author; decision authority: Project Owner
@@ -218,7 +218,7 @@ core IR/semantics must be explicit rather than smuggled into dialect support.
 
 ## Follow-through
 
-- [ ] Owner review of ADR-0013 and its four recommended decisions.
+- [x] Owner review of ADR-0013 and its four recommended decisions.
 - [ ] After approval, publish/register the exact accepted snapshot and update
   status/index/Roadmap; retain illustrative artifacts unchanged.
 - [ ] Translate every paper rule into validator/conformance tests and full

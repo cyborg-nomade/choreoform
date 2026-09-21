@@ -3,7 +3,7 @@
 
 # Positive and negative contract evidence
 
-**Status:** Proposed ADR-0013 evidence, not executable process fixtures.
+**Status:** Accepted ADR-0013 evidence upon merge of PR #17, not executable process fixtures.
 Rules: [values/expressions](values-expressions.md), [policies](policies.md).
 “C” means the exact selected pure judgment runs in the
 [Rust probe tests](../../tools/contract-probe/src/tests.rs). “B” means worked

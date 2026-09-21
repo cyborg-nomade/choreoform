@@ -1,10 +1,11 @@
 <!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# Initial executable-contract proposal
+# Initial executable-contract specification
 
-**Status:** Proposed under [ADR-0013](../decisions/0013-executable-dialect-contracts.md).
-No artifact in this directory is an accepted immutable contract yet.
+**Status:** Accepted under [ADR-0013](../decisions/0013-executable-dialect-contracts.md), effective upon merge of PR #17.
+The [artifact registry](../ir/contracts/README.md) identifies the immutable
+snapshot; files in this directory are its editorial source, not moving bindings.
 
 “Executable” here means a specified value judgment, evaluation rule or state
 transition with checkable positive/negative cases. It does not mean today's
@@ -12,15 +13,15 @@ parser/probe can admit these definitions or that a process engine exists.
 
 Read [types and expressions](values-expressions.md), [policies](policies.md),
 [worked cases](cases.md) and the [evidence limitations](../evaluation/0013-executable-contracts.md).
-The proposed first profile is deliberately restrictive. Unsupported forms fail
+The initial profile is deliberately restrictive. Unsupported forms fail
 closed; they do not become host-language callbacks or quietly defaulted policies.
 The JSON shapes below are interchange notation, **not the near-English authoring
 language**. Final authoring and visual representations remain separate decisions.
 
 ## Contract identity and publication
 
-The proposal is one coordinated suite containing three dialect roles: types,
-expressions, and policies. Proposed artifact identity:
+The contract is one coordinated suite containing three dialect roles: types,
+expressions, and policies. Artifact identity:
 `urn:choreoform:contracts:core-profile:0.1.0`. The role is selected by the IR
 position and the payload discriminator, not by a suggestive local dialect alias.
 Each local alias in `body.dialects` still binds an exact `{id, revision}`. A suite
@@ -39,8 +40,8 @@ and probe code are evidence, not part of the contract hash domain.
 Freeze that accepted snapshot, add it to the explicit local artifact registry,
 and retain it unchanged thereafter. Subsequent editorial source edits do not
 rebind definitions. New semantic rules need a new contract version and snapshot;
-new whole-file bytes need a new digest. In this proposal PR the files remain
-editable and no final digest is promised. No reader may accept the proposed URN
+new whole-file bytes need a new digest. The registry pins the accepted snapshot;
+editorial source files remain editable without altering that binding. No reader may accept the URN
 without the exact approved snapshot and implemented contract support.
 
 This does not replace or reinterpret the existing illustrative dialect artifact.

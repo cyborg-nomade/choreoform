@@ -3,7 +3,7 @@
 
 # Policy decisions and transition obligations
 
-**Status:** Proposed. [Common notation and admission](README.md) and
+**Status:** Accepted with ADR-0013 upon merge of PR #17. [Common notation and admission](README.md) and
 [expression rules](values-expressions.md) apply throughout.
 
 Each existing IR policy record still has `scope`, `dialect`, `body`. Its body
@@ -346,7 +346,7 @@ scheduling but cannot shrink membership or erase pending children.
 
 ## P8. Boundaries still requiring evidence
 
-These closed rules are the proposed initial policy vocabulary, not a supported
+These closed rules are the accepted initial policy vocabulary, not a supported
 engine. A target must support every used contract, provider/clock/calendar trust
 boundary, transfer and invariant check or refuse. Where a host contract is not
 yet supplied, that definition is not executable. The first profile deliberately

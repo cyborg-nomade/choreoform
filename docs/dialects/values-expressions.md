@@ -3,7 +3,7 @@
 
 # Value and pure-expression contracts
 
-**Status:** Proposed; publication and common notation in [the suite](README.md).
+**Status:** Accepted with ADR-0013 upon merge of PR #17; publication and common notation in [the suite](README.md).
 
 ## V1. Type descriptors and values
 

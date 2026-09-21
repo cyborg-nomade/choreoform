@@ -3,7 +3,7 @@
 
 # ADR-0013: Specify a closed initial type, expression and policy profile
 
-**Status:** Proposed<br>
+**Status:** Accepted — initial executable contract specification<br>
 **Date:** 2026-09-19<br>
 **Decider:** Project Owner
 
@@ -33,7 +33,7 @@ unless it says exactly when retry is eligible and what evidence is required.
 
 ## Decision
 
-Propose the [initial contract suite](../dialects/README.md):
+Adopt the [initial contract suite](../dialects/README.md):
 
 - signed-64 integer coefficients encoded as canonical decimal strings, fixed
   decimal scales 0..18, no floats/implicit rounding;
@@ -61,7 +61,7 @@ authority; its synthetic input facts are not a security API. The full validator,
 atomic engine and host adapters remain separate Roadmap work. Accepting this
 contract would not certify their existence or close Phase 1's executable-IR gate.
 
-### Review questions and recommended decisions
+### Resolved review questions — approved 2026-09-21
 
 1. **Exact arithmetic:** start with bounded signed-64 coefficients and explicit
    exact decimal rescaling; reject overflow/inexact results. This is easy to
@@ -80,7 +80,7 @@ contract would not certify their existence or close Phase 1's executable-IR gate
    arithmetic, fault-data ports, general race resolvers/declassification and
    provider-specific extensions need later reviewed contract support.
 
-These are recommendations, not acceptance. The initial profile is restrictive
+The Project Owner approved these four decisions. The initial profile is restrictive
 and does not claim all corpus paths are executable. The
 [worked cases](../dialects/cases.md) separate reproduced functions from paper
 transition reasoning and retain explicit gaps.
@@ -89,7 +89,7 @@ transition reasoning and retain explicit gaps.
 
 | Option | Benefits | Costs/risks | Recommendation |
 | --- | --- | --- | --- |
-| Closed typed/declarative suite | Inspectable shapes; deterministic dependency rules; portable bounded checks | Verbosity and restricted integrations; requires complete validator/host obligations | Propose first |
+| Closed typed/declarative suite | Inspectable shapes; deterministic dependency rules; portable bounded checks | Verbosity and restricted integrations; requires complete validator/host obligations | Adopt initially |
 | Embedded host-language code | Familiar rich computation and libraries | Ambient effects, divergent runtimes, weak static visibility and visual parity | Reject as core contract |
 | General policy VM/plugin ABI now | More extensibility and reusable policy programs | Sandbox, termination, dependency/authority analysis and compatibility problems before evidence | Defer |
 | Keep opaque illustrative payloads | Lowest immediate effort; existing examples unchanged | Does not satisfy executable contract deliverable | Retain only as historical non-executable fixtures |
@@ -133,10 +133,17 @@ the aggregate completion gate or final language selection complete.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved ADR-0013 and PR #17 on 2026-09-21 with all four
+recommended decisions: bounded exact arithmetic; conservative information flow
+without generic declassification; explicit pinned time/retry evidence; and a
+closed typed policy vocabulary. Merge of
+[PR #17](https://github.com/cyborg-nomade/choreoform/pull/17) makes this decision
+effective. Approval covers the contract specification and bounded evidence, not
+a complete validator, trusted host implementation or engine. G1–G4 and the
+aggregate executable-IR completion gate remain open.
 
-1. [ ] Obtain approval and resolve the four review questions.
-2. [ ] Mark Accepted, record approval and update index/Roadmap.
+1. [x] Obtain approval and resolve the four review questions.
+2. [x] Mark Accepted, record approval and update index/Roadmap.
 3. [ ] Publish/register the approved content-addressed suite snapshot using the
    exact declared hash domain; never edit old illustrative snapshots.
 4. [ ] Convert remaining paper rules into validator/conformance tests and full
