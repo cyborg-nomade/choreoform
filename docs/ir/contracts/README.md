@@ -15,7 +15,7 @@ support to the Rust probe, fixture checker or a runtime.
 | --- | --- | --- |
 | `urn:choreoform:semantics:adr-0008` | [Semantic contract snapshot](sha256-0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141.txt) | `docs/decisions/0008-core-process-semantics.md` at `eeddfb43547ac766334e6700d7fb02ef33bf8dde` |
 | `urn:choreoform:examples:illustrative-dialect` | [Illustrative dialect snapshot](sha256-282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9.txt) | `docs/ir/examples.md` at `102f796dec0bc51c4d15e4dfd3e9bed4bc0d47af` |
-| `urn:choreoform:contracts:core-profile:0.1.0` | [Accepted executable-contract specification](sha256-323e6a1333efe412088e52e2fda5cf37c4651dfff3f36b284d95020ea2753bab.txt) | Three `docs/dialects/` sources at `8f71da41233dfc0834118c54bf1ab8b7110ccc79`, framed in the order specified below |
+| `urn:choreoform:contracts:core-profile:0.1.0` | [Accepted executable-contract specification](sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt) | Three `docs/dialects/` sources at `8ac89587090bc57145da615e4add53548cd661bc`, framed in the order specified below |
 
 Hash every byte, including the original notices and final newline. The local
 `.gitattributes` disables line-ending conversion for these snapshots. The `.txt`
@@ -46,3 +46,11 @@ merge makes acceptance effective. Integrity and framing are checked in CI with
 bytes, not today's editorial sources. It tests corruption, unknown pins and
 malformed framing, but cannot certify type/policy enforcement. The existing
 illustrative artifacts, registry and fixture revisions remain unchanged.
+
+The earlier pre-merge [publication candidate](sha256-323e6a1333efe412088e52e2fda5cf37c4651dfff3f36b284d95020ea2753bab.txt)
+is retained byte-for-byte for provenance but is not the accepted registered pin.
+Its source commit was `8f71da41233dfc0834118c54bf1ab8b7110ccc79`. Final review
+identified a misleading integer-to-decimal sentence; the registered snapshot
+clarifies the already-closed AST: integer-to-decimal conversion is unsupported,
+and nominal wrapping requires an exact representation-type match. No operation
+or coercion was added. Changed source bytes require the new digest above.

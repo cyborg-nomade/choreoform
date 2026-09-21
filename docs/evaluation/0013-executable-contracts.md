@@ -235,10 +235,10 @@ contract-definition deliverable, effective on merge. This does not upgrade the
 evidence grades or close G1–G4, full validation or the aggregate executable-IR gate.
 
 The [published snapshot registry](../ir/contracts/README.md#adr-0013-publication)
-pins `sha256:323e6a1333efe412088e52e2fda5cf37c4651dfff3f36b284d95020ea2753bab` from accepted source commit
-`8f71da41233dfc0834118c54bf1ab8b7110ccc79`. Framing and digest verification have
+pins `sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58` from accepted source commit
+`8ac89587090bc57145da615e4add53548cd661bc`. Framing and digest verification have
 their own publication-only registry/check, not new executable support.
-CodeRabbit's latest substantive review found no actionable issues; its generic
+CodeRabbit's original substantive review found no actionable issues; its generic
 docstring-percentage warning is not a repository merge requirement and does not
 justify unrelated filler comments.
 
@@ -247,3 +247,10 @@ Publication verification on 2026-09-21: all four snapshot integrity test groups,
 tests and three compile-fail doc tests passed again, as did formatting and
 `git diff --check`. Each framed source was also compared byte-for-byte with the
 accepted source commit; existing illustrative snapshots and bindings are unchanged.
+
+The final publication review raised two valid wording issues: the Roadmap must
+not imply migration of illustrative payloads, and `wrap` cannot convert Integer
+to Decimal. Both are corrected without changing the closed AST or adding an
+operation. The corrected source commit and registered digest above supersede
+the pre-merge publication candidate, whose bytes remain intact for provenance.
+The publication integrity tests were rerun against the corrected snapshot.

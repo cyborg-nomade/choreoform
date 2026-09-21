@@ -7,14 +7,14 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SUITE_ID = "urn:choreoform:contracts:core-profile:0.1.0"
-REVISION = "sha256:323e6a1333efe412088e52e2fda5cf37c4651dfff3f36b284d95020ea2753bab"
+REVISION = "sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58"
 PATHS = (
     "docs/dialects/README.md",
     "docs/dialects/values-expressions.md",
     "docs/dialects/policies.md",
 )
 REGISTRY = {
-    (SUITE_ID, REVISION): ROOT / "docs/ir/contracts/sha256-323e6a1333efe412088e52e2fda5cf37c4651dfff3f36b284d95020ea2753bab.txt"
+    (SUITE_ID, REVISION): ROOT / "docs/ir/contracts/sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt"
 }
 
 
