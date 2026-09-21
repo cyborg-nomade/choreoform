@@ -28,6 +28,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0010](0010-initial-implementation-language.md) | Accepted | Use Rust for the initial shared semantic implementation |
 | [0011](0011-initial-textual-grammar.md) | Accepted | Prototype an explicit declaration-oriented textual grammar |
 | [0012](0012-binding-type-foundations.md) | Accepted | Bind names and typed interfaces explicitly across closed composition boundaries |
+| [0013](0013-executable-dialect-contracts.md) | Accepted | Specify a closed initial type, expression and policy profile |
 
 ## When an ADR is required
 

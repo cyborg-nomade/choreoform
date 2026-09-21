@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## Completed evaluations
 
+- [ADR-0013 executable contracts](0013-executable-contracts.md) — accepted closed
+  rules and selected pure-function evidence; owner approved 2026-09-21 in PR #17, full validator,
+  host enforcement and complete executable benchmarks remain open.
+
 - [ADR-0012 binding/type foundations](0012-binding-type-foundations.md) —
   worked paper judgments only; owner approved 2026-09-15 in PR #16, executable contracts and
   module/linkage formats remain open.
