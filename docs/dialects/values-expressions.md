@@ -105,8 +105,8 @@ Each row gives the exact object keys. E means another AST; T a descriptor.
 
 No function calls, effect requests, random values, current clock, filesystem,
 network, environment, reflection, unknown operators, implicit casts or loops.
-An integer-to-decimal conversion can explicitly `wrap` into an appropriate
-domain representation only if types match; it is not a magical coercion.
+Integer-to-decimal conversion is unsupported. `wrap` only constructs a named
+value when the operand exactly matches its representation type.
 Named unwrap/wrap never relaxes protection or authority.
 
 ## E2. Static dependencies and binding
