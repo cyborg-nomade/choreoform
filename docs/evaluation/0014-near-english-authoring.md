@@ -3,7 +3,7 @@
 
 # Evaluation: Near-English authoring candidates
 
-**Status:** In progress; paper comparison prepared, human evaluation not run<br>
+**Status:** In progress; provisional direction approved 2026-09-22, human evaluation not run<br>
 **Plan frozen:** 2026-09-22 in `5b5c34210cf5b77faab3213fb464d641884e031f`<br>
 **Framework/corpus baseline:** `8a90c092fec740436ad248e88ca864f3ccead4fd`<br>
 **Owner/evaluator:** Proposal author; decision authority: Project Owner
@@ -184,8 +184,19 @@ to executable or representative-user evidence.
 
 ## Follow-through
 
-- [ ] Owner reviews ADR-0014's four questions and provisional scope.
+- [x] Owner reviews ADR-0014's four questions and provisional scope.
 - [ ] Full grammar/binding-package specification and complete source/IR benchmarks.
 - [ ] Independent task-material review and coordinated participant study.
 - [ ] Reassess evidence/gates before final selection or Roadmap completion.
 - [ ] Obtain permission before starting the visual-notation item.
+
+## Owner acceptance — 2026-09-22
+
+The Project Owner approved ADR-0014 and PR #18 with all four recommendations,
+preferring Candidate A as shorter and simpler. This accepts the provisional
+working direction upon merge, not final syntax, source compatibility or the
+completion of the authoring-language Roadmap item. B remains the matched study
+alternative. The owner's stated preference does not change the frozen desk
+scores, constitute independent scoring or supply representative-user evidence.
+Full grammar/binding-package specifications, complete source/IR benchmarks and
+the study remain outstanding; G1–G4 and the aggregate Phase 1 gate remain open.

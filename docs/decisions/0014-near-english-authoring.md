@@ -3,7 +3,7 @@
 
 # ADR-0014: Develop structured English sentences as a provisional authoring direction
 
-**Status:** Proposed<br>
+**Status:** Accepted — provisional authoring direction<br>
 **Date:** 2026-09-22<br>
 **Decider:** Project Owner
 
@@ -38,7 +38,7 @@ compiler was built, and all three full lowerable benchmarks retain gaps.
 
 ## Decision
 
-Propose **Candidate A: named steps with structured sentences and explicit outcome
+Adopt **Candidate A: named steps with structured sentences and explicit outcome
 clauses**, as the reversible direction for the next iteration of this same
 authoring deliverable. Retain Candidate B's local guarded rules as the matched
 study alternative. Do not select a final language or promise source compatibility.
@@ -56,15 +56,15 @@ operations. Missing or stale bindings must not cause guessed identity recovery.
 The companion format and complete grammar need a reviewed specification and
 tests before implementation can claim identity-preserving lowering.
 
-G1–G4 remain conditional. Approval would authorize a **working direction only**;
+G1–G4 remain conditional. Approval authorizes a **working direction only**;
 the Roadmap item stays open until complete lowerable benchmark and representative-
-user evidence is supplied. It would not authorize automatically advancing to
+user evidence is supplied. It does not authorize automatically advancing to
 visual notation or the next Roadmap deliverable. No accepted IR/contract is
 superseded, no new runtime feature is added, and the old parser remains unchanged.
 
 ## Options considered
 
-| Option | Advantages | Costs and risks | Proposed outcome |
+| Option | Advantages | Costs and risks | Outcome |
 | --- | --- | --- | --- |
 | A: structured sentences and named steps | Local action/outcome structure; distinct verbs for human/effect/evidence; no global firing implication | Repeated names, quotes and explicit policy detail are verbose; usability untested | Develop provisionally, test with people |
 | B: local `when ... then ...` rules | Uniform condition/action reading; may suit rule-oriented authors | Repeated “when”; may imply persistent triggers or first-rule priority absent from semantics | Retain as matched study alternative |
@@ -75,7 +75,7 @@ The A/B comparison is paper-level; no measured implementation or human ranking
 exists. Quoted names and exact keywords trade naturalness for deterministic
 boundaries. The user study may favor different wording, fewer quotes, or B.
 
-## Review questions and recommendations
+## Resolved review questions — approved 2026-09-22
 
 1. **Degree of English freedom:** use a closed controlled-English grammar with
    quoted names initially, not pronoun/synonym/intent inference. Test less
@@ -123,10 +123,20 @@ critical errors even if a later candidate changes the preferred wording.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
+The Project Owner approved ADR-0014 and PR #18 on 2026-09-22 with all four
+recommendations, preferring Candidate A because its form is shorter and simpler.
+This is the owner's design judgment, not a measured representative-user result.
+The accepted scope is controlled English with exact quoted names initially,
+Candidate A as the provisional direction with B retained for matched study,
+portable tool-managed identity bindings, and an unchanged completion bar.
+Merge of [PR #18](https://github.com/cyborg-nomade/choreoform/pull/18) makes this
+working-direction decision effective. Final syntax, source compatibility,
+complete lowering and accessibility remain unproven; the Roadmap item and G1–G4
+stay open. Further implementation of this same item requires its own review;
+no next Roadmap item is started by this acceptance.
 
-1. [ ] Review the four questions and the bounded recommendation.
-2. [ ] Record approval/status/index without closing the entire authoring item.
+1. [x] Review the four questions and the bounded recommendation.
+2. [x] Record approval/status/index without closing the entire authoring item.
 3. [ ] Complete and test grammar/binding-package specifications and full source/IR
    benchmark representations in further authorized work on this item.
 4. [ ] Coordinate representative participants; run and review the study results.

@@ -18,7 +18,8 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 - [ADR-0014 near-English authoring](0014-near-english-authoring.md) — two worked
   paper surfaces, complete-case walkthroughs with explicit lowerability gaps,
-  and a proposed study protocol. No participant results or final syntax selection.
+  and a proposed study protocol. Candidate A approved as the provisional direction
+  on 2026-09-22 in PR #18. No participant results or final syntax selection.
 
 ## Completed evaluations
 

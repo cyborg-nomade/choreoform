@@ -3,7 +3,8 @@
 
 # Near-English authoring: a working design, not final syntax
 
-**Status:** Proposed in [ADR-0014](../decisions/0014-near-english-authoring.md).
+**Status:** Accepted working direction in [ADR-0014](../decisions/0014-near-english-authoring.md),
+owner approved 2026-09-22, effective upon merge of PR #18; not final syntax.
 Nothing here is accepted by the current parser. The Roadmap deliverable remains
 open: representative-user evaluation, complete lowerable benchmarks and visual
 parity have not happened.
@@ -11,7 +12,7 @@ parity have not happened.
 The aim is to let someone describe a process using readable sentences and familiar
 names, without writing JSON or managing wire IDs. The computer must still know
 exactly which decision, revision, authority and effect each sentence describes.
-We propose **structured sentences with named steps and explicit outcomes** for
+The accepted direction is **structured sentences with named steps and explicit outcomes** for
 further study, not unrestricted English interpreted by a model.
 
 ## A first look
