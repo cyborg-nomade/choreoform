@@ -164,8 +164,9 @@ by the study plan itself.
 ## Reproduction and verification
 
 From the repository root, run `python3 tools/check_authoring_evidence.py`.
-It checks forty unique corpus IDs/statuses, all ten core mapping rows, required
-documents, local Markdown target files/anchors and the unchanged frozen-plan
+It checks forty unique corpus IDs/statuses and all ten core kinds across eleven
+mapping rows, including separate human and capability activity rows. It also
+checks required documents, local Markdown target files/anchors and the unchanged frozen-plan
 bytes. It is **not** a grammar, semantics, accessibility or lowering validator.
 Existing Rust tests, Clippy/native/Wasm CI and Python wire/text/snapshot checks
 are regressions for the unchanged implementation; record actual results below
