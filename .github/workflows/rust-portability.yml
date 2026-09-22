@@ -38,6 +38,7 @@ jobs:
           .tools/ir-check/bin/pip install --require-hashes --only-binary=:all: -r tools/portability/requirements.txt
           .tools/ir-check/bin/python tools/check_ir_fixtures.py
           .tools/ir-check/bin/python tools/check_contract_suite.py
+          .tools/ir-check/bin/python tools/check_authoring_evidence.py
           .tools/ir-check/bin/python tools/portability/check_report.py target/native.json
           cargo build -p choreoform-text-prototype --locked
           .tools/ir-check/bin/python tools/check_text_prototype.py

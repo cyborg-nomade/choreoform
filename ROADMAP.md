@@ -104,6 +104,12 @@ validated, and round-tripped.
   representative non-programmer comprehension, authoring, correction and review
   tasks. Document accessibility evidence and unresolved gaps. PR #14's low-level
   declaration prototype does **not** satisfy this item or settle final syntax.
+  In progress: [ADR-0014](docs/decisions/0014-near-english-authoring.md) accepts
+  Candidate A as a provisional working direction, with the
+  [authoring comparison](docs/authoring/README.md); Project Owner approved
+  2026-09-22, effective upon merge of [PR #18](https://github.com/cyborg-nomade/choreoform/pull/18).
+  This is not completion. Full lowerable benchmarks, grammar/binding-package evidence
+  and representative-user studies remain required; this item stays unchecked.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted
