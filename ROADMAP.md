@@ -110,6 +110,11 @@ validated, and round-tripped.
   2026-09-22, effective upon merge of [PR #18](https://github.com/cyborg-nomade/choreoform/pull/18).
   This is not completion. Full lowerable benchmarks, grammar/binding-package evidence
   and representative-user studies remain required; this item stays unchecked.
+  The next bounded step is proposed in
+  [ADR-0015](docs/decisions/0015-authoring-grammar-bindings.md): complete Candidate A
+  grammar and portable binding-package specifications with executable checks.
+  Rust frontend/source-ledger admission, full source/IR benchmarks and matched
+  user-study materials/results still require subsequent work within this item.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

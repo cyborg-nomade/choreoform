@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:authoring:bindings:0.1.0",
+  "title": "Proposed Candidate A portable binding ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "version", "profile", "definition", "root", "contracts", "declarations", "generated", "symbols", "retired", "resources", "annotations"],
+  "properties": {
+    "format": {"const": "choreoform-authoring-bindings"},
+    "version": {"const": "0.1.0"},
+    "profile": {"const": "0.2.0"},
+    "definition": {"$ref": "#/$defs/id"},
+    "root": {"$ref": "#/$defs/id"},
+    "contracts": {
+      "type": "object", "additionalProperties": false, "required": ["semantics", "core"],
+      "properties": {
+        "semantics": {
+          "type": "object", "additionalProperties": false, "required": ["contract", "digest"],
+          "properties": {
+            "contract": {"const": "urn:choreoform:semantics:adr-0008"},
+            "digest": {"const": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"}
+          }
+        },
+        "core": {
+          "type": "object", "additionalProperties": false, "required": ["dialect", "contract", "digest"],
+          "properties": {
+            "dialect": {"$ref": "#/$defs/id"},
+            "contract": {"const": "urn:choreoform:contracts:core-profile:0.1.0"},
+            "digest": {"const": "sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58"}
+          }
+        }
+      }
+    },
+    "declarations": {
+      "type": "array", "minItems": 1, "maxItems": 10000,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "kind", "scope", "name"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "kind": {"enum": ["scope", "data", "expression", "actor", "capability", "policy", "node", "resource"]},
+          "scope": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/id"}]},
+          "name": {"$ref": "#/$defs/name"}
+        }
+      }
+    },
+    "generated": {
+      "type": "array", "maxItems": 10000,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "owner", "role", "key"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"}, "owner": {"$ref": "#/$defs/id"},
+          "role": {"enum": ["initial", "assignment", "flow", "provider-policy"]},
+          "key": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/id"}]}
+        }
+      }
+    },
+    "symbols": {
+      "type": "array", "maxItems": 10000,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "owner", "role", "name", "wire"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"}, "owner": {"$ref": "#/$defs/id"},
+          "role": {"enum": ["outcome", "branch", "input", "output", "purpose"]},
+          "name": {"$ref": "#/$defs/name"}, "wire": {"$ref": "#/$defs/id"}
+        }
+      }
+    },
+    "retired": {"type": "array", "maxItems": 10000, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "resources": {
+      "type": "array", "maxItems": 10000,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["binding", "kind", "contract", "digest"],
+        "properties": {
+          "binding": {"$ref": "#/$defs/id"},
+          "kind": {"enum": ["provider", "named-type", "clock", "calendar"]},
+          "contract": {"type": "string", "minLength": 1, "maxLength": 4096},
+          "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+        }
+      }
+    },
+    "annotations": {"type": "object"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"},
+    "name": {"type": "string", "minLength": 1, "maxLength": 4096, "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f\\ud800-\\udfff\\u2028\\u2029]+$"}
+  }
+}

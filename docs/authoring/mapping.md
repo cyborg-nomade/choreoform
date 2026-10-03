@@ -8,6 +8,11 @@ must produce the same accepted [IR](../ir/definition-v0.1.md) and
 [dialect contracts](../dialects/README.md). No new node, policy kind or implicit
 host operation is authorized by these English phrases.
 
+The concrete format is now proposed in [binding package 0.1.0](bindings.md),
+with the [source profile](profile.md). This page retains the original shared
+candidate obligations and open implementation requirements; the follow-on
+oracle does not implement full source/IR consistency or safe source editing.
+
 ## 1. Artifact boundaries
 
 Propose an authored text plus a **tool-managed, portable binding companion**.

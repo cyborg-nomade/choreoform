@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+# Small specification fixture, not an executable benchmark.
+Choreoform authoring "0.2.0".
+Process "Terminal example".
+  Start at "Done".
+  Inputs empty.
+  Outputs empty.
+  Outcomes ["complete"].
+  Use cancellation "Stop", faults "Fault handling", closure "Close" and races "Commit order".
+  Require actor "Reviewer" under "Reviewer requirement".
+  Rule for actor "Reviewer requirement".
+    Permit when (true).
+  End policy.
+  Rule for cancel "Stop".
+    Authority "Reviewer".
+    For children use "Settle".
+  End policy.
+  Rule for settlement "Settle".
+    Unfinished work cancel.
+  End policy.
+  Rule for faults "Fault handling".
+    Handle empty.
+  End policy.
+  Rule for closure "Close".
+    Fully terminal.
+  End policy.
+  Rule for race "Commit order".
+    Accept in acceptance order.
+  End policy.
+  Step "Done".
+    Finish as "complete".
+  End step.
+End process.

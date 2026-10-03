@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [ADR-0015 grammar/binding-package evidence](0015-authoring-grammar-bindings.md)
+  — concrete Candidate A grammar and identity schema with bounded specification
+  tests; no source/IR lowering or participant evidence.
+
 - [ADR-0014 near-English authoring](0014-near-english-authoring.md) — two worked
   paper surfaces, complete-case walkthroughs with explicit lowerability gaps,
   and a proposed study protocol. Candidate A approved as the provisional direction
