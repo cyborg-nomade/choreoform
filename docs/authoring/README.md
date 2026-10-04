@@ -5,9 +5,18 @@
 
 **Status:** Accepted working direction in [ADR-0014](../decisions/0014-near-english-authoring.md),
 owner approved 2026-09-22, effective upon merge of PR #18; not final syntax.
-Nothing here is accepted by the current parser. The Roadmap deliverable remains
+Nothing here is accepted by the current Rust parser. The Roadmap deliverable remains
 open: representative-user evaluation, complete lowerable benchmarks and visual
 parity have not happened.
+
+The grammar/package iteration is accepted provisionally in
+[ADR-0015](../decisions/0015-authoring-grammar-bindings.md): a concrete
+[Candidate A grammar/profile](profile.md), [portable identity package](bindings.md)
+and [executable specification checks](../evaluation/0015-authoring-grammar-bindings.md).
+Owner approved 2026-10-04, effective upon merge of PR #19. Read those for the
+current specified encoding. The A/B paper comparison below is
+retained as the original ADR-0014 evidence; it is not retroactively upgraded into
+compiler or user-study evidence.
 
 The aim is to let someone describe a process using readable sentences and familiar
 names, without writing JSON or managing wire IDs. The computer must still know

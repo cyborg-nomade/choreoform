@@ -1,0 +1,36 @@
+{
+  "format": "choreoform-authoring-bindings",
+  "version": "0.1.0",
+  "profile": "0.2.0",
+  "definition": "def_terminal",
+  "root": "scope_terminal",
+  "contracts": {
+    "semantics": {
+      "contract": "urn:choreoform:semantics:adr-0008",
+      "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "core": {
+      "dialect": "core",
+      "contract": "urn:choreoform:contracts:core-profile:0.1.0",
+      "digest": "sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58"
+    }
+  },
+  "declarations": [
+    {"id": "scope_terminal", "kind": "scope", "scope": null, "name": "Terminal example"},
+    {"id": "actor_reviewer", "kind": "actor", "scope": "scope_terminal", "name": "Reviewer"},
+    {"id": "policy_actor", "kind": "policy", "scope": "scope_terminal", "name": "Reviewer requirement"},
+    {"id": "policy_stop", "kind": "policy", "scope": "scope_terminal", "name": "Stop"},
+    {"id": "policy_settle", "kind": "policy", "scope": "scope_terminal", "name": "Settle"},
+    {"id": "policy_faults", "kind": "policy", "scope": "scope_terminal", "name": "Fault handling"},
+    {"id": "policy_close", "kind": "policy", "scope": "scope_terminal", "name": "Close"},
+    {"id": "policy_races", "kind": "policy", "scope": "scope_terminal", "name": "Commit order"},
+    {"id": "node_done", "kind": "node", "scope": "scope_terminal", "name": "Done"}
+  ],
+  "generated": [],
+  "symbols": [
+    {"id": "sym_complete", "owner": "scope_terminal", "role": "outcome", "name": "complete", "wire": "complete"}
+  ],
+  "retired": [],
+  "resources": [],
+  "annotations": {"example:review": {"message": "Preserve this unknown extension", "flags": [true, null, 7]}}
+}

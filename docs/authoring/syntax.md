@@ -9,6 +9,10 @@ They are not a complete parser grammar: policy/resource and binding-package
 encodings still need an implemented grammar and conformance tests. No example
 with omitted declarations or an unresolved requirement can lower successfully.
 
+For the follow-on concrete Candidate A encoding and bounded recognition tests,
+see the proposed [profile](profile.md) and [evaluation](../evaluation/0015-authoring-grammar-bindings.md).
+The templates and gaps below describe the original paper comparison.
+
 ## 1. Shared lexical and binding rules
 
 - A sentence ends in `.` outside a quoted string. A block has an explicit matching
