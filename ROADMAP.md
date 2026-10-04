@@ -115,8 +115,14 @@ validated, and round-tripped.
   grammar and portable binding-package specifications with executable checks;
   Project Owner approved 2026-10-04, effective upon merge of
   [PR #19](https://github.com/cyborg-nomade/choreoform/pull/19).
-  Rust frontend/source-ledger admission, full source/IR benchmarks and matched
-  user-study materials/results still require subsequent work within this item.
+  The [bounded Rust frontend slice](docs/evaluation/0015-rust-authoring-frontend.md)
+  proposes exact source/ledger consistency and supported candidate IR lowering.
+  This is **not** full source/semantic admission or general IR export: external
+  provider/clock/calendar/named-type readers, complete validation/confusable
+  diagnostics, identity-preserving export/editing, full source/IR benchmarks and
+  matched user-study materials/results remain explicit subsequent work within
+  this item. It stays unchecked; coordinate semantic admission with the open
+  executable-IR/validator gates before authorizing the next slice.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

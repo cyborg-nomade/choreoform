@@ -173,6 +173,16 @@ impl Parser<'_> {
 }
 
 /// JCS for the IR's restricted integer-only JSON domain (not general float JCS).
+/// Decode before canonicalization so caller-built Values cannot bypass transport.
+pub fn decode_canonical(raw: &[u8]) -> Result<(Value, String)> {
+    let value = decode(raw)?;
+    let mut bytes = Vec::new();
+    write_canonical(&value, &mut bytes).map_err(|_| Error::Json)?;
+    let canonical = String::from_utf8(bytes).map_err(|_| Error::Utf8)?;
+    Ok((value, canonical))
+}
+
+/// JCS for an already admitted test value, not a public construction bypass.
 /// Private: callers cannot bypass strict decoding with arbitrary serde Values.
 #[cfg(test)]
 pub(crate) fn canonical(value: &Value) -> String {
@@ -310,5 +320,34 @@ mod tests {
         }
         assert_eq!(decode(b"9007199254740992"), Err(Error::IntegerRange));
         assert_eq!(decode(b"-9007199254740992"), Err(Error::IntegerRange));
+    }
+
+    #[test]
+    fn public_canonical_decoder_preserves_strict_admission_and_utf16_key_order() {
+        let raw = "{\"\u{e000}\":1,\"\u{10000}\":2,\"a\":\"x\\n\"}";
+        let (value, canonical) = decode_canonical(raw.as_bytes()).unwrap();
+        assert_eq!(canonical, "{\"a\":\"x\\n\",\"\u{10000}\":2,\"\u{e000}\":1}");
+        assert_eq!(
+            decode_canonical(canonical.as_bytes()).unwrap(),
+            (value, canonical)
+        );
+        for raw in [
+            b"{\"a\":1,\"\\u0061\":2}".as_slice(),
+            b"1.0",
+            b"9007199254740992",
+            b"\xff",
+        ] {
+            assert!(decode_canonical(raw).is_err());
+        }
+        assert_eq!(
+            decode_canonical(&vec![b' '; MAX_BYTES + 1]),
+            Err(Error::Size)
+        );
+        let nested = format!(
+            "{}0{}",
+            "[".repeat(MAX_DEPTH + 1),
+            "]".repeat(MAX_DEPTH + 1)
+        );
+        assert_eq!(decode_canonical(nested.as_bytes()), Err(Error::Depth));
     }
 }
