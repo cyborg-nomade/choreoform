@@ -3,7 +3,7 @@
 
 # ADR-0015: Specify Candidate A grammar and portable identity bindings
 
-**Status:** Proposed<br>
+**Status:** Accepted — provisional source/package specification<br>
 **Date:** 2026-10-03<br>
 **Decider:** Project Owner
 
@@ -34,7 +34,7 @@ supplies a concrete, checkable specification before substantial compiler work.
 
 ## Decision
 
-Propose the [Candidate A authoring profile 0.2.0](../authoring/profile.md), with
+Adopt provisionally the [Candidate A authoring profile 0.2.0](../authoring/profile.md), with
 the [complete token grammar](../authoring/candidate-a.ebnf), and the
 [portable binding package 0.1.0](../authoring/bindings.md) with a closed schema.
 Require explicit ordered scope interfaces and policy clauses, bracketed maps,
@@ -118,12 +118,18 @@ or new semantic engine result may be inferred from passing these tests.
 
 ## Acceptance and action items
 
-This proposal becomes effective only after Project Owner approval and merge.
-The main authoring Roadmap item and G1–G4 remain open.
+The Project Owner approved ADR-0015 and PR #19 on 2026-10-04 with the recommended
+decisions: bracketed maps/fixed clause order, explicit qualified wire aliases,
+portable companion/tombstones/framed integrity, and bounded Rust frontend work
+next. Merge of [PR #19](https://github.com/cyborg-nomade/choreoform/pull/19) makes
+this specification decision effective. Approval is provisional, with no final
+source compatibility or accessibility claim. The main authoring Roadmap item
+and G1–G4 remain open. The owner also explicitly authorized starting the next
+implementation step within this item after merge; visual notation is not started.
 
-1. [ ] Review the four questions and approve or amend this bounded proposal.
-2. [ ] Record approval/status/index and merge after the required checks.
-3. [ ] In separately authorized continuation, implement Rust source/ledger
+1. [x] Review the four questions and approve this bounded proposal.
+2. [x] Record approval/status/index; merge after the required checks.
+3. [ ] In the authorized continuation, implement Rust source/ledger
    admission, lowering, identity-preserving export and round-trip tests.
 4. [ ] Complete full RP-01/03/08 source/IR benchmarks and resolve their recorded
    calendar/aggregation/ad-hoc/import requirements without semantic shortcuts.

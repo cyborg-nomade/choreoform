@@ -18,7 +18,7 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 - [ADR-0015 grammar/binding-package evidence](0015-authoring-grammar-bindings.md)
   — concrete Candidate A grammar and identity schema with bounded specification
-  tests; no source/IR lowering or participant evidence.
+  tests; owner approved 2026-10-04 in PR #19. No source/IR lowering or participant evidence.
 
 - [ADR-0014 near-English authoring](0014-near-english-authoring.md) — two worked
   paper surfaces, complete-case walkthroughs with explicit lowerability gaps,

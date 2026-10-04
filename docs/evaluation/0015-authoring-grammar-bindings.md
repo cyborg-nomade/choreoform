@@ -3,7 +3,7 @@
 
 # Evidence: Candidate A grammar and portable bindings
 
-**Status:** Proposed specification with bounded executable checks<br>
+**Status:** Bounded specification evidence; owner approved 2026-10-04 in PR #19<br>
 **Date:** 2026-10-03<br>
 **Baseline:** `24680d9c8a34013db4551fe2ab391c2c2c403e4d` (accepted PR #18)<br>
 **Evaluator:** Proposal author; decision authority: Project Owner

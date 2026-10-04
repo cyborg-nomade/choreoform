@@ -30,7 +30,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0012](0012-binding-type-foundations.md) | Accepted | Bind names and typed interfaces explicitly across closed composition boundaries |
 | [0013](0013-executable-dialect-contracts.md) | Accepted | Specify a closed initial type, expression and policy profile |
 | [0014](0014-near-english-authoring.md) | Accepted | Develop structured English sentences as a provisional authoring direction |
-| [0015](0015-authoring-grammar-bindings.md) | Proposed | Specify Candidate A grammar and portable identity bindings |
+| [0015](0015-authoring-grammar-bindings.md) | Accepted | Specify Candidate A grammar and portable identity bindings |
 
 ## When an ADR is required
 

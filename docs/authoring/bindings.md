@@ -3,7 +3,8 @@
 
 # Portable authoring binding package 0.1.0
 
-**Status:** Proposed in [ADR-0015](../decisions/0015-authoring-grammar-bindings.md).
+**Status:** Accepted provisionally in [ADR-0015](../decisions/0015-authoring-grammar-bindings.md),
+owner approved 2026-10-04, effective upon merge of PR #19.
 The [schema](../../schemas/authoring/bindings-0.1.schema.json) is normative for
 structure; the invariants below are additional requirements. This is the concrete
 format for [ADR-0014's identity requirements](mapping.md), not an implemented

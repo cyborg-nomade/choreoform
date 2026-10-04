@@ -9,11 +9,12 @@ Nothing here is accepted by the current Rust parser. The Roadmap deliverable rem
 open: representative-user evaluation, complete lowerable benchmarks and visual
 parity have not happened.
 
-The next iteration is now proposed in
+The grammar/package iteration is accepted provisionally in
 [ADR-0015](../decisions/0015-authoring-grammar-bindings.md): a concrete
 [Candidate A grammar/profile](profile.md), [portable identity package](bindings.md)
 and [executable specification checks](../evaluation/0015-authoring-grammar-bindings.md).
-Read those for the current proposed encoding. The A/B paper comparison below is
+Owner approved 2026-10-04, effective upon merge of PR #19. Read those for the
+current specified encoding. The A/B paper comparison below is
 retained as the original ADR-0014 evidence; it is not retroactively upgraded into
 compiler or user-study evidence.
 

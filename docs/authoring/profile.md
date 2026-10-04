@@ -3,7 +3,8 @@
 
 # Candidate A authoring profile 0.2.0
 
-**Status:** Proposed in [ADR-0015](../decisions/0015-authoring-grammar-bindings.md).
+**Status:** Accepted provisionally in [ADR-0015](../decisions/0015-authoring-grammar-bindings.md),
+owner approved 2026-10-04, effective upon merge of PR #19.
 This completes a concrete grammar specification for the accepted working
 direction, not the authoring deliverable or a supported compiler. The Rust
 JSON-record profile 0.1.0 remains unchanged. The version numbers identify
