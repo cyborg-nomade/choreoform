@@ -16,6 +16,11 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [ADR-0015 bounded Rust frontend continuation](0015-rust-authoring-frontend.md)
+  — grammar/binding consistency and supported **candidate** lowering with package
+  reparse tests; awaiting implementation review, not full semantic admission,
+  general IR export, full benchmarks or participant evidence.
+
 - [ADR-0015 grammar/binding-package evidence](0015-authoring-grammar-bindings.md)
   — concrete Candidate A grammar and identity schema with bounded specification
   tests; owner approved 2026-10-04 in PR #19. No source/IR lowering or participant evidence.

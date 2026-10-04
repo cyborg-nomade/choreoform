@@ -81,6 +81,12 @@ a semantic validator, or a text/visual editor.
 The intended authoring language is near plain English; its dedicated design and
 user-evaluation deliverable is explicit in the Phase 1 Roadmap.
 
+The [near-English working profile](docs/authoring/README.md) now has a bounded
+[Rust frontend implementation proposal](crates/authoring-frontend/README.md):
+exact source/identity consistency and partial candidate lowering, not semantic
+admission, general IR export or completed user evaluation. Review its
+[evidence and remaining gates](docs/evaluation/0015-rust-authoring-frontend.md).
+
 ## Name
 
 “Choreoform” combines *choreo-*—the arrangement of coordinated activity—with

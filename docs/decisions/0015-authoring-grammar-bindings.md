@@ -131,6 +131,10 @@ implementation step within this item after merge; visual notation is not started
 2. [x] Record approval/status/index; merge after the required checks.
 3. [ ] In the authorized continuation, implement Rust source/ledger
    admission, lowering, identity-preserving export and round-trip tests.
+   In progress: [bounded frontend implementation evidence](../evaluation/0015-rust-authoring-frontend.md)
+   supplies consistency/candidate lowering and original-package formatting;
+   full admission, external readers, general IR export and transactional editing
+   remain open. This action is not marked complete.
 4. [ ] Complete full RP-01/03/08 source/IR benchmarks and resolve their recorded
    calendar/aggregation/ad-hoc/import requirements without semantic shortcuts.
 5. [ ] Prepare equally complete study tasks for A/B and coordinate representative
