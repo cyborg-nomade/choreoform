@@ -3,7 +3,7 @@
 
 # Static contract checks, not executable admission
 
-Reviewable [ADR-0016](../../docs/decisions/0016-static-contract-checks.md) implementation
+Accepted [ADR-0016](../../docs/decisions/0016-static-contract-checks.md) implementation
 of closed ADR-0013 judgments. Rust remains the shared implementation language.
 No IO, network, clock, authentication, dispatch or process interpreter is provided.
 

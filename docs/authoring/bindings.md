@@ -204,7 +204,7 @@ source-package format/reparse tests. It remains short of full semantic admission
 general identity-preserving IR export and transactional editing; see
 [its evidence](../evaluation/0015-rust-authoring-frontend.md).
 
-[ADR-0016's implementation proposal](../decisions/0016-static-contract-checks.md)
+[ADR-0016's accepted implementation](../decisions/0016-static-contract-checks.md)
 adds supported resource readers and an explicit static stage, without an executable
 admission capability or implicit identity/resource reconciliation. The
 [current boundary](../../crates/semantic-check/README.md) retains full-validation,

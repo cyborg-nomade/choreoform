@@ -87,7 +87,7 @@ exact source/identity consistency and partial candidate lowering, not semantic
 admission, general IR export or completed user evaluation. Review its
 [evidence and remaining gates](docs/evaluation/0015-rust-authoring-frontend.md).
 
-The next [static contract-checking proposal](docs/decisions/0016-static-contract-checks.md)
+The accepted [static contract-checking stage](docs/decisions/0016-static-contract-checks.md)
 adds supported artifact readers and explicit source/candidate checks. Its
 [report and limits](crates/semantic-check/README.md) are not executable admission;
 clock support and complete semantic/host/benchmark gates remain open.

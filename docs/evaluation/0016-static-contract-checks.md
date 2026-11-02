@@ -4,7 +4,7 @@
 # Static contract-reader/checking implementation evidence
 
 **Date:** 2026-11-02<br>
-**Status:** Proposed; awaiting Project Owner review<br>
+**Status:** Accepted bounded implementation; owner approved 2026-11-02, effective upon merge of PR #21<br>
 **Decision:** [ADR-0016](../decisions/0016-static-contract-checks.md)<br>
 **Baseline:** `9820346bdb848b34436c50621aa1689cfa14f5e3` (merged PR #20)<br>
 **Frozen plan:** [0016-static-check-plan.md](0016-static-check-plan.md), committed
@@ -99,5 +99,10 @@ diagnostics, complete RP-01/03/08 examples, conformance/visual parity, safe prot
 editing, user-study results, G1–G4 and Phase 1 exit remain open. Forty Partial
 corpus scenarios retain their status. No visual notation or participant recruitment.
 
-Pause for owner review of this ADR/PR before merge or another item. No successful
-static report may be used as permission to plan, execute or certify host policies.
+The Project Owner approved this ADR/PR on 2026-11-02, accepting the separately
+named static stage and supported named-type/provider readers while keeping
+clock/timer support and all stated residual judgments open. The review regression
+was fixed in `0568151`; the thread is resolved and required CI passed. The
+implementation review pause is closed for merge only; another item requires
+separate authorization. No successful static report may be used as permission
+to plan, execute or certify host policies.

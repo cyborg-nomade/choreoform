@@ -51,7 +51,7 @@ and population-wide wire collisions. Qualified descendant invalidation and
 ancestor settlement references are narrow exceptions, not general child/sibling
 visibility. Static ancestor binding does not establish live runtime ownership.
 
-The [ADR-0016 proposal](../../docs/decisions/0016-static-contract-checks.md) enables
+Accepted [ADR-0016](../../docs/decisions/0016-static-contract-checks.md) enables
 closed named-type/provider resources and capability request candidate lowering,
 using exact-byte readers and transitive dependencies. Nominal literal membership
 is checked by the explicit static stage, not by merely lowering a candidate.

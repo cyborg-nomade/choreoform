@@ -3,7 +3,7 @@
 
 # ADR-0016: Separate static contract checks from executable admission
 
-**Status:** Proposed<br>
+**Status:** Accepted — bounded static-check stage<br>
 **Date:** 2026-11-02<br>
 **Decider:** Project Owner
 
@@ -26,7 +26,7 @@ arbitrary hashed clock JSON object or a caller-supplied “supported” Boolean.
 3. Keep checked artifacts distinct from permission to plan or execute.
 4. Provide bounded native/Wasm evidence and inspectable residual obligations.
 
-## Proposed decision
+## Decision
 
 Add a shared Rust static-check stage, separate from syntax, candidate lowering,
 full-definition admission and planning. Its immutable report binds the original
@@ -87,11 +87,19 @@ explicit rejection of validly hashed unknown clock resources.
 
 ## Acceptance and action items
 
-This proposal takes effect only after owner approval and merge. The implementation
-is supplied as reviewable evidence under the explicitly authorized next-item scope.
+The Project Owner reviewed and approved PR #21, including this ADR, on 2026-11-02.
+The accepted boundary is a separately named static stage, supported named-type/
+provider candidate lowering, and continued refusal of unsupported clocks/timers.
+The remaining full-definition/host/benchmark judgments retain their stated priority
+and open status. Merge of [PR #21](https://github.com/cyborg-nomade/choreoform/pull/21)
+makes this decision effective. The invocation-output protection finding was fixed
+in `0568151`; its thread is resolved and required CI passed.
 
-1. [ ] Review the stage boundary, resource/clock policy and follow-up priority.
-2. [ ] Record owner approval/status/index before merging.
+Approval closes this item's review pause, not the broader Phase 1 gates. Starting
+another implementation item still requires separate owner authorization.
+
+1. [x] Review the stage boundary, resource/clock policy and follow-up priority.
+2. [x] Record owner approval/status/index before merging.
 3. [x] Supply bounded implementation and reproducible tests/evidence.
 4. [ ] Complete the separately tracked full-definition/host/benchmark gates; this
    prototype does not mark them done or start Phase 2.
