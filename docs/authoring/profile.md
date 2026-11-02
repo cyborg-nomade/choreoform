@@ -214,3 +214,9 @@ revision-bearing **unvalidated candidates**. It does not supply full admission,
 external-resource readers, confusable diagnostics, general IR export or a user
 study. [Separate implementation evidence](../evaluation/0015-rust-authoring-frontend.md)
 does not retroactively upgrade the original specification observations.
+
+The accepted [ADR-0016 stage](../decisions/0016-static-contract-checks.md) implements
+closed artifact readers and explicit static type/payload checks. It does not
+complete full-definition admission or general export; unsupported clocks/timers
+still refuse. Refer to [current implementation limits](../../crates/semantic-check/README.md)
+rather than treating the earlier slice's limitations as permanent profile rules.

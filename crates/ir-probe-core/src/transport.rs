@@ -233,8 +233,9 @@ fn write_canonical(value: &Value, out: &mut impl Write) -> io::Result<()> {
 
 /// In-memory construction cannot contain duplicate keys or surrogate strings,
 /// but still must check numbers, whole-envelope depth and exact encoded size.
-/// Private so only checked constructors can establish the admission invariant.
-pub(crate) fn admit_value(value: &Value) -> Result<()> {
+/// This checks the restricted JSON domain only; success grants no structural,
+/// semantic or execution authority and does not manufacture an admitted wrapper.
+pub fn admit_value(value: &Value) -> Result<()> {
     fn walk(value: &Value, depth: usize) -> Result<()> {
         if depth > MAX_DEPTH {
             return Err(Error::Depth);

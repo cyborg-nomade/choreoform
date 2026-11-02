@@ -10,6 +10,7 @@ publish.workspace = true
 
 [dependencies]
 choreoform-ir-probe-core = { path = "../ir-probe-core" }
+choreoform-semantic-check = { path = "../semantic-check" }
 serde_json.workspace = true
 
 [lints]

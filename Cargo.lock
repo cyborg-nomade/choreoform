@@ -28,6 +28,7 @@ name = "choreoform-authoring-frontend"
 version = "0.0.0"
 dependencies = [
  "choreoform-ir-probe-core",
+ "choreoform-semantic-check",
  "serde_json",
 ]
 
@@ -50,6 +51,14 @@ dependencies = [
  "choreoform-ir-probe-core",
  "serde_json",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "choreoform-semantic-check"
+version = "0.0.0"
+dependencies = [
+ "choreoform-ir-probe-core",
+ "serde_json",
 ]
 
 [[package]]

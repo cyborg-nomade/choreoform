@@ -1,0 +1,29 @@
+{
+  "kind": "named-types",
+  "version": "0.1.0",
+  "id": "urn:choreoform:examples:number-types:0.1.0",
+  "definitions": {
+    "Nonnegative": {
+      "representation": {
+        "kind": "integer"
+      },
+      "invariant": {
+        "op": "not",
+        "value": {
+          "op": "lt",
+          "left": {
+            "op": "param",
+            "name": "value"
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "integer"
+            },
+            "value": "0"
+          }
+        }
+      }
+    }
+  }
+}

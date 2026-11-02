@@ -120,11 +120,18 @@ validated, and round-tripped.
   Project Owner approved 2026-11-02 with recommendations, effective upon merge of
   [PR #20](https://github.com/cyborg-nomade/choreoform/pull/20).
   This is **not** full source/semantic admission or general IR export: external
-  provider/clock/calendar/named-type readers, complete validation/confusable
+  clock/calendar contract/host support, complete validation/confusable
   diagnostics, identity-preserving export/editing, full source/IR benchmarks and
   matched user-study materials/results remain explicit subsequent work within
   this item. It stays unchecked; coordinate semantic admission with the open
   executable-IR/validator gates before authorizing the next slice.
+  [ADR-0016](docs/decisions/0016-static-contract-checks.md) accepts supported artifact
+  readers and explicit static checks with source integration; Project Owner
+  approved 2026-11-02, effective upon merge of
+  [PR #21](https://github.com/cyborg-nomade/choreoform/pull/21).
+  [Evidence and residual obligations](docs/evaluation/0016-static-contract-checks.md)
+  preserve the distinction from full-definition admission; clocks/timers remain
+  unsupported. Neither this authoring item nor the complete validator is closed.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

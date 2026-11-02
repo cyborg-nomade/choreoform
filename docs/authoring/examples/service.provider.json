@@ -1,0 +1,79 @@
+{
+  "kind": "provider-contract",
+  "version": "0.1.0",
+  "id": "urn:choreoform:examples:review-provider:0.1.0",
+  "input": {
+    "kind": "text"
+  },
+  "output": {
+    "kind": "variant",
+    "cases": {
+      "approved": {
+        "kind": "record",
+        "fields": {}
+      },
+      "correction_needed": {
+        "kind": "record",
+        "fields": {}
+      }
+    }
+  },
+  "outcomes": {
+    "approved": true,
+    "correction_needed": true
+  },
+  "resultProtection": {
+    "policy": "service_protection",
+    "sensitivity": "internal",
+    "purposes": {
+      "expense_review": true
+    },
+    "participants": {
+      "service_actor": true
+    },
+    "capabilities": {}
+  },
+  "observations": {
+    "approved": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "approved": {
+            "kind": "record",
+            "fields": {}
+          },
+          "correction_needed": {
+            "kind": "record",
+            "fields": {}
+          }
+        }
+      },
+      "outcome": "approved"
+    },
+    "correction": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "approved": {
+            "kind": "record",
+            "fields": {}
+          },
+          "correction_needed": {
+            "kind": "record",
+            "fields": {}
+          }
+        }
+      },
+      "outcome": "correction_needed"
+    },
+    "unknown": {
+      "state": "unknown",
+      "result": null,
+      "outcome": null
+    }
+  },
+  "idempotency": "none",
+  "effectClass": "read-only"
+}

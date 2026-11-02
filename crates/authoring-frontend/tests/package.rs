@@ -53,6 +53,7 @@ fn terminal_package_lowers_without_execution_authority() {
     assert_eq!(candidate.bindings_digest(), integrity.bindings);
     assert_eq!(candidate.package_digest(), integrity.package);
     assert_eq!(candidate.spans().len(), 9);
+    candidate.check_static(&resources()).unwrap();
     let span = candidate.spans()["node_done"].clone();
     assert_eq!(
         &SOURCE[span],
@@ -447,6 +448,7 @@ fn invocation_repeat_and_qualified_descendant_invalidation_keep_explicit_scope_i
             .lower(&resources())
             .unwrap();
         assert_eq!(c.document()["body"]["nodes"]["node_done"]["body"], "child");
+        c.check_static(&resources()).unwrap();
     }
     let mut b: Value = serde_json::from_slice(REVIEW_LEDGER).unwrap();
     let source = child_fixture(
@@ -523,6 +525,7 @@ fn split_join_refuses_population_wide_wire_collisions_unless_explicitly_selected
         candidate.document()["body"]["nodes"]["gather"]["predicate"]["outcomes"],
         json!({"complete":true})
     );
+    candidate.check_static(&resources()).unwrap();
     let ambiguous = source.replace(", outcome \"complete\" of \"Right\"", "");
     assert_eq!(
         Package::parse(ambiguous.as_bytes(), &bytes(&b))
@@ -740,7 +743,7 @@ fn matching_external_hashes_do_not_grant_unsupported_lowering_authority() {
     package.ledger().verify_resources(&supplied).unwrap();
     assert_eq!(
         package.lower(&supplied).unwrap_err().code,
-        "external-contract-lowering-unsupported"
+        "clock-contract-unsupported"
     );
 }
 
@@ -783,6 +786,7 @@ fn fanout_item_alias_resolves_to_the_child_owned_cell() {
         candidate.document()["body"]["nodes"]["node_done"]["item"],
         "item_cell"
     );
+    candidate.check_static(&resources()).unwrap();
     assert_eq!(
         candidate.document()["body"]["nodes"]["node_done"]["changes"],
         "membership"

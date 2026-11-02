@@ -23,6 +23,9 @@ semantic admission, execution or a production authoring editor.
 - `Candidate::document()` / `into_document()` expose **unvalidated** revision-bearing
   IR through the existing strict transport/JCS/envelope implementation. This
   document may still be ill-typed or inadmissible. Do not execute it.
+- `Candidate::check_static(resources)` explicitly runs the new
+  [static suite stage](../semantic-check/README.md). Its report lists remaining
+  obligations; it is not a fully admitted or executable definition.
 
 The shared library has no IO, filesystem discovery or network access. Hosts
 supply resources explicitly. Identity/name lookup is indexed; dependency/control
@@ -48,14 +51,18 @@ and population-wide wire collisions. Qualified descendant invalidation and
 ancestor settlement references are narrow exceptions, not general child/sibling
 visibility. Static ancestor binding does not establish live runtime ownership.
 
-**Nonempty external-resource inventories refuse lowering**, even with matching
-hashes. Provider/capability requests, named types and non-null clock/calendar
-timers require supported readers and dependency evidence. Their syntax recognition
-is not lowering support. The historic JSON probe's registry/admission is unchanged.
+Accepted [ADR-0016](../../docs/decisions/0016-static-contract-checks.md) enables
+closed named-type/provider resources and capability request candidate lowering,
+using exact-byte readers and transitive dependencies. Nominal literal membership
+is checked by the explicit static stage, not by merely lowering a candidate.
+**Clock/calendar resources and non-null timers still refuse lowering**, even with
+matching hashes. Calendar table decoding does not establish clock/trust support.
+The historic JSON probe's registry/admission is unchanged.
 
-Complete expression/type checking, typed fact contexts, protection/authority and
-executable semantic validation remain separate work. Unicode confusable diagnostics
-are not implemented. Syntax/reference errors usually have exact spans; companion
+Closed expression/type/policy-fact checks now exist in the explicit static stage.
+Complete process/control/protection/authority judgments and executable semantic
+admission remain separate work. Unicode confusable diagnostics are not implemented.
+Syntax/reference errors usually have exact spans; companion
 and some graph errors use `0..0` (no source location). Candidate span maps cover
 declarations/generated records, not all alias occurrences. These profile requirements
 remain open, not waived.
@@ -96,3 +103,11 @@ embeds the two accepted core snapshots for these synthetic examples. It reads
 explicit paths and writes stdout only; errors never echo source values. A zero
 exit code means only that command's selected checks passed. Wasm compilation covers
 the library, not a browser adapter or execution. See [evidence and remaining work](../../docs/evaluation/0015-rust-authoring-frontend.md).
+
+`check SOURCE COMPANION` reports `static-checks-passed`, `executable:false`, the
+candidate revision and residual obligations. `lower`, `check` and `format` accept
+explicit `--resource ID REVISION PATH` groups (at most 254 external files, 1 MiB
+each; registry total 8 MiB including core snapshots). No path/ID discovery or
+implicit rebind occurs. See the [service example](../../docs/authoring/examples/service.choreo),
+[its pins](../../docs/authoring/examples/service.bindings.json) and the
+[static-stage evidence](../../docs/evaluation/0016-static-contract-checks.md).

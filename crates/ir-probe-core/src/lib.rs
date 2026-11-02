@@ -208,6 +208,34 @@ impl DefinitionEnvelope {
     pub fn canonical(&self) -> String {
         canonical_definition(&self.document)
     }
+    /// Reuse the probe's selected closed record/reference checks on an admitted
+    /// envelope. Dialect payloads remain opaque: this is NOT semantic admission,
+    /// contract support, revision verification or an execution capability.
+    pub fn check_structure(&self) -> Result<model::Graph> {
+        let body = &self.document["body"];
+        fields(
+            body,
+            &[
+                "id",
+                "semantics",
+                "dialects",
+                "root",
+                "scopes",
+                "data",
+                "expressions",
+                "actors",
+                "capabilities",
+                "policies",
+                "nodes",
+                "flows",
+            ],
+            &[],
+        )?;
+        if string(&body["id"])?.is_empty() {
+            return Err(Error::Shape);
+        }
+        model::Graph::read(body)
+    }
 }
 
 /// Transport and envelope only; useful to prepare mutated evidence fixtures.

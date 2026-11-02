@@ -27,6 +27,11 @@ For the current implementation review, read the
 [its identity companion](examples/review.bindings.json). The comparison table below
 describes the original paper proposal, not this later implementation slice.
 
+The accepted [static-checking stage](../decisions/0016-static-contract-checks.md)
+adds supported named-type/provider readers and explicit checks for closed payloads,
+types, facts and dependencies. [Evidence and limits](../evaluation/0016-static-contract-checks.md)
+remain separate from full semantic admission, clock/host support and user evaluation.
+
 The aim is to let someone describe a process using readable sentences and familiar
 names, without writing JSON or managing wire IDs. The computer must still know
 exactly which decision, revision, authority and effect each sentence describes.

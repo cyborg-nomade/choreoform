@@ -16,6 +16,11 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [ADR-0016 static contract readers/checks](0016-static-contract-checks.md) —
+  closed payload judgments and selected source/type/dependency integration;
+  owner approved 2026-11-02 in PR #21, not complete definition admission,
+  planning or host enforcement.
+
 - [ADR-0015 bounded Rust frontend continuation](0015-rust-authoring-frontend.md)
   — grammar/binding consistency and supported **candidate** lowering with package
   reparse tests; owner approved 2026-11-02 in PR #20, not full semantic admission,
