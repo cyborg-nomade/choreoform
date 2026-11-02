@@ -357,3 +357,179 @@ fn policy_and_data_access_dependency_closure_is_preserved() {
         json!({"review_audit":true})
     );
 }
+
+/// A concrete output transfer with no parent reads: the generic read/write
+/// cross-product cannot substitute for checking this child-owned source cell.
+fn invoke_output_body() -> Value {
+    let mut body = Package::parse(SERVICE, SERVICE_LEDGER)
+        .unwrap()
+        .lower(&service_resources())
+        .unwrap()
+        .into_document()["body"]
+        .clone();
+    let mut child = body["scopes"]["scope_service"].clone();
+    child["parent"] = "scope_service".into();
+    child["entry"] = "child_done".into();
+    child["outputs"] = json!({"decision":"child_decision"});
+    body["scopes"]["child"] = child;
+    let mut cell = body["data"]["service_decision"].clone();
+    cell["scope"] = "child".into();
+    cell["initial"] = "child_initial".into();
+    body["expressions"]["child_initial"] = json!({"scope":"child","dialect":"core","resultType":cell["type"],"parameters":{},"reads":{},"body":{"op":"literal","type":cell["type"]["body"],"value":{"tag":"approved","value":{}}}});
+    body["data"]["child_decision"] = cell;
+    body["nodes"]["child_done"] = json!({"kind":"finish","scope":"child","outcomes":{},"reads":{},"writes":{},"outcome":"complete"});
+    body["nodes"]["service_step"] = json!({"kind":"invoke","scope":"scope_service","outcomes":{"complete":true},"reads":{},"writes":{"service_decision":true},"body":"child","inputs":{},"outputs":{"decision":"service_decision"}});
+    body["flows"]["service_flow_approved"]["outcome"] = "complete".into();
+    body["flows"]
+        .as_object_mut()
+        .unwrap()
+        .remove("service_flow_correction");
+    body["actors"]["extra_actor"] =
+        json!({"scope":"scope_service","requirement":"service_actor_policy"});
+    body["policies"]["extra_protection"] = body["policies"]["service_protection"].clone();
+    body
+}
+
+#[test]
+fn invoke_outputs_reject_broader_destination_protection() {
+    let body = invoke_output_body();
+    check(&envelope(body.clone()), &service_resources()).unwrap();
+    for (field, value) in [
+        (
+            "purposes",
+            json!({"expense_review":true,"extra_purpose":true}),
+        ),
+        (
+            "participants",
+            json!({"service_actor":true,"extra_actor":true}),
+        ),
+        ("capabilities", json!({"service_capability":true})),
+        ("sensitivity", json!("public")),
+        ("policy", json!("extra_protection")),
+    ] {
+        let mut changed = body.clone();
+        changed["data"]["service_decision"]["protection"][field] = value;
+        let diagnostic = check(&envelope(changed), &service_resources()).unwrap_err();
+        assert_eq!(diagnostic.code, "information-flow", "{field}");
+        assert_eq!(diagnostic.path, "/body/nodes/service_step");
+    }
+}
+
+#[test]
+fn invoke_outputs_allow_equal_or_narrower_destination_protection() {
+    let mut body = invoke_output_body();
+    check(&envelope(body.clone()), &service_resources()).unwrap();
+    let protection = &mut body["data"]["child_decision"]["protection"];
+    protection["purposes"]["extra_purpose"] = true.into();
+    protection["participants"]["extra_actor"] = true.into();
+    protection["capabilities"]["service_capability"] = true.into();
+    check(&envelope(body), &service_resources()).unwrap();
+}
+
+#[test]
+fn invoke_outputs_check_every_port_and_preserve_binding_guards() {
+    let mut body = invoke_output_body();
+    let mut cell = body["data"]["service_request"].clone();
+    cell["scope"] = "child".into();
+    cell["invalidates"] = json!({});
+    body["data"]["child_request"] = cell;
+    body["scopes"]["child"]["outputs"]["request"] = "child_request".into();
+    body["nodes"]["service_step"]["outputs"]["request"] = "service_request".into();
+    body["nodes"]["service_step"]["writes"]["service_request"] = true.into();
+    check(&envelope(body.clone()), &service_resources()).unwrap();
+    let mut broad = body.clone();
+    broad["data"]["service_request"]["protection"]["purposes"]["extra_purpose"] = true.into();
+    assert_eq!(
+        check(&envelope(broad), &service_resources())
+            .unwrap_err()
+            .code,
+        "information-flow"
+    );
+    for (mutation, expected) in [
+        ("write", "invoke-writes"),
+        ("type", "invoke-type"),
+        ("visibility", "visibility"),
+    ] {
+        let mut changed = body.clone();
+        match mutation {
+            "write" => {
+                changed["nodes"]["service_step"]["writes"]
+                    .as_object_mut()
+                    .unwrap()
+                    .remove("service_decision");
+            }
+            "type" => {
+                changed["nodes"]["service_step"]["outputs"]["decision"] = "service_request".into();
+            }
+            "visibility" => {
+                changed["nodes"]["service_step"]["outputs"]["decision"] = "child_decision".into();
+                changed["nodes"]["service_step"]["writes"]["child_decision"] = true.into();
+            }
+            _ => unreachable!(),
+        }
+        assert_eq!(
+            check(&envelope(changed), &service_resources())
+                .unwrap_err()
+                .code,
+            expected,
+            "{mutation}"
+        );
+    }
+}
+
+#[test]
+fn source_invocation_output_bindings_preserve_protection_after_reparse() {
+    let output_type = "choice with [outcome \"approved\" of \"Review\" as record with empty, outcome \"correction needed\" of \"Review\" as record with empty]";
+    let child = format!(
+        "Scope \"Child\" within \"Review example\". Start at \"Child done\". Inputs empty. Outputs [\"Decision\" uses \"Child decision\"]. Outcomes [\"approved\", \"correction needed\"]. Use cancellation \"Stop\", faults \"Fault handling\", closure \"Close\" and races \"Commit order\". Keep \"Child decision\" as {output_type} under \"Protection\". Sensitivity \"internal\". Purposes [\"Expense review\"]. Participants [\"Reviewer\"]. Capabilities empty. Invalidate empty. Initially (literal of {output_type} with value case outcome \"approved\" of \"Review\" containing (record with empty)). End data. Step \"Child done\". Finish as \"approved\". End step. End scope. End process."
+    );
+    let source = String::from_utf8(SOURCE.to_vec()).unwrap()
+        .replace("Ask \"Reviewer\" to decide using \"Current request\" under \"Review work\" and record in \"Review decision\".", "Run \"Child\" with inputs empty and outputs [\"Decision\" uses \"Review decision\"].")
+        .replace("End process.", &child);
+    let mut ledger: Value = serde_json::from_slice(LEDGER).unwrap();
+    ledger["declarations"].as_array_mut().unwrap().extend([
+        json!({"id":"scope_child","kind":"scope","scope":"scope_review","name":"Child"}),
+        json!({"id":"child_decision","kind":"data","scope":"scope_child","name":"Child decision"}),
+        json!({"id":"child_done","kind":"node","scope":"scope_child","name":"Child done"}),
+    ]);
+    ledger["symbols"].as_array_mut().unwrap().extend([
+        json!({"id":"child_output","owner":"scope_child","role":"output","name":"Decision","wire":"decision"}),
+        json!({"id":"child_approved","owner":"scope_child","role":"outcome","name":"approved","wire":"approved"}),
+        json!({"id":"child_correction","owner":"scope_child","role":"outcome","name":"correction needed","wire":"correction_needed"}),
+        json!({"id":"child_purpose","owner":"child_decision","role":"purpose","name":"Expense review","wire":"expense_review"}),
+    ]);
+    ledger["generated"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"id":"child_initial","owner":"child_decision","role":"initial","key":null}));
+    let package = Package::parse(source.as_bytes(), &serde_json::to_vec(&ledger).unwrap()).unwrap();
+    let candidate = package.lower(&resources()).unwrap();
+    candidate.check_static(&resources()).unwrap();
+    let (formatted, companion) = package.formatted().unwrap();
+    let roundtrip = Package::parse(formatted.as_bytes(), companion.as_bytes())
+        .unwrap()
+        .lower(&resources())
+        .unwrap();
+    assert_eq!(candidate.document(), roundtrip.document());
+    roundtrip.check_static(&resources()).unwrap();
+    // Change only the caller destination's purposes, not the child output's.
+    let start = source.find("Keep \"Review decision\"").unwrap();
+    let mut broader = source.clone();
+    let purposes = start
+        + broader[start..]
+            .find("Purposes [\"Expense review\"].")
+            .unwrap();
+    broader.replace_range(
+        purposes..purposes + "Purposes [\"Expense review\"].".len(),
+        "Purposes [\"Expense review\", \"Wider access\"].",
+    );
+    ledger["symbols"].as_array_mut().unwrap().push(json!({"id":"caller_wider_purpose","owner":"review_decision","role":"purpose","name":"Wider access","wire":"wider_access"}));
+    let candidate = Package::parse(broader.as_bytes(), &serde_json::to_vec(&ledger).unwrap())
+        .unwrap()
+        .lower(&resources())
+        .unwrap();
+    assert_eq!(
+        candidate.check_static(&resources()).unwrap_err().code,
+        "information-flow"
+    );
+}

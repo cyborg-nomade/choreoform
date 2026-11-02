@@ -215,6 +215,15 @@ impl Check<'_, '_> {
                             self.cells[&id].clone()
                         };
                         require(&bound == ty, "invoke-type")?;
+                        if !input {
+                            // Child outputs are not lexical parent reads; check
+                            // the actual port transfer, not just reads × writes.
+                            self.resources.budget.tick(0)?;
+                            self.flow(
+                                &self.b["data"][text(cell)?]["protection"],
+                                &self.b["data"][text(&bindings[port])?]["protection"],
+                            )?;
+                        }
                     }
                 }
                 require(names(&child["outcomes"])? == outcomes, "invoke-outcomes")?;
@@ -331,6 +340,8 @@ impl Check<'_, '_> {
         }
         Ok(())
     }
+    /// Direct transfer only: retain sensitivity/policy identity and never widen
+    /// access sets. This does not establish whole-process information flow.
     fn flow(&self, source: &Value, target: &Value) -> Result<()> {
         require(
             source["sensitivity"] == target["sensitivity"] && source["policy"] == target["policy"],

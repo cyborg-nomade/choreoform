@@ -39,7 +39,7 @@ fixed point and static checking verifies the result. Policy cycles/depth refuse.
 
 Selected node checks cover parameter sites, expression/input/result/assignment
 types, guard/key/seal types, local/direct-child interfaces, human/provider outcomes,
-policy kinds and declared reads/writes. Direct source/destination and provider-result
+policy kinds and declared reads/writes. Direct source/destination, invocation-output and provider-result
 transfer checks use identical sensitivity/policy identity and narrowing access sets.
 They do **not** prove control-sensitive whole-process information flow or access
 authorization, reachable reconciliation, definite outputs, race safety or

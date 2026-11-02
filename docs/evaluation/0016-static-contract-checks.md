@@ -32,16 +32,23 @@ frontend Wasm compilation. Then build the native adapter and run
 `tools/check_static_contracts.py` in the existing hash-locked Python environment.
 Existing authoring, IR, snapshot, technical-text and portability checks remain gates.
 
-The local verification run passed 81 Rust tests plus five compile-fail doctests,
+The local verification run passed 85 Rust tests plus five compile-fail doctests,
 workspace formatting/warnings-as-errors lint, both new library Wasm lints and
 release frontend Wasm compilation. New semantic coverage comprises ten public
-contract-helper tests, one private nominal graph-guard test and six source/static
+contract-helper tests, one private nominal graph-guard test and ten source/static
 integration tests. Existing control examples and the new core transport/structure
 boundary test also pass. The six-group Python static oracle, four-group frontend
 oracle (106 grammar positives), IR (16), snapshot (4), authoring evidence (6),
 authoring profile (17) and text oracle all pass. The native portability report
 retains 89 case results, 15 JCS/hash comparisons, three unchanged fixtures, all ten
 node variants and seven CLI checks. These observations do not close residual gates.
+
+PR review regression: invocation output ports now apply the direct transfer rule
+from the child-owned source cell to the caller destination, independently of
+parent read sets. The broader-destination test reproduced the original false
+success before the fix. Purpose/participant/capability widening and mismatched
+sensitivity/policy identity refuse; equal/narrower envelopes, multiple ports and
+source-package reparse pass. Existing visibility/write/type guards remain intact.
 
 | Judgment | Reproduced observations | Boundary |
 | --- | --- | --- |
