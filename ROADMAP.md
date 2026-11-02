@@ -125,6 +125,11 @@ validated, and round-tripped.
   matched user-study materials/results remain explicit subsequent work within
   this item. It stays unchecked; coordinate semantic admission with the open
   executable-IR/validator gates before authorizing the next slice.
+  Next bounded step for review: [ADR-0016](docs/decisions/0016-static-contract-checks.md)
+  proposes supported artifact readers and explicit static checks with source
+  integration. [Evidence and residual obligations](docs/evaluation/0016-static-contract-checks.md)
+  preserve the distinction from full-definition admission; clocks/timers remain
+  unsupported. Neither this authoring item nor the complete validator is closed.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

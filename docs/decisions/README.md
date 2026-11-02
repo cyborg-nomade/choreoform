@@ -31,6 +31,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0013](0013-executable-dialect-contracts.md) | Accepted | Specify a closed initial type, expression and policy profile |
 | [0014](0014-near-english-authoring.md) | Accepted | Develop structured English sentences as a provisional authoring direction |
 | [0015](0015-authoring-grammar-bindings.md) | Accepted | Specify Candidate A grammar and portable identity bindings |
+| [0016](0016-static-contract-checks.md) | Proposed | Separate static contract checks from executable admission |
 
 ## When an ADR is required
 

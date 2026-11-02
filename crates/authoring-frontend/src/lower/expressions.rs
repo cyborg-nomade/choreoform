@@ -37,7 +37,11 @@ impl<'a, 's> Lower<'a, 's> {
             }
             "type" => {
                 let resource = self.r(tree, scope, "resource", 0)?;
-                json!({"kind":"named", "name": self.syntax.text(tree.one("NAME")?)?, "contract": self.ledger.pin(&resource, "named-type")?})
+                let descriptor = json!({"kind":"named", "name": self.syntax.text(tree.one("NAME")?)?, "contract": self.ledger.pin(&resource, "named-type")?});
+                self.resources
+                    .type_descriptor(&descriptor)
+                    .map_err(|e| error(e.code, self.syntax.span(tree)))?;
+                descriptor
             }
             _ => return Err(error("type", self.syntax.span(tree))),
         })

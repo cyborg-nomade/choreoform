@@ -30,7 +30,7 @@ pub struct Package<'a> {
 /// ```
 #[derive(Debug)]
 pub struct Candidate {
-    document: Value,
+    envelope: DefinitionEnvelope,
     source_digest: String,
     bindings_digest: String,
     package_digest: String,
@@ -46,11 +46,11 @@ pub struct Integrity {
 impl Candidate {
     /// Borrow the unvalidated IR envelope; this does not authorize execution.
     pub fn document(&self) -> &Value {
-        &self.document
+        self.envelope.document()
     }
     /// Consume this candidate, returning its still-unvalidated IR envelope.
     pub fn into_document(self) -> Value {
-        self.document
+        self.envelope.into_document()
     }
     /// Digest of the exact original UTF-8 source bytes, not its semantic revision.
     pub fn source_digest(&self) -> &str {
@@ -67,6 +67,14 @@ impl Candidate {
     /// Borrow declaration/generated-record spans in the original source's UTF-8 bytes.
     pub fn spans(&self) -> &BTreeMap<String, std::ops::Range<usize>> {
         &self.spans
+    }
+    /// Run explicit static suite checks. A report still grants no planning or
+    /// execution authority; full-definition and host obligations remain open.
+    pub fn check_static(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::Report> {
+        choreoform_semantic_check::check(&self.envelope, resources)
     }
 }
 impl<'a> Package<'a> {
@@ -104,14 +112,7 @@ impl<'a> Package<'a> {
     /// All pins must have uniquely supplied matching bytes. No runtime policy follows.
     pub fn lower(&self, resources: &[Resource<'_>]) -> Result<Candidate> {
         self.ledger.verify_resources(resources)?;
-        if !self.ledger.document["resources"]
-            .as_array()
-            .expect("checked resources")
-            .is_empty()
-        {
-            return Err(error("external-contract-lowering-unsupported", 0..0));
-        }
-        let mut lowering = Lower::new(&self.syntax, &self.ledger);
+        let mut lowering = Lower::new(&self.syntax, &self.ledger, resources)?;
         let root = self.syntax.tree().one("process")?;
         lowering.scope(root, None, 0)?;
         for (tree, scope) in std::mem::take(&mut lowering.pending_steps) {
@@ -125,15 +126,14 @@ impl<'a> Package<'a> {
         let contracts = &self.ledger.document["contracts"];
         body.insert("semantics".into(), json!({"id": contracts["semantics"]["contract"], "revision": contracts["semantics"]["digest"]}));
         body.insert("dialects".into(), json!({ self.ledger.dialect(): {"id": contracts["core"]["contract"], "revision": contracts["core"]["digest"]} }));
-        let document = DefinitionEnvelope::from_parts(
+        let envelope = DefinitionEnvelope::from_parts(
             Value::Object(body),
             self.ledger.document["annotations"].clone(),
         )
-        .map_err(|_| error("candidate-transport", 0..self.syntax.source().len()))?
-        .into_document();
+        .map_err(|_| error("candidate-transport", 0..self.syntax.source().len()))?;
         let integrity = self.integrity();
         Ok(Candidate {
-            document,
+            envelope,
             source_digest: integrity.source,
             bindings_digest: integrity.bindings,
             package_digest: integrity.package,
@@ -152,6 +152,7 @@ use expressions::ast_reads;
 struct Lower<'a, 's> {
     syntax: &'a Syntax<'s>,
     ledger: &'a Ledger,
+    resources: choreoform_semantic_check::Resources<'a>,
     body: Map<String, Value>,
     declarations: BTreeSet<String>,
     symbols: BTreeSet<String>,
@@ -217,10 +218,37 @@ fn decimal(spelling: &str, places: u8) -> Result<String> {
 }
 
 impl<'a, 's> Lower<'a, 's> {
-    fn new(syntax: &'a Syntax<'s>, ledger: &'a Ledger) -> Self {
-        Self {
+    fn new(
+        syntax: &'a Syntax<'s>,
+        ledger: &'a Ledger,
+        supplied: &'a [Resource<'a>],
+    ) -> Result<Self> {
+        let mut resources =
+            choreoform_semantic_check::Resources::new(supplied).map_err(|e| error(e.code, 0..0))?;
+        for r in ledger.document["resources"]
+            .as_array()
+            .expect("checked resources")
+        {
+            let pin = choreoform_semantic_check::Pin {
+                id: r["contract"].as_str().expect("contract").into(),
+                revision: r["digest"].as_str().expect("digest").into(),
+            };
+            match r["kind"].as_str().expect("resource kind") {
+                "named-type" => resources
+                    .named_types(&pin)
+                    .map_err(|e| error(e.code, 0..0))?,
+                "provider" => {
+                    resources.provider(&pin).map_err(|e| error(e.code, 0..0))?;
+                }
+                // Parsing calendar provenance never establishes clock support.
+                "clock" | "calendar" => return Err(error("clock-contract-unsupported", 0..0)),
+                _ => return Err(error("external-contract-lowering-unsupported", 0..0)),
+            }
+        }
+        Ok(Self {
             syntax,
             ledger,
+            resources,
             body: [
                 "scopes",
                 "data",
@@ -241,7 +269,7 @@ impl<'a, 's> Lower<'a, 's> {
             pending_steps: Vec::new(),
             join_selections: BTreeMap::new(),
             wait_owners: BTreeMap::new(),
-        }
+        })
     }
     fn put(&mut self, section: &str, id: String, record: Value) -> Result<()> {
         insert(

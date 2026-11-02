@@ -30,8 +30,13 @@ fn run() -> Result<String, String> {
                 .to_string(),
         );
     }
-    if args.len() != 3 || !matches!(args[0].as_str(), "lower" | "integrity" | "format") {
-        return Err("usage: choreoform-authoring-frontend <lower|integrity|format> SOURCE COMPANION; lower emits UNVALIDATED candidate IR; or parse-fragment RULE < stdin".into());
+    if args.len() < 3
+        || !matches!(args[0].as_str(), "lower" | "integrity" | "format" | "check")
+        || args.len() > 3 + 4 * 254
+        || !(args.len() - 3).is_multiple_of(4)
+        || (args[0] == "integrity" && args.len() != 3)
+    {
+        return Err("usage: choreoform-authoring-frontend <lower|check|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; lower emits UNVALIDATED candidates; check is STATIC ONLY; or parse-fragment RULE < stdin".into());
     }
     let source = read(std::fs::File::open(&args[1]).map_err(|_| "source-read".to_owned())?)?;
     let bindings = read(std::fs::File::open(&args[2]).map_err(|_| "companion-read".to_owned())?)?;
@@ -44,7 +49,22 @@ fn run() -> Result<String, String> {
                 .to_string(),
         );
     }
-    let resources = [
+    let mut extra = Vec::new();
+    let mut total = 0usize;
+    for arg in args[3..].as_chunks::<4>().0 {
+        if arg[0] != "--resource" {
+            return Err("resource-arguments".into());
+        }
+        let bytes = read(std::fs::File::open(&arg[3]).map_err(|_| "resource-read".to_owned())?)?;
+        total = total
+            .checked_add(bytes.len())
+            .ok_or_else(|| "resource-budget".to_owned())?;
+        if total > 8 * MAX_BYTES {
+            return Err("resource-budget".into());
+        }
+        extra.push((&arg[1], &arg[2], bytes));
+    }
+    let mut resources = vec![
         Resource {
             id: SUPPORTED_CONTRACTS[0].0,
             revision: SUPPORTED_CONTRACTS[0].1,
@@ -60,9 +80,20 @@ fn run() -> Result<String, String> {
             ),
         },
     ];
+    resources.extend(extra.iter().map(|(id, revision, bytes)| Resource {
+        id,
+        revision,
+        bytes,
+    }));
     let candidate = package
         .lower(&resources)
         .map_err(|e| format!("{} at {:?}", e.code, e.span))?;
+    if args[0] == "check" {
+        let report = candidate
+            .check_static(&resources)
+            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+        return Ok(serde_json::json!({"status":"static-checks-passed","executable":false,"revision":report.revision(),"expressions":report.expressions(),"policies":report.policies(),"remaining":report.remaining()}).to_string());
+    }
     if args[0] == "format" {
         let (source, companion) = package.formatted().map_err(|e| e.code.to_owned())?;
         return Ok(serde_json::json!({"source":source,"companion":companion,"semanticRevision":candidate.document()["revision"]}).to_string());

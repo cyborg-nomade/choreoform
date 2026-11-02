@@ -76,3 +76,14 @@ fn decoding_still_rejects_duplicate_keys_and_numeric_token_spellings() {
         assert_eq!(DefinitionEnvelope::decode(raw).unwrap_err(), expected);
     }
 }
+
+#[test]
+fn public_in_memory_admission_is_transport_only() {
+    choreoform_ir_probe_core::transport::admit_value(&json!({"not":"an IR definition"})).unwrap();
+    assert_eq!(
+        choreoform_ir_probe_core::transport::admit_value(&json!(1.0)),
+        Err(Error::NumberToken)
+    );
+    let env = DefinitionEnvelope::from_parts(json!({"not":"a typed graph"}), json!({})).unwrap();
+    assert!(env.check_structure().is_err());
+}

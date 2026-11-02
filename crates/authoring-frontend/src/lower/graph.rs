@@ -21,6 +21,15 @@ impl<'a, 's> Lower<'a, 's> {
                     refs.insert(target.to_owned());
                 }
             }
+            if p["kind"] == "capability" {
+                let pin = choreoform_semantic_check::Pin::decode(&p["provider"])
+                    .map_err(|e| error(e.code, 0..0))?;
+                let provider = self
+                    .resources
+                    .provider(&pin)
+                    .map_err(|e| error(e.code, 0..0))?;
+                refs.extend(self.protection_policy_refs(provider.protection())?);
+            }
             if let Some(actor) = p["authority"].as_str() {
                 refs.insert(
                     self.body["actors"][actor]["requirement"]
@@ -186,9 +195,96 @@ impl<'a, 's> Lower<'a, 's> {
                     .ok_or_else(|| error("actor-requirement", 0..0))?;
                 reads.extend(closure[policy].iter().cloned());
             }
+            if node["mode"] == "capability" {
+                let c = &self.body["capabilities"][node["target"].as_str().expect("capability")];
+                for field in ["contract", "effects"] {
+                    reads.extend(
+                        closure[c[field]
+                            .as_str()
+                            .ok_or_else(|| error("capability-reference", 0..0))?]
+                        .iter()
+                        .cloned(),
+                    );
+                }
+                let actor = c["authority"]
+                    .as_str()
+                    .ok_or_else(|| error("actor-reference", 0..0))?;
+                reads.extend(
+                    closure[self.body["actors"][actor]["requirement"]
+                        .as_str()
+                        .ok_or_else(|| error("actor-requirement", 0..0))?]
+                    .iter()
+                    .cloned(),
+                );
+            }
+            // Data-access protection can itself depend on data. Expand to a fixed
+            // point, retaining all conservative reads and their obligations.
+            let mut queue: Vec<_> = reads
+                .iter()
+                .cloned()
+                .chain(node["writes"].as_object().expect("writes").keys().cloned())
+                .collect();
+            let mut seen = BTreeSet::new();
+            while let Some(cell) = queue.pop() {
+                if !seen.insert(cell.clone()) {
+                    continue;
+                }
+                for policy in
+                    self.protection_policy_refs(&self.body["data"][&cell]["protection"])?
+                {
+                    for read in &closure[&policy] {
+                        if reads.insert(read.clone()) {
+                            queue.push(read.clone());
+                        }
+                    }
+                }
+            }
             self.body["nodes"][&id]["reads"] = set(reads);
         }
         self.check_shape()
+    }
+    fn protection_policy_refs(&self, p: &Value) -> Result<BTreeSet<String>> {
+        let mut refs = BTreeSet::from([p["policy"]
+            .as_str()
+            .ok_or_else(|| error("protection-policy", 0..0))?
+            .into()]);
+        for actor in p["participants"]
+            .as_object()
+            .ok_or_else(|| error("protection-participants", 0..0))?
+            .keys()
+        {
+            refs.insert(
+                self.body["actors"][actor]["requirement"]
+                    .as_str()
+                    .ok_or_else(|| error("actor-requirement", 0..0))?
+                    .into(),
+            );
+        }
+        for cap in p["capabilities"]
+            .as_object()
+            .ok_or_else(|| error("protection-capabilities", 0..0))?
+            .keys()
+        {
+            let c = &self.body["capabilities"][cap];
+            for field in ["contract", "effects"] {
+                refs.insert(
+                    c[field]
+                        .as_str()
+                        .ok_or_else(|| error("capability-reference", 0..0))?
+                        .into(),
+                );
+            }
+            let actor = c["authority"]
+                .as_str()
+                .ok_or_else(|| error("actor-reference", 0..0))?;
+            refs.insert(
+                self.body["actors"][actor]["requirement"]
+                    .as_str()
+                    .ok_or_else(|| error("actor-requirement", 0..0))?
+                    .into(),
+            );
+        }
+        Ok(refs)
     }
     pub(super) fn check_shape(&self) -> Result<()> {
         let policy_kind = |id: &Value, kind: &str| -> Result<()> {
