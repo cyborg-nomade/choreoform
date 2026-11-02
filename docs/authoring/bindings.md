@@ -194,6 +194,12 @@ must use explicit import, not generate a replacement lineage. Unsupported
 payloads must refuse export or produce a clearly incomplete inert view; a
 well-formed companion alone never grants admission.
 
-This PR's tests cover grammar recognition and companion invariants, not those
+The specification PR's tests cover grammar recognition and companion invariants, not those
 full admission/editing requirements. [Evaluation and remaining gates](../evaluation/0015-authoring-grammar-bindings.md)
 keep the distinction explicit.
+
+The subsequent [Rust implementation slice](../../crates/authoring-frontend/README.md)
+adds exact inventory/reference checks and supported candidate lowering, with
+source-package format/reparse tests. It remains short of full semantic admission,
+general identity-preserving IR export and transactional editing; see
+[its evidence](../evaluation/0015-rust-authoring-frontend.md).

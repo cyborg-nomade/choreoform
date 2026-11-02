@@ -1,0 +1,47 @@
+{
+  "format": "choreoform-authoring-bindings",
+  "version": "0.1.0",
+  "profile": "0.2.0",
+  "definition": "def_review",
+  "root": "scope_review",
+  "contracts": {
+    "semantics": {"contract": "urn:choreoform:semantics:adr-0008", "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"},
+    "core": {"dialect": "core", "contract": "urn:choreoform:contracts:core-profile:0.1.0", "digest": "sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58"}
+  },
+  "declarations": [
+    {"id": "scope_review", "kind": "scope", "scope": null, "name": "Review example"},
+    {"id": "review_actor", "kind": "actor", "scope": "scope_review", "name": "Reviewer"},
+    {"id": "review_actor_policy", "kind": "policy", "scope": "scope_review", "name": "Reviewer requirement"},
+    {"id": "review_protection", "kind": "policy", "scope": "scope_review", "name": "Protection"},
+    {"id": "review_work", "kind": "policy", "scope": "scope_review", "name": "Review work"},
+    {"id": "review_stop", "kind": "policy", "scope": "scope_review", "name": "Stop"},
+    {"id": "review_settle", "kind": "policy", "scope": "scope_review", "name": "Settle"},
+    {"id": "review_faults", "kind": "policy", "scope": "scope_review", "name": "Fault handling"},
+    {"id": "review_close", "kind": "policy", "scope": "scope_review", "name": "Close"},
+    {"id": "review_race", "kind": "policy", "scope": "scope_review", "name": "Commit order"},
+    {"id": "review_request", "kind": "data", "scope": "scope_review", "name": "Request"},
+    {"id": "review_decision", "kind": "data", "scope": "scope_review", "name": "Review decision"},
+    {"id": "review_audit", "kind": "data", "scope": "scope_review", "name": "Audit basis"},
+    {"id": "review_input", "kind": "expression", "scope": "scope_review", "name": "Current request"},
+    {"id": "review_step", "kind": "node", "scope": "scope_review", "name": "Review"},
+    {"id": "review_done", "kind": "node", "scope": "scope_review", "name": "Done"}
+  ],
+  "symbols": [
+    {"id": "review_scope_complete", "owner": "scope_review", "role": "outcome", "name": "complete", "wire": "complete"},
+    {"id": "review_output", "owner": "scope_review", "role": "output", "name": "Decision", "wire": "decision"},
+    {"id": "review_approved", "owner": "review_step", "role": "outcome", "name": "approved", "wire": "approved"},
+    {"id": "review_correction", "owner": "review_step", "role": "outcome", "name": "correction needed", "wire": "correction_needed"},
+    {"id": "review_request_purpose", "owner": "review_request", "role": "purpose", "name": "Expense review", "wire": "expense_review"},
+    {"id": "review_decision_purpose", "owner": "review_decision", "role": "purpose", "name": "Expense review", "wire": "expense_review"},
+    {"id": "review_audit_purpose", "owner": "review_audit", "role": "purpose", "name": "Expense review", "wire": "expense_review"}
+  ],
+  "generated": [
+    {"id": "review_initial_request", "owner": "review_request", "role": "initial", "key": null},
+    {"id": "review_initial_audit", "owner": "review_audit", "role": "initial", "key": null},
+    {"id": "review_flow_approved", "owner": "review_step", "role": "flow", "key": "review_approved"},
+    {"id": "review_flow_correction", "owner": "review_step", "role": "flow", "key": "review_correction"}
+  ],
+  "retired": [],
+  "resources": [],
+  "annotations": {"example:review": {"message": "Retain this unknown annotation", "flags": [true, null, 7]}}
+}

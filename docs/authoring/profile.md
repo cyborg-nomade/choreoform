@@ -207,3 +207,10 @@ must compare every declaration/symbol/generated slot, resolve all references,
 validate all accepted contracts and compute the existing IR semantic revision.
 See [the evaluation](../evaluation/0015-authoring-grammar-bindings.md) for the
 bounded observations and remaining work.
+
+A subsequent [Rust frontend slice](../../crates/authoring-frontend/README.md)
+now compares exact source/ledger inventories and lowers a supported subset to
+revision-bearing **unvalidated candidates**. It does not supply full admission,
+external-resource readers, confusable diagnostics, general IR export or a user
+study. [Separate implementation evidence](../evaluation/0015-rust-authoring-frontend.md)
+does not retroactively upgrade the original specification observations.

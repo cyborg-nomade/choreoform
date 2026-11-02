@@ -1,0 +1,78 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+# Synthetic frontend fixture, not an admitted/executable process or full benchmark.
+Choreoform authoring "0.2.0".
+Process "Review example".
+  Start at "Review".
+  Inputs empty.
+  Outputs ["Decision" uses "Review decision"].
+  Outcomes ["complete"].
+  Use cancellation "Stop", faults "Fault handling", closure "Close" and races "Commit order".
+  Require actor "Reviewer" under "Reviewer requirement".
+  Rule for actor "Reviewer requirement".
+    Permit when (true).
+  End policy.
+  Rule for protection "Protection".
+    Permit access when ((the fact "purpose") equals (purpose "Expense review" of "Request")) .
+  End policy.
+  Rule for work "Review work".
+    Instructions "Review the current request and record the decision.".
+    Authority "Reviewer".
+    Attempts 1.
+    Delays empty.
+    Retry faults empty.
+    Timeout none.
+    Complete when (true).
+    Compensates none.
+  End policy.
+  Rule for cancel "Stop".
+    Authority "Reviewer".
+    For children use "Settle".
+  End policy.
+  Rule for settlement "Settle".
+    Unfinished work cancel.
+  End policy.
+  Rule for faults "Fault handling".
+    Handle empty.
+  End policy.
+  Rule for closure "Close".
+    Fully terminal.
+  End policy.
+  Rule for race "Commit order".
+    Accept in acceptance order.
+  End policy.
+  Keep "Request" as text under "Protection".
+    Sensitivity "internal".
+    Purposes ["Expense review"].
+    Participants ["Reviewer"].
+    Capabilities empty.
+    Invalidate ["Review"].
+    Initially ("Synthetic request").
+  End data.
+  Keep "Review decision" as choice with [outcome "approved" of "Review" as record with empty, outcome "correction needed" of "Review" as record with empty] under "Protection".
+    Sensitivity "internal".
+    Purposes ["Expense review"].
+    Participants ["Reviewer"].
+    Capabilities empty.
+    Invalidate empty.
+    Initially unavailable.
+  End data.
+  Keep "Audit basis" as whole number under "Protection".
+    Sensitivity "internal".
+    Purposes ["Expense review"].
+    Participants ["Reviewer"].
+    Capabilities empty.
+    Invalidate ["Review"].
+    Initially (0).
+  End data.
+  Let "Current request" mean (the value of "Request") as text with parameters empty.
+  Step "Review".
+    Ask "Reviewer" to decide using "Current request" under "Review work" and record in "Review decision".
+    Also read ["Audit basis"].
+    On "approved", continue with "Done".
+    On "correction needed", continue with "Done".
+  End step.
+  Step "Done".
+    Finish as "complete".
+  End step.
+End process.
