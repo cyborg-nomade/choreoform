@@ -16,10 +16,13 @@ executable processes or complete the authoring item.
 
 ## Reproducible observations
 
-`cargo test -p choreoform-authoring-frontend --locked` runs 21 integration tests
+`cargo test -p choreoform-authoring-frontend --locked` runs 22 integration tests
 with table-driven/subcase coverage. The new public strict canonical decoder has
 a regression test in the existing core. Workspace tests, compile-fail doctests,
-formatting and warnings-as-errors lint remain regression gates.
+formatting and warnings-as-errors lint remain regression gates. Two frontend
+compile-fail doctests protect candidate metadata privacy and shared-only span
+access. Review regressions also verify exact UTF-8 error spans for exceptional
+invalidation and settlement-owner lookups, including multibyte references.
 
 Build the native adapter, then run
 `.tools/ir-check/bin/python tools/check_authoring_frontend.py` with the existing

@@ -114,7 +114,13 @@ impl<'a, 's> Lower<'a, 's> {
             "settlement" => {
                 body["unfinished"] = self.syntax.word(tree, 7)?.into();
                 body["owner"] = if let Some(reference) = tree.all("reference").first() {
-                    self.ledger.ancestor(scope, &self.parts(reference)?)?.into()
+                    self.ledger
+                        .ancestor(scope, &self.parts(reference)?)
+                        .map_err(|mut e| {
+                            e.span = self.syntax.span(reference);
+                            e
+                        })?
+                        .into()
                 } else {
                     Value::Null
                 };

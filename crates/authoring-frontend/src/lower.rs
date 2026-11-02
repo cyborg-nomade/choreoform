@@ -14,13 +14,27 @@ pub struct Package<'a> {
 }
 
 /// Immutable revision-bearing candidate; never a validated/executable definition.
+/// Metadata cannot be replaced independently of the candidate document:
+/// ```compile_fail
+/// use choreoform_authoring_frontend::Candidate;
+/// fn tamper(candidate: &mut Candidate) {
+///     candidate.source_digest = String::new();
+/// }
+/// ```
+/// The source map is exposed only as a shared borrow, even to an owning caller:
+/// ```compile_fail
+/// use choreoform_authoring_frontend::Candidate;
+/// fn tamper(mut candidate: Candidate) {
+///     candidate.spans().clear();
+/// }
+/// ```
 #[derive(Debug)]
 pub struct Candidate {
     document: Value,
-    pub source_digest: String,
-    pub bindings_digest: String,
-    pub package_digest: String,
-    pub spans: BTreeMap<String, std::ops::Range<usize>>,
+    source_digest: String,
+    bindings_digest: String,
+    package_digest: String,
+    spans: BTreeMap<String, std::ops::Range<usize>>,
 }
 /// Package integrity only; independent of binding consistency and IR admission.
 #[derive(Debug, PartialEq, Eq)]
@@ -30,11 +44,29 @@ pub struct Integrity {
     pub package: String,
 }
 impl Candidate {
+    /// Borrow the unvalidated IR envelope; this does not authorize execution.
     pub fn document(&self) -> &Value {
         &self.document
     }
+    /// Consume this candidate, returning its still-unvalidated IR envelope.
     pub fn into_document(self) -> Value {
         self.document
+    }
+    /// Digest of the exact original UTF-8 source bytes, not its semantic revision.
+    pub fn source_digest(&self) -> &str {
+        &self.source_digest
+    }
+    /// Digest of the strict canonical companion used to lower this candidate.
+    pub fn bindings_digest(&self) -> &str {
+        &self.bindings_digest
+    }
+    /// Digest of the length-framed original source and canonical companion.
+    pub fn package_digest(&self) -> &str {
+        &self.package_digest
+    }
+    /// Borrow declaration/generated-record spans in the original source's UTF-8 bytes.
+    pub fn spans(&self) -> &BTreeMap<String, std::ops::Range<usize>> {
+        &self.spans
     }
 }
 impl<'a> Package<'a> {

@@ -48,7 +48,16 @@ fn terminal_package_lowers_without_execution_authority() {
         package.integrity().package,
         "sha256:9d0328a4cd9266221ac31393567bc23ef6c513bfe8bb24be573047e0601b44d5"
     );
-    assert_eq!(candidate.spans.len(), 9);
+    let integrity = package.integrity();
+    assert_eq!(candidate.source_digest(), integrity.source);
+    assert_eq!(candidate.bindings_digest(), integrity.bindings);
+    assert_eq!(candidate.package_digest(), integrity.package);
+    assert_eq!(candidate.spans().len(), 9);
+    let span = candidate.spans()["node_done"].clone();
+    assert_eq!(
+        &SOURCE[span],
+        "Step \"Done\".\n    Finish as \"complete\".\n  End step."
+    );
 }
 
 #[test]
@@ -846,7 +855,7 @@ fn source_identity_order_is_not_semantics_but_work_instructions_are() {
         .lower(&resources())
         .unwrap();
     assert_eq!(reordered.document(), original.document());
-    assert_ne!(reordered.bindings_digest, original.bindings_digest);
+    assert_ne!(reordered.bindings_digest(), original.bindings_digest());
     let changed = REVIEW_SOURCE.replace(
         "Instructions \"Review the current request and record the decision.\"",
         "Instructions \"Compare the synthetic request.\"",
@@ -906,4 +915,42 @@ fn depth_token_cycles_shadowing_and_ledger_fields_fail_closed() {
         Ledger::decode(&bytes(&b)).unwrap_err().code,
         "ledger-fields"
     );
+}
+
+#[test]
+fn exceptional_ledger_references_report_exact_source_spans() {
+    for (reference, code) in [
+        ("\"未定義\"", "reference-missing"),
+        ("\"Reviewer\"", "reference-kind"),
+        ("\"Review\" in \"違う scope\"", "invalidation-qualification"),
+    ] {
+        let clause = format!("Invalidate [{reference}].");
+        let source = format!(
+            "# Multibyte prefix: é\n{}",
+            REVIEW_SOURCE.replacen("Invalidate [\"Review\"].", &clause, 1)
+        );
+        let start = source.find(&clause).unwrap() + "Invalidate [".len();
+        let diagnostic = Package::parse(source.as_bytes(), REVIEW_LEDGER)
+            .unwrap()
+            .lower(&resources())
+            .unwrap_err();
+        assert_eq!(diagnostic.code, code);
+        assert_eq!(diagnostic.span, start..start + reference.len());
+        assert_eq!(&source[diagnostic.span], reference);
+    }
+    for reference in ["\"Review example\"", "\"祖先\""] {
+        let clause = format!("Unfinished work transfer to {reference}.");
+        let source = format!(
+            "# Multibyte prefix: é\n{}",
+            REVIEW_SOURCE.replace("Unfinished work cancel.", &clause)
+        );
+        let start = source.find(&clause).unwrap() + "Unfinished work transfer to ".len();
+        let diagnostic = Package::parse(source.as_bytes(), REVIEW_LEDGER)
+            .unwrap()
+            .lower(&resources())
+            .unwrap_err();
+        assert_eq!(diagnostic.code, "settlement-ancestor");
+        assert_eq!(diagnostic.span, start..start + reference.len());
+        assert_eq!(&source[diagnostic.span], reference);
+    }
 }

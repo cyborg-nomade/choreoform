@@ -128,7 +128,14 @@ impl<'a, 's> Lower<'a, 's> {
             reference_lists[2]
                 .all("reference")
                 .into_iter()
-                .map(|r| self.ledger.invalidation(scope, &self.parts(r)?))
+                .map(|r| {
+                    self.ledger
+                        .invalidation(scope, &self.parts(r)?)
+                        .map_err(|mut e| {
+                            e.span = self.syntax.span(r);
+                            e
+                        })
+                })
                 .collect::<Result<Vec<_>>>()?,
         )?;
         let mut record = json!({"scope":scope, "type":ty, "protection":{"policy":self.r(tree, scope, "policy", 0)?, "sensitivity":self.syntax.text(tree.all("NAME")[1])?, "purposes":set(purposes), "participants":self.references(reference_lists[0], scope, "actor")?, "capabilities":self.references(reference_lists[1], scope, "capability")?}, "invalidates":invalidates});
