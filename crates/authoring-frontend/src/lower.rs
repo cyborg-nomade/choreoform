@@ -76,6 +76,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::Report> {
         choreoform_semantic_check::check(&self.envelope, resources)
     }
+    /// Prove conservative ordinary control/initialization obligations. Root input
+    /// cells are launch preconditions; this report never authorizes execution.
+    pub fn check_control(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ControlReport> {
+        choreoform_semantic_check::check_control(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {

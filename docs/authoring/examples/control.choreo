@@ -1,0 +1,59 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+# Synthetic ordinary initialization proof; no execution or benchmark claim.
+Choreoform authoring "0.2.0".
+Process "Branch example".
+  Start at "Choose route".
+  Inputs empty.
+  Outputs ["Answer" uses "Result"].
+  Outcomes ["complete"].
+  Use cancellation "Stop", faults "Fault handling", closure "Close" and races "Commit order".
+  Require actor "Reviewer" under "Reviewer requirement".
+  Rule for actor "Reviewer requirement".
+    Permit when (true).
+  End policy.
+  Rule for protection "Protection".
+    Permit access when (true).
+  End policy.
+  Rule for cancel "Stop".
+    Authority "Reviewer".
+    For children use "Settle".
+  End policy.
+  Rule for settlement "Settle".
+    Unfinished work cancel.
+  End policy.
+  Rule for faults "Fault handling".
+    Handle empty.
+  End policy.
+  Rule for closure "Close".
+    Fully terminal.
+  End policy.
+  Rule for race "Commit order".
+    Accept in acceptance order.
+  End policy.
+  Keep "Result" as whole number under "Protection".
+    Sensitivity "internal".
+    Purposes ["Illustration"].
+    Participants ["Reviewer"].
+    Capabilities empty.
+    Invalidate empty.
+    Initially unavailable.
+  End data.
+  Let "First route applies" mean (true) as truth value with parameters empty.
+  Step "Choose route".
+    Choose by ["first" when "First route applies"]; otherwise "second".
+    On "first", continue with "Write first".
+    On "second", continue with "Write second".
+  End step.
+  Step "Write first".
+    Set together ["Result" to (1)].
+    On "ready", continue with "Done".
+  End step.
+  Step "Write second".
+    Set together ["Result" to (2)].
+    On "ready", continue with "Done".
+  End step.
+  Step "Done".
+    Finish as "complete".
+  End step.
+End process.

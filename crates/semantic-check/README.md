@@ -105,3 +105,42 @@ paths and writes stdout. Formatting still drops comments. No runtime/browser
 execution or production authorization is implied by these synthetic examples.
 
 See [the evidence and remaining work](../../docs/evaluation/0016-static-contract-checks.md).
+
+## Conservative ordinary control stage (proposed ADR-0017)
+
+`check_control(&DefinitionEnvelope, explicit_resources)` first runs unchanged
+`check`, then verifies ordinary outcome/flow coverage, unique source/outcome pairs,
+acyclicity and reciprocal same-scope split/fanout joins. Scope entry and ordinary
+flows cannot directly activate a join; its source fork supplies the sole synthetic
+edge. Nested predicate tokens must belong to the source population. This proves
+neither predicate satisfiability nor progress.
+
+The analysis follows ordinary root/call paths, intersecting initialized-cell sets
+at merges. Root input cells are reported launch assumptions. Initial expressions
+may depend on entry inputs/available ancestors, with no invented local initializer
+order. All declared reads precede writes; every reachable finish must supply its
+outputs. Invocations use fresh locals and exact port/write maps, distinct output
+targets and summaries of guaranteed ancestor initialization. Repeat's zero case
+and parallel joins receive no body-only initialization credit. Fanout supplies its
+explicit item input. Unreachable declarations remain static checked and reported
+as uncovered. Exceptional work receives no invented ordinary entry context.
+
+`ControlReport` exposes the unchanged revision, covered/uncovered nodes, covered
+scopes, required input cells and residual obligations through shared getters.
+`unproved` diagnostics can reflect conservative limits rather than semantic
+invalidity. Initialization is distinct from current evidence validity, access
+authorization, race/invalidation, exceptional-flow, host and atomic enforcement.
+The API provides no executable capability and preserves the old `check` boundary.
+
+Control traversal has an independent cumulative 1,000,000-unit visit/state-member
+budget and scope/predicate depth 64, in addition to existing transport/static
+limits. Graph-edge traversal is iterative. Retained/copied availability membership
+is charged; dense sets may refuse. These are prototype bounds, not scale promises.
+
+Try `check-control` instead of `check` on the
+[branch source](../../docs/authoring/examples/control.choreo) and
+[companion](../../docs/authoring/examples/control.bindings.json). The CLI returns
+`control-checks-passed`, `executable:false`, the revision, explicit coverage/input
+sets and remaining obligations. See
+[ADR-0017](../../docs/decisions/0017-control-availability-checks.md) and
+[evidence/review questions](../../docs/evaluation/0017-control-availability-checks.md).
