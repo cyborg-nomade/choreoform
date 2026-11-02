@@ -133,6 +133,8 @@ implementation step within this item after merge; visual notation is not started
    admission, lowering, identity-preserving export and round-trip tests.
    In progress: [bounded frontend implementation evidence](../evaluation/0015-rust-authoring-frontend.md)
    supplies consistency/candidate lowering and original-package formatting;
+   Project Owner approved that bounded slice in PR #20 on 2026-11-02 with the
+   recommended decisions and authorized the next contract-reader/admission step.
    full admission, external readers, general IR export and transactional editing
    remain open. This action is not marked complete.
 4. [ ] Complete full RP-01/03/08 source/IR benchmarks and resolve their recorded

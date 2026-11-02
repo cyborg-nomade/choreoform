@@ -82,7 +82,7 @@ The intended authoring language is near plain English; its dedicated design and
 user-evaluation deliverable is explicit in the Phase 1 Roadmap.
 
 The [near-English working profile](docs/authoring/README.md) now has a bounded
-[Rust frontend implementation proposal](crates/authoring-frontend/README.md):
+[Rust frontend](crates/authoring-frontend/README.md), approved in PR #20:
 exact source/identity consistency and partial candidate lowering, not semantic
 admission, general IR export or completed user evaluation. Review its
 [evidence and remaining gates](docs/evaluation/0015-rust-authoring-frontend.md).

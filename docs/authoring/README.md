@@ -6,7 +6,7 @@
 **Status:** Accepted working direction in [ADR-0014](../decisions/0014-near-english-authoring.md),
 owner approved 2026-09-22, effective upon merge of PR #18; not final syntax.
 The technical JSON-record parser remains unchanged. A bounded
-[Rust authoring frontend](../../crates/authoring-frontend/README.md) now proposes
+[Rust authoring frontend](../../crates/authoring-frontend/README.md), approved in PR #20, implements
 syntax/binding consistency and partial **candidate** IR lowering, not semantic
 admission or an executable compiler. The Roadmap deliverable remains
 open: representative-user evaluation, complete lowerable benchmarks and visual

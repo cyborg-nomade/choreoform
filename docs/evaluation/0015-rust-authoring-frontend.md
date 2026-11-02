@@ -4,7 +4,7 @@
 # ADR-0015 continuation: bounded Rust frontend evidence
 
 **Date:** 2026-10-04<br>
-**Status:** Implementation proposal awaiting Project Owner review<br>
+**Status:** Accepted bounded implementation; owner approved 2026-11-02, effective upon merge of PR #20<br>
 **Specification baseline:** `e65d82d15aa2a5f68d8d0ec60edd6a56d126976a` (merged PR #19)<br>
 **Frozen plan:** [0015-frontend-plan.md](0015-frontend-plan.md), committed before
 implementation in `515ba25`<br>
@@ -86,3 +86,13 @@ G1–G4, forty Partial scenarios, accessibility evidence and Phase 1 exit are un
 No visual notation or participant recruitment is included. Rust remains accepted;
 ADR-0015 decisions stand without a duplicate implementation ADR. Pause for owner
 review before merge or another implementation slice.
+
+## Acceptance
+
+The Project Owner approved PR #20 with the recommendations on 2026-11-02:
+accept bounded candidate infrastructure, keep the budgets/formatter prototype-only,
+and prioritize supported contract readers and static semantic admission next.
+The two review findings were fixed in `4a8c787`; required CI passed and both
+threads were resolved. This closes the review pause for this slice only. The
+owner explicitly authorized completing the next scoped item to review readiness.
+No runtime, benchmark, authoring completion or Phase 1 gate is closed.

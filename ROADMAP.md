@@ -116,7 +116,9 @@ validated, and round-tripped.
   Project Owner approved 2026-10-04, effective upon merge of
   [PR #19](https://github.com/cyborg-nomade/choreoform/pull/19).
   The [bounded Rust frontend slice](docs/evaluation/0015-rust-authoring-frontend.md)
-  proposes exact source/ledger consistency and supported candidate IR lowering.
+  implements exact source/ledger consistency and supported candidate IR lowering;
+  Project Owner approved 2026-11-02 with recommendations, effective upon merge of
+  [PR #20](https://github.com/cyborg-nomade/choreoform/pull/20).
   This is **not** full source/semantic admission or general IR export: external
   provider/clock/calendar/named-type readers, complete validation/confusable
   diagnostics, identity-preserving export/editing, full source/IR benchmarks and

@@ -18,7 +18,7 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 - [ADR-0015 bounded Rust frontend continuation](0015-rust-authoring-frontend.md)
   — grammar/binding consistency and supported **candidate** lowering with package
-  reparse tests; awaiting implementation review, not full semantic admission,
+  reparse tests; owner approved 2026-11-02 in PR #20, not full semantic admission,
   general IR export, full benchmarks or participant evidence.
 
 - [ADR-0015 grammar/binding-package evidence](0015-authoring-grammar-bindings.md)
