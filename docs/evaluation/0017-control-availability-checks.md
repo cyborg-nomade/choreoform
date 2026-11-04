@@ -44,7 +44,7 @@ ten node variants and seven CLI checks. These results do not close residual gate
 | Repeat and parallel | Zero-iteration path; no sibling handoff or join credit; explicit fanout item seed | Valid programs needing parallel/order proofs may refuse |
 | Initializers and coverage | Entry-input dependencies pass; guessed local initializer ordering refuses; unreachable declarations reported | Exceptional/unreachable declarations have no availability proof |
 | Bounds | 1,000-node × 600-cell dense propagation refuses the cumulative work limit | No latency, throughput or compatibility claim |
-| Source/package boundary | Four original-package format/reparse/check cycles; static success/control refusal mutations | No general IR exporter, safe edit transaction or browser execution |
+| Source/package boundary | Five format/reparse/check cases across four source packages, including a root-input variant; static success/control refusal mutations | No general IR exporter, safe edit transaction or browser execution |
 
 Rust regressions live in
 [`control_check.rs`](../../crates/authoring-frontend/tests/control_check.rs).
@@ -55,6 +55,30 @@ independently checks schema/JCS/revision/package hashes, coverage partitions and
 source-cycle stability. It invokes Rust for semantic results; it is not an
 independent semantic prover. It also checks explicit resource refusal, diagnostics,
 document links and licenses. CI runs it after the existing static oracle.
+
+## PR #22 review follow-up (2026-11-04)
+
+The [CodeRabbit review](https://github.com/cyborg-nomade/choreoform/pull/22#pullrequestreview-5739164221)
+has three valid coverage findings, all addressed independently:
+
+- **Nonempty CLI inputs:** add a temporary branch-package variant with a root
+  input whose display name, port wire name and cell ID differ. Assert that
+  `requiredInputs` contains the cell ID `branch_result`, and preserve the report
+  through formatting/reparse. An always-empty serializer now fails this case.
+- **Unreachable missing flow:** add an unconnected compute node with an ordinary
+  outcome but no flow. It passes payload checks and refuses `flow-missing`, in
+  addition to the existing reachable-node and duplicate-flow mutations.
+- **Diagnostic value assertion:** embed a distinct integer marker in the actual
+  fixture, verify its presence, then assert it is absent from the complete debug
+  diagnostic. This replaces an assertion against an absent `SECRET` string; it
+  covers that integer payload, not every possible value or a demonstrated leak.
+
+The separate CodeRabbit **80% docstring coverage** advisory is declined. Its
+complexity-filtered percentage is not an adopted repository requirement in
+`CONTRIBUTING.md` or the workflow. The public proof boundary, assumptions and
+budgets are already documented in the API/README/ADR. Blanket comments on private
+helpers and tests would not close a demonstrated documentation or behavior gap.
+No production semantics or admission boundary changes are needed for these findings.
 
 ## Reproduce
 

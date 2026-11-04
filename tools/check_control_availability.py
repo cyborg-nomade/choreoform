@@ -15,12 +15,23 @@ from check_static_contracts import ROOT, EXAMPLES, run, service_resources
 
 class ControlEvidence(unittest.TestCase):
     def test_source_cycles_bind_reports_to_unchanged_revisions(self):
-        for name in ['terminal', 'review', 'service', 'control']:
-            with self.subTest(package=name), tempfile.TemporaryDirectory() as directory:
+        cases = [(name, False) for name in ['terminal', 'review', 'service', 'control']]
+        cases.append(('control', True))
+        for name, root_input in cases:
+            with self.subTest(package=name, root_input=root_input), tempfile.TemporaryDirectory() as directory:
                 source = Path(directory) / 'process.choreo'
                 companion = Path(directory) / 'process.bindings.json'
                 source.write_bytes((EXAMPLES / f'{name}.choreo').read_bytes())
                 companion.write_bytes((EXAMPLES / f'{name}.bindings.json').read_bytes())
+                if root_input:
+                    source.write_text(source.read_text(encoding='utf-8').replace(
+                        'Inputs empty.', 'Inputs ["Starting result" uses "Result"].'), encoding='utf-8')
+                    ledger = json.loads(companion.read_bytes())
+                    ledger['symbols'].append({
+                        'id': 'sym_branch_input', 'owner': 'scope_branch', 'role': 'input',
+                        'name': 'Starting result', 'wire': 'argument',
+                    })
+                    companion.write_text(json.dumps(ledger), encoding='utf-8')
                 resources = service_resources() if name == 'service' else []
                 grammar.recognize(source.read_text(encoding='utf-8'))
                 lowered = run('lower', source, companion, resources)
@@ -35,8 +46,10 @@ class ControlEvidence(unittest.TestCase):
                 self.assertIs(report['executable'], False)
                 self.assertEqual(report['revision'], candidate['revision'])
                 self.assertTrue(report['remaining'])
-                self.assertEqual(report['requiredInputs'], [])
+                self.assertEqual(report['requiredInputs'], ['branch_result'] if root_input else [])
                 body = candidate['body']
+                if root_input:
+                    self.assertEqual(body['scopes'][body['root']]['inputs'], {'argument': 'branch_result'})
                 covered, uncovered = set(report['coveredNodes']), set(report['uncoveredNodes'])
                 self.assertFalse(covered & uncovered)
                 self.assertEqual(covered | uncovered, set(body['nodes']))

@@ -6,6 +6,7 @@ use choreoform_semantic_check::{CORE, SEMANTICS, check, check_control};
 use serde_json::{Value, json};
 
 const ROOT: &str = "scope_terminal";
+const INTEGER_MARKER: &str = "424242";
 fn resources() -> Vec<Resource<'static>> {
     vec![
         Resource {
@@ -38,7 +39,7 @@ fn base() -> Value {
         &mut b,
         "zero",
         json!({"kind":"integer"}),
-        json!({"op":"literal","type":{"kind":"integer"},"value":"0"}),
+        json!({"op":"literal","type":{"kind":"integer"},"value":INTEGER_MARKER}),
         json!({}),
     );
     expr(
@@ -58,11 +59,15 @@ fn pass(b: Value) {
 }
 fn refuse(b: Value, expected: &str) {
     let e = envelope(b);
+    assert_eq!(
+        e.document()["body"]["expressions"]["zero"]["body"]["value"],
+        INTEGER_MARKER
+    );
     // These candidates deliberately pass the old payload stage.
     check(&e, &resources()).unwrap();
     let error = check_control(&e, &resources()).unwrap_err();
     assert_eq!(error.code, expected, "{error:?}");
-    assert!(!error.path.contains("SECRET"));
+    assert!(!format!("{error:?}").contains(INTEGER_MARKER));
 }
 fn cell(b: &mut Value, id: &str, scope: &str, initialized: bool) {
     b["data"][id] = json!({"scope":scope,"type":{"dialect":"core","body":{"kind":"integer"}},"protection":{"policy":"protect","sensitivity":"internal","purposes":{"test":true},"participants":{},"capabilities":{}},"invalidates":{}});
@@ -212,6 +217,15 @@ fn every_ordinary_outcome_has_one_flow_including_unreachable_nodes() {
         .unwrap()
         .remove("right_done");
     refuse(missing, "flow-missing");
+    let mut unreachable = b.clone();
+    compute(
+        &mut unreachable,
+        "unreachable_write",
+        ROOT,
+        json!({"answer":"zero"}),
+        json!({}),
+    );
+    refuse(unreachable, "flow-missing");
     let mut duplicate = b;
     duplicate["flows"]["duplicate"] = duplicate["flows"]["right_done"].clone();
     refuse(duplicate, "flow-duplicate");
