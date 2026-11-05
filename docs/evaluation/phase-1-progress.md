@@ -110,6 +110,13 @@ invariants, runtime/exceptional/reconciliation concurrency and phase gates stay 
 The next slice is the [supported clock resource/host boundary proposal](0023-clock-contract-plan.md).
 Timer typing, clock-source information flow and host-obligation integration must
 follow before source/definition timers can be enabled; no host support is inferred.
+The clock contract/reader slice now pins a separate immutable instance-microsecond
+profile and validates exact typed source metadata. Existing timer/source-resource
+refusals remain. ADR-0023 is accepted under delegated automated review; 162 Rust
+tests plus five compile-fail doctests, native/Wasm checks, artifact integrity and
+all relevant stage oracles passed locally. Final-head CI and PR merge remain
+pending. Timer typing/flow, calendar-domain and retry-clock bindings plus explicit
+host obligations are the next dependencies; no actual clock support is claimed.
 
 ## Honest exit accounting
 

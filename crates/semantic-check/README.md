@@ -225,3 +225,14 @@ checked/uncovered forks, earlier evidence and residual host/domain obligations;
 no arbitrary invariant, actual settlement, live seal or race permission is proved.
 See [ADR-0022](../../docs/decisions/0022-ordinary-concurrency.md) and
 [evidence](../../docs/evaluation/0022-ordinary-concurrency.md).
+
+## Pinned clock metadata (ADR-0023)
+
+`Resources::clock` returns immutable metadata for the exact `CLOCK_PROFILE` and
+its read-only Integer tick provider. Register the clock, profile and source bytes
+explicitly; the reader verifies all pins and source constraints. It reads no
+time, authenticates no source and grants no timer/dispatch authority. Source/
+definition timers remain unsupported until typed dependencies, clock-result flow,
+calendar/domain association and host obligations are integrated. See
+[clock contracts](../../docs/clocks/README.md) and
+[evidence](../../docs/evaluation/0023-clock-resource-contract.md).

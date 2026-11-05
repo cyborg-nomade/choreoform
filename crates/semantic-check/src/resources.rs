@@ -3,6 +3,8 @@
 use super::*;
 use choreoform_ir_probe_core::{Resource, digest, transport};
 use std::sync::Arc;
+mod clock;
+pub use clock::{CLOCK_PROFILE, Clock};
 
 #[derive(Debug)]
 pub(crate) struct NamedDefinition {

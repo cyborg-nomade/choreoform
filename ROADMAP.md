@@ -175,6 +175,12 @@ validated, and round-tripped.
   checks fresh-local/shared-ancestor footprints and conservative external/lifetime
   boundaries. Full domain/invariant proofs, early/reconcile concurrency, actual
   host enforcement and aggregate gates remain open.
+  [ADR-0023](docs/decisions/0023-clock-resource-contract.md) specifies a pinned
+  instance-microsecond clock profile and metadata reader, with explicit trusted
+  source/origin/ordering/host requirements. Non-null timers stay unsupported until
+  timer typing, clock-source flow, wait outcomes, calendar-domain binding, retry
+  clock selection and host-obligation integration are completed. This proposal
+  does not supply a real clock adapter or close the time/validator gate.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted
