@@ -8,6 +8,14 @@ Each phase should produce a usable vertical slice and the decisions needed by
 the next phase. Phases may overlap, but their exit criteria should not be
 skipped.
 
+**Execution workflow (owner-authorized 2026-11-05):** follow
+[ADR-0018](docs/decisions/0018-phase-review-delegation.md). Codex implements,
+reviews and merges verified items within the current phase without item-level
+approval pauses. At the phase boundary it reports achievements, evidence and
+remaining limits, then waits for owner approval before opening the next phase
+chat. Keep all exit/evidence criteria intact. The
+[Phase 1 progress record](docs/evaluation/phase-1-progress.md) tracks continuation.
+
 ## Phase 0 — Groundwork
 
 **Goal:** establish the project’s identity, legal foundation, scope, and way of
@@ -170,7 +178,8 @@ not a claim that a production engine already exists.
 **Sequence approved in PR #14:** after the bounded parser,
 address binding/type foundations and executable contracts before advancing to
 the near-English and visual authoring designs. Each deliverable still requires
-its own review and permission to start. Authoring studies may feed back into the
+its own recorded review; permission to start within the phase is now delegated
+under ADR-0018. Authoring studies may feed back into the
 contracts; no final language selection or compatibility commitment is made
 while the gates remain conditional.
 

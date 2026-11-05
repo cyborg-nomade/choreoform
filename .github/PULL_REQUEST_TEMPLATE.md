@@ -32,5 +32,6 @@ Related issue, Roadmap item, or ADR:
 ## Maintainer checklist
 
 - [ ] Required review and verification are complete.
-- [ ] The Project Owner approved this pull request, if it is a Roadmap deliverable.
+- [ ] The Project Owner approved this Roadmap deliverable, or recorded delegated
+      review/acceptance under ADR-0018 applies (state which).
 - [ ] Any accepted ADR status and action items are updated before merge.

@@ -77,14 +77,31 @@ promise, changes project-wide policy, or has unresolved, material objections.
 ### Roadmap deliverables
 
 Each Roadmap deliverable has a dedicated branch and pull request. It is merged
-only after the Project Owner records approval. Any accepted decision record in
-the pull request is updated to reflect that approval before merge.
+after Project Owner approval or acceptance under an explicit recorded delegation.
+Any accepted decision record records that authority before merge.
+
+### Current phase execution delegation
+
+On 2026-11-05 the Project Owner authorized Codex, acting as the owner's automated
+project agent, to implement, review and merge work within the current phase,
+including scoped ADR decisions. [ADR-0018](docs/decisions/0018-phase-review-delegation.md)
+records this standing authorization. Automated self-review is labeled as such;
+it is not independent human review. Dedicated PRs, review dispositions, required
+CI, DCO and evidence requirements remain in force. No item-level approval pause
+is required while this delegation applies.
+
+At each phase boundary the agent supplies an achievement/evidence/limits report
+and stops for owner approval before opening the next phase chat and continuing.
+The owner can steer or revoke the delegation at any time. Unmet exit criteria
+remain unmet; delegation cannot substitute for actual participant observations,
+independent review or other required external evidence.
 
 ### Durable or cross-cutting decisions
 
 Changes to language semantics, public compatibility, architecture, licensing,
 governance, or the open/commercial boundary require a public architecture
-decision record and Project Owner approval. The
+decision record and Project Owner approval or acceptance within the recorded
+phase delegation. Ownership, licenses and the Manifest remain under owner control. The
 [ADR process](docs/decisions/README.md) defines proposal, discussion,
 acceptance, and supersession.
 
