@@ -4,7 +4,7 @@
 # Ordinary control and initialization: evidence and review guide
 
 **Date:** 2026-11-02<br>
-**Status:** Ready for review; ADR/merge approval pending<br>
+**Status:** Accepted; owner approved PR #22 on 2026-11-05, effective upon merge<br>
 **Decision:** [ADR-0017](../decisions/0017-control-availability-checks.md)<br>
 **Baseline:** `99857fc658b98e1fcb9e82893764062a2d547833` (merged PR #21)<br>
 **Frozen plan:** [0017-control-plan.md](0017-control-plan.md), committed in
@@ -124,7 +124,9 @@ library, not a running process host or new browser runtime evidence.
 
 ## Stop boundary
 
-Pause with this ADR and implementation PR ready for owner review. Full structural/
+The Project Owner approved PR #22 on 2026-11-05 and authorized continued work,
+review and merge within the phase, with a report/approval boundary before the next
+phase. The original item-level review pause is closed. Full structural/
 semantic admission, rich stable source diagnostics, complete benchmark and forty
 Partial corpus scenarios, G1–G4 and Phase 1 exit remain open. No process engine,
 visual notation or participant recruitment starts here.

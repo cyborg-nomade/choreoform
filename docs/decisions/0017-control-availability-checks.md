@@ -3,7 +3,7 @@
 
 # ADR-0017: Check ordinary control and initialization conservatively
 
-**Status:** Proposed<br>
+**Status:** Accepted — conservative ordinary-control/initialization stage<br>
 **Date:** 2026-11-02<br>
 **Decider:** Project Owner
 
@@ -91,7 +91,15 @@ implementation in `dc63a97`. [Evidence and review questions](../evaluation/0017-
 describe positive/negative graph and initialization cases, bounds, source cycles
 and native/Wasm checks. No frozen artifact or semantic version changes.
 
-1. [ ] Owner reviews the stage boundary, conservative rules and next priority.
-2. [ ] Record owner approval before merge; do not start another item implicitly.
+The Project Owner reviewed and approved [PR #22](https://github.com/cyborg-nomade/choreoform/pull/22)
+on 2026-11-05. This accepts the separate conservative stage, its explicit input/
+coverage assumptions and the stated follow-up priority. The three CodeRabbit
+coverage findings were addressed in `c53e4d4`; no unresolved inline threads remain.
+The owner also authorized continued implementation, review and merge within each
+phase, with a report/approval boundary before starting the next phase. This
+approval does not close any residual full-validator or Phase 1 gate.
+
+1. [x] Owner reviews the stage boundary, conservative rules and next priority.
+2. [x] Record owner approval before merge; subsequent work is explicitly authorized.
 3. [x] Supply bounded implementation and reproducible evidence for review.
 4. [ ] Complete the separately tracked full validator/host/benchmark gates.
