@@ -939,3 +939,68 @@ fn fanout_item_access_metadata_is_a_parent_dependency_without_an_item_value_read
         "node-reads"
     );
 }
+
+#[test]
+fn finish_declares_output_metadata_dependencies_in_uncalled_child_scopes() {
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "basis", ROOT, true);
+    cell(&mut b, "local", "child", false);
+    access_policy(&mut b, "output_access", "basis");
+    b["data"]["local"]["protection"]["policy"] = "output_access".into();
+    b["scopes"]["child"]["inputs"] = json!({"value":"local"});
+    b["scopes"]["child"]["outputs"] = json!({"value":"local"});
+    assert_eq!(
+        check(&envelope(b.clone()), &resources()).unwrap_err().code,
+        "node-reads"
+    );
+    b["nodes"]["child_done"]["reads"] = json!({"basis":true});
+    let report = check_control(&envelope(b), &resources()).unwrap();
+    assert!(report.uncovered_nodes().contains("child_done"));
+}
+#[test]
+fn completion_metadata_closure_includes_access_on_predicate_read_data() {
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "audit", ROOT, false);
+    cell(&mut b, "basis", ROOT, true);
+    cell(&mut b, "local", "child", false);
+    b["scopes"][ROOT]["inputs"] = json!({"audit":"audit"});
+    access_policy(&mut b, "basis_access", "audit");
+    access_policy(&mut b, "output_access", "basis");
+    b["data"]["basis"]["protection"]["policy"] = "basis_access".into();
+    b["data"]["local"]["protection"]["policy"] = "output_access".into();
+    b["scopes"]["child"]["inputs"] = json!({"value":"local"});
+    b["scopes"]["child"]["outputs"] = json!({"value":"local"});
+    b["nodes"]["child_done"]["reads"] = json!({"basis":true});
+    assert_eq!(
+        check(&envelope(b.clone()), &resources()).unwrap_err().code,
+        "node-reads"
+    );
+    b["nodes"]["child_done"]["reads"] = json!({"basis":true,"audit":true});
+    check_control(&envelope(b), &resources()).unwrap();
+}
+#[test]
+fn finish_metadata_has_no_spurious_output_value_reads() {
+    let mut b = base();
+    cell(&mut b, "value", ROOT, true);
+    b["scopes"][ROOT]["outputs"] = json!({"value":"value"});
+    assert_eq!(b["nodes"]["node_done"]["reads"], json!({}));
+    check_control(&envelope(b), &resources()).unwrap();
+
+    // Many terminal declarations share one wide, immutable envelope. Validate it
+    // once, while still checking every node's metadata dependencies and budget.
+    let mut b = base();
+    cell(&mut b, "value", ROOT, true);
+    b["scopes"][ROOT]["outputs"] = json!({"value":"value"});
+    b["data"]["value"]["protection"]["purposes"] = Value::Object(
+        (0..4000)
+            .map(|i| (format!("purpose_{i:04}"), json!(true)))
+            .collect(),
+    );
+    for i in 0..700 {
+        b["nodes"][format!("extra_finish_{i:04}")] = b["nodes"]["node_done"].clone();
+    }
+    let report = check_control(&envelope(protected(b)), &resources()).unwrap();
+    assert_eq!(report.uncovered_nodes().len(), 700);
+}

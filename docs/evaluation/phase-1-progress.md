@@ -57,6 +57,12 @@ automated self-review passed. PR #25 merged at
 delegated review; no unresolved findings were present and CodeRabbit skipped
 automatic review. The [completion dependency plan](0019-completion-access-plan.md)
 is the next active task, followed by lifecycle/race/invalidation and clock work.
+The completion fix is implemented with three regression groups and stronger source
+report-cycle evidence. Automated review added private immutable metadata caching
+and complete visit/member work charges. Local verification passed 128 Rust tests
+plus five doctests, native/Wasm checks and stage oracles. Recorded automated review
+is complete; final-head required CI/merge are pending. Next implement conservative
+lifecycle/race/invalidation judgments, then explicit supported-clock contracts.
 
 ## Honest exit accounting
 

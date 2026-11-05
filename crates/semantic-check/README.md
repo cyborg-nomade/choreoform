@@ -174,5 +174,13 @@ ancestors. Peer-input/local initializer ordering is not invented. Shared bounded
 dependency expansion includes participant and capability requirements. Caller
 read sets include child-input/fanout-item destination metadata without reading
 fresh target values; source lowering derives the same dependencies. The resolved
-ordinary initialization residual is removed; terminal-port metadata availability
-and actual runtime policy enforcement remain separate obligations.
+ordinary initialization residual is removed; actual runtime policy enforcement
+remains a separate obligation.
+
+The [completion follow-up](../../docs/evaluation/0019-completion-access-evidence.md)
+requires scope-output access-policy data dependencies at every finish, including
+uncalled child declarations. Source lowering derives the same metadata closure.
+Validated data protection reference sets are cached only within the immutable
+definition check and copied under a work charge; raw validation charges purpose
+members and visits. This is declaration/availability evidence, not current access
+permission or atomic publication.

@@ -250,6 +250,19 @@ impl<'a, 's> Lower<'a, 's> {
                         .into(),
                 );
             }
+            if node["kind"] == "finish" {
+                for cell in scope["outputs"]
+                    .as_object()
+                    .ok_or_else(|| error("scope-outputs", 0..0))?
+                    .values()
+                {
+                    queue.push(
+                        cell.as_str()
+                            .ok_or_else(|| error("output-cell", 0..0))?
+                            .into(),
+                    );
+                }
+            }
             let mut seen = BTreeSet::new();
             while let Some(cell) = queue.pop() {
                 if !seen.insert(cell.clone()) {

@@ -105,7 +105,17 @@ class ProtectionEvidence(unittest.TestCase):
             source.write_text(text, encoding='utf-8')
             companion = EXAMPLES / 'review.bindings.json'
             grammar.recognize(text)
-            self.assertEqual(run('lower', source, companion).returncode, 0)
+            lowered = run('lower', source, companion)
+            self.assertEqual(lowered.returncode, 0, lowered.stderr)
+            candidate = wire.load(lowered.stdout)
+            self.assertEqual(candidate['body']['nodes']['review_done']['reads'], {'review_audit': True})
+            formatted = run('format', source, companion)
+            self.assertEqual(formatted.returncode, 0, formatted.stderr)
+            package = json.loads(formatted.stdout)
+            source.write_text(package['source'], encoding='utf-8')
+            rebound = Path(directory) / 'bindings.json'
+            rebound.write_text(package['companion'], encoding='utf-8')
+            self.assertEqual(json.loads(run('lower', source, rebound).stdout), candidate)
             checked = run('check', source, companion)
             self.assertEqual(checked.returncode, 0, checked.stderr)
             for stage in ['check-control', 'check-protection']:
@@ -119,7 +129,9 @@ class ProtectionEvidence(unittest.TestCase):
                          'docs/evaluation/0019-protection-plan.md',
                          'docs/evaluation/0019-protected-ordinary-transfers.md',
                          'docs/evaluation/0019-initial-access-plan.md',
-                         'docs/evaluation/0019-initial-access-evidence.md']:
+                         'docs/evaluation/0019-initial-access-evidence.md',
+                         'docs/evaluation/0019-completion-access-plan.md',
+                         'docs/evaluation/0019-completion-access-evidence.md']:
             path = ROOT / relative
             self.assertIn('SPDX-License-Identifier: CC-BY-4.0', path.read_text(encoding='utf-8'))
             check_links(path)
