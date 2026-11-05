@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 use choreoform_authoring_frontend::Package;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
-use choreoform_semantic_check::{CORE, SEMANTICS, check, check_control};
+use choreoform_semantic_check::{CORE, SEMANTICS, check, check_control, check_protection};
 use serde_json::{Value, json};
 
 const ROOT: &str = "scope_terminal";
@@ -621,4 +621,223 @@ fn chain(length: usize, cells: usize) -> Value {
 fn long_flat_dag_is_iterative_and_dense_state_work_refuses_boundedly() {
     pass(chain(1200, 0));
     refuse(chain(1000, 600), "budget");
+}
+
+fn protected(mut b: Value) -> Value {
+    for d in b["data"].as_object_mut().unwrap().values_mut() {
+        d["protection"]["participants"] = json!({"actor_reviewer":true});
+    }
+    b
+}
+fn protection_refuse(b: Value, code: &str) {
+    let e = envelope(b);
+    check_control(&e, &resources()).unwrap();
+    let error = check_protection(&e, &resources()).unwrap_err();
+    assert_eq!(error.code, code);
+    assert!(e.document().pointer(&error.path).is_some(), "{error:?}");
+}
+fn secret_branch() -> Value {
+    let mut b = branch();
+    cell(&mut b, "secret", ROOT, false);
+    b["data"]["secret"]["type"]["body"] = json!({"kind":"boolean"});
+    b["data"]["secret"]["initial"] = "yes".into();
+    b["data"]["secret"]["protection"]["purposes"] = json!({"private":true});
+    expr(
+        &mut b,
+        "secret_guard",
+        json!({"kind":"boolean"}),
+        json!({"op":"read","cell":"secret"}),
+        json!({"secret":true}),
+    );
+    b["nodes"]["choose"]["guards"]["left"] = "secret_guard".into();
+    b["nodes"]["choose"]["reads"] = json!({"secret":true});
+    protected(b)
+}
+#[test]
+fn protection_rejects_implicit_branch_flows_and_keeps_compatible_labels() {
+    let mut b = secret_branch();
+    protection_refuse(b.clone(), "control-information-flow");
+    b["data"]["answer"]["protection"]["purposes"] = json!({"private":true});
+    check_protection(&envelope(b), &resources()).unwrap();
+}
+#[test]
+fn protection_does_not_release_origins_after_merges_or_constant_guards() {
+    let mut b = secret_branch();
+    b["data"]["answer"]["protection"]["purposes"] = json!({"private":true});
+    cell(&mut b, "public", ROOT, false);
+    compute(
+        &mut b,
+        "after_merge",
+        ROOT,
+        json!({"public":"zero"}),
+        json!({}),
+    );
+    for edge in ["left_done", "right_done"] {
+        b["flows"][edge]["target"] = "after_merge".into();
+    }
+    flow(
+        &mut b,
+        "after_merge_done",
+        "after_merge",
+        "next",
+        "node_done",
+    );
+    b["scopes"][ROOT]["outputs"] = json!({"result":"public"});
+    protection_refuse(protected(b), "control-information-flow");
+    let mut b = secret_branch();
+    b["nodes"]["choose"]["guards"]["left"] = "yes".into();
+    protection_refuse(b, "control-information-flow");
+}
+#[test]
+fn protection_checks_initializers_and_invocation_input_transfer() {
+    let mut b = base();
+    cell(&mut b, "source", ROOT, false);
+    cell(&mut b, "destination", ROOT, false);
+    b["scopes"][ROOT]["inputs"] = json!({"value":"source"});
+    read(&mut b, "read_source", "source");
+    b["data"]["source"]["protection"]["purposes"] = json!({"private":true});
+    b["data"]["destination"]["initial"] = "read_source".into();
+    protection_refuse(protected(b), "control-information-flow");
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "source", ROOT, true);
+    cell(&mut b, "local", "child", false);
+    b["data"]["source"]["protection"]["purposes"] = json!({"private":true});
+    b["scopes"]["child"]["inputs"] = json!({"value":"local"});
+    read(&mut b, "argument", "source");
+    invoke(&mut b, "call", "child", json!({}));
+    b["nodes"]["call"]["inputs"] = json!({"value":"argument"});
+    b["nodes"]["call"]["reads"] = json!({"source":true});
+    protection_refuse(protected(b), "control-information-flow");
+}
+#[test]
+fn protection_checks_input_destination_access_predicate_dependencies() {
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "secret", ROOT, true);
+    cell(&mut b, "local", "child", false);
+    b["data"]["secret"]["protection"]["purposes"] = json!({"private":true});
+    b["policies"]["input_protection"] = json!({"scope":ROOT,"dialect":"core","body":{"kind":"protection","reads":{"secret":true},"permit":{"op":"eq","left":{"op":"read","cell":"secret"},"right":{"op":"literal","type":{"kind":"integer"},"value":"0"}}}});
+    b["data"]["local"]["protection"]["policy"] = "input_protection".into();
+    b["scopes"]["child"]["inputs"] = json!({"value":"local"});
+    b["nodes"]["child_done"]["reads"] = json!({"local":true,"secret":true});
+    invoke(&mut b, "call", "child", json!({}));
+    b["nodes"]["call"]["inputs"] = json!({"value":"zero"});
+    protection_refuse(protected(b), "control-information-flow");
+}
+#[test]
+fn protection_keeps_nested_and_parallel_completion_origins() {
+    let mut b = parallel();
+    cell(&mut b, "public", ROOT, true);
+    cell(&mut b, "secret", "child_a", true);
+    b["data"]["secret"]["protection"]["purposes"] = json!({"private":true});
+    b["nodes"]["child_a_done"]["reads"] = json!({"secret":true});
+    b["scopes"][ROOT]["outputs"] = json!({"result":"public"});
+    protection_refuse(protected(b), "control-information-flow");
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "secret", "child", true);
+    cell(&mut b, "public", ROOT, false);
+    b["data"]["secret"]["protection"]["purposes"] = json!({"private":true});
+    b["nodes"]["child_done"]["reads"] = json!({"secret":true});
+    invoke(&mut b, "call", "child", json!({}));
+    compute(&mut b, "later", ROOT, json!({"public":"zero"}), json!({}));
+    b["flows"]["flow_call"]["target"] = "later".into();
+    flow(&mut b, "later_done", "later", "next", "node_done");
+    protection_refuse(protected(b), "control-information-flow");
+}
+#[test]
+fn protection_access_obligations_are_explicit_and_empty_contexts_deny() {
+    protection_refuse(branch(), "access-context-empty");
+    let b = protected(branch());
+    let e = envelope(b);
+    let report = check_protection(&e, &resources()).unwrap();
+    assert_eq!(report.revision(), e.document()["revision"]);
+    assert!(
+        report
+            .accesses()
+            .iter()
+            .any(|a| a.site() == "write_left" && a.cell() == "answer" && a.operation() == "write")
+    );
+    assert!(
+        report.accesses().iter().any(|a| a.site() == "node_done"
+            && a.cell() == "answer"
+            && a.operation() == "transfer")
+    );
+    assert!(
+        report
+            .remaining()
+            .contains(&"current-principal-purpose-capability-and-policy-enforcement")
+    );
+}
+#[test]
+fn protection_reports_unreachable_work_without_fabricated_access_contexts() {
+    let mut b = base();
+    cell(&mut b, "unused", ROOT, false);
+    compute(
+        &mut b,
+        "unreachable",
+        ROOT,
+        json!({"unused":"zero"}),
+        json!({}),
+    );
+    flow(&mut b, "unused_done", "unreachable", "next", "node_done");
+    let report = check_protection(&envelope(b), &resources()).unwrap();
+    assert!(report.control().uncovered_nodes().contains("unreachable"));
+    assert!(report.accesses().is_empty());
+}
+#[test]
+fn protection_graph_work_is_iterative_and_transfer_work_is_bounded() {
+    check_protection(&envelope(base()), &resources()).unwrap();
+    check_protection(&envelope(chain(1200, 0)), &resources()).unwrap();
+    let mut b = chain(600, 0);
+    for i in 0..200 {
+        let id = format!("argument_{i:03}");
+        cell(&mut b, &id, ROOT, false);
+        b["scopes"][ROOT]["inputs"][format!("port_{i:03}")] = id.into();
+    }
+    let assignments: serde_json::Map<_, _> = (0..10)
+        .map(|i| (format!("target_{i:03}"), json!("zero")))
+        .collect();
+    for id in assignments.keys() {
+        cell(&mut b, id, ROOT, false);
+    }
+    for i in 0..600 {
+        compute(
+            &mut b,
+            &format!("chain_{i:04}"),
+            ROOT,
+            Value::Object(assignments.clone()),
+            json!({}),
+        );
+    }
+    protection_refuse(protected(b), "budget");
+
+    // Charge metadata comparisons too, rather than treating wide envelopes as
+    // one unit per source/destination pair in the earlier static stage.
+    let mut b = chain(200, 0);
+    cell(&mut b, "source", ROOT, true);
+    cell(&mut b, "destination", ROOT, false);
+    read(&mut b, "copy_source", "source");
+    let purposes: serde_json::Map<_, _> = (0..4000)
+        .map(|i| (format!("purpose_{i:04}"), json!(true)))
+        .collect();
+    for id in ["source", "destination"] {
+        b["data"][id]["protection"]["purposes"] = Value::Object(purposes.clone());
+    }
+    for i in 0..200 {
+        compute(
+            &mut b,
+            &format!("chain_{i:04}"),
+            ROOT,
+            json!({"destination":"copy_source"}),
+            json!({"source":true}),
+        );
+    }
+    assert_eq!(
+        check(&envelope(protected(b)), &resources())
+            .unwrap_err()
+            .code,
+        "budget"
+    );
 }

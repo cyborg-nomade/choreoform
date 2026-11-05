@@ -121,3 +121,11 @@ parallel/exceptional proofs can refuse as `unproved`. See the
 [branch example](../../docs/authoring/examples/control.choreo),
 [ADR-0017](../../docs/decisions/0017-control-availability-checks.md) and
 [review guide](../../docs/evaluation/0017-control-availability-checks.md).
+
+`check-protection SOURCE COMPANION` / `Candidate::check_protection` adds ordinary
+control-origin protection constraints and explicit access obligations after the
+earlier checks. The CLI supports the same explicit resource flags and returns
+`protection-checks-passed`, `executable:false`, unchanged revision, control coverage,
+input assumptions, transfer count, access obligations and residual host/validation
+judgments. The [evidence](../../docs/evaluation/0019-protected-ordinary-transfers.md)
+explains conservative refusals and the absence of actual access authorization.

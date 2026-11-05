@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 use choreoform_authoring_frontend::Package;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
-use choreoform_semantic_check::{CORE, SEMANTICS, check};
+use choreoform_semantic_check::{CORE, SEMANTICS, check, check_control, check_protection};
 use serde_json::{Value, json};
 
 const SOURCE: &[u8] = include_bytes!("../../../docs/authoring/examples/review.choreo");
@@ -531,5 +531,60 @@ fn source_invocation_output_bindings_preserve_protection_after_reparse() {
     assert_eq!(
         candidate.check_static(&resources()).unwrap_err().code,
         "information-flow"
+    );
+}
+
+#[test]
+fn protection_keeps_provider_result_labels_without_a_published_result_cell() {
+    let mut b = Package::parse(SERVICE, SERVICE_LEDGER)
+        .unwrap()
+        .lower(&service_resources())
+        .unwrap()
+        .into_document()["body"]
+        .clone();
+    let mut provider: Value = serde_json::from_slice(PROVIDER).unwrap();
+    provider["output"] = json!({"kind":"record","fields":{}});
+    for obs in provider["observations"]
+        .as_object_mut()
+        .unwrap()
+        .values_mut()
+    {
+        if obs["result"] != Value::Null {
+            obs["result"] = json!({"kind":"record","fields":{}});
+        }
+    }
+    provider["resultProtection"]["purposes"] = json!({"private":true});
+    let bytes = serde_json::to_vec(&provider).unwrap();
+    let revision = digest(&bytes);
+    b["capabilities"]["service_capability"]["output"]["body"] =
+        json!({"kind":"record","fields":{}});
+    let policy = b["capabilities"]["service_capability"]["contract"]
+        .as_str()
+        .unwrap()
+        .to_owned();
+    b["policies"][policy]["body"]["provider"]["revision"] = revision.clone().into();
+    b["nodes"]["service_step"]["result"] = Value::Null;
+    b["nodes"]["service_step"]["writes"] = json!({});
+    b["scopes"]["scope_service"]["outputs"] = json!({});
+    b["nodes"]["publish_public"] = json!({"kind":"compute","scope":"scope_service","assignments":{"service_request":"service_initial_request"},"reads":{},"writes":{"service_request":true},"outcomes":{"next":true}});
+    for flow in b["flows"].as_object_mut().unwrap().values_mut() {
+        if flow["source"] == "service_step" {
+            flow["target"] = "publish_public".into();
+        }
+    }
+    b["flows"]["public_done"] =
+        json!({"source":"publish_public","outcome":"next","target":"service_done"});
+    let mut registry: Vec<Resource<'_>> = service_resources();
+    registry.retain(|r| r.id != "urn:choreoform:examples:review-provider:0.1.0");
+    registry.push(Resource {
+        id: "urn:choreoform:examples:review-provider:0.1.0",
+        revision: &revision,
+        bytes: &bytes,
+    });
+    let e = envelope(b);
+    check_control(&e, &registry).unwrap();
+    assert_eq!(
+        check_protection(&e, &registry).unwrap_err().code,
+        "control-information-flow"
     );
 }

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 
-pub(super) struct Graph {
+pub(crate) struct Graph {
     pub order: BTreeMap<String, Vec<String>>,
     pub predecessors: BTreeMap<String, BTreeSet<String>>,
 }

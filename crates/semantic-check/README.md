@@ -144,3 +144,25 @@ Try `check-control` instead of `check` on the
 sets and remaining obligations. See
 [ADR-0017](../../docs/decisions/0017-control-availability-checks.md) and
 [evidence/review questions](../../docs/evaluation/0017-control-availability-checks.md).
+
+## Ordinary protection constraints (ADR-0019)
+
+`check_protection(&DefinitionEnvelope, explicit_resources)` runs the preceding
+stages, propagates cell/provider protection origins through ordinary paths and
+checks inherited control origins against writes, initializers and input/output
+transfers. Merges/child completions retain origin unions, including conservative
+repeat/parallel cases. Provider result labels survive null publication. Access
+metadata dependencies are included; no declassification or branch-release proof
+is inferred. Cumulative work charges envelope members as well as transfer pairs;
+the older static stage shares that accounting improvement.
+
+`ProtectionReport` has immutable revision, transfer count, control coverage/input
+assumptions and `AccessObligation` getters (`site`, `cell`, `operation`). Site IDs
+resolve to node/data/scope declarations in that revision. Obligations enumerate
+future judgments; they do not authenticate access. Both access sets empty refuses.
+Actual principal/purpose/capability membership, actor authority, policy truth at
+the current snapshot, initial access-policy availability, exceptional/observable
+channels, race/invalidation and atomic host enforcement remain explicit residual
+work. Passing this stage is not whole-process noninterference or executable
+admission. See [ADR-0019](../../docs/decisions/0019-protected-ordinary-transfers.md)
+and [evidence](../../docs/evaluation/0019-protected-ordinary-transfers.md).

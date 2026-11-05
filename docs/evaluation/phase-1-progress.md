@@ -38,6 +38,16 @@ claim follows from either partial report.
 Items may be split into coherent PRs or reordered where verified dependencies
 justify it. Update the record on each merge rather than asking to start each item.
 
+PR #23 merged the delegated workflow as
+`384e3add214bbf1be7aecbf520a9c027d563898a` after recorded automated self-review
+and passing final-head required CI. CodeRabbit automatic review was unavailable;
+no independent bot/human review is claimed. The next active slice is the
+[protected ordinary-transfer plan](0019-protection-plan.md), committed before code.
+Its implementation/ADR-0019 has passed local verification and automated self-
+review (including fixes for destination access-policy dependencies and comparison
+work accounting). The dedicated PR still requires final-head CI and merge; no
+phase-level gate is closed by the partial protection report.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
