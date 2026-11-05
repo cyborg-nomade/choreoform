@@ -61,8 +61,11 @@ The completion fix is implemented with three regression groups and stronger sour
 report-cycle evidence. Automated review added private immutable metadata caching
 and complete visit/member work charges. Local verification passed 128 Rust tests
 plus five doctests, native/Wasm checks and stage oracles. Recorded automated review
-is complete; final-head required CI/merge are pending. Next implement conservative
-lifecycle/race/invalidation judgments, then explicit supported-clock contracts.
+is complete. PR #26 merged as `be697012c15374ca05082a235d15cd16bd442e45` after
+recorded delegated review and passing final-head CI; CodeRabbit automatic review
+was skipped and no independent review is claimed. The next active dependency is
+[lifecycle policy use-site validation](0020-lifecycle-link-plan.md), before
+conservative race/invalidation judgments and explicit supported-clock contracts.
 
 ## Honest exit accounting
 
