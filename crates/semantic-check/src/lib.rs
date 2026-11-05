@@ -3,6 +3,7 @@
 
 //! Closed ADR-0013 static judgments, NOT full-definition admission or a planner.
 //! No IO, network, clock, authentication, effect dispatch or executable permission.
+mod access;
 mod control;
 mod definition;
 mod expression;

@@ -224,6 +224,32 @@ impl<'a, 's> Lower<'a, 's> {
                 .cloned()
                 .chain(node["writes"].as_object().expect("writes").keys().cloned())
                 .collect();
+            // Destination access metadata is consulted before child creation;
+            // add its dependencies, without reading fresh input values.
+            if node["kind"] == "invoke" {
+                let child = &self.body["scopes"][node["body"]
+                    .as_str()
+                    .ok_or_else(|| error("scope-reference", 0..0))?];
+                for cell in child["inputs"]
+                    .as_object()
+                    .ok_or_else(|| error("scope-inputs", 0..0))?
+                    .values()
+                {
+                    queue.push(
+                        cell.as_str()
+                            .ok_or_else(|| error("input-cell", 0..0))?
+                            .into(),
+                    );
+                }
+            }
+            if node["kind"] == "fanout" {
+                queue.push(
+                    node["item"]
+                        .as_str()
+                        .ok_or_else(|| error("item-cell", 0..0))?
+                        .into(),
+                );
+            }
             let mut seen = BTreeSet::new();
             while let Some(cell) = queue.pop() {
                 if !seen.insert(cell.clone()) {

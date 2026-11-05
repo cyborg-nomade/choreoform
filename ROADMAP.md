@@ -151,8 +151,11 @@ validated, and round-tripped.
   complete validation or the executable-IR/Phase 1 gates.
   The [ordinary protection analysis](docs/decisions/0019-protected-ordinary-transfers.md)
   adds control-origin and transfer constraints with explicit access obligations;
-  actual access/host enforcement, exceptional/observable channels, initial access-
-  policy availability and race/invalidation proofs remain open. See its
+  actual access/host enforcement, exceptional/observable channels and race/
+  invalidation proofs remain open. Its
+  [initial access follow-up](docs/evaluation/0019-initial-access-evidence.md)
+  checks ordinary input/initializer policy dependencies conservatively; terminal
+  output-port access dependencies remain separate work. See its
   [evidence](docs/evaluation/0019-protected-ordinary-transfers.md).
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.

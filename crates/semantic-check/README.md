@@ -161,8 +161,18 @@ assumptions and `AccessObligation` getters (`site`, `cell`, `operation`). Site I
 resolve to node/data/scope declarations in that revision. Obligations enumerate
 future judgments; they do not authenticate access. Both access sets empty refuses.
 Actual principal/purpose/capability membership, actor authority, policy truth at
-the current snapshot, initial access-policy availability, exceptional/observable
+the current snapshot, exceptional/observable
 channels, race/invalidation and atomic host enforcement remain explicit residual
 work. Passing this stage is not whole-process noninterference or executable
 admission. See [ADR-0019](../../docs/decisions/0019-protected-ordinary-transfers.md)
 and [evidence](../../docs/evaluation/0019-protected-ordinary-transfers.md).
+
+The [initial access follow-up](../../docs/evaluation/0019-initial-access-evidence.md)
+checks input policy reads against the ancestor snapshot before seeding fresh
+inputs, and initializer value/access-metadata reads against entry inputs and
+ancestors. Peer-input/local initializer ordering is not invented. Shared bounded
+dependency expansion includes participant and capability requirements. Caller
+read sets include child-input/fanout-item destination metadata without reading
+fresh target values; source lowering derives the same dependencies. The resolved
+ordinary initialization residual is removed; terminal-port metadata availability
+and actual runtime policy enforcement remain separate obligations.

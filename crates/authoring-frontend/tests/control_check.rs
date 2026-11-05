@@ -723,6 +723,7 @@ fn protection_checks_input_destination_access_predicate_dependencies() {
     b["nodes"]["child_done"]["reads"] = json!({"local":true,"secret":true});
     invoke(&mut b, "call", "child", json!({}));
     b["nodes"]["call"]["inputs"] = json!({"value":"zero"});
+    b["nodes"]["call"]["reads"] = json!({"secret":true});
     protection_refuse(protected(b), "control-information-flow");
 }
 #[test]
@@ -839,5 +840,102 @@ fn protection_graph_work_is_iterative_and_transfer_work_is_bounded() {
             .unwrap_err()
             .code,
         "budget"
+    );
+}
+
+fn access_policy(b: &mut Value, id: &str, source: &str) {
+    b["policies"][id] = json!({"scope":ROOT,"dialect":"core","body":{"kind":"protection","reads":{source:true},"permit":{"op":"eq","left":{"op":"read","cell":source},"right":{"op":"literal","type":{"kind":"integer"},"value":"0"}}}});
+}
+#[test]
+fn initial_access_predicates_require_available_entry_data() {
+    let mut b = base();
+    cell(&mut b, "basis", ROOT, false);
+    cell(&mut b, "value", ROOT, true);
+    access_policy(&mut b, "access_basis", "basis");
+    b["data"]["value"]["protection"]["policy"] = "access_basis".into();
+    refuse(b.clone(), "initial-access-availability-unproved");
+    b["scopes"][ROOT]["inputs"] = json!({"basis":"basis"});
+    pass(b);
+}
+#[test]
+fn initial_access_predicates_do_not_guess_local_or_peer_input_order() {
+    let mut b = base();
+    cell(&mut b, "basis", ROOT, true);
+    cell(&mut b, "value", ROOT, true);
+    access_policy(&mut b, "access_basis", "basis");
+    b["data"]["value"]["protection"]["policy"] = "access_basis".into();
+    refuse(b.clone(), "initial-access-availability-unproved");
+    b["data"]["basis"]
+        .as_object_mut()
+        .unwrap()
+        .remove("initial");
+    b["data"]["value"]
+        .as_object_mut()
+        .unwrap()
+        .remove("initial");
+    b["scopes"][ROOT]["inputs"] = json!({"basis":"basis","value":"value"});
+    refuse(b, "initial-access-availability-unproved");
+}
+#[test]
+fn initial_access_dependency_expansion_handles_transitive_cycles_boundedly() {
+    let mut b = base();
+    cell(&mut b, "first", ROOT, true);
+    cell(&mut b, "second", ROOT, true);
+    access_policy(&mut b, "first_policy", "second");
+    access_policy(&mut b, "second_policy", "first");
+    b["data"]["first"]["protection"]["policy"] = "first_policy".into();
+    b["data"]["second"]["protection"]["policy"] = "second_policy".into();
+    refuse(b, "initial-access-availability-unproved");
+}
+#[test]
+fn initial_access_includes_participant_requirement_dependencies() {
+    let mut b = base();
+    cell(&mut b, "basis", ROOT, false);
+    cell(&mut b, "value", ROOT, true);
+    b["data"]["value"]["protection"]["participants"] = json!({"actor_reviewer":true});
+    b["policies"]["policy_actor"]["body"]["permit"] = json!({"op":"eq","left":{"op":"read","cell":"basis"},"right":{"op":"literal","type":{"kind":"integer"},"value":"0"}});
+    b["policies"]["policy_actor"]["body"]["reads"] = json!({"basis":true});
+    b["policies"]["policy_stop"]["body"]["reads"] = json!({"basis":true});
+    b["nodes"]["node_done"]["reads"] = json!({"basis":true});
+    refuse(b, "initial-access-availability-unproved");
+}
+#[test]
+fn child_input_access_dependencies_use_caller_reads_and_ancestor_state() {
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "basis", ROOT, true);
+    cell(&mut b, "local", "child", false);
+    access_policy(&mut b, "access_basis", "basis");
+    b["data"]["local"]["protection"]["policy"] = "access_basis".into();
+    b["scopes"]["child"]["inputs"] = json!({"value":"local"});
+    invoke(&mut b, "call", "child", json!({}));
+    b["nodes"]["call"]["inputs"] = json!({"value":"zero"});
+    b["nodes"]["call"]["reads"] = json!({"basis":true});
+    pass(b.clone());
+    let mut missing = b.clone();
+    missing["nodes"]["call"]["reads"] = json!({});
+    assert_eq!(
+        check(&envelope(missing), &resources()).unwrap_err().code,
+        "node-reads"
+    );
+    b["data"]["basis"]
+        .as_object_mut()
+        .unwrap()
+        .remove("initial");
+    refuse(b, "data-availability-unproved");
+}
+#[test]
+fn fanout_item_access_metadata_is_a_parent_dependency_without_an_item_value_read() {
+    let mut b = fanout();
+    cell(&mut b, "basis", ROOT, true);
+    access_policy(&mut b, "item_access", "basis");
+    b["data"]["item_cell"]["protection"]["policy"] = "item_access".into();
+    b["nodes"]["fork"]["reads"] = json!({"basis":true});
+    b["nodes"]["child_a_done"]["reads"] = json!({"item_cell":true,"basis":true});
+    pass(b.clone());
+    b["nodes"]["fork"]["reads"] = json!({});
+    assert_eq!(
+        check(&envelope(b), &resources()).unwrap_err().code,
+        "node-reads"
     );
 }

@@ -58,6 +58,7 @@ class ProtectionEvidence(unittest.TestCase):
                 self.assertIs(report['executable'], False)
                 self.assertEqual(report['revision'], candidate['revision'])
                 self.assertIn('current-principal-purpose-capability-and-policy-enforcement', report['remaining'])
+                self.assertNotIn('initial-access-policy-availability', report['remaining'])
                 self.assertEqual(report['requiredInputs'], ['secret_choice'] if name == 'root-input' else [])
                 body = candidate['body']
                 self.assertEqual(set(report['coveredNodes']) | set(report['uncoveredNodes']), set(body['nodes']))
@@ -95,10 +96,30 @@ class ProtectionEvidence(unittest.TestCase):
                     self.assertIn(code, refused.stderr.decode())
                     self.assertNotIn('Secret choice', refused.stderr.decode())
 
+    def test_initial_access_availability_is_distinct_from_payload_typing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'source.choreo'
+            text = (EXAMPLES / 'review.choreo').read_text(encoding='utf-8')
+            old = next(line for line in text.splitlines() if 'Permit access when' in line)
+            text = text.replace(old, '    Permit access when ((the value of "Audit basis") equals (0)).')
+            source.write_text(text, encoding='utf-8')
+            companion = EXAMPLES / 'review.bindings.json'
+            grammar.recognize(text)
+            self.assertEqual(run('lower', source, companion).returncode, 0)
+            checked = run('check', source, companion)
+            self.assertEqual(checked.returncode, 0, checked.stderr)
+            for stage in ['check-control', 'check-protection']:
+                refused = run(stage, source, companion)
+                self.assertNotEqual(refused.returncode, 0)
+                self.assertEqual(refused.stdout, b'')
+                self.assertIn(b'initial-access-availability-unproved', refused.stderr)
+
     def test_documentation_and_licenses(self):
         for relative in ['docs/decisions/0019-protected-ordinary-transfers.md',
                          'docs/evaluation/0019-protection-plan.md',
-                         'docs/evaluation/0019-protected-ordinary-transfers.md']:
+                         'docs/evaluation/0019-protected-ordinary-transfers.md',
+                         'docs/evaluation/0019-initial-access-plan.md',
+                         'docs/evaluation/0019-initial-access-evidence.md']:
             path = ROOT / relative
             self.assertIn('SPDX-License-Identifier: CC-BY-4.0', path.read_text(encoding='utf-8'))
             check_links(path)

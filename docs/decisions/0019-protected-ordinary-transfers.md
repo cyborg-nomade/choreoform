@@ -98,3 +98,8 @@ merge prerequisite. This does not claim personal owner or independent human revi
 1. [x] Complete implementation, tests and a separate automated self-review pass.
 2. [x] Record acceptance under delegation; require final-head CI before merge.
 3. [ ] Continue the remaining full-validator/host/benchmark and Phase 1 gates.
+
+Follow-up: [ordinary initialization access dependencies](../evaluation/0019-initial-access-evidence.md)
+implement the previously unproved input/initializer availability obligation. The
+remaining host, terminal-port, exceptional and full-validator gates stay open;
+this note does not rewrite the original stage's historical boundary.
