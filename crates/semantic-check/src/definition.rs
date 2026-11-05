@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
+mod lifecycle;
 mod nodes;
 mod policies;
 
@@ -143,6 +144,7 @@ impl Check<'_, '_> {
         }
         self.policies()?;
         self.nodes()?;
+        self.lifecycle_links()?;
         Ok(())
     }
     fn ancestors(&self, scope: &str) -> Result<BTreeSet<String>> {

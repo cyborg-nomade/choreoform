@@ -184,3 +184,15 @@ Validated data protection reference sets are cached only within the immutable
 definition check and copied under a work charge; raw validation charges purpose
 members and visits. This is declaration/availability evidence, not current access
 permission or atomic publication.
+
+## Lifecycle definition links (ADR-0020)
+
+Static checking validates handler/follow-up child relations at every scope using
+the policy, including uncalled scopes. Inherited empty-handler and terminal
+policies stay reusable. For effect reconciliation, an indexed map must identify
+one declared wait node using the referenced wait policy; zero refuses as missing
+and multiple sites refuse as unproved. Ordinary IR wait-policy reuse without a
+non-node effect use remains valid. Reports do not bind a live owner or prove
+receiver acceptance, occurrence/subscription identity, correlation, authority or
+atomic settlement. See [ADR-0020](../../docs/decisions/0020-lifecycle-policy-links.md)
+and [evidence](../../docs/evaluation/0020-lifecycle-policy-links.md).

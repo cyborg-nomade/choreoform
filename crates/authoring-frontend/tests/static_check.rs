@@ -635,3 +635,49 @@ fn source_derives_child_input_access_dependencies_without_reading_fresh_values()
     assert_eq!(candidate.document(), roundtrip.document());
     roundtrip.check_control(&resources()).unwrap();
 }
+
+#[test]
+fn effect_reconciliation_requires_one_declared_wait_definition_site() {
+    let b = Package::parse(SERVICE, SERVICE_LEDGER)
+        .unwrap()
+        .lower(&service_resources())
+        .unwrap()
+        .into_document()["body"]
+        .clone();
+    check(&envelope(b.clone()), &service_resources()).unwrap();
+    let effect = b["capabilities"]["service_capability"]["effects"]
+        .as_str()
+        .unwrap();
+    let wait = b["policies"][effect]["body"]["reconciliation"]
+        .as_str()
+        .unwrap();
+    let owner = b["nodes"]
+        .as_object()
+        .unwrap()
+        .iter()
+        .find(|(_, n)| n["kind"] == "wait" && n["policy"] == wait)
+        .unwrap()
+        .0
+        .clone();
+    let mut absent = b.clone();
+    absent["nodes"].as_object_mut().unwrap().remove(&owner);
+    absent["flows"]
+        .as_object_mut()
+        .unwrap()
+        .retain(|_, f| f["source"] != owner);
+    let e = envelope(absent);
+    let error = check(&e, &service_resources()).unwrap_err();
+    assert_eq!(error.code, "reconciliation-owner-missing");
+    assert!(e.document().pointer(&error.path).is_some());
+    let mut ambiguous = b.clone();
+    ambiguous["nodes"]["another_observer"] = ambiguous["nodes"][&owner].clone();
+    ambiguous["flows"]["another_observation"] =
+        json!({"source":"another_observer","outcome":"observed","target":"service_done"});
+    let e = envelope(ambiguous);
+    let error = check(&e, &service_resources()).unwrap_err();
+    assert_eq!(error.code, "reconciliation-owner-unproved");
+    assert_eq!(
+        error.path,
+        format!("/body/policies/{effect}/body/reconciliation")
+    );
+}

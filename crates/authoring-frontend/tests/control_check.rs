@@ -1004,3 +1004,53 @@ fn finish_metadata_has_no_spurious_output_value_reads() {
     let report = check_control(&envelope(protected(b)), &resources()).unwrap();
     assert_eq!(report.uncovered_nodes().len(), 700);
 }
+
+#[test]
+fn inherited_empty_structural_policies_remain_reusable() {
+    let mut b = base();
+    child(&mut b, "child");
+    pass(b);
+}
+#[test]
+fn fault_handlers_are_children_of_the_actual_policy_use_scope() {
+    let mut b = base();
+    child(&mut b, "handler");
+    b["policies"]["empty_faults"] = b["policies"]["policy_faults"].clone();
+    b["policies"]["policy_faults"]["body"]["handlers"] = json!({"recoverable":"handler"});
+    b["scopes"]["handler"]["faults"] = "empty_faults".into();
+    pass(b.clone());
+    b["scopes"]["handler"]["faults"] = "policy_faults".into();
+    let e = envelope(b);
+    let error = check(&e, &resources()).unwrap_err();
+    assert_eq!(error.code, "fault-handler-context");
+    assert_eq!(error.path, "/body/scopes/handler/faults");
+    assert!(e.document().pointer(&error.path).is_some());
+}
+#[test]
+fn reconcile_followup_is_a_child_of_the_actual_policy_use_scope() {
+    let mut b = base();
+    child(&mut b, "followup");
+    b["policies"]["terminal_close"] = b["policies"]["policy_close"].clone();
+    b["policies"]["policy_close"]["body"]["mode"] = "reconcile".into();
+    b["policies"]["policy_close"]["body"]["followup"] = "followup".into();
+    b["scopes"]["followup"]["closure"] = "terminal_close".into();
+    pass(b.clone());
+    b["scopes"]["followup"]["closure"] = "policy_close".into();
+    let e = envelope(b);
+    let error = check(&e, &resources()).unwrap_err();
+    assert_eq!(error.code, "closure-followup-context");
+    assert_eq!(error.path, "/body/scopes/followup/closure");
+    assert!(e.document().pointer(&error.path).is_some());
+}
+#[test]
+fn ordinary_wait_policy_reuse_does_not_require_a_unique_non_node_owner() {
+    let mut b = base();
+    b["policies"]["observe_policy"] = json!({"scope":ROOT,"dialect":"core","body":{"kind":"wait","reads":{},"observationType":{"kind":"record","fields":{}},"match":{"op":"literal","type":{"kind":"boolean"},"value":true},"authority":"actor_reviewer","timer":null,"onObservation":"observed","onTimer":null}});
+    for id in ["wait_a", "wait_b"] {
+        b["nodes"][id] = json!({"kind":"wait","scope":ROOT,"policy":"observe_policy","reads":{},"writes":{},"outcomes":{"observed":true}});
+    }
+    flow(&mut b, "wait_a_next", "wait_a", "observed", "wait_b");
+    flow(&mut b, "wait_b_next", "wait_b", "observed", "node_done");
+    entry(&mut b, "wait_a");
+    pass(b);
+}
