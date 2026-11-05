@@ -52,8 +52,17 @@ is closed by these partial reports.
 That follow-up is implemented with six control groups, one source lowering/
 reparse regression and a fourth protection-oracle group. Local verification
 (125 Rust tests plus five doctests, lint, Wasm and stage oracles) and recorded
-automated self-review passed; final-head required CI/merge are pending. Next inspect terminal output-port
-access dependencies, then continue lifecycle/race/invalidation and clock work.
+automated self-review passed. PR #25 merged at
+`89d648266702d13746ffd4a7b9c04c5998994b59` after final-head required CI and recorded
+delegated review; no unresolved findings were present and CodeRabbit skipped
+automatic review. The [completion dependency plan](0019-completion-access-plan.md)
+is the next active task, followed by lifecycle/race/invalidation and clock work.
+The completion fix is implemented with three regression groups and stronger source
+report-cycle evidence. Automated review added private immutable metadata caching
+and complete visit/member work charges. Local verification passed 128 Rust tests
+plus five doctests, native/Wasm checks and stage oracles. Recorded automated review
+is complete; final-head required CI/merge are pending. Next implement conservative
+lifecycle/race/invalidation judgments, then explicit supported-clock contracts.
 
 ## Honest exit accounting
 

@@ -45,7 +45,8 @@ impl Check<'_, '_> {
         }
         for (id, data) in object(&self.b["data"])? {
             let scope = text(&data["scope"])?;
-            self.protection(scope, &data["protection"])?;
+            let refs = self.protection(scope, &data["protection"])?;
+            self.protection_refs.insert(id.clone(), refs);
             if let Some(initial) = data.get("initial") {
                 require(
                     self.expr(scope, initial, false)?.ty == self.cells[id],
@@ -199,8 +200,7 @@ impl Check<'_, '_> {
                 self.child(scope, &n["body"])?;
                 let child = &self.b["scopes"][text(&n["body"])?];
                 for cell in object(&child["inputs"])?.values() {
-                    let data = &self.b["data"][text(cell)?];
-                    policies.extend(self.protection(text(&data["scope"])?, &data["protection"])?);
+                    policies.extend(self.data_protection(text(cell)?)?);
                 }
                 for (ports, bindings, input) in [
                     (&child["inputs"], &n["inputs"], true),
@@ -270,8 +270,7 @@ impl Check<'_, '_> {
                             && outcomes.is_empty(),
                         "fanout-interface",
                     )?;
-                    let data = &self.b["data"][item];
-                    policies.extend(self.protection(text(&data["scope"])?, &data["protection"])?);
+                    policies.extend(self.data_protection(item)?);
                     self.policy_kind(scope, &n["changes"], "membership")?;
                 }
             }
@@ -305,6 +304,11 @@ impl Check<'_, '_> {
             )?,
             _ => return Err(err("node-kind")),
         }
+        if kind == "finish" {
+            for cell in object(&self.b["scopes"][scope]["outputs"])?.values() {
+                policies.extend(self.data_protection(text(cell)?)?);
+            }
+        }
         if !matches!(kind, "activity" | "compute" | "invoke") {
             require(writes.is_empty(), "node-writes")?;
         }
@@ -325,8 +329,7 @@ impl Check<'_, '_> {
             if !seen.insert(cell.clone()) {
                 continue;
             }
-            let data = &self.b["data"][&cell];
-            for policy in self.protection(text(&data["scope"])?, &data["protection"])? {
+            for policy in self.data_protection(&cell)? {
                 for read in &self.policy_reads[&policy] {
                     if required.insert(read.clone()) {
                         queue.push(read.clone());

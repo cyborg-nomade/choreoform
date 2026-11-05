@@ -64,6 +64,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         cells: BTreeMap::new(),
         expressions: BTreeMap::new(),
         policy_reads: BTreeMap::new(),
+        protection_refs: BTreeMap::new(),
     };
     c.run()?;
     Ok(Report {
@@ -78,6 +79,7 @@ struct Check<'a, 'r> {
     cells: BTreeMap<String, Type>,
     expressions: BTreeMap<String, Judgment>,
     policy_reads: BTreeMap<String, BTreeSet<String>>,
+    protection_refs: BTreeMap<String, BTreeSet<String>>,
 }
 impl Check<'_, '_> {
     fn run(&mut self) -> Result<()> {
@@ -221,7 +223,10 @@ impl Check<'_, '_> {
             ],
         )?;
         let count = object(&p["participants"])?.len() + object(&p["capabilities"])?.len();
-        self.resources.budget.charge(count.saturating_mul(4))?;
+        let members = object(&p["purposes"])?.len();
+        self.resources
+            .budget
+            .charge(count.saturating_mul(4) + members + 1)?;
         name(&p["sensitivity"])?;
         require(!names(&p["purposes"])?.is_empty(), "protection-purposes")?;
         let mut dependencies =
@@ -233,6 +238,14 @@ impl Check<'_, '_> {
             dependencies.extend(self.capability_refs(scope, &Value::from(id))?);
         }
         Ok(dependencies)
+    }
+    fn data_protection(&mut self, id: &str) -> Result<BTreeSet<String>> {
+        let refs = self
+            .protection_refs
+            .get(id)
+            .ok_or_else(|| err("protection-reference"))?;
+        self.resources.budget.charge(refs.len() + 1)?;
+        Ok(refs.clone())
     }
     fn capability_refs(&self, scope: &str, id: &Value) -> Result<BTreeSet<String>> {
         let id = self.visible(scope, "capabilities", id)?;

@@ -103,3 +103,6 @@ Follow-up: [ordinary initialization access dependencies](../evaluation/0019-init
 implement the previously unproved input/initializer availability obligation. The
 remaining host, terminal-port, exceptional and full-validator gates stay open;
 this note does not rewrite the original stage's historical boundary.
+The [completion follow-up](../evaluation/0019-completion-access-evidence.md) closes
+the output metadata read-declaration omission. Actual access/atomic enforcement
+and other stated residual judgments remain open.

@@ -154,8 +154,10 @@ validated, and round-tripped.
   actual access/host enforcement, exceptional/observable channels and race/
   invalidation proofs remain open. Its
   [initial access follow-up](docs/evaluation/0019-initial-access-evidence.md)
-  checks ordinary input/initializer policy dependencies conservatively; terminal
-  output-port access dependencies remain separate work. See its
+  checks ordinary input/initializer policy dependencies conservatively; the
+  [completion follow-up](docs/evaluation/0019-completion-access-evidence.md)
+  declares output metadata dependencies at finish nodes. These do not establish
+  actual runtime access or close the full validator. See its
   [evidence](docs/evaluation/0019-protected-ordinary-transfers.md).
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
