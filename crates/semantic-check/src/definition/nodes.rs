@@ -79,6 +79,7 @@ impl Check<'_, '_> {
                 "capability-effect",
             )?;
         }
+        self.creation_dependencies()?;
         for (id, node) in object(&self.b["nodes"])? {
             self.node(node).map_err(|mut e| {
                 e.path = format!("/body/nodes/{id}");
@@ -97,6 +98,20 @@ impl Check<'_, '_> {
         }
         let mut required = BTreeSet::new();
         let mut policies = BTreeSet::new();
+        let children: Vec<_> = match kind {
+            "invoke" | "repeat" | "fanout" => vec![text(&n["body"])?],
+            "split" => object(&n["children"])?
+                .values()
+                .map(text)
+                .collect::<Result<_>>()?,
+            _ => Vec::new(),
+        };
+        self.resources.budget.charge(children.len())?;
+        for child in children {
+            let reads = &self.creation_reads[child];
+            self.resources.budget.charge(reads.len())?;
+            required.extend(reads.iter().cloned());
+        }
         for field in ["cancellation", "faults", "closure", "race"] {
             policies.insert(text(&self.b["scopes"][scope][field])?.to_owned());
         }

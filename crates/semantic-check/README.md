@@ -196,3 +196,10 @@ non-node effect use remains valid. Reports do not bind a live owner or prove
 receiver acceptance, occurrence/subscription identity, correlation, authority or
 atomic settlement. See [ADR-0020](../../docs/decisions/0020-lifecycle-policy-links.md)
 and [evidence](../../docs/evaluation/0020-lifecycle-policy-links.md).
+
+Creator read declarations also include ancestor data consulted by child
+initializers and initial access metadata, for invoke/repeat/split/fanout. The
+source frontend derives the same per-scope footprint; fresh child-local values
+remain outside caller reads. This exposes dependencies to later conflict analysis
+without claiming conflict safety, atomic creation or read authorization. See the
+[creation evidence](../../docs/evaluation/0019-creation-access-evidence.md).

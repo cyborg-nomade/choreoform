@@ -589,8 +589,7 @@ fn protection_keeps_provider_result_labels_without_a_published_result_cell() {
     );
 }
 
-#[test]
-fn source_derives_child_input_access_dependencies_without_reading_fresh_values() {
+fn child_input_source() -> (String, Vec<u8>) {
     let output_type = "choice with [outcome \"approved\" of \"Review\" as record with empty, outcome \"correction needed\" of \"Review\" as record with empty]";
     let addition = format!(
         "Rule for protection \"Input access\". Permit access when ((the value of \"Audit basis\") equals (0)). End policy. Scope \"Child\" within \"Review example\". Start at \"Child done\". Inputs [\"Argument\" uses \"Child input\"]. Outputs [\"Decision\" uses \"Child decision\"]. Outcomes [\"approved\", \"correction needed\"]. Use cancellation \"Stop\", faults \"Fault handling\", closure \"Close\" and races \"Commit order\". Keep \"Child input\" as text under \"Input access\". Sensitivity \"internal\". Purposes [\"Expense review\"]. Participants [\"Reviewer\"]. Capabilities empty. Invalidate empty. Initially unavailable. End data. Keep \"Child decision\" as {output_type} under \"Protection\". Sensitivity \"internal\". Purposes [\"Expense review\"]. Participants [\"Reviewer\"]. Capabilities empty. Invalidate empty. Initially (literal of {output_type} with value case outcome \"approved\" of \"Review\" containing (record with empty)). End data. Step \"Child done\". Finish as \"approved\". End step. End scope. End process."
@@ -619,6 +618,12 @@ fn source_derives_child_input_access_dependencies_without_reading_fresh_values()
         .unwrap()
         .push(json!({"id":"child_initial","owner":"child_decision","role":"initial","key":null}));
     let companion = serde_json::to_vec(&ledger).unwrap();
+    (source, companion)
+}
+
+#[test]
+fn source_derives_child_input_access_dependencies_without_reading_fresh_values() {
+    let (source, companion) = child_input_source();
     let package = Package::parse(source.as_bytes(), &companion).unwrap();
     let candidate = package.lower(&resources()).unwrap();
     assert_eq!(
@@ -634,6 +639,57 @@ fn source_derives_child_input_access_dependencies_without_reading_fresh_values()
         .unwrap();
     assert_eq!(candidate.document(), roundtrip.document());
     roundtrip.check_control(&resources()).unwrap();
+}
+
+#[test]
+fn source_derives_initializer_value_and_destination_access_ancestor_reads() {
+    for metadata in [false, true] {
+        let (source, companion) = child_input_source();
+        let mut source = source.replace(
+            "Keep \"Child input\" as text under \"Input access\".",
+            "Keep \"Child input\" as text under \"Protection\".",
+        );
+        let (protection, initial) = if metadata {
+            ("Input access", "0")
+        } else {
+            source = source.replace(
+                "Permit access when ((the value of \"Audit basis\") equals (0)).",
+                "Permit access when (true).",
+            );
+            ("Protection", "the value of \"Audit basis\"")
+        };
+        source = source.replace("End scope. End process.", &format!(
+            "Keep \"Child seed\" as whole number under \"{protection}\". Sensitivity \"internal\". Purposes [\"Expense review\"]. Participants [\"Reviewer\"]. Capabilities empty. Invalidate empty. Initially ({initial}). End data. End scope. End process."));
+        let mut ledger: Value = serde_json::from_slice(&companion).unwrap();
+        ledger["declarations"].as_array_mut().unwrap().push(
+            json!({"id":"child_seed","kind":"data","scope":"scope_child","name":"Child seed"}),
+        );
+        ledger["symbols"].as_array_mut().unwrap().push(json!({"id":"child_seed_purpose","owner":"child_seed","role":"purpose","name":"Expense review","wire":"expense_review"}));
+        ledger["generated"].as_array_mut().unwrap().push(
+            json!({"id":"child_seed_initial","owner":"child_seed","role":"initial","key":null}),
+        );
+        let companion = serde_json::to_vec(&ledger).unwrap();
+        let package = Package::parse(source.as_bytes(), &companion).unwrap();
+        let candidate = package.lower(&resources()).unwrap();
+        assert_eq!(
+            candidate.document()["body"]["nodes"]["review_step"]["reads"],
+            json!({"review_request":true,"review_audit":true})
+        );
+        candidate.check_control(&resources()).unwrap();
+        let mut b = candidate.document()["body"].clone();
+        b["nodes"]["review_step"]["reads"] = json!({"review_request":true});
+        assert_eq!(
+            check(&envelope(b), &resources()).unwrap_err().code,
+            "node-reads"
+        );
+        let (formatted, bindings) = package.formatted().unwrap();
+        let roundtrip = Package::parse(formatted.as_bytes(), bindings.as_bytes())
+            .unwrap()
+            .lower(&resources())
+            .unwrap();
+        assert_eq!(roundtrip.document(), candidate.document());
+        roundtrip.check_control(&resources()).unwrap();
+    }
 }
 
 #[test]

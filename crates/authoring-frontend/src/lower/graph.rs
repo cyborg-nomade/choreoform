@@ -141,6 +141,8 @@ impl<'a, 's> Lower<'a, 's> {
                 }
             }
         }
+        let mut creation_work = 0;
+        let creation = self.creation_dependencies(&closure, &mut creation_work)?;
         let ids: Vec<_> = self.body["nodes"]
             .as_object()
             .expect("nodes")
@@ -156,6 +158,28 @@ impl<'a, 's> Lower<'a, 's> {
                 .cloned()
                 .collect();
             let scope = &self.body["scopes"][node["scope"].as_str().expect("scope")];
+            let children: Vec<_> = match node["kind"].as_str() {
+                Some("invoke" | "repeat" | "fanout") => vec![
+                    node["body"]
+                        .as_str()
+                        .ok_or_else(|| error("scope-reference", 0..0))?,
+                ],
+                Some("split") => node["children"]
+                    .as_object()
+                    .ok_or_else(|| error("children", 0..0))?
+                    .values()
+                    .map(|v| v.as_str().ok_or_else(|| error("scope-reference", 0..0)))
+                    .collect::<Result<_>>()?,
+                _ => Vec::new(),
+            };
+            creation::charge(&mut creation_work, children.len())?;
+            for child in children {
+                let footprint = creation
+                    .get(child)
+                    .ok_or_else(|| error("scope-reference", 0..0))?;
+                creation::charge(&mut creation_work, footprint.len())?;
+                reads.extend(footprint.iter().cloned());
+            }
             for field in ["cancellation", "faults", "closure", "race"] {
                 reads.extend(
                     closure[scope[field].as_str().expect("policy")]
@@ -282,7 +306,7 @@ impl<'a, 's> Lower<'a, 's> {
         }
         self.check_shape()
     }
-    fn protection_policy_refs(&self, p: &Value) -> Result<BTreeSet<String>> {
+    pub(super) fn protection_policy_refs(&self, p: &Value) -> Result<BTreeSet<String>> {
         let mut refs = BTreeSet::from([p["policy"]
             .as_str()
             .ok_or_else(|| error("protection-policy", 0..0))?

@@ -76,6 +76,12 @@ automatic review; no independent review is claimed. No runtime ownership proof
 or aggregate gate closure follows. Before race/invalidation analysis, implement
 the [scope-creation footprint plan](0019-creation-access-plan.md) so initializer
 ancestor reads cannot disappear from creator read declarations.
+That fix now derives and checks per-scope footprints for invoke/repeat/split/
+fanout, including transitive initializer/access dependencies and excluding fresh
+local storage. Five new regression groups cover direct IR and source cycles.
+Separate automated self-review passed; local verification passed 138 Rust tests
+plus five compile-fail doctests, native/Wasm checks and the relevant stage oracles.
+Final-head required CI and the dedicated PR merge remain pending.
 
 ## Honest exit accounting
 

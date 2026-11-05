@@ -131,7 +131,9 @@ class ProtectionEvidence(unittest.TestCase):
                          'docs/evaluation/0019-initial-access-plan.md',
                          'docs/evaluation/0019-initial-access-evidence.md',
                          'docs/evaluation/0019-completion-access-plan.md',
-                         'docs/evaluation/0019-completion-access-evidence.md']:
+                         'docs/evaluation/0019-completion-access-evidence.md',
+                         'docs/evaluation/0019-creation-access-plan.md',
+                         'docs/evaluation/0019-creation-access-evidence.md']:
             path = ROOT / relative
             self.assertIn('SPDX-License-Identifier: CC-BY-4.0', path.read_text(encoding='utf-8'))
             check_links(path)

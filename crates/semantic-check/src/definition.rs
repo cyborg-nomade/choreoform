@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
+mod creation;
 mod lifecycle;
 mod nodes;
 mod policies;
@@ -66,6 +67,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         expressions: BTreeMap::new(),
         policy_reads: BTreeMap::new(),
         protection_refs: BTreeMap::new(),
+        creation_reads: BTreeMap::new(),
     };
     c.run()?;
     Ok(Report {
@@ -81,6 +83,7 @@ struct Check<'a, 'r> {
     expressions: BTreeMap<String, Judgment>,
     policy_reads: BTreeMap<String, BTreeSet<String>>,
     protection_refs: BTreeMap<String, BTreeSet<String>>,
+    creation_reads: BTreeMap<String, BTreeSet<String>>,
 }
 impl Check<'_, '_> {
     fn run(&mut self) -> Result<()> {
