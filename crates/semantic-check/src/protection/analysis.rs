@@ -41,24 +41,7 @@ impl<'a> Flow<'a> {
         }
     }
     fn dependencies(&mut self, p: &Value) -> Result<BTreeSet<String>> {
-        let mut policies = BTreeSet::from([text(&p["policy"])?.to_owned()]);
-        for actor in names(&p["participants"])? {
-            policies.insert(text(&self.b["actors"][actor]["requirement"])?.into());
-        }
-        for cap in names(&p["capabilities"])? {
-            let c = &self.b["capabilities"][cap];
-            for field in ["contract", "effects"] {
-                policies.insert(text(&c[field])?.into());
-            }
-            policies.insert(text(&self.b["actors"][text(&c["authority"])?]["requirement"])?.into());
-        }
-        let mut reads = BTreeSet::new();
-        for policy in policies {
-            let set = names(&self.b["policies"][policy]["body"]["reads"])?;
-            self.budget.charge(set.len() + 1)?;
-            reads.extend(set);
-        }
-        Ok(reads)
+        crate::access::policy_reads(self.b, p, &mut self.budget)
     }
     fn access(&mut self, site: &str, cell: &str, operation: &'static str) -> Result<Origins> {
         let mut origins = Origins::new();

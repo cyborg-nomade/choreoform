@@ -198,6 +198,10 @@ impl Check<'_, '_> {
             "invoke" => {
                 self.child(scope, &n["body"])?;
                 let child = &self.b["scopes"][text(&n["body"])?];
+                for cell in object(&child["inputs"])?.values() {
+                    let data = &self.b["data"][text(cell)?];
+                    policies.extend(self.protection(text(&data["scope"])?, &data["protection"])?);
+                }
                 for (ports, bindings, input) in [
                     (&child["inputs"], &n["inputs"], true),
                     (&child["outputs"], &n["outputs"], false),
@@ -266,6 +270,8 @@ impl Check<'_, '_> {
                             && outcomes.is_empty(),
                         "fanout-interface",
                     )?;
+                    let data = &self.b["data"][item];
+                    policies.extend(self.protection(text(&data["scope"])?, &data["protection"])?);
                     self.policy_kind(scope, &n["changes"], "membership")?;
                 }
             }

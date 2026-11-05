@@ -61,6 +61,19 @@ impl<'a> Analysis<'a> {
             })
             .cloned()
             .collect();
+        // Input transfer policies use the pre-creation ancestor snapshot. Fresh
+        // peer inputs cannot supply one another's permission dependencies.
+        for cell in object(&s["inputs"])?.values() {
+            let id = text(cell)?;
+            let reads = crate::access::cell_reads(self.b, id, &mut self.budget)?;
+            self.available(
+                &reads,
+                &initial,
+                "data",
+                id,
+                "initial-access-availability-unproved",
+            )?;
+        }
         for cell in object(&s["inputs"])?.values() {
             initial.insert(text(cell)?.into());
         }
@@ -78,6 +91,21 @@ impl<'a> Analysis<'a> {
                     "data",
                     id,
                     "initializer-availability-unproved",
+                )?;
+                let mut access = crate::access::cell_reads(self.b, id, &mut self.budget)?;
+                for source in reads {
+                    access.extend(crate::access::cell_reads(
+                        self.b,
+                        &source,
+                        &mut self.budget,
+                    )?);
+                }
+                self.available(
+                    &access,
+                    &entry,
+                    "data",
+                    id,
+                    "initial-access-availability-unproved",
                 )?;
                 initial.insert(id.clone());
             }

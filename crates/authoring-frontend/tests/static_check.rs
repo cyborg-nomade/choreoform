@@ -588,3 +588,50 @@ fn protection_keeps_provider_result_labels_without_a_published_result_cell() {
         "control-information-flow"
     );
 }
+
+#[test]
+fn source_derives_child_input_access_dependencies_without_reading_fresh_values() {
+    let output_type = "choice with [outcome \"approved\" of \"Review\" as record with empty, outcome \"correction needed\" of \"Review\" as record with empty]";
+    let addition = format!(
+        "Rule for protection \"Input access\". Permit access when ((the value of \"Audit basis\") equals (0)). End policy. Scope \"Child\" within \"Review example\". Start at \"Child done\". Inputs [\"Argument\" uses \"Child input\"]. Outputs [\"Decision\" uses \"Child decision\"]. Outcomes [\"approved\", \"correction needed\"]. Use cancellation \"Stop\", faults \"Fault handling\", closure \"Close\" and races \"Commit order\". Keep \"Child input\" as text under \"Input access\". Sensitivity \"internal\". Purposes [\"Expense review\"]. Participants [\"Reviewer\"]. Capabilities empty. Invalidate empty. Initially unavailable. End data. Keep \"Child decision\" as {output_type} under \"Protection\". Sensitivity \"internal\". Purposes [\"Expense review\"]. Participants [\"Reviewer\"]. Capabilities empty. Invalidate empty. Initially (literal of {output_type} with value case outcome \"approved\" of \"Review\" containing (record with empty)). End data. Step \"Child done\". Finish as \"approved\". End step. End scope. End process."
+    );
+    let source=String::from_utf8(SOURCE.to_vec()).unwrap()
+        .replace("Ask \"Reviewer\" to decide using \"Current request\" under \"Review work\" and record in \"Review decision\".","Run \"Child\" with inputs [\"Argument\" uses \"Current request\"] and outputs [\"Decision\" uses \"Review decision\"].")
+        .replace("Also read [\"Audit basis\"].","").replace("End process.",&addition);
+    let mut ledger: Value = serde_json::from_slice(LEDGER).unwrap();
+    ledger["declarations"].as_array_mut().unwrap().extend([
+        json!({"id":"input_access_policy","kind":"policy","scope":"scope_review","name":"Input access"}),
+        json!({"id":"scope_child","kind":"scope","scope":"scope_review","name":"Child"}),
+        json!({"id":"child_input","kind":"data","scope":"scope_child","name":"Child input"}),
+        json!({"id":"child_decision","kind":"data","scope":"scope_child","name":"Child decision"}),
+        json!({"id":"child_done","kind":"node","scope":"scope_child","name":"Child done"}),
+    ]);
+    ledger["symbols"].as_array_mut().unwrap().extend([
+        json!({"id":"child_input_port","owner":"scope_child","role":"input","name":"Argument","wire":"request"}),
+        json!({"id":"child_output_port","owner":"scope_child","role":"output","name":"Decision","wire":"decision"}),
+        json!({"id":"child_approved","owner":"scope_child","role":"outcome","name":"approved","wire":"approved"}),
+        json!({"id":"child_correction","owner":"scope_child","role":"outcome","name":"correction needed","wire":"correction_needed"}),
+        json!({"id":"child_input_purpose","owner":"child_input","role":"purpose","name":"Expense review","wire":"expense_review"}),
+        json!({"id":"child_output_purpose","owner":"child_decision","role":"purpose","name":"Expense review","wire":"expense_review"}),
+    ]);
+    ledger["generated"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"id":"child_initial","owner":"child_decision","role":"initial","key":null}));
+    let companion = serde_json::to_vec(&ledger).unwrap();
+    let package = Package::parse(source.as_bytes(), &companion).unwrap();
+    let candidate = package.lower(&resources()).unwrap();
+    assert_eq!(
+        candidate.document()["body"]["nodes"]["review_step"]["reads"],
+        json!({"review_request":true,"review_audit":true})
+    );
+    candidate.check_static(&resources()).unwrap();
+    candidate.check_control(&resources()).unwrap();
+    let (formatted, bindings) = package.formatted().unwrap();
+    let roundtrip = Package::parse(formatted.as_bytes(), bindings.as_bytes())
+        .unwrap()
+        .lower(&resources())
+        .unwrap();
+    assert_eq!(candidate.document(), roundtrip.document());
+    roundtrip.check_control(&resources()).unwrap();
+}

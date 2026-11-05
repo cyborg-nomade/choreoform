@@ -50,7 +50,6 @@ impl ProtectionReport {
         &[
             "parallel-and-exceptional-availability-proofs",
             "exceptional-and-observable-channel-information-flow",
-            "initial-access-policy-availability",
             "current-principal-purpose-capability-and-policy-enforcement",
             "race-and-invalidation-proofs",
             "host-trust-and-atomic-runtime-enforcement",

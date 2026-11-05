@@ -49,6 +49,11 @@ work accounting) and passing final-head CI. CodeRabbit skipped automatic review;
 no independent review is claimed. The current follow-up is the
 [initial access dependency plan](0019-initial-access-plan.md). No phase-level gate
 is closed by these partial reports.
+That follow-up is implemented with six control groups, one source lowering/
+reparse regression and a fourth protection-oracle group. Local verification
+(125 Rust tests plus five doctests, lint, Wasm and stage oracles) and recorded
+automated self-review passed; final-head required CI/merge are pending. Next inspect terminal output-port
+access dependencies, then continue lifecycle/race/invalidation and clock work.
 
 ## Honest exit accounting
 
