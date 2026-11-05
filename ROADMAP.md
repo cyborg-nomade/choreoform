@@ -164,6 +164,9 @@ validated, and round-tripped.
   reconciliation wait definition sites. It does not prove live ownership,
   receiver acceptance, runtime correlation or settlement. These and the remaining
   race/invalidation, clock, benchmark and phase gates stay open.
+  [Creation footprints](docs/evaluation/0019-creation-access-evidence.md) expose
+  ancestor initializer/access dependencies on all four creator kinds before
+  conflict analysis, without treating fresh locals as shared caller storage.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

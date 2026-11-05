@@ -1054,3 +1054,111 @@ fn ordinary_wait_policy_reuse_does_not_require_a_unique_non_node_owner() {
     entry(&mut b, "wait_a");
     pass(b);
 }
+
+#[test]
+fn all_creator_kinds_declare_ancestor_initializer_reads() {
+    for kind in ["invoke", "repeat", "split", "fanout"] {
+        let mut b = match kind {
+            "split" => parallel(),
+            "fanout" => fanout(),
+            _ => {
+                let mut b = base();
+                child(&mut b, "child_a");
+                b
+            }
+        };
+        let creator = if matches!(kind, "split" | "fanout") {
+            "fork"
+        } else {
+            "call"
+        };
+        if kind == "invoke" {
+            invoke(&mut b, creator, "child_a", json!({}));
+        } else if kind == "repeat" {
+            b["nodes"][creator] = json!({"kind":"repeat","scope":ROOT,"body":"child_a","condition":"yes","reads":{},"writes":{},"outcomes":{"next":true}});
+            entry(&mut b, creator);
+            flow(&mut b, "repeat_next", creator, "next", "node_done");
+        }
+        cell(&mut b, "basis", ROOT, true);
+        cell(&mut b, "local", "child_a", false);
+        read(&mut b, "initial_read", "basis");
+        b["data"]["local"]["initial"] = "initial_read".into();
+        let e = envelope(b.clone());
+        let error = check(&e, &resources()).unwrap_err();
+        assert_eq!(error.code, "node-reads", "{kind}: {error:?}");
+        assert_eq!(error.path, format!("/body/nodes/{creator}"));
+        b["nodes"][creator]["reads"] = json!({"basis":true});
+        pass(b.clone());
+        b["data"]["basis"]
+            .as_object_mut()
+            .unwrap()
+            .remove("initial");
+        refuse(b, "data-availability-unproved");
+    }
+}
+
+#[test]
+fn creation_includes_initializer_source_access_metadata() {
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "audit", ROOT, false);
+    b["scopes"][ROOT]["inputs"] = json!({"audit":"audit"});
+    cell(&mut b, "basis", ROOT, true);
+    cell(&mut b, "local", "child", false);
+    access_policy(&mut b, "basis_access", "audit");
+    b["data"]["basis"]["protection"]["policy"] = "basis_access".into();
+    read(&mut b, "initial_read", "basis");
+    b["data"]["local"]["initial"] = "initial_read".into();
+    invoke(&mut b, "call", "child", json!({}));
+    b["nodes"]["call"]["reads"] = json!({"basis":true,"audit":true});
+    pass(b.clone());
+    b["nodes"]["call"]["reads"] = json!({"basis":true});
+    assert_eq!(
+        check(&envelope(b), &resources()).unwrap_err().code,
+        "node-reads"
+    );
+}
+
+#[test]
+fn creation_includes_transitive_initializer_destination_access_metadata() {
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "audit", ROOT, false);
+    b["scopes"][ROOT]["inputs"] = json!({"audit":"audit"});
+    cell(&mut b, "basis", ROOT, true);
+    cell(&mut b, "local", "child", true);
+    access_policy(&mut b, "basis_access", "audit");
+    access_policy(&mut b, "local_access", "basis");
+    b["data"]["basis"]["protection"]["policy"] = "basis_access".into();
+    b["data"]["local"]["protection"]["policy"] = "local_access".into();
+    invoke(&mut b, "call", "child", json!({}));
+    b["nodes"]["call"]["reads"] = json!({"basis":true,"audit":true});
+    pass(b.clone());
+    // Still checked when the creator itself is ordinary-unreachable.
+    entry(&mut b, "node_done");
+    pass(b.clone());
+    b["nodes"]["call"]["reads"] = json!({"basis":true});
+    assert_eq!(
+        check(&envelope(b), &resources()).unwrap_err().code,
+        "node-reads"
+    );
+}
+
+#[test]
+fn fresh_input_and_initializer_cells_do_not_become_caller_value_reads() {
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "argument", "child", false);
+    cell(&mut b, "local", "child", false);
+    b["scopes"]["child"]["inputs"] = json!({"value":"argument"});
+    read(&mut b, "copy_argument", "argument");
+    b["expressions"]["copy_argument"]["scope"] = "child".into();
+    access_policy(&mut b, "local_access", "argument");
+    b["policies"]["local_access"]["scope"] = "child".into();
+    b["data"]["local"]["protection"]["policy"] = "local_access".into();
+    b["data"]["local"]["initial"] = "copy_argument".into();
+    invoke(&mut b, "call", "child", json!({}));
+    b["nodes"]["call"]["inputs"] = json!({"value":"zero"});
+    assert_eq!(b["nodes"]["call"]["reads"], json!({}));
+    pass(b);
+}
