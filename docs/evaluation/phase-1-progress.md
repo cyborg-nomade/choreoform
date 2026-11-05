@@ -43,10 +43,12 @@ PR #23 merged the delegated workflow as
 and passing final-head required CI. CodeRabbit automatic review was unavailable;
 no independent bot/human review is claimed. The next active slice is the
 [protected ordinary-transfer plan](0019-protection-plan.md), committed before code.
-Its implementation/ADR-0019 has passed local verification and automated self-
+PR #24 merged as `ecc29c965191504b18bd98c75d6d9f64f44afe3d` after automated self-
 review (including fixes for destination access-policy dependencies and comparison
-work accounting). The dedicated PR still requires final-head CI and merge; no
-phase-level gate is closed by the partial protection report.
+work accounting) and passing final-head CI. CodeRabbit skipped automatic review;
+no independent review is claimed. The current follow-up is the
+[initial access dependency plan](0019-initial-access-plan.md). No phase-level gate
+is closed by these partial reports.
 
 ## Honest exit accounting
 
