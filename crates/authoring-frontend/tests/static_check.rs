@@ -737,3 +737,77 @@ fn effect_reconciliation_requires_one_declared_wait_definition_site() {
         format!("/body/policies/{effect}/body/reconciliation")
     );
 }
+
+#[test]
+fn concurrency_distinguishes_read_only_contracts_from_unproved_effect_overlap() {
+    let mut b = Package::parse(SERVICE, SERVICE_LEDGER)
+        .unwrap()
+        .lower(&service_resources())
+        .unwrap()
+        .into_document()["body"]
+        .clone();
+    let root = "scope_service";
+    b["scopes"][root]["outputs"] = json!({});
+    b["scopes"][root]["entry"] = "fork".into();
+    b["nodes"]["fork"] = json!({"kind":"split","scope":root,"children":{"a":"child_a","b":"child_b"},"join":"barrier","reads":{},"writes":{},"outcomes":{}});
+    b["nodes"]["barrier"] = json!({"kind":"join","scope":root,"source":"fork","predicate":{"op":"all","outcomes":{"complete":true}},"remaining":"service_settle","reads":{},"writes":{},"outcomes":{"next":true}});
+    b["flows"]["barrier_done"] =
+        json!({"source":"barrier","outcome":"next","target":"service_done"});
+    for child in ["child_a", "child_b"] {
+        let work = format!("{child}_work");
+        let done = format!("{child}_done");
+        let result = format!("{child}_result");
+        let mut scope = b["scopes"][root].clone();
+        scope["parent"] = root.into();
+        scope["entry"] = work.clone().into();
+        b["scopes"][child] = scope;
+        b["data"][&result] = b["data"]["service_decision"].clone();
+        b["data"][&result]["scope"] = child.into();
+        b["nodes"][&work] = b["nodes"]["service_step"].clone();
+        b["nodes"][&work]["scope"] = child.into();
+        b["nodes"][&work]["result"] = result.clone().into();
+        b["nodes"][&work]["writes"] = json!({result:true});
+        b["nodes"][&done] = json!({"kind":"finish","scope":child,"outcome":"complete","reads":{},"writes":{},"outcomes":{}});
+        for outcome in ["approved", "correction_needed"] {
+            b["flows"][format!("{child}_{outcome}")] =
+                json!({"source":work,"outcome":outcome,"target":done});
+        }
+        for cell in ["service_request", "service_audit"] {
+            b["data"][cell]["invalidates"][&work] = true.into();
+        }
+    }
+    let report =
+        choreoform_semantic_check::check_concurrency(&envelope(b.clone()), &service_resources())
+            .unwrap();
+    assert!(report.checked_forks().contains("fork"));
+    // The host still owes truthful provider enforcement; the digest is not proof.
+    for class in ["compensatable", "irreversible"] {
+        let mut provider: Value = serde_json::from_slice(PROVIDER).unwrap();
+        provider["effectClass"] = class.into();
+        let bytes = serde_json::to_vec(&provider).unwrap();
+        let revision = digest(&bytes);
+        let mut variant = b.clone();
+        let effects = variant["capabilities"]["service_capability"]["effects"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        let contract = variant["capabilities"]["service_capability"]["contract"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        variant["policies"][effects]["body"]["class"] = class.into();
+        variant["policies"][contract]["body"]["provider"]["revision"] = revision.clone().into();
+        let mut registry = service_resources();
+        registry.retain(|r| r.id != "urn:choreoform:examples:review-provider:0.1.0");
+        registry.push(Resource {
+            id: "urn:choreoform:examples:review-provider:0.1.0",
+            revision: &revision,
+            bytes: &bytes,
+        });
+        let e = envelope(variant);
+        choreoform_semantic_check::check_invalidation(&e, &registry).unwrap();
+        let error = choreoform_semantic_check::check_concurrency(&e, &registry).unwrap_err();
+        assert_eq!(error.code, "parallel-effects-unproved");
+        assert_eq!(error.path, "/body/nodes/fork");
+    }
+}

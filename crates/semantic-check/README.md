@@ -213,3 +213,15 @@ Immutable reports expose checked/uncovered consequential sites and sorted links,
 not consumed live revisions, withdrawal, cancellation or effect undo. Earlier
 stages retain their boundaries. See [ADR-0021](../../docs/decisions/0021-ordinary-invalidation.md)
 and [evidence](../../docs/evaluation/0021-ordinary-invalidation.md).
+
+## Ordinary parallel independence (ADR-0022)
+
+`check_concurrency` follows invalidation, indexes scope/context footprints and
+checks ordinary-covered fork declarations. Fresh local storage stays private
+across reused/fanout occurrences; ancestor shared hazards and unproved overlapping
+effects refuse. Early joins and surviving reconciliation lifetimes refuse as
+unproved. Accumulated sets avoid quadratic branch scans. Immutable reports retain
+checked/uncovered forks, earlier evidence and residual host/domain obligations;
+no arbitrary invariant, actual settlement, live seal or race permission is proved.
+See [ADR-0022](../../docs/decisions/0022-ordinary-concurrency.md) and
+[evidence](../../docs/evaluation/0022-ordinary-concurrency.md).

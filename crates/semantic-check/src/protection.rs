@@ -68,17 +68,22 @@ pub fn check_protection(
 }
 
 pub(crate) type DependencyMap = BTreeMap<String, BTreeSet<String>>;
+#[derive(Default)]
+pub(crate) struct Dependencies {
+    pub nodes: DependencyMap,
+    pub scopes: DependencyMap,
+}
 
 pub(crate) fn analyze(
     envelope: &DefinitionEnvelope,
     supplied: &[Resource<'_>],
     collect_dependencies: bool,
-) -> Result<(ProtectionReport, DependencyMap)> {
+) -> Result<(ProtectionReport, Dependencies)> {
     let control = check_control(envelope, supplied)?;
     let b = &envelope.document()["body"];
     let mut flow = Flow::new(b, supplied)?;
     if collect_dependencies {
-        flow.dependencies = Some(BTreeMap::new());
+        flow.dependencies = Some(Dependencies::default());
     }
     flow.scope(text(&b["root"])?, &BTreeSet::new(), 0)?;
     Ok((
