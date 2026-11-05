@@ -49,7 +49,12 @@ fixes do not need an issue first.
 
 The default branch is `main`. Each Roadmap deliverable is developed on a
 dedicated branch and reviewed in its own pull request. The Project Owner must
-approve a Roadmap deliverable before it is merged.
+approve a Roadmap deliverable before it is merged, either individually or through
+the [recorded phase execution delegation](docs/decisions/0018-phase-review-delegation.md).
+Under the current delegation Codex implements, self-reviews and merges verified
+items without an item-level pause; the owner approves the report at each phase
+boundary before work starts in the next phase. Reviews and ADR acceptance must
+state the actual authority and must not imply independent human review.
 
 For other changes:
 

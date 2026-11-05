@@ -33,6 +33,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0015](0015-authoring-grammar-bindings.md) | Accepted | Specify Candidate A grammar and portable identity bindings |
 | [0016](0016-static-contract-checks.md) | Accepted | Separate static contract checks from executable admission |
 | [0017](0017-control-availability-checks.md) | Accepted | Check ordinary control and initialization conservatively |
+| [0018](0018-phase-review-delegation.md) | Accepted | Delegate implementation review within approved phases |
 
 ## When an ADR is required
 
@@ -88,7 +89,12 @@ contributors and summarize material objections; silence is not consent.
 There is no fixed review period. The decider allows time proportionate to the
 decision’s reach, reversibility, urgency, and participation. The Project Owner
 must approve Roadmap deliverables and the durable or cross-cutting decisions
-identified by Governance.
+identified by Governance, individually or through an explicit recorded delegation.
+[ADR-0018](0018-phase-review-delegation.md) records the current phase workflow:
+Codex reviews and accepts scoped decisions under owner delegation, with owner
+approval of each phase report before continuing into the next phase. Record this
+as automated self-review under delegation, not personal owner or independent
+human review of every future proposal.
 
 When the decider approves a proposal:
 
