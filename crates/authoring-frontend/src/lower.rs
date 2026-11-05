@@ -92,6 +92,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ProtectionReport> {
         choreoform_semantic_check::check_protection(&self.envelope, resources)
     }
+    /// Check ordinary invalidation declarations; never execute withdrawal,
+    /// authorize work or establish current runtime sufficiency.
+    pub fn check_invalidation(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::InvalidationReport> {
+        choreoform_semantic_check::check_invalidation(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {

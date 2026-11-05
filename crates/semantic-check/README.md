@@ -203,3 +203,13 @@ source frontend derives the same per-scope footprint; fresh child-local values
 remain outside caller reads. This exposes dependencies to later conflict analysis
 without claiming conflict safety, atomic creation or read authorization. See the
 [creation evidence](../../docs/evaluation/0019-creation-access-evidence.md).
+
+## Ordinary invalidation declarations (ADR-0021)
+
+`check_invalidation` adds conservative pre-result dependency coverage for visited
+decisions, human/capability activities and waits. Visible cell origins must name
+the site in `invalidates`; nonvisible completion origins refuse as unproved.
+Immutable reports expose checked/uncovered consequential sites and sorted links,
+not consumed live revisions, withdrawal, cancellation or effect undo. Earlier
+stages retain their boundaries. See [ADR-0021](../../docs/decisions/0021-ordinary-invalidation.md)
+and [evidence](../../docs/evaluation/0021-ordinary-invalidation.md).

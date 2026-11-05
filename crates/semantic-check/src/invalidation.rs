@@ -1,0 +1,117 @@
+// SPDX-FileCopyrightText: 2026 Choreoform contributors
+// SPDX-License-Identifier: MPL-2.0
+//! Conservative ordinary invalidation declarations, never runtime sufficiency.
+use super::*;
+use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
+
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct InvalidationObligation {
+    site: String,
+    cell: String,
+}
+impl InvalidationObligation {
+    pub fn site(&self) -> &str {
+        &self.site
+    }
+    pub fn cell(&self) -> &str {
+        &self.cell
+    }
+}
+
+/// Revision-bound declaration evidence, without values or an executable plan.
+#[derive(Debug)]
+pub struct InvalidationReport {
+    protection: ProtectionReport,
+    checked: BTreeSet<String>,
+    uncovered: BTreeSet<String>,
+    obligations: BTreeSet<InvalidationObligation>,
+}
+impl InvalidationReport {
+    pub fn revision(&self) -> &str {
+        self.protection.revision()
+    }
+    pub fn protection(&self) -> &ProtectionReport {
+        &self.protection
+    }
+    pub fn checked_nodes(&self) -> &BTreeSet<String> {
+        &self.checked
+    }
+    /// Consequential declarations without an invented ordinary entry context.
+    pub fn uncovered_nodes(&self) -> &BTreeSet<String> {
+        &self.uncovered
+    }
+    pub fn obligations(&self) -> &BTreeSet<InvalidationObligation> {
+        &self.obligations
+    }
+    pub fn remaining(&self) -> &'static [&'static str] {
+        &[
+            "parallel-and-exceptional-availability-proofs",
+            "exceptional-and-observable-channel-information-flow",
+            "current-principal-purpose-capability-and-policy-enforcement",
+            "concurrency-and-irreversible-race-safety-proofs",
+            "exceptional-and-non-data-invalidation-and-lifecycle-enforcement",
+            "host-trust-and-atomic-runtime-enforcement",
+            "full-benchmark-and-conformance-evidence",
+        ]
+    }
+}
+
+/// Require visible pre-result dependencies to declare invalidation of visited
+/// decision/work/wait sites. Conservative refusal can mean unproved, not invalid.
+pub fn check_invalidation(
+    envelope: &DefinitionEnvelope,
+    supplied: &[Resource<'_>],
+) -> Result<InvalidationReport> {
+    let (protection, dependencies) = crate::protection::analyze(envelope, supplied, true)?;
+    let b = &envelope.document()["body"];
+    let mut budget = Budget::default();
+    let mut declared = BTreeMap::new();
+    for (id, d) in object(&b["data"])? {
+        budget.charge(object(&d["invalidates"])?.len() + 1)?;
+        declared.insert(id.as_str(), names(&d["invalidates"])?);
+    }
+    let mut obligations = BTreeSet::new();
+    for (site, cells) in &dependencies {
+        budget.tick(0)?;
+        let mut ancestors = BTreeSet::new();
+        let mut scope = Some(text(&b["nodes"][site]["scope"])?);
+        while let Some(id) = scope {
+            budget.tick(ancestors.len())?;
+            require(ancestors.insert(id), "scope-cycle")?;
+            scope = b["scopes"][id]["parent"].as_str();
+        }
+        for cell in cells {
+            budget.tick(0)?;
+            if !ancestors.contains(text(&b["data"][cell]["scope"])?) {
+                return Err(Diagnostic {
+                    code: "invalidation-context-unproved",
+                    path: format!("/body/nodes/{site}"),
+                });
+            }
+            if !declared[cell.as_str()].contains(site) {
+                return Err(Diagnostic {
+                    code: "invalidation-coverage",
+                    path: format!("/body/data/{cell}/invalidates"),
+                });
+            }
+            obligations.insert(InvalidationObligation {
+                site: site.clone(),
+                cell: cell.clone(),
+            });
+        }
+    }
+    let checked = dependencies.into_keys().collect::<BTreeSet<_>>();
+    let mut uncovered = BTreeSet::new();
+    for (id, n) in object(&b["nodes"])? {
+        budget.tick(0)?;
+        if matches!(text(&n["kind"])?, "decision" | "activity" | "wait") && !checked.contains(id) {
+            uncovered.insert(id.clone());
+        }
+    }
+    Ok(InvalidationReport {
+        protection,
+        checked,
+        uncovered,
+        obligations,
+    })
+}

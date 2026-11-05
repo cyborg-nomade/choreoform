@@ -10,6 +10,7 @@ pub(super) struct Flow<'a> {
     budget: Budget,
     pub transfers: usize,
     pub accesses: BTreeSet<AccessObligation>,
+    pub dependencies: Option<DependencyMap>,
 }
 impl<'a> Flow<'a> {
     pub fn new(b: &'a Value, supplied: &[Resource<'_>]) -> Result<Self> {
@@ -32,6 +33,7 @@ impl<'a> Flow<'a> {
             budget,
             transfers: 0,
             accesses: BTreeSet::new(),
+            dependencies: None,
         })
     }
     fn label(&self, origin: &Origin) -> &Value {
@@ -149,6 +151,20 @@ impl<'a> Flow<'a> {
             let mut reads = Origins::new();
             for cell in names(&n["reads"])? {
                 reads.extend(self.access(&id, &cell, "read")?);
+            }
+            if matches!(text(&n["kind"])?, "decision" | "activity" | "wait")
+                && let Some(dependencies) = &mut self.dependencies
+            {
+                self.budget.charge(pc.len() + reads.len())?;
+                // Save pre-result dependencies, unioning repeated call contexts.
+                // A site's own freshly produced result cannot invalidate itself
+                // merely because publication adds it to the outgoing context.
+                dependencies.entry(id.clone()).or_default().extend(
+                    pc.iter().chain(&reads).filter_map(|origin| match origin {
+                        Origin::Cell(cell) => Some(cell.clone()),
+                        Origin::Provider(_) => None,
+                    }),
+                );
             }
             for cell in names(&n["writes"])? {
                 let deps = self.access(&id, &cell, "write")?;

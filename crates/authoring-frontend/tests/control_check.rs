@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: MPL-2.0
 use choreoform_authoring_frontend::Package;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
-use choreoform_semantic_check::{CORE, SEMANTICS, check, check_control, check_protection};
+use choreoform_semantic_check::{
+    CORE, SEMANTICS, check, check_control, check_invalidation, check_protection,
+};
 use serde_json::{Value, json};
 
 const ROOT: &str = "scope_terminal";
@@ -1161,4 +1163,171 @@ fn fresh_input_and_initializer_cells_do_not_become_caller_value_reads() {
     b["nodes"]["call"]["inputs"] = json!({"value":"zero"});
     assert_eq!(b["nodes"]["call"]["reads"], json!({}));
     pass(b);
+}
+
+fn invalidation_refuse(b: Value, code: &str) {
+    let e = envelope(protected(b));
+    check_protection(&e, &resources()).unwrap();
+    let error = check_invalidation(&e, &resources()).unwrap_err();
+    assert_eq!(error.code, code, "{error:?}");
+    assert!(e.document().pointer(&error.path).is_some());
+    assert!(!format!("{error:?}").contains(INTEGER_MARKER));
+}
+
+#[test]
+fn invalidation_requires_direct_read_coverage_without_guessing_immutability() {
+    let mut b = base();
+    cell(&mut b, "basis", ROOT, true);
+    compute(&mut b, "observe", ROOT, json!({}), json!({"basis":true}));
+    entry(&mut b, "observe");
+    flow(&mut b, "observe_done", "observe", "next", "node_done");
+    invalidation_refuse(b.clone(), "invalidation-coverage");
+    b["data"]["basis"]["invalidates"] = json!({"observe":true});
+    let e = envelope(protected(b));
+    let report = check_invalidation(&e, &resources()).unwrap();
+    assert_eq!(report.revision(), e.document()["revision"]);
+    assert_eq!(
+        report
+            .checked_nodes()
+            .iter()
+            .map(String::as_str)
+            .collect::<Vec<_>>(),
+        ["observe"]
+    );
+    let obligation = report.obligations().first().unwrap();
+    assert_eq!((obligation.site(), obligation.cell()), ("observe", "basis"));
+    assert!(report.uncovered_nodes().is_empty());
+}
+
+#[test]
+fn invalidation_retains_control_and_both_branch_origins_after_merge() {
+    let mut b = branch();
+    for (cell_id, node) in [("left_basis", "write_left"), ("right_basis", "write_right")] {
+        cell(&mut b, cell_id, ROOT, true);
+        b["nodes"][node]["reads"] = json!({cell_id:true});
+        b["data"][cell_id]["invalidates"] = json!({"after_merge":true});
+        let flow = if node == "write_left" {
+            "left_done"
+        } else {
+            "right_done"
+        };
+        b["flows"][flow]["target"] = "after_merge".into();
+    }
+    b["data"]["answer"]["invalidates"] = json!({"after_merge":true});
+    compute(&mut b, "after_merge", ROOT, json!({}), json!({}));
+    flow(&mut b, "merge_done", "after_merge", "next", "node_done");
+    let report = check_invalidation(&envelope(protected(b.clone())), &resources()).unwrap();
+    assert_eq!(report.obligations().len(), 3);
+    b["data"]["right_basis"]["invalidates"] = json!({});
+    invalidation_refuse(b, "invalidation-coverage");
+}
+
+#[test]
+fn invalidation_includes_work_policy_dependencies() {
+    let mut b = base();
+    cell(&mut b, "audit", ROOT, false);
+    b["scopes"][ROOT]["inputs"] = json!({"audit":"audit"});
+    cell(&mut b, "basis", ROOT, true);
+    read(&mut b, "work_input", "basis");
+    b["policies"]["work"] = json!({"scope":ROOT,"dialect":"core","body":{"kind":"work","reads":{"audit":true},"instructions":"Review evidence","authority":"actor_reviewer","retry":{"maxAttempts":1,"delays":[],"faults":{}},"timeout":null,"completion":{"op":"eq","left":{"op":"read","cell":"audit"},"right":{"op":"literal","type":{"kind":"integer"},"value":"0"}},"compensates":null}});
+    b["nodes"]["observe"] = json!({"kind":"activity","scope":ROOT,"mode":"human","target":"actor_reviewer","policy":"work","input":"work_input","result":null,"reads":{"basis":true,"audit":true},"writes":{},"outcomes":{"next":true}});
+    entry(&mut b, "observe");
+    flow(&mut b, "observe_done", "observe", "next", "node_done");
+    b["data"]["basis"]["invalidates"] = json!({"observe":true});
+    invalidation_refuse(b.clone(), "invalidation-coverage");
+    b["data"]["audit"]["invalidates"] = json!({"observe":true});
+    check_invalidation(&envelope(protected(b)), &resources()).unwrap();
+}
+
+#[test]
+fn invalidation_unions_repeated_child_contexts() {
+    let mut b = base();
+    child(&mut b, "child");
+    for id in ["first_basis", "second_basis"] {
+        cell(&mut b, id, ROOT, true);
+        b["data"][id]["invalidates"] = json!({"child_observe":true});
+    }
+    compute(&mut b, "child_observe", "child", json!({}), json!({}));
+    b["scopes"]["child"]["entry"] = "child_observe".into();
+    flow(&mut b, "child_next", "child_observe", "next", "child_done");
+    invoke(&mut b, "call_first", "child", json!({}));
+    invoke(&mut b, "call_second", "child", json!({}));
+    b["nodes"]["call_first"]["reads"] = json!({"first_basis":true});
+    b["nodes"]["call_second"]["reads"] = json!({"second_basis":true});
+    b["flows"]["flow_call_first"]["target"] = "call_second".into();
+    entry(&mut b, "call_first");
+    let report = check_invalidation(&envelope(protected(b.clone())), &resources()).unwrap();
+    assert_eq!(report.obligations().len(), 2);
+    b["data"]["second_basis"]["invalidates"] = json!({});
+    invalidation_refuse(b, "invalidation-coverage");
+}
+
+#[test]
+fn invalidation_does_not_invent_cross_scope_links_for_local_completion_origins() {
+    let mut b = base();
+    child(&mut b, "child");
+    cell(&mut b, "local", "child", true);
+    compute(
+        &mut b,
+        "child_observe",
+        "child",
+        json!({}),
+        json!({"local":true}),
+    );
+    b["data"]["local"]["invalidates"] = json!({"child_observe":true});
+    b["scopes"]["child"]["entry"] = "child_observe".into();
+    flow(&mut b, "child_next", "child_observe", "next", "child_done");
+    invoke(&mut b, "call", "child", json!({}));
+    compute(&mut b, "after_child", ROOT, json!({}), json!({}));
+    b["flows"]["flow_call"]["target"] = "after_child".into();
+    flow(&mut b, "after_next", "after_child", "next", "node_done");
+    invalidation_refuse(b, "invalidation-context-unproved");
+}
+
+#[test]
+fn invalidation_reports_unvisited_sites_without_inventing_entry_contexts() {
+    let mut b = base();
+    cell(&mut b, "unavailable", ROOT, false);
+    compute(
+        &mut b,
+        "unvisited",
+        ROOT,
+        json!({}),
+        json!({"unavailable":true}),
+    );
+    flow(&mut b, "unused_next", "unvisited", "next", "node_done");
+    let report = check_invalidation(&envelope(protected(b)), &resources()).unwrap();
+    assert!(report.checked_nodes().is_empty());
+    assert_eq!(
+        report
+            .uncovered_nodes()
+            .iter()
+            .map(String::as_str)
+            .collect::<Vec<_>>(),
+        ["unvisited"]
+    );
+    assert!(report.obligations().is_empty());
+}
+
+#[test]
+fn invalidation_keeps_a_consumed_old_result_even_when_the_site_replaces_it() {
+    let mut b = base();
+    cell(&mut b, "result", ROOT, true);
+    b["data"]["result"]["type"]["body"] = json!({"kind":"record","fields":{}});
+    expr(
+        &mut b,
+        "empty_result",
+        json!({"kind":"record","fields":{}}),
+        json!({"op":"literal","type":{"kind":"record","fields":{}},"value":{}}),
+        json!({}),
+    );
+    b["data"]["result"]["initial"] = "empty_result".into();
+    b["policies"]["work"] = json!({"scope":ROOT,"dialect":"core","body":{"kind":"work","reads":{},"instructions":"Review evidence","authority":"actor_reviewer","retry":{"maxAttempts":1,"delays":[],"faults":{}},"timeout":null,"completion":{"op":"literal","type":{"kind":"boolean"},"value":true},"compensates":null}});
+    b["nodes"]["observe"] = json!({"kind":"activity","scope":ROOT,"mode":"human","target":"actor_reviewer","policy":"work","input":"zero","result":"result","reads":{"result":true},"writes":{"result":true},"outcomes":{"next":true}});
+    entry(&mut b, "observe");
+    flow(&mut b, "observe_done", "observe", "next", "node_done");
+    invalidation_refuse(b.clone(), "invalidation-coverage");
+    b["data"]["result"]["invalidates"] = json!({"observe":true});
+    let report = check_invalidation(&envelope(protected(b)), &resources()).unwrap();
+    assert_eq!(report.obligations().first().unwrap().cell(), "result");
 }
