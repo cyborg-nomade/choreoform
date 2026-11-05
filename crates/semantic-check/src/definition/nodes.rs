@@ -308,7 +308,12 @@ impl Check<'_, '_> {
                 let id = self.policy_kind(scope, &n["policy"], "wait")?;
                 let p = &self.b["policies"][&id]["body"];
                 require(
-                    outcomes == BTreeSet::from([text(&p["onObservation"])?.into()]),
+                    outcomes
+                        == [p["onObservation"].as_str(), p["onTimer"].as_str()]
+                            .into_iter()
+                            .flatten()
+                            .map(str::to_owned)
+                            .collect(),
                     "wait-outcomes",
                 )?;
             }

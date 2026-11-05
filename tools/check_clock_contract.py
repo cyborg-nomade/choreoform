@@ -24,7 +24,7 @@ class ClockContractEvidence(unittest.TestCase):
         self.assertIn(b'SPDX-License-Identifier: CC-BY-4.0', raw)
         self.assertIn('sha256-*.txt -text', (ROOT / 'docs/ir/contracts/.gitattributes').read_text())
 
-    def test_known_metadata_does_not_enable_source_lowering(self):
+    def test_known_metadata_does_not_grant_execution_authority(self):
         with tempfile.TemporaryDirectory() as directory:
             source = json.loads((EXAMPLES / 'service.provider.json').read_bytes())
             source.update({'id': 'urn:test:clock-source', 'input': {'kind': 'record', 'fields': {}},
@@ -47,10 +47,12 @@ class ClockContractEvidence(unittest.TestCase):
             resources = [(clock['id'], clock_revision, clock_path),
                          (PROFILE_ID, 'sha256:' + PROFILE_HASH, PROFILE_PATH),
                          (source_pin['id'], source_pin['revision'], source_path)]
-            result = run('check', EXAMPLES / 'terminal.choreo', companion, resources)
-            self.assertNotEqual(result.returncode, 0)
-            self.assertEqual(result.stdout, b'')
-            self.assertIn(b'clock-contract-unsupported', result.stderr)
+            result = run('check-timing', EXAMPLES / 'terminal.choreo', companion, resources)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads(result.stdout)
+            self.assertIs(report['executable'], False)
+            self.assertEqual(report['timerUses'], [])
+            self.assertIn('host-trust-and-atomic-runtime-enforcement', report['remaining'])
 
     def test_documents_and_licenses(self):
         for relative in ['docs/decisions/0023-clock-resource-contract.md',

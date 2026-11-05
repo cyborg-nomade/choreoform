@@ -41,6 +41,13 @@ impl<'a, 's> Lower<'a, 's> {
             for field in ["timeout", "timer"] {
                 let timer = &p[field];
                 if timer.is_object() {
+                    let clock_pin = choreoform_semantic_check::Pin::decode(&timer["clock"])
+                        .map_err(|e| error(e.code, 0..0))?;
+                    let clock = self
+                        .resources
+                        .clock(&clock_pin)
+                        .map_err(|e| error(e.code, 0..0))?;
+                    refs.extend(self.protection_policy_refs(clock.source_contract().protection())?);
                     reads.extend(ast_reads(&timer["due"]));
                     if let Some(cell) = timer["basis"].as_str() {
                         reads.insert(cell.into());

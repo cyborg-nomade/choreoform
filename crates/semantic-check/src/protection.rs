@@ -99,9 +99,28 @@ pub(crate) fn analyze(
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Origin {
     Cell(String),
-    Provider(String),
+    Provider(ProviderSite),
 }
 type Origins = BTreeSet<Origin>;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+enum ProviderRole {
+    Activity,
+    Clock,
+}
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+struct ProviderSite {
+    node: String,
+    role: ProviderRole,
+}
+impl ProviderSite {
+    fn new(node: &str, role: ProviderRole) -> Self {
+        Self {
+            node: node.into(),
+            role,
+        }
+    }
+}
 
 fn diagnostic(code: &'static str, map: &str, id: &str) -> Diagnostic {
     Diagnostic {
