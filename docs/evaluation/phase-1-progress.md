@@ -114,9 +114,13 @@ The clock contract/reader slice now pins a separate immutable instance-microseco
 profile and validates exact typed source metadata. Existing timer/source-resource
 refusals remain. ADR-0023 is accepted under delegated automated review; 162 Rust
 tests plus five compile-fail doctests, native/Wasm checks, artifact integrity and
-all relevant stage oracles passed locally. Final-head CI and PR merge remain
-pending. Timer typing/flow, calendar-domain and retry-clock bindings plus explicit
-host obligations are the next dependencies; no actual clock support is claimed.
+all relevant stage oracles passed locally. PR #31 merged as
+`47084ce231abd51d6e3c0194785673347756d6c0` after recorded delegated review and
+passing final-head CI run `42118063627`. CodeRabbit skipped automatic review; no
+independent review is claimed. The next slice is
+[timer typing/clock flow/host obligations](0024-timer-integration-plan.md).
+Calendar-domain and retry-clock bindings remain explicit subsequent contracts;
+no actual clock support or phase gate closure is claimed.
 
 ## Honest exit accounting
 
