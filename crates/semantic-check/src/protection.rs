@@ -64,15 +64,31 @@ pub fn check_protection(
     envelope: &DefinitionEnvelope,
     supplied: &[Resource<'_>],
 ) -> Result<ProtectionReport> {
+    analyze(envelope, supplied, false).map(|(report, _)| report)
+}
+
+pub(crate) type DependencyMap = BTreeMap<String, BTreeSet<String>>;
+
+pub(crate) fn analyze(
+    envelope: &DefinitionEnvelope,
+    supplied: &[Resource<'_>],
+    collect_dependencies: bool,
+) -> Result<(ProtectionReport, DependencyMap)> {
     let control = check_control(envelope, supplied)?;
     let b = &envelope.document()["body"];
     let mut flow = Flow::new(b, supplied)?;
+    if collect_dependencies {
+        flow.dependencies = Some(BTreeMap::new());
+    }
     flow.scope(text(&b["root"])?, &BTreeSet::new(), 0)?;
-    Ok(ProtectionReport {
-        control,
-        transfers: flow.transfers,
-        accesses: flow.accesses,
-    })
+    Ok((
+        ProtectionReport {
+            control,
+            transfers: flow.transfers,
+            accesses: flow.accesses,
+        },
+        flow.dependencies.unwrap_or_default(),
+    ))
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]

@@ -122,6 +122,13 @@ parallel/exceptional proofs can refuse as `unproved`. See the
 [ADR-0017](../../docs/decisions/0017-control-availability-checks.md) and
 [review guide](../../docs/evaluation/0017-control-availability-checks.md).
 
+`check-invalidation SOURCE COMPANION` / `Candidate::check_invalidation` adds
+conservative ordinary invalidation declarations after earlier stages. It reports
+checked/uncovered consequential sites and required site/cell links, refuses
+missing coverage or unrepresentable context dependencies, and always remains
+non-executable. It does not withdraw work, undo effects or prove concurrency safe.
+See [ADR-0021](../../docs/decisions/0021-ordinary-invalidation.md).
+
 `check-protection SOURCE COMPANION` / `Candidate::check_protection` adds ordinary
 control-origin protection constraints and explicit access obligations after the
 earlier checks. The CLI supports the same explicit resource flags and returns

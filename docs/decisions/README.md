@@ -36,6 +36,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0018](0018-phase-review-delegation.md) | Accepted | Delegate implementation review within approved phases |
 | [0019](0019-protected-ordinary-transfers.md) | Accepted | Track ordinary control protection and access obligations |
 | [0020](0020-lifecycle-policy-links.md) | Accepted under delegation | Validate lifecycle policies at their definition use sites |
+| [0021](0021-ordinary-invalidation.md) | Accepted under delegation | Check conservative ordinary invalidation declarations |
 
 ## When an ADR is required
 

@@ -81,7 +81,18 @@ fanout, including transitive initializer/access dependencies and excluding fresh
 local storage. Five new regression groups cover direct IR and source cycles.
 Separate automated self-review passed; local verification passed 138 Rust tests
 plus five compile-fail doctests, native/Wasm checks and the relevant stage oracles.
-Final-head required CI and the dedicated PR merge remain pending.
+PR #28 merged as `14cdfa0147e9c0b0f324e02b29a057dbd0dd689e` after recorded
+delegated review and passing final-head CI run `42111580262`. CodeRabbit skipped
+automatic review; no independent review is claimed. The next slice is
+[ordinary invalidation declaration coverage](0021-invalidation-plan.md), followed
+by conservative conflict judgments and explicit lifecycle/clock host boundaries.
+The ordinary invalidation slice now checks visible pre-result dependency links,
+unions control/branch/repeated contexts, reports unvisited consequential sites and
+refuses nonrepresentable cross-context origins. ADR-0021 is accepted under
+delegation after separate automated self-review; 145 Rust tests plus five
+compile-fail doctests, native/Wasm checks and relevant Python oracles passed
+locally. Final-head CI and the dedicated PR merge remain pending. No runtime
+invalidation, race-safety or phase-exit claim follows.
 
 ## Honest exit accounting
 
