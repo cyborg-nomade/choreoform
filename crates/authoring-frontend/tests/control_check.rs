@@ -3,7 +3,7 @@
 use choreoform_authoring_frontend::Package;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
 use choreoform_semantic_check::{
-    CORE, SEMANTICS, check, check_control, check_invalidation, check_protection,
+    CORE, SEMANTICS, check, check_concurrency, check_control, check_invalidation, check_protection,
 };
 use serde_json::{Value, json};
 
@@ -1330,4 +1330,270 @@ fn invalidation_keeps_a_consumed_old_result_even_when_the_site_replaces_it() {
     b["data"]["result"]["invalidates"] = json!({"observe":true});
     let report = check_invalidation(&envelope(protected(b)), &resources()).unwrap();
     assert_eq!(report.obligations().first().unwrap().cell(), "result");
+}
+
+fn concurrency_refuse(b: Value, code: &str) {
+    let e = envelope(protected(b));
+    check_invalidation(&e, &resources()).unwrap();
+    let error = check_concurrency(&e, &resources()).unwrap_err();
+    assert_eq!(error.code, code, "{error:?}");
+    if code != "budget" {
+        assert!(e.document().pointer(&error.path).is_some());
+    }
+    assert!(!format!("{error:?}").contains(INTEGER_MARKER));
+}
+fn child_compute(b: &mut Value, child: &str, assignments: Value, reads: Value) {
+    let id = format!("{child}_work");
+    compute(b, &id, child, assignments, reads);
+    b["scopes"][child]["entry"] = id.clone().into();
+    flow(
+        b,
+        &format!("{child}_next"),
+        &id,
+        "next",
+        &format!("{child}_done"),
+    );
+}
+
+#[test]
+fn concurrency_treats_reused_template_and_fanout_locals_as_fresh_storage() {
+    for fan in [false, true] {
+        let mut b = if fan { fanout() } else { parallel() };
+        if !fan {
+            b["nodes"]["fork"]["children"]["b"] = "child_a".into();
+        }
+        cell(&mut b, "local", "child_a", false);
+        child_compute(&mut b, "child_a", json!({"local":"zero"}), json!({}));
+        let report = check_concurrency(&envelope(protected(b)), &resources()).unwrap();
+        assert!(report.checked_forks().contains("fork"));
+        assert!(report.uncovered_forks().is_empty());
+    }
+}
+
+#[test]
+fn concurrency_allows_shared_reads_and_disjoint_ancestor_writes() {
+    let mut b = parallel();
+    cell(&mut b, "basis", ROOT, true);
+    b["data"]["basis"]["invalidates"] = json!({"child_a_work":true,"child_b_work":true});
+    for child in ["child_a", "child_b"] {
+        child_compute(&mut b, child, json!({}), json!({"basis":true}));
+    }
+    check_concurrency(&envelope(protected(b)), &resources()).unwrap();
+    let mut b = parallel();
+    for (child, target) in [("child_a", "left"), ("child_b", "right")] {
+        cell(&mut b, target, ROOT, false);
+        child_compute(&mut b, child, json!({target:"zero"}), json!({}));
+    }
+    check_concurrency(&envelope(protected(b)), &resources()).unwrap();
+}
+
+#[test]
+fn concurrency_refuses_shared_hazards_even_with_an_arbitrary_true_guard() {
+    for read_write in [false, true] {
+        let mut b = parallel();
+        cell(&mut b, "basis", ROOT, true);
+        child_compute(&mut b, "child_a", json!({"basis":"zero"}), json!({}));
+        if read_write {
+            child_compute(&mut b, "child_b", json!({}), json!({"basis":true}));
+            b["data"]["basis"]["invalidates"] = json!({"child_b_work":true});
+        } else {
+            child_compute(&mut b, "child_b", json!({"basis":"zero"}), json!({}));
+        }
+        concurrency_refuse(b.clone(), "parallel-storage-conflict-unproved");
+        b["policies"]["policy_races"]["body"]["mode"] = "guarded".into();
+        b["policies"]["policy_races"]["body"]["invariant"] =
+            json!({"op":"literal","type":{"kind":"boolean"},"value":true});
+        concurrency_refuse(b, "parallel-storage-conflict-unproved");
+    }
+}
+
+#[test]
+fn concurrency_includes_initializer_only_shared_reads() {
+    let mut b = parallel();
+    cell(&mut b, "basis", ROOT, true);
+    cell(&mut b, "local", "child_a", false);
+    read(&mut b, "seed_local", "basis");
+    b["data"]["local"]["initial"] = "seed_local".into();
+    b["nodes"]["fork"]["reads"] = json!({"basis":true});
+    child_compute(&mut b, "child_b", json!({"basis":"zero"}), json!({}));
+    concurrency_refuse(b, "parallel-storage-conflict-unproved");
+}
+
+#[test]
+fn concurrency_promotes_nested_ancestor_writes() {
+    let mut b = parallel();
+    child(&mut b, "grandchild");
+    b["scopes"]["grandchild"]["parent"] = "child_a".into();
+    cell(&mut b, "basis", ROOT, true);
+    child_compute(&mut b, "grandchild", json!({"basis":"zero"}), json!({}));
+    child_compute(&mut b, "child_b", json!({"basis":"zero"}), json!({}));
+    invoke(&mut b, "call_nested", "grandchild", json!({}));
+    b["nodes"]["call_nested"]["scope"] = "child_a".into();
+    b["scopes"]["child_a"]["entry"] = "call_nested".into();
+    b["flows"]["flow_call_nested"]["target"] = "child_a_done".into();
+    entry(&mut b, "fork");
+    concurrency_refuse(b, "parallel-storage-conflict-unproved");
+}
+
+#[test]
+fn concurrency_proves_all_member_completion_only_from_sufficient_predicates() {
+    let all = json!({"op":"all","outcomes":{"complete":true}});
+    let any = json!({"op":"any","outcomes":{"complete":true}});
+    let threshold = json!({"op":"atLeast","count":2,"outcomes":{"complete":true}});
+    for predicate in [
+        all.clone(),
+        threshold.clone(),
+        json!({"op":"and","terms":{"a":all.clone(),"b":any.clone()}}),
+        json!({"op":"or","terms":{"a":all.clone(),"b":threshold}}),
+    ] {
+        let mut b = parallel();
+        b["nodes"]["barrier"]["predicate"] = predicate;
+        check_concurrency(&envelope(protected(b)), &resources()).unwrap();
+    }
+    for predicate in [
+        any.clone(),
+        json!({"op":"atLeast","count":1,"outcomes":{"complete":true}}),
+        json!({"op":"or","terms":{"a":all,"b":any.clone()}}),
+    ] {
+        let mut b = parallel();
+        b["nodes"]["barrier"]["predicate"] = predicate;
+        concurrency_refuse(b, "parallel-lifetime-unproved");
+    }
+    let mut b = parallel();
+    b["nodes"]["fork"]["children"] = json!({"a":"child_a"});
+    b["nodes"]["barrier"]["predicate"] = any.clone();
+    check_concurrency(&envelope(protected(b)), &resources()).unwrap();
+    let mut b = fanout();
+    b["nodes"]["barrier"]["predicate"] = any;
+    concurrency_refuse(b, "parallel-lifetime-unproved");
+}
+
+#[test]
+fn concurrency_refuses_surviving_reconciliation_lifetimes_for_all_creators() {
+    for kind in ["split", "fanout", "invoke", "repeat"] {
+        let mut b = if kind == "fanout" {
+            fanout()
+        } else {
+            parallel()
+        };
+        child(&mut b, "reconcile");
+        b["scopes"]["reconcile"]["parent"] = "child_a".into();
+        b["policies"]["child_close"] = json!({"scope":"child_a","dialect":"core","body":{"kind":"closure","reads":{},"mode":"reconcile","followup":"reconcile"}});
+        b["scopes"]["child_a"]["closure"] = "child_close".into();
+        if kind == "invoke" {
+            invoke(&mut b, "call", "child_a", json!({}));
+        }
+        if kind == "repeat" {
+            b["nodes"]["call"] = json!({"kind":"repeat","scope":ROOT,"body":"child_a","condition":"yes","reads":{},"writes":{},"outcomes":{"next":true}});
+            entry(&mut b, "call");
+            flow(&mut b, "repeat_next", "call", "next", "node_done");
+        }
+        concurrency_refuse(b, "scope-lifetime-unproved");
+    }
+}
+
+#[test]
+fn concurrency_refuses_overlapping_opaque_external_work() {
+    let mut b = parallel();
+    b["policies"]["work"] = json!({"scope":ROOT,"dialect":"core","body":{"kind":"work","reads":{},"instructions":"Review evidence","authority":"actor_reviewer","retry":{"maxAttempts":1,"delays":[],"faults":{}},"timeout":null,"completion":{"op":"literal","type":{"kind":"boolean"},"value":true},"compensates":null}});
+    for child in ["child_a", "child_b"] {
+        let id = format!("{child}_work");
+        b["nodes"][&id] = json!({"kind":"activity","scope":child,"mode":"human","target":"actor_reviewer","policy":"work","input":"zero","result":null,"reads":{},"writes":{},"outcomes":{"next":true}});
+        b["scopes"][child]["entry"] = id.clone().into();
+        flow(
+            &mut b,
+            &format!("{child}_next"),
+            &id,
+            "next",
+            &format!("{child}_done"),
+        );
+    }
+    concurrency_refuse(b.clone(), "parallel-effects-unproved");
+    b["scopes"]["child_b"]["entry"] = "child_b_done".into();
+    // Unvisited declarations remain in conservative summaries; deletion is an
+    // explicit definition edit, not a constant-guard or activation guess.
+    b["nodes"].as_object_mut().unwrap().remove("child_b_work");
+    b["flows"].as_object_mut().unwrap().remove("child_b_next");
+    check_concurrency(&envelope(protected(b)), &resources()).unwrap();
+}
+
+#[test]
+fn concurrency_reports_unvisited_forks_and_bounds_member_work() {
+    let mut b = parallel();
+    entry(&mut b, "node_done");
+    let report = check_concurrency(&envelope(protected(b)), &resources()).unwrap();
+    assert!(report.checked_forks().is_empty());
+    assert!(report.uncovered_forks().contains("fork"));
+    let mut b = parallel();
+    b["nodes"]["fork"]["children"] = (0..2200)
+        .map(|i| (format!("branch_{i:04}"), json!("child_a")))
+        .collect::<serde_json::Map<_, _>>()
+        .into();
+    // Empty peers use an accumulated index, not quadratic pair scans.
+    check_concurrency(&envelope(protected(b.clone())), &resources()).unwrap();
+    for i in 0..1000 {
+        cell(&mut b, &format!("basis_{i:04}"), ROOT, false);
+    }
+    let reads: serde_json::Map<_, _> = (0..1000)
+        .map(|i| (format!("basis_{i:04}"), true.into()))
+        .collect();
+    compute(
+        &mut b,
+        "unvisited_reads",
+        "child_a",
+        json!({}),
+        reads.into(),
+    );
+    flow(
+        &mut b,
+        "unvisited_next",
+        "unvisited_reads",
+        "next",
+        "child_a_done",
+    );
+    b["nodes"]["fork"]["children"] = (0..600)
+        .map(|i| (format!("branch_{i:04}"), json!("child_a")))
+        .collect::<serde_json::Map<_, _>>()
+        .into();
+    concurrency_refuse(b, "budget");
+}
+
+#[test]
+fn concurrency_retains_pre_fork_control_reads_in_child_footprints() {
+    let mut b = parallel();
+    cell(&mut b, "basis", ROOT, true);
+    cell(&mut b, "other", ROOT, true);
+    expr(
+        &mut b,
+        "route_guard",
+        json!({"kind":"boolean"}),
+        json!({"op":"eq","left":{"op":"read","cell":"basis"},"right":{"op":"literal","type":{"kind":"integer"},"value":"0"}}),
+        json!({"basis":true}),
+    );
+    b["nodes"]["route"] = json!({"kind":"decision","scope":ROOT,"guards":{"next":"route_guard"},"default":null,"reads":{"basis":true},"writes":{},"outcomes":{"next":true}});
+    b["data"]["basis"]["invalidates"] = json!({"route":true});
+    entry(&mut b, "route");
+    flow(&mut b, "route_fork", "route", "next", "fork");
+    child_compute(&mut b, "child_a", json!({"basis":"zero"}), json!({}));
+    child_compute(&mut b, "child_b", json!({"other":"zero"}), json!({}));
+    concurrency_refuse(b, "parallel-storage-conflict-unproved");
+}
+
+#[test]
+fn concurrency_refuses_nonvisible_completion_context_without_aliasing_fresh_locals() {
+    let mut b = parallel();
+    child(&mut b, "seed");
+    cell(&mut b, "seed_local", "seed", true);
+    b["nodes"]["seed_done"]["reads"] = json!({"seed_local":true});
+    invoke(&mut b, "seed_call", "seed", json!({}));
+    b["flows"]["flow_seed_call"]["target"] = "fork".into();
+    concurrency_refuse(b, "scope-context-unproved");
+}
+
+#[test]
+fn concurrency_refuses_potential_shared_writes_between_fanout_occurrences() {
+    let mut b = fanout();
+    cell(&mut b, "shared", ROOT, false);
+    child_compute(&mut b, "child_a", json!({"shared":"zero"}), json!({}));
+    concurrency_refuse(b, "parallel-storage-conflict-unproved");
 }

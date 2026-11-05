@@ -10,7 +10,7 @@ pub(super) struct Flow<'a> {
     budget: Budget,
     pub transfers: usize,
     pub accesses: BTreeSet<AccessObligation>,
-    pub dependencies: Option<DependencyMap>,
+    pub dependencies: Option<Dependencies>,
 }
 impl<'a> Flow<'a> {
     pub fn new(b: &'a Value, supplied: &[Resource<'_>]) -> Result<Self> {
@@ -99,6 +99,15 @@ impl<'a> Flow<'a> {
     pub fn scope(&mut self, scope: &str, inherited: &Origins, depth: usize) -> Result<Origins> {
         self.budget.tick(depth)?;
         self.budget.charge(inherited.len())?;
+        if let Some(dependencies) = &mut self.dependencies {
+            self.budget.charge(inherited.len() + 1)?;
+            dependencies.scopes.entry(scope.into()).or_default().extend(
+                inherited.iter().filter_map(|origin| match origin {
+                    Origin::Cell(cell) => Some(cell.clone()),
+                    Origin::Provider(_) => None,
+                }),
+            );
+        }
         let s = &self.b["scopes"][scope];
         let mut entry = inherited.clone();
         for cell in object(&s["inputs"])?.values() {
@@ -159,7 +168,7 @@ impl<'a> Flow<'a> {
                 // Save pre-result dependencies, unioning repeated call contexts.
                 // A site's own freshly produced result cannot invalidate itself
                 // merely because publication adds it to the outgoing context.
-                dependencies.entry(id.clone()).or_default().extend(
+                dependencies.nodes.entry(id.clone()).or_default().extend(
                     pc.iter().chain(&reads).filter_map(|origin| match origin {
                         Origin::Cell(cell) => Some(cell.clone()),
                         Origin::Provider(_) => None,

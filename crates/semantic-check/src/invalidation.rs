@@ -25,8 +25,12 @@ pub struct InvalidationReport {
     checked: BTreeSet<String>,
     uncovered: BTreeSet<String>,
     obligations: BTreeSet<InvalidationObligation>,
+    scope_contexts: crate::protection::DependencyMap,
 }
 impl InvalidationReport {
+    pub(crate) fn scope_contexts(&self) -> &crate::protection::DependencyMap {
+        &self.scope_contexts
+    }
     pub fn revision(&self) -> &str {
         self.protection.revision()
     }
@@ -71,7 +75,7 @@ pub fn check_invalidation(
         declared.insert(id.as_str(), names(&d["invalidates"])?);
     }
     let mut obligations = BTreeSet::new();
-    for (site, cells) in &dependencies {
+    for (site, cells) in &dependencies.nodes {
         budget.tick(0)?;
         let mut ancestors = BTreeSet::new();
         let mut scope = Some(text(&b["nodes"][site]["scope"])?);
@@ -100,7 +104,7 @@ pub fn check_invalidation(
             });
         }
     }
-    let checked = dependencies.into_keys().collect::<BTreeSet<_>>();
+    let checked = dependencies.nodes.into_keys().collect::<BTreeSet<_>>();
     let mut uncovered = BTreeSet::new();
     for (id, n) in object(&b["nodes"])? {
         budget.tick(0)?;
@@ -113,5 +117,6 @@ pub fn check_invalidation(
         checked,
         uncovered,
         obligations,
+        scope_contexts: dependencies.scopes,
     })
 }

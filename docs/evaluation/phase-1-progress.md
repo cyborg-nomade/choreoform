@@ -97,6 +97,14 @@ skipped automatic review; no independent review is claimed. No runtime
 invalidation, race-safety or phase-exit claim follows. Next is the
 [ordinary parallel independence plan](0022-concurrency-plan.md), followed by
 explicit lifecycle/clock host contracts and remaining full-validator evidence.
+The concurrency slice now indexes scope footprints, keeps fresh local storage
+distinct, retains pre-fork control dependencies, and refuses unproved shared/
+external/lifetime hazards. Review fixed incoming-context loss and quadratic pair
+scans, with explicit nonvisible-context refusal and 2,200-branch/dense-budget
+regressions. ADR-0022 is accepted under delegated automated review; 158 Rust tests
+plus five compile-fail doctests, native/Wasm checks and all relevant stage oracles
+passed locally. Final-head CI and the dedicated PR merge remain pending. Domain
+invariants, runtime/exceptional/reconciliation concurrency and phase gates stay open.
 
 ## Honest exit accounting
 

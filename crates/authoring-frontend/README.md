@@ -129,6 +129,13 @@ missing coverage or unrepresentable context dependencies, and always remains
 non-executable. It does not withdraw work, undo effects or prove concurrency safe.
 See [ADR-0021](../../docs/decisions/0021-ordinary-invalidation.md).
 
+`check-concurrency SOURCE COMPANION` / `Candidate::check_concurrency` checks the
+conservative ordinary parallel independence subset in
+[ADR-0022](../../docs/decisions/0022-ordinary-concurrency.md). It separates fresh
+local storage from shared ancestor data, refuses unproved hazards/effect overlap
+and lifetimes, and reports checked/uncovered forks. Earlier evidence and host/
+domain obligations remain; the report is non-executable.
+
 `check-protection SOURCE COMPANION` / `Candidate::check_protection` adds ordinary
 control-origin protection constraints and explicit access obligations after the
 earlier checks. The CLI supports the same explicit resource flags and returns

@@ -100,6 +100,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::InvalidationReport> {
         choreoform_semantic_check::check_invalidation(&self.envelope, resources)
     }
+    /// Check conservative ordinary parallel independence. This does not prove
+    /// domain invariants or authorize concurrent effects.
+    pub fn check_concurrency(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ConcurrencyReport> {
+        choreoform_semantic_check::check_concurrency(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {

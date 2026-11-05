@@ -171,6 +171,10 @@ validated, and round-tripped.
   check conservative pre-result dependency links for visited decisions/work/waits,
   with explicit uncovered sites and unsupported context refusal. Runtime
   withdrawal, non-data/exceptional invalidation and race safety remain open.
+  [Ordinary parallel independence](docs/decisions/0022-ordinary-concurrency.md)
+  checks fresh-local/shared-ancestor footprints and conservative external/lifetime
+  boundaries. Full domain/invariant proofs, early/reconcile concurrency, actual
+  host enforcement and aggregate gates remain open.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted
