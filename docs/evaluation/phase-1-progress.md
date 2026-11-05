@@ -70,8 +70,12 @@ The lifecycle slice is implemented and accepted under delegated automated review
 actual-use fault/closure child links and missing/ambiguous effect wait-site checks,
 with valid ordinary wait reuse preserved. Local verification passed 133 Rust tests
 and five compile-fail doctests, native/Wasm checks and relevant Python oracles.
-Final-head required CI and PR merge remain pending; no runtime ownership proof
-or aggregate gate closure follows. Continue race/invalidation analysis afterward.
+PR #27 merged as `20a94148a09ee9e5d75ddbe2d4c1c9aa4f50dec7` after recorded
+automated review and passing final-head CI run `42110269705`. CodeRabbit skipped
+automatic review; no independent review is claimed. No runtime ownership proof
+or aggregate gate closure follows. Before race/invalidation analysis, implement
+the [scope-creation footprint plan](0019-creation-access-plan.md) so initializer
+ancestor reads cannot disappear from creator read declarations.
 
 ## Honest exit accounting
 
