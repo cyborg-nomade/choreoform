@@ -91,8 +91,12 @@ unions control/branch/repeated contexts, reports unvisited consequential sites a
 refuses nonrepresentable cross-context origins. ADR-0021 is accepted under
 delegation after separate automated self-review; 145 Rust tests plus five
 compile-fail doctests, native/Wasm checks and relevant Python oracles passed
-locally. Final-head CI and the dedicated PR merge remain pending. No runtime
-invalidation, race-safety or phase-exit claim follows.
+locally. PR #29 merged as `6067d9037c6dd77f01e2b7895673c00c9c066027` after
+recorded automated review and passing final-head CI run `42113299497`. CodeRabbit
+skipped automatic review; no independent review is claimed. No runtime
+invalidation, race-safety or phase-exit claim follows. Next is the
+[ordinary parallel independence plan](0022-concurrency-plan.md), followed by
+explicit lifecycle/clock host contracts and remaining full-validator evidence.
 
 ## Honest exit accounting
 
