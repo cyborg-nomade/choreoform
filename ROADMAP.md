@@ -159,6 +159,11 @@ validated, and round-tripped.
   declares output metadata dependencies at finish nodes. These do not establish
   actual runtime access or close the full validator. See its
   [evidence](docs/evaluation/0019-protected-ordinary-transfers.md).
+  [Lifecycle use-site validation](docs/decisions/0020-lifecycle-policy-links.md)
+  checks actual handler/follow-up child contexts and conservative unique
+  reconciliation wait definition sites. It does not prove live ownership,
+  receiver acceptance, runtime correlation or settlement. These and the remaining
+  race/invalidation, clock, benchmark and phase gates stay open.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

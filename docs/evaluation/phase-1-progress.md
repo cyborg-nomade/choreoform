@@ -66,6 +66,12 @@ recorded delegated review and passing final-head CI; CodeRabbit automatic review
 was skipped and no independent review is claimed. The next active dependency is
 [lifecycle policy use-site validation](0020-lifecycle-link-plan.md), before
 conservative race/invalidation judgments and explicit supported-clock contracts.
+The lifecycle slice is implemented and accepted under delegated automated review:
+actual-use fault/closure child links and missing/ambiguous effect wait-site checks,
+with valid ordinary wait reuse preserved. Local verification passed 133 Rust tests
+and five compile-fail doctests, native/Wasm checks and relevant Python oracles.
+Final-head required CI and PR merge remain pending; no runtime ownership proof
+or aggregate gate closure follows. Continue race/invalidation analysis afterward.
 
 ## Honest exit accounting
 

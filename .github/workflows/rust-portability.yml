@@ -51,4 +51,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_static_contracts.py
           .tools/ir-check/bin/python tools/check_control_availability.py
           .tools/ir-check/bin/python tools/check_protection_flow.py
+          .tools/ir-check/bin/python tools/check_lifecycle_links.py
       # Browser execution is a separate manual evidence step, not implied by CI.
