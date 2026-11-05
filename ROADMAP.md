@@ -149,6 +149,11 @@ validated, and round-tripped.
   access, race/invalidation/reconciliation, supported clocks/host and complete
   benchmark/conformance evidence as open work. It does not close this item,
   complete validation or the executable-IR/Phase 1 gates.
+  The [ordinary protection analysis](docs/decisions/0019-protected-ordinary-transfers.md)
+  adds control-origin and transfer constraints with explicit access obligations;
+  actual access/host enforcement, exceptional/observable channels, initial access-
+  policy availability and race/invalidation proofs remain open. See its
+  [evidence](docs/evaluation/0019-protected-ordinary-transfers.md).
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

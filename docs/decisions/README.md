@@ -34,6 +34,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0016](0016-static-contract-checks.md) | Accepted | Separate static contract checks from executable admission |
 | [0017](0017-control-availability-checks.md) | Accepted | Check ordinary control and initialization conservatively |
 | [0018](0018-phase-review-delegation.md) | Accepted | Delegate implementation review within approved phases |
+| [0019](0019-protected-ordinary-transfers.md) | Accepted | Track ordinary control protection and access obligations |
 
 ## When an ADR is required
 

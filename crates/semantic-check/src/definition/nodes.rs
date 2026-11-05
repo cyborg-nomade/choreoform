@@ -342,17 +342,10 @@ impl Check<'_, '_> {
     }
     /// Direct transfer only: retain sensitivity/policy identity and never widen
     /// access sets. This does not establish whole-process information flow.
-    fn flow(&self, source: &Value, target: &Value) -> Result<()> {
-        require(
-            source["sensitivity"] == target["sensitivity"] && source["policy"] == target["policy"],
-            "information-flow",
-        )?;
-        for field in ["purposes", "participants", "capabilities"] {
-            require(
-                names(&target[field])?.is_subset(&names(&source[field])?),
-                "information-flow",
-            )?;
-        }
-        Ok(())
+    fn flow(&mut self, source: &Value, target: &Value) -> Result<()> {
+        self.resources
+            .budget
+            .charge(crate::protection::transfer_cost(source, target)?)?;
+        crate::protection::transfer(source, target)
     }
 }

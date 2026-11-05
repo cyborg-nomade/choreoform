@@ -4,7 +4,7 @@
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
 mod availability;
-mod graph;
+pub(crate) mod graph;
 use availability::Analysis;
 use graph::Graph;
 

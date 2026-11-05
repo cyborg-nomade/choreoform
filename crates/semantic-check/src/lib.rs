@@ -6,11 +6,13 @@
 mod control;
 mod definition;
 mod expression;
+mod protection;
 mod resources;
 mod types;
 pub use control::{ControlReport, check_control};
 pub use definition::{Report, check};
 pub use expression::{Context, Judgment};
+pub use protection::{AccessObligation, ProtectionReport, check_protection};
 pub use resources::{Calendar, Provider, Resources};
 pub use types::{Nominal, Pin, Type};
 

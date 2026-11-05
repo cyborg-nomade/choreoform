@@ -33,13 +33,13 @@ fn run() -> Result<String, String> {
     if args.len() < 3
         || !matches!(
             args[0].as_str(),
-            "lower" | "integrity" | "format" | "check" | "check-control"
+            "lower" | "integrity" | "format" | "check" | "check-control" | "check-protection"
         )
         || args.len() > 3 + 4 * 254
         || !(args.len() - 3).is_multiple_of(4)
         || (args[0] == "integrity" && args.len() != 3)
     {
-        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; lower emits UNVALIDATED candidates; check/check-control grant NO execution authority; or parse-fragment RULE < stdin".into());
+        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
     }
     let source = read(std::fs::File::open(&args[1]).map_err(|_| "source-read".to_owned())?)?;
     let bindings = read(std::fs::File::open(&args[2]).map_err(|_| "companion-read".to_owned())?)?;
@@ -102,6 +102,17 @@ fn run() -> Result<String, String> {
             .check_control(&resources)
             .map_err(|e| format!("{} at {}", e.code, e.path))?;
         return Ok(serde_json::json!({"status":"control-checks-passed","executable":false,"revision":report.revision(),"coveredNodes":report.covered_nodes(),"uncoveredNodes":report.uncovered_nodes(),"coveredScopes":report.covered_scopes(),"requiredInputs":report.required_inputs(),"remaining":report.remaining()}).to_string());
+    }
+    if args[0] == "check-protection" {
+        let report = candidate
+            .check_protection(&resources)
+            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+        let accesses: Vec<_> = report
+            .accesses()
+            .iter()
+            .map(|a| serde_json::json!({"site":a.site(),"cell":a.cell(),"operation":a.operation()}))
+            .collect();
+        return Ok(serde_json::json!({"status":"protection-checks-passed","executable":false,"revision":report.revision(),"transfers":report.transfers(),"accessObligations":accesses,"coveredNodes":report.control().covered_nodes(),"uncoveredNodes":report.control().uncovered_nodes(),"requiredInputs":report.control().required_inputs(),"remaining":report.remaining()}).to_string());
     }
     if args[0] == "format" {
         let (source, companion) = package.formatted().map_err(|e| e.code.to_owned())?;

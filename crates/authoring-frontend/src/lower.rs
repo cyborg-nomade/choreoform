@@ -84,6 +84,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ControlReport> {
         choreoform_semantic_check::check_control(&self.envelope, resources)
     }
+    /// Check conservative ordinary protection constraints and enumerate access
+    /// obligations; this does not authenticate a principal or grant access.
+    pub fn check_protection(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ProtectionReport> {
+        choreoform_semantic_check::check_protection(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {
