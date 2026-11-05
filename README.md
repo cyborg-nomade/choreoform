@@ -91,6 +91,10 @@ The accepted [static contract-checking stage](docs/decisions/0016-static-contrac
 adds supported artifact readers and explicit source/candidate checks. Its
 [report and limits](crates/semantic-check/README.md) are not executable admission;
 clock support and complete semantic/host/benchmark gates remain open.
+The proposed [ordinary control/initialization stage](docs/decisions/0017-control-availability-checks.md)
+adds explicit conservative flow and output proofs with input assumptions and
+coverage reporting; [review evidence](docs/evaluation/0017-control-availability-checks.md)
+preserves the remaining full-validation gates.
 
 ## Name
 

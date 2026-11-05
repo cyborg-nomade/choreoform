@@ -111,3 +111,13 @@ each; registry total 8 MiB including core snapshots). No path/ID discovery or
 implicit rebind occurs. See the [service example](../../docs/authoring/examples/service.choreo),
 [its pins](../../docs/authoring/examples/service.bindings.json) and the
 [static-stage evidence](../../docs/evaluation/0016-static-contract-checks.md).
+
+`check-control SOURCE COMPANION` (or `Candidate::check_control`) adds the proposed
+conservative ordinary-flow/initialization proof after unchanged static checks.
+It also accepts explicit resource groups. Reports say `control-checks-passed`,
+`executable:false` and expose input assumptions, covered/uncovered node IDs and
+residual obligations. Valid programs needing local initializer ordering or
+parallel/exceptional proofs can refuse as `unproved`. See the
+[branch example](../../docs/authoring/examples/control.choreo),
+[ADR-0017](../../docs/decisions/0017-control-availability-checks.md) and
+[review guide](../../docs/evaluation/0017-control-availability-checks.md).

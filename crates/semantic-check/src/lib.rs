@@ -3,10 +3,12 @@
 
 //! Closed ADR-0013 static judgments, NOT full-definition admission or a planner.
 //! No IO, network, clock, authentication, effect dispatch or executable permission.
+mod control;
 mod definition;
 mod expression;
 mod resources;
 mod types;
+pub use control::{ControlReport, check_control};
 pub use definition::{Report, check};
 pub use expression::{Context, Judgment};
 pub use resources::{Calendar, Provider, Resources};

@@ -132,6 +132,15 @@ validated, and round-tripped.
   [Evidence and residual obligations](docs/evaluation/0016-static-contract-checks.md)
   preserve the distinction from full-definition admission; clocks/timers remain
   unsupported. Neither this authoring item nor the complete validator is closed.
+  The bounded [ordinary control/initialization stage](docs/decisions/0017-control-availability-checks.md)
+  is accepted: Project Owner approved PR #22 on 2026-11-05, effective upon merge.
+  It checks ordinary flow rules, conservative definite reads/
+  outputs and explicit root-input/coverage reporting. Its
+  [evidence and follow-up priority](docs/evaluation/0017-control-availability-checks.md)
+  retain parallel/exceptional availability, control-sensitive information flow/
+  access, race/invalidation/reconciliation, supported clocks/host and complete
+  benchmark/conformance evidence as open work. It does not close this item,
+  complete validation or the executable-IR/Phase 1 gates.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

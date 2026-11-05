@@ -32,6 +32,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0014](0014-near-english-authoring.md) | Accepted | Develop structured English sentences as a provisional authoring direction |
 | [0015](0015-authoring-grammar-bindings.md) | Accepted | Specify Candidate A grammar and portable identity bindings |
 | [0016](0016-static-contract-checks.md) | Accepted | Separate static contract checks from executable admission |
+| [0017](0017-control-availability-checks.md) | Accepted | Check ordinary control and initialization conservatively |
 
 ## When an ADR is required
 
