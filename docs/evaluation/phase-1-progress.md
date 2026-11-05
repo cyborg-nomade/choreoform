@@ -103,8 +103,20 @@ external/lifetime hazards. Review fixed incoming-context loss and quadratic pair
 scans, with explicit nonvisible-context refusal and 2,200-branch/dense-budget
 regressions. ADR-0022 is accepted under delegated automated review; 158 Rust tests
 plus five compile-fail doctests, native/Wasm checks and all relevant stage oracles
-passed locally. Final-head CI and the dedicated PR merge remain pending. Domain
+passed locally. PR #30 merged as `83e3493024a2ad0d9dfa50aa1c22a9c9a8621605`
+after recorded automated review and passing final-head CI run `42115779980`.
+CodeRabbit skipped automatic review; no independent review is claimed. Domain
 invariants, runtime/exceptional/reconciliation concurrency and phase gates stay open.
+The next slice is the [supported clock resource/host boundary proposal](0023-clock-contract-plan.md).
+Timer typing, clock-source information flow and host-obligation integration must
+follow before source/definition timers can be enabled; no host support is inferred.
+The clock contract/reader slice now pins a separate immutable instance-microsecond
+profile and validates exact typed source metadata. Existing timer/source-resource
+refusals remain. ADR-0023 is accepted under delegated automated review; 162 Rust
+tests plus five compile-fail doctests, native/Wasm checks, artifact integrity and
+all relevant stage oracles passed locally. Final-head CI and PR merge remain
+pending. Timer typing/flow, calendar-domain and retry-clock bindings plus explicit
+host obligations are the next dependencies; no actual clock support is claimed.
 
 ## Honest exit accounting
 

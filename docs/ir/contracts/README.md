@@ -4,7 +4,8 @@
 # Immutable local contract artifacts
 
 These content-addressed UTF-8 byte snapshots preserve the contracts referenced
-by the three IR fixtures and the accepted ADR-0013 specification. They are distributed in this repository; no network
+by the three IR fixtures, accepted ADR-0013 specification and later external clock
+profile. They are distributed in this repository; no network
 resolver or registry service is required. The fixture checker's explicit local
 registry binds each exact `(id, revision)` pair to the corresponding file.
 The separate [suite publication registry](../../../tools/check_contract_suite.py)
@@ -16,6 +17,7 @@ support to the Rust probe, fixture checker or a runtime.
 | `urn:choreoform:semantics:adr-0008` | [Semantic contract snapshot](sha256-0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141.txt) | `docs/decisions/0008-core-process-semantics.md` at `eeddfb43547ac766334e6700d7fb02ef33bf8dde` |
 | `urn:choreoform:examples:illustrative-dialect` | [Illustrative dialect snapshot](sha256-282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9.txt) | `docs/ir/examples.md` at `102f796dec0bc51c4d15e4dfd3e9bed4bc0d47af` |
 | `urn:choreoform:contracts:core-profile:0.1.0` | [Accepted executable-contract specification](sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt) | Three `docs/dialects/` sources at `8ac89587090bc57145da615e4add53548cd661bc`, framed in the order specified below |
+| `urn:choreoform:clock-profile:instance-microseconds:0.1.0` | [Instance-clock profile](sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt) | Exact versioned `docs/clocks/instance-microseconds-v0.1.md` bytes; ADR-0023 delegated acceptance, effective upon merge |
 
 Hash every byte, including the original notices and final newline. The local
 `.gitattributes` disables line-ending conversion for these snapshots. The `.txt`
@@ -30,6 +32,10 @@ This preserves the existing contract IDs, digests, and definition revisions.
 It does not turn the illustrative dialect into an executable contract, approve
 ADR-0009, or provide artifact authenticity/signing. Future accepted contracts
 must use the same immutable-binding discipline rather than a live document.
+
+The clock profile is checked by `tools/check_clock_contract.py` and the semantic
+crate's metadata reader. Its publication does not enable definition/source timers
+or certify an actual host clock. It leaves existing artifact pins/revisions intact.
 
 ## ADR-0013 publication
 

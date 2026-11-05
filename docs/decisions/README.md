@@ -38,6 +38,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0020](0020-lifecycle-policy-links.md) | Accepted under delegation | Validate lifecycle policies at their definition use sites |
 | [0021](0021-ordinary-invalidation.md) | Accepted under delegation | Check conservative ordinary invalidation declarations |
 | [0022](0022-ordinary-concurrency.md) | Accepted under delegation | Check conservative ordinary parallel independence |
+| [0023](0023-clock-resource-contract.md) | Accepted under delegation | Define a pinned instance-clock resource and host boundary |
 
 ## When an ADR is required
 
