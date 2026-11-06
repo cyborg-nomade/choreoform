@@ -433,6 +433,18 @@ mutable-survivor counterexamples before changing invalidation/lifetime analyses.
 All forty scenarios, full benchmark/text/visual/protected editing/user gates and
 Phase 1 exit remain open. The parent is still unmerged.
 
+Draft #46's adoption head `3f67ab3bf54ed0e564f27dc8d6a0690b12b9f620` passed
+final-head CI `42251674305`; it remains unmerged because whole-package obligations
+are not complete. The active branch is `codex/closed-output-provenance`, following
+[frozen plan](0037-closed-provenance-plan.md), `a3fc112`. The
+[pre-change critique](0037-closed-provenance-audit.md) records five actual native
+invoke/repeat/read-only-survivor/mutable-writer/missing-ancestor witnesses and
+recommends only exact-scope, no-descendant-writer historical origins at synchronous
+ordinary completion. Mutable ancestor reads must remain; partial fork summaries
+and unproved descendants are excluded. The checker is still unchanged at this
+audit checkpoint. Next implement ADR-0037 with counterexample/budget/report tests,
+then rerun the actual full package and retain its next real refusal. No phase gate.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
