@@ -2,12 +2,24 @@
 // SPDX-License-Identifier: MPL-2.0
 
 //! Native test adapter; explicit source/companion paths, no discovery or writes.
-use choreoform_authoring_frontend::{MAX_BYTES, Package, parse_fragment};
+use choreoform_authoring_frontend::{Candidate, MAX_BYTES, Package, parse_fragment};
 use choreoform_ir_probe_core::{Resource, SUPPORTED_CONTRACTS};
 use std::io::{Read, Write};
 
 const CORE_ID: &str = "urn:choreoform:contracts:core-profile:0.1.0";
 const CORE_REV: &str = "sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58";
+fn semantic_error(
+    candidate: &Candidate,
+    diagnostic: choreoform_semantic_check::Diagnostic,
+) -> String {
+    match candidate.source_span(&diagnostic) {
+        Some(span) => format!(
+            "{} at {}; source bytes {}..{}",
+            diagnostic.code, diagnostic.path, span.start, span.end
+        ),
+        None => format!("{} at {}", diagnostic.code, diagnostic.path),
+    }
+}
 fn read(input: impl Read) -> Result<Vec<u8>, String> {
     let mut bytes = Vec::new();
     input
@@ -113,19 +125,19 @@ fn run() -> Result<String, String> {
     if args[0] == "check" {
         let report = candidate
             .check_static(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         return Ok(serde_json::json!({"status":"static-checks-passed","executable":false,"revision":report.revision(),"expressions":report.expressions(),"policies":report.policies(),"remaining":report.remaining()}).to_string());
     }
     if args[0] == "check-control" {
         let report = candidate
             .check_control(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         return Ok(serde_json::json!({"status":"control-checks-passed","executable":false,"revision":report.revision(),"coveredNodes":report.covered_nodes(),"uncoveredNodes":report.uncovered_nodes(),"coveredScopes":report.covered_scopes(),"requiredInputs":report.required_inputs(),"remaining":report.remaining()}).to_string());
     }
     if args[0] == "check-protection" {
         let report = candidate
             .check_protection(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         let accesses: Vec<_> = report
             .accesses()
             .iter()
@@ -136,7 +148,7 @@ fn run() -> Result<String, String> {
     if args[0] == "check-invalidation" {
         let report = candidate
             .check_invalidation(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         let obligations: Vec<_> = report
             .obligations()
             .iter()
@@ -147,14 +159,14 @@ fn run() -> Result<String, String> {
     if args[0] == "check-concurrency" {
         let report = candidate
             .check_concurrency(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         let control = report.invalidation().protection().control();
         return Ok(serde_json::json!({"status":"concurrency-checks-passed","executable":false,"revision":report.revision(),"checkedForks":report.checked_forks(),"uncoveredForks":report.uncovered_forks(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedInvalidationNodes":report.invalidation().checked_nodes(),"uncoveredInvalidationNodes":report.invalidation().uncovered_nodes(),"remaining":report.remaining()}).to_string());
     }
     if args[0] == "check-timing" {
         let report = candidate
             .check_timing(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         let control = report.concurrency().invalidation().protection().control();
         let uses: Vec<_> = report.timer_uses().iter().map(|t| {
             let calendar = t.calendar().map(|c| serde_json::json!({"id":c.pin().id,"revision":c.pin().revision,"rules":{"id":c.rules().id,"revision":c.rules().revision},"profile":{"id":c.profile().id,"revision":c.profile().revision},"hostRequirements":c.host_requirements()}));
@@ -166,7 +178,7 @@ fn run() -> Result<String, String> {
     if args[0] == "check-fault-routes" {
         let report = candidate
             .check_fault_routes(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         let control = report
             .timing()
             .concurrency()
@@ -205,7 +217,7 @@ fn run() -> Result<String, String> {
     if args[0] == "check-exceptional-availability" {
         let report = candidate
             .check_exceptional_availability(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         let control = report
             .faults()
             .timing()
@@ -238,7 +250,7 @@ fn run() -> Result<String, String> {
     if args[0] == "check-reconciliation-links" {
         let report = candidate
             .check_reconciliation_links(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         let control = report
             .exceptional()
             .faults()
@@ -264,7 +276,7 @@ fn run() -> Result<String, String> {
     if args[0] == "check-reconciliation-availability" {
         let report = candidate
             .check_reconciliation_availability(&resources)
-            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+            .map_err(|e| semantic_error(&candidate, e))?;
         let control = report
             .links()
             .exceptional()

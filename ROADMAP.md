@@ -230,6 +230,10 @@ validated, and round-tripped.
   contracts and stable diagnostics; include negative cases and fail-closed
   handling of unknown dialects and unenforceable policies. Parsing/hashing and
   the existing partial probe are not substitutes.
+  [ADR-0033](docs/decisions/0033-semantic-source-locations.md) maps known semantic
+  declaration paths to original UTF-8 source spans without guessing global/resource
+  locations. Exact field/token precision, full catalogue and complete validator
+  coverage remain open; declaration locations do not close this item.
 - [ ] Build text → IR → text and visual → IR → visual round trips.
 - [ ] Publish small executable examples and negative examples.
 - [x] Start a language conformance suite. The

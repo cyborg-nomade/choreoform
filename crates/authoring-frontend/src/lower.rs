@@ -68,6 +68,33 @@ impl Candidate {
     pub fn spans(&self) -> &BTreeMap<String, std::ops::Range<usize>> {
         &self.spans
     }
+    /// Locate a diagnostic from this candidate at its original declaration or
+    /// generated-record span. This is not an exact field/token location or proof
+    /// that a diagnostic supplied by the caller belongs to this revision.
+    /// Global, external-resource and missing-record paths have no guessed span.
+    pub fn source_span(
+        &self,
+        diagnostic: &choreoform_semantic_check::Diagnostic,
+    ) -> Option<std::ops::Range<usize>> {
+        let mut parts = diagnostic.path.strip_prefix("/body/")?.split('/');
+        let table = parts.next()?;
+        if !matches!(
+            table,
+            "scopes"
+                | "data"
+                | "expressions"
+                | "actors"
+                | "capabilities"
+                | "policies"
+                | "nodes"
+                | "flows"
+        ) {
+            return None;
+        }
+        let id = parts.next()?;
+        self.document()["body"].get(table)?.as_object()?.get(id)?;
+        self.spans.get(id).cloned()
+    }
     /// Run explicit static suite checks. A report still grants no planning or
     /// execution authority; full-definition and host obligations remain open.
     pub fn check_static(

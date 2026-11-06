@@ -10,6 +10,13 @@ semantic admission, execution or a production authoring editor.
 
 ## API boundaries
 
+`Candidate::source_span` maps semantic diagnostic record paths to original
+declaration/generated-record UTF-8 byte spans when known. All native semantic
+commands preserve their code/IR-path prefix and append that range; global/resource
+errors have no guessed location. Reparse after editing. These are declaration
+locations, not exact field tokens or admission evidence. See the
+[diagnostic guide](../../docs/authoring/diagnostics.md).
+
 `check-reconciliation-availability` and its Candidate method check conditional
 follow-up bodies with zero inherited values and fresh locals. They expose exact
 declared entries and separate ordinary/handler/follow-up coverage, with bounded

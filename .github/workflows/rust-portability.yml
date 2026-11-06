@@ -66,4 +66,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_reconciliation_links.py
           .tools/ir-check/bin/python tools/check_qualified_endpoints.py
           .tools/ir-check/bin/python tools/check_reconciliation_availability.py
+          .tools/ir-check/bin/python tools/check_source_diagnostics.py
       # Browser execution is a separate manual evidence step, not implied by CI.

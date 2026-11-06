@@ -264,11 +264,25 @@ ordinary/handler/conditional body coverage separate. Seven Rust and four Python
 groups cover parent-value refusals, local initialization, role isolation, nested/
 unused contexts, 401 entries and owned source cycles. 242 Rust tests plus five
 compile-fail doctests, native/Wasm and all relevant artifact/source/stage oracles
-passed. ADR-0032 is accepted after separate delegated self-review; final-head CI
-and expected-head merge remain pending. Next improve actionable source diagnostic
-mapping from existing immutable source maps. Retain exceptional/follow-up
+passed. ADR-0032 is accepted after separate delegated self-review. PR #42 merged
+as `b6dbb9f6c16b68afdc8a9928d7ac68f8bfe90852` after passing final-head CI run
+`42205941353`; CodeRabbit skipped review and there were no unresolved findings.
+Next is the [frozen source diagnostic plan](0033-source-diagnostics-plan.md),
+using existing immutable source maps. Retain exceptional/follow-up
 protection/invalidation/concurrency, richer retained snapshots, actual host and
 full validator/benchmark/text/visual/protected editing/user gates. No phase exit.
+
+The source diagnostic utility now maps existing IR record paths to immutable
+original UTF-8 declaration/generated spans; all ten native semantic commands share
+the formatter, preserving code/path prefixes without copying source literals.
+Four Rust and five Python groups cover actual static/control/lifecycle errors,
+generated records, wrong/missing/global paths and multibyte format/reparse cycles.
+246 Rust tests plus five compile-fail doctests, native/Wasm and all relevant
+artifact/source/stage oracles passed. ADR-0033 is accepted after separate delegated
+self-review; final-head CI/expected-head merge remain pending. Next give still-bare
+scope/data/actor/capability static failures precise record/field paths. Full
+semantic/proof/benchmark/text/visual/protected editing and actual user gates remain
+open; declaration locations do not close full diagnostics or phase exit.
 
 ## Honest exit accounting
 
