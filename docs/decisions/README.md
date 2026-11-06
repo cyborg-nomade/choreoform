@@ -50,6 +50,8 @@ while specifications, guides, and code describe the system as it exists now.
 | [0032](0032-conditional-reconciliation-availability.md) | Accepted under delegation | Check surviving follow-up bodies without inherited values |
 | [0033](0033-semantic-source-locations.md) | Accepted under delegation | Locate semantic diagnostics in original source declarations |
 
+| [0034](0034-benchmark-authoring-profile.md) | Accepted under delegation | Bound full-benchmark source and bind actual-use wait endpoints |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to

@@ -151,6 +151,7 @@ impl Ledger {
             (Some("0.2.0"), Some("0.1.0")) => CORE,
             (Some("0.3.0"), Some("0.2.0")) => choreoform_semantic_check::CORE_V2,
             (Some("0.4.0"), Some("0.3.0")) => choreoform_semantic_check::CORE_V2,
+            (Some("0.5.0"), Some("0.4.0")) => choreoform_semantic_check::CORE_V2,
             _ => return Err(error("ledger-profile", 0..0)),
         };
         let mut used = BTreeSet::from([id(&document["definition"])?]);
@@ -491,6 +492,34 @@ impl Ledger {
             scope = parent;
         }
         Err(error("reference-missing", 0..0))
+    }
+    /// Tentative scope lookup ONLY for the versioned wait-endpoint exception.
+    /// The lowering pass must validate the actual wait/policy/activity use before
+    /// returning a candidate. This is not general descendant visibility.
+    pub(crate) fn endpoint_scope(&self, context: &str, parts: &[&str]) -> Result<&Declaration> {
+        let root = &self.declarations[self.root()];
+        if parts.last().copied() != Some(root.name.as_str()) {
+            return Err(error("reference-qualification", 0..0));
+        }
+        let mut target = root;
+        for name in parts.iter().rev().skip(1) {
+            target = self
+                .names
+                .get(&(Some(target.id.clone()), (*name).into()))
+                .and_then(|id| self.declarations.get(id))
+                .ok_or_else(|| error("reference-missing", 0..0))?;
+            if target.kind != "scope" {
+                return Err(error("reference-kind", 0..0));
+            }
+        }
+        let mut parent = target.scope.as_deref();
+        while let Some(id) = parent {
+            if id == context {
+                return Ok(target);
+            }
+            parent = self.declarations[id].scope.as_deref();
+        }
+        Err(error("wait-endpoint-boundary", 0..0))
     }
     pub(crate) fn symbol(&self, owner: &str, role: &str, name: &str) -> Result<&Symbol> {
         self.symbol_names

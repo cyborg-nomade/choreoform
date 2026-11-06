@@ -330,8 +330,24 @@ Next keep this package as an unmerged draft and freeze a separately versioned,
 bounded authoring profile for actual-use endpoint binding and the measured token/
 parser quota need. Preserve old profiles/limits and general data privacy; then
 return to full lowering, semantic/refusal evidence and all RP-01 alternatives.
+Draft [PR #46](https://github.com/cyborg-nomade/choreoform/pull/46) tracks head
+`def1d7e299f66aa12442181bbfc90b6443a99a07`; it is not ready for merge. The
+active dependency branch is `codex/benchmark-authoring-profile`, following the
+[frozen source 0.5 plan](0034-benchmark-profile-plan.md), stacked on that draft.
 Source/IR, full validator/proof, benchmark, visual/protected editing and actual
 user gates remain open. No phase report or Phase 2 boundary has been reached.
+
+Source 0.5.0 / companion 0.4.0 is implemented on the stacked dependency branch
+under ADR-0034, retaining core 0.2 and older limits/privacy. It provides closed
+whole-program quotas and actual-use follow-up endpoint binding. Explicit promoted
+copies of the full RP-01 draft lower with 8,945 tokens / 101,388 native pattern
+visits, but its static permission mismatch and called surviving-scope lifetime
+proof remain separate. Three additional Rust and seven Python groups pass;
+258 Rust tests plus five compile-fail doctests, native/Wasm and all CI Python
+checks passed. Separate delegated review corrected budget documentation and
+added exact token-cap evidence. See [dependency evidence](0034-benchmark-profile.md).
+Require final-head CI/comment audit/expected-head merge into the unmerged parent
+before explicit benchmark adoption. No complete scenario or phase gate is closed.
 
 ## Honest exit accounting
 
