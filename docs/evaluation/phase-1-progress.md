@@ -349,6 +349,18 @@ added exact token-cap evidence. See [dependency evidence](0034-benchmark-profile
 Require final-head CI/comment audit/expected-head merge into the unmerged parent
 before explicit benchmark adoption. No complete scenario or phase gate is closed.
 
+Dependency [PR #47](https://github.com/cyborg-nomade/choreoform/pull/47) merged
+into draft #46 as `3ba30c1fc7a2a4781c3f7db990922a63f0070669` after final-head
+CI `42243608148`. Delegated self-review comment `6688576876` records the
+separate review and no unresolved findings; CodeRabbit skipped the non-default
+base and supplies no independent evidence. ADR-0034 becomes effective on main
+only with parent integration. The active branch is again
+`codex/rp01-benchmark-package`; next follow the
+[frozen integration continuation](0034-rp01-integration-plan.md) to adopt the
+profile explicitly, fix the contradictory synthetic provider capability envelope,
+derive canonical IR and retain actual semantic-stage results/refusals. The
+parent remains a draft and no complete benchmark/phase gate is closed.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
