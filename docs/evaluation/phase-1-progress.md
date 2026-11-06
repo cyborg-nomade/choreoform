@@ -533,6 +533,16 @@ signed off. ADR-0039 remains pending parent/main integration. Active work is the
 which must distinguish ten passing partial stages from A–D/domain/host evidence.
 The parent remains draft/unmerged; every scenario and phase gate stays open.
 
+The [original A–D audit](0040-rp01-scenario-audit.md) distinguishes ten passing
+partial stages from missing guard/transition/host evidence. Three actual weakened-
+predicate/fault-name temporary copies still pass partial checks without executable
+authority; attempted wait-result capture refuses syntax. No unsafe payment or
+actual process execution is claimed. Next freeze finite source-derived guard
+snapshot conformance using existing pure production judgments in a test-only
+harness, then resolve concrete fault-source/late-observation/continuation needs.
+Substantial independent work remains; this is not an external blocker or phase
+report. Draft #46 stays unmerged and all forty scenarios remain Partial.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

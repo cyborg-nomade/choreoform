@@ -230,6 +230,14 @@ validated, and round-tripped.
   [ADR-0037](docs/decisions/0037-closed-ordinary-provenance.md) proves a bounded
   historical-origin subset for ordinary invalidation while retaining mutable
   ancestors, protection and independent lifetime/host obligations.
+  [ADR-0038](docs/decisions/0038-invalidation-requirements.md) derives advisory
+  required/missing links without bypassing strict coverage. [ADR-0039](docs/decisions/0039-isolated-surviving-waits.md)
+  checks a synchronous isolated wait-only follow-up subset under explicit live
+  P6 premises, preserving parallel terminal requirements. The full RP-01 draft now
+  passes ten partial static stages, but its [original-scenario audit](docs/evaluation/0040-rp01-scenario-audit.md)
+  retains guard conformance, fault-source classification, late-observation capture/
+  continuation and actual ownership/race/host evidence as open work. This does not
+  close full benchmark, near-English authoring, complete validation or phase gates.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current
