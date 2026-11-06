@@ -56,3 +56,11 @@ review, inspect all comments/CodeRabbit summaries and sign off authored/merge
 commits. Merge only the passing exact head into draft #46. Then explicitly version
 authoring/source/report integration before adopting the resource in RP-01. Continue
 late-observation/data/continuation and full validator work; no scenario/phase exit.
+
+Implementation inspection before touching fault routing found that its current
+name catalogue comes only from handler keys. Existing cycle coverage is an
+overapproximation, but a new bound source may declare noneligible/unhandled fault
+names too. Include every emission of bound core-0.4 sources in the conservative
+name catalogue, not just eligible retries; deduplicate repeated source pins and
+charge lookups/copies under existing budgets. Preserve old-core routes/counts.
+Test noneligible source-name accounting and matching handler/cycle behavior.
