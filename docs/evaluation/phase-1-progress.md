@@ -482,6 +482,16 @@ Final-head CI, comment audit and signed expected-head merge into draft #46 remai
 required. Then add precise source links and continue lifetime/proof dependencies;
 the parent remains unmerged and every scenario/phase gate stays open.
 
+[PR #51](https://github.com/cyborg-nomade/choreoform/pull/51) merged into draft
+#46 as `365c2b24e0b6a763b9488801c955da3127c92120` after final-head CI
+`42264580138`. Review comment `6694481064` records delegated automated review and
+the complete empty-finding comment/thread audit; CodeRabbit skipped the stacked
+target and supplies no independent evidence. The merge is explicitly signed off.
+ADR-0038 remains pending parent/main integration. Active work is the
+[precise RP-01 source-link integration](0038-rp01-links-plan.md) on the parent.
+Add the exact measured links, then retain and audit the next actual proof gap.
+Draft #46 remains unmerged; no scenario or phase gate closes.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
