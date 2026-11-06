@@ -58,9 +58,11 @@ invalidation completeness. Those residual gates are explicit in the report.
   provenance bytes, generate intervals, authenticate the calendar or prove clock
   support. Empty tables simply contain no eligible interval.
 
-The accepted suite has no standardized clock-provider format. Every non-null timer
-and clock/calendar authoring resource still refuses, even if a host supplied
-matching hashes. Unknown kinds/fields/operations and unsupported roles refuse.
+The accepted suite leaves clock providers external. ADR-0023 defines the first
+separately pinned clock profile; ADR-0024 adds supported timer typing and ordinary
+clock-origin flow. Calendars remain domain-binding-unproved and the timing stage
+refuses unbound multiple-attempt retry clocks. Resource hashes establish no live
+host trust. Unknown kinds/fields/operations and unsupported roles refuse.
 The historic illustrative `inspect` registry is unchanged.
 
 ## Prototype budgets
@@ -231,8 +233,20 @@ See [ADR-0022](../../docs/decisions/0022-ordinary-concurrency.md) and
 `Resources::clock` returns immutable metadata for the exact `CLOCK_PROFILE` and
 its read-only Integer tick provider. Register the clock, profile and source bytes
 explicitly; the reader verifies all pins and source constraints. It reads no
-time, authenticates no source and grants no timer/dispatch authority. Source/
-definition timers remain unsupported until typed dependencies, clock-result flow,
-calendar/domain association and host obligations are integrated. See
+time, authenticates no source and grants no timer/dispatch authority. Supported
+non-calendar timer typing/flow is integrated in ADR-0024; calendar/domain and retry
+clock bindings, current facts and actual host enforcement remain open. See
 [clock contracts](../../docs/clocks/README.md) and
 [evidence](../../docs/evaluation/0023-clock-resource-contract.md).
+
+## Typed timer uses (ADR-0024)
+
+`check_timing` follows prior stages and exposes immutable TimerUse site/policy,
+clock/source pins, basis, pause authority and required live host judgments. Exact
+wait outcomes and transitive clock-source metadata dependencies are checked;
+clock labels apply before timing-dependent writes and coexist with activity
+origins even without result publication. Reports remain non-executable; no
+observations, current clock facts or authorization are inputs. Integer typing is
+not proof of due/basis domain provenance. See
+[ADR-0024](../../docs/decisions/0024-timer-contract-checks.md) and
+[evidence](../../docs/evaluation/0024-timer-contract-checks.md).

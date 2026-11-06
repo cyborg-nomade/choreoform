@@ -1509,6 +1509,9 @@ fn concurrency_refuses_overlapping_opaque_external_work() {
         );
     }
     concurrency_refuse(b.clone(), "parallel-effects-unproved");
+    b["policies"]["observe_policy"] = json!({"scope":ROOT,"dialect":"core","body":{"kind":"wait","reads":{},"observationType":{"kind":"record","fields":{}},"match":{"op":"literal","type":{"kind":"boolean"},"value":true},"authority":"actor_reviewer","timer":null,"onObservation":"next","onTimer":null}});
+    b["nodes"]["child_b_work"] = json!({"kind":"wait","scope":"child_b","policy":"observe_policy","reads":{},"writes":{},"outcomes":{"next":true}});
+    concurrency_refuse(b.clone(), "parallel-effects-unproved");
     b["scopes"]["child_b"]["entry"] = "child_b_done".into();
     // Unvisited declarations remain in conservative summaries; deletion is an
     // explicit definition edit, not a constant-guard or activation guess.

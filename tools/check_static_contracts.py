@@ -139,7 +139,7 @@ class StaticEvidence(unittest.TestCase):
             companion.write_text(json.dumps(ledger), encoding='utf-8')
             checked = run('check', EXAMPLES / 'terminal.choreo', companion, [('urn:test:clock', revision, clock)])
             self.assertNotEqual(checked.returncode, 0)
-            self.assertIn(b'clock-contract-unsupported', checked.stderr)
+            self.assertIn(b'resource-transport', checked.stderr)
         bad = subprocess.run([str(BINARY), 'check', str(EXAMPLES / 'review.choreo'), str(EXAMPLES / 'review.bindings.json'), '--resource'], capture_output=True, timeout=15)
         self.assertNotEqual(bad.returncode, 0)
         self.assertEqual(bad.stdout, b'')

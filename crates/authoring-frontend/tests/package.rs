@@ -743,7 +743,7 @@ fn matching_external_hashes_do_not_grant_unsupported_lowering_authority() {
     package.ledger().verify_resources(&supplied).unwrap();
     assert_eq!(
         package.lower(&supplied).unwrap_err().code,
-        "clock-contract-unsupported"
+        "resource-transport"
     );
 }
 

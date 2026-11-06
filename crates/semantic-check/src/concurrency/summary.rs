@@ -105,6 +105,9 @@ impl Summary {
             let summary = direct.get_mut(text(&n["scope"])?).unwrap();
             summary.reads.extend(names(&n["reads"])?);
             summary.writes.extend(names(&n["writes"])?);
+            if n["kind"] == "wait" {
+                summary.observations = true;
+            }
             if n["kind"] == "activity" {
                 summary.observations = true;
                 if n["mode"] == "human" {

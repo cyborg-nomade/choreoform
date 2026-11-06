@@ -6,7 +6,7 @@ use crate::control::graph::Graph;
 pub(super) struct Flow<'a> {
     b: &'a Value,
     graph: Graph,
-    providers: BTreeMap<String, Arc<Provider>>,
+    providers: BTreeMap<ProviderRole, BTreeMap<String, Arc<Provider>>>,
     budget: Budget,
     pub transfers: usize,
     pub accesses: BTreeSet<AccessObligation>,
@@ -17,13 +17,29 @@ impl<'a> Flow<'a> {
         let mut budget = Budget::default();
         let graph = Graph::build(b, &mut budget)?;
         let mut registry = Resources::new(supplied)?;
-        let mut providers = BTreeMap::new();
+        let mut providers: BTreeMap<ProviderRole, BTreeMap<String, Arc<Provider>>> =
+            BTreeMap::new();
         for (id, n) in object(&b["nodes"])? {
             budget.tick(0)?;
             if n["kind"] == "activity" && n["mode"] == "capability" {
                 let cap = &b["capabilities"][text(&n["target"])?];
                 let pin = Pin::decode(&b["policies"][text(&cap["contract"])?]["body"]["provider"])?;
-                providers.insert(id.clone(), registry.provider(&pin)?);
+                providers
+                    .entry(ProviderRole::Activity)
+                    .or_default()
+                    .insert(id.clone(), registry.provider(&pin)?);
+            }
+            let timer = match n["kind"].as_str() {
+                Some("activity") => &b["policies"][text(&n["policy"])?]["body"]["timeout"],
+                Some("wait") => &b["policies"][text(&n["policy"])?]["body"]["timer"],
+                _ => &Value::Null,
+            };
+            if !timer.is_null() {
+                let clock = registry.clock(&Pin::decode(&timer["clock"])?)?;
+                providers
+                    .entry(ProviderRole::Clock)
+                    .or_default()
+                    .insert(id.clone(), registry.provider(clock.source())?);
             }
         }
         Ok(Self {
@@ -39,11 +55,26 @@ impl<'a> Flow<'a> {
     fn label(&self, origin: &Origin) -> &Value {
         match origin {
             Origin::Cell(id) => &self.b["data"][id]["protection"],
-            Origin::Provider(id) => self.providers[id].protection(),
+            Origin::Provider(site) => self.providers[&site.role][&site.node].protection(),
         }
     }
     fn dependencies(&mut self, p: &Value) -> Result<BTreeSet<String>> {
         crate::access::policy_reads(self.b, p, &mut self.budget)
+    }
+    fn source(&mut self, node: &str, role: ProviderRole, origins: &mut Origins) -> Result<()> {
+        if let Some(provider) = self
+            .providers
+            .get(&role)
+            .and_then(|sites| sites.get(node))
+            .cloned()
+        {
+            self.budget.tick(0)?;
+            for read in self.dependencies(provider.protection())? {
+                origins.extend(self.access(node, &read, "read")?);
+            }
+            origins.insert(Origin::Provider(ProviderSite::new(node, role)));
+        }
+        Ok(())
     }
     fn access(&mut self, site: &str, cell: &str, operation: &'static str) -> Result<Origins> {
         let mut origins = Origins::new();
@@ -161,6 +192,9 @@ impl<'a> Flow<'a> {
             for cell in names(&n["reads"])? {
                 reads.extend(self.access(&id, &cell, "read")?);
             }
+            // Timing affects whether a result may publish, not only its later
+            // successor. Keep clock and activity providers as distinct origins.
+            self.source(&id, ProviderRole::Clock, &mut pc)?;
             if matches!(text(&n["kind"])?, "decision" | "activity" | "wait")
                 && let Some(dependencies) = &mut self.dependencies
             {
@@ -187,12 +221,7 @@ impl<'a> Flow<'a> {
             }
             pc.extend(reads);
             // Successful completion/outcome selection can disclose input/result facts.
-            if let Some(provider) = self.providers.get(&id).cloned() {
-                pc.insert(Origin::Provider(id.clone()));
-                for read in self.dependencies(provider.protection())? {
-                    pc.extend(self.access(&id, &read, "read")?);
-                }
-            }
+            self.source(&id, ProviderRole::Activity, &mut pc)?;
             match text(&n["kind"])? {
                 "invoke" => {
                     let child = text(&n["body"])?;

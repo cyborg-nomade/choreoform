@@ -99,7 +99,7 @@ fn closed_payload_mutations_are_rejected_independently() {
         ("policy-field", "fields"),
         ("retry-count", "retry-delays"),
         ("work-result-fact", "expression-type"),
-        ("timer", "clock-contract-unsupported"),
+        ("timer", "fields"),
         ("role", "dialect-contract"),
         ("semantic-role", "semantic-contract"),
     ] {

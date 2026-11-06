@@ -133,8 +133,7 @@ impl Check<'_, '_> {
                 predicates.push((&p["permit"], context));
             }
             "capability" => {
-                let provider = self.resources.provider(&Pin::decode(&p["provider"])?)?;
-                refs.extend(self.protection(scope, &provider.protection)?);
+                refs.extend(self.provider_protection(scope, &Pin::decode(&p["provider"])?)?);
             }
             "effect" => {
                 require(
@@ -162,7 +161,9 @@ impl Check<'_, '_> {
                     require(integer(delay)? >= 0, "retry-delay")?;
                 }
                 names(&retry["faults"])?;
-                self.no_timer(&p["timeout"])?;
+                let timer = self.timer(scope, &p["timeout"], &context)?;
+                reads.extend(timer.0);
+                refs.extend(timer.1);
                 if !p["compensates"].is_null() {
                     let prior = self.visible(scope, "nodes", &p["compensates"])?;
                     require(
@@ -208,15 +209,24 @@ impl Check<'_, '_> {
             }
             "wait" => {
                 let ty = self.resources.type_descriptor(&p["observationType"])?;
+                let timer = self.timer(scope, &p["timer"], &context)?;
+                reads.extend(timer.0);
+                refs.extend(timer.1);
                 text_facts(
                     &mut context,
                     &["principal", "observation", "occurrence", "inputRevision"],
                 );
                 context.facts.insert("payload".into(), ty);
                 refs.insert(self.actor(scope, &p["authority"])?);
-                self.no_timer(&p["timer"])?;
-                require(p["onTimer"].is_null(), "wait-timer-outcome")?;
                 name(&p["onObservation"])?;
+                require(
+                    p["timer"].is_null() == p["onTimer"].is_null(),
+                    "wait-timer-outcome",
+                )?;
+                if !p["onTimer"].is_null() {
+                    name(&p["onTimer"])?;
+                    require(p["onTimer"] != p["onObservation"], "wait-timer-outcome")?;
+                }
                 predicates.push((&p["match"], context));
             }
             "cancel" => {
@@ -262,9 +272,33 @@ impl Check<'_, '_> {
         }
         Ok((reads, refs))
     }
-    fn no_timer(&self, timer: &Value) -> Result<()> {
-        // P5 has no standardized clock-provider format. Hashes cannot fill that gap.
-        require(timer.is_null(), "clock-contract-unsupported")
+    fn timer(
+        &mut self,
+        scope: &str,
+        timer: &Value,
+        context: &Context,
+    ) -> Result<(BTreeSet<String>, BTreeSet<String>)> {
+        if timer.is_null() {
+            return Ok((BTreeSet::new(), BTreeSet::new()));
+        }
+        fields(
+            timer,
+            &["clock", "basis", "due", "calendar", "pauseAuthority"],
+        )?;
+        let pin = Pin::decode(&timer["clock"])?;
+        let clock = self.resources.clock(&pin)?;
+        if !timer["calendar"].is_null() {
+            let calendar = self.resources.calendar(&Pin::decode(&timer["calendar"])?)?;
+            require(calendar.clock() == &pin, "calendar-clock")?;
+            return Err(err("calendar-domain-binding-unproved"));
+        }
+        let due = self.resources.expression(&timer["due"], context)?;
+        require(due.ty == Type::Integer, "timer-due-type")?;
+        let mut reads = due.reads;
+        reads.insert(self.visible(scope, "data", &timer["basis"])?);
+        let mut refs = self.provider_protection(scope, clock.source())?;
+        refs.insert(self.actor(scope, &timer["pauseAuthority"])?);
+        Ok((reads, refs))
     }
     pub(super) fn result_type(&mut self, node: &Value) -> Result<Type> {
         if node["result"].is_null() {

@@ -37,8 +37,9 @@ agrees with the shipped catalogue; that is not a future-grammar ambiguity proof.
 
 Scoped interfaces, data/protection, actors, explicit/generated expressions,
 purpose/outcome aliases and conservative node reads are preserved. Supported
-actions are human work, compute, invoke, decision, split/join, untimed wait,
-repeat, fanout and finish. Closed non-resource policy payloads are mapped; read
+actions are human work, compute, invoke, decision, split/join, wait (including
+supported non-calendar timers), repeat, fanout and finish. Closed policy payloads
+are mapped for supported resource bindings; read
 closure follows referenced policies and actor requirements. Integer/decimal
 coefficients are exact signed-64 strings, never floats. Decimal value markers
 cannot silently change the declared scale. Literal versus constructor ASTs and
@@ -55,8 +56,10 @@ Accepted [ADR-0016](../../docs/decisions/0016-static-contract-checks.md) enables
 closed named-type/provider resources and capability request candidate lowering,
 using exact-byte readers and transitive dependencies. Nominal literal membership
 is checked by the explicit static stage, not by merely lowering a candidate.
-**Clock/calendar resources and non-null timers still refuse lowering**, even with
-matching hashes. Calendar table decoding does not establish clock/trust support.
+Only the exact implemented clock profile is recognized. Supported non-calendar
+timer typing/clock flow and explicit host requirements are provided by ADR-0024;
+calendar-domain and retry-clock bindings remain unproved. Typed decoding does not
+establish current clock facts, host trust or timer execution authority.
 The historic JSON probe's registry/admission is unchanged.
 
 Closed expression/type/policy-fact checks now exist in the explicit static stage.
@@ -135,6 +138,12 @@ conservative ordinary parallel independence subset in
 local storage from shared ancestor data, refuses unproved hazards/effect overlap
 and lifetimes, and reports checked/uncovered forks. Earlier evidence and host/
 domain obligations remain; the report is non-executable.
+
+`check-timing SOURCE COMPANION` / `Candidate::check_timing` adds supported timer
+typing/clock-origin checks and immutable timer uses with required host judgments.
+It includes no observations/current facts or execution authority. Calendar-domain
+and retry-clock bindings remain explicitly unproved. See
+[ADR-0024](../../docs/decisions/0024-timer-contract-checks.md).
 
 `check-protection SOURCE COMPANION` / `Candidate::check_protection` adds ordinary
 control-origin protection constraints and explicit access obligations after the

@@ -68,6 +68,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         policy_reads: BTreeMap::new(),
         protection_refs: BTreeMap::new(),
         creation_reads: BTreeMap::new(),
+        provider_refs: BTreeMap::new(),
     };
     c.run()?;
     Ok(Report {
@@ -84,6 +85,7 @@ struct Check<'a, 'r> {
     policy_reads: BTreeMap<String, BTreeSet<String>>,
     protection_refs: BTreeMap<String, BTreeSet<String>>,
     creation_reads: BTreeMap<String, BTreeSet<String>>,
+    provider_refs: BTreeMap<String, BTreeMap<Pin, BTreeSet<String>>>,
 }
 impl Check<'_, '_> {
     fn run(&mut self) -> Result<()> {
@@ -249,6 +251,26 @@ impl Check<'_, '_> {
             .protection_refs
             .get(id)
             .ok_or_else(|| err("protection-reference"))?;
+        self.resources.budget.charge(refs.len() + 1)?;
+        Ok(refs.clone())
+    }
+    fn provider_protection(&mut self, scope: &str, pin: &Pin) -> Result<BTreeSet<String>> {
+        if self
+            .provider_refs
+            .get(scope)
+            .and_then(|sources| sources.get(pin))
+            .is_none()
+        {
+            let provider = self.resources.provider(pin)?;
+            let refs = self.protection(scope, provider.protection())?;
+            self.provider_refs
+                .entry(scope.into())
+                .or_default()
+                .insert(pin.clone(), refs);
+        }
+        // Only immutable definition-local references are cached, by source AND
+        // lexical scope. No predicate truth or current authority is cached.
+        let refs = &self.provider_refs[scope][pin];
         self.resources.budget.charge(refs.len() + 1)?;
         Ok(refs.clone())
     }

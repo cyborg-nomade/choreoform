@@ -108,6 +108,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ConcurrencyReport> {
         choreoform_semantic_check::check_concurrency(&self.envelope, resources)
     }
+    /// Check typed ordinary timer uses and expose live host requirements; no
+    /// observations, current authority or execution permission are accepted.
+    pub fn check_timing(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::TimingReport> {
+        choreoform_semantic_check::check_timing(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {
@@ -273,8 +281,11 @@ impl<'a, 's> Lower<'a, 's> {
                 "provider" => {
                     resources.provider(&pin).map_err(|e| error(e.code, 0..0))?;
                 }
-                // Parsing calendar provenance never establishes clock support.
-                "clock" | "calendar" => return Err(error("clock-contract-unsupported", 0..0)),
+                "clock" => {
+                    resources.clock(&pin).map_err(|e| error(e.code, 0..0))?;
+                }
+                // Calendar provenance alone cannot bind an instance origin.
+                "calendar" => return Err(error("calendar-domain-binding-unproved", 0..0)),
                 _ => return Err(error("external-contract-lowering-unsupported", 0..0)),
             }
         }

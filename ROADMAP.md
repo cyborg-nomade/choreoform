@@ -181,6 +181,11 @@ validated, and round-tripped.
   timer typing, clock-source flow, wait outcomes, calendar-domain binding, retry
   clock selection and host-obligation integration are completed. This proposal
   does not supply a real clock adapter or close the time/validator gate.
+  [ADR-0024](docs/decisions/0024-timer-contract-checks.md) integrates supported
+  non-calendar timer types/dependencies, exact wait outcomes and pre-write clock
+  origins, with an explicit non-executable timing report of host requirements.
+  Calendar-origin and retry-clock bindings, due/domain provenance and actual
+  source/clock/authority/atomic enforcement remain open; no time gate is closed.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

@@ -41,12 +41,13 @@ fn run() -> Result<String, String> {
                 | "check-protection"
                 | "check-invalidation"
                 | "check-concurrency"
+                | "check-timing"
         )
         || args.len() > 3 + 4 * 254
         || !(args.len() - 3).is_multiple_of(4)
         || (args[0] == "integrity" && args.len() != 3)
     {
-        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
+        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|check-timing|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
     }
     let source = read(std::fs::File::open(&args[1]).map_err(|_| "source-read".to_owned())?)?;
     let bindings = read(std::fs::File::open(&args[2]).map_err(|_| "companion-read".to_owned())?)?;
@@ -138,6 +139,14 @@ fn run() -> Result<String, String> {
             .map_err(|e| format!("{} at {}", e.code, e.path))?;
         let control = report.invalidation().protection().control();
         return Ok(serde_json::json!({"status":"concurrency-checks-passed","executable":false,"revision":report.revision(),"checkedForks":report.checked_forks(),"uncoveredForks":report.uncovered_forks(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedInvalidationNodes":report.invalidation().checked_nodes(),"uncoveredInvalidationNodes":report.invalidation().uncovered_nodes(),"remaining":report.remaining()}).to_string());
+    }
+    if args[0] == "check-timing" {
+        let report = candidate
+            .check_timing(&resources)
+            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+        let control = report.concurrency().invalidation().protection().control();
+        let uses: Vec<_> = report.timer_uses().iter().map(|t| serde_json::json!({"site":t.site(),"policy":t.policy(),"role":t.role(),"clock":{"id":t.clock().id,"revision":t.clock().revision},"source":{"id":t.source().id,"revision":t.source().revision},"basis":t.basis(),"pauseAuthority":t.pause_authority(),"hostRequirements":t.host_requirements()})).collect();
+        return Ok(serde_json::json!({"status":"timing-checks-passed","executable":false,"revision":report.revision(),"timerUses":uses,"checkedTimingNodes":report.checked_nodes(),"uncoveredTimingNodes":report.uncovered_nodes(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining()}).to_string());
     }
     if args[0] == "format" {
         let (source, companion) = package.formatted().map_err(|e| e.code.to_owned())?;
