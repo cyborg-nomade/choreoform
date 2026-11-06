@@ -61,6 +61,10 @@ The subsequent [ADR-0029 body slice](../decisions/0029-conditional-handler-avail
 checks availability under explicit ancestor input contracts. It does not supply
 fault-site snapshots, exceptional information-flow/invalidation or actual
 activation/lifetime facts. Its scope index removes repeated full-data scans.
+The subsequent [ADR-0030 declaration slice](../decisions/0030-reconciliation-declaration-links.md)
+checks direct follow-up ownership/entry-to-wait links per capability activity.
+Actual handoff, entry data and multi-obligation lifetime remain unproved. The
+qualified child-endpoint authoring profile is still an explicit immediate dependency.
 
 ## Distinct kinds of remaining work
 

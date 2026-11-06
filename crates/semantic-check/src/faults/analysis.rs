@@ -32,6 +32,7 @@ impl<'a> Analysis<'a> {
     pub fn new(b: &'a Value) -> Result<Self> {
         let mut budget = Budget::default();
         let graph = Graph::build(b, &mut budget)?;
+        let reachable = graph.reachable(b, &mut budget)?;
         let records = object(&b["scopes"])?;
         let index: BTreeMap<&str, usize> = records
             .keys()
@@ -73,20 +74,13 @@ impl<'a> Analysis<'a> {
             }
             // Only syntactically reachable ordinary sites can create templates.
             // No data availability or predicate truth is assigned to this walk.
-            let mut reached = BTreeSet::new();
             let mut children = BTreeSet::new();
-            for node in graph.order.get(id).ok_or_else(|| err("scope-entry"))? {
+            for node in reachable
+                .get(id.as_str())
+                .ok_or_else(|| err("scope-entry"))?
+            {
                 budget.tick(0)?;
-                let mut possible = s["entry"] == *node;
-                for prior in &graph.predecessors[node] {
-                    budget.tick(0)?;
-                    possible |= reached.contains(prior);
-                }
-                if !possible {
-                    continue;
-                }
-                reached.insert(node.clone());
-                let n = &b["nodes"][node];
+                let n = &b["nodes"][*node];
                 match n["kind"].as_str() {
                     Some("invoke" | "repeat" | "fanout") => {
                         children.insert(index[text(&n["body"])?]);

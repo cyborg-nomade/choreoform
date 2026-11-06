@@ -44,12 +44,13 @@ fn run() -> Result<String, String> {
                 | "check-timing"
                 | "check-fault-routes"
                 | "check-exceptional-availability"
+                | "check-reconciliation-links"
         )
         || args.len() > 3 + 4 * 254
         || !(args.len() - 3).is_multiple_of(4)
         || (args[0] == "integrity" && args.len() != 3)
     {
-        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|check-timing|check-fault-routes|check-exceptional-availability|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
+        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|check-timing|check-fault-routes|check-exceptional-availability|check-reconciliation-links|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
     }
     let source = read(std::fs::File::open(&args[1]).map_err(|_| "source-read".to_owned())?)?;
     let bindings = read(std::fs::File::open(&args[2]).map_err(|_| "companion-read".to_owned())?)?;
@@ -227,6 +228,32 @@ fn run() -> Result<String, String> {
             })
             .collect::<Result<_, String>>()?;
         let output=serde_json::json!({"status":"exceptional-availability-checks-passed","executable":false,"revision":report.revision(),"handlerEntries":entries,"checkedExceptionalNodes":report.checked_nodes(),"checkedExceptionalScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"ordinaryUncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedFaultScopes":report.faults().checked_scopes(),"uncoveredFaultScopes":report.faults().uncovered_scopes(),"remaining":report.remaining(),"priorFaultRouteObligations":report.faults().remaining(),"priorTimingObligations":report.faults().timing().remaining()}).to_string();
+        return if output.len() <= MAX_BYTES {
+            Ok(output)
+        } else {
+            Err("report-budget".into())
+        };
+    }
+    if args[0] == "check-reconciliation-links" {
+        let report = candidate
+            .check_reconciliation_links(&resources)
+            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+        let control = report
+            .exceptional()
+            .faults()
+            .timing()
+            .concurrency()
+            .invalidation()
+            .protection()
+            .control();
+        let mut remaining = MAX_BYTES;
+        let uses:Vec<_>=report.uses().iter().map(|u| {
+            let value=serde_json::json!({"site":u.site(),"scope":u.scope(),"capability":u.capability(),"effects":u.effects(),"closure":u.closure(),"followup":u.followup(),"waitPolicy":u.wait_policy(),"waitNode":u.wait_node(),"hostRequirements":u.host_requirements()});
+            let size=serde_json::to_vec(&value).map_err(|_|"report-budget".to_owned())?.len();
+            remaining=remaining.checked_sub(size).ok_or_else(||"report-budget".to_owned())?;
+            Ok(value)
+        }).collect::<Result<_,String>>()?;
+        let output=serde_json::json!({"status":"reconciliation-links-checked","executable":false,"revision":report.revision(),"reconciliationUses":uses,"ordinaryUnvisitedReconciliationSites":report.ordinary_unvisited_sites(),"unusedEffectContexts":report.unused_effects(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.exceptional().checked_nodes(),"uncoveredNodes":report.exceptional().uncovered_nodes(),"remaining":report.remaining(),"priorExceptionalObligations":report.exceptional().remaining(),"priorFaultRouteObligations":report.exceptional().faults().remaining(),"priorTimingObligations":report.exceptional().faults().timing().remaining()}).to_string();
         return if output.len() <= MAX_BYTES {
             Ok(output)
         } else {

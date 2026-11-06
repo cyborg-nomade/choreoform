@@ -8,6 +8,8 @@ use choreoform_semantic_check::{
 };
 use serde_json::{Value, json};
 
+#[path = "timing/reconciliation.rs"]
+mod reconciliation;
 #[path = "timing/retry.rs"]
 mod retry;
 #[path = "timing/retry_source.rs"]

@@ -3,6 +3,15 @@
 
 # Static contract checks, not executable admission
 
+`check_reconciliation_links` follows conditional handler availability and verifies
+each declared capability activity's own reconcile closure, direct child follow-up
+and reachable unique wait site. It records exact declaration references, unvisited
+sites and unused effect contexts; it does not prove activation, accepted ownership,
+provider correlation, wait progress or terminal disposal. Read-only provider
+metadata supplies no exemption. See
+[ADR-0030](../../docs/decisions/0030-reconciliation-declaration-links.md) and
+[direct-IR/source-boundary evidence](../../docs/evaluation/0030-reconciliation-declaration-links.md).
+
 `check_exceptional_availability` checks routing-discovered handler bodies under
 explicit ancestor-input premises, with fresh locals and no borrowed ordinary
 result/initializer snapshot. It separates conditional body coverage from earlier
