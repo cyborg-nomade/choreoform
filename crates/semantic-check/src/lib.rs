@@ -19,7 +19,7 @@ mod reconciliation_entry;
 mod resources;
 mod timing;
 mod types;
-pub use concurrency::{ConcurrencyReport, check_concurrency};
+pub use concurrency::{ConcurrencyReport, IsolatedFollowup, check_concurrency};
 pub use control::{ControlReport, check_control};
 pub use definition::{Report, check};
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};

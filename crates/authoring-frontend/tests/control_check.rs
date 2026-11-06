@@ -19,6 +19,8 @@ mod reconciliation_entry;
 mod requirements;
 #[path = "control/settlement.rs"]
 mod settlement;
+#[path = "control/survivors.rs"]
+mod survivors;
 
 const ROOT: &str = "scope_terminal";
 const INTEGER_MARKER: &str = "424242";

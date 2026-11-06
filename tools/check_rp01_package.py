@@ -65,7 +65,7 @@ class Rp01PackageEvidence(unittest.TestCase):
         manifest = json.loads(generated['manifest.json'])
         self.assertIs(manifest['executable'], False)
         self.assertEqual([s['stage'] for s in manifest['semanticStageResults']], STAGES)
-        self.assertEqual([s['result'] for s in manifest['semanticStageResults']], ['passed'] * 4 + ['refused'] * 6)
+        self.assertEqual([s['result'] for s in manifest['semanticStageResults']], ['passed'] * 10)
         for stage in manifest['semanticStageResults']:
             if stage['result'] == 'passed':
                 report = json.loads(generated[stage['report']])
@@ -73,11 +73,7 @@ class Rp01PackageEvidence(unittest.TestCase):
                 self.assertEqual(report['revision'], self.candidate['revision'])
                 self.assertEqual(stage['reportDigest'], 'sha256:' + sha256(generated[stage['report']]).hexdigest())
                 continue
-            self.assertEqual(stage['code'], 'scope-lifetime-unproved')
-            self.assertEqual(stage['path'], '/body/nodes/run_checks')
-            start, end = stage['sourceBytes']
-            declaration = self.source[start:end].decode('utf-8')
-            self.assertTrue(declaration.startswith('Step "Run checks"'))
+            self.fail('unexpected stage refusal: '+repr(stage))
         self.assertEqual(manifest['sourceDigest'], 'sha256:' + sha256(self.source).hexdigest())
         self.assertEqual(manifest['canonicalIR']['digest'], 'sha256:' + sha256(generated['candidate.ir.json']).hexdigest())
 

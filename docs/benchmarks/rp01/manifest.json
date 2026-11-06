@@ -1,7 +1,7 @@
 {
   "format": "choreoform-rp01-benchmark-draft",
   "version": "0.1.0",
-  "status": "lowered-candidate-awaiting-semantic-dependencies",
+  "status": "lowered-candidate-with-partial-static-evidence",
   "executable": false,
   "sourceProfile": "0.6.0",
   "companionVersion": "0.5.0",
@@ -44,63 +44,39 @@
     },
     {
       "stage": "check-concurrency",
-      "result": "refused",
-      "code": "scope-lifetime-unproved",
-      "path": "/body/nodes/run_checks",
-      "sourceBytes": [
-        40983,
-        41175
-      ]
+      "result": "passed",
+      "report": "reports/check-concurrency.json",
+      "reportDigest": "sha256:362c58ec6dfdb3a18ed2da7bda589b58e71f231d1c2f07c320d0a9af22689b8f"
     },
     {
       "stage": "check-timing",
-      "result": "refused",
-      "code": "scope-lifetime-unproved",
-      "path": "/body/nodes/run_checks",
-      "sourceBytes": [
-        40983,
-        41175
-      ]
+      "result": "passed",
+      "report": "reports/check-timing.json",
+      "reportDigest": "sha256:6880e0ae63095572cb39312d9185ad6de85a4f5e94135a771db573131933ab83"
     },
     {
       "stage": "check-fault-routes",
-      "result": "refused",
-      "code": "scope-lifetime-unproved",
-      "path": "/body/nodes/run_checks",
-      "sourceBytes": [
-        40983,
-        41175
-      ]
+      "result": "passed",
+      "report": "reports/check-fault-routes.json",
+      "reportDigest": "sha256:e276aec7a9a12e073e026ff4770ef519a47b0c77252fce0bbb6600b1d3714089"
     },
     {
       "stage": "check-exceptional-availability",
-      "result": "refused",
-      "code": "scope-lifetime-unproved",
-      "path": "/body/nodes/run_checks",
-      "sourceBytes": [
-        40983,
-        41175
-      ]
+      "result": "passed",
+      "report": "reports/check-exceptional-availability.json",
+      "reportDigest": "sha256:0326d6d62f59f67fbab02d422fdd5f263a7b3c54133d3c8ebfd4a2974261af8e"
     },
     {
       "stage": "check-reconciliation-links",
-      "result": "refused",
-      "code": "scope-lifetime-unproved",
-      "path": "/body/nodes/run_checks",
-      "sourceBytes": [
-        40983,
-        41175
-      ]
+      "result": "passed",
+      "report": "reports/check-reconciliation-links.json",
+      "reportDigest": "sha256:6ecd457406b14a7934dba927919a83fcad5bc748c8a10eeb39cf7fd842897de6"
     },
     {
       "stage": "check-reconciliation-availability",
-      "result": "refused",
-      "code": "scope-lifetime-unproved",
-      "path": "/body/nodes/run_checks",
-      "sourceBytes": [
-        40983,
-        41175
-      ]
+      "result": "passed",
+      "report": "reports/check-reconciliation-availability.json",
+      "reportDigest": "sha256:c7df0c417ba4f394de176ae6dee21a0bf26eb29151bc97cc9a92773892b1cb74"
     }
   ],
   "resources": [

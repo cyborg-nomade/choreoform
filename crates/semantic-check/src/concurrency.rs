@@ -4,13 +4,16 @@
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
 mod summary;
+mod survivors;
 use summary::Summary;
+pub use survivors::IsolatedFollowup;
 
 #[derive(Debug)]
 pub struct ConcurrencyReport {
     invalidation: InvalidationReport,
     checked: BTreeSet<String>,
     uncovered: BTreeSet<String>,
+    isolated: BTreeSet<IsolatedFollowup>,
 }
 impl ConcurrencyReport {
     pub fn revision(&self) -> &str {
@@ -25,6 +28,9 @@ impl ConcurrencyReport {
     pub fn uncovered_forks(&self) -> &BTreeSet<String> {
         &self.uncovered
     }
+    pub fn isolated_followups(&self) -> &BTreeSet<IsolatedFollowup> {
+        &self.isolated
+    }
     pub fn remaining(&self) -> &'static [&'static str] {
         &[
             "parallel-and-exceptional-availability-proofs",
@@ -33,6 +39,7 @@ impl ConcurrencyReport {
             "domain-and-irreversible-race-invariant-proofs",
             "exceptional-and-reconciliation-concurrency",
             "live-membership-sealing-and-lifecycle-enforcement",
+            "conditional-isolated-followup-ownership-correlation-and-terminal-settlement",
             "exceptional-and-non-data-invalidation-and-lifecycle-enforcement",
             "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "host-trust-and-atomic-runtime-enforcement",
@@ -52,6 +59,8 @@ pub fn check_concurrency(
     let covered = invalidation.protection().control().covered_nodes();
     let mut checked = BTreeSet::new();
     let mut uncovered = BTreeSet::new();
+    let mut isolated = BTreeSet::new();
+    let mut survivor_index = None;
     for (id, n) in object(&b["nodes"])? {
         budget.tick(0)?;
         let kind = text(&n["kind"])?;
@@ -62,7 +71,19 @@ pub fn check_concurrency(
             continue;
         }
         if matches!(kind, "invoke" | "repeat") {
-            terminal(b, text(&n["body"])?, id)?;
+            let body = text(&n["body"])?;
+            let closure = text(&b["scopes"][body]["closure"])?;
+            if b["policies"][closure]["body"]["mode"] != "terminal" {
+                if survivor_index.is_none() {
+                    survivor_index = Some(survivors::Index::build(b, &mut budget)?);
+                }
+                isolated.insert(survivor_index.as_mut().unwrap().check(
+                    b,
+                    body,
+                    id,
+                    &mut budget,
+                )?);
+            }
         }
         if !matches!(kind, "split" | "fanout") {
             continue;
@@ -103,6 +124,7 @@ pub fn check_concurrency(
         invalidation,
         checked,
         uncovered,
+        isolated,
     })
 }
 

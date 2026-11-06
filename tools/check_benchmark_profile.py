@@ -115,12 +115,16 @@ class BenchmarkProfileEvidence(unittest.TestCase):
         self.assertEqual(raw['policies']['checks_wait']['scope'], 'expense')
         self.assertEqual(raw['nodes']['checks_request_step']['scope'], 'checks_service')
         self.assertEqual(raw['nodes']['checks_observe']['scope'], 'checks_recovery')
-        # Existing conservative live-scope composition still refuses a called
-        # surviving child; the source exception does not close that proof gap.
+        # The isolated wait-only subset now discloses live P6 premises; a shared
+        # read remains outside it even when the predicate is a tautology.
         called, l = endpoint(invoked=True)
         result = invoke(called, l, 'check-reconciliation-links')
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn(b'scope-lifetime-unproved', result.stderr)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual(len(json.loads(result.stdout)['isolatedFollowups']),1)
+        shared=called.replace('Match when (true).','Match when ((the value of "Current claim") equals (the value of "Current claim")).')
+        self.assertEqual(invoke(shared,l,'check-invalidation').returncode,0)
+        result=invoke(shared,l,'check-concurrency')
+        self.assertIn(b'scope-lifetime-unproved',result.stderr)
 
     def test_unused_incompatible_and_wrong_endpoint_namespaces_refuse(self):
         base, ledger = endpoint()
