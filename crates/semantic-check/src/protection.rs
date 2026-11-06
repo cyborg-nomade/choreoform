@@ -107,6 +107,7 @@ type Origins = BTreeSet<Origin>;
 enum ProviderRole {
     Activity,
     Clock,
+    RetryClock,
 }
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 struct ProviderSite {

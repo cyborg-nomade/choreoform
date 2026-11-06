@@ -191,6 +191,12 @@ validated, and round-tripped.
   source/IR/timing-use references. Actual host construction approval, origin
   activation, reschedule and clock enforcement remain required; unbound retries
   and the remaining aggregate gates stay open.
+  [ADR-0026](docs/decisions/0026-explicit-retry-clock.md) adds a separately pinned
+  core revision with explicit retry clock/basis fields and protected timing-use
+  metadata. A dedicated new near-English authoring profile and retry sentence
+  must follow; old source must retain its old core and unbound-retry refusal.
+  Actual fault/domain correlation, unchanged revisions, effect evidence and
+  atomic authorized dispatch remain host requirements, not static approval.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

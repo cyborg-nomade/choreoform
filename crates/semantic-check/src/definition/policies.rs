@@ -150,7 +150,15 @@ impl Check<'_, '_> {
                 name(&p["instructions"])?;
                 refs.insert(self.actor(scope, &p["authority"])?);
                 let retry = &p["retry"];
-                fields(retry, &["maxAttempts", "delays", "faults"])?;
+                let retry_v2 = self.b["dialects"][text(&r["dialect"])?]["id"] == CORE_V2.0;
+                fields(
+                    retry,
+                    if retry_v2 {
+                        &["maxAttempts", "delays", "faults", "clock", "basis"]
+                    } else {
+                        &["maxAttempts", "delays", "faults"]
+                    },
+                )?;
                 let attempts = retry["maxAttempts"]
                     .as_u64()
                     .filter(|n| *n > 0 && *n <= 1000)
@@ -161,6 +169,22 @@ impl Check<'_, '_> {
                     require(integer(delay)? >= 0, "retry-delay")?;
                 }
                 names(&retry["faults"])?;
+                if retry_v2 {
+                    if attempts == 1 {
+                        require(
+                            retry["clock"].is_null() && retry["basis"].is_null(),
+                            "retry-binding-unused",
+                        )?;
+                    } else {
+                        require(
+                            !retry["clock"].is_null() && !retry["basis"].is_null(),
+                            "retry-binding-required",
+                        )?;
+                        let clock = self.resources.clock(&Pin::decode(&retry["clock"])?)?;
+                        reads.insert(self.visible(scope, "data", &retry["basis"])?);
+                        refs.extend(self.provider_protection(scope, clock.source())?);
+                    }
+                }
                 let timer = self.timer(scope, &p["timeout"], &context)?;
                 reads.extend(timer.0);
                 refs.extend(timer.1);

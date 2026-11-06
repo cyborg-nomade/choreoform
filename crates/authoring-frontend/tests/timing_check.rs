@@ -8,6 +8,9 @@ use choreoform_semantic_check::{
 };
 use serde_json::{Value, json};
 
+#[path = "timing/retry.rs"]
+mod retry;
+
 const PROFILE: &[u8] = include_bytes!(
     "../../../docs/ir/contracts/sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt"
 );

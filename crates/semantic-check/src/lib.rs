@@ -22,7 +22,7 @@ pub use protection::{AccessObligation, ProtectionReport, check_protection};
 pub use resources::{
     CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, InstanceCalendar, Provider, Resources,
 };
-pub use timing::{CalendarUse, TimerUse, TimingReport, check_timing};
+pub use timing::{CalendarUse, RetryUse, TimerUse, TimingReport, check_timing};
 pub use types::{Nominal, Pin, Type};
 
 use serde_json::{Map, Value};
@@ -33,6 +33,10 @@ pub const CORE: (&str, &str) = (
     "sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58",
 );
 pub const SEMANTICS: (&str, &str) = choreoform_ir_probe_core::SUPPORTED_CONTRACTS[0];
+pub const CORE_V2: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.2.0",
+    "sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623",
+);
 const MAX_DEPTH: usize = 64;
 const MAX_ITEMS: usize = 10_000;
 
