@@ -89,5 +89,6 @@ reviewer, individual owner review or actual host observation is claimed.
 
 1. [x] Verify direct-IR links, refusal/coverage/performance and source boundaries.
 2. [x] Record delegated acceptance after separate review; require final-head CI.
-3. [ ] Complete the explicit qualified endpoint source profile next.
+3. [x] Supply the [qualified endpoint profile](0031-qualified-wait-endpoints.md)
+   in source 0.4.0; this does not close actual entry or live ownership judgments.
 4. [ ] Continue remaining Phase 1 lifecycle/validator and aggregate evidence.

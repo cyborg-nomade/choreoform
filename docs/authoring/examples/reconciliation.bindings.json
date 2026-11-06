@@ -1,0 +1,298 @@
+{
+  "format": "choreoform-authoring-bindings",
+  "version": "0.3.0",
+  "profile": "0.4.0",
+  "definition": "def_service",
+  "root": "scope_service",
+  "contracts": {
+    "semantics": {
+      "contract": "urn:choreoform:semantics:adr-0008",
+      "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "core": {
+      "dialect": "core",
+      "contract": "urn:choreoform:contracts:core-profile:0.2.0",
+      "digest": "sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623"
+    }
+  },
+  "declarations": [
+    {
+      "id": "scope_service",
+      "kind": "scope",
+      "scope": null,
+      "name": "Service example"
+    },
+    {
+      "id": "service_actor",
+      "kind": "actor",
+      "scope": "scope_service",
+      "name": "Reviewer"
+    },
+    {
+      "id": "service_actor_policy",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Reviewer requirement"
+    },
+    {
+      "id": "service_protection",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Protection"
+    },
+    {
+      "id": "service_work",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Review work"
+    },
+    {
+      "id": "service_stop",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Stop"
+    },
+    {
+      "id": "service_settle",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Settle"
+    },
+    {
+      "id": "service_faults",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Fault handling"
+    },
+    {
+      "id": "service_close",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Close"
+    },
+    {
+      "id": "service_race",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Commit order"
+    },
+    {
+      "id": "service_request",
+      "kind": "data",
+      "scope": "scope_service",
+      "name": "Request"
+    },
+    {
+      "id": "service_decision",
+      "kind": "data",
+      "scope": "scope_service",
+      "name": "Review decision"
+    },
+    {
+      "id": "service_audit",
+      "kind": "data",
+      "scope": "scope_service",
+      "name": "Audit basis"
+    },
+    {
+      "id": "service_input",
+      "kind": "expression",
+      "scope": "scope_service",
+      "name": "Current request"
+    },
+    {
+      "id": "service_step",
+      "kind": "node",
+      "scope": "scope_service",
+      "name": "Review"
+    },
+    {
+      "id": "service_done",
+      "kind": "node",
+      "scope": "scope_service",
+      "name": "Done"
+    },
+    {
+      "id": "service_capability",
+      "kind": "capability",
+      "scope": "scope_service",
+      "name": "Decision service"
+    },
+    {
+      "id": "service_effect",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Service effects"
+    },
+    {
+      "id": "service_reconciliation",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Service reconciliation"
+    },
+    {
+      "id": "service_observe",
+      "kind": "node",
+      "scope": "recovery",
+      "name": "Observe service"
+    },
+    {
+      "id": "service_provider_resource",
+      "kind": "resource",
+      "scope": "scope_service",
+      "name": "Review provider"
+    },
+    {
+      "id": "service_types_resource",
+      "kind": "resource",
+      "scope": "scope_service",
+      "name": "Number types"
+    },
+    {
+      "id": "recovery",
+      "kind": "scope",
+      "scope": "scope_service",
+      "name": "Recovery"
+    },
+    {
+      "id": "recovery_close",
+      "kind": "policy",
+      "scope": "scope_service",
+      "name": "Recovery close"
+    },
+    {
+      "id": "recovery_done",
+      "kind": "node",
+      "scope": "recovery",
+      "name": "Recovery done"
+    }
+  ],
+  "symbols": [
+    {
+      "id": "service_scope_complete",
+      "owner": "scope_service",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "service_output",
+      "owner": "scope_service",
+      "role": "output",
+      "name": "Decision",
+      "wire": "decision"
+    },
+    {
+      "id": "service_approved",
+      "owner": "service_step",
+      "role": "outcome",
+      "name": "approved",
+      "wire": "approved"
+    },
+    {
+      "id": "service_correction",
+      "owner": "service_step",
+      "role": "outcome",
+      "name": "correction needed",
+      "wire": "correction_needed"
+    },
+    {
+      "id": "service_request_purpose",
+      "owner": "service_request",
+      "role": "purpose",
+      "name": "Expense review",
+      "wire": "expense_review"
+    },
+    {
+      "id": "service_decision_purpose",
+      "owner": "service_decision",
+      "role": "purpose",
+      "name": "Expense review",
+      "wire": "expense_review"
+    },
+    {
+      "id": "service_audit_purpose",
+      "owner": "service_audit",
+      "role": "purpose",
+      "name": "Expense review",
+      "wire": "expense_review"
+    },
+    {
+      "id": "service_observed",
+      "owner": "service_observe",
+      "role": "outcome",
+      "name": "observed",
+      "wire": "observed"
+    },
+    {
+      "id": "recovery_complete",
+      "owner": "recovery",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    }
+  ],
+  "generated": [
+    {
+      "id": "service_initial_request",
+      "owner": "service_request",
+      "role": "initial",
+      "key": null
+    },
+    {
+      "id": "service_initial_audit",
+      "owner": "service_audit",
+      "role": "initial",
+      "key": null
+    },
+    {
+      "id": "service_flow_approved",
+      "owner": "service_step",
+      "role": "flow",
+      "key": "service_approved"
+    },
+    {
+      "id": "service_flow_correction",
+      "owner": "service_step",
+      "role": "flow",
+      "key": "service_correction"
+    },
+    {
+      "id": "service_generated_provider",
+      "owner": "service_capability",
+      "role": "provider-policy",
+      "key": null
+    },
+    {
+      "id": "service_observation_flow",
+      "owner": "service_observe",
+      "role": "flow",
+      "key": "service_observed"
+    }
+  ],
+  "retired": [],
+  "resources": [
+    {
+      "binding": "service_provider_resource",
+      "kind": "provider",
+      "contract": "urn:choreoform:examples:review-provider:0.1.0",
+      "digest": "sha256:4b48fb8169aa6959702579a1fcad831db3aaf0668be2de93d02ac6404e0c5835"
+    },
+    {
+      "binding": "service_types_resource",
+      "kind": "named-type",
+      "contract": "urn:choreoform:examples:number-types:0.1.0",
+      "digest": "sha256:f6bd253b88ec8732955e50cc0d9ac3ac0cff3a8975f61878075cf6eff1f0e644"
+    }
+  ],
+  "annotations": {
+    "example:service": {
+      "message": "Synthetic static-check example; not an executable provider adapter",
+      "flags": [
+        true,
+        null,
+        7
+      ]
+    }
+  }
+}

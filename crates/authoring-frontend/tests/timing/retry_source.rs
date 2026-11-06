@@ -205,7 +205,7 @@ fn source_retry_derives_basis_and_transitive_clock_authority_reads() {
 
 #[test]
 fn both_versioned_grammars_preserve_bounded_parsing() {
-    for profile in ["0.2.0", "0.3.0"] {
+    for profile in ["0.2.0", "0.3.0", "0.4.0"] {
         let source = format!(
             "Choreoform authoring \"{profile}\". {}",
             "bad ".repeat(5000)

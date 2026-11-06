@@ -46,6 +46,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0028](0028-conservative-fault-routing.md) | Accepted under delegation | Check a conservative active-context handler-selection graph |
 | [0029](0029-conditional-handler-availability.md) | Accepted under delegation | Check handler-body availability under explicit input contracts |
 | [0030](0030-reconciliation-declaration-links.md) | Accepted under delegation | Require an owned reachable reconciliation declaration route |
+| [0031](0031-qualified-wait-endpoints.md) | Accepted under delegation | Bind explicitly qualified reconciliation wait endpoints |
 
 ## When an ADR is required
 

@@ -10,6 +10,8 @@ use serde_json::{Value, json};
 
 #[path = "timing/reconciliation.rs"]
 mod reconciliation;
+#[path = "timing/reconciliation_source.rs"]
+mod reconciliation_source;
 #[path = "timing/retry.rs"]
 mod retry;
 #[path = "timing/retry_source.rs"]

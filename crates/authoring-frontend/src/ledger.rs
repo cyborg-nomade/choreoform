@@ -150,6 +150,7 @@ impl Ledger {
         let core = match (document["profile"].as_str(), document["version"].as_str()) {
             (Some("0.2.0"), Some("0.1.0")) => CORE,
             (Some("0.3.0"), Some("0.2.0")) => choreoform_semantic_check::CORE_V2,
+            (Some("0.4.0"), Some("0.3.0")) => choreoform_semantic_check::CORE_V2,
             _ => return Err(error("ledger-profile", 0..0)),
         };
         let mut used = BTreeSet::from([id(&document["definition"])?]);
@@ -431,7 +432,7 @@ impl Ledger {
         {
             verify(string(&pin["contract"])?, string(&pin["digest"])?)?;
         }
-        if self.document["profile"] == "0.3.0" {
+        if self.document["profile"] != "0.2.0" {
             verify(CORE.0, CORE.1)?;
         }
         Ok(())
