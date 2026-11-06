@@ -3,6 +3,13 @@
 
 # Static contract checks, not executable admission
 
+Settlement transfer dependencies include the receiving ancestor's actual
+cancellation/management actor requirement, as required by P6. This does not
+include its children-settlement policy or establish current receiver acceptance.
+Policy dependency mismatches point to the declaration's `body/reads`; policy
+closure charges edge/member copies. See the
+[correction evidence](../../docs/evaluation/0019-settlement-authority-dependencies.md).
+
 Core 0.2.0 adds explicit retry clock/basis fields while inheriting the exact core
 0.1.0 artifact. Records select their own dialect; old records are not upgraded.
 `check_timing().retry_uses()` exposes immutable bindings/attempts/delays and live

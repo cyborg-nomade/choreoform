@@ -43,12 +43,21 @@ impl Check<'_, '_> {
             self.resources.budget.tick(0)?;
             let mut reads = local.remove(&id).ok_or_else(|| err("policy-cycle"))?;
             for target in &edges[&id] {
+                self.resources
+                    .budget
+                    .charge(self.policy_reads[target].len() + 1)?;
                 reads.extend(self.policy_reads[target].iter().cloned());
             }
-            require(
-                reads == names(&self.b["policies"][&id]["body"]["reads"])?,
-                "policy-reads",
-            )?;
+            (|| {
+                require(
+                    reads == names(&self.b["policies"][&id]["body"]["reads"])?,
+                    "policy-reads",
+                )
+            })()
+            .map_err(|mut e| {
+                e.path = format!("/body/policies/{id}/body/reads");
+                e
+            })?;
             self.policy_reads.insert(id.clone(), reads);
             for user in dependents.get(&id).into_iter().flatten() {
                 let degree = degrees
@@ -259,10 +268,22 @@ impl Check<'_, '_> {
             }
             "settlement" => match text(&p["unfinished"])? {
                 "cancel" | "retain" => require(p["owner"].is_null(), "settlement-owner")?,
-                "transfer" => require(
-                    self.ancestors(scope)?.contains(text(&p["owner"])?) && p["owner"] != scope,
-                    "settlement-owner",
-                )?,
+                "transfer" => {
+                    let owner = text(&p["owner"])?;
+                    require(
+                        self.ancestors(scope)?.contains(owner) && owner != scope,
+                        "settlement-owner",
+                    )?;
+                    let cancellation = self.policy_kind(
+                        owner,
+                        &self.b["scopes"][owner]["cancellation"],
+                        "cancel",
+                    )?;
+                    refs.insert(self.actor(
+                        owner,
+                        &self.b["policies"][cancellation]["body"]["authority"],
+                    )?);
+                }
                 _ => return Err(err("settlement-mode")),
             },
             "closure" => match text(&p["mode"])? {

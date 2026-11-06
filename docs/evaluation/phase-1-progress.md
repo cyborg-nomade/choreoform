@@ -164,9 +164,22 @@ and six independent Python groups cover full cycles, identities, version/field/
 reference refusals, dependencies, separate clocks, alias edits and bounds.
 195 Rust tests plus five compile-fail doctests, native/Wasm and all relevant
 artifact/stage oracles passed. ADR-0027 is accepted after delegated automated
-self-review; required final-head CI/merge remain pending. Next audit remaining
-validator/lifecycle judgments and implement the next verified dependency; keep
-full benchmarks, general text/visual export/editing and actual user evidence open.
+self-review. PR #35 merged as `6170c615bda47e985bc03e018e2d9da1e81ecc54`
+after recorded delegated review and passing final-head CI run `42170950887`;
+CodeRabbit skipped automatic review. The remaining-validator audit identified
+[omitted settlement receiver-authority dependencies](0019-settlement-access-plan.md)
+as the next concrete fix. Keep full lifecycle/validator, benchmarks, general
+text/visual export/editing and actual user evidence open; no phase gate closes.
+The settlement correction now checks/derives receiver management-authority reads,
+retains receiver-context visibility and excludes unrelated child settlement
+dependencies. It also supplies exact policy-read diagnostic paths and bounded
+closure-copy work. The old omission was reproduced before changes. Six new Rust
+and three Python groups cover direct/source behavior, inheritance, modes, links,
+500 repeated edges and both profile cycles. 201 Rust tests plus five compile-fail
+doctests, native/Wasm and relevant artifact/stage checks passed; dedicated
+final-head CI/merge remain pending. Next consolidate the remaining
+validator/lifecycle obligations and implement verified dependencies. Actual live
+acceptance/ownership, full benchmarks, editing/visual/user evidence remain open.
 
 ## Honest exit accounting
 

@@ -7,6 +7,9 @@ use choreoform_semantic_check::{
 };
 use serde_json::{Value, json};
 
+#[path = "control/settlement.rs"]
+mod settlement;
+
 const ROOT: &str = "scope_terminal";
 const INTEGER_MARKER: &str = "424242";
 fn resources() -> Vec<Resource<'static>> {

@@ -199,6 +199,10 @@ validated, and round-tripped.
   unbound-retry refusal. This is not complete tool-managed authoring or user evidence.
   Actual fault/domain correlation, unchanged revisions, effect evidence and
   atomic authorized dispatch remain host requirements, not static approval.
+  The [settlement dependency correction](docs/evaluation/0019-settlement-authority-dependencies.md)
+  closes receiver management-authority reads into transfer policy/node footprints
+  and supplies precise read-mismatch paths. Actual receiver acceptance/live
+  ownership, exceptional routing and the complete validator still require evidence.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted
