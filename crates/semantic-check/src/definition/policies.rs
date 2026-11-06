@@ -17,15 +17,18 @@ impl Check<'_, '_> {
             metadata.insert(id.clone(), result.2);
         }
         if object(&self.b["policies"])?.values().any(|p| {
-            self.b["dialects"][p["dialect"].as_str().expect("checked dialect")]["id"] == CORE_V3.0
+            metadata_core(
+                &self.b["dialects"][p["dialect"].as_str().expect("checked dialect")]["id"],
+            )
         }) {
             let graph = local
                 .into_iter()
                 .map(|(id, reads)| {
-                    let eligible = self.b["dialects"][self.b["policies"][&id]["dialect"]
-                        .as_str()
-                        .expect("checked dialect")]["id"]
-                        == CORE_V3.0;
+                    let eligible = metadata_core(
+                        &self.b["dialects"][self.b["policies"][&id]["dialect"]
+                            .as_str()
+                            .expect("checked dialect")]["id"],
+                    );
                     let node = PolicyReadDependencies {
                         local: reads,
                         strong: edges.remove(&id).expect("policy edges"),
@@ -200,10 +203,21 @@ impl Check<'_, '_> {
                 name(&p["instructions"])?;
                 refs.insert(self.actor(scope, &p["authority"])?);
                 let retry = &p["retry"];
-                let retry_v2 = matches!(self.b["dialects"][text(&r["dialect"])?]["id"].as_str(), Some(id) if id == CORE_V2.0 || id == CORE_V3.0);
+                let core = &self.b["dialects"][text(&r["dialect"])?]["id"];
+                let retry_v4 = core == CORE_V4.0;
+                let retry_v2 = core == CORE_V2.0 || metadata_core(core);
                 fields(
                     retry,
-                    if retry_v2 {
+                    if retry_v4 {
+                        &[
+                            "maxAttempts",
+                            "delays",
+                            "faults",
+                            "clock",
+                            "basis",
+                            "faultSource",
+                        ]
+                    } else if retry_v2 {
                         &["maxAttempts", "delays", "faults", "clock", "basis"]
                     } else {
                         &["maxAttempts", "delays", "faults"]
@@ -218,7 +232,36 @@ impl Check<'_, '_> {
                 for delay in delays {
                     require(integer(delay)? >= 0, "retry-delay")?;
                 }
-                names(&retry["faults"])?;
+                let faults = names(&retry["faults"])?;
+                if retry_v4 {
+                    if attempts == 1 {
+                        require(
+                            retry["faultSource"].is_null() && faults.is_empty(),
+                            "retry-fault-source-unused",
+                        )?;
+                    } else {
+                        require(
+                            !faults.is_empty() && !retry["faultSource"].is_null(),
+                            "retry-fault-source-required",
+                        )?;
+                        let source = self
+                            .resources
+                            .provider_fault_source(&Pin::decode(&retry["faultSource"])?)?;
+                        self.resources.budget.charge(faults.len())?;
+                        for fault in &faults {
+                            let emission = source
+                                .emissions()
+                                .get(fault)
+                                .ok_or_else(|| err("retry-fault-source-name"))?;
+                            require(
+                                emission.evidence() != FaultEvidence::Unresolved
+                                    || source.provider_contract().idempotency == "stable-key",
+                                "retry-fault-evidence-unproved",
+                            )?;
+                        }
+                        metadata.extend(self.provider_protection(scope, source.provider())?);
+                    }
+                }
                 if retry_v2 {
                     if attempts == 1 {
                         require(
@@ -358,7 +401,7 @@ impl Check<'_, '_> {
             require(j.ty == Type::Boolean, "predicate-type")?;
             reads.extend(j.reads);
         }
-        if self.b["dialects"][text(&r["dialect"])?]["id"] != CORE_V3.0 {
+        if !metadata_core(&self.b["dialects"][text(&r["dialect"])?]["id"]) {
             refs.append(&mut metadata);
         }
         Ok((reads, refs, metadata))

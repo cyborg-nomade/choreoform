@@ -56,17 +56,23 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         let p = Pin::decode(pin)?;
         let contract = (p.id.as_str(), p.revision.as_str());
         require(
-            contract == CORE || contract == CORE_V2 || contract == CORE_V3,
+            contract == CORE || contract == CORE_V2 || contract == CORE_V3 || contract == CORE_V4,
             "dialect-contract",
         )?;
         resources.verify(&p)?;
-        if contract == CORE_V3 {
+        if contract == CORE_V4 {
+            resources.verify(&Pin {
+                id: CORE_V3.0.into(),
+                revision: CORE_V3.1.into(),
+            })?;
+        }
+        if contract == CORE_V3 || contract == CORE_V4 {
             resources.verify(&Pin {
                 id: CORE_V2.0.into(),
                 revision: CORE_V2.1.into(),
             })?;
         }
-        if contract == CORE_V2 || contract == CORE_V3 {
+        if contract == CORE_V2 || contract == CORE_V3 || contract == CORE_V4 {
             resources.verify(&Pin {
                 id: CORE.0.into(),
                 revision: CORE.1.into(),

@@ -611,6 +611,18 @@ Core 0.4 will bind declared source/provider/eligible-fault evidence explicitly;
 current source 0.6/core 0.3 remains unchanged until separate authoring integration.
 All actual acceptance/permission/settlement, scenario and phase gates stay open.
 
+ADR-0042 raw core-0.4 binding is implemented after the frozen plan/supplement.
+Ten Rust integration groups plus one copied-evidence budget group check exact
+source/provider/eligible-class relationships, unvisited/human/unused contexts,
+metadata reads and mixed/legacy behavior. Bound source names, including noneligible
+faults, enter conservative routing without claiming actual emission; graph/resource
+work shares one allowance. Typed RetryUse evidence remains revision-bound and
+non-executable. See [evidence](0042-retry-fault-binding.md). Local 315 Rust tests
+plus six doctests and native/Wasm/all Python checks pass; final-head CI/comment
+audit/signed exact merge remain required. Current source 0.6/core 0.3 and package bytes
+stay unchanged pending a separately versioned authoring/disclosure step. All
+scenario/phase and actual host/data/continuation gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

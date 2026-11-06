@@ -162,6 +162,27 @@ impl Check<'_, '_> {
         match kind {
             "activity" => {
                 self.policy_kind(scope, &n["policy"], "work")?;
+                let work = &self.b["policies"][text(&n["policy"])?];
+                if self.b["dialects"][text(&work["dialect"])?]["id"] == CORE_V4.0
+                    && work["body"]["retry"]["maxAttempts"]
+                        .as_u64()
+                        .is_some_and(|n| n > 1)
+                {
+                    require(
+                        n["mode"] == "capability",
+                        "retry-fault-source-context-unproved",
+                    )?;
+                    let source = self.resources.provider_fault_source(&Pin::decode(
+                        &work["body"]["retry"]["faultSource"],
+                    )?)?;
+                    let cap = self.visible(scope, "capabilities", &n["target"])?;
+                    let contract = text(&self.b["capabilities"][&cap]["contract"])?;
+                    let provider = Pin::decode(&self.b["policies"][contract]["body"]["provider"])?;
+                    require(
+                        source.provider() == &provider,
+                        "retry-fault-source-provider",
+                    )?;
+                }
                 let result = self.result_type(n)?;
                 let target_type = n["result"].as_str().map_or_else(
                     || Ok(Type::empty()),

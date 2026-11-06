@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 use crate::control::graph::Graph;
+use std::borrow::Cow;
 use std::collections::VecDeque;
 
 struct Scope<'a> {
@@ -23,13 +24,13 @@ struct State {
 }
 pub(super) struct Analysis<'a> {
     scopes: Vec<Scope<'a>>,
-    names: Vec<&'a str>,
+    names: Vec<Cow<'a, str>>,
     selections: Vec<Selection<'a>>,
     root: usize,
     budget: Budget,
 }
 impl<'a> Analysis<'a> {
-    pub fn new(b: &'a Value) -> Result<Self> {
+    pub fn new(b: &'a Value, supplied: &[choreoform_ir_probe_core::Resource<'_>]) -> Result<Self> {
         let mut budget = Budget::default();
         let graph = Graph::build(b, &mut budget)?;
         let reachable = graph.reachable(b, &mut budget)?;
@@ -41,19 +42,42 @@ impl<'a> Analysis<'a> {
             .collect();
         budget.charge(index.len())?;
         let mut names = BTreeSet::new();
+        let mut resources = Resources::new(supplied)?;
+        let mut sources = BTreeSet::new();
         for p in object(&b["policies"])?.values() {
             budget.tick(0)?;
-            if p["body"]["kind"] != "faults" {
+            if p["body"]["kind"] == "faults" {
+                for name in object(&p["body"]["handlers"])?.keys() {
+                    budget.tick(0)?;
+                    names.insert(Cow::Borrowed(name.as_str()));
+                }
+            }
+            if b["dialects"][text(&p["dialect"])?]["id"] != CORE_V4.0
+                || p["body"]["kind"] != "work"
+                || p["body"]["retry"]["faultSource"].is_null()
+            {
                 continue;
             }
-            for name in object(&p["body"]["handlers"])?.keys() {
-                budget.tick(0)?;
-                names.insert(name.as_str());
+            let pin = Pin::decode(&p["body"]["retry"]["faultSource"])?;
+            if sources.insert(pin.clone()) {
+                // Resource decoding and graph/name copying share one allowance.
+                resources.budget.work = budget.work;
+                let decoded = resources.provider_fault_source(&pin);
+                budget.work = resources.budget.work;
+                let source = decoded?;
+                for name in source.emissions().keys() {
+                    budget.charge(2)?;
+                    names.insert(Cow::Owned(name.clone()));
+                }
             }
         }
         require(names.len() <= MAX_ITEMS, "budget")?;
         let names: Vec<_> = names.into_iter().collect();
-        let fault_index: BTreeMap<_, _> = names.iter().enumerate().map(|(i, n)| (*n, i)).collect();
+        let fault_index: BTreeMap<&str, _> = names
+            .iter()
+            .enumerate()
+            .map(|(i, n)| (n.as_ref(), i))
+            .collect();
         let mut scopes = Vec::new();
         let mut selections = Vec::new();
         for (id, s) in records {
@@ -271,7 +295,7 @@ impl<'a> Analysis<'a> {
             .map(|s| FaultSelection {
                 owner: all_scopes[s.owner].clone(),
                 policy: s.policy.into(),
-                fault: self.names[s.fault].into(),
+                fault: self.names[s.fault].to_string(),
                 handler: all_scopes[s.handler].clone(),
             })
             .collect();
