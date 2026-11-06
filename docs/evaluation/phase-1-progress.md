@@ -550,6 +550,15 @@ production static/value/pure judgments and explicit immutable synthetic bindings
 introduce no public evaluation/authority/runtime API or scenario completion claim.
 The parent remains draft/unmerged and every phase gate stays open.
 
+The finite snapshot harness has reproduced `commit_wrong_policy`: the actual
+payment commit predicate returns true for otherwise well-typed evidence with a
+wrong policy revision, while the retained expected result is false. No unsafe
+execution/reachability claim follows. Before source changes, the
+[precise correction plan](0040-rp01-policy-guard-fix-plan.md) freezes three explicit
+policy-revision equality clauses and symmetric negatives, preserving old fixture
+profiles and all other semantic fields. This source correction is part of the
+dedicated guard-conformance deliverable; no phase gate closes.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
