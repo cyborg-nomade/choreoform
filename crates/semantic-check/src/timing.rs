@@ -13,6 +13,7 @@ pub struct TimerUse {
     source: Pin,
     basis: String,
     pause_authority: String,
+    calendar: Option<CalendarUse>,
 }
 impl TimerUse {
     pub fn site(&self) -> &str {
@@ -36,6 +37,9 @@ impl TimerUse {
     pub fn pause_authority(&self) -> &str {
         &self.pause_authority
     }
+    pub fn calendar(&self) -> Option<&CalendarUse> {
+        self.calendar.as_ref()
+    }
     pub fn host_requirements(&self) -> &'static [&'static str] {
         &[
             "authenticated-source-instance-domain-and-origin-binding",
@@ -43,9 +47,39 @@ impl TimerUse {
             "exact-observation-occurrence-and-timer-revision-identity",
             "current-clock-source-result-protection-and-authority",
             "due-and-basis-calculation-in-the-registered-clock-domain",
-            "current-basis-revisions-access-and-pause-authority",
+            "current-basis-revisions-and-access",
+            "pause-resume-reschedule-only-with-current-pause-authority",
             "pause-reschedule-overflow-and-replay-enforcement",
             "atomic-fire-cancellation-and-owned-settlement",
+        ]
+    }
+}
+
+/// Exact construction references and required live binding, never its approval.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct CalendarUse {
+    pin: Pin,
+    rules: Pin,
+    profile: Pin,
+}
+impl CalendarUse {
+    pub fn pin(&self) -> &Pin {
+        &self.pin
+    }
+    pub fn rules(&self) -> &Pin {
+        &self.rules
+    }
+    pub fn profile(&self) -> &Pin {
+        &self.profile
+    }
+    pub fn host_requirements(&self) -> &'static [&'static str] {
+        &[
+            "trusted-host-calendar-construction-approval",
+            "exact-calendar-rules-profile-clock-and-instance-origin-binding",
+            "current-definition-timer-occurrence-and-basis-revisions",
+            "durable-binding-recovery-without-origin-reset",
+            "calendar-change-only-by-authorized-reschedule",
+            "finite-half-open-table-gating-without-fallback",
         ]
     }
 }
@@ -80,7 +114,7 @@ impl TimingReport {
             "current-principal-purpose-capability-and-policy-enforcement",
             "domain-and-irreversible-race-invariant-proofs",
             "exceptional-and-reconciliation-concurrency",
-            "calendar-instance-origin-and-retry-clock-basis-bindings",
+            "live-calendar-activation-and-retry-clock-basis-bindings",
             "live-clock-pause-reschedule-membership-and-lifecycle-enforcement",
             "exceptional-and-non-data-invalidation-and-lifecycle-enforcement",
             "host-trust-and-atomic-runtime-enforcement",
@@ -132,6 +166,16 @@ pub fn check_timing(
         let timer = &p[role];
         let pin = Pin::decode(&timer["clock"])?;
         let clock = resources.clock(&pin)?;
+        let calendar = if timer["calendar"].is_null() {
+            None
+        } else {
+            let calendar = resources.instance_calendar(&Pin::decode(&timer["calendar"])?)?;
+            Some(CalendarUse {
+                pin: calendar.pin().clone(),
+                rules: calendar.rules().clone(),
+                profile: calendar.profile().clone(),
+            })
+        };
         uses.insert(TimerUse {
             site: id.clone(),
             policy: policy.into(),
@@ -140,6 +184,7 @@ pub fn check_timing(
             source: clock.source().clone(),
             basis: text(&timer["basis"])?.into(),
             pause_authority: text(&timer["pauseAuthority"])?.into(),
+            calendar,
         });
         checked.insert(id.clone());
     }

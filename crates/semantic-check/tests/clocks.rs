@@ -1,11 +1,14 @@
 // SPDX-FileCopyrightText: 2026 Choreoform contributors
 // SPDX-License-Identifier: MPL-2.0
 use choreoform_ir_probe_core::{Resource, digest};
-use choreoform_semantic_check::{CLOCK_PROFILE, Pin, Resources, Type};
+use choreoform_semantic_check::{CALENDAR_PROFILE, CLOCK_PROFILE, Pin, Resources, Type};
 use serde_json::{Value, json};
 
 const PROFILE: &[u8] = include_bytes!(
     "../../../docs/ir/contracts/sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt"
+);
+const CALENDAR: &[u8] = include_bytes!(
+    "../../../docs/ir/contracts/sha256-2ab8a6a78f2829ababa2d023f6743ac82d7a31acbfca1fb7a03340b7c929f35f.txt"
 );
 fn provider() -> Value {
     json!({"kind":"provider-contract","version":"0.1.0","id":"urn:test:clock-source","input":{"kind":"record","fields":{}},"output":{"kind":"integer"},"outcomes":{"tick":true},"resultProtection":{"policy":"protect","sensitivity":"internal","purposes":{"process":true},"participants":{"reviewer":true},"capabilities":{}},"observations":{"tick":{"state":"succeeded","result":{"kind":"integer"},"outcome":"tick"},"unknown":{"state":"unknown","result":null,"outcome":null}},"idempotency":"none","effectClass":"read-only"})
@@ -215,4 +218,240 @@ fn clocks_require_all_exact_bytes_and_reject_hashed_arbitrary_sources() {
         };
         assert_eq!(error.code, expected, "{mode}: {error:?}");
     }
+}
+
+type Artifacts = Vec<(String, String, Vec<u8>)>;
+fn artifact(artifacts: &mut Artifacts, id: &str, bytes: Vec<u8>) -> Pin {
+    let pin = Pin {
+        id: id.into(),
+        revision: digest(&bytes),
+    };
+    artifacts.push((pin.id.clone(), pin.revision.clone(), bytes));
+    pin
+}
+fn reference(pin: &Pin) -> Value {
+    json!({"id":pin.id,"revision":pin.revision})
+}
+fn calendar_bundle(
+    intervals: Value,
+    mutate: impl FnOnce(&mut Value, &mut Value),
+) -> (Artifacts, Pin) {
+    let mut artifacts = vec![
+        (
+            CLOCK_PROFILE.0.into(),
+            CLOCK_PROFILE.1.into(),
+            PROFILE.to_vec(),
+        ),
+        (
+            CALENDAR_PROFILE.0.into(),
+            CALENDAR_PROFILE.1.into(),
+            CALENDAR.to_vec(),
+        ),
+    ];
+    let source = provider();
+    artifact(
+        &mut artifacts,
+        "urn:test:clock-source",
+        serde_json::to_vec(&source).unwrap(),
+    );
+    let clock = artifact(
+        &mut artifacts,
+        "urn:test:clock",
+        serde_json::to_vec(&clock(&source)).unwrap(),
+    );
+    let mut rules = json!({"kind":"calendar-rules","version":"0.1.0","id":"urn:test:rules","profile":{"id":CALENDAR_PROFILE.0,"revision":CALENDAR_PROFILE.1},"clock":reference(&clock)});
+    let mut calendar = json!({"kind":"calendar","version":"0.1.0","id":"urn:test:calendar","clock":reference(&clock),"zone":"instance-relative","zoneRules":null,"intervals":intervals});
+    mutate(&mut rules, &mut calendar);
+    let rules = artifact(
+        &mut artifacts,
+        "urn:test:rules",
+        serde_json::to_vec(&rules).unwrap(),
+    );
+    calendar["zoneRules"] = reference(&rules);
+    let calendar = artifact(
+        &mut artifacts,
+        "urn:test:calendar",
+        serde_json::to_vec(&calendar).unwrap(),
+    );
+    (artifacts, calendar)
+}
+fn registry(artifacts: &Artifacts) -> Vec<Resource<'_>> {
+    artifacts
+        .iter()
+        .map(|(id, revision, bytes)| Resource {
+            id,
+            revision,
+            bytes,
+        })
+        .collect()
+}
+
+#[test]
+fn instance_calendars_bind_exact_construction_and_test_half_open_coordinates_only() {
+    assert_eq!(digest(CALENDAR), CALENDAR_PROFILE.1);
+    assert_eq!(
+        CALENDAR,
+        include_bytes!("../../../docs/clocks/instance-calendar-v0.1.md")
+    );
+    let (artifacts, pin) = calendar_bundle(
+        json!([{"start":i64::MIN.to_string(),"end":"-1"},{"start":"0","end":"2"},{"start":"2","end":"5"},{"start":(i64::MAX-1).to_string(),"end":i64::MAX.to_string()}]),
+        |_, _| {},
+    );
+    let supplied = registry(&artifacts);
+    let mut resources = Resources::new(&supplied).unwrap();
+    let calendar = resources.instance_calendar(&pin).unwrap();
+    assert_eq!(calendar.pin(), &pin);
+    assert_eq!(calendar.profile().id, CALENDAR_PROFILE.0);
+    assert_eq!(calendar.clock().id, "urn:test:clock");
+    assert_eq!(calendar.rules().id, "urn:test:rules");
+    assert_eq!(calendar.intervals().len(), 4);
+    for (coordinate, contains) in [
+        (i64::MIN, true),
+        (-2, true),
+        (-1, false),
+        (0, true),
+        (1, true),
+        (2, true),
+        (4, true),
+        (5, false),
+        (6, false),
+        (i64::MAX - 1, true),
+        (i64::MAX, false),
+    ] {
+        assert_eq!(
+            calendar.contains_coordinate(coordinate),
+            contains,
+            "{coordinate}"
+        );
+    }
+    let (artifacts, pin) = calendar_bundle(json!([]), |_, _| {});
+    let supplied = registry(&artifacts);
+    let calendar = Resources::new(&supplied)
+        .unwrap()
+        .instance_calendar(&pin)
+        .unwrap();
+    assert!(!calendar.contains_coordinate(0));
+    assert!(!calendar.contains_coordinate(i64::MAX));
+}
+
+#[test]
+fn instance_calendars_refuse_unknown_rules_profiles_clocks_and_trust_flags() {
+    for (mutation, expected) in [
+        ("zone", "calendar-zone-profile"),
+        ("profile-id", "calendar-profile-unsupported"),
+        ("profile-revision", "calendar-profile-unsupported"),
+        ("rule-clock", "calendar-rules-clock"),
+        ("safe", "fields"),
+        ("kind", "resource-format"),
+        ("version", "resource-format"),
+        ("interval-order", "calendar-intervals"),
+        ("zero-width", "calendar-intervals"),
+    ] {
+        let (artifacts, pin) = calendar_bundle(
+            json!([{"start":"0","end":"10"}]),
+            |rules, calendar| match mutation {
+                "zone" => calendar["zone"] = "Etc/Unknown".into(),
+                "profile-id" => rules["profile"]["id"] = "urn:test:unimplemented".into(),
+                "profile-revision" => {
+                    rules["profile"]["revision"] = format!("sha256:{}", "0".repeat(64)).into()
+                }
+                "rule-clock" => rules["clock"]["id"] = "urn:test:other-clock".into(),
+                "safe" => rules["safe"] = true.into(),
+                "kind" => rules["kind"] = "uploaded-schedule-approval".into(),
+                "version" => rules["version"] = "0.2.0".into(),
+                "interval-order" => {
+                    calendar["intervals"] = json!([{"start":"3","end":"5"},{"start":"0","end":"2"}])
+                }
+                _ => calendar["intervals"] = json!([{"start":"0","end":"0"}]),
+            },
+        );
+        let supplied = registry(&artifacts);
+        let error = Resources::new(&supplied)
+            .unwrap()
+            .instance_calendar(&pin)
+            .unwrap_err();
+        assert_eq!(error.code, expected, "{mutation}: {error:?}");
+    }
+}
+
+#[test]
+fn instance_calendars_require_exact_rule_and_profile_bytes_after_generic_metadata_reading() {
+    for mutation in [
+        "missing-rules",
+        "missing-profile",
+        "corrupt-rules",
+        "corrupt-profile",
+        "opaque-rules",
+    ] {
+        let (mut artifacts, mut pin) =
+            calendar_bundle(json!([{"start":"0","end":"10"}]), |_, _| {});
+        match mutation {
+            "missing-rules" => artifacts.retain(|(id, _, _)| id != "urn:test:rules"),
+            "missing-profile" => artifacts.retain(|(id, _, _)| id != CALENDAR_PROFILE.0),
+            "corrupt-rules" => artifacts
+                .iter_mut()
+                .find(|(id, _, _)| id == "urn:test:rules")
+                .unwrap()
+                .2
+                .push(b' '),
+            "corrupt-profile" => artifacts
+                .iter_mut()
+                .find(|(id, _, _)| id == CALENDAR_PROFILE.0)
+                .unwrap()
+                .2
+                .push(b' '),
+            _ => {
+                let rules = artifacts
+                    .iter_mut()
+                    .find(|(id, _, _)| id == "urn:test:rules")
+                    .unwrap();
+                rules.2 = b"opaque provenance bytes".to_vec();
+                rules.1 = digest(&rules.2);
+                let revision = rules.1.clone();
+                let calendar = artifacts
+                    .iter_mut()
+                    .find(|(id, _, _)| id == "urn:test:calendar")
+                    .unwrap();
+                let mut value: Value = serde_json::from_slice(&calendar.2).unwrap();
+                value["zoneRules"]["revision"] = revision.into();
+                calendar.2 = serde_json::to_vec(&value).unwrap();
+                calendar.1 = digest(&calendar.2);
+                pin.revision = calendar.1.clone();
+            }
+        }
+        let supplied = registry(&artifacts);
+        let mut resources = Resources::new(&supplied).unwrap();
+        if mutation == "opaque-rules" {
+            resources.calendar(&pin).unwrap();
+        }
+        let error = resources.instance_calendar(&pin).unwrap_err();
+        let expected = if mutation.starts_with("missing") {
+            "resource-missing"
+        } else if mutation.starts_with("corrupt") {
+            "resource-digest"
+        } else {
+            "resource-transport"
+        };
+        assert_eq!(error.code, expected, "{mutation}: {error:?}");
+    }
+}
+
+#[test]
+fn instance_calendar_metadata_cache_shares_wide_tables_without_live_approval() {
+    let intervals = (0..10000)
+        .map(|i| json!({"start":(i*2).to_string(),"end":(i*2+1).to_string()}))
+        .collect::<Vec<_>>();
+    let (artifacts, pin) = calendar_bundle(intervals.into(), |_, _| {});
+    let supplied = registry(&artifacts);
+    let mut resources = Resources::new(&supplied).unwrap();
+    let first = resources.instance_calendar(&pin).unwrap();
+    for _ in 0..1000 {
+        assert!(std::sync::Arc::ptr_eq(
+            &first,
+            &resources.instance_calendar(&pin).unwrap()
+        ));
+    }
+    assert_eq!(first.intervals().len(), 10000);
+    assert!(first.contains_coordinate(19998));
+    assert!(!first.contains_coordinate(19999));
 }

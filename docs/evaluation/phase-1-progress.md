@@ -3,7 +3,7 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-05<br>
+**Updated:** 2026-11-06<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
@@ -128,9 +128,20 @@ Review added wait-observation conflict coverage and source-pin/scope metadata
 caching with 700-policy and visibility-isolation regressions. ADR-0024 is accepted
 under delegation; 175 Rust tests plus five compile-fail doctests, native/Wasm and
 all relevant stage/artifact oracles passed locally. Final-head CI and the dedicated
-PR merge remain pending. Next are explicit calendar-domain and retry-clock
-contracts (versioned where necessary), plus remaining full-validator/lifecycle,
-benchmark and authoring/visual/user evidence. Phase 1 remains incomplete.
+PR #32 merged as `05424ff687e3ef4cafed983ca6c3fe31a9864087` after recorded
+delegated review and passing final-head CI run `42123357994`. CodeRabbit skipped
+automatic review; no independent review is claimed. The next slice is the
+[calendar construction/origin-binding plan](0025-calendar-plan.md), then explicit
+retry-clock contracts (versioned where necessary) and remaining full-validator/
+lifecycle, benchmark and authoring/visual/user evidence. Phase 1 remains incomplete.
+The calendar slice now recognizes exact pinned relative construction rules,
+shares immutable wide tables and exposes explicit live activation requirements.
+Initial host calendar trust is separate from permission to pause a deadline.
+ADR-0025 is accepted under delegated automated review; 183 Rust tests plus five
+compile-fail doctests, native/Wasm checks and all relevant stage/artifact oracles
+passed locally. Final-head CI and PR merge remain pending. Next is an explicit
+versioned retry-clock/basis binding; no implicit timeout/scheduler clock or phase
+exit is inferred from the calendar work.
 
 ## Honest exit accounting
 

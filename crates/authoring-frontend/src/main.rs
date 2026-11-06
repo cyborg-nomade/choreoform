@@ -145,7 +145,10 @@ fn run() -> Result<String, String> {
             .check_timing(&resources)
             .map_err(|e| format!("{} at {}", e.code, e.path))?;
         let control = report.concurrency().invalidation().protection().control();
-        let uses: Vec<_> = report.timer_uses().iter().map(|t| serde_json::json!({"site":t.site(),"policy":t.policy(),"role":t.role(),"clock":{"id":t.clock().id,"revision":t.clock().revision},"source":{"id":t.source().id,"revision":t.source().revision},"basis":t.basis(),"pauseAuthority":t.pause_authority(),"hostRequirements":t.host_requirements()})).collect();
+        let uses: Vec<_> = report.timer_uses().iter().map(|t| {
+            let calendar = t.calendar().map(|c| serde_json::json!({"id":c.pin().id,"revision":c.pin().revision,"rules":{"id":c.rules().id,"revision":c.rules().revision},"profile":{"id":c.profile().id,"revision":c.profile().revision},"hostRequirements":c.host_requirements()}));
+            serde_json::json!({"site":t.site(),"policy":t.policy(),"role":t.role(),"clock":{"id":t.clock().id,"revision":t.clock().revision},"source":{"id":t.source().id,"revision":t.source().revision},"basis":t.basis(),"pauseAuthority":t.pause_authority(),"calendar":calendar,"hostRequirements":t.host_requirements()})
+        }).collect();
         return Ok(serde_json::json!({"status":"timing-checks-passed","executable":false,"revision":report.revision(),"timerUses":uses,"checkedTimingNodes":report.checked_nodes(),"uncoveredTimingNodes":report.uncovered_nodes(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining()}).to_string());
     }
     if args[0] == "format" {

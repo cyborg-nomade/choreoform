@@ -56,4 +56,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_concurrency.py
           .tools/ir-check/bin/python tools/check_clock_contract.py
           .tools/ir-check/bin/python tools/check_timing.py
+          .tools/ir-check/bin/python tools/check_instance_calendar.py
       # Browser execution is a separate manual evidence step, not implied by CI.

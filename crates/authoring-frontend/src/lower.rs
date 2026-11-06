@@ -284,8 +284,11 @@ impl<'a, 's> Lower<'a, 's> {
                 "clock" => {
                     resources.clock(&pin).map_err(|e| error(e.code, 0..0))?;
                 }
-                // Calendar provenance alone cannot bind an instance origin.
-                "calendar" => return Err(error("calendar-domain-binding-unproved", 0..0)),
+                "calendar" => {
+                    resources
+                        .instance_calendar(&pin)
+                        .map_err(|e| error(e.code, 0..0))?;
+                }
                 _ => return Err(error("external-contract-lowering-unsupported", 0..0)),
             }
         }
