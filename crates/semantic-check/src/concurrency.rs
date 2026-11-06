@@ -34,6 +34,7 @@ impl ConcurrencyReport {
             "exceptional-and-reconciliation-concurrency",
             "live-membership-sealing-and-lifecycle-enforcement",
             "exceptional-and-non-data-invalidation-and-lifecycle-enforcement",
+            "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "host-trust-and-atomic-runtime-enforcement",
             "full-benchmark-and-conformance-evidence",
         ]

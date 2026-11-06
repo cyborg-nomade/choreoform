@@ -56,3 +56,14 @@ Wasm/all relevant Python checks, separate completed-diff self-review, inspect al
 comments/CodeRabbit summaries, sign off commits and merge passing expected heads.
 Then return to the next real package/proof dependency. All forty scenarios remain
 Partial and Phase 1/actual host/browser/user gates stay open.
+
+## Inherited-context evidence clarification
+
+The planned substitution can remove a spurious `scope-context-unproved` refusal
+when a parallel child inherits only a proved historical influence. It does not
+change the concurrency/conflict/lifetime algorithm. Record that use with its
+creator node and optional destination context scope, not just later consequential
+sites; preserve the original refusal when an unvisited descendant writer keeps
+the origin live. A live origin already in a caller context is never upgraded by
+a later call to the same template. These are explicit tests of the planned context
+substitution, not permission to freeze fork/fanout summaries or mutable peers.

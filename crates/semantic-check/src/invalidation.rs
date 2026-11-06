@@ -18,6 +18,41 @@ impl InvalidationObligation {
     }
 }
 
+/// A conditional old value/control influence, not an actual completion receipt.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct HistoricalOrigin {
+    pub(crate) site: String,
+    pub(crate) cell: String,
+    pub(crate) boundary: String,
+    pub(crate) scope: String,
+    pub(crate) closure: String,
+    pub(crate) context_scope: Option<String>,
+}
+impl HistoricalOrigin {
+    pub fn site(&self) -> &str {
+        &self.site
+    }
+    pub fn cell(&self) -> &str {
+        &self.cell
+    }
+    pub fn boundary(&self) -> &str {
+        &self.boundary
+    }
+    pub fn scope(&self) -> &str {
+        &self.scope
+    }
+    pub fn closure(&self) -> &str {
+        &self.closure
+    }
+    /// Present when a creator carries this historical influence into a scope.
+    pub fn context_scope(&self) -> Option<&str> {
+        self.context_scope.as_deref()
+    }
+    pub fn condition(&self) -> &'static str {
+        "ordinary-completion-with-no-declared-descendant-writer"
+    }
+}
+
 /// Revision-bound declaration evidence, without values or an executable plan.
 #[derive(Debug)]
 pub struct InvalidationReport {
@@ -25,6 +60,7 @@ pub struct InvalidationReport {
     checked: BTreeSet<String>,
     uncovered: BTreeSet<String>,
     obligations: BTreeSet<InvalidationObligation>,
+    historical: BTreeSet<HistoricalOrigin>,
     scope_contexts: crate::protection::DependencyMap,
 }
 impl InvalidationReport {
@@ -47,6 +83,9 @@ impl InvalidationReport {
     pub fn obligations(&self) -> &BTreeSet<InvalidationObligation> {
         &self.obligations
     }
+    pub fn historical_origins(&self) -> &BTreeSet<HistoricalOrigin> {
+        &self.historical
+    }
     pub fn remaining(&self) -> &'static [&'static str] {
         &[
             "parallel-and-exceptional-availability-proofs",
@@ -54,6 +93,7 @@ impl InvalidationReport {
             "current-principal-purpose-capability-and-policy-enforcement",
             "concurrency-and-irreversible-race-safety-proofs",
             "exceptional-and-non-data-invalidation-and-lifecycle-enforcement",
+            "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "host-trust-and-atomic-runtime-enforcement",
             "full-benchmark-and-conformance-evidence",
         ]
@@ -118,5 +158,6 @@ pub fn check_invalidation(
         uncovered,
         obligations,
         scope_contexts: dependencies.scopes,
+        historical: dependencies.historical,
     })
 }

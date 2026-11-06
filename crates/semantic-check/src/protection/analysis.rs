@@ -12,6 +12,7 @@ pub(super) struct Flow<'a> {
     pub transfers: usize,
     pub accesses: BTreeSet<AccessObligation>,
     pub dependencies: Option<Dependencies>,
+    nonlocal_writes: BTreeSet<String>,
 }
 impl<'a> Flow<'a> {
     pub fn new(b: &'a Value, supplied: &[Resource<'_>]) -> Result<Self> {
@@ -63,11 +64,58 @@ impl<'a> Flow<'a> {
             transfers: 0,
             accesses: BTreeSet::new(),
             dependencies: None,
+            nonlocal_writes: BTreeSet::new(),
         })
+    }
+    pub(super) fn collect_dependencies(&mut self) -> Result<()> {
+        // Static checking has verified complete write inventories and visibility.
+        // Count every declaration, not only ordinary/reachable descendants.
+        for n in object(&self.b["nodes"])?.values() {
+            self.budget.charge(object(&n["writes"])?.len() + 1)?;
+            for cell in object(&n["writes"])?.keys() {
+                if self.b["data"][cell]["scope"] != n["scope"] {
+                    self.nonlocal_writes.insert(cell.clone());
+                }
+            }
+        }
+        self.dependencies = Some(Dependencies::default());
+        Ok(())
+    }
+    fn ordinary_completed(
+        &mut self,
+        origins: Origins,
+        scope: &str,
+        boundary: &str,
+        inherited: &Origins,
+    ) -> Result<Origins> {
+        if self.dependencies.is_none() {
+            return Ok(origins);
+        }
+        self.budget.charge(origins.len())?;
+        let mut result = Origins::new();
+        for origin in origins {
+            let origin = match origin {
+                Origin::Cell(cell)
+                    if self.b["data"][&cell]["scope"] == scope
+                        && !self.nonlocal_writes.contains(&cell)
+                        && !inherited.contains(&Origin::Cell(cell.clone())) =>
+                {
+                    Origin::Historical {
+                        cell,
+                        boundary: boundary.into(),
+                    }
+                }
+                other => other,
+            };
+            result.insert(origin);
+        }
+        Ok(result)
     }
     fn label(&self, origin: &Origin) -> &Value {
         match origin {
-            Origin::Cell(id) => &self.b["data"][id]["protection"],
+            Origin::Cell(id) | Origin::Historical { cell: id, .. } => {
+                &self.b["data"][id]["protection"]
+            }
             Origin::Provider(site) => self.providers[&site.role][&site.node].protection(),
         }
     }
@@ -140,15 +188,37 @@ impl<'a> Flow<'a> {
         }
         Ok(())
     }
-    pub fn scope(&mut self, scope: &str, inherited: &Origins, depth: usize) -> Result<Origins> {
+    pub fn scope(
+        &mut self,
+        scope: &str,
+        inherited: &Origins,
+        depth: usize,
+        creator: Option<&str>,
+    ) -> Result<Origins> {
         self.budget.tick(depth)?;
         self.budget.charge(inherited.len())?;
         if let Some(dependencies) = &mut self.dependencies {
             self.budget.charge(inherited.len() + 1)?;
+            if let Some(site) = creator {
+                for origin in inherited {
+                    if let Origin::Historical { cell, boundary } = origin {
+                        self.budget.charge(6)?;
+                        let source_scope = text(&self.b["data"][cell]["scope"])?;
+                        dependencies.historical.insert(HistoricalOrigin {
+                            site: site.into(),
+                            cell: cell.clone(),
+                            boundary: boundary.clone(),
+                            scope: source_scope.into(),
+                            closure: text(&self.b["scopes"][source_scope]["closure"])?.into(),
+                            context_scope: Some(scope.into()),
+                        });
+                    }
+                }
+            }
             dependencies.scopes.entry(scope.into()).or_default().extend(
                 inherited.iter().filter_map(|origin| match origin {
                     Origin::Cell(cell) => Some(cell.clone()),
-                    Origin::Provider(_) => None,
+                    Origin::Provider(_) | Origin::Historical { .. } => None,
                 }),
             );
         }
@@ -217,12 +287,27 @@ impl<'a> Flow<'a> {
                 // Save pre-result dependencies, unioning repeated call contexts.
                 // A site's own freshly produced result cannot invalidate itself
                 // merely because publication adds it to the outgoing context.
-                dependencies.nodes.entry(id.clone()).or_default().extend(
-                    pc.iter().chain(&reads).filter_map(|origin| match origin {
-                        Origin::Cell(cell) => Some(cell.clone()),
-                        Origin::Provider(_) => None,
-                    }),
-                );
+                let cells = dependencies.nodes.entry(id.clone()).or_default();
+                for origin in pc.iter().chain(&reads) {
+                    match origin {
+                        Origin::Cell(cell) => {
+                            cells.insert(cell.clone());
+                        }
+                        Origin::Historical { cell, boundary } => {
+                            self.budget.charge(5)?;
+                            let scope = text(&self.b["data"][cell]["scope"])?;
+                            dependencies.historical.insert(HistoricalOrigin {
+                                site: id.clone(),
+                                cell: cell.clone(),
+                                boundary: boundary.clone(),
+                                scope: scope.into(),
+                                closure: text(&self.b["scopes"][scope]["closure"])?.into(),
+                                context_scope: None,
+                            });
+                        }
+                        Origin::Provider(_) => {}
+                    }
+                }
             }
             for cell in names(&n["writes"])? {
                 let deps = self.access(&id, &cell, "write")?;
@@ -249,11 +334,14 @@ impl<'a> Flow<'a> {
                         self.access(&id, target, "transfer")?;
                         self.publish(&sources, target, &id)?;
                     }
-                    pc.extend(self.scope(child, &pc.clone(), depth + 1)?);
+                    let completed = self.scope(child, &pc.clone(), depth + 1, Some(&id))?;
+                    let closed = self.ordinary_completed(completed, child, &id, &pc)?;
+                    pc.extend(closed);
                     for (port, target) in object(&n["outputs"])? {
                         let source = text(&self.b["scopes"][child]["outputs"][port])?;
                         let mut sources = pc.clone();
-                        sources.extend(self.access(&id, source, "transfer")?);
+                        let output = self.access(&id, source, "transfer")?;
+                        sources.extend(self.ordinary_completed(output, child, &id, &pc)?);
                         let target = text(target)?;
                         self.access(&id, target, "transfer")?;
                         self.publish(&sources, target, &id)?;
@@ -265,12 +353,19 @@ impl<'a> Flow<'a> {
                         self.access(&id, item, "transfer")?;
                         self.publish(&pc, item, &id)?;
                     }
-                    pc.extend(self.scope(text(&n["body"])?, &pc.clone(), depth + 1)?);
+                    let body = text(&n["body"])?;
+                    let completed = self.scope(body, &pc.clone(), depth + 1, Some(&id))?;
+                    let completed = if n["kind"] == "repeat" {
+                        self.ordinary_completed(completed, body, &id, &pc)?
+                    } else {
+                        completed
+                    };
+                    pc.extend(completed);
                 }
                 "split" => {
                     let snapshot = pc.clone();
                     for child in object(&n["children"])?.values() {
-                        pc.extend(self.scope(text(child)?, &snapshot, depth + 1)?);
+                        pc.extend(self.scope(text(child)?, &snapshot, depth + 1, Some(&id))?);
                     }
                 }
                 "finish" => {

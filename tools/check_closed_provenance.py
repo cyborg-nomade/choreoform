@@ -68,19 +68,95 @@ def invoke(source, ledger, stage='check-invalidation'):
         return run(stage, s, b)
 
 
+def large_package(cells=100, sites=80):
+    p = Package()
+    p.ledger.update(profile='0.6.0', version='0.5.0', root='root', definition='historical_report_budget', annotations={'synthetic': True})
+    p.ledger['contracts']['core'] = CORE3.copy()
+    root = Scope(p, 'root', 'Historical report budget', None, 'Run')
+    foundations(root)
+    root.expression('yes', 'Yes', BOOLEAN, literal(BOOLEAN, True))
+    root.step('run', 'Run', 'Run "Worker" with inputs empty and outputs empty.', [('complete', 'After 0')])
+    for i in range(sites):
+        target = f'After {i+1}' if i+1 < sites else 'Done'
+        root.step(f'after{i}', f'After {i}', 'Choose by ["go" when "Yes"]; otherwise "other".', [('go', target), ('other', target)])
+    root.step('done', 'Done', 'Finish as "complete".')
+    child = Scope(p, 'worker', 'Worker', root, 'Choose')
+    terms = []
+    for i in range(cells):
+        child.data(f'local{i}', f'Local {i}', INTEGER, literal(INTEGER, '0'), invalidates=['"Choose"'], participants=PEOPLE)
+        terms.append(binary('eq', read(f'Local {i}'), literal(INTEGER, '0')))
+    def balanced(values):
+        if len(values) == 1:
+            return values[0]
+        middle = len(values) // 2
+        return binary('and', balanced(values[:middle]), balanced(values[middle:]))
+    child.expression('condition', 'Condition', BOOLEAN, balanced(terms))
+    child.step('choose', 'Choose', 'Choose by ["go" when "Condition"]; otherwise "other".', [('go','Worker done'),('other','Worker done')])
+    child.step('worker_done', 'Worker done', 'Finish as "complete".')
+    root.child(child)
+    return 'Choreoform authoring "0.6.0".\n' + root.render(), p.ledger
+
+
 class ClosedProvenanceEvidence(unittest.TestCase):
-    def test_baseline_context_refusals_and_complete_mutable_input_reads(self):
-        for mode, survivor, omit in [('invoke', None, False), ('repeat', None, False), ('invoke', 'readonly', False), ('invoke', 'writer', False), ('invoke', None, True)]:
-            with self.subTest(mode=mode, survivor=survivor, omit=omit):
-                source, ledger = package(mode, survivor, omit)
-                result = invoke(source, ledger, 'check-protection')
-                self.assertEqual(result.returncode, 0, result.stderr)
-                raw = json.loads(invoke(source, ledger, 'lower').stdout)['body']
-                self.assertIn('seed', raw['nodes']['run']['reads'])
-                result = invoke(source, ledger)
-                self.assertNotEqual(result.returncode, 0)
-                self.assertIn(b'invalidation-context-unproved at /body/nodes/review', result.stderr)
-                self.assertEqual(result.stdout, b'')
+    def test_synchronous_invoke_and_repeat_keep_ancestor_obligations_and_report_conditions(self):
+        for mode in ['invoke', 'repeat']:
+            source, ledger = package(mode)
+            result = invoke(source, ledger)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads(result.stdout)
+            self.assertIs(report['executable'], False)
+            self.assertEqual(report['historicalOrigins'], [{'site': 'review', 'cell': 'local', 'boundary': 'run', 'scope': 'worker', 'closure': 'ordinary_close', 'condition': 'ordinary-completion-with-no-declared-descendant-writer'}])
+            self.assertIn({'site':'review','cell':'seed'}, report['invalidationObligations'])
+            self.assertNotIn('Synthetic declaration review.', result.stdout.decode())
+            self.assertIn('occurrence-bound-ordinary-closure-and-snapshot-enforcement', report['remaining'])
+
+    def test_mutable_ancestor_and_surviving_writer_are_still_refused_independently(self):
+        for survivor, omit, code, path in [('writer',False,'invalidation-context-unproved','/body/nodes/review'), (None,True,'invalidation-coverage','/body/data/seed/invalidates')]:
+            source, ledger = package(survivor=survivor, omit_ancestor=omit)
+            result = invoke(source, ledger)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(f'{code} at {path}; source bytes '.encode(), result.stderr)
+            self.assertEqual(result.stdout,b'')
+        source, ledger = package(survivor='readonly')
+        result = invoke(source, ledger)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout)['historicalOrigins'][0]['closure'],'keep_worker')
+        result = invoke(source, ledger, 'check-concurrency')
+        self.assertIn(b'scope-lifetime-unproved', result.stderr)
+
+    def test_all_composed_native_reports_retain_the_same_conditional_history(self):
+        source, ledger = package()
+        expected = json.loads(invoke(source, ledger).stdout)['historicalOrigins']
+        for stage in ['check-concurrency', 'check-timing', 'check-fault-routes', 'check-exceptional-availability', 'check-reconciliation-links', 'check-reconciliation-availability']:
+            result = invoke(source, ledger, stage)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads(result.stdout)
+            self.assertIs(report['executable'],False)
+            self.assertEqual(report['historicalOrigins'], expected)
+            self.assertIn('occurrence-bound-ordinary-closure-and-snapshot-enforcement', report['remaining'])
+
+    def test_format_reparse_keeps_ir_and_history_with_no_new_private_namespace(self):
+        source, ledger = package()
+        before = json.loads(invoke(source, ledger, 'lower').stdout)
+        formatted = json.loads(invoke(source, ledger, 'format').stdout)
+        after_source, after_ledger = formatted['source'], json.loads(formatted['companion'])
+        self.assertEqual(json.loads(invoke(after_source, after_ledger,'lower').stdout),before)
+        self.assertEqual(json.loads(invoke(source,ledger).stdout),json.loads(invoke(after_source,after_ledger).stdout))
+        # Generic parent source still cannot read a child's private cell.
+        ledger['declarations'].append({'id':'private_read','kind':'expression','scope':'root','name':'Private read'})
+        source = source.replace('End process.', 'Let "Private read" mean (the value of "Local" in "Worker" in "Snapshot example") as whole number with parameters empty. End process.')
+        result = invoke(source,ledger,'lower')
+        self.assertIn(b'reference-missing',result.stderr)
+        self.assertEqual(result.stdout,b'')
+
+    def test_native_historical_report_is_bounded_before_any_output_is_written(self):
+        source, ledger = large_package()
+        result = invoke(source,ledger,'lower')
+        self.assertEqual(result.returncode,0,result.stderr)
+        result = invoke(source,ledger)
+        self.assertNotEqual(result.returncode,0)
+        self.assertEqual(result.stdout,b'')
+        self.assertIn(b'report-budget',result.stderr)
 
 
 if __name__ == '__main__':

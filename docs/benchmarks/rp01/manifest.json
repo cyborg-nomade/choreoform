@@ -39,71 +39,71 @@
     {
       "stage": "check-invalidation",
       "result": "refused",
-      "code": "invalidation-context-unproved",
-      "path": "/body/nodes/check_rejection",
+      "code": "invalidation-coverage",
+      "path": "/body/data/disposition/invalidates",
       "sourceBytes": [
-        44138,
-        44347
+        49280,
+        49607
       ]
     },
     {
       "stage": "check-concurrency",
       "result": "refused",
-      "code": "invalidation-context-unproved",
-      "path": "/body/nodes/check_rejection",
+      "code": "invalidation-coverage",
+      "path": "/body/data/disposition/invalidates",
       "sourceBytes": [
-        44138,
-        44347
+        49280,
+        49607
       ]
     },
     {
       "stage": "check-timing",
       "result": "refused",
-      "code": "invalidation-context-unproved",
-      "path": "/body/nodes/check_rejection",
+      "code": "invalidation-coverage",
+      "path": "/body/data/disposition/invalidates",
       "sourceBytes": [
-        44138,
-        44347
+        49280,
+        49607
       ]
     },
     {
       "stage": "check-fault-routes",
       "result": "refused",
-      "code": "invalidation-context-unproved",
-      "path": "/body/nodes/check_rejection",
+      "code": "invalidation-coverage",
+      "path": "/body/data/disposition/invalidates",
       "sourceBytes": [
-        44138,
-        44347
+        49280,
+        49607
       ]
     },
     {
       "stage": "check-exceptional-availability",
       "result": "refused",
-      "code": "invalidation-context-unproved",
-      "path": "/body/nodes/check_rejection",
+      "code": "invalidation-coverage",
+      "path": "/body/data/disposition/invalidates",
       "sourceBytes": [
-        44138,
-        44347
+        49280,
+        49607
       ]
     },
     {
       "stage": "check-reconciliation-links",
       "result": "refused",
-      "code": "invalidation-context-unproved",
-      "path": "/body/nodes/check_rejection",
+      "code": "invalidation-coverage",
+      "path": "/body/data/disposition/invalidates",
       "sourceBytes": [
-        44138,
-        44347
+        49280,
+        49607
       ]
     },
     {
       "stage": "check-reconciliation-availability",
       "result": "refused",
-      "code": "invalidation-context-unproved",
-      "path": "/body/nodes/check_rejection",
+      "code": "invalidation-coverage",
+      "path": "/body/data/disposition/invalidates",
       "sourceBytes": [
-        44138,
-        44347
+        49280,
+        49607
       ]
     }
   ],

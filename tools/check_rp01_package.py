@@ -46,11 +46,11 @@ class Rp01PackageEvidence(unittest.TestCase):
                 self.assertEqual(report['revision'], self.candidate['revision'])
                 self.assertEqual(stage['reportDigest'], 'sha256:' + sha256(generated[stage['report']]).hexdigest())
                 continue
-            self.assertEqual(stage['code'], 'invalidation-context-unproved')
-            self.assertEqual(stage['path'], '/body/nodes/check_rejection')
+            self.assertEqual(stage['code'], 'invalidation-coverage')
+            self.assertEqual(stage['path'], '/body/data/disposition/invalidates')
             start, end = stage['sourceBytes']
             declaration = self.source[start:end].decode('utf-8')
-            self.assertTrue(declaration.startswith('Step "Check rejection".'))
+            self.assertTrue(declaration.startswith('Keep "Disposition"'))
         self.assertEqual(manifest['sourceDigest'], 'sha256:' + sha256(self.source).hexdigest())
         self.assertEqual(manifest['canonicalIR']['digest'], 'sha256:' + sha256(generated['candidate.ir.json']).hexdigest())
 

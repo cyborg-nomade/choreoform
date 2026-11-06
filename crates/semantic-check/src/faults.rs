@@ -103,6 +103,7 @@ impl FaultReport {
     }
     pub fn remaining(&self) -> &'static [&'static str] {
         &[
+            "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "all-prior-timing-stage-obligations",
             "exceptional-handler-entry-availability-protection-and-invalidation",
             "concurrent-handler-activation-and-occurrence-lifetime-proofs",

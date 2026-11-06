@@ -445,6 +445,20 @@ and unproved descendants are excluded. The checker is still unchanged at this
 audit checkpoint. Next implement ADR-0037 with counterexample/budget/report tests,
 then rerun the actual full package and retain its next real refusal. No phase gate.
 
+ADR-0037's exact-scope/no-descendant-writer proof is implemented on the closed-
+provenance branch after the committed critique. Seven additional Rust and five
+Python groups cover live ancestor retention, mutable/unvisited writers, protected
+historical control, repeated/fork contexts, scope-entry evidence and work/report
+bounds. The full RP-01 source/IR identity and protection reports remain unchanged;
+its next real refusal is missing `/body/data/disposition/invalidates` coverage,
+not private context. See [evidence](0037-closed-provenance.md). Local 277 Rust tests
+plus five doctests, native/Wasm and all Python checks pass; final-head CI/comment
+audit/expected-head merge remain required. Subsequent merge bodies will explicitly
+include sign-off trailers; [three earlier GitHub default-message exceptions](0037-merge-signoff-correction.md)
+are recorded without rewriting published hashes. Next derive precise missing
+package invalidation obligations, then continue lifetime/proof work. Draft #46
+remains unmerged and no complete scenario or phase gate closes.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

@@ -14,8 +14,10 @@ measurement lexes complete lines independently and is not whole-program admissio
 Source 0.6 / companion 0.5 and core 0.3 are selected explicitly under
 ADR-0035/0036; old cores/source profiles remain unchanged. Coherent fictional
 business/clock recipient labels now pass static, ordinary control and protection
-checks. Invalidation and all later composed stages still refuse a private-child
-context; no later-stage or whole-process admission is claimed.
+checks. Invalidation and all later composed stages now refuse missing declared
+coverage for the mutable Disposition cell; no later-stage or whole-process
+admission is claimed. Closed private influence is handled only by the bounded
+ADR-0037 proof subset, retaining all mutable ancestor dependencies.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 
