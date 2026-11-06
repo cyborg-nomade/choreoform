@@ -459,6 +459,18 @@ are recorded without rewriting published hashes. Next derive precise missing
 package invalidation obligations, then continue lifetime/proof work. Draft #46
 remains unmerged and no complete scenario or phase gate closes.
 
+[PR #50](https://github.com/cyborg-nomade/choreoform/pull/50) merged into draft
+#46 as `a8fd751f33385cd65d96f5987489b2aead598018` after final-head CI
+`42260886484`. Delegated self-review comment `6691092446` records no unresolved
+findings; CodeRabbit skipped the non-default base and supplies no independent
+evidence. The merge message has an explicit sign-off trailer. ADR-0037 remains
+pending parent/main integration. The active dependency is now
+`codex/invalidation-requirements`, following the
+[frozen advisory requirements plan](0038-invalidation-requirements-plan.md).
+Derive exact required/missing links while keeping all strict checks strict, then
+return to source declarations and remaining lifetime/proof work. Draft #46 remains
+unmerged and all scenarios/phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
