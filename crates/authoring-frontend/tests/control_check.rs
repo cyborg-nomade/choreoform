@@ -11,6 +11,8 @@ use serde_json::{Value, json};
 mod exceptional;
 #[path = "control/faults.rs"]
 mod faults;
+#[path = "control/reconciliation_entry.rs"]
+mod reconciliation_entry;
 #[path = "control/settlement.rs"]
 mod settlement;
 

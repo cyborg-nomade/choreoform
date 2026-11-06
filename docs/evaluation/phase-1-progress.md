@@ -250,11 +250,25 @@ source example. Six Rust and five Python groups cover identity, format/hash/repo
 cycles, strict profiles/pins, timer/retry compatibility, declaration order and
 private/non-designated/nested/wrong-policy boundaries. 235 Rust tests plus five
 compile-fail doctests, native/Wasm and all relevant artifact/source/stage oracles
-passed. ADR-0031 is accepted after separate delegated self-review; final-head CI
-and expected-head merge remain pending. Next audit precise surviving follow-up
-entry/data lifetime rules before implementing further conditional availability;
+passed. ADR-0031 is accepted after separate delegated self-review. PR #41 merged
+as `1c6718c5c2afd23f5e7609ba34f77cafb44a06db` after passing final-head CI run
+`42204771363`; CodeRabbit skipped review and there were no unresolved findings.
+The P6 audit confirms a no-port surviving boundary, without guaranteed retained
+ancestor values. Next is the [frozen conditional entry plan](0032-reconciliation-entry-plan.md);
 retain exceptional protection/invalidation and full validator/benchmark/
 text/visual/protected editing/actual user gates. No phase exit is claimed.
+
+The reconciliation-body stage now checks each actual reconcile-closure follow-up
+with zero inherited cells, fresh locals and one shared graph/index/budget, keeping
+ordinary/handler/conditional body coverage separate. Seven Rust and four Python
+groups cover parent-value refusals, local initialization, role isolation, nested/
+unused contexts, 401 entries and owned source cycles. 242 Rust tests plus five
+compile-fail doctests, native/Wasm and all relevant artifact/source/stage oracles
+passed. ADR-0032 is accepted after separate delegated self-review; final-head CI
+and expected-head merge remain pending. Next improve actionable source diagnostic
+mapping from existing immutable source maps. Retain exceptional/follow-up
+protection/invalidation/concurrency, richer retained snapshots, actual host and
+full validator/benchmark/text/visual/protected editing/user gates. No phase exit.
 
 ## Honest exit accounting
 

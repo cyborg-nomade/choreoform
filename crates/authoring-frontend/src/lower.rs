@@ -140,6 +140,15 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ReconciliationReport> {
         choreoform_semantic_check::check_reconciliation_links(&self.envelope, resources)
     }
+    /// Check conditional follow-up bodies with zero inherited values, never live
+    /// storage, authority, accepted ownership, correlation or execution permission.
+    pub fn check_reconciliation_availability(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ReconciliationEntryReport>
+    {
+        choreoform_semantic_check::check_reconciliation_availability(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {

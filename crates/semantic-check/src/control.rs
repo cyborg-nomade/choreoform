@@ -83,11 +83,12 @@ pub(crate) struct EntryCoverage {
     pub scopes: BTreeSet<String>,
 }
 /// Reuse one bounded graph for conditional body entries. These sets are explicit
-/// premises from input contracts, not invented current runtime snapshots.
+/// premises (possibly empty), not invented current runtime snapshots.
 pub(crate) fn check_entries(
     b: &Value,
     entries: &BTreeMap<String, BTreeSet<String>>,
     mut budget: Budget,
+    availability_code: &'static str,
 ) -> Result<EntryCoverage> {
     if entries.is_empty() {
         return Ok(EntryCoverage {
@@ -97,8 +98,8 @@ pub(crate) fn check_entries(
     }
     let graph = Graph::build(b, &mut budget)?;
     let mut analysis = Analysis::new(b, graph, budget)?;
-    for (handler, inputs) in entries {
-        analysis.scope(handler, inputs, 0).map_err(|mut e| {
+    for (entry, inputs) in entries {
+        analysis.scope(entry, inputs, 0).map_err(|mut e| {
             if matches!(
                 e.code,
                 "data-availability-unproved"
@@ -106,7 +107,7 @@ pub(crate) fn check_entries(
                     | "initializer-availability-unproved"
                     | "output-availability-unproved"
             ) {
-                e.code = "exceptional-availability-unproved";
+                e.code = availability_code;
             }
             e
         })?;

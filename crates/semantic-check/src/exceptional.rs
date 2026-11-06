@@ -76,7 +76,8 @@ pub fn check_exceptional_availability(
         budget.charge(inputs.len() + 1)?;
         assumptions.insert(handler.to_owned(), inputs);
     }
-    let coverage = control::check_entries(b, &assumptions, budget)?;
+    let coverage =
+        control::check_entries(b, &assumptions, budget, "exceptional-availability-unproved")?;
     let ordinary = faults
         .timing()
         .concurrency()

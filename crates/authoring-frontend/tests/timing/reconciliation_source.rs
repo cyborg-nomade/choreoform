@@ -202,6 +202,12 @@ fn observation_and_timer_share_the_exact_exported_wait_owner() {
     // The follow-up is not invented as an ordinary timing/data execution context.
     let report = c.check_reconciliation_links(&f.resources()).unwrap();
     assert_eq!(report.uses().len(), 1);
+    assert_eq!(
+        c.check_reconciliation_availability(&f.resources())
+            .unwrap_err()
+            .code,
+        "reconciliation-availability-unproved"
+    );
     let source = source.replace(
         "On timer outcome \"expired\" of \"Observe service\" in \"Recovery\".",
         "On timer outcome \"approved\" of \"Review\".",
