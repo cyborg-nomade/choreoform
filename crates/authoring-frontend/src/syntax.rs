@@ -259,7 +259,7 @@ fn lex(source: &str, program: bool) -> Result<Vec<Token>> {
             && tokens[1].kind == Kind::Word
             && tokens[1].value == "authoring"
             && tokens[2].kind == Kind::Text
-            && tokens[2].value == "0.5.0"
+            && matches!(tokens[2].value.as_str(), "0.5.0" | "0.6.0")
         {
             token_limit = V5_TOKENS;
         }
@@ -537,6 +537,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
             Some("0.3.0") => "0.3.0",
             Some("0.4.0") => "0.4.0",
             Some("0.5.0") => "0.5.0",
+            Some("0.6.0") => "0.6.0",
             _ => return Err(error("profile", 0..source.len())),
         }
     } else {
@@ -552,7 +553,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
         position: 0,
         work: 0,
         furthest: 0,
-        work_limit: if profile == "0.5.0" {
+        work_limit: if matches!(profile, "0.5.0" | "0.6.0") {
             V5_WORK
         } else {
             MAX_WORK

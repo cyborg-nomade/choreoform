@@ -5,13 +5,18 @@
 
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
 profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0, 0.4.0 /
-companion 0.3.0 and 0.5.0 / companion 0.4.0. This prototype produces **candidate IR**, not
+companion 0.3.0, 0.5.0 / companion 0.4.0 and 0.6.0 / companion 0.5.0. This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
 
 The [0.5.0 profile](../../docs/authoring/profile-v0.5.md) adds bounded full-program
 recognition and actual declared capability-use follow-up endpoints. Read-only
 `Syntax::token_count()` and `parser_work()` expose lexical size and native pattern
 visits, without implying semantic or runtime evidence.
+
+[Source 0.6.0](../../docs/authoring/profile-v0.6.md) selects exact core 0.3 plus
+both inherited core artifacts, deriving finite provider metadata reads within the
+existing dependency-pass work bound. Compiler output still requires semantic
+revalidation; source promotion changes the core pin and semantic revision.
 
 ## API boundaries
 
@@ -133,7 +138,7 @@ transactional identity editor, safe rename/move API or production formatter.
 Tests exercise original-package format/reparse/lower cycles and declared alias edits.
 
 Source/companion are each at most 1 MiB. Legacy profiles/fragments allow at most
-4,096 tokens and 100,000 recognizer pattern visits; the explicit 0.5.0 program
+4,096 tokens and 100,000 recognizer pattern visits; the explicit 0.5.0/0.6.0 program
 header selects 16,384 tokens and 1,000,000 visits. Keep 64 delimiter levels and
 100,000 lowering work units. A separate 512-call recognizer-depth
 guard can refuse deeply nested legal fragments. Scope/type/expression and ledger/IR

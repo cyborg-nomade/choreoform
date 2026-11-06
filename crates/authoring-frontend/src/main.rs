@@ -114,6 +114,13 @@ fn run() -> Result<String, String> {
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt"),
         });
     }
+    if package.syntax().profile() == "0.6.0" {
+        resources.push(Resource {
+            id: choreoform_semantic_check::CORE_V3.0,
+            revision: choreoform_semantic_check::CORE_V3.1,
+            bytes: include_bytes!("../../../docs/ir/contracts/sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt"),
+        });
+    }
     resources.extend(extra.iter().map(|(id, revision, bytes)| Resource {
         id,
         revision,

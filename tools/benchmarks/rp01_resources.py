@@ -160,12 +160,12 @@ def providers(type_pin, shared=False):
     return result
 
 
-def clock_resources():
+def clock_resources(shared=False):
     source_id = 'urn:choreoform:benchmarks:rp01:clock-source:0.1.0'
     source = {
         'kind': 'provider-contract', 'version': '0.1.0', 'id': source_id,
         'input': record(), 'output': INTEGER, 'outcomes': {'tick': True},
-        'resultProtection': protection(),
+        'resultProtection': protection(['checks_capability', 'payment_capability', 'notice_capability'] if shared else ()),
         'observations': {
             'tick': {'state': 'succeeded', 'result': INTEGER, 'outcome': 'tick'},
             'unknown': {'state': 'unknown', 'result': None, 'outcome': None},

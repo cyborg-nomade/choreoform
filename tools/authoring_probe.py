@@ -82,7 +82,7 @@ def lex(source, program=True):
             if value[0] in '-0123456789' and i < len(source) and (source[i].isalnum() or source[i] in '_-'):
                 reject("numeric token requires a boundary")
             tokens.append(('NUMBER' if value[0] in '-0123456789' else 'WORD', value))
-        if program and tokens == [('WORD', 'Choreoform'), ('WORD', 'authoring'), ('TEXT', '0.5.0')]:
+        if program and len(tokens) == 3 and tokens[:2] == [('WORD', 'Choreoform'), ('WORD', 'authoring')] and tokens[2] in [('TEXT', '0.5.0'), ('TEXT', '0.6.0')]:
             token_limit = 16384
         if len(tokens) > token_limit:
             reject("oracle token limit")
@@ -166,7 +166,7 @@ def recognize(source, start='program', rules=None):
     tokens = lex(source, program=start == 'program')
     profile = '0.2.0'
     if start == 'program':
-        if len(tokens) < 3 or tokens[2] not in [('TEXT', '0.2.0'), ('TEXT', '0.3.0'), ('TEXT', '0.4.0'), ('TEXT', '0.5.0')]:
+        if len(tokens) < 3 or tokens[2] not in [('TEXT', '0.2.0'), ('TEXT', '0.3.0'), ('TEXT', '0.4.0'), ('TEXT', '0.5.0'), ('TEXT', '0.6.0')]:
             reject("unsupported source profile")
         profile = tokens[2][1]
     if rules is None:
@@ -175,7 +175,7 @@ def recognize(source, start='program', rules=None):
     if start not in rules:
         reject("unknown grammar start rule")
     states = 0
-    state_limit = 1000000 if profile == '0.5.0' else MAX_STATES
+    state_limit = 1000000 if profile in ['0.5.0', '0.6.0'] else MAX_STATES
 
     @lru_cache(maxsize=None)
     def walk(node, position):
@@ -288,7 +288,7 @@ def strict_json(raw):
 
 
 def validate_ledger(ledger):
-    version = {'0.2.0': '0.1', '0.3.0': '0.2', '0.4.0': '0.3', '0.5.0': '0.4'}.get(ledger.get('profile'))
+    version = {'0.2.0': '0.1', '0.3.0': '0.2', '0.4.0': '0.3', '0.5.0': '0.4', '0.6.0': '0.5'}.get(ledger.get('profile'))
     if version is None:
         reject("unsupported companion profile")
     schema = json.loads((ROOT / f'schemas/authoring/bindings-{version}.schema.json').read_text())

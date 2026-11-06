@@ -3,7 +3,12 @@
 
 # Near-English authoring: a working design, not final syntax
 
-The [source 0.5.0 / companion 0.4.0 profile](profile-v0.5.md) adds explicit
+The [source 0.6.0 / companion 0.5.0 profile](profile-v0.6.md) explicitly selects
+core 0.3 and derives finite provider-recipient metadata reads. Older profiles keep
+their original cores, limits and integrity domains. Full benchmark, validation,
+editing and actual user gates remain open.
+
+The earlier [source 0.5.0 / companion 0.4.0 profile](profile-v0.5.md) adds explicit
 whole-program quotas and actual-use reconciliation endpoints for larger benchmark
 drafts. It preserves private data and older profile limits; lowering remains
 separate from semantic admission.
