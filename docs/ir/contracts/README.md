@@ -19,6 +19,7 @@ support to the Rust probe, fixture checker or a runtime.
 | `urn:choreoform:contracts:core-profile:0.1.0` | [Accepted executable-contract specification](sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt) | Three `docs/dialects/` sources at `8ac89587090bc57145da615e4add53548cd661bc`, framed in the order specified below |
 | `urn:choreoform:clock-profile:instance-microseconds:0.1.0` | [Instance-clock profile](sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt) | Exact versioned `docs/clocks/instance-microseconds-v0.1.md` bytes; ADR-0023 delegated acceptance, effective upon merge |
 | `urn:choreoform:calendar-profile:instance-intervals:0.1.0` | [Instance calendar construction](sha256-2ab8a6a78f2829ababa2d023f6743ac82d7a31acbfca1fb7a03340b7c929f35f.txt) | Exact versioned `docs/clocks/instance-calendar-v0.1.md` bytes; ADR-0025 delegated acceptance, effective upon merge |
+| `urn:choreoform:contracts:core-profile:0.2.0` | [Explicit retry clock extension](sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt) | Exact `docs/dialects/core-retry-v0.2.md` bytes; requires the exact 0.1.0 base artifact; ADR-0026 |
 
 Hash every byte, including the original notices and final newline. The local
 `.gitattributes` disables line-ending conversion for these snapshots. The `.txt`

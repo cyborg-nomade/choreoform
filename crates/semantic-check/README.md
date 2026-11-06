@@ -3,6 +3,15 @@
 
 # Static contract checks, not executable admission
 
+Core 0.2.0 adds explicit retry clock/basis fields while inheriting the exact core
+0.1.0 artifact. Records select their own dialect; old records are not upgraded.
+`check_timing().retry_uses()` exposes immutable bindings/attempts/delays and live
+host requirements, never dispatch permission. Distinct retry-clock labels apply
+before work result writes and survive null results alongside timeout/activity
+origins. Source 0.2.0 retains its old payload; a new near-English profile follows.
+See [ADR-0026](../../docs/decisions/0026-explicit-retry-clock.md) and
+[evidence](../../docs/evaluation/0026-explicit-retry-clock.md).
+
 Accepted [ADR-0016](../../docs/decisions/0016-static-contract-checks.md) implementation
 of closed ADR-0013 judgments. Rust remains the shared implementation language.
 No IO, network, clock, authentication, dispatch or process interpreter is provided.
@@ -236,7 +245,8 @@ its read-only Integer tick provider. Register the clock, profile and source byte
 explicitly; the reader verifies all pins and source constraints. It reads no
 time, authenticates no source and grants no timer/dispatch authority. Supported
 timer typing/flow is integrated in ADR-0024, with known relative calendars in
-ADR-0025. Live calendar activation, retry clock bindings, current facts and actual
+ADR-0025. ADR-0026 adds explicit retry metadata; live calendar activation, retry
+domain/fault/basis bindings, current facts and actual
 host enforcement remain open. See
 [clock contracts](../../docs/clocks/README.md) and
 [evidence](../../docs/evaluation/0023-clock-resource-contract.md).

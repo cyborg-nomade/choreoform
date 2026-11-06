@@ -145,6 +145,15 @@ CodeRabbit skipped automatic review; no independent review is claimed. Next is
 the [versioned retry-clock/basis plan](0026-retry-clock-plan.md): core/static/
 timing integration followed by a separate near-English authoring revision.
 No implicit timeout/scheduler clock or phase exit follows from calendar metadata.
+The core 0.2.0 retry slice now requires explicit clock/basis fields per record
+dialect, retains distinct pre-write source origins and exposes immutable RetryUse
+metadata/live obligations. Seven new Rust and three Python groups cover version,
+integrity, visibility, dependencies, independent clocks/null results, coverage and
+bounded sharing. ADR-0026 is accepted under delegated automated self-review;
+190 Rust tests plus five compile-fail doctests, native/Wasm and relevant stage/
+artifact oracles passed locally. Required final-head CI/merge remain pending.
+Next is the separately versioned near-English source profile and retry sentence;
+old source/core remain unchanged. No live retry dispatch or phase gate is closed.
 
 ## Honest exit accounting
 

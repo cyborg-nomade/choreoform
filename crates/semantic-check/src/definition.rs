@@ -54,11 +54,15 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
     resources.verify(&semantics)?;
     for pin in object(&b["dialects"])?.values() {
         let p = Pin::decode(pin)?;
-        require(
-            (p.id.as_str(), p.revision.as_str()) == CORE,
-            "dialect-contract",
-        )?;
+        let contract = (p.id.as_str(), p.revision.as_str());
+        require(contract == CORE || contract == CORE_V2, "dialect-contract")?;
         resources.verify(&p)?;
+        if contract == CORE_V2 {
+            resources.verify(&Pin {
+                id: CORE.0.into(),
+                revision: CORE.1.into(),
+            })?;
+        }
     }
     let mut c = Check {
         b,

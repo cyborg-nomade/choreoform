@@ -41,6 +41,16 @@ impl<'a> Flow<'a> {
                     .or_default()
                     .insert(id.clone(), registry.provider(clock.source())?);
             }
+            if n["kind"] == "activity" {
+                let retry = &b["policies"][text(&n["policy"])?]["body"]["retry"];
+                if !retry["clock"].is_null() {
+                    let clock = registry.clock(&Pin::decode(&retry["clock"])?)?;
+                    providers
+                        .entry(ProviderRole::RetryClock)
+                        .or_default()
+                        .insert(id.clone(), registry.provider(clock.source())?);
+                }
+            }
         }
         Ok(Self {
             b,
@@ -195,6 +205,7 @@ impl<'a> Flow<'a> {
             // Timing affects whether a result may publish, not only its later
             // successor. Keep clock and activity providers as distinct origins.
             self.source(&id, ProviderRole::Clock, &mut pc)?;
+            self.source(&id, ProviderRole::RetryClock, &mut pc)?;
             if matches!(text(&n["kind"])?, "decision" | "activity" | "wait")
                 && let Some(dependencies) = &mut self.dependencies
             {

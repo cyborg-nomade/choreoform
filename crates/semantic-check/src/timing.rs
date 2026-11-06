@@ -84,10 +84,62 @@ impl CalendarUse {
     }
 }
 
+/// Explicit retry binding metadata, never proof that an attempt may dispatch.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct RetryUse {
+    site: String,
+    policy: String,
+    clock: Pin,
+    source: Pin,
+    basis: String,
+    authority: String,
+    max_attempts: u64,
+    delays: Vec<i64>,
+}
+impl RetryUse {
+    pub fn site(&self) -> &str {
+        &self.site
+    }
+    pub fn policy(&self) -> &str {
+        &self.policy
+    }
+    pub fn clock(&self) -> &Pin {
+        &self.clock
+    }
+    pub fn source(&self) -> &Pin {
+        &self.source
+    }
+    pub fn basis(&self) -> &str {
+        &self.basis
+    }
+    pub fn authority(&self) -> &str {
+        &self.authority
+    }
+    pub fn max_attempts(&self) -> u64 {
+        self.max_attempts
+    }
+    pub fn delays(&self) -> &[i64] {
+        &self.delays
+    }
+    pub fn host_requirements(&self) -> &'static [&'static str] {
+        &[
+            "authenticated-retry-clock-source-instance-and-registered-origin",
+            "accepted-eligible-fault-attempt-correlation-and-domain-stamp",
+            "checked-delay-addition-and-durable-monotonic-due-observations",
+            "unchanged-original-request-input-and-basis-revisions",
+            "current-work-target-source-protection-and-access-authority",
+            "stable-key-or-definitive-correlated-no-effect-evidence-as-required",
+            "no-retry-after-success-process-cancellation-or-ordinary-closure",
+            "atomic-durable-attempt-budget-dispatch-and-owned-reconciliation",
+        ]
+    }
+}
+
 #[derive(Debug)]
 pub struct TimingReport {
     concurrency: ConcurrencyReport,
     uses: BTreeSet<TimerUse>,
+    retries: BTreeSet<RetryUse>,
     checked: BTreeSet<String>,
     uncovered: BTreeSet<String>,
 }
@@ -100,6 +152,9 @@ impl TimingReport {
     }
     pub fn timer_uses(&self) -> &BTreeSet<TimerUse> {
         &self.uses
+    }
+    pub fn retry_uses(&self) -> &BTreeSet<RetryUse> {
+        &self.retries
     }
     pub fn checked_nodes(&self) -> &BTreeSet<String> {
         &self.checked
@@ -114,7 +169,7 @@ impl TimingReport {
             "current-principal-purpose-capability-and-policy-enforcement",
             "domain-and-irreversible-race-invariant-proofs",
             "exceptional-and-reconciliation-concurrency",
-            "live-calendar-activation-and-retry-clock-basis-bindings",
+            "live-calendar-activation-and-retry-domain-fault-basis-bindings",
             "live-clock-pause-reschedule-membership-and-lifecycle-enforcement",
             "exceptional-and-non-data-invalidation-and-lifecycle-enforcement",
             "host-trust-and-atomic-runtime-enforcement",
@@ -138,6 +193,7 @@ pub fn check_timing(
         .covered_nodes();
     let mut resources = Resources::new(supplied)?;
     let mut uses = BTreeSet::new();
+    let mut retries = BTreeSet::new();
     let mut checked = BTreeSet::new();
     let mut uncovered = BTreeSet::new();
     for (id, n) in object(&b["nodes"])? {
@@ -158,10 +214,36 @@ pub fn check_timing(
             continue;
         }
         if retry {
-            return Err(Diagnostic {
-                code: "retry-clock-basis-unproved",
-                path: format!("/body/policies/{policy}/body/retry"),
+            if p["retry"]["clock"].is_null() {
+                return Err(Diagnostic {
+                    code: "retry-clock-basis-unproved",
+                    path: format!("/body/policies/{policy}/body/retry"),
+                });
+            }
+            let r = &p["retry"];
+            let pin = Pin::decode(&r["clock"])?;
+            let clock = resources.clock(&pin)?;
+            let mut delays = Vec::new();
+            for delay in items(&r["delays"])? {
+                resources.budget.tick(0)?;
+                delays.push(integer(delay)?);
+            }
+            retries.insert(RetryUse {
+                site: id.clone(),
+                policy: policy.into(),
+                clock: pin,
+                source: clock.source().clone(),
+                basis: text(&r["basis"])?.into(),
+                authority: text(&p["authority"])?.into(),
+                max_attempts: r["maxAttempts"]
+                    .as_u64()
+                    .ok_or_else(|| err("retry-attempts"))?,
+                delays,
             });
+            checked.insert(id.clone());
+        }
+        if p[role].is_null() {
+            continue;
         }
         let timer = &p[role];
         let pin = Pin::decode(&timer["clock"])?;
@@ -191,6 +273,7 @@ pub fn check_timing(
     Ok(TimingReport {
         concurrency,
         uses,
+        retries,
         checked,
         uncovered,
     })
