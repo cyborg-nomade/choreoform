@@ -13,6 +13,7 @@ import rfc8785
 
 from authoring_probe import lex, validate_ledger, recognize
 from benchmarks.rp01_graph import build, endpoint_probe
+from benchmarks.rp01_invalidation import declare_links
 from benchmarks.rp01_resources import types, providers, clock_resources, encoded, pin
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,6 +80,7 @@ def artifacts():
         files[names[name]] = raw
     source, package = build(type_pin, {k: resources[k][0] for k in ['checks', 'payment', 'notice']},
         {k: v[2] for k, v in resources.items()}, profile="0.6.0")
+    source = declare_links(source, package.ledger)
     # Counting individual complete lines uses the unchanged bounded lexer only
     # for measurement. It does not recognize/admit the over-budget whole program.
     tokens = sum(len(lex(line)) for line in source.splitlines())
@@ -171,11 +173,14 @@ The source has {len(source_raw)} UTF-8 bytes and {tokens} measured tokens. The
 measurement lexes complete lines independently and is not whole-program admission.
 Source 0.6 / companion 0.5 and core 0.3 are selected explicitly under
 ADR-0035/0036; old cores/source profiles remain unchanged. Coherent fictional
-business/clock recipient labels now pass static, ordinary control and protection
-checks. Invalidation and all later composed stages now refuse missing declared
-coverage for the mutable Disposition cell; no later-stage or whole-process
-admission is claimed. Closed private influence is handled only by the bounded
-ADR-0037 proof subset, retaining all mutable ancestor dependencies.
+business/clock recipient labels pass static, ordinary control and protection
+checks. The exact 72 missing ordinary invalidation links derived under ADR-0038
+are now declared; strict invalidation also passes. Concurrency and later composed
+stages refuse `scope-lifetime-unproved` at `run_checks`, whose called body owns
+surviving reconciliation. No later-stage or whole-process admission is claimed.
+Closed private influence is handled only by the bounded ADR-0037 proof subset,
+retaining all mutable ancestor dependencies. This fixture patch preserves all
+existing invalidation links and changes no other semantic body fields.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 

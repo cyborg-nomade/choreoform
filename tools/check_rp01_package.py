@@ -15,6 +15,8 @@ import check_ir_fixtures as wire
 from build_rp01_benchmark import artifacts, STAGES
 from benchmarks.rp01_resources import types, providers
 from check_static_contracts import ROOT, run
+from check_metadata_authoring import full as unpatched_rp01, invoke as invoke_unpatched
+from benchmarks.rp01_invalidation import MISSING_LINKS, declare_links
 
 BASE = ROOT / 'docs/benchmarks/rp01'
 
@@ -31,6 +33,31 @@ class Rp01PackageEvidence(unittest.TestCase):
         cls.bindings = (BASE / 'bindings.json').read_bytes()
         cls.candidate = wire.load((BASE / 'candidate.ir.json').read_bytes())
 
+    def test_only_exact_missing_links_change_the_body_and_all_identities_are_preserved(self):
+        source, ledger, supplied = baseline = unpatched_rp01()
+        self.assertEqual(json.loads(self.bindings), ledger)
+        old = json.loads(invoke_unpatched(baseline, 'lower').stdout)
+        advice = json.loads(invoke_unpatched(baseline, 'invalidation-requirements').stdout)
+        missing = {(o['site'], o['cell']) for o in advice['missingInvalidationObligations']}
+        self.assertEqual(missing, {(site,cell) for cell, sites in MISSING_LINKS.items() for site in sites})
+        self.assertEqual(len(missing),72)
+        before, after = deepcopy(old['body']), deepcopy(self.candidate['body'])
+        added = set()
+        for cell, data in before['data'].items():
+            old_links = set(data['invalidates'])
+            new_links = set(after['data'][cell]['invalidates'])
+            self.assertTrue(old_links <= new_links)
+            added |= {(site,cell) for site in new_links - old_links}
+            after['data'][cell]['invalidates'] = data['invalidates']
+        self.assertEqual(added,missing)
+        self.assertEqual(before,after)
+        self.assertNotEqual(old['revision'],self.candidate['revision'])
+        self.assertEqual(declare_links(source,ledger).encode(),self.source)
+        self.assertEqual(len(grammar.lex(self.source.decode())),self.manifest['measuredTokens'])
+        # The fixture assembler refuses a changed/already-patched baseline.
+        with self.assertRaises(AssertionError):
+            declare_links(self.source.decode(),ledger)
+
     def test_generation_repeats_native_candidate_and_all_ten_actual_stage_results(self):
         generated = artifacts()
         for name, raw in generated.items():
@@ -38,7 +65,7 @@ class Rp01PackageEvidence(unittest.TestCase):
         manifest = json.loads(generated['manifest.json'])
         self.assertIs(manifest['executable'], False)
         self.assertEqual([s['stage'] for s in manifest['semanticStageResults']], STAGES)
-        self.assertEqual([s['result'] for s in manifest['semanticStageResults']], ['passed'] * 3 + ['refused'] * 7)
+        self.assertEqual([s['result'] for s in manifest['semanticStageResults']], ['passed'] * 4 + ['refused'] * 6)
         for stage in manifest['semanticStageResults']:
             if stage['result'] == 'passed':
                 report = json.loads(generated[stage['report']])
@@ -46,11 +73,11 @@ class Rp01PackageEvidence(unittest.TestCase):
                 self.assertEqual(report['revision'], self.candidate['revision'])
                 self.assertEqual(stage['reportDigest'], 'sha256:' + sha256(generated[stage['report']]).hexdigest())
                 continue
-            self.assertEqual(stage['code'], 'invalidation-coverage')
-            self.assertEqual(stage['path'], '/body/data/disposition/invalidates')
+            self.assertEqual(stage['code'], 'scope-lifetime-unproved')
+            self.assertEqual(stage['path'], '/body/nodes/run_checks')
             start, end = stage['sourceBytes']
             declaration = self.source[start:end].decode('utf-8')
-            self.assertTrue(declaration.startswith('Keep "Disposition"'))
+            self.assertTrue(declaration.startswith('Step "Run checks"'))
         self.assertEqual(manifest['sourceDigest'], 'sha256:' + sha256(self.source).hexdigest())
         self.assertEqual(manifest['canonicalIR']['digest'], 'sha256:' + sha256(generated['candidate.ir.json']).hexdigest())
 

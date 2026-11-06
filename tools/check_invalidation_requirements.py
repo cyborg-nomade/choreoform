@@ -9,6 +9,7 @@ import unittest
 
 from check_closed_provenance import package, invoke, large_package
 from check_static_contracts import ROOT, run
+from check_metadata_authoring import full as unpatched_rp01, invoke as invoke_unpatched
 
 BASE = ROOT / 'docs/benchmarks/rp01'
 
@@ -75,7 +76,7 @@ class InvalidationRequirementsEvidence(unittest.TestCase):
         self.assertIn(b'resource-digest', result.stderr)
         self.assertEqual(result.stdout, b'')
 
-    def test_full_rp01_is_advisory_with_real_missing_links_and_unchanged_strict_refusal(self):
+    def test_full_rp01_and_unpatched_baseline_have_exact_requirements_without_bypassing_lifetime(self):
         manifest = json.loads((BASE / 'manifest.json').read_bytes())
         supplied = [(r['id'], r['revision'], ROOT / r['path']) for r in manifest['resources']]
         before = (BASE / 'source.choreo').read_bytes(), (BASE / 'bindings.json').read_bytes()
@@ -83,7 +84,7 @@ class InvalidationRequirementsEvidence(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         report = json.loads(result.stdout)
         self.assertEqual(len(report['requiredInvalidationObligations']), 84)
-        self.assertEqual(len(report['missingInvalidationObligations']), 72)
+        self.assertEqual(len(report['missingInvalidationObligations']), 0)
         self.assertEqual(len(report['historicalOrigins']), 88)
         candidate = json.loads((BASE / 'candidate.ir.json').read_bytes())
         declared = {(site, cell) for cell, d in candidate['body']['data'].items() for site in d['invalidates']}
@@ -91,6 +92,15 @@ class InvalidationRequirementsEvidence(unittest.TestCase):
         self.assertIs(report['advisory'], True)
         self.assertIs(report['executable'], False)
         strict = run('check-invalidation', BASE / 'source.choreo', BASE / 'bindings.json', supplied)
+        self.assertEqual(strict.returncode, 0, strict.stderr)
+        later = run('check-concurrency', BASE / 'source.choreo', BASE / 'bindings.json', supplied)
+        self.assertIn(b'scope-lifetime-unproved at /body/nodes/run_checks', later.stderr)
+        baseline = unpatched_rp01()
+        old = json.loads(invoke_unpatched(baseline, 'invalidation-requirements').stdout)
+        self.assertEqual(len(old['missingInvalidationObligations']), 72)
+        self.assertEqual(pairs(old['requiredInvalidationObligations']), pairs(report['requiredInvalidationObligations']))
+        self.assertEqual(old['historicalOrigins'], report['historicalOrigins'])
+        strict = invoke_unpatched(baseline, 'check-invalidation')
         self.assertIn(b'invalidation-coverage at /body/data/disposition/invalidates', strict.stderr)
         self.assertEqual(before, ((BASE / 'source.choreo').read_bytes(), (BASE / 'bindings.json').read_bytes()))
 

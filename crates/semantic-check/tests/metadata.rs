@@ -440,7 +440,7 @@ fn raw_package_control_pass_does_not_hide_its_separate_clock_label_refusal() {
 }
 
 #[test]
-fn coherent_raw_clock_and_business_labels_reveal_missing_live_invalidation_coverage() {
+fn coherent_raw_labels_keep_strict_coverage_and_separate_lifetime_requirements() {
     let mut f = Fixture::new();
     let mut source: Value = serde_json::from_slice(
         &f.resources
@@ -471,6 +471,16 @@ fn coherent_raw_clock_and_business_labels_reveal_missing_live_invalidation_cover
     let e = DefinitionEnvelope::from_parts(f.body.clone(), json!({})).unwrap();
     let r = f.supplied();
     choreoform_semantic_check::check_protection(&e, &r).unwrap();
+    choreoform_semantic_check::check_invalidation(&e, &r).unwrap();
+    assert_eq!(
+        choreoform_semantic_check::check_concurrency(&e, &r)
+            .unwrap_err()
+            .code,
+        "scope-lifetime-unproved"
+    );
+    let mut body = f.body.clone();
+    body["data"]["disposition"]["invalidates"] = json!({});
+    let e = DefinitionEnvelope::from_parts(body, json!({})).unwrap();
     let refusal = choreoform_semantic_check::check_invalidation(&e, &r).unwrap_err();
     assert_eq!(refusal.code, "invalidation-coverage");
     assert_eq!(refusal.path, "/body/data/disposition/invalidates");

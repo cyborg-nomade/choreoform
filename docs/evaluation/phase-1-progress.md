@@ -492,6 +492,17 @@ ADR-0038 remains pending parent/main integration. Active work is the
 Add the exact measured links, then retain and audit the next actual proof gap.
 Draft #46 remains unmerged; no scenario or phase gate closes.
 
+The [precise link integration checkpoint](0038-rp01-links.md) adds only the 72
+measured missing pairs, preserving every old link/ID/resource and all other body
+fields. The native package now passes static/control/protection/invalidation;
+advisory missing is zero (84 required, 88 conditional historical records). All six
+later composed stages refuse `scope-lifetime-unproved` at `run_checks`, original
+source bytes 40983..41175. Local 283 Rust tests plus six doctests, all Python
+oracles and exact generation/profile probes pass after retaining explicit old
+missing-link counterexamples. Draft #46 still requires final-head CI and remains
+unmerged/incomplete. Next freeze and audit called surviving reconciliation lifetime
+without weakening its closure policy. All scenarios/phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

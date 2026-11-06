@@ -6,104 +6,100 @@
   "sourceProfile": "0.6.0",
   "companionVersion": "0.5.0",
   "coreProfile": "0.3.0",
-  "sourceBytes": 52055,
-  "measuredTokens": 8945,
+  "sourceBytes": 56185,
+  "measuredTokens": 9327,
   "tokenMeasurement": "sum of complete-line lexing; not whole-program recognition",
-  "sourceDigest": "sha256:089abfd6e275479f07f6556435539a0b88021e5306f0f8823ab75a0a405657a4",
+  "sourceDigest": "sha256:3ba40c9c533ee657c2a7851054571ee8019e6bd624dbb5798d6757c7f8568eb2",
   "bindingsDigest": "sha256:bd9d9363fa00e45c89357c66fd4c0c0104e40b7e10538c437b695707c1ca566c",
-  "packageDigest": "sha256:9c1c478922f59ca5636ed451830e6aa6c561e2a2d7e5d9600cf1057d4cdf71f7",
+  "packageDigest": "sha256:0b04a54d15ea5c48d3a4b863c4fe2de743e9db76b5ac77a20da283d9cda819ad",
   "canonicalIR": {
     "path": "candidate.ir.json",
-    "revision": "sha256:559d82dbee340a13cbb25b61fcaa6fbb588563dad2d4a5e4812721edc909896b",
-    "digest": "sha256:9ac9f358651146525914cf725505b79d17a4c963257f12a9a06c3245dd1c0ffa"
+    "revision": "sha256:d0567026a71a1e7808168f6e1e17f27cb6f8272c1d9b49f189439e12c9e6be05",
+    "digest": "sha256:76a65e2593be2c5ce372aca4802e7a944ae1eab085e824c917685eff42274213"
   },
   "semanticStageResults": [
     {
       "stage": "check",
       "result": "passed",
       "report": "reports/check.json",
-      "reportDigest": "sha256:59568d65f5af4d24e2495f8b7ec501885101a6089aba3ba129d4e2b12b15e349"
+      "reportDigest": "sha256:408287e2f078224e38e8e576284652722003de81ef76ecc99ccd4bb6fbb9cf83"
     },
     {
       "stage": "check-control",
       "result": "passed",
       "report": "reports/check-control.json",
-      "reportDigest": "sha256:2521f84066dcfe474f4d73e6b730100d197dc3c2d083478cbcaa320d78352151"
+      "reportDigest": "sha256:b525b2df6fbca2400af1122715f6cd17f1e2855bda7e6d34055c4000fbe6f5a0"
     },
     {
       "stage": "check-protection",
       "result": "passed",
       "report": "reports/check-protection.json",
-      "reportDigest": "sha256:27a089b8a0bd42f15e923c9f59aa3a1bea40a19e054bdc7b07dfcf8a1b1f499f"
+      "reportDigest": "sha256:cc9e9c258ed3d5938bea38cea8cbca371dd0a8e23c1b826ee7cbcdfb85427503"
     },
     {
       "stage": "check-invalidation",
-      "result": "refused",
-      "code": "invalidation-coverage",
-      "path": "/body/data/disposition/invalidates",
-      "sourceBytes": [
-        49280,
-        49607
-      ]
+      "result": "passed",
+      "report": "reports/check-invalidation.json",
+      "reportDigest": "sha256:9a2107cb980e821a06bbcc71719ff63cf5a7a39f33cc1221d8e824e71cc1d5e9"
     },
     {
       "stage": "check-concurrency",
       "result": "refused",
-      "code": "invalidation-coverage",
-      "path": "/body/data/disposition/invalidates",
+      "code": "scope-lifetime-unproved",
+      "path": "/body/nodes/run_checks",
       "sourceBytes": [
-        49280,
-        49607
+        40983,
+        41175
       ]
     },
     {
       "stage": "check-timing",
       "result": "refused",
-      "code": "invalidation-coverage",
-      "path": "/body/data/disposition/invalidates",
+      "code": "scope-lifetime-unproved",
+      "path": "/body/nodes/run_checks",
       "sourceBytes": [
-        49280,
-        49607
+        40983,
+        41175
       ]
     },
     {
       "stage": "check-fault-routes",
       "result": "refused",
-      "code": "invalidation-coverage",
-      "path": "/body/data/disposition/invalidates",
+      "code": "scope-lifetime-unproved",
+      "path": "/body/nodes/run_checks",
       "sourceBytes": [
-        49280,
-        49607
+        40983,
+        41175
       ]
     },
     {
       "stage": "check-exceptional-availability",
       "result": "refused",
-      "code": "invalidation-coverage",
-      "path": "/body/data/disposition/invalidates",
+      "code": "scope-lifetime-unproved",
+      "path": "/body/nodes/run_checks",
       "sourceBytes": [
-        49280,
-        49607
+        40983,
+        41175
       ]
     },
     {
       "stage": "check-reconciliation-links",
       "result": "refused",
-      "code": "invalidation-coverage",
-      "path": "/body/data/disposition/invalidates",
+      "code": "scope-lifetime-unproved",
+      "path": "/body/nodes/run_checks",
       "sourceBytes": [
-        49280,
-        49607
+        40983,
+        41175
       ]
     },
     {
       "stage": "check-reconciliation-availability",
       "result": "refused",
-      "code": "invalidation-coverage",
-      "path": "/body/data/disposition/invalidates",
+      "code": "scope-lifetime-unproved",
+      "path": "/body/nodes/run_checks",
       "sourceBytes": [
-        49280,
-        49607
+        40983,
+        41175
       ]
     }
   ],

@@ -58,7 +58,7 @@
     "current_claim",
     "payment_due"
   ],
-  "revision": "sha256:559d82dbee340a13cbb25b61fcaa6fbb588563dad2d4a5e4812721edc909896b",
+  "revision": "sha256:d0567026a71a1e7808168f6e1e17f27cb6f8272c1d9b49f189439e12c9e6be05",
   "status": "control-checks-passed",
   "uncoveredNodes": [
     "checks_observe",

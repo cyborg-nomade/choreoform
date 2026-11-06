@@ -28,6 +28,8 @@ def promote(source, ledger):
 
 
 def full(read=False):
+    # Deliberately retain the pre-link-patch fixture for exact missing-coverage
+    # and metadata regression evidence; the current package is generated separately.
     _, raw, p = types()
     resources = providers(p, shared=True) | clock_resources(shared=True)
     source, package = build(p, {k: resources[k][0] for k in ['checks', 'payment', 'notice']}, {k: v[2] for k, v in resources.items()})
