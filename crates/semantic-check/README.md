@@ -60,8 +60,9 @@ invalidation completeness. Those residual gates are explicit in the report.
 
 The accepted suite leaves clock providers external. ADR-0023 defines the first
 separately pinned clock profile; ADR-0024 adds supported timer typing and ordinary
-clock-origin flow. Calendars remain domain-binding-unproved and the timing stage
-refuses unbound multiple-attempt retry clocks. Resource hashes establish no live
+clock-origin flow. ADR-0025 types known relative calendar construction and records
+required live approval/origin binding. The timing stage still refuses unbound
+multiple-attempt retry clocks. Resource hashes establish no live
 host trust. Unknown kinds/fields/operations and unsupported roles refuse.
 The historic illustrative `inspect` registry is unchanged.
 
@@ -234,8 +235,9 @@ See [ADR-0022](../../docs/decisions/0022-ordinary-concurrency.md) and
 its read-only Integer tick provider. Register the clock, profile and source bytes
 explicitly; the reader verifies all pins and source constraints. It reads no
 time, authenticates no source and grants no timer/dispatch authority. Supported
-non-calendar timer typing/flow is integrated in ADR-0024; calendar/domain and retry
-clock bindings, current facts and actual host enforcement remain open. See
+timer typing/flow is integrated in ADR-0024, with known relative calendars in
+ADR-0025. Live calendar activation, retry clock bindings, current facts and actual
+host enforcement remain open. See
 [clock contracts](../../docs/clocks/README.md) and
 [evidence](../../docs/evaluation/0023-clock-resource-contract.md).
 
@@ -250,3 +252,15 @@ observations, current clock facts or authorization are inputs. Integer typing is
 not proof of due/basis domain provenance. See
 [ADR-0024](../../docs/decisions/0024-timer-contract-checks.md) and
 [evidence](../../docs/evaluation/0024-timer-contract-checks.md).
+
+## Instance calendar construction (ADR-0025)
+
+`Resources::instance_calendar` checks exact known rule/profile/clock pins and
+the relative-zone convention, sharing immutable interval metadata. Generic
+`calendar` reading still verifies provenance only. `contains_coordinate` is a pure
+half-open membership guard with no observed time, live binding or firing authority.
+Timing reports expose exact CalendarUse references and required trusted host
+construction/origin activation. Initial construction trust is separate from
+requested pause/reschedule authority. See
+[ADR-0025](../../docs/decisions/0025-instance-calendars.md) and
+[evidence](../../docs/evaluation/0025-instance-calendars.md).

@@ -3,7 +3,8 @@
 use choreoform_authoring_frontend::Package;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
 use choreoform_semantic_check::{
-    CLOCK_PROFILE, CORE, Pin, SEMANTICS, check, check_control, check_protection, check_timing,
+    CALENDAR_PROFILE, CLOCK_PROFILE, CORE, Pin, SEMANTICS, check, check_control, check_protection,
+    check_timing,
 };
 use serde_json::{Value, json};
 
@@ -185,6 +186,14 @@ impl Fixture {
             }
         }
         self.b["flows"]["public_done"] = json!({"source":"publish_public","outcome":"next","target":format!("{}_done",self.prefix)});
+    }
+    fn relative_calendar(&mut self, clock: &Pin, intervals: Value) -> Pin {
+        let profile = self.artifact(CALENDAR_PROFILE.0, include_bytes!("../../../docs/ir/contracts/sha256-2ab8a6a78f2829ababa2d023f6743ac82d7a31acbfca1fb7a03340b7c929f35f.txt").to_vec());
+        assert_eq!(profile.revision, CALENDAR_PROFILE.1);
+        let rules = json!({"kind":"calendar-rules","version":"0.1.0","id":"urn:test:rules","profile":{"id":profile.id,"revision":profile.revision},"clock":{"id":clock.id,"revision":clock.revision}});
+        let rules = self.artifact("urn:test:rules", serde_json::to_vec(&rules).unwrap());
+        let calendar = json!({"kind":"calendar","version":"0.1.0","id":"urn:test:calendar","clock":{"id":clock.id,"revision":clock.revision},"zone":"instance-relative","zoneRules":{"id":rules.id,"revision":rules.revision},"intervals":intervals});
+        self.artifact("urn:test:calendar", serde_json::to_vec(&calendar).unwrap())
     }
 }
 
@@ -401,7 +410,7 @@ fn timer_closes_clock_source_participant_requirement_dependencies() {
 }
 
 #[test]
-fn timer_calendars_need_domain_binding_even_when_finite_tables_and_pins_are_valid() {
+fn timer_calendars_need_supported_construction_rules_even_with_valid_finite_tables() {
     for matching in [true, false] {
         let mut f = Fixture::new(false);
         f.work_timer();
@@ -425,14 +434,7 @@ fn timer_calendars_need_domain_binding_even_when_finite_tables_and_pins_are_vali
             json!({"id":calendar.id,"revision":calendar.revision});
         let e = f.envelope();
         let error = check(&e, &f.resources()).unwrap_err();
-        assert_eq!(
-            error.code,
-            if matching {
-                "calendar-domain-binding-unproved"
-            } else {
-                "calendar-clock"
-            }
-        );
+        assert_eq!(error.code, "calendar-zone-profile");
         assert!(e.document().pointer(&error.path).is_some());
     }
 }
@@ -523,4 +525,93 @@ fn source_reference_cache_never_reuses_a_child_visibility_proof_in_its_parent() 
     let error = check(&f.envelope(), &f.resources()).unwrap_err();
     assert_eq!(error.code, "visibility");
     assert_eq!(error.path, "/body/policies/review_work");
+}
+
+#[test]
+fn calendar_timing_uses_expose_exact_construction_pins_and_required_live_binding() {
+    for wait in [false, true] {
+        let mut f = Fixture::new(false);
+        if wait {
+            f.wait();
+        } else {
+            f.work_timer();
+        }
+        let calendar = f.relative_calendar(&f.clock.clone(), json!([{"start":"0","end":"100"}]));
+        let policy = if wait {
+            "timed_wait_policy"
+        } else {
+            "review_work"
+        };
+        let role = if wait { "timer" } else { "timeout" };
+        f.b["policies"][policy]["body"][role]["calendar"] =
+            json!({"id":calendar.id,"revision":calendar.revision});
+        let report = check_timing(&f.envelope(), &f.resources()).unwrap();
+        let use_site = report.timer_uses().first().unwrap().calendar().unwrap();
+        assert_eq!(use_site.pin(), &calendar);
+        assert_eq!(use_site.rules().id, "urn:test:rules");
+        assert_eq!(use_site.profile().revision, CALENDAR_PROFILE.1);
+        assert!(
+            use_site
+                .host_requirements()
+                .contains(&"trusted-host-calendar-construction-approval")
+        );
+        assert!(
+            use_site
+                .host_requirements()
+                .contains(&"exact-calendar-rules-profile-clock-and-instance-origin-binding")
+        );
+    }
+}
+
+#[test]
+fn known_calendar_with_another_clock_cannot_supply_a_timer_domain() {
+    let mut f = Fixture::new(false);
+    f.work_timer();
+    let mut clock = f.document(CLOCK_ID);
+    clock["id"] = "urn:test:other-clock".into();
+    let clock = f.artifact("urn:test:other-clock", serde_json::to_vec(&clock).unwrap());
+    let calendar = f.relative_calendar(&clock, json!([{"start":"0","end":"100"}]));
+    f.b["policies"]["review_work"]["body"]["timeout"]["calendar"] =
+        json!({"id":calendar.id,"revision":calendar.revision});
+    let error = check(&f.envelope(), &f.resources()).unwrap_err();
+    assert_eq!(error.code, "calendar-clock");
+}
+
+#[test]
+fn initial_calendar_metadata_does_not_require_permission_to_pause_an_absolute_deadline() {
+    let mut f = Fixture::new(false);
+    f.work_timer();
+    f.b["actors"]["no_pause"] = json!({"scope":"scope_review","requirement":"deny_pause"});
+    f.b["policies"]["deny_pause"] = json!({"scope":"scope_review","dialect":"core","body":{"kind":"actor","reads":{},"permit":{"op":"literal","type":{"kind":"boolean"},"value":false}}});
+    f.b["policies"]["review_work"]["body"]["timeout"]["pauseAuthority"] = "no_pause".into();
+    let calendar = f.relative_calendar(&f.clock.clone(), json!([{"start":"0","end":"100"}]));
+    f.b["policies"]["review_work"]["body"]["timeout"]["calendar"] =
+        json!({"id":calendar.id,"revision":calendar.revision});
+    let report = check_timing(&f.envelope(), &f.resources()).unwrap();
+    let timer = report.timer_uses().first().unwrap();
+    assert_eq!(timer.pause_authority(), "no_pause");
+    assert!(
+        timer
+            .calendar()
+            .unwrap()
+            .host_requirements()
+            .contains(&"trusted-host-calendar-construction-approval")
+    );
+}
+
+#[test]
+fn repeated_timer_calendars_share_a_wide_immutable_table_without_binding_it() {
+    let mut f = Fixture::new(false);
+    f.work_timer();
+    let intervals = (0..10000)
+        .map(|i| json!({"start":(i*2).to_string(),"end":(i*2+1).to_string()}))
+        .collect::<Vec<_>>();
+    let calendar = f.relative_calendar(&f.clock.clone(), intervals.into());
+    f.b["policies"]["review_work"]["body"]["timeout"]["calendar"] =
+        json!({"id":calendar.id,"revision":calendar.revision});
+    for i in 0..700 {
+        f.b["policies"][format!("unused_calendar_{i:04}")] = f.b["policies"]["review_work"].clone();
+    }
+    let report = check_timing(&f.envelope(), &f.resources()).unwrap();
+    assert_eq!(report.timer_uses().len(), 1);
 }

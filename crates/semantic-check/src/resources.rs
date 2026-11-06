@@ -5,6 +5,8 @@ use choreoform_ir_probe_core::{Resource, digest, transport};
 use std::sync::Arc;
 mod clock;
 pub use clock::{CLOCK_PROFILE, Clock};
+mod instance_calendar;
+pub use instance_calendar::{CALENDAR_PROFILE, InstanceCalendar};
 
 #[derive(Debug)]
 pub(crate) struct NamedDefinition {
@@ -91,6 +93,16 @@ pub struct Calendar {
     zone_rules: Pin,
 }
 impl Calendar {
+    /// Mathematical membership only, without an observed/authenticated clock
+    /// coordinate, live domain binding, due check or firing authority.
+    pub fn contains_coordinate(&self, coordinate: i64) -> bool {
+        let index = self
+            .intervals
+            .partition_point(|(_, end)| *end <= coordinate);
+        self.intervals
+            .get(index)
+            .is_some_and(|(start, _)| *start <= coordinate)
+    }
     pub fn intervals(&self) -> &[(i64, i64)] {
         &self.intervals
     }
@@ -111,6 +123,7 @@ pub struct Resources<'a> {
     visiting: BTreeSet<Nominal>,
     checking_named: bool,
     providers: BTreeMap<Pin, Arc<Provider>>,
+    instance_calendars: BTreeMap<Pin, Arc<InstanceCalendar>>,
     pub(crate) budget: Budget,
 }
 impl<'a> Resources<'a> {
@@ -141,6 +154,7 @@ impl<'a> Resources<'a> {
             visiting: BTreeSet::new(),
             checking_named: false,
             providers: BTreeMap::new(),
+            instance_calendars: BTreeMap::new(),
             budget: Budget::default(),
         })
     }

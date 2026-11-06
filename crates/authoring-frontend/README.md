@@ -38,7 +38,7 @@ agrees with the shipped catalogue; that is not a future-grammar ambiguity proof.
 Scoped interfaces, data/protection, actors, explicit/generated expressions,
 purpose/outcome aliases and conservative node reads are preserved. Supported
 actions are human work, compute, invoke, decision, split/join, wait (including
-supported non-calendar timers), repeat, fanout and finish. Closed policy payloads
+supported instance-clock timers/calendars), repeat, fanout and finish. Closed policy payloads
 are mapped for supported resource bindings; read
 closure follows referenced policies and actor requirements. Integer/decimal
 coefficients are exact signed-64 strings, never floats. Decimal value markers
@@ -56,9 +56,9 @@ Accepted [ADR-0016](../../docs/decisions/0016-static-contract-checks.md) enables
 closed named-type/provider resources and capability request candidate lowering,
 using exact-byte readers and transitive dependencies. Nominal literal membership
 is checked by the explicit static stage, not by merely lowering a candidate.
-Only the exact implemented clock profile is recognized. Supported non-calendar
-timer typing/clock flow and explicit host requirements are provided by ADR-0024;
-calendar-domain and retry-clock bindings remain unproved. Typed decoding does not
+Only the exact implemented clock/construction profiles are recognized. Timer
+typing/clock flow and host requirements are provided by ADR-0024/0025. Live
+calendar activation and retry-clock bindings remain unproved. Typed decoding does not
 establish current clock facts, host trust or timer execution authority.
 The historic JSON probe's registry/admission is unchanged.
 

@@ -134,6 +134,14 @@ automatic review; no independent review is claimed. The next slice is the
 [calendar construction/origin-binding plan](0025-calendar-plan.md), then explicit
 retry-clock contracts (versioned where necessary) and remaining full-validator/
 lifecycle, benchmark and authoring/visual/user evidence. Phase 1 remains incomplete.
+The calendar slice now recognizes exact pinned relative construction rules,
+shares immutable wide tables and exposes explicit live activation requirements.
+Initial host calendar trust is separate from permission to pause a deadline.
+ADR-0025 is accepted under delegated automated review; 183 Rust tests plus five
+compile-fail doctests, native/Wasm checks and all relevant stage/artifact oracles
+passed locally. Final-head CI and PR merge remain pending. Next is an explicit
+versioned retry-clock/basis binding; no implicit timeout/scheduler clock or phase
+exit is inferred from the calendar work.
 
 ## Honest exit accounting
 

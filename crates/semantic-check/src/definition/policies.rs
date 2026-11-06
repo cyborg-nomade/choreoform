@@ -288,9 +288,10 @@ impl Check<'_, '_> {
         let pin = Pin::decode(&timer["clock"])?;
         let clock = self.resources.clock(&pin)?;
         if !timer["calendar"].is_null() {
-            let calendar = self.resources.calendar(&Pin::decode(&timer["calendar"])?)?;
+            let calendar = self
+                .resources
+                .instance_calendar(&Pin::decode(&timer["calendar"])?)?;
             require(calendar.clock() == &pin, "calendar-clock")?;
-            return Err(err("calendar-domain-binding-unproved"));
         }
         let due = self.resources.expression(&timer["due"], context)?;
         require(due.ty == Type::Integer, "timer-due-type")?;

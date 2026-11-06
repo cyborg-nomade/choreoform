@@ -40,6 +40,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0022](0022-ordinary-concurrency.md) | Accepted under delegation | Check conservative ordinary parallel independence |
 | [0023](0023-clock-resource-contract.md) | Accepted under delegation | Define a pinned instance-clock resource and host boundary |
 | [0024](0024-timer-contract-checks.md) | Accepted under delegation | Type supported timers and expose their host obligations |
+| [0025](0025-instance-calendars.md) | Accepted under delegation | Define instance calendar construction and activation obligations |
 
 ## When an ADR is required
 

@@ -19,8 +19,10 @@ pub use definition::{Report, check};
 pub use expression::{Context, Judgment};
 pub use invalidation::{InvalidationObligation, InvalidationReport, check_invalidation};
 pub use protection::{AccessObligation, ProtectionReport, check_protection};
-pub use resources::{CLOCK_PROFILE, Calendar, Clock, Provider, Resources};
-pub use timing::{TimerUse, TimingReport, check_timing};
+pub use resources::{
+    CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, InstanceCalendar, Provider, Resources,
+};
+pub use timing::{CalendarUse, TimerUse, TimingReport, check_timing};
 pub use types::{Nominal, Pin, Type};
 
 use serde_json::{Map, Value};

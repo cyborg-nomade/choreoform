@@ -18,6 +18,7 @@ support to the Rust probe, fixture checker or a runtime.
 | `urn:choreoform:examples:illustrative-dialect` | [Illustrative dialect snapshot](sha256-282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9.txt) | `docs/ir/examples.md` at `102f796dec0bc51c4d15e4dfd3e9bed4bc0d47af` |
 | `urn:choreoform:contracts:core-profile:0.1.0` | [Accepted executable-contract specification](sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt) | Three `docs/dialects/` sources at `8ac89587090bc57145da615e4add53548cd661bc`, framed in the order specified below |
 | `urn:choreoform:clock-profile:instance-microseconds:0.1.0` | [Instance-clock profile](sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt) | Exact versioned `docs/clocks/instance-microseconds-v0.1.md` bytes; ADR-0023 delegated acceptance, effective upon merge |
+| `urn:choreoform:calendar-profile:instance-intervals:0.1.0` | [Instance calendar construction](sha256-2ab8a6a78f2829ababa2d023f6743ac82d7a31acbfca1fb7a03340b7c929f35f.txt) | Exact versioned `docs/clocks/instance-calendar-v0.1.md` bytes; ADR-0025 delegated acceptance, effective upon merge |
 
 Hash every byte, including the original notices and final newline. The local
 `.gitattributes` disables line-ending conversion for these snapshots. The `.txt`
@@ -36,6 +37,9 @@ must use the same immutable-binding discipline rather than a live document.
 The clock profile is checked by `tools/check_clock_contract.py` and the semantic
 crate's metadata reader. Its publication does not enable definition/source timers
 or certify an actual host clock. It leaves existing artifact pins/revisions intact.
+The calendar construction profile is checked by `tools/check_instance_calendar.py`;
+its known mapping and pure interval membership do not approve or bind a live
+calendar instance. New profiles never reinterpret the earlier frozen artifacts.
 
 ## ADR-0013 publication
 

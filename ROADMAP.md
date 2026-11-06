@@ -186,6 +186,11 @@ validated, and round-tripped.
   origins, with an explicit non-executable timing report of host requirements.
   Calendar-origin and retry-clock bindings, due/domain provenance and actual
   source/clock/authority/atomic enforcement remain open; no time gate is closed.
+  [ADR-0025](docs/decisions/0025-instance-calendars.md) defines a separately pinned
+  relative-calendar construction profile, indexed coordinate membership and exact
+  source/IR/timing-use references. Actual host construction approval, origin
+  activation, reschedule and clock enforcement remain required; unbound retries
+  and the remaining aggregate gates stay open.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

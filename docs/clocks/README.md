@@ -18,3 +18,9 @@ judgments. Calendar-domain and retry-clock bindings, current facts and actual ho
 enforcement remain open. See [timer evidence](../evaluation/0024-timer-contract-checks.md)
 and the [original contract slice](../evaluation/0023-clock-resource-contract.md).
 The Phase 2 reference engine and real host support remain separate deliveries.
+
+[ADR-0025](../decisions/0025-instance-calendars.md) defines
+[instance calendar intervals](instance-calendar-v0.1.md) and supported closed
+construction-rule metadata. Known relative tables can be type checked and queried
+for coordinate membership; actual host approval/origin activation and timer firing
+are still required live judgments. No civil calendar generation is supplied.
