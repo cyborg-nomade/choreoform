@@ -623,6 +623,17 @@ audit/signed exact merge remain required. Current source 0.6/core 0.3 and packag
 stay unchanged pending a separately versioned authoring/disclosure step. All
 scenario/phase and actual host/data/continuation gates remain open.
 
+[PR #55](https://github.com/cyborg-nomade/choreoform/pull/55) merged into draft
+#46 as `f6cffd2a88635e84b39b49261d984be11e5ac263` after final-head CI
+`42300892278` and delegated review/comment audit `6696903303`. CodeRabbit skipped
+the stacked target and supplies no independent evidence; the merge is explicitly
+signed off. ADR-0042 remains pending parent/main integration. Active dependency:
+`codex/retry-fault-authoring`, following the
+[frozen authoring/disclosure plan](0043-retry-fault-authoring-plan.md).
+Select raw core 0.4 only through explicit new source 0.7/companion 0.6, retain old
+profiles/package bytes, then separately adopt the source in RP-01. All actual
+host/data/continuation, scenario and phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
