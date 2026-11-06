@@ -577,6 +577,29 @@ passed required final-head CI `42290223948`. It remains draft/unmerged. Current
 guard-conformance work is on its dedicated dependency branch and still requires
 its own final-head review/CI/merge. ADR-0040 is pending parent/main integration.
 
+[PR #53](https://github.com/cyborg-nomade/choreoform/pull/53) merged into draft
+#46 as `983de13c294db11bef13d14c11c5dff15d6fd9e8` after final-head CI
+`42292305622` and delegated review/comment audit `6695368575`. CodeRabbit skipped
+the stacked target and supplies no independent evidence; the merge is explicitly
+signed off. ADR-0040 remains pending parent/main integration. Active dependency:
+`codex/provider-fault-source`, following the
+[frozen metadata contract/reader plan](0041-provider-fault-source-plan.md).
+First pin declared provider observation-to-fault evidence, then design explicit
+versioned actual-use retry/source binding. No source/core reinterpretation or
+actual fault/permission/settlement claim follows. Draft #46 remains unmerged and
+all scenarios/phase gates remain open.
+
+ADR-0041's independent provider-observation fault-source profile/reader is
+implemented on its dedicated branch. Six Rust integration groups, one budget
+group and sixteen vectors distinguish declared unknown/no-effect states and
+reject success/acknowledgement, aliases, ambiguous maps and trust claims. Four
+Python groups check independent mapping/hash accountability and identical native
+timing behavior when extra mapping bytes are supplied: no implicit retry binding.
+See [evidence](0041-provider-fault-source.md). Local 304 Rust tests plus six doctests
+and native/Wasm/all Python checks pass; final-head CI/comment audit/signed exact
+merge remain required. Then design explicit versioned actual-use binding; metadata
+does not establish a fault, retry permission, scenario or phase exit.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

@@ -3,6 +3,15 @@
 
 # Static contract checks, not executable admission
 
+[ADR-0041](../../docs/decisions/0041-provider-fault-source-metadata.md) adds the
+independently pinned [provider fault-source metadata profile](../../docs/dialects/provider-fault-sources.md).
+`Resources::provider_fault_source` verifies exact source/profile/provider/type
+bytes and returns immutable declared state mappings. `Provider::observations`
+exposes typed declared states; names never imply no-effect evidence. Existing
+core/source retry records have no binding to this metadata. No observation,
+accepted fault, retry permission or dispatch is produced; explicit versioned
+definition/use-site binding and actual host enforcement remain required.
+
 [Core 0.3.0](../../docs/dialects/core-metadata-v0.3.md) adds finite provider-result
 metadata read closure under [ADR-0035](../../docs/decisions/0035-provider-metadata-read-closure.md).
 The strong graph remains acyclic; cyclic components containing legacy policies

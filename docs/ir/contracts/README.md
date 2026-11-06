@@ -14,6 +14,7 @@ support to the Rust probe, fixture checker or a runtime.
 
 | Contract ID | Artifact (SHA-256 is the filename suffix) | Source and provenance |
 | --- | --- | --- |
+| `urn:choreoform:fault-source-profile:provider-observations:0.1.0` | [Provider-observation fault-source](sha256-f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0.txt) | Exact `docs/dialects/provider-fault-sources.md` bytes; ADR-0041 metadata reader, pending parent/main integration; no implicit core/retry/source binding |
 | `urn:choreoform:semantics:adr-0008` | [Semantic contract snapshot](sha256-0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141.txt) | `docs/decisions/0008-core-process-semantics.md` at `eeddfb43547ac766334e6700d7fb02ef33bf8dde` |
 | `urn:choreoform:examples:illustrative-dialect` | [Illustrative dialect snapshot](sha256-282dd3c02983141da13e8f700e852d5472ffc4af176a53ca3578c418482a09b9.txt) | `docs/ir/examples.md` at `102f796dec0bc51c4d15e4dfd3e9bed4bc0d47af` |
 | `urn:choreoform:contracts:core-profile:0.1.0` | [Accepted executable-contract specification](sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt) | Three `docs/dialects/` sources at `8ac89587090bc57145da615e4add53548cd661bc`, framed in the order specified below |

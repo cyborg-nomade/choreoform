@@ -64,6 +64,8 @@ while specifications, guides, and code describe the system as it exists now.
 
 | [0040](0040-finite-guard-snapshot-conformance.md) | Accepted under delegation | Check actual guard ASTs with finite synthetic snapshots, without execution claims |
 
+| [0041](0041-provider-fault-source-metadata.md) | Accepted under delegation | Pin declared provider observation-to-fault evidence without implicit retry authority |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to
