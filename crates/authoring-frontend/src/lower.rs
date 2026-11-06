@@ -119,6 +119,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ProtectionReport> {
         choreoform_semantic_check::check_protection(&self.envelope, resources)
     }
+    /// Ordinary advisory requirements; missing links never produce a checked report.
+    pub fn invalidation_requirements(
+        &self,
+        supplied: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::InvalidationRequirements>
+    {
+        choreoform_semantic_check::derive_invalidation_requirements(&self.envelope, supplied)
+    }
     /// Check ordinary invalidation declarations; never execute withdrawal,
     /// authorize work or establish current runtime sufficiency.
     pub fn check_invalidation(

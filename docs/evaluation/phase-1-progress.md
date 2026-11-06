@@ -471,6 +471,17 @@ Derive exact required/missing links while keeping all strict checks strict, then
 return to source declarations and remaining lifetime/proof work. Draft #46 remains
 unmerged and all scenarios/phase gates remain open.
 
+ADR-0038 advisory requirements are implemented after the frozen plan. Six Rust
+and six Python groups plus a compile-fail type-boundary test distinguish complete
+requirements from passed coverage, retain strict error precedence and refuse
+unproved contexts/resources/budgets. Actual unchanged RP-01 derives 84 required /
+72 missing links and 88 conditional historical records. Strict invalidation still
+refuses disposition coverage; see [evidence](0038-invalidation-requirements.md).
+Local 283 Rust tests plus six doctests, native/Wasm and all Python checks pass.
+Final-head CI, comment audit and signed expected-head merge into draft #46 remain
+required. Then add precise source links and continue lifetime/proof dependencies;
+the parent remains unmerged and every scenario/phase gate stays open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

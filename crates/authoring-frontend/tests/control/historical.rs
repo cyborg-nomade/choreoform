@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 
-fn closed_call() -> Value {
+pub(super) fn closed_call() -> Value {
     let mut b = base();
     child(&mut b, "child");
     cell(&mut b, "basis", ROOT, true);
