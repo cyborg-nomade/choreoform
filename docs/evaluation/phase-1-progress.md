@@ -589,6 +589,17 @@ versioned actual-use retry/source binding. No source/core reinterpretation or
 actual fault/permission/settlement claim follows. Draft #46 remains unmerged and
 all scenarios/phase gates remain open.
 
+ADR-0041's independent provider-observation fault-source profile/reader is
+implemented on its dedicated branch. Six Rust integration groups, one budget
+group and sixteen vectors distinguish declared unknown/no-effect states and
+reject success/acknowledgement, aliases, ambiguous maps and trust claims. Four
+Python groups check independent mapping/hash accountability and identical native
+timing behavior when extra mapping bytes are supplied: no implicit retry binding.
+See [evidence](0041-provider-fault-source.md). Local 304 Rust tests plus six doctests
+and native/Wasm/all Python checks pass; final-head CI/comment audit/signed exact
+merge remain required. Then design explicit versioned actual-use binding; metadata
+does not establish a fault, retry permission, scenario or phase exit.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

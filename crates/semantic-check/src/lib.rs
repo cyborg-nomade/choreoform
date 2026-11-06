@@ -36,7 +36,9 @@ pub use reconciliation_entry::{
     ReconciliationEntry, ReconciliationEntryReport, check_reconciliation_availability,
 };
 pub use resources::{
-    CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, InstanceCalendar, Provider, Resources,
+    CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, FAULT_SOURCE_PROFILE, FaultEmission,
+    FaultEvidence, InstanceCalendar, Provider, ProviderFaultSource, ProviderObservationState,
+    Resources,
 };
 pub use timing::{CalendarUse, RetryUse, TimerUse, TimingReport, check_timing};
 pub use types::{Nominal, Pin, Type};
