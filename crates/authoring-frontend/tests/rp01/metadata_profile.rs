@@ -6,13 +6,9 @@ use choreoform_ir_probe_core::DefinitionEnvelope;
 use choreoform_semantic_check::{CORE, CORE_V2, CORE_V3};
 
 fn supplied(m: &Value) -> Vec<Resource<'_>> {
-    let mut r = super::profile::source_resources(m);
-    r.push(Resource {
-        id: CORE_V3.0, revision: CORE_V3.1,
-        bytes: include_bytes!("../../../../docs/ir/contracts/sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt"),
-    });
-    r
+    super::profile::source_resources(m)
 }
+
 fn promote(source: &[u8], bindings: &[u8]) -> (String, Vec<u8>) {
     let source = std::str::from_utf8(source).unwrap();
     let mut l: Value = serde_json::from_slice(bindings).unwrap();
@@ -29,9 +25,22 @@ fn promote(source: &[u8], bindings: &[u8]) -> (String, Vec<u8>) {
 fn explicit_core_promotion_changes_revision_and_integrity_with_compatible_body_and_format() {
     let m: Value = serde_json::from_slice(MANIFEST).unwrap();
     let r = supplied(&m);
-    let original = Package::parse(SOURCE, BINDINGS).unwrap();
+    // This compatibility comparison needs an acyclic core-0.2 package; the
+    // current whole RP-01 labels intentionally require the new core.
+    let legacy_source = include_str!("../../../../docs/authoring/examples/terminal.choreo")
+        .replace("authoring \"0.2.0\"", "authoring \"0.5.0\"");
+    let mut legacy: Value = serde_json::from_slice(include_bytes!(
+        "../../../../docs/authoring/examples/terminal.bindings.json"
+    ))
+    .unwrap();
+    legacy["profile"] = "0.5.0".into();
+    legacy["version"] = "0.4.0".into();
+    legacy["contracts"]["core"]["contract"] = CORE_V2.0.into();
+    legacy["contracts"]["core"]["digest"] = CORE_V2.1.into();
+    let legacy_bytes = serde_json::to_vec(&legacy).unwrap();
+    let original = Package::parse(legacy_source.as_bytes(), &legacy_bytes).unwrap();
     let old = original.lower(&r).unwrap();
-    let (s, l) = promote(SOURCE, BINDINGS);
+    let (s, l) = promote(legacy_source.as_bytes(), &legacy_bytes);
     let package = Package::parse(s.as_bytes(), &l).unwrap();
     assert_eq!(
         package.syntax().token_count(),

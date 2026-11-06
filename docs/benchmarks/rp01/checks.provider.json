@@ -66,7 +66,11 @@
       "operator_actor": true,
       "clock_actor": true
     },
-    "capabilities": {}
+    "capabilities": {
+      "checks_capability": true,
+      "payment_capability": true,
+      "notice_capability": true
+    }
   },
   "observations": {
     "result-clear": {

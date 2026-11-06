@@ -10,15 +10,33 @@ import unittest
 
 import authoring_probe as grammar
 import check_ir_fixtures as wire
-from benchmarks.rp01_resources import types, providers
-from benchmarks.rp01_graph import endpoint_probe
+from benchmarks.rp01_resources import types, providers, clock_resources
+from benchmarks.rp01_graph import endpoint_probe, build
 from check_static_contracts import ROOT, run
 
 BENCHMARK = ROOT / 'docs/benchmarks/rp01'
 
 
-def resources():
-    return [(r['id'], r['revision'], ROOT / r['path']) for r in json.loads((BENCHMARK / 'manifest.json').read_bytes())['resources']]
+def resources(directory):
+    # Preserve exact historical narrow resources independently of the current
+    # parent manifest's explicitly upgraded capability/clock recipients.
+    _, raw, p = types()
+    metadata = providers(p) | clock_resources()
+    supplied = []
+    for name, identity, revision, data in [('types', p['id'], p['revision'], raw)] + [(k, v[2]['id'], v[2]['revision'], v[1]) for k, v in metadata.items()]:
+        path = Path(directory) / name
+        path.write_bytes(data)
+        supplied.append((identity, revision, path))
+    cp = metadata['clock'][0]['profile']
+    supplied.append((cp['id'], cp['revision'], ROOT / 'docs/ir/contracts' / (cp['revision'].replace(':', '-') + '.txt')))
+    return supplied
+
+
+def legacy_full():
+    _, _, p = types()
+    metadata = providers(p) | clock_resources()
+    source, package = build(p, {k:metadata[k][0] for k in ['checks','payment','notice']}, {k:v[2] for k,v in metadata.items()})
+    return source, package.ledger
 
 
 def promote(text, ledger):
@@ -57,27 +75,27 @@ def write(directory, text, ledger):
 def invoke(text, ledger, stage='lower'):
     with tempfile.TemporaryDirectory() as directory:
         source, companion = write(directory, text, ledger)
-        return run(stage, source, companion, resources())
+        return run(stage, source, companion, resources(directory))
 
 
 class BenchmarkProfileEvidence(unittest.TestCase):
     def test_full_source_profile_grammar_schema_ir_hash_and_format_cycles(self):
-        text, ledger = promote((BENCHMARK / 'source.choreo').read_text(encoding='utf-8'), json.loads((BENCHMARK / 'bindings.json').read_bytes()))
+        text, ledger = legacy_full()
         self.assertEqual(len(grammar.lex(text)), 8945)
         self.assertGreater(grammar.recognize(text), grammar.MAX_STATES)
         grammar.validate_ledger(ledger)
         with tempfile.TemporaryDirectory() as directory:
             source, companion = write(directory, text, ledger)
-            result = run('lower', source, companion, resources())
+            result = run('lower', source, companion, resources(directory))
             self.assertEqual(result.returncode, 0, result.stderr)
             candidate = wire.load(result.stdout)
             self.assertEqual(candidate['revision'], wire.revision(candidate))
             self.assertEqual(len(candidate['body']['scopes']), 9)
             self.assertEqual(json.loads(run('integrity', source, companion).stdout), grammar.package_digests(source.read_bytes(), companion.read_bytes()))
-            formatted = json.loads(run('format', source, companion, resources()).stdout)
+            formatted = json.loads(run('format', source, companion, resources(directory)).stdout)
             source.write_text(formatted['source'], encoding='utf-8')
             companion.write_text(formatted['companion'], encoding='utf-8')
-            self.assertEqual(json.loads(run('lower', source, companion, resources()).stdout), candidate)
+            self.assertEqual(json.loads(run('lower', source, companion, resources(directory)).stdout), candidate)
             # The full draft still owes its independent static/protection fixes;
             # compiling it does not establish reimbursement or permission.
             self.assertIsNotNone(candidate['revision'])
@@ -184,8 +202,7 @@ Step "Other done". Finish as "complete". End step. End scope.
 
     def test_timer_and_observation_require_the_same_actual_wait_owner(self):
         base, ledger = endpoint()
-        manifest = json.loads((BENCHMARK / 'manifest.json').read_bytes())
-        clock = next(r for r in manifest['resources'] if r['path'].endswith('/clock.json'))
+        clock = clock_resources()['clock'][2]
         ledger['declarations'] += [
             {'id': 'probe_clock', 'kind': 'resource', 'scope': 'expense', 'name': 'Test clock'},
             {'id': 'probe_basis', 'kind': 'data', 'scope': 'expense', 'name': 'Clock basis'},

@@ -92,9 +92,10 @@ fn draft_manifest_and_resource_pins_do_not_claim_program_admission() {
     );
     let stages = m["semanticStageResults"].as_array().unwrap();
     assert_eq!(stages.len(), 10);
-    assert!(stages.iter().all(|s| s["result"] == "refused"
-        && s["code"] == "information-flow"
-        && s["path"] == "/body/nodes/checks_request_step"));
+    assert!(stages[..3].iter().all(|s| s["result"] == "passed"));
+    assert!(stages[3..].iter().all(|s| s["result"] == "refused"
+        && s["code"] == "invalidation-context-unproved"
+        && s["path"] == "/body/nodes/check_rejection"));
     assert_eq!(m["sourceDigest"], digest(SOURCE));
     assert_eq!(m["sourceBytes"], SOURCE.len());
     assert_eq!(m["scenarios"].as_array().unwrap().len(), 4);
@@ -113,10 +114,10 @@ fn draft_manifest_and_resource_pins_do_not_claim_program_admission() {
     assert!(
         m["measuredTokens"].as_u64().unwrap() > choreoform_authoring_frontend::MAX_TOKENS as u64
     );
-    assert_eq!(parse(SOURCE).unwrap().profile(), "0.5.0");
+    assert_eq!(parse(SOURCE).unwrap().profile(), "0.6.0");
     let old = std::str::from_utf8(SOURCE)
         .unwrap()
-        .replacen("\"0.5.0\"", "\"0.4.0\"", 1);
+        .replacen("\"0.6.0\"", "\"0.4.0\"", 1);
     assert_eq!(parse(old.as_bytes()).unwrap_err().code, "tokens");
 }
 

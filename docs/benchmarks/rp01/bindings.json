@@ -1,7 +1,7 @@
 {
   "format": "choreoform-authoring-bindings",
-  "version": "0.4.0",
-  "profile": "0.5.0",
+  "version": "0.5.0",
+  "profile": "0.6.0",
   "definition": "rp01_benchmark",
   "root": "expense",
   "contracts": {
@@ -10,8 +10,8 @@
       "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
     },
     "core": {
-      "contract": "urn:choreoform:contracts:core-profile:0.2.0",
-      "digest": "sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623",
+      "contract": "urn:choreoform:contracts:core-profile:0.3.0",
+      "digest": "sha256:30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3",
       "dialect": "core"
     }
   },
@@ -2062,25 +2062,25 @@
       "binding": "checks_provider_binding",
       "kind": "provider",
       "contract": "urn:choreoform:benchmarks:rp01:checks:0.1.0",
-      "digest": "sha256:4393cea1c6d81969bac3e05c68630ca87cb339b9f9525c4428a2a3dcfe1fd929"
+      "digest": "sha256:a884fd9977b676ed4b82244ec1a91e43e5f947b225be12f6abb6ad33b15e3378"
     },
     {
       "binding": "payment_provider_binding",
       "kind": "provider",
       "contract": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
-      "digest": "sha256:a71cd130f5f116823cec80f144f666f20f2e26710457cf88cbf81af403b583e3"
+      "digest": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d"
     },
     {
       "binding": "notice_provider_binding",
       "kind": "provider",
       "contract": "urn:choreoform:benchmarks:rp01:notice:0.1.0",
-      "digest": "sha256:da62a675a72b15344ddfe988c63a4c9b78be198b6b2d487b45774f9c51ead750"
+      "digest": "sha256:7ae8bce8e4b6881ff9b0472658e49376f392156acb467c261e1877b4df9b5f82"
     },
     {
       "binding": "expense_clock",
       "kind": "clock",
       "contract": "urn:choreoform:benchmarks:rp01:clock:0.1.0",
-      "digest": "sha256:63191f6fe3e43ccd6dddb036eb61b3f28dc05ee76dd5ba5e0b6e7e10433289dc"
+      "digest": "sha256:32f46c291fe06f4248c44fc0aa802905ad4501c8fbcd714110689d922f832085"
     }
   ],
   "annotations": {

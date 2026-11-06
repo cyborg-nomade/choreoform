@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Choreoform contributors
 # SPDX-License-Identifier: MPL-2.0
 # Synthetic whole-case draft; not admitted or executable.
-Choreoform authoring "0.5.0".
+Choreoform authoring "0.6.0".
 Process "Expense reimbursement".
 Start at "Review again".
 Inputs ["Claim" uses "Current claim", "Payment due" uses "Payment due"]. Outputs ["Disposition" uses "Disposition", "Payable" uses "Payable reference"]. Outcomes ["paid", "rejected", "problem"].

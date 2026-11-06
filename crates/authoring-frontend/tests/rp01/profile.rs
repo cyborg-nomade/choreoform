@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 use choreoform_authoring_frontend::{Package, parse_fragment};
-use choreoform_semantic_check::{CORE, CORE_V2, SEMANTICS};
+use choreoform_semantic_check::{CORE, CORE_V2, CORE_V3, SEMANTICS};
 
 pub(super) fn source_resources(m: &Value) -> Vec<Resource<'_>> {
     let mut r = resources(m);
@@ -10,6 +10,7 @@ pub(super) fn source_resources(m: &Value) -> Vec<Resource<'_>> {
         Resource { id:SEMANTICS.0,revision:SEMANTICS.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141.txt") },
         Resource { id:CORE.0,revision:CORE.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt") },
         Resource { id:CORE_V2.0,revision:CORE_V2.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt") },
+        Resource { id:CORE_V3.0,revision:CORE_V3.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt") },
     ]);
     r
 }
@@ -24,43 +25,33 @@ fn promote(source: &[u8], bindings: &[u8]) -> (String, Vec<u8>) {
 }
 
 #[test]
-fn explicit_new_profile_parses_and_lowers_full_draft_without_claiming_admission() {
+fn whole_current_source_lowers_but_cannot_silently_rebind_legacy_metadata_cycles() {
     let m: Value = serde_json::from_slice(MANIFEST).unwrap();
-    let supplied = source_resources(&m);
-    let (source, bindings) = promote(SOURCE, BINDINGS);
-    let package = Package::parse(source.as_bytes(), &bindings).unwrap();
-    let syntax = package.syntax();
-    assert_eq!(syntax.profile(), "0.5.0");
+    let r = source_resources(&m);
+    let package = Package::parse(SOURCE, BINDINGS).unwrap();
+    assert_eq!(package.syntax().profile(), "0.6.0");
     assert_eq!(
-        syntax.token_count(),
+        package.syntax().token_count(),
         m["measuredTokens"].as_u64().unwrap() as usize
     );
-    assert!(syntax.parser_work() > choreoform_authoring_frontend::MAX_WORK);
-    assert!(syntax.parser_work() <= 1_000_000);
-    eprintln!(
-        "RP-01 source 0.5: {} tokens, {} parser pattern visits",
-        syntax.token_count(),
-        syntax.parser_work()
-    );
-    let c = package.lower(&supplied).unwrap();
+    assert!(package.syntax().parser_work() > choreoform_authoring_frontend::MAX_WORK);
+    let c = package.lower(&r).unwrap();
+    c.check_protection(&r).unwrap();
     assert_eq!(c.document()["body"]["scopes"].as_object().unwrap().len(), 9);
-    assert_eq!(c.document()["body"]["dialects"]["core"]["id"], CORE_V2.0);
-    assert_eq!(
-        c.document()["body"]["nodes"]["checks_observe"]["scope"],
-        "checks_recovery"
+    let source = std::str::from_utf8(SOURCE).unwrap().replacen(
+        "authoring \"0.6.0\"",
+        "authoring \"0.5.0\"",
+        1,
     );
-    assert_eq!(
-        c.document()["body"]["policies"]["checks_wait"]["scope"],
-        "expense"
-    );
-    let (formatted, companion) = package.formatted().unwrap();
-    let next = Package::parse(formatted.as_bytes(), companion.as_bytes())
-        .unwrap()
-        .lower(&supplied)
-        .unwrap();
-    assert_eq!(c.document(), next.document());
-    // Candidate lowering, fixed source metadata and matching IR are not full
-    // semantic permission, a live provider fact or a successful reimbursement.
+    let mut l: Value = serde_json::from_slice(BINDINGS).unwrap();
+    l["profile"] = "0.5.0".into();
+    l["version"] = "0.4.0".into();
+    l["contracts"]["core"]["contract"] = CORE_V2.0.into();
+    l["contracts"]["core"]["digest"] = CORE_V2.1.into();
+    let bytes = serde_json::to_vec(&l).unwrap();
+    let old = Package::parse(source.as_bytes(), &bytes).unwrap();
+    assert_eq!(old.syntax().token_count(), package.syntax().token_count());
+    assert_eq!(old.lower(&r).unwrap_err().code, "policy-cycle");
 }
 
 #[test]

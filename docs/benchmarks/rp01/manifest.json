@@ -3,119 +3,107 @@
   "version": "0.1.0",
   "status": "lowered-candidate-awaiting-semantic-dependencies",
   "executable": false,
-  "sourceProfile": "0.5.0",
-  "companionVersion": "0.4.0",
-  "coreProfile": "0.2.0",
+  "sourceProfile": "0.6.0",
+  "companionVersion": "0.5.0",
+  "coreProfile": "0.3.0",
   "sourceBytes": 52055,
   "measuredTokens": 8945,
   "tokenMeasurement": "sum of complete-line lexing; not whole-program recognition",
-  "sourceDigest": "sha256:93e3a59299d66e078e32232dd52247b72f5b53917298aac374da20dba03f38c0",
-  "bindingsDigest": "sha256:50832e73068cd8ac905582d18d030e822c8b5bff502fd7b590053625a521db08",
-  "packageDigest": "sha256:24fdb653a163e40cb5f4919d06849eeae6cfaa7f750c3b6a54b5ccf1c18d7353",
+  "sourceDigest": "sha256:089abfd6e275479f07f6556435539a0b88021e5306f0f8823ab75a0a405657a4",
+  "bindingsDigest": "sha256:bd9d9363fa00e45c89357c66fd4c0c0104e40b7e10538c437b695707c1ca566c",
+  "packageDigest": "sha256:9c1c478922f59ca5636ed451830e6aa6c561e2a2d7e5d9600cf1057d4cdf71f7",
   "canonicalIR": {
     "path": "candidate.ir.json",
-    "revision": "sha256:a4f9bb63535a1644fe3327b305029ca7e63490ff64c35a7ba729f70b485a883b",
-    "digest": "sha256:0ed82d7fbaea854863b080db6f8847416b2a9897f2624f5d1c1f26331b67f4a1"
+    "revision": "sha256:559d82dbee340a13cbb25b61fcaa6fbb588563dad2d4a5e4812721edc909896b",
+    "digest": "sha256:9ac9f358651146525914cf725505b79d17a4c963257f12a9a06c3245dd1c0ffa"
   },
   "semanticStageResults": [
     {
       "stage": "check",
-      "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
-      "sourceBytes": [
-        20791,
-        21147
-      ]
+      "result": "passed",
+      "report": "reports/check.json",
+      "reportDigest": "sha256:59568d65f5af4d24e2495f8b7ec501885101a6089aba3ba129d4e2b12b15e349"
     },
     {
       "stage": "check-control",
-      "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
-      "sourceBytes": [
-        20791,
-        21147
-      ]
+      "result": "passed",
+      "report": "reports/check-control.json",
+      "reportDigest": "sha256:2521f84066dcfe474f4d73e6b730100d197dc3c2d083478cbcaa320d78352151"
     },
     {
       "stage": "check-protection",
-      "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
-      "sourceBytes": [
-        20791,
-        21147
-      ]
+      "result": "passed",
+      "report": "reports/check-protection.json",
+      "reportDigest": "sha256:27a089b8a0bd42f15e923c9f59aa3a1bea40a19e054bdc7b07dfcf8a1b1f499f"
     },
     {
       "stage": "check-invalidation",
       "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
+      "code": "invalidation-context-unproved",
+      "path": "/body/nodes/check_rejection",
       "sourceBytes": [
-        20791,
-        21147
+        44138,
+        44347
       ]
     },
     {
       "stage": "check-concurrency",
       "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
+      "code": "invalidation-context-unproved",
+      "path": "/body/nodes/check_rejection",
       "sourceBytes": [
-        20791,
-        21147
+        44138,
+        44347
       ]
     },
     {
       "stage": "check-timing",
       "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
+      "code": "invalidation-context-unproved",
+      "path": "/body/nodes/check_rejection",
       "sourceBytes": [
-        20791,
-        21147
+        44138,
+        44347
       ]
     },
     {
       "stage": "check-fault-routes",
       "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
+      "code": "invalidation-context-unproved",
+      "path": "/body/nodes/check_rejection",
       "sourceBytes": [
-        20791,
-        21147
+        44138,
+        44347
       ]
     },
     {
       "stage": "check-exceptional-availability",
       "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
+      "code": "invalidation-context-unproved",
+      "path": "/body/nodes/check_rejection",
       "sourceBytes": [
-        20791,
-        21147
+        44138,
+        44347
       ]
     },
     {
       "stage": "check-reconciliation-links",
       "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
+      "code": "invalidation-context-unproved",
+      "path": "/body/nodes/check_rejection",
       "sourceBytes": [
-        20791,
-        21147
+        44138,
+        44347
       ]
     },
     {
       "stage": "check-reconciliation-availability",
       "result": "refused",
-      "code": "information-flow",
-      "path": "/body/nodes/checks_request_step",
+      "code": "invalidation-context-unproved",
+      "path": "/body/nodes/check_rejection",
       "sourceBytes": [
-        20791,
-        21147
+        44138,
+        44347
       ]
     }
   ],
@@ -127,27 +115,27 @@
     },
     {
       "id": "urn:choreoform:benchmarks:rp01:checks:0.1.0",
-      "revision": "sha256:4393cea1c6d81969bac3e05c68630ca87cb339b9f9525c4428a2a3dcfe1fd929",
+      "revision": "sha256:a884fd9977b676ed4b82244ec1a91e43e5f947b225be12f6abb6ad33b15e3378",
       "path": "docs/benchmarks/rp01/checks.provider.json"
     },
     {
       "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
-      "revision": "sha256:a71cd130f5f116823cec80f144f666f20f2e26710457cf88cbf81af403b583e3",
+      "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d",
       "path": "docs/benchmarks/rp01/payment.provider.json"
     },
     {
       "id": "urn:choreoform:benchmarks:rp01:notice:0.1.0",
-      "revision": "sha256:da62a675a72b15344ddfe988c63a4c9b78be198b6b2d487b45774f9c51ead750",
+      "revision": "sha256:7ae8bce8e4b6881ff9b0472658e49376f392156acb467c261e1877b4df9b5f82",
       "path": "docs/benchmarks/rp01/notice.provider.json"
     },
     {
       "id": "urn:choreoform:benchmarks:rp01:clock-source:0.1.0",
-      "revision": "sha256:f9d094ee3c1fc0bda7c083cef569786fbff89653646dcc69b6a23d3060940ed9",
+      "revision": "sha256:e5d530de89cf116c25fc174c8bfe820435e2eccb29b6e4359c24a5d14af0d45c",
       "path": "docs/benchmarks/rp01/clock.provider.json"
     },
     {
       "id": "urn:choreoform:benchmarks:rp01:clock:0.1.0",
-      "revision": "sha256:63191f6fe3e43ccd6dddb036eb61b3f28dc05ee76dd5ba5e0b6e7e10433289dc",
+      "revision": "sha256:32f46c291fe06f4248c44fc0aa802905ad4501c8fbcd714110689d922f832085",
       "path": "docs/benchmarks/rp01/clock.json"
     },
     {
@@ -162,8 +150,8 @@
       "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
     },
     "core": {
-      "contract": "urn:choreoform:contracts:core-profile:0.2.0",
-      "digest": "sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623",
+      "contract": "urn:choreoform:contracts:core-profile:0.3.0",
+      "digest": "sha256:30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3",
       "dialect": "core"
     }
   },

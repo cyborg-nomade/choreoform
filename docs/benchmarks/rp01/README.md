@@ -11,11 +11,11 @@ scenarios from the [adopted case](../../representative-processes/01-expense-reim
 
 The source has 52055 UTF-8 bytes and 8945 measured tokens. The
 measurement lexes complete lines independently and is not whole-program admission.
-Source 0.5 / companion 0.4 is selected explicitly under ADR-0034; core 0.2
-and all prior profiles remain unchanged. Static information flow still refuses
-the provider result capability-envelope mismatch. Granting its intended shared
-capabilities instead reproduces a core-0.2 policy cycle; a separate versioned
-contract dependency is required before semantic progress can be claimed.
+Source 0.6 / companion 0.5 and core 0.3 are selected explicitly under
+ADR-0035/0036; old cores/source profiles remain unchanged. Coherent fictional
+business/clock recipient labels now pass static, ordinary control and protection
+checks. Invalidation and all later composed stages still refuse a private-child
+context; no later-stage or whole-process admission is claimed.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 
@@ -46,7 +46,7 @@ ownership. The exact `confirmed no effect` retry fault name requires truthful
 authenticated classification; it is not inferred from HTTP errors or spelling.
 
 Each service occurrence owns one capability site and its declared follow-up.
-Root data names root-visible capabilities; source 0.5 ancestor wait policies name
+Root data names root-visible capabilities; source 0.6 ancestor wait policies name
 their actual activity-use follow-ups. Older profile 0.4 keeps its narrower binding. The remaining-owner finish is a P6
 closure gate, not proof that transitive obligations vanished. Full lifetime,
 retention, invalidation/conflict/exceptional protection and accepted handoff remain
@@ -55,8 +55,9 @@ open until actual checks and any necessary contract work establish them.
 Broadly authorized fictional expense participants share the declared expense
 purpose/envelope; request payloads still separate claim, approval, payment and
 notice information. This is not a demonstrated least-privilege editor or protected
-audience view. The provider metadata still has no permitted capability recipients,
-so the declared data circle is not yet a semantically consistent policy. Policy and receipt files are fictional input artifacts, not trusted
+audience view. All three business adapters and the clock-result source explicitly
+permit that same downstream recipient circle; data/pin equality still grants no
+current authority, truthful observation or least-privilege guarantee. Policy and receipt files are fictional input artifacts, not trusted
 execution contracts or real operational evidence. All four scenarios and the
 forty-corpus accounting remain Partial. No user, host/browser/process execution,
 independent review or Phase 1 closure is claimed.

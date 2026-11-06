@@ -4,7 +4,7 @@
 from .rp01_resources import (
     TEXT, INTEGER, BOOLEAN, binary, every, field, literal, negate, nominal, option, record, variant,
 )
-from .rp01_source import Package, Scope, expression_source, quote, type_source
+from .rp01_source import Package, Scope, CORE3, expression_source, quote, type_source
 
 PEOPLE = ['Employee', 'Manager', 'Finance reviewer', 'Payment operator', 'Clock observer']
 CAPABILITIES = ['Check the claim', 'Create the payable', 'Notify the employee']
@@ -200,9 +200,12 @@ def endpoint_probe(type_pin, provider, provider_pin):
     return 'Choreoform authoring "0.4.0".\n' + root.render(), package
 
 
-def build(type_pin, provider_documents, resource_pins):
+def build(type_pin, provider_documents, resource_pins, profile="0.5.0"):
+    assert profile in ["0.5.0", "0.6.0"]
     package = Package()
-    package.ledger.update(profile="0.5.0", version="0.4.0")
+    package.ledger.update(profile=profile, version="0.5.0" if profile == "0.6.0" else "0.4.0")
+    if profile == "0.6.0":
+        package.ledger['contracts']['core'] = CORE3.copy()
     root = Scope(package, 'expense', 'Expense reimbursement', None, 'Review again',
         inputs=[('claim', 'Claim', 'Current claim'), ('deadline', 'Payment due', 'Payment due')],
         outputs=[('disposition', 'Disposition', 'Disposition'), ('payable', 'Payable', 'Payable reference')],
@@ -390,5 +393,5 @@ def build(type_pin, provider_documents, resource_pins):
     root.data('payable_reference', 'Payable reference', option(TEXT), {'op': 'none', 'element': TEXT}, participants=PEOPLE, capabilities=CAPABILITIES)
     root.data('recorded_payment', 'Recorded payment result', payment_type, participants=PEOPLE, capabilities=CAPABILITIES)
     root.data('recorded_notice', 'Recorded notice result', provider_documents['notice']['output'], participants=PEOPLE, capabilities=CAPABILITIES)
-    source = '# SPDX-FileCopyrightText: 2026 Choreoform contributors\n# SPDX-License-Identifier: MPL-2.0\n# Synthetic whole-case draft; not admitted or executable.\nChoreoform authoring "0.5.0".\n' + root.render() + '\n'
+    source = '# SPDX-FileCopyrightText: 2026 Choreoform contributors\n# SPDX-License-Identifier: MPL-2.0\n# Synthetic whole-case draft; not admitted or executable.\nChoreoform authoring "' + profile + '".\n' + root.render() + '\n'
     return source, package

@@ -61,6 +61,29 @@ impl Fixture {
             let pin = f.replace(provider);
             f.body["policies"][wrapper]["body"]["provider"] = pin;
         }
+        let mut source: Value = serde_json::from_slice(
+            &f.resources
+                .iter()
+                .find(|r| r.0.ends_with(":clock-source:0.1.0"))
+                .unwrap()
+                .2,
+        )
+        .unwrap();
+        source["resultProtection"]["capabilities"] = json!({});
+        let source_pin = f.replace(source);
+        let mut clock: Value = serde_json::from_slice(
+            &f.resources
+                .iter()
+                .find(|r| r.0.ends_with(":clock:0.1.0"))
+                .unwrap()
+                .2,
+        )
+        .unwrap();
+        clock["source"] = source_pin;
+        let clock_pin = f.replace(clock);
+        for role in ["timeout", "retry"] {
+            f.body["policies"]["payment_work"]["body"][role]["clock"] = clock_pin.clone();
+        }
         f
     }
     fn replace(&mut self, provider: Value) -> Value {

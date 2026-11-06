@@ -420,6 +420,19 @@ The active branch is again `codex/rp01-benchmark-package`, following the
 regression fixtures, then derive real stage evidence and freeze the next genuine
 proof dependency. Draft #46 remains unmerged; no scenario or phase gate closes.
 
+The actual [RP-01 adoption checkpoint](0036-rp01-adoption.md) now uses source 0.6 /
+companion 0.5 / core 0.3 with coherent fictional business/clock recipient labels.
+Freshly derived IR and all ten stage results are bound in the manifest: static,
+control and protection pass, while invalidation and later prerequisites refuse
+`invalidation-context-unproved` at `/body/nodes/check_rejection`. No later stage
+or full scenario is admitted. Historical source-0.5/narrow-resource and 0.4 endpoint
+fixtures remain independently reproducible. Local 270 Rust tests plus five
+doctests, lint and all Python checks pass; draft #46 still needs its final-head
+checks and full deliverable completion. Next audit closed-child provenance and
+mutable-survivor counterexamples before changing invalidation/lifetime analyses.
+All forty scenarios, full benchmark/text/visual/protected editing/user gates and
+Phase 1 exit remain open. The parent is still unmerged.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

@@ -31,20 +31,26 @@ class Rp01PackageEvidence(unittest.TestCase):
         cls.bindings = (BASE / 'bindings.json').read_bytes()
         cls.candidate = wire.load((BASE / 'candidate.ir.json').read_bytes())
 
-    def test_generation_repeats_native_candidate_and_all_ten_actual_stage_refusals(self):
+    def test_generation_repeats_native_candidate_and_all_ten_actual_stage_results(self):
         generated = artifacts()
         for name, raw in generated.items():
             self.assertEqual((BASE / name).read_bytes(), raw, name)
         manifest = json.loads(generated['manifest.json'])
         self.assertIs(manifest['executable'], False)
         self.assertEqual([s['stage'] for s in manifest['semanticStageResults']], STAGES)
+        self.assertEqual([s['result'] for s in manifest['semanticStageResults']], ['passed'] * 3 + ['refused'] * 7)
         for stage in manifest['semanticStageResults']:
-            self.assertEqual(stage['result'], 'refused')
-            self.assertEqual(stage['code'], 'information-flow')
-            self.assertEqual(stage['path'], '/body/nodes/checks_request_step')
+            if stage['result'] == 'passed':
+                report = json.loads(generated[stage['report']])
+                self.assertIs(report['executable'], False)
+                self.assertEqual(report['revision'], self.candidate['revision'])
+                self.assertEqual(stage['reportDigest'], 'sha256:' + sha256(generated[stage['report']]).hexdigest())
+                continue
+            self.assertEqual(stage['code'], 'invalidation-context-unproved')
+            self.assertEqual(stage['path'], '/body/nodes/check_rejection')
             start, end = stage['sourceBytes']
             declaration = self.source[start:end].decode('utf-8')
-            self.assertTrue(declaration.startswith('Step "Request Claim checks".'))
+            self.assertTrue(declaration.startswith('Step "Check rejection".'))
         self.assertEqual(manifest['sourceDigest'], 'sha256:' + sha256(self.source).hexdigest())
         self.assertEqual(manifest['canonicalIR']['digest'], 'sha256:' + sha256(generated['candidate.ir.json']).hexdigest())
 
@@ -75,11 +81,13 @@ class Rp01PackageEvidence(unittest.TestCase):
         _, _, type_pin = types()
         _, raw, pin = providers(type_pin, shared=True)['checks']
         ledger = json.loads(self.bindings)
+        ledger.update(profile='0.5.0', version='0.4.0')
+        ledger['contracts']['core'].update(contract='urn:choreoform:contracts:core-profile:0.2.0', digest='sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623')
         next(r for r in ledger['resources'] if r['binding'] == 'checks_provider_binding')['digest'] = pin['revision']
         with tempfile.TemporaryDirectory() as directory:
             base = Path(directory)
             s, b, p = base / 'source.choreo', base / 'bindings.json', base / 'provider.json'
-            s.write_bytes(self.source)
+            s.write_bytes(self.source.replace(b'authoring "0.6.0"', b'authoring "0.5.0"', 1))
             b.write_text(json.dumps(ledger), encoding='utf-8')
             p.write_bytes(raw)
             supplied = [(i, pin['revision'], p) if i == pin['id'] else (i, digest, path) for i, digest, path in registry(self.manifest)]
@@ -93,7 +101,7 @@ class Rp01PackageEvidence(unittest.TestCase):
         manager = next(d for d in ledger['declarations'] if d['id'] == 'manager_actor')
         with tempfile.TemporaryDirectory() as directory:
             s, b = Path(directory) / 'source.choreo', Path(directory) / 'bindings.json'
-            s.write_bytes(self.source.replace(b'authoring "0.5.0"', b'authoring "0.7.0"', 1))
+            s.write_bytes(self.source.replace(b'authoring "0.6.0"', b'authoring "0.7.0"', 1))
             b.write_bytes(self.bindings)
             result = run('lower', s, b, registry(self.manifest))
             self.assertNotEqual(result.returncode, 0)

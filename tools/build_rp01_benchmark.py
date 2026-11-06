@@ -71,14 +71,14 @@ def derive(files, registry):
 def artifacts():
     files = {}
     _, type_raw, type_pin = types()
-    resources = providers(type_pin) | clock_resources()
+    resources = providers(type_pin, shared=True) | clock_resources(shared=True)
     names = {'checks': 'checks.provider.json', 'payment': 'payment.provider.json',
              'notice': 'notice.provider.json', 'clock-source': 'clock.provider.json', 'clock': 'clock.json'}
     files['types.json'] = type_raw
     for name, (_, raw, _) in resources.items():
         files[names[name]] = raw
     source, package = build(type_pin, {k: resources[k][0] for k in ['checks', 'payment', 'notice']},
-        {k: v[2] for k, v in resources.items()})
+        {k: v[2] for k, v in resources.items()}, profile="0.6.0")
     # Counting individual complete lines uses the unchanged bounded lexer only
     # for measurement. It does not recognize/admit the over-budget whole program.
     tokens = sum(len(lex(line)) for line in source.splitlines())
@@ -117,7 +117,7 @@ def artifacts():
         'path': 'docs/ir/contracts/sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt'})
     canonical_bindings = rfc8785.dumps(package.ledger)
     source_raw = files['source.choreo']
-    frame = b'choreoform-authoring-package:0.5.0\0' + len(source_raw).to_bytes(8, 'big') + source_raw + len(canonical_bindings).to_bytes(8, 'big') + canonical_bindings
+    frame = b'choreoform-authoring-package:0.6.0\0' + len(source_raw).to_bytes(8, 'big') + source_raw + len(canonical_bindings).to_bytes(8, 'big') + canonical_bindings
     requirements = [
         'authenticated-current-principal-role-relationship-and-assignment-binding',
         'exact-input-policy-claim-and-evidence-revisions-before-acceptance',
@@ -133,7 +133,7 @@ def artifacts():
     manifest = {
         'format': 'choreoform-rp01-benchmark-draft', 'version': '0.1.0',
         'status': 'whole-source-draft-awaiting-measured-profile-and-checks', 'executable': False,
-        'sourceProfile': '0.5.0', 'companionVersion': '0.4.0', 'coreProfile': '0.2.0',
+        'sourceProfile': '0.6.0', 'companionVersion': '0.5.0', 'coreProfile': '0.3.0',
         'sourceBytes': len(source_raw), 'measuredTokens': tokens,
         'tokenMeasurement': 'sum of complete-line lexing; not whole-program recognition',
         'sourceDigest': 'sha256:' + sha256(source_raw).hexdigest(),
@@ -169,11 +169,11 @@ scenarios from the [adopted case](../../representative-processes/01-expense-reim
 
 The source has {len(source_raw)} UTF-8 bytes and {tokens} measured tokens. The
 measurement lexes complete lines independently and is not whole-program admission.
-Source 0.5 / companion 0.4 is selected explicitly under ADR-0034; core 0.2
-and all prior profiles remain unchanged. Static information flow still refuses
-the provider result capability-envelope mismatch. Granting its intended shared
-capabilities instead reproduces a core-0.2 policy cycle; a separate versioned
-contract dependency is required before semantic progress can be claimed.
+Source 0.6 / companion 0.5 and core 0.3 are selected explicitly under
+ADR-0035/0036; old cores/source profiles remain unchanged. Coherent fictional
+business/clock recipient labels now pass static, ordinary control and protection
+checks. Invalidation and all later composed stages still refuse a private-child
+context; no later-stage or whole-process admission is claimed.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 
@@ -204,7 +204,7 @@ ownership. The exact `confirmed no effect` retry fault name requires truthful
 authenticated classification; it is not inferred from HTTP errors or spelling.
 
 Each service occurrence owns one capability site and its declared follow-up.
-Root data names root-visible capabilities; source 0.5 ancestor wait policies name
+Root data names root-visible capabilities; source 0.6 ancestor wait policies name
 their actual activity-use follow-ups. Older profile 0.4 keeps its narrower binding. The remaining-owner finish is a P6
 closure gate, not proof that transitive obligations vanished. Full lifetime,
 retention, invalidation/conflict/exceptional protection and accepted handoff remain
@@ -213,8 +213,9 @@ open until actual checks and any necessary contract work establish them.
 Broadly authorized fictional expense participants share the declared expense
 purpose/envelope; request payloads still separate claim, approval, payment and
 notice information. This is not a demonstrated least-privilege editor or protected
-audience view. The provider metadata still has no permitted capability recipients,
-so the declared data circle is not yet a semantically consistent policy. Policy and receipt files are fictional input artifacts, not trusted
+audience view. All three business adapters and the clock-result source explicitly
+permit that same downstream recipient circle; data/pin equality still grants no
+current authority, truthful observation or least-privilege guarantee. Policy and receipt files are fictional input artifacts, not trusted
 execution contracts or real operational evidence. All four scenarios and the
 forty-corpus accounting remain Partial. No user, host/browser/process execution,
 independent review or Phase 1 closure is claimed.
@@ -247,7 +248,7 @@ def main():
         binary = ROOT / 'target/debug/choreoform-authoring-frontend'
         with tempfile.TemporaryDirectory() as directory:
             source, bindings = Path(directory) / 'old.choreo', Path(directory) / 'old.json'
-            source.write_text(files['source.choreo'].decode('utf-8').replace('"0.5.0"', '"0.4.0"', 1), encoding='utf-8')
+            source.write_text(files['source.choreo'].decode('utf-8').replace('"0.6.0"', '"0.4.0"', 1), encoding='utf-8')
             ledger = json.loads(files['bindings.json'])
             ledger.update(profile='0.4.0', version='0.3.0')
             bindings.write_bytes(encoded(ledger))
@@ -263,7 +264,11 @@ def main():
             source, bindings = Path(directory) / 'source.choreo', Path(directory) / 'bindings.json'
             source.write_text(probe, encoding='utf-8')
             bindings.write_bytes(package.companion())
-            result = subprocess.run([str(binary), 'lower', str(source), str(bindings), *args_for_resources], capture_output=True, timeout=20)
+            provider_path = Path(directory) / 'checks.provider.json'
+            provider_path.write_bytes(encoded(provider))
+            probe_resources = [item for r in manifest['resources'] if r['id'] != provider_pin['id'] for item in ['--resource', r['id'], r['revision'], str(ROOT / r['path'])]]
+            probe_resources += ['--resource', provider_pin['id'], provider_pin['revision'], str(provider_path)]
+            result = subprocess.run([str(binary), 'lower', str(source), str(bindings), *probe_resources], capture_output=True, timeout=20)
         if result.returncode == 0 or b'reference-missing' not in result.stderr or result.stdout:
             raise SystemExit('expected the ancestor-policy endpoint binding refusal, got: ' + result.stderr.decode('utf-8', errors='replace'))
         print('Strict whole draft:', strict.stderr.decode('utf-8').strip())

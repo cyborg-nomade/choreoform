@@ -8,6 +8,8 @@ from .rp01_resources import TEXT, BOOLEAN, encoded
 SEMANTICS = {'contract': 'urn:choreoform:semantics:adr-0008', 'digest': 'sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141'}
 CORE = {'contract': 'urn:choreoform:contracts:core-profile:0.2.0', 'digest': 'sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623', 'dialect': 'core'}
 
+CORE3 = {'contract': 'urn:choreoform:contracts:core-profile:0.3.0', 'digest': 'sha256:30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3', 'dialect': 'core'}
+
 
 def quote(value):
     assert not any(ord(c) < 32 for c in value)

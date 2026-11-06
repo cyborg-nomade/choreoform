@@ -4,7 +4,8 @@
 # RP-01 draft host obligations
 
 **Status:** Synthetic benchmark boundary specification, not implemented support or
-execution authorization. The source lowers as a candidate but still has explicit semantic/proof refusals.
+execution authorization. The source lowers and passes supported static/control/protection checks, while
+private-child invalidation and later composed proof stages still refuse.
 Read [package status](README.md), [manifest](manifest.json) and
 [frozen plan](../../evaluation/0034-rp01-package-plan.md).
 
@@ -58,8 +59,10 @@ new manager/finance work before payment. The unexpected-stale-evidence fallback
 requests no payable and records an explicit problem; it is not renewed approval.
 No generic out-of-band mutable-data import API is implemented by this benchmark.
 
-The shared fictional expense envelope is a deliberately declared authorization
-circle, not demonstrated least privilege. Payloads separate check/review/payment/
+The shared fictional expense envelope explicitly permits the three business
+adapters on data and business/clock result labels. Clock observations can affect
+payment/control publication, so their downstream recipient circle is explicit too.
+This is a deliberately declared authorization circle, not demonstrated least privilege. Payloads separate check/review/payment/
 notice information, but that does not prove protected accessible editing, audience
 views or all control/timing information flows. Those gates remain open.
 
