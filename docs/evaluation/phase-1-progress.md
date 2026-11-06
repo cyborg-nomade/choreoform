@@ -543,6 +543,13 @@ harness, then resolve concrete fault-source/late-observation/continuation needs.
 Substantial independent work remains; this is not an external blocker or phase
 report. Draft #46 stays unmerged and all forty scenarios remain Partial.
 
+The scenario audit checkpoint is `80037c65c4f681d39199f120153fb11ec60f49cb`
+on draft #46. Active dependency: `codex/rp01-guard-conformance`, following the
+[frozen finite-snapshot plan](0040-rp01-guard-plan.md). Use exact original ASTs,
+production static/value/pure judgments and explicit immutable synthetic bindings;
+introduce no public evaluation/authority/runtime API or scenario completion claim.
+The parent remains draft/unmerged and every phase gate stays open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
