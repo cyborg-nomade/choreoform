@@ -8,8 +8,8 @@ metadata read closure under [ADR-0035](../../docs/decisions/0035-provider-metada
 The strong graph remains acyclic; cyclic components containing legacy policies
 refuse. The pure `policy_read_closure` helper returns sets/work, not validated
 policies or authority. Callers validate exact pins/visibility/eligibility and charge
-its work against their existing remaining budget. Source profiles still select
-their original cores; this slice adds direct-IR checking only.
+its work against their existing remaining budget. [Source 0.6](../../docs/authoring/profile-v0.6.md)
+selects this core explicitly; earlier profiles keep their original pins.
 
 Static scope/input, actor, data protection/initializer/invalidation and capability
 errors include record/field paths without changing their codes. Existing deeper

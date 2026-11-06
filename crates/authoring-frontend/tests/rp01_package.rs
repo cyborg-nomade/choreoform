@@ -6,6 +6,8 @@ use choreoform_ir_probe_core::{Resource, digest};
 use choreoform_semantic_check::{Context, Pin, Resources};
 use serde_json::{Value, json};
 
+#[path = "rp01/metadata_profile.rs"]
+mod metadata_profile;
 #[path = "rp01/profile.rs"]
 mod profile;
 

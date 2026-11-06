@@ -54,6 +54,8 @@ while specifications, guides, and code describe the system as it exists now.
 
 | [0035](0035-provider-metadata-read-closure.md) | Accepted under delegation | Derive finite read closure through provider recipient metadata |
 
+| [0036](0036-metadata-core-authoring.md) | Accepted under delegation | Select finite metadata closure through an explicit source/core pair |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to

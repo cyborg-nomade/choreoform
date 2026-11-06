@@ -4,7 +4,7 @@ use super::*;
 use choreoform_authoring_frontend::{Package, parse_fragment};
 use choreoform_semantic_check::{CORE, CORE_V2, SEMANTICS};
 
-fn source_resources(m: &Value) -> Vec<Resource<'_>> {
+pub(super) fn source_resources(m: &Value) -> Vec<Resource<'_>> {
     let mut r = resources(m);
     r.extend([
         Resource { id:SEMANTICS.0,revision:SEMANTICS.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141.txt") },
@@ -116,7 +116,7 @@ fn strict_pair_pin_resource_and_integrity_domains_are_preserved() {
 
 #[test]
 fn new_quotas_require_the_explicit_program_header_and_stay_bounded() {
-    for profile in ["0.2.0", "0.3.0", "0.4.0", "0.6.0"] {
+    for profile in ["0.2.0", "0.3.0", "0.4.0", "0.7.0"] {
         let source = format!(
             "Choreoform authoring \"{profile}\". {}",
             "bad ".repeat(5000)

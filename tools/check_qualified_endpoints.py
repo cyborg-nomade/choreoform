@@ -121,7 +121,7 @@ Step "Other done". Finish as "complete". End step. End scope.
             self.assertNotEqual(result.returncode, 0)
             self.assertIn(b'contract-pin', result.stderr)
             with self.assertRaises(ValueError):
-                grammar.recognize(source.read_text(encoding='utf-8').replace('"0.4.0"', '"0.6.0"'))
+                grammar.recognize(source.read_text(encoding='utf-8').replace('"0.4.0"', '"0.7.0"'))
 
     def test_documentation_links_and_licenses(self):
         for name in ['docs/authoring/profile-v0.4.md', 'docs/decisions/0031-qualified-wait-endpoints.md',

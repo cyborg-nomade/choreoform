@@ -152,6 +152,7 @@ impl Ledger {
             (Some("0.3.0"), Some("0.2.0")) => choreoform_semantic_check::CORE_V2,
             (Some("0.4.0"), Some("0.3.0")) => choreoform_semantic_check::CORE_V2,
             (Some("0.5.0"), Some("0.4.0")) => choreoform_semantic_check::CORE_V2,
+            (Some("0.6.0"), Some("0.5.0")) => choreoform_semantic_check::CORE_V3,
             _ => return Err(error("ledger-profile", 0..0)),
         };
         let mut used = BTreeSet::from([id(&document["definition"])?]);
@@ -432,6 +433,12 @@ impl Ledger {
             )
         {
             verify(string(&pin["contract"])?, string(&pin["digest"])?)?;
+        }
+        if self.document["profile"] == "0.6.0" {
+            verify(
+                choreoform_semantic_check::CORE_V2.0,
+                choreoform_semantic_check::CORE_V2.1,
+            )?;
         }
         if self.document["profile"] != "0.2.0" {
             verify(CORE.0, CORE.1)?;

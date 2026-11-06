@@ -397,6 +397,18 @@ source support without changing prior pairs, quotas or hashes, then return to
 actual RP-01 adoption and remaining invalidation/lifetime/proof work. Draft #46
 remains unmerged and all phase gates remain open.
 
+Source 0.6 / companion 0.5 now explicitly selects core 0.3 and both inherited
+snapshots on the source dependency branch. Old pairs/quotas/hashes stay intact.
+Three additional Rust and six Python groups cover actual whole-source and
+self/mutual metadata lowering/reads, strict resources and revision changes,
+format/alias/hash cycles, privacy and dense work refusal. Promoted RP-01 copies
+pass static/control/protection but still refuse private-child invalidation context.
+270 Rust tests plus five doctests, native/Wasm and all Python checks pass; see
+[evidence](0036-metadata-source.md). Separate delegated review removes unused
+legacy reverse-index construction on the new path. Final-head CI/comment audit/
+expected-head merge remain required before parent adoption. Draft #46 stays
+unmerged; invalidation/lifetime/full proof/benchmark and all phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
