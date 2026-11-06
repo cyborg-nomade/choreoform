@@ -8,7 +8,7 @@ pub const FAULT_SOURCE_PROFILE: (&str, &str) = (
 );
 
 /// Declared evidence class only; no accepted fact or retry permission.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum FaultEvidence {
     DefinitiveNoEffect,
     Unresolved,

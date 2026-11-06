@@ -40,7 +40,10 @@ pub use resources::{
     FaultEvidence, InstanceCalendar, Provider, ProviderFaultSource, ProviderObservationState,
     Resources,
 };
-pub use timing::{CalendarUse, RetryUse, TimerUse, TimingReport, check_timing};
+pub use timing::{
+    CalendarUse, RetryFaultBinding, RetryFaultDeclaration, RetryUse, TimerUse, TimingReport,
+    check_timing,
+};
 pub use types::{Nominal, Pin, Type};
 
 use serde_json::{Map, Value};
@@ -59,6 +62,14 @@ pub const CORE_V3: (&str, &str) = (
     "urn:choreoform:contracts:core-profile:0.3.0",
     "sha256:30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3",
 );
+pub const CORE_V4: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.4.0",
+    "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3",
+);
+
+fn metadata_core(id: &Value) -> bool {
+    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0)
+}
 
 const MAX_DEPTH: usize = 64;
 const MAX_ITEMS: usize = 10_000;

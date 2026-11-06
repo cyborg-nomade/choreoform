@@ -123,5 +123,5 @@ pub fn check_fault_routes(
     supplied: &[Resource<'_>],
 ) -> Result<FaultReport> {
     let timing = check_timing(envelope, supplied)?;
-    analysis::Analysis::new(&envelope.document()["body"])?.run(timing)
+    analysis::Analysis::new(&envelope.document()["body"], supplied)?.run(timing)
 }

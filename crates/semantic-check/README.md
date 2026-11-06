@@ -3,6 +3,15 @@
 
 # Static contract checks, not executable admission
 
+[Core 0.4](../../docs/dialects/core-fault-source-v0.4.md) under
+[ADR-0042](../../docs/decisions/0042-explicit-retry-fault-source-binding.md) adds
+explicit retry fault-source/name/evidence and exact actual capability-provider
+binding. Library `RetryUse::fault_source` exposes immutable revision-bound
+declarations; legacy None supplies no binding. Noneligible source emission names
+remain visible in conservative routing. Actual acceptance/correlation/authority/
+retry/ownership and all other stage gates remain outstanding. Current source 0.6
+still selects core 0.3; raw-core support does not upgrade an authoring package.
+
 [ADR-0041](../../docs/decisions/0041-provider-fault-source-metadata.md) adds the
 independently pinned [provider fault-source metadata profile](../../docs/dialects/provider-fault-sources.md).
 `Resources::provider_fault_source` verifies exact source/profile/provider/type

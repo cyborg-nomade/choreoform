@@ -3,6 +3,8 @@
 //! Typed timer uses and required live host judgments; no clock read or eligibility.
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
+mod fault_binding;
+pub use fault_binding::{RetryFaultBinding, RetryFaultDeclaration};
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct TimerUse {
@@ -95,6 +97,7 @@ pub struct RetryUse {
     authority: String,
     max_attempts: u64,
     delays: Vec<i64>,
+    fault_source: Option<RetryFaultBinding>,
 }
 impl RetryUse {
     pub fn site(&self) -> &str {
@@ -120,6 +123,10 @@ impl RetryUse {
     }
     pub fn delays(&self) -> &[i64] {
         &self.delays
+    }
+    /// None for legacy cores; no source proof is inferred from eligible labels.
+    pub fn fault_source(&self) -> Option<&RetryFaultBinding> {
+        self.fault_source.as_ref()
     }
     pub fn host_requirements(&self) -> &'static [&'static str] {
         &[
@@ -229,6 +236,17 @@ pub fn check_timing(
                 resources.budget.tick(0)?;
                 delays.push(integer(delay)?);
             }
+            let core = &b["dialects"][text(&b["policies"][policy]["dialect"])?]["id"];
+            let fault_source = if core == CORE_V4.0 {
+                Some(fault_binding::collect(
+                    &mut resources,
+                    r,
+                    id,
+                    concurrency.revision(),
+                )?)
+            } else {
+                None
+            };
             retries.insert(RetryUse {
                 site: id.clone(),
                 policy: policy.into(),
@@ -240,6 +258,7 @@ pub fn check_timing(
                     .as_u64()
                     .ok_or_else(|| err("retry-attempts"))?,
                 delays,
+                fault_source,
             });
             checked.insert(id.clone());
         }

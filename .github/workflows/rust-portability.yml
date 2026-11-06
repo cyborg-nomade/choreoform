@@ -78,4 +78,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_isolated_survivors.py
           .tools/ir-check/bin/python tools/check_rp01_guard_snapshots.py
           .tools/ir-check/bin/python tools/check_provider_fault_sources.py
+          .tools/ir-check/bin/python tools/check_retry_fault_binding.py
       # Browser execution is a separate manual evidence step, not implied by CI.
