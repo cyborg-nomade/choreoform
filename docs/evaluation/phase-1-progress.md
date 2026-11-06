@@ -409,6 +409,17 @@ legacy reverse-index construction on the new path. Final-head CI/comment audit/
 expected-head merge remain required before parent adoption. Draft #46 stays
 unmerged; invalidation/lifetime/full proof/benchmark and all phase gates remain open.
 
+[PR #49](https://github.com/cyborg-nomade/choreoform/pull/49) merged into draft
+#46 as `c759741741922cb08f43793d7ed3f7645ca16f29` after final-head CI
+`42250149390`. Delegated self-review comment `6689541091` records the separate
+review and no unresolved findings; CodeRabbit skipped the non-default base and
+supplies no independent evidence. ADR-0036 remains pending parent/main integration.
+The active branch is again `codex/rp01-benchmark-package`, following the
+[frozen core-0.3 adoption continuation](0036-rp01-adoption-plan.md). Adopt source
+0.6 and coherent business/clock labels explicitly, preserving actual old-profile
+regression fixtures, then derive real stage evidence and freeze the next genuine
+proof dependency. Draft #46 remains unmerged; no scenario or phase gate closes.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
