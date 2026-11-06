@@ -24,20 +24,25 @@ impl<'a, 's> Lower<'a, 's> {
         if parts.len() < 2 {
             return ordinary;
         }
-        let target = self
-            .ledger
-            .resolve(scope, &parts[1..], "scope")
-            .map_err(|mut e| {
-                e.span = self.syntax.span(reference);
-                e
-            })?;
+        let scope_lookup = self.ledger.resolve(scope, &parts[1..], "scope");
+        let target = match scope_lookup {
+            Err(e) if self.syntax.profile() == "0.5.0" && e.code == "reference-missing" => {
+                self.ledger.endpoint_scope(scope, &parts[1..])
+            }
+            other => other,
+        }
+        .map_err(|mut e| {
+            e.span = self.syntax.span(reference);
+            e
+        })?;
         let closure = self.body["scopes"][scope]["closure"]
             .as_str()
             .expect("bound closure");
         let close = &self.body["policies"][closure]["body"];
-        if target.scope.as_deref() != Some(scope)
-            || close["mode"] != "reconcile"
-            || close["followup"] != target.id
+        if self.syntax.profile() != "0.5.0"
+            && (target.scope.as_deref() != Some(scope)
+                || close["mode"] != "reconcile"
+                || close["followup"] != target.id)
         {
             return Err(error("wait-endpoint-boundary", self.syntax.span(reference)));
         }
@@ -109,10 +114,53 @@ impl<'a, 's> Lower<'a, 's> {
     }
 
     pub(super) fn validate_endpoints(&self) -> Result<()> {
+        // One immutable declared-use index, not a runtime ownership/permission
+        // cache and not a full node scan for every exported observation/timer.
+        let mut uses: BTreeMap<&str, BTreeSet<&str>> = BTreeMap::new();
+        if self.syntax.profile() == "0.5.0" {
+            for node in self.body["nodes"].as_object().expect("nodes").values() {
+                if node["kind"] != "activity" || node["mode"] != "capability" {
+                    continue;
+                }
+                let Some(capability) = node["target"].as_str() else {
+                    continue;
+                };
+                let Some(effect) = self.body["capabilities"][capability]["effects"].as_str() else {
+                    continue;
+                };
+                if let Some(wait) = self.body["policies"][effect]["body"]["reconciliation"].as_str()
+                {
+                    uses.entry(wait)
+                        .or_default()
+                        .insert(node["scope"].as_str().expect("bound node scope"));
+                }
+            }
+        }
         for (policy, node, scope, span) in &self.exported_endpoints {
             let n = &self.body["nodes"][node];
             if n["kind"] != "wait" || n["policy"] != *policy || n["scope"] != *scope {
                 return Err(error("wait-endpoint-owner", span.clone()));
+            }
+            if self.syntax.profile() == "0.5.0" {
+                let declaring_scope = self.body["policies"][policy]["scope"]
+                    .as_str()
+                    .expect("bound policy scope");
+                let owns = |owner: &str| {
+                    let Some(closure) = self.body["scopes"][owner]["closure"].as_str() else {
+                        return false;
+                    };
+                    let close = &self.body["policies"][closure]["body"];
+                    close["mode"] == "reconcile"
+                        && close["followup"] == *scope
+                        && self.body["scopes"][scope]["parent"] == owner
+                };
+                if !owns(declaring_scope)
+                    && !uses.get(policy.as_str()).is_some_and(|owners| {
+                        !owners.is_empty() && owners.iter().all(|owner| owns(owner))
+                    })
+                {
+                    return Err(error("wait-endpoint-use-unproved", span.clone()));
+                }
             }
         }
         Ok(())

@@ -4,9 +4,14 @@
 # Bounded near-English authoring frontend
 
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
-profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0 and 0.4.0 /
-companion 0.3.0. This prototype produces **candidate IR**, not
+profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0, 0.4.0 /
+companion 0.3.0 and 0.5.0 / companion 0.4.0. This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
+
+The [0.5.0 profile](../../docs/authoring/profile-v0.5.md) adds bounded full-program
+recognition and actual declared capability-use follow-up endpoints. Read-only
+`Syntax::token_count()` and `parser_work()` expose lexical size and native pattern
+visits, without implying semantic or runtime evidence.
 
 ## API boundaries
 
@@ -127,8 +132,10 @@ Call `lower` explicitly for consistency. This is not a general IR exporter,
 transactional identity editor, safe rename/move API or production formatter.
 Tests exercise original-package format/reparse/lower cycles and declared alias edits.
 
-Source/companion are each at most 1 MiB; source at most 4,096 tokens, 64 delimiter
-levels and 100,000 recognizer pattern visits. A separate 512-call recognizer-depth
+Source/companion are each at most 1 MiB. Legacy profiles/fragments allow at most
+4,096 tokens and 100,000 recognizer pattern visits; the explicit 0.5.0 program
+header selects 16,384 tokens and 1,000,000 visits. Keep 64 delimiter levels and
+100,000 lowering work units. A separate 512-call recognizer-depth
 guard can refuse deeply nested legal fragments. Scope/type/expression and ledger/IR
 depth are bounded; final envelopes retain existing 1 MiB / 64-level limits.
 These are prototype budgets, not measured scalability.

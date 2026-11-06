@@ -3,7 +3,12 @@
 
 # Near-English authoring: a working design, not final syntax
 
-The [source 0.4.0 / companion 0.3.0 profile](profile-v0.4.md) adds narrowly
+The [source 0.5.0 / companion 0.4.0 profile](profile-v0.5.md) adds explicit
+whole-program quotas and actual-use reconciliation endpoints for larger benchmark
+drafts. It preserves private data and older profile limits; lowering remains
+separate from semantic admission.
+
+The earlier [source 0.4.0 / companion 0.3.0 profile](profile-v0.4.md) adds narrowly
 qualified wait outcomes inside a designated reconciliation follow-up. The
 [owned service example](examples/reconciliation.choreo) remains a synthetic
 declaration/body fixture, not a complete benchmark or live handoff. See the

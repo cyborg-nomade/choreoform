@@ -6,6 +6,9 @@ use choreoform_ir_probe_core::{Resource, digest};
 use choreoform_semantic_check::{Context, Pin, Resources};
 use serde_json::{Value, json};
 
+#[path = "rp01/profile.rs"]
+mod profile;
+
 const MANIFEST: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/manifest.json");
 const SOURCE: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/source.choreo");
 const BINDINGS: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/bindings.json");
