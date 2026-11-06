@@ -440,7 +440,7 @@ fn raw_package_control_pass_does_not_hide_its_separate_clock_label_refusal() {
 }
 
 #[test]
-fn coherent_raw_clock_and_business_labels_retain_invalidation_context_refusal() {
+fn coherent_raw_clock_and_business_labels_reveal_missing_live_invalidation_coverage() {
     let mut f = Fixture::new();
     let mut source: Value = serde_json::from_slice(
         &f.resources
@@ -472,6 +472,6 @@ fn coherent_raw_clock_and_business_labels_retain_invalidation_context_refusal() 
     let r = f.supplied();
     choreoform_semantic_check::check_protection(&e, &r).unwrap();
     let refusal = choreoform_semantic_check::check_invalidation(&e, &r).unwrap_err();
-    assert_eq!(refusal.code, "invalidation-context-unproved");
-    assert_eq!(refusal.path, "/body/nodes/check_rejection");
+    assert_eq!(refusal.code, "invalidation-coverage");
+    assert_eq!(refusal.path, "/body/data/disposition/invalidates");
 }

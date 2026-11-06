@@ -11,6 +11,12 @@ policies or authority. Callers validate exact pins/visibility/eligibility and ch
 its work against their existing remaining budget. [Source 0.6](../../docs/authoring/profile-v0.6.md)
 selects this core explicitly; earlier profiles keep their original pins.
 
+[ADR-0037](../../docs/decisions/0037-closed-ordinary-provenance.md) adds conditional
+historical origins only at exact synchronous ordinary boundaries with no declared
+descendant writer. Invalidation retains live ancestors and original protection
+labels, with explicit site/scope-entry evidence and required host snapshot
+enforcement. It gives no retained value, access, lifetime or settlement guarantee.
+
 Static scope/input, actor, data protection/initializer/invalidation and capability
 errors include record/field paths without changing their codes. Existing deeper
 paths are retained; global resource/structure/revision and graph failures are not

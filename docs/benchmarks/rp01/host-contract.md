@@ -5,7 +5,7 @@
 
 **Status:** Synthetic benchmark boundary specification, not implemented support or
 execution authorization. The source lowers and passes supported static/control/protection checks, while
-private-child invalidation and later composed proof stages still refuse.
+missing invalidation coverage and later composed proof stages still refuse.
 Read [package status](README.md), [manifest](manifest.json) and
 [frozen plan](../../evaluation/0034-rp01-package-plan.md).
 
@@ -103,6 +103,13 @@ subscription cardinality. Transfer requires authorized receiver acceptance and
 atomic old/new ownership updates. No accepted handoff leaves the original owner
 accountable and closure pending. Retain required storage/provenance while any
 follow-up needs it; ordinary completion does not make all parent values available.
+
+Ordinary invalidation may classify a private influence as historical only after
+its exact synchronous owner occurrence completes ordinary work and no declared
+descendant can write that cell. The host must enforce fresh occurrence storage,
+value-copy publication and the ordinary-close cutoff. This proves no retained
+value availability, current permission, live effect settlement or disposal right;
+mutable ancestor inputs remain subject to their own revision/invalidation checks.
 
 The root remaining-owner finish and each follow-up finish are closure gates,
 not assertions that obligations disappeared. The actual instance must account

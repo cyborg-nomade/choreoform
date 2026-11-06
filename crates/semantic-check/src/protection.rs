@@ -72,6 +72,7 @@ pub(crate) type DependencyMap = BTreeMap<String, BTreeSet<String>>;
 pub(crate) struct Dependencies {
     pub nodes: DependencyMap,
     pub scopes: DependencyMap,
+    pub historical: BTreeSet<HistoricalOrigin>,
 }
 
 pub(crate) fn analyze(
@@ -83,9 +84,9 @@ pub(crate) fn analyze(
     let b = &envelope.document()["body"];
     let mut flow = Flow::new(b, supplied)?;
     if collect_dependencies {
-        flow.dependencies = Some(Dependencies::default());
+        flow.collect_dependencies()?;
     }
-    flow.scope(text(&b["root"])?, &BTreeSet::new(), 0)?;
+    flow.scope(text(&b["root"])?, &BTreeSet::new(), 0, None)?;
     Ok((
         ProtectionReport {
             control,
@@ -99,6 +100,7 @@ pub(crate) fn analyze(
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Origin {
     Cell(String),
+    Historical { cell: String, boundary: String },
     Provider(ProviderSite),
 }
 type Origins = BTreeSet<Origin>;

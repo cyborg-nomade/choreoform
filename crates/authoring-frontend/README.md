@@ -18,6 +18,12 @@ both inherited core artifacts, deriving finite provider metadata reads within th
 existing dependency-pass work bound. Compiler output still requires semantic
 revalidation; source promotion changes the core pin and semantic revision.
 
+`check-invalidation` and the six composed native stages expose bounded
+`historicalOrigins`: source cells/ordinary boundaries and optional scope contexts,
+with conditional host requirements. Live ancestors and protection labels remain.
+These are declarations, not values, completion receipts or permissions; see
+[ADR-0037](../../docs/decisions/0037-closed-ordinary-provenance.md).
+
 ## API boundaries
 
 `Candidate::source_span` maps semantic diagnostic record paths to original

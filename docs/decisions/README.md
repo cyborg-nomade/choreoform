@@ -56,6 +56,8 @@ while specifications, guides, and code describe the system as it exists now.
 
 | [0036](0036-metadata-core-authoring.md) | Accepted under delegation | Select finite metadata closure through an explicit source/core pair |
 
+| [0037](0037-closed-ordinary-provenance.md) | Accepted under delegation | Separate proved historical origins from live invalidation inputs |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to

@@ -94,8 +94,8 @@ fn draft_manifest_and_resource_pins_do_not_claim_program_admission() {
     assert_eq!(stages.len(), 10);
     assert!(stages[..3].iter().all(|s| s["result"] == "passed"));
     assert!(stages[3..].iter().all(|s| s["result"] == "refused"
-        && s["code"] == "invalidation-context-unproved"
-        && s["path"] == "/body/nodes/check_rejection"));
+        && s["code"] == "invalidation-coverage"
+        && s["path"] == "/body/data/disposition/invalidates"));
     assert_eq!(m["sourceDigest"], digest(SOURCE));
     assert_eq!(m["sourceBytes"], SOURCE.len());
     assert_eq!(m["scenarios"].as_array().unwrap().len(), 4);

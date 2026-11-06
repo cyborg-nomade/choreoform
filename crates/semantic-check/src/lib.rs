@@ -25,7 +25,9 @@ pub use definition::{Report, check};
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};
 pub use expression::{Context, Judgment};
 pub use faults::{FaultReport, FaultRoute, FaultSelection, check_fault_routes};
-pub use invalidation::{InvalidationObligation, InvalidationReport, check_invalidation};
+pub use invalidation::{
+    HistoricalOrigin, InvalidationObligation, InvalidationReport, check_invalidation,
+};
 pub use policy_reads::{PolicyReadClosure, PolicyReadDependencies, policy_read_closure};
 pub use protection::{AccessObligation, ProtectionReport, check_protection};
 pub use reconciliation::{ReconciliationReport, ReconciliationUse, check_reconciliation_links};

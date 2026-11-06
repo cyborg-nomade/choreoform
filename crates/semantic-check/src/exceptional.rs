@@ -41,6 +41,7 @@ impl ExceptionalReport {
             "exceptional-fault-control-protection-and-invalidation",
             "current-principal-purpose-capability-and-policy-enforcement",
             "concurrent-handler-occurrence-lifetime-and-owned-settlement",
+            "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "host-trust-and-atomic-runtime-enforcement",
             "full-benchmark-conformance-cross-form-and-user-evidence",
         ]

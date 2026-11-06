@@ -227,6 +227,9 @@ validated, and round-tripped.
   versioned finite provider-metadata read closure with strong/legacy cycle refusal.
   [ADR-0036](docs/decisions/0036-metadata-core-authoring.md) adds explicit source
   0.6 support for that core; full source adoption/benchmark/proof gates remain open.
+  [ADR-0037](docs/decisions/0037-closed-ordinary-provenance.md) proves a bounded
+  historical-origin subset for ordinary invalidation while retaining mutable
+  ancestors, protection and independent lifetime/host obligations.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

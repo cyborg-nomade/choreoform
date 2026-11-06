@@ -89,7 +89,7 @@ class MetadataAuthoringEvidence(unittest.TestCase):
             self.assertIs(json.loads(result.stdout)['executable'], False)
         result = invoke(package, 'check-invalidation')
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn(b'invalidation-context-unproved at /body/nodes/check_rejection; source bytes ', result.stderr)
+        self.assertIn(b'invalidation-coverage at /body/data/disposition/invalidates; source bytes ', result.stderr)
 
     def test_all_actual_metadata_reads_are_derived_in_self_and_mutual_recipient_components(self):
         for count in [1, 2]:
