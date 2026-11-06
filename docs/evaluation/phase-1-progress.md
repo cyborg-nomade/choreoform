@@ -292,9 +292,11 @@ or capability short-circuit order. Five Rust and three Python groups cover exact
 raw-IR pointers, both core/all source profiles, native source spans, unused/private
 metadata, ancestry and global revision behavior. 251 Rust tests plus five compile-
 fail doctests, native/Wasm and all relevant artifact/source/stage checks passed.
-Separate delegated review found no actionable issue; final-head CI/merge remain
-pending. Next return to full RP-01/03/08 benchmark requirements/gap accounting to
-choose the next substantial slice. The forty historical scenarios and full
+Separate delegated review found no actionable issue. PR #44 merged as
+`dc529b0a9ce639601661fc0833702786ec663d24` after passing final-head CI run
+`42208252170`; CodeRabbit skipped review and there were no unresolved findings.
+Next is the [frozen full-benchmark readiness audit](0034-benchmark-readiness-plan.md)
+to choose the next substantial implementation slice. The forty historical scenarios and full
 validator/proof/text/visual/protected editing/user gates remain open.
 
 ## Honest exit accounting
