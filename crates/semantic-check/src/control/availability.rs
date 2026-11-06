@@ -7,18 +7,21 @@ pub(super) struct Analysis<'a> {
     b: &'a Value,
     graph: Graph,
     budget: Budget,
+    initializers: crate::initialization::Index<'a>,
     pub nodes: BTreeSet<String>,
     pub scopes: BTreeSet<String>,
 }
 impl<'a> Analysis<'a> {
-    pub fn new(b: &'a Value, graph: Graph, budget: Budget) -> Self {
-        Self {
+    pub fn new(b: &'a Value, graph: Graph, mut budget: Budget) -> Result<Self> {
+        let initializers = crate::initialization::by_scope(b, &mut budget)?;
+        Ok(Self {
             b,
             graph,
             budget,
+            initializers,
             nodes: BTreeSet::new(),
             scopes: BTreeSet::new(),
-        }
+        })
     }
     fn ancestors(&self, scope: &str) -> Result<Cells> {
         let mut set = Cells::new();
@@ -79,11 +82,12 @@ impl<'a> Analysis<'a> {
         }
         self.budget.charge(initial.len())?;
         let entry = initial.clone();
-        for (id, data) in object(&self.b["data"])? {
+        self.budget
+            .charge(self.initializers.get(scope).map_or(0, Vec::len))?;
+        let initializers = self.initializers.get(scope).cloned().unwrap_or_default();
+        for id in initializers {
             self.budget.tick(depth)?;
-            if data["scope"] == scope
-                && let Some(expr) = data.get("initial")
-            {
+            if let Some(expr) = self.b["data"][id].get("initial") {
                 let reads = names(&self.b["expressions"][text(expr)?]["reads"])?;
                 self.available(
                     &reads,
@@ -107,7 +111,7 @@ impl<'a> Analysis<'a> {
                     id,
                     "initial-access-availability-unproved",
                 )?;
-                initial.insert(id.clone());
+                initial.insert(id.to_owned());
             }
         }
         let mut after: BTreeMap<String, Cells> = BTreeMap::new();

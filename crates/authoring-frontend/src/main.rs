@@ -43,12 +43,13 @@ fn run() -> Result<String, String> {
                 | "check-concurrency"
                 | "check-timing"
                 | "check-fault-routes"
+                | "check-exceptional-availability"
         )
         || args.len() > 3 + 4 * 254
         || !(args.len() - 3).is_multiple_of(4)
         || (args[0] == "integrity" && args.len() != 3)
     {
-        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|check-timing|check-fault-routes|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
+        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|check-timing|check-fault-routes|check-exceptional-availability|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
     }
     let source = read(std::fs::File::open(&args[1]).map_err(|_| "source-read".to_owned())?)?;
     let bindings = read(std::fs::File::open(&args[2]).map_err(|_| "companion-read".to_owned())?)?;
@@ -193,6 +194,39 @@ fn run() -> Result<String, String> {
             .map(&mut bounded)
             .collect::<Result<_, _>>()?;
         let output = serde_json::json!({"status":"fault-route-checks-passed","executable":false,"revision":report.revision(),"faultRoutes":routes,"checkedHandlerSelections":checked,"uncoveredHandlerSelections":uncovered,"checkedFaultScopes":report.checked_scopes(),"uncoveredFaultScopes":report.uncovered_scopes(),"analysisContexts":report.contexts(),"unhandledFaultCases":report.unhandled_cases(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining(),"priorTimingObligations":report.timing().remaining()}).to_string();
+        return if output.len() <= MAX_BYTES {
+            Ok(output)
+        } else {
+            Err("report-budget".into())
+        };
+    }
+    if args[0] == "check-exceptional-availability" {
+        let report = candidate
+            .check_exceptional_availability(&resources)
+            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+        let control = report
+            .faults()
+            .timing()
+            .concurrency()
+            .invalidation()
+            .protection()
+            .control();
+        let mut remaining = MAX_BYTES;
+        let entries: Vec<_> = report
+            .entry_assumptions()
+            .iter()
+            .map(|(handler, cells)| {
+                let value = serde_json::json!({"handler":handler,"requiredAncestorInputs":cells});
+                let size = serde_json::to_vec(&value)
+                    .map_err(|_| "report-budget".to_owned())?
+                    .len();
+                remaining = remaining
+                    .checked_sub(size)
+                    .ok_or_else(|| "report-budget".to_owned())?;
+                Ok(value)
+            })
+            .collect::<Result<_, String>>()?;
+        let output=serde_json::json!({"status":"exceptional-availability-checks-passed","executable":false,"revision":report.revision(),"handlerEntries":entries,"checkedExceptionalNodes":report.checked_nodes(),"checkedExceptionalScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"ordinaryUncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedFaultScopes":report.faults().checked_scopes(),"uncoveredFaultScopes":report.faults().uncovered_scopes(),"remaining":report.remaining(),"priorFaultRouteObligations":report.faults().remaining(),"priorTimingObligations":report.faults().timing().remaining()}).to_string();
         return if output.len() <= MAX_BYTES {
             Ok(output)
         } else {

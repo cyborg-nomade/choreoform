@@ -124,6 +124,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::FaultReport> {
         choreoform_semantic_check::check_fault_routes(&self.envelope, resources)
     }
+    /// Check selected handler bodies under explicit ancestor input contracts;
+    /// never establish a live fault snapshot, current access or dispatch authority.
+    pub fn check_exceptional_availability(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ExceptionalReport> {
+        choreoform_semantic_check::check_exceptional_availability(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {

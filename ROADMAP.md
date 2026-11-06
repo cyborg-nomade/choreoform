@@ -207,6 +207,11 @@ validated, and round-tripped.
   conservative handler-selection graph with lexical/active exclusion rules and
   explicit cycle-unproved refusal. Actual exceptional data, concurrent occurrence
   lifetime and runtime dispatch/ownership remain separate open judgments.
+  [ADR-0029](docs/decisions/0029-conditional-handler-availability.md) adds handler
+  body availability under explicit ancestor-input premises and fresh locals,
+  without crediting an ordinary-path result as a fault snapshot. Exceptional
+  fault-control protection/invalidation, actual activation and lifetime remain
+  open. A private initializer scope index removes unrelated-storage scans.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted
