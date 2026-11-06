@@ -13,6 +13,7 @@ mod faults;
 mod initialization;
 mod invalidation;
 mod protection;
+mod reconciliation;
 mod resources;
 mod timing;
 mod types;
@@ -24,6 +25,7 @@ pub use expression::{Context, Judgment};
 pub use faults::{FaultReport, FaultRoute, FaultSelection, check_fault_routes};
 pub use invalidation::{InvalidationObligation, InvalidationReport, check_invalidation};
 pub use protection::{AccessObligation, ProtectionReport, check_protection};
+pub use reconciliation::{ReconciliationReport, ReconciliationUse, check_reconciliation_links};
 pub use resources::{
     CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, InstanceCalendar, Provider, Resources,
 };

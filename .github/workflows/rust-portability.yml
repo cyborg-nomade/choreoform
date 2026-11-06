@@ -63,4 +63,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_value_conformance.py
           .tools/ir-check/bin/python tools/check_fault_routes.py
           .tools/ir-check/bin/python tools/check_exceptional_availability.py
+          .tools/ir-check/bin/python tools/check_reconciliation_links.py
       # Browser execution is a separate manual evidence step, not implied by CI.

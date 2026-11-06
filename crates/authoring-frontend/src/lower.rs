@@ -132,6 +132,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ExceptionalReport> {
         choreoform_semantic_check::check_exceptional_availability(&self.envelope, resources)
     }
+    /// Check surviving reconciliation declaration links, never live ownership,
+    /// provider facts, wait input availability or accepted atomic handoff.
+    pub fn check_reconciliation_links(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ReconciliationReport> {
+        choreoform_semantic_check::check_reconciliation_links(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {

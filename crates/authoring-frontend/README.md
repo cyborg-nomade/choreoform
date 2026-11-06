@@ -9,6 +9,13 @@ semantic admission, execution or a production authoring editor.
 
 ## API boundaries
 
+`check-reconciliation-links` and its Candidate method check surviving declaration
+routes, with bounded non-executable output and explicit host/entry/lifetime
+requirements. The old service example honestly refuses its missing follow-up.
+Direct IR can express the owned child wait; a separately versioned qualified
+endpoint source binding is the immediate follow-up. Old source visibility is
+preserved. See [ADR-0030](../../docs/decisions/0030-reconciliation-declaration-links.md).
+
 `check-exceptional-availability` and its Candidate method expose conditional
 handler body checks, explicit required ancestor inputs and separate ordinary/
 exceptional/routing coverage. The native metadata/report output remains bounded

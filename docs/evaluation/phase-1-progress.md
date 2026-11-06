@@ -228,6 +228,18 @@ then the explicit qualified child-endpoint source binding. Keep exceptional
 fault-control protection/invalidation/lifetime and host-label boundaries, full
 validator, benchmarks, general text/visual/protected editing and actual user
 evidence open; no phase gate is closed.
+The reconciliation declaration slice now requires the activity's own surviving
+follow-up and potentially reachable unique wait inside it, with indexed lookups,
+exact immutable references and host/entry/lifetime requirements. Seven Rust and
+four Python groups cover correct raw IR under both core profiles, wrong/unreachable
+owners/routes, incompatible scope reuse, unused/unvisited contexts, 500 repeated
+sites and the old source binding boundary. 229 Rust tests plus five compile-fail
+doctests, native/Wasm and all relevant artifact/stage oracles passed. ADR-0030 is
+accepted after delegated self-review; required final-head CI/merge remain pending.
+Next freeze and implement the separately versioned qualified reconciliation
+endpoint authoring profile. Actual entry/handoff/correlation/multiple-obligation
+lifetime, exceptional protection/invalidation, full validator/benchmarks and
+text/visual/protected editing/user gates remain open.
 
 ## Honest exit accounting
 

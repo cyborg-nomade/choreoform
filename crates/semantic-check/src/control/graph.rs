@@ -7,6 +7,31 @@ pub(crate) struct Graph {
     pub predecessors: BTreeMap<String, BTreeSet<String>>,
 }
 impl Graph {
+    /// Potential ordinary reachability only; no predicate truth or entry values.
+    pub(crate) fn reachable<'a>(
+        &'a self,
+        b: &Value,
+        budget: &mut Budget,
+    ) -> Result<BTreeMap<&'a str, BTreeSet<&'a str>>> {
+        let mut result = BTreeMap::new();
+        for (scope, order) in &self.order {
+            budget.tick(0)?;
+            let mut reached = BTreeSet::new();
+            for id in order {
+                budget.tick(0)?;
+                let mut possible = b["scopes"][scope]["entry"] == *id;
+                for prior in &self.predecessors[id] {
+                    budget.tick(0)?;
+                    possible |= reached.contains(prior.as_str());
+                }
+                if possible {
+                    reached.insert(id.as_str());
+                }
+            }
+            result.insert(scope.as_str(), reached);
+        }
+        Ok(result)
+    }
     pub fn build(b: &Value, budget: &mut Budget) -> Result<Self> {
         let nodes = object(&b["nodes"])?;
         let mut edges: BTreeMap<String, BTreeSet<String>> = nodes
