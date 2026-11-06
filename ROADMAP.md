@@ -193,8 +193,10 @@ validated, and round-tripped.
   and the remaining aggregate gates stay open.
   [ADR-0026](docs/decisions/0026-explicit-retry-clock.md) adds a separately pinned
   core revision with explicit retry clock/basis fields and protected timing-use
-  metadata. A dedicated new near-English authoring profile and retry sentence
-  must follow; old source must retain its old core and unbound-retry refusal.
+  metadata. [ADR-0027](docs/decisions/0027-explicit-retry-authoring.md) supplies
+  source 0.3.0 / companion 0.2.0 and the explicit English retry sentence, with
+  grammar/schema/hash/IR/report cycles. Old source retains its old core and
+  unbound-retry refusal. This is not complete tool-managed authoring or user evidence.
   Actual fault/domain correlation, unchanged revisions, effect evidence and
   atomic authorized dispatch remain host requirements, not static approval.
 - [ ] Design an initial visual notation and serialization of layout metadata,

@@ -3,6 +3,12 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The separate [source 0.3.0 / companion 0.2.0 profile](profile-v0.3.md) adds an
+explicit English retry clock/basis sentence and selects core 0.2.0. The earlier
+source 0.2.0 package remains supported with its original grammar/core/digests.
+This version evolution supplies no user-study, full compiler or host execution
+evidence; the broader authoring and ordinary tool-managed editing work stays open.
+
 **Status:** Accepted working direction in [ADR-0014](../decisions/0014-near-english-authoring.md),
 owner approved 2026-09-22, effective upon merge of PR #18; not final syntax.
 The technical JSON-record parser remains unchanged. A bounded

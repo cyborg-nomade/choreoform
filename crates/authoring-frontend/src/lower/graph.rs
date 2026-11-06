@@ -63,6 +63,21 @@ impl<'a, 's> Lower<'a, 's> {
                     );
                 }
             }
+            if !p["retry"]["clock"].is_null() {
+                let pin = choreoform_semantic_check::Pin::decode(&p["retry"]["clock"])
+                    .map_err(|e| error(e.code, 0..0))?;
+                let clock = self
+                    .resources
+                    .clock(&pin)
+                    .map_err(|e| error(e.code, 0..0))?;
+                refs.extend(self.protection_policy_refs(clock.source_contract().protection())?);
+                reads.insert(
+                    p["retry"]["basis"]
+                        .as_str()
+                        .ok_or_else(|| error("retry-binding", 0..0))?
+                        .into(),
+                );
+            }
             for target in &refs {
                 if self.body["policies"].get(target).is_none() {
                     return Err(error("policy-reference", 0..0));

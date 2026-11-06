@@ -67,6 +67,23 @@ impl<'a, 's> Lower<'a, 's> {
                     return Err(error("retry-delays", self.syntax.span(tree)));
                 }
                 body["retry"] = json!({"maxAttempts":attempts, "delays":delays, "faults":unique_set(self.names(tree.one("names")?)?)?});
+                if self.syntax.profile() == "0.3.0" {
+                    let bindings = tree.all("retry_binding");
+                    if (attempts > 1) != !bindings.is_empty() {
+                        return Err(error("retry-binding", self.syntax.span(tree)));
+                    }
+                    let (clock, basis) = if let Some(binding) = bindings.first() {
+                        let clock = self.r(binding, scope, "resource", 0)?;
+                        (
+                            self.ledger.pin(&clock, "clock")?,
+                            self.r(binding, scope, "data", 1)?.into(),
+                        )
+                    } else {
+                        (Value::Null, Value::Null)
+                    };
+                    body["retry"]["clock"] = clock;
+                    body["retry"]["basis"] = basis;
+                }
                 body["timeout"] = self.timer(tree.one("timer")?, scope)?;
                 body["completion"] = self.expression(tree.one("expression")?, scope, true, 0)?;
                 body["compensates"] =

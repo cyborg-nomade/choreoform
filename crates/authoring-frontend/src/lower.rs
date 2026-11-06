@@ -119,10 +119,12 @@ impl Candidate {
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {
-        Ok(Self {
-            syntax: parse(source)?,
-            ledger: Ledger::decode(companion)?,
-        })
+        let syntax = parse(source)?;
+        let ledger = Ledger::decode(companion)?;
+        if ledger.document["profile"] != syntax.profile() {
+            return Err(error("package-profile", 0..0));
+        }
+        Ok(Self { syntax, ledger })
     }
     pub fn syntax(&self) -> &Syntax<'a> {
         &self.syntax
@@ -133,7 +135,8 @@ impl<'a> Package<'a> {
     pub fn integrity(&self) -> Integrity {
         let source = self.syntax.source().as_bytes();
         let bindings = self.ledger.canonical().as_bytes();
-        let mut framed = b"choreoform-authoring-package:0.2.0\0".to_vec();
+        let mut framed =
+            format!("choreoform-authoring-package:{}\0", self.syntax.profile()).into_bytes();
         framed.extend_from_slice(&(source.len() as u64).to_be_bytes());
         framed.extend_from_slice(source);
         framed.extend_from_slice(&(bindings.len() as u64).to_be_bytes());

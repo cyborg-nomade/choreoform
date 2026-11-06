@@ -91,6 +91,13 @@ fn run() -> Result<String, String> {
             ),
         },
     ];
+    if package.syntax().profile() == "0.3.0" {
+        resources.push(Resource {
+            id: choreoform_semantic_check::CORE_V2.0,
+            revision: choreoform_semantic_check::CORE_V2.1,
+            bytes: include_bytes!("../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt"),
+        });
+    }
     resources.extend(extra.iter().map(|(id, revision, bytes)| Resource {
         id,
         revision,
