@@ -27,12 +27,12 @@ def promote(source, ledger):
     return source, ledger
 
 
-def full(read=False):
+def full(read=False, payment_policy_revisions=False):
     # Deliberately retain the pre-link-patch fixture for exact missing-coverage
     # and metadata regression evidence; the current package is generated separately.
     _, raw, p = types()
     resources = providers(p, shared=True) | clock_resources(shared=True)
-    source, package = build(p, {k: resources[k][0] for k in ['checks', 'payment', 'notice']}, {k: v[2] for k, v in resources.items()})
+    source, package = build(p, {k: resources[k][0] for k in ['checks', 'payment', 'notice']}, {k: v[2] for k, v in resources.items()}, payment_policy_revisions=payment_policy_revisions)
     source, ledger = promote(source, package.ledger)
     if read:
         source = source.replace('Permit access when ((the fact "purpose") equals ("reimbursement")).', 'Permit access when (((the fact "purpose") equals ("reimbursement")) and ((the value of "Payment due") equals (the value of "Payment due"))).')

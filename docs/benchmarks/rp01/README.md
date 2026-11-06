@@ -9,7 +9,7 @@ semantic-stage results/refusals and the exact canonical IR digest. It follows
 the [frozen plan](../../evaluation/0034-rp01-package-plan.md) and preserves all four
 scenarios from the [adopted case](../../representative-processes/01-expense-reimbursement.md).
 
-The source has 56185 UTF-8 bytes and 9327 measured tokens. The
+The source has 56843 UTF-8 bytes and 9466 measured tokens. The
 measurement lexes complete lines independently and is not whole-program admission.
 Source 0.6 / companion 0.5 and core 0.3 are selected explicitly under
 ADR-0035/0036; old cores/source profiles remain unchanged. Coherent fictional
@@ -24,6 +24,10 @@ Closed private influence is handled only by the bounded ADR-0037 proof subset,
 retaining all mutable ancestor dependencies. This fixture patch preserves all
 existing invalidation links and changes no other semantic body fields. The
 ADR-0039 checker refinement changes no source, IR revision or resource bytes.
+The ADR-0040 finite-snapshot correction explicitly rechecks both approval policy
+revisions and the current claim policy revision at the payment commit guard;
+it preserves the six earlier clauses. This changes the current candidate's
+semantic revision, while historical profile fixtures keep their original guard.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 

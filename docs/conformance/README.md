@@ -57,3 +57,31 @@ Next expand process snapshot/permission/revision and policy/lifecycle judgments,
 complete RP-01/RP-03/RP-08 packages and all forty scenario mappings. Add full
 source/IR/text/visual and negative diagnostic evidence without replacing old
 immutable artifacts or presenting synthetic inputs as actual host/user evidence.
+
+The [RP-01 guard snapshot catalogue](../../crates/semantic-check/tests/conformance/rp01-guard-snapshots.json)
+adds 44 finite cases against actual source-derived expression and actor/work/race
+ASTs under [ADR-0040](../decisions/0040-finite-guard-snapshot-conformance.md).
+It has 41 Boolean results (12 true, 29 false), one selected absence fault and two
+binding refusals. Six additional Rust groups cover the catalogue and harness
+boundaries; a separate four-group Python oracle checks accountability, not semantic
+evaluation. These are different counts from the original 69 vectors and forty
+corpus scenarios; all scenarios remain Partial.
+
+The test-only harness checks the original AST and exact bound types/nominal values,
+rebinds read/fact leaves to explicit immutable parameters, checks the rebound AST
+and uses the existing pure evaluator. Literal values/type descriptors are opaque.
+The closed format has `format`, `version`, `candidateRevision`, `candidateDigest`,
+`values` and `cases`. Cases contain `id`, `scenario`, `subject`, `cells`, `facts`,
+`expect`. Subjects select map/ID/field/site; cell/fact maps reference named explicit
+values. Expected outcomes distinguish Boolean value, binding refusal and selected
+evaluation fault. Header pins must match current canonical candidate bytes.
+This is a test fixture format, not ordinary authoring or a runtime observation API.
+
+```sh
+cargo test -p choreoform-semantic-check --lib rp01_snapshots --locked
+.tools/ir-check/bin/python tools/check_rp01_guard_snapshots.py
+```
+
+Finite predicates do not prove snapshot reachability, assignment/authentication,
+policy permission, mandatory acceptance prechecks, process transitions, current
+host facts or irreversible safety. See the [evidence and remaining limits](../evaluation/0040-rp01-guard-snapshots.md).

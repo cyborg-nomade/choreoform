@@ -6,77 +6,77 @@
   "sourceProfile": "0.6.0",
   "companionVersion": "0.5.0",
   "coreProfile": "0.3.0",
-  "sourceBytes": 56185,
-  "measuredTokens": 9327,
+  "sourceBytes": 56843,
+  "measuredTokens": 9466,
   "tokenMeasurement": "sum of complete-line lexing; not whole-program recognition",
-  "sourceDigest": "sha256:3ba40c9c533ee657c2a7851054571ee8019e6bd624dbb5798d6757c7f8568eb2",
+  "sourceDigest": "sha256:086c97c6ba0325187f9108c06c81472641c88cc65a54dbdadb2a4eb3a73c22ac",
   "bindingsDigest": "sha256:bd9d9363fa00e45c89357c66fd4c0c0104e40b7e10538c437b695707c1ca566c",
-  "packageDigest": "sha256:0b04a54d15ea5c48d3a4b863c4fe2de743e9db76b5ac77a20da283d9cda819ad",
+  "packageDigest": "sha256:01c9bdbfdca1dc533f8da04e41cb2e0d6c06335ff9f713cf4e87df91e584c649",
   "canonicalIR": {
     "path": "candidate.ir.json",
-    "revision": "sha256:d0567026a71a1e7808168f6e1e17f27cb6f8272c1d9b49f189439e12c9e6be05",
-    "digest": "sha256:76a65e2593be2c5ce372aca4802e7a944ae1eab085e824c917685eff42274213"
+    "revision": "sha256:d0bca38fb470cd0485b9a1cc22767182e6276669ca9ca131ac45d7af268269f3",
+    "digest": "sha256:cab58022696be22dd9ec89c1357ca60c5b0781b1e0ceaad14f47ae3bfce2d693"
   },
   "semanticStageResults": [
     {
       "stage": "check",
       "result": "passed",
       "report": "reports/check.json",
-      "reportDigest": "sha256:408287e2f078224e38e8e576284652722003de81ef76ecc99ccd4bb6fbb9cf83"
+      "reportDigest": "sha256:3e12a616beb3f6e208c4e1036a108d823c85314d21574e63f62f00d6d4444377"
     },
     {
       "stage": "check-control",
       "result": "passed",
       "report": "reports/check-control.json",
-      "reportDigest": "sha256:b525b2df6fbca2400af1122715f6cd17f1e2855bda7e6d34055c4000fbe6f5a0"
+      "reportDigest": "sha256:91128028b9c5549a6fb49f7985a4eba0bf81d78730883d865fbabda94df2c4f8"
     },
     {
       "stage": "check-protection",
       "result": "passed",
       "report": "reports/check-protection.json",
-      "reportDigest": "sha256:cc9e9c258ed3d5938bea38cea8cbca371dd0a8e23c1b826ee7cbcdfb85427503"
+      "reportDigest": "sha256:2586c6ed189264a45a30ec37308ae454a306a09a54aa215d87aaf52358661c42"
     },
     {
       "stage": "check-invalidation",
       "result": "passed",
       "report": "reports/check-invalidation.json",
-      "reportDigest": "sha256:9a2107cb980e821a06bbcc71719ff63cf5a7a39f33cc1221d8e824e71cc1d5e9"
+      "reportDigest": "sha256:5c0c5e857f0c7a73e2a91f702e170e998793d7f1e69442e7b312f920b2e3826b"
     },
     {
       "stage": "check-concurrency",
       "result": "passed",
       "report": "reports/check-concurrency.json",
-      "reportDigest": "sha256:362c58ec6dfdb3a18ed2da7bda589b58e71f231d1c2f07c320d0a9af22689b8f"
+      "reportDigest": "sha256:778320897865e29bf245618d54792625e7caf2bec735c12a51063c0040b00513"
     },
     {
       "stage": "check-timing",
       "result": "passed",
       "report": "reports/check-timing.json",
-      "reportDigest": "sha256:6880e0ae63095572cb39312d9185ad6de85a4f5e94135a771db573131933ab83"
+      "reportDigest": "sha256:d2a15162c78cb2e55dabbcd01ba9bc6e4c148128db0e20cd49eef9768a0cfc40"
     },
     {
       "stage": "check-fault-routes",
       "result": "passed",
       "report": "reports/check-fault-routes.json",
-      "reportDigest": "sha256:e276aec7a9a12e073e026ff4770ef519a47b0c77252fce0bbb6600b1d3714089"
+      "reportDigest": "sha256:0a143fb7a8b0cf196d13e65cedf707d0679f8eaf7390523a5b4ac85563f2ed67"
     },
     {
       "stage": "check-exceptional-availability",
       "result": "passed",
       "report": "reports/check-exceptional-availability.json",
-      "reportDigest": "sha256:0326d6d62f59f67fbab02d422fdd5f263a7b3c54133d3c8ebfd4a2974261af8e"
+      "reportDigest": "sha256:b2f8a38569bdca1a4960610e3102e1d48ac2547aee7764566d058b89a144dc88"
     },
     {
       "stage": "check-reconciliation-links",
       "result": "passed",
       "report": "reports/check-reconciliation-links.json",
-      "reportDigest": "sha256:6ecd457406b14a7934dba927919a83fcad5bc748c8a10eeb39cf7fd842897de6"
+      "reportDigest": "sha256:744b299add48436a2d27ac20ade663fa5c2672854283796f11c3ad0d05d7a043"
     },
     {
       "stage": "check-reconciliation-availability",
       "result": "passed",
       "report": "reports/check-reconciliation-availability.json",
-      "reportDigest": "sha256:c7df0c417ba4f394de176ae6dee21a0bf26eb29151bc97cc9a92773892b1cb74"
+      "reportDigest": "sha256:9fac164c2f91cb5d5af9c107ae6755b0acf54f354e6335796b0d52b8a87ffb7e"
     }
   ],
   "resources": [
