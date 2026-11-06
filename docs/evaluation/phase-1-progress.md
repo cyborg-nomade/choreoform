@@ -220,10 +220,14 @@ scan quota failure in availability/protection. Seven Rust and three Python group
 cover premises, roles, initialization, nested/uncalled cases, metadata and both
 profile cycles. 222 Rust tests plus five compile-fail doctests, native/Wasm and
 all relevant artifact/stage oracles passed; ADR-0029 is accepted after delegated
-self-review. Required final-head CI/merge remain pending. Next establish the
-exceptional fault-control protection/invalidation/lifetime judgment and its
-explicit source/host-label boundaries; keep full validator, benchmarks, general
-text/visual/protected editing and actual user evidence open.
+self-review. PR #39 merged as `4d95e3610488ad98383ab9ddadeff36e5a8fca68`
+after recorded delegated review and passing final-head CI run `42179630093`;
+CodeRabbit skipped automatic review. The lifecycle audit identified the next
+concrete dependency: [owned reconciliation declaration links](0030-reconciliation-links-plan.md),
+then the explicit qualified child-endpoint source binding. Keep exceptional
+fault-control protection/invalidation/lifetime and host-label boundaries, full
+validator, benchmarks, general text/visual/protected editing and actual user
+evidence open; no phase gate is closed.
 
 ## Honest exit accounting
 
