@@ -3,7 +3,14 @@
 
 # Near-English authoring: a working design, not final syntax
 
-The separate [source 0.3.0 / companion 0.2.0 profile](profile-v0.3.md) adds an
+The [source 0.4.0 / companion 0.3.0 profile](profile-v0.4.md) adds narrowly
+qualified wait outcomes inside a designated reconciliation follow-up. The
+[owned service example](examples/reconciliation.choreo) remains a synthetic
+declaration/body fixture, not a complete benchmark or live handoff. See the
+[diagnostic guide](diagnostics.md), [full benchmark readiness audit](../evaluation/0034-benchmark-readiness.md)
+and [forty-scenario accountability](../evaluation/0034-corpus-accountability.md).
+
+The earlier [source 0.3.0 / companion 0.2.0 profile](profile-v0.3.md) adds an
 explicit English retry clock/basis sentence and selects core 0.2.0. The earlier
 source 0.2.0 package remains supported with its original grammar/core/digests.
 This version evolution supplies no user-study, full compiler or host execution

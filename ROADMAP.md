@@ -242,6 +242,10 @@ validated, and round-tripped.
   This marks the start only; complete policy/process/benchmark and cross-form
   conformance remains part of the open aggregate gate below. See the
   [consolidated validator gap audit](docs/evaluation/0028-validator-gap-audit.md).
+  The [current benchmark readiness audit](docs/evaluation/0034-benchmark-readiness.md)
+  retains complete RP-01/03/08 responsibilities, explicit no-output/interface
+  boundaries and [all forty scenario gaps](docs/evaluation/0034-corpus-accountability.md).
+  All forty remain Partial; the next package target is full RP-01.
 
 ### Executable IR completion gate (still open)
 

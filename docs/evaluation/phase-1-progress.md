@@ -299,6 +299,19 @@ Next is the [frozen full-benchmark readiness audit](0034-benchmark-readiness-pla
 to choose the next substantial implementation slice. The forty historical scenarios and full
 validator/proof/text/visual/protected editing/user gates remain open.
 
+The full benchmark readiness audit now traces all twelve RP-01/03/08 scenarios
+and their whole-case alternatives to current capabilities and concrete gaps.
+It verifies no-output split/repeat/fan-out restrictions and separates result
+aggregation, fault continuation, surviving data and import/protected-view needs
+from isolated checks. A current table retains all forty unique scenarios as
+Partial. Local link/anchor/SPDX/count checks and all six existing authoring-evidence
+groups passed; separate delegated document review found no actionable issue.
+Final-head CI/merge remain pending. Next freeze and implement the full RP-01
+data/resource/whole-graph package, measuring actual source/quota and stage results
+and retaining all four scenarios/alternatives and explicit unsupported boundaries.
+Any necessary contract extension gets its own ADR/version/evidence; no toy review
+is relabeled a full reimbursement package. Full phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
