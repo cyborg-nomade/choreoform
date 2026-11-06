@@ -153,6 +153,7 @@ impl Ledger {
             (Some("0.4.0"), Some("0.3.0")) => choreoform_semantic_check::CORE_V2,
             (Some("0.5.0"), Some("0.4.0")) => choreoform_semantic_check::CORE_V2,
             (Some("0.6.0"), Some("0.5.0")) => choreoform_semantic_check::CORE_V3,
+            (Some("0.7.0"), Some("0.6.0")) => choreoform_semantic_check::CORE_V4,
             _ => return Err(error("ledger-profile", 0..0)),
         };
         let mut used = BTreeSet::from([id(&document["definition"])?]);
@@ -338,7 +339,10 @@ impl Ledger {
             {
                 return Err(error("resource-binding", 0..0));
             }
-            if !["provider", "named-type", "clock", "calendar"].contains(&string(&row["kind"])?) {
+            let resource_kind = string(&row["kind"])?;
+            if !["provider", "named-type", "clock", "calendar"].contains(&resource_kind)
+                && !(document["profile"] == "0.7.0" && resource_kind == "provider-fault-source")
+            {
                 return Err(error("resource-kind", 0..0));
             }
             let contract = string(&row["contract"])?;
@@ -434,7 +438,13 @@ impl Ledger {
         {
             verify(string(&pin["contract"])?, string(&pin["digest"])?)?;
         }
-        if self.document["profile"] == "0.6.0" {
+        if self.document["profile"] == "0.7.0" {
+            verify(
+                choreoform_semantic_check::CORE_V3.0,
+                choreoform_semantic_check::CORE_V3.1,
+            )?;
+        }
+        if matches!(self.document["profile"].as_str(), Some("0.6.0" | "0.7.0")) {
             verify(
                 choreoform_semantic_check::CORE_V2.0,
                 choreoform_semantic_check::CORE_V2.1,

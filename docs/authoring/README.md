@@ -3,7 +3,11 @@
 
 # Near-English authoring: a working design, not final syntax
 
-The [source 0.6.0 / companion 0.5.0 profile](profile-v0.6.md) explicitly selects
+The [source 0.7.0 / companion 0.6.0 profile](profile-v0.7.md) adds an explicit
+retry fault-source clause and selects core 0.4. Typed source/provider declarations
+remain separate from actual faults or retry permission.
+
+The earlier [source 0.6.0 / companion 0.5.0 profile](profile-v0.6.md) explicitly selects
 core 0.3 and derives finite provider-recipient metadata reads. Older profiles keep
 their original cores, limits and integrity domains. Full benchmark, validation,
 editing and actual user gates remain open.

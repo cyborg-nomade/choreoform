@@ -83,6 +83,14 @@ impl<'a, 's> Lower<'a, 's> {
                     };
                     body["retry"]["clock"] = clock;
                     body["retry"]["basis"] = basis;
+                    if self.syntax.profile() == "0.7.0" {
+                        body["retry"]["faultSource"] = if let Some(binding) = bindings.first() {
+                            let source = self.r(binding, scope, "resource", 2)?;
+                            self.ledger.pin(&source, "provider-fault-source")?
+                        } else {
+                            Value::Null
+                        };
+                    }
                 }
                 body["timeout"] = self.timer(tree.one("timer")?, scope)?;
                 body["completion"] = self.expression(tree.one("expression")?, scope, true, 0)?;
@@ -106,7 +114,7 @@ impl<'a, 's> Lower<'a, 's> {
                 body["match"] = self.expression(tree.one("expression")?, scope, true, 0)?;
                 body["authority"] = self.r(tree, scope, "actor", 0)?.into();
                 body["timer"] = self.timer(tree.one("timer")?, scope)?;
-                if matches!(self.syntax.profile(), "0.4.0" | "0.5.0" | "0.6.0") {
+                if matches!(self.syntax.profile(), "0.4.0" | "0.5.0" | "0.6.0" | "0.7.0") {
                     self.pending_waits.push((tree, scope.into(), id.clone()));
                 } else {
                     let (observation, timer) = self.wait_outcomes(tree, scope, &id, false)?;
