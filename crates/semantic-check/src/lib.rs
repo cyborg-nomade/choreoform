@@ -12,6 +12,7 @@ mod expression;
 mod faults;
 mod initialization;
 mod invalidation;
+mod policy_reads;
 mod protection;
 mod reconciliation;
 mod reconciliation_entry;
@@ -25,6 +26,7 @@ pub use exceptional::{ExceptionalReport, check_exceptional_availability};
 pub use expression::{Context, Judgment};
 pub use faults::{FaultReport, FaultRoute, FaultSelection, check_fault_routes};
 pub use invalidation::{InvalidationObligation, InvalidationReport, check_invalidation};
+pub use policy_reads::{PolicyReadClosure, PolicyReadDependencies, policy_read_closure};
 pub use protection::{AccessObligation, ProtectionReport, check_protection};
 pub use reconciliation::{ReconciliationReport, ReconciliationUse, check_reconciliation_links};
 pub use reconciliation_entry::{
@@ -48,6 +50,11 @@ pub const CORE_V2: (&str, &str) = (
     "urn:choreoform:contracts:core-profile:0.2.0",
     "sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623",
 );
+pub const CORE_V3: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.3.0",
+    "sha256:30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3",
+);
+
 const MAX_DEPTH: usize = 64;
 const MAX_ITEMS: usize = 10_000;
 

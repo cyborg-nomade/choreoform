@@ -373,6 +373,19 @@ versioned finite provider-metadata read-closure contract while preserving legacy
 cycle refusal and all real dependency reads; then add explicit authoring support
 and return to remaining package/proof issues. No complete benchmark or phase exit.
 
+The active stacked dependency branch is `codex/provider-metadata-closure`, following
+[frozen plan](0035-provider-metadata-plan.md), `52596b0`. ADR-0035/core 0.3
+provides finite provider metadata read closure while preserving strong acyclicity,
+legacy cycle refusal, exact visibility/pins and complete read sets. Nine new Rust
+groups and twelve Python-recomputed graph vectors cover real metadata/clock reads,
+large iterative graphs and budget/depth boundaries. Raw RP-01 with coherent labels
+passes protection but still refuses private-child invalidation context. See
+[evidence](0035-provider-metadata.md). Local 267 Rust tests plus five doctests,
+native/Wasm and all Python checks pass; final-head CI/comment audit/expected-head
+merge are still required. Source profiles and parent candidate remain unchanged.
+Next freeze explicit source support before adopting core 0.3 in draft #46, then
+resolve actual invalidation/lifetime dependencies. No benchmark or phase gate closes.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
