@@ -524,6 +524,15 @@ required. Then audit original full A–D conformance/negative/contract dependenc
 partial stage success does not complete the benchmark or any scenario. The parent
 remains draft/unmerged, all forty scenarios Partial, and all phase gates open.
 
+[PR #52](https://github.com/cyborg-nomade/choreoform/pull/52) merged into draft
+#46 as `a89e481cddae40fea18684953d421bcdf0a1447e` after required final-head CI
+`42289283886` and delegated review/comment audit `6694910027`. CodeRabbit skipped
+the stacked target and supplies no independent evidence; the merge is explicitly
+signed off. ADR-0039 remains pending parent/main integration. Active work is the
+[original RP-01 scenario conformance audit](0040-rp01-scenario-audit-plan.md),
+which must distinguish ten passing partial stages from A–D/domain/host evidence.
+The parent remains draft/unmerged; every scenario and phase gate stays open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
