@@ -3,6 +3,9 @@
 use super::*;
 use serde_json::json;
 
+#[cfg(test)]
+mod conformance;
+
 /// Explicit static bindings; empty facts means ordinary expressions/invariants.
 #[derive(Default)]
 pub struct Context {

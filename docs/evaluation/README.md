@@ -16,6 +16,12 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Current Phase 1 checkpoint](phase-1-progress.md) and
+  [validator/gate gap audit](0028-validator-gap-audit.md) consolidate current
+  delegated merges and remaining obligations. The
+  [69-vector value-expression corpus](0028-value-conformance.md) starts reusable
+  conformance evidence; it does not certify a complete validator or close gates.
+
 - [ADR-0016 static contract readers/checks](0016-static-contract-checks.md) —
   closed payload judgments and selected source/type/dependency integration;
   owner approved 2026-11-02 in PR #21, not complete definition admission,

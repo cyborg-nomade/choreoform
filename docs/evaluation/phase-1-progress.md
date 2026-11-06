@@ -182,6 +182,18 @@ final-head CI run `42172282464`; CodeRabbit skipped automatic review. Next is th
 [validator gap audit and value-expression conformance plan](0028-value-conformance-plan.md).
 Actual live
 acceptance/ownership, full benchmarks, editing/visual/user evidence remain open.
+The consolidated validator/gate audit now distinguishes implemented judgments,
+conservative refusals, missing static analyses, live host facts and product/user
+evidence. The reusable value-expression corpus starts conformance with 69 exact
+vectors (42 values, 16 static refusals, 11 selected faults) in three Rust groups;
+read/fact remain invariant-context refusals. Three Python groups check catalogue
+integrity rather than independently evaluating semantics. 204 Rust tests plus
+five compile-fail doctests, native/Wasm and all relevant artifact/stage oracles
+passed; separate delegated self-review found no open issue. Required final-head
+CI/merge remain pending. Next freeze the P4 handler-selection/invocation proposal,
+including lexical precedence, failed-selection exclusion and bounded cycle
+analysis without guessing emitted faults from retry eligibility. No phase gate
+or full validator is closed, and no Phase 2 engine work is started.
 
 ## Honest exit accounting
 
