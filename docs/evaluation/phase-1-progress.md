@@ -306,8 +306,10 @@ aggregation, fault continuation, surviving data and import/protected-view needs
 from isolated checks. A current table retains all forty unique scenarios as
 Partial. Local link/anchor/SPDX/count checks and all six existing authoring-evidence
 groups passed; separate delegated document review found no actionable issue.
-Final-head CI/merge remain pending. Next freeze and implement the full RP-01
-data/resource/whole-graph package, measuring actual source/quota and stage results
+PR #45 merged as `482adf7c2871e2766e0ac645628a1a2c38a872ce` after passing
+final-head CI run `42209667673`; CodeRabbit skipped review and there were no
+unresolved findings. Next implement the [frozen full RP-01 package plan](0034-rp01-package-plan.md),
+measuring actual source/quota and stage results
 and retaining all four scenarios/alternatives and explicit unsupported boundaries.
 Any necessary contract extension gets its own ADR/version/evidence; no toy review
 is relabeled a full reimbursement package. Full phase gates remain open.
