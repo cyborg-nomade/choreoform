@@ -235,8 +235,11 @@ four Python groups cover correct raw IR under both core profiles, wrong/unreacha
 owners/routes, incompatible scope reuse, unused/unvisited contexts, 500 repeated
 sites and the old source binding boundary. 229 Rust tests plus five compile-fail
 doctests, native/Wasm and all relevant artifact/stage oracles passed. ADR-0030 is
-accepted after delegated self-review; required final-head CI/merge remain pending.
-Next freeze and implement the separately versioned qualified reconciliation
+accepted after delegated self-review. PR #40 merged as
+`9a530b257ed0fdc2d5b891fea905a1e12ff4dd89` after passing final-head CI run
+`42203551485`; CodeRabbit skipped automatic review and no unresolved findings
+were present. Next implement the [frozen separately versioned qualified reconciliation
+endpoint plan](0031-qualified-endpoint-plan.md) and its
 endpoint authoring profile. Actual entry/handoff/correlation/multiple-obligation
 lifetime, exceptional protection/invalidation, full validator/benchmarks and
 text/visual/protected editing/user gates remain open.
