@@ -190,9 +190,12 @@ read/fact remain invariant-context refusals. Three Python groups check catalogue
 integrity rather than independently evaluating semantics. 204 Rust tests plus
 five compile-fail doctests, native/Wasm and all relevant artifact/stage oracles
 passed; separate delegated self-review found no open issue. Required final-head
-CI/merge remain pending. Next freeze the P4 handler-selection/invocation proposal,
-including lexical precedence, failed-selection exclusion and bounded cycle
-analysis without guessing emitted faults from retry eligibility. No phase gate
+CI passed in run `42173865419`; PR #37 merged as
+`8da0ac6c7d632bb05a622fe9e6ec9f27728e8563` after recorded delegated review.
+CodeRabbit skipped automatic review. Next is the
+[frozen P4 handler-selection graph proposal](0028-fault-routing-plan.md), with
+lexical precedence, active failed-selection exclusion and bounded conservative
+cycle analysis without guessing emission from retry eligibility. No phase gate
 or full validator is closed, and no Phase 2 engine work is started.
 
 ## Honest exit accounting
