@@ -365,6 +365,11 @@ impl<'a, 's> Lower<'a, 's> {
                         .instance_calendar(&pin)
                         .map_err(|e| error(e.code, 0..0))?;
                 }
+                "provider-fault-source" => {
+                    resources
+                        .provider_fault_source(&pin)
+                        .map_err(|e| error(e.code, 0..0))?;
+                }
                 _ => return Err(error("external-contract-lowering-unsupported", 0..0)),
             }
         }

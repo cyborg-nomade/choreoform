@@ -15,9 +15,9 @@ use std::ops::Range;
 
 pub const MAX_BYTES: usize = 1024 * 1024;
 pub const MAX_DEPTH: usize = 64;
-/// Legacy profile/fragment token quota; sources 0.5/0.6 have a closed quota.
+/// Legacy profile/fragment token quota; sources 0.5/0.6/0.7 have a closed quota.
 pub const MAX_TOKENS: usize = 4096;
-/// Legacy parser and current lowering quota; sources 0.5/0.6 parsers have a closed quota.
+/// Legacy parser and current lowering quota; sources 0.5/0.6/0.7 parsers have a closed quota.
 pub const MAX_WORK: usize = 100_000;
 
 /// Frontend-local codes and half-open UTF-8 byte spans, not validator diagnostics.

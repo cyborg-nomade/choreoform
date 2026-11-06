@@ -5,7 +5,7 @@
 
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
 profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0, 0.4.0 /
-companion 0.3.0, 0.5.0 / companion 0.4.0 and 0.6.0 / companion 0.5.0. This prototype produces **candidate IR**, not
+companion 0.3.0, 0.5.0 / companion 0.4.0 0.6.0 / companion 0.5.0 and 0.7.0 / companion 0.6.0. This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
 
 The [0.5.0 profile](../../docs/authoring/profile-v0.5.md) adds bounded full-program
@@ -17,6 +17,12 @@ visits, without implying semantic or runtime evidence.
 both inherited core artifacts, deriving finite provider metadata reads within the
 existing dependency-pass work bound. Compiler output still requires semantic
 revalidation; source promotion changes the core pin and semantic revision.
+
+[Source 0.7.0](../../docs/authoring/profile-v0.7.md) explicitly binds retry fault
+sources and selects exact core 0.4 plus inherited artifacts. A bounded native
+`retryFaultBindings` view from timing onward discloses only typed declarations and
+live requirements. Older reports keep their structure; no actual fault, authority
+or retry execution is inferred. Source-provider metadata contributes complete reads.
 
 `check-invalidation` and the six composed native stages expose bounded
 `historicalOrigins`: source cells/ordinary boundaries and optional scope contexts,

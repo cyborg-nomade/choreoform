@@ -67,6 +67,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0041](0041-provider-fault-source-metadata.md) | Accepted under delegation | Pin declared provider observation-to-fault evidence without implicit retry authority |
 
 | [0042](0042-explicit-retry-fault-source-binding.md) | Accepted under delegation | Bind eligible provider fault sources explicitly in core 0.4 without live permission claims |
+| [0043](0043-retry-fault-source-authoring.md) | Accepted under delegation | Explicit source 0.7 retry fault-source clauses and bounded declaration disclosure |
 
 ## When an ADR is required
 

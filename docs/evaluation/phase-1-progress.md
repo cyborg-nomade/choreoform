@@ -634,6 +634,16 @@ Select raw core 0.4 only through explicit new source 0.7/companion 0.6, retain o
 profiles/package bytes, then separately adopt the source in RP-01. All actual
 host/data/continuation, scenario and phase gates remain open.
 
+ADR-0043 source 0.7/companion 0.6 is implemented after frozen plan `eb16001`, with
+explicit fault-source clauses/core 0.4, complete source metadata reads and bounded
+typed disclosure through all five stages from timing onward. Five Rust/seven Python
+groups cover actual full-source/pin/identity/context/read/compatibility/hash/output
+cases. Local 320 Rust + six doctests and native/Wasm/all Python checks pass; every
+large-report path refuses without stdout. See [evidence](0043-retry-fault-authoring.md).
+Final-head CI/comment audit/signed exact merge remain required. Current checked-in
+RP-01 bytes remain unchanged pending separate adoption. No actual fault, retry
+permission, continuation, scenario or phase gate is established.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
