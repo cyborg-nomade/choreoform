@@ -503,6 +503,15 @@ missing-link counterexamples. Draft #46 still requires final-head CI and remains
 unmerged/incomplete. Next freeze and audit called surviving reconciliation lifetime
 without weakening its closure policy. All scenarios/phase gates remain open.
 
+Draft #46's precise-link head `b95b2be93c14626adfc248fdf3d6a30235ea8343`
+passed required final-head CI `42287364292`. It remains draft/unmerged. The active
+stacked dependency is `codex/isolated-surviving-waits`, following
+[frozen plan](0039-isolated-survivors-plan.md), `445b23e`, and the
+[pre-change critique](0039-isolated-survivors-audit.md). Five actual native witnesses
+distinguish isolated waits from mutable/shared-read/storage/route cases. Next prove
+only declared isolation under explicit outstanding P6 host premises; keep all
+parallel and general reconciliation/progress/phase gates open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
