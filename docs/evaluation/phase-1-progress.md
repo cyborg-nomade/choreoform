@@ -197,6 +197,17 @@ CodeRabbit skipped automatic review. Next is the
 lexical precedence, active failed-selection exclusion and bounded conservative
 cycle analysis without guessing emission from retry eligibility. No phase gate
 or full validator is closed, and no Phase 2 engine work is started.
+The fault-routing slice now checks a bounded indexed active-stack graph with
+exact lexical keys, per-propagation failed-selection exclusion and cycle-unproved
+refusal. It reports abstract route coverage separately from still-uncovered
+handler data contexts and concurrent occurrences. Eleven Rust groups and three
+Python groups cover roles/precedence/exclusion, cycles, 1,000 uncalled scopes,
+63 nested handlers, budget refusal and both-profile cycles. 215 Rust tests plus
+five compile-fail doctests, native/Wasm and all relevant artifact/stage oracles
+passed. ADR-0028 is accepted after separate delegated self-review; required
+final-head CI/merge remain pending. Next address exceptional entry/lifetime/
+protection/invalidation judgments and unified diagnostics/accounting, keeping
+actual host, complete benchmark/conformance and text/visual/user gates open.
 
 ## Honest exit accounting
 

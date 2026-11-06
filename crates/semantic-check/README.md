@@ -3,6 +3,15 @@
 
 # Static contract checks, not executable admission
 
+`check_fault_routes` follows timing/ordinary checks with an indexed conservative
+handler-selection graph and active failed-selection exclusion. It considers all
+declared fault names, refuses potential cycles as unproved and reports abstract
+route/selection coverage. This does not initialize/authenticate handler contexts,
+classify actual engine faults, prove concurrent occurrence lifetime or dispatch
+work. Route views borrow one immutable metadata table. See
+[ADR-0028](../../docs/decisions/0028-conservative-fault-routing.md) and
+[evidence](../../docs/evaluation/0028-conservative-fault-routing.md).
+
 The [value-expression conformance corpus](../../docs/conformance/README.md)
 exercises exact production static/invariant-evaluation judgments in three Rust
 test groups. Its 69 vectors cover all 29 E1 operations at catalogue level, with
