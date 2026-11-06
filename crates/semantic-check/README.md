@@ -3,6 +3,15 @@
 
 # Static contract checks, not executable admission
 
+`check_exceptional_availability` checks routing-discovered handler bodies under
+explicit ancestor-input premises, with fresh locals and no borrowed ordinary
+result/initializer snapshot. It separates conditional body coverage from earlier
+ordinary/routing coverage; current activation/revisions/authority, fault-control
+protection and ownership remain unproved. A private per-scope initializer index
+replaces repeated full-data scans in availability/protection without caching values
+or policy truth. See [ADR-0029](../../docs/decisions/0029-conditional-handler-availability.md)
+and [evidence](../../docs/evaluation/0029-conditional-handler-availability.md).
+
 `check_fault_routes` follows timing/ordinary checks with an indexed conservative
 handler-selection graph and active failed-selection exclusion. It considers all
 declared fault names, refuses potential cycles as unproved and reports abstract

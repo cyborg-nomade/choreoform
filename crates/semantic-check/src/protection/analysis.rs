@@ -8,6 +8,7 @@ pub(super) struct Flow<'a> {
     graph: Graph,
     providers: BTreeMap<ProviderRole, BTreeMap<String, Arc<Provider>>>,
     budget: Budget,
+    initializers: crate::initialization::Index<'a>,
     pub transfers: usize,
     pub accesses: BTreeSet<AccessObligation>,
     pub dependencies: Option<Dependencies>,
@@ -16,6 +17,7 @@ impl<'a> Flow<'a> {
     pub fn new(b: &'a Value, supplied: &[Resource<'_>]) -> Result<Self> {
         let mut budget = Budget::default();
         let graph = Graph::build(b, &mut budget)?;
+        let initializers = crate::initialization::by_scope(b, &mut budget)?;
         let mut registry = Resources::new(supplied)?;
         let mut providers: BTreeMap<ProviderRole, BTreeMap<String, Arc<Provider>>> =
             BTreeMap::new();
@@ -57,6 +59,7 @@ impl<'a> Flow<'a> {
             graph,
             providers,
             budget,
+            initializers,
             transfers: 0,
             accesses: BTreeSet::new(),
             dependencies: None,
@@ -157,17 +160,18 @@ impl<'a> Flow<'a> {
             self.publish(inherited, id, scope)?;
             entry.extend(deps);
         }
-        for (id, d) in object(&self.b["data"])? {
+        self.budget
+            .charge(self.initializers.get(scope).map_or(0, Vec::len))?;
+        let initializers = self.initializers.get(scope).cloned().unwrap_or_default();
+        for id in initializers {
             self.budget.tick(depth)?;
-            if d["scope"] != scope {
-                continue;
-            }
+            let d = &self.b["data"][id];
             if let Some(initial) = d.get("initial") {
                 let mut sources = inherited.clone();
                 sources.extend(
                     self.access(id, id, "write")?
                         .into_iter()
-                        .filter(|x| *x != Origin::Cell(id.clone())),
+                        .filter(|x| !matches!(x, Origin::Cell(cell) if cell == id)),
                 );
                 for read in names(&self.b["expressions"][text(initial)?]["reads"])? {
                     sources.extend(self.access(id, &read, "read")?);

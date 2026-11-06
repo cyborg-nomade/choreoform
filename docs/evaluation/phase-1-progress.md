@@ -212,6 +212,18 @@ skipped automatic review. Next is the
 including explicit ancestor-input assumptions and a private initializer scope
 index. Keep exceptional protection/invalidation/lifetime, actual host, full
 benchmark/conformance and text/visual/user gates open; no phase exit is claimed.
+The conditional handler-body slice now derives explicit ancestor-input premises,
+checks selected bodies with fresh locals/separate contexts and refuses unavailable
+owner-initializer/result/metadata reads without inventing snapshots. A private
+initializer scope index removes a reproduced 1,000-visit × 1,000-unrelated-cell
+scan quota failure in availability/protection. Seven Rust and three Python groups
+cover premises, roles, initialization, nested/uncalled cases, metadata and both
+profile cycles. 222 Rust tests plus five compile-fail doctests, native/Wasm and
+all relevant artifact/stage oracles passed; ADR-0029 is accepted after delegated
+self-review. Required final-head CI/merge remain pending. Next establish the
+exceptional fault-control protection/invalidation/lifetime judgment and its
+explicit source/host-label boundaries; keep full validator, benchmarks, general
+text/visual/protected editing and actual user evidence open.
 
 ## Honest exit accounting
 

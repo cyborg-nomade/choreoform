@@ -9,6 +9,13 @@ semantic admission, execution or a production authoring editor.
 
 ## API boundaries
 
+`check-exceptional-availability` and its Candidate method expose conditional
+handler body checks, explicit required ancestor inputs and separate ordinary/
+exceptional/routing coverage. The native metadata/report output remains bounded
+to 1 MiB. No input values, actual activation/current access, fault snapshot or
+execution permission is supplied. See
+[ADR-0029](../../docs/decisions/0029-conditional-handler-availability.md).
+
 `Candidate::check_fault_routes` and `check-fault-routes` expose conservative P4
 active-context routing after prior timing/ordinary stages. Routing coverage is
 separate from ordinary handler data coverage; a checked routing scope may still

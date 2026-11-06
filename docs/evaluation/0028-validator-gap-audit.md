@@ -57,6 +57,10 @@ adds a bounded active-stack overapproximation for P4 selection/cycle checking.
 It partially addresses the missing graph judgment above; exceptional entry data,
 concurrent fault/handler occurrences and runtime ownership remain unproved. The
 baseline matrix is not retroactively relabeled complete.
+The subsequent [ADR-0029 body slice](../decisions/0029-conditional-handler-availability.md)
+checks availability under explicit ancestor input contracts. It does not supply
+fault-site snapshots, exceptional information-flow/invalidation or actual
+activation/lifetime facts. Its scope index removes repeated full-data scans.
 
 ## Distinct kinds of remaining work
 

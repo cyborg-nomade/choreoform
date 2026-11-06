@@ -7,6 +7,8 @@ use choreoform_semantic_check::{
 };
 use serde_json::{Value, json};
 
+#[path = "control/exceptional.rs"]
+mod exceptional;
 #[path = "control/faults.rs"]
 mod faults;
 #[path = "control/settlement.rs"]

@@ -44,6 +44,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0026](0026-explicit-retry-clock.md) | Accepted under delegation | Bind retry timing explicitly in a versioned core profile |
 | [0027](0027-explicit-retry-authoring.md) | Accepted under delegation | Express retry clock bindings in a versioned English sentence |
 | [0028](0028-conservative-fault-routing.md) | Accepted under delegation | Check a conservative active-context handler-selection graph |
+| [0029](0029-conditional-handler-availability.md) | Accepted under delegation | Check handler-body availability under explicit input contracts |
 
 ## When an ADR is required
 
