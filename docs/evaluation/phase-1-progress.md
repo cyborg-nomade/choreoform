@@ -205,9 +205,13 @@ Python groups cover roles/precedence/exclusion, cycles, 1,000 uncalled scopes,
 63 nested handlers, budget refusal and both-profile cycles. 215 Rust tests plus
 five compile-fail doctests, native/Wasm and all relevant artifact/stage oracles
 passed. ADR-0028 is accepted after separate delegated self-review; required
-final-head CI/merge remain pending. Next address exceptional entry/lifetime/
-protection/invalidation judgments and unified diagnostics/accounting, keeping
-actual host, complete benchmark/conformance and text/visual/user gates open.
+final-head CI passed in run `42176546160`; PR #38 merged as
+`a20049d51a15052a8457a66c320660e623c9a131` after delegated review. CodeRabbit
+skipped automatic review. Next is the
+[conditional handler-body availability plan](0029-exceptional-availability-plan.md),
+including explicit ancestor-input assumptions and a private initializer scope
+index. Keep exceptional protection/invalidation/lifetime, actual host, full
+benchmark/conformance and text/visual/user gates open; no phase exit is claimed.
 
 ## Honest exit accounting
 
