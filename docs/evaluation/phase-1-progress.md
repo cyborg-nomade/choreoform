@@ -386,6 +386,17 @@ merge are still required. Source profiles and parent candidate remain unchanged.
 Next freeze explicit source support before adopting core 0.3 in draft #46, then
 resolve actual invalidation/lifetime dependencies. No benchmark or phase gate closes.
 
+[PR #48](https://github.com/cyborg-nomade/choreoform/pull/48) merged into draft
+#46 as `ffe0c2cd38327003b0521a9c3a117afb4644d7ee` after final-head CI
+`42247517504`. Delegated self-review comment `6689168425` records the separate
+review and no unresolved findings; CodeRabbit skipped the non-default base and
+supplies no independent evidence. ADR-0035 remains pending parent/main integration.
+The active dependency is now `codex/metadata-core-authoring`, following the
+[frozen source-0.6 plan](0036-metadata-source-plan.md). Add explicit core-0.3
+source support without changing prior pairs, quotas or hashes, then return to
+actual RP-01 adoption and remaining invalidation/lifetime/proof work. Draft #46
+remains unmerged and all phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
