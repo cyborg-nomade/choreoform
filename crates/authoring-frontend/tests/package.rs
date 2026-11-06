@@ -5,6 +5,9 @@ use choreoform_authoring_frontend::{Ledger, Package, parse, parse_fragment};
 use choreoform_ir_probe_core::{Resource, SUPPORTED_CONTRACTS};
 use serde_json::{Value, json};
 
+#[path = "package/diagnostics.rs"]
+mod diagnostics;
+
 const SOURCE: &str = include_str!("../../../docs/authoring/examples/terminal.choreo");
 const LEDGER: &[u8] = include_bytes!("../../../docs/authoring/examples/terminal.bindings.json");
 const REVIEW_SOURCE: &str = include_str!("../../../docs/authoring/examples/review.choreo");

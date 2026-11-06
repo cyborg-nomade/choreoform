@@ -272,6 +272,18 @@ using existing immutable source maps. Retain exceptional/follow-up
 protection/invalidation/concurrency, richer retained snapshots, actual host and
 full validator/benchmark/text/visual/protected editing/user gates. No phase exit.
 
+The source diagnostic utility now maps existing IR record paths to immutable
+original UTF-8 declaration/generated spans; all ten native semantic commands share
+the formatter, preserving code/path prefixes without copying source literals.
+Four Rust and five Python groups cover actual static/control/lifecycle errors,
+generated records, wrong/missing/global paths and multibyte format/reparse cycles.
+246 Rust tests plus five compile-fail doctests, native/Wasm and all relevant
+artifact/source/stage oracles passed. ADR-0033 is accepted after separate delegated
+self-review; final-head CI/expected-head merge remain pending. Next give still-bare
+scope/data/actor/capability static failures precise record/field paths. Full
+semantic/proof/benchmark/text/visual/protected editing and actual user gates remain
+open; declaration locations do not close full diagnostics or phase exit.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

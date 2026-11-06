@@ -48,6 +48,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0030](0030-reconciliation-declaration-links.md) | Accepted under delegation | Require an owned reachable reconciliation declaration route |
 | [0031](0031-qualified-wait-endpoints.md) | Accepted under delegation | Bind explicitly qualified reconciliation wait endpoints |
 | [0032](0032-conditional-reconciliation-availability.md) | Accepted under delegation | Check surviving follow-up bodies without inherited values |
+| [0033](0033-semantic-source-locations.md) | Accepted under delegation | Locate semantic diagnostics in original source declarations |
 
 ## When an ADR is required
 
