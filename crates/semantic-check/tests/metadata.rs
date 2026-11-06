@@ -474,9 +474,10 @@ fn coherent_raw_labels_keep_strict_coverage_and_separate_lifetime_requirements()
     choreoform_semantic_check::check_invalidation(&e, &r).unwrap();
     assert_eq!(
         choreoform_semantic_check::check_concurrency(&e, &r)
-            .unwrap_err()
-            .code,
-        "scope-lifetime-unproved"
+            .unwrap()
+            .isolated_followups()
+            .len(),
+        3
     );
     let mut body = f.body.clone();
     body["data"]["disposition"]["invalidates"] = json!({});

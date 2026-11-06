@@ -5,9 +5,10 @@
 
 **Status:** Synthetic benchmark boundary specification, not implemented support or
 execution authorization. The source lowers and passes supported static/control/
-protection/invalidation checks. Concurrency and later composed stages still refuse
-`scope-lifetime-unproved` at `run_checks`; called surviving reconciliation lifetime
-is not yet proved.
+protection/invalidation checks and all six later partial static stages. Those
+later reports disclose three isolated wait-only surviving declarations and
+outstanding occurrence ownership/correlation/handoff/settlement premises.
+Actual surviving lifetime, progress and irreversible safety remain unproved.
 Read [package status](README.md), [manifest](manifest.json) and
 [frozen plan](../../evaluation/0034-rp01-package-plan.md).
 

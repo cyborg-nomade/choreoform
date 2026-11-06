@@ -92,10 +92,7 @@ fn draft_manifest_and_resource_pins_do_not_claim_program_admission() {
     );
     let stages = m["semanticStageResults"].as_array().unwrap();
     assert_eq!(stages.len(), 10);
-    assert!(stages[..4].iter().all(|s| s["result"] == "passed"));
-    assert!(stages[4..].iter().all(|s| s["result"] == "refused"
-        && s["code"] == "scope-lifetime-unproved"
-        && s["path"] == "/body/nodes/run_checks"));
+    assert!(stages.iter().all(|s| s["result"] == "passed"));
     assert_eq!(m["sourceDigest"], digest(SOURCE));
     assert_eq!(m["sourceBytes"], SOURCE.len());
     assert_eq!(m["scenarios"].as_array().unwrap().len(), 4);

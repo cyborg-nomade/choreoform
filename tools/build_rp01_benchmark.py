@@ -153,7 +153,7 @@ def artifacts():
         ],
     }
     candidate, stage_results = derive(files, registry)
-    manifest.update(status='lowered-candidate-awaiting-semantic-dependencies',
+    manifest.update(status='lowered-candidate-with-partial-static-evidence',
         canonicalIR={'path': 'candidate.ir.json', 'revision': candidate['revision'],
                      'digest': 'sha256:' + sha256(files['candidate.ir.json']).hexdigest()},
         semanticStageResults=stage_results)
@@ -175,12 +175,15 @@ Source 0.6 / companion 0.5 and core 0.3 are selected explicitly under
 ADR-0035/0036; old cores/source profiles remain unchanged. Coherent fictional
 business/clock recipient labels pass static, ordinary control and protection
 checks. The exact 72 missing ordinary invalidation links derived under ADR-0038
-are now declared; strict invalidation also passes. Concurrency and later composed
-stages refuse `scope-lifetime-unproved` at `run_checks`, whose called body owns
-surviving reconciliation. No later-stage or whole-process admission is claimed.
+are now declared; strict invalidation also passes. All ten existing partial
+static stages now pass. Concurrency and later views disclose three isolated
+surviving follow-up declarations under ADR-0039, with outstanding live ownership,
+correlation, atomic handoff and terminal-settlement premises. These reports prove
+no actual lifetime, progress, general race safety or whole-process admission.
 Closed private influence is handled only by the bounded ADR-0037 proof subset,
 retaining all mutable ancestor dependencies. This fixture patch preserves all
-existing invalidation links and changes no other semantic body fields.
+existing invalidation links and changes no other semantic body fields. The
+ADR-0039 checker refinement changes no source, IR revision or resource bytes.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 

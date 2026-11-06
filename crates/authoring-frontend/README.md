@@ -217,6 +217,15 @@ local storage from shared ancestor data, refuses unproved hazards/effect overlap
 and lifetimes, and reports checked/uncovered forks. Earlier evidence and host/
 domain obligations remain; the report is non-executable.
 
+Under [ADR-0039](../../docs/decisions/0039-isolated-surviving-waits.md), synchronous
+invoke/repeat may retain an explicitly owned isolated follow-up consisting solely
+of data-free timer-free waits and finishes, with no storage, ports or nested work.
+All declarations, including unvisited ones and management dependencies, are checked.
+Split/fanout retain terminal-child requirements. `ConcurrencyReport::isolated_followups`
+and all six composed native views expose `isolatedFollowups` with creator/body/
+closure/follow-up/waits and outstanding P6 host requirements. This conditional
+declaration evidence grants no actual ownership, settlement, progress or execution.
+
 `check-timing SOURCE COMPANION` / `Candidate::check_timing` adds supported timer
 typing/clock-origin checks and immutable timer uses with required host judgments.
 It includes no observations/current facts or execution authority. Calendar-domain

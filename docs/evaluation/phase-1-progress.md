@@ -512,6 +512,18 @@ distinguish isolated waits from mutable/shared-read/storage/route cases. Next pr
 only declared isolation under explicit outstanding P6 host premises; keep all
 parallel and general reconciliation/progress/phase gates open.
 
+ADR-0039's isolated synchronous follow-up subset is implemented after its critique.
+Seven Rust control groups, one budget group and six Python groups preserve shared/
+mutable/storage/nested/timed/parallel negatives and expose conditional P6 host
+premises in all six composed native reports. Full RP-01 now passes all ten existing
+partial static stages with three isolated-follow-up declarations; source/IR/
+resource identity is unchanged. See [evidence](0039-isolated-survivors.md). Local
+291 Rust tests plus six doctests, native/Wasm and all Python checks pass.
+Final-head CI/comment audit/signed expected-head merge into draft #46 remain
+required. Then audit original full A–D conformance/negative/contract dependencies;
+partial stage success does not complete the benchmark or any scenario. The parent
+remains draft/unmerged, all forty scenarios Partial, and all phase gates open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

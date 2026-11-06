@@ -122,7 +122,12 @@ class ClosedProvenanceEvidence(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout)['historicalOrigins'][0]['closure'],'keep_worker')
         result = invoke(source, ledger, 'check-concurrency')
-        self.assertIn(b'scope-lifetime-unproved', result.stderr)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual(json.loads(result.stdout)['isolatedFollowups'][0]['followup'],'recovery')
+        # Sharing a mutable input still falls outside isolated surviving waits.
+        source = source.replace('Observe text. Match when (true).','Observe text. Match when ((the value of "Seed") equals (0)).')
+        result = invoke(source, ledger, 'check-concurrency')
+        self.assertIn(b'scope-lifetime-unproved',result.stderr)
 
     def test_all_composed_native_reports_retain_the_same_conditional_history(self):
         source, ledger = package()
