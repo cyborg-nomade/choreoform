@@ -238,6 +238,10 @@ validated, and round-tripped.
   retains guard conformance, fault-source classification, late-observation capture/
   continuation and actual ownership/race/host evidence as open work. This does not
   close full benchmark, near-English authoring, complete validation or phase gates.
+  [ADR-0040](docs/decisions/0040-finite-guard-snapshot-conformance.md) adds 44 finite
+  source-derived guard snapshots and corrects missing payment policy-revision
+  comparisons. These test-only predicate results are neither authenticated facts
+  nor process transitions and do not complete any A–D scenario.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

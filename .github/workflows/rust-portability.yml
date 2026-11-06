@@ -76,4 +76,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_closed_provenance.py
           .tools/ir-check/bin/python tools/check_invalidation_requirements.py
           .tools/ir-check/bin/python tools/check_isolated_survivors.py
+          .tools/ir-check/bin/python tools/check_rp01_guard_snapshots.py
       # Browser execution is a separate manual evidence step, not implied by CI.

@@ -79,7 +79,7 @@ def artifacts():
     for name, (_, raw, _) in resources.items():
         files[names[name]] = raw
     source, package = build(type_pin, {k: resources[k][0] for k in ['checks', 'payment', 'notice']},
-        {k: v[2] for k, v in resources.items()}, profile="0.6.0")
+        {k: v[2] for k, v in resources.items()}, profile="0.6.0", payment_policy_revisions=True)
     source = declare_links(source, package.ledger)
     # Counting individual complete lines uses the unchanged bounded lexer only
     # for measurement. It does not recognize/admit the over-budget whole program.
@@ -184,6 +184,10 @@ Closed private influence is handled only by the bounded ADR-0037 proof subset,
 retaining all mutable ancestor dependencies. This fixture patch preserves all
 existing invalidation links and changes no other semantic body fields. The
 ADR-0039 checker refinement changes no source, IR revision or resource bytes.
+The ADR-0040 finite-snapshot correction explicitly rechecks both approval policy
+revisions and the current claim policy revision at the payment commit guard;
+it preserves the six earlier clauses. This changes the current candidate's
+semantic revision, while historical profile fixtures keep their original guard.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 

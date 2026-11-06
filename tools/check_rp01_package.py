@@ -34,7 +34,7 @@ class Rp01PackageEvidence(unittest.TestCase):
         cls.candidate = wire.load((BASE / 'candidate.ir.json').read_bytes())
 
     def test_only_exact_missing_links_change_the_body_and_all_identities_are_preserved(self):
-        source, ledger, supplied = baseline = unpatched_rp01()
+        source, ledger, supplied = baseline = unpatched_rp01(payment_policy_revisions=True)
         self.assertEqual(json.loads(self.bindings), ledger)
         old = json.loads(invoke_unpatched(baseline, 'lower').stdout)
         advice = json.loads(invoke_unpatched(baseline, 'invalidation-requirements').stdout)
@@ -57,6 +57,21 @@ class Rp01PackageEvidence(unittest.TestCase):
         # The fixture assembler refuses a changed/already-patched baseline.
         with self.assertRaises(AssertionError):
             declare_links(self.source.decode(),ledger)
+
+    def test_policy_guard_correction_preserves_all_six_old_clauses_and_only_adds_three(self):
+        weak=json.loads(invoke_unpatched(unpatched_rp01(),'lower').stdout)['body']
+        strong=json.loads(invoke_unpatched(unpatched_rp01(payment_policy_revisions=True),'lower').stdout)['body']
+        before=weak['policies']['payment_commits']['body']['invariant']
+        after=strong['policies']['payment_commits']['body']['invariant']
+        def conjunction(ast):
+            return conjunction(ast['left'])+conjunction(ast['right']) if ast['op']=='and' else [ast]
+        old,new=conjunction(before),conjunction(after)
+        self.assertEqual(len(old),6)
+        self.assertEqual(new[:6],old)
+        self.assertEqual(len(new),9)
+        self.assertTrue(all(c['op']=='eq' and c['left']['name']==c['right']['name']=='policy revision' for c in new[6:]))
+        strong['policies']['payment_commits']['body']['invariant']=before
+        self.assertEqual(strong,weak)
 
     def test_generation_repeats_native_candidate_and_all_ten_actual_stage_results(self):
         generated = artifacts()

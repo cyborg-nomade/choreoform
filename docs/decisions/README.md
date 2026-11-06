@@ -62,6 +62,8 @@ while specifications, guides, and code describe the system as it exists now.
 
 | [0039](0039-isolated-surviving-waits.md) | Accepted under delegation | Check declared isolation of synchronous surviving waits under live P6 premises |
 
+| [0040](0040-finite-guard-snapshot-conformance.md) | Accepted under delegation | Check actual guard ASTs with finite synthetic snapshots, without execution claims |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to

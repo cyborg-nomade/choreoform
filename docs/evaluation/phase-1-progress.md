@@ -559,6 +559,24 @@ policy-revision equality clauses and symmetric negatives, preserving old fixture
 profiles and all other semantic fields. This source correction is part of the
 dedicated guard-conformance deliverable; no phase gate closes.
 
+ADR-0040's test-only finite guard harness now passes 44 source-derived predicate
+vectors (41 Boolean values, one evaluation fault, two binding refusals), mapped
+only to A–D fragments. Six new Rust groups exercise the catalogue/boundaries and
+four Python groups check independent accountability. The recorded payment policy
+gap is corrected by three explicit equality clauses; the six old clauses and all
+other body fields/IDs/resources remain. Old profile fixtures retain their guard.
+New package semantic revision is `sha256:d0bca38fb470cd0485b9a1cc22767182e6276669ca9ca131ac45d7af268269f3`.
+All ten partial stages still pass. See [evidence](0040-rp01-guard-snapshots.md).
+Local 297 Rust tests plus six doctests, native/Wasm and all Python checks pass;
+final-head CI/comment audit/signed expected-head integration remain required. No
+snapshot is an observation, permission, transition or completed scenario. Continue
+concrete fault-source/late-observation/continuation work; no phase gate closes.
+
+Draft #46's original-scenario audit head `80037c65c4f681d39199f120153fb11ec60f49cb`
+passed required final-head CI `42290223948`. It remains draft/unmerged. Current
+guard-conformance work is on its dedicated dependency branch and still requires
+its own final-head review/CI/merge. ADR-0040 is pending parent/main integration.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

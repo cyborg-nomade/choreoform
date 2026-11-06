@@ -107,7 +107,7 @@ def foundations(root):
     root.child(remaining)
 
 
-def service(root, parent, provider, key, name, capability_name, input_name, output_name, permitted=None, completion_override=None):
+def service(root, parent, provider, key, name, capability_name, input_name, output_name, permitted=None, completion_override=None, payment_policy_revisions=False):
     """One capability activity per owner occurrence, with an explicit follow-up.
 
     Capabilities stay visible at root so its data can name their permitted access.
@@ -140,10 +140,14 @@ def service(root, parent, provider, key, name, capability_name, input_name, outp
     if key == 'payment':
         owner.data('payment_deadline', 'Payment deadline', INTEGER, participants=PEOPLE, capabilities=CAPABILITIES)
         witnesses = [representation(field(read(input_name), person)) for person in ['manager', 'finance']]
-        guard = every([evidence_matches(w, claim) for w in witnesses] + [
+        predicates = [evidence_matches(w, claim) for w in witnesses] + [
             equal(field(claim, 'revision'), field(representation(read('Current claim')), 'revision')),
             equal(field(claim, 'claim ID'), field(representation(read('Current claim')), 'claim ID')),
-        ])
+        ]
+        if payment_policy_revisions:
+            predicates += [equal(field(w, 'policy revision'), field(claim, 'policy revision')) for w in witnesses]
+            predicates.append(equal(field(claim, 'policy revision'), field(representation(read('Current claim')), 'policy revision')))
+        guard = every(predicates)
         owner.policy('payment_commits', 'race', name + ' commits', f'Guard commits when ({expression_source(guard)}).')
         completion = result_matches(list(output_type['cases']), claim,
             lambda tag, e: [equal(field(e, 'amount'), field(claim, 'amount')), equal(field(e, 'currency'), field(claim, 'currency'))] if tag == 'paid' else [])
@@ -200,7 +204,7 @@ def endpoint_probe(type_pin, provider, provider_pin):
     return 'Choreoform authoring "0.4.0".\n' + root.render(), package
 
 
-def build(type_pin, provider_documents, resource_pins, profile="0.5.0"):
+def build(type_pin, provider_documents, resource_pins, profile="0.5.0", payment_policy_revisions=False):
     assert profile in ["0.5.0", "0.6.0"]
     package = Package()
     package.ledger.update(profile=profile, version="0.5.0" if profile == "0.6.0" else "0.4.0")
@@ -222,7 +226,7 @@ def build(type_pin, provider_documents, resource_pins, profile="0.5.0"):
     duplicate_type = variant({tag: review_type for tag in ['clear', 'correction', 'rejected']})
     cycle = Scope(package, 'review_cycle', 'Review cycle', root, 'Run checks')
     _, checks_type = service(root, cycle, provider_documents['checks'], 'checks', 'Claim checks', 'Check the claim', 'Check request', 'Check outcome')
-    service(root, root, provider_documents['payment'], 'payment', 'Payment', 'Create the payable', 'Payable request', 'Payment outcome')
+    service(root, root, provider_documents['payment'], 'payment', 'Payment', 'Create the payable', 'Payable request', 'Payment outcome', payment_policy_revisions=payment_policy_revisions)
     service(root, root, provider_documents['notice'], 'notice', 'Notice', 'Notify the employee', 'Notice request', 'Notice outcome')
     cycle.data('cycle_checks', 'Check finding', checks_type, participants=PEOPLE, capabilities=CAPABILITIES)
     cycle.data('manager_result', 'Manager result', approval_type, participants=PEOPLE, capabilities=CAPABILITIES)
