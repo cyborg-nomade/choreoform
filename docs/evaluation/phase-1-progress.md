@@ -258,6 +258,18 @@ ancestor values. Next is the [frozen conditional entry plan](0032-reconciliation
 retain exceptional protection/invalidation and full validator/benchmark/
 text/visual/protected editing/actual user gates. No phase exit is claimed.
 
+The reconciliation-body stage now checks each actual reconcile-closure follow-up
+with zero inherited cells, fresh locals and one shared graph/index/budget, keeping
+ordinary/handler/conditional body coverage separate. Seven Rust and four Python
+groups cover parent-value refusals, local initialization, role isolation, nested/
+unused contexts, 401 entries and owned source cycles. 242 Rust tests plus five
+compile-fail doctests, native/Wasm and all relevant artifact/source/stage oracles
+passed. ADR-0032 is accepted after separate delegated self-review; final-head CI
+and expected-head merge remain pending. Next improve actionable source diagnostic
+mapping from existing immutable source maps. Retain exceptional/follow-up
+protection/invalidation/concurrency, richer retained snapshots, actual host and
+full validator/benchmark/text/visual/protected editing/user gates. No phase exit.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

@@ -220,6 +220,10 @@ validated, and round-tripped.
   reconciliation child, preserving old lexical/data privacy without dummy root
   nodes. This closes that source binding dependency only; actual follow-up entry,
   protection, handoff, correlation and multiple-obligation lifetime stay open.
+  [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
+  conditional follow-up body availability with zero inherited values and fresh
+  locals. It does not prove ancestor retention, live activation/storage/current
+  permission, exceptional protection/invalidation or accepted settlement.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

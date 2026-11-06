@@ -3,6 +3,14 @@
 
 # Static contract checks, not executable admission
 
+`check_reconciliation_availability` follows declaration links with a conditional
+body judgment for each actual reconcile-closure use. It uses zero inherited cells,
+fresh locals and one shared graph/index/budget. Parent input/initializer/result
+values are not assumed retained across the surviving boundary. Conditional body
+coverage remains separate from actual activation, live storage/current authority,
+protection/invalidation/concurrency and accepted ownership/correlation/settlement.
+See [ADR-0032](../../docs/decisions/0032-conditional-reconciliation-availability.md).
+
 `check_reconciliation_links` follows conditional handler availability and verifies
 each declared capability activity's own reconcile closure, direct child follow-up
 and reachable unique wait site. It records exact declaration references, unvisited

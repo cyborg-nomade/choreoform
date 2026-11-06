@@ -68,6 +68,10 @@ qualified child-endpoint dependency is supplied by
 [source 0.4.0 / ADR-0031](../decisions/0031-qualified-wait-endpoints.md), with
 ordinary lexical/data privacy retained. This does not supply the live or entry
 judgments above.
+The subsequent [ADR-0032 body slice](../decisions/0032-conditional-reconciliation-availability.md)
+checks actual declared follow-up contexts with zero inherited values and fresh
+locals; this adds conditional body coverage without assuming parent value
+retention, actual activation/storage lifetime, permission or owned settlement.
 
 ## Distinct kinds of remaining work
 

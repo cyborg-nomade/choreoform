@@ -10,6 +10,13 @@ semantic admission, execution or a production authoring editor.
 
 ## API boundaries
 
+`check-reconciliation-availability` and its Candidate method check conditional
+follow-up bodies with zero inherited values and fresh locals. They expose exact
+declared entries and separate ordinary/handler/follow-up coverage, with bounded
+non-executable output. Current permission, retained storage, actual activation,
+handoff, correlation and settlement stay open. See
+[ADR-0032](../../docs/decisions/0032-conditional-reconciliation-availability.md).
+
 `check-reconciliation-links` and its Candidate method check surviving declaration
 routes, with bounded non-executable output and explicit host/entry/lifetime
 requirements. The old service example honestly refuses its missing follow-up.
