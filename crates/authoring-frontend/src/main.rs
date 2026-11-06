@@ -94,7 +94,7 @@ fn run() -> Result<String, String> {
             ),
         },
     ];
-    if package.syntax().profile() == "0.3.0" {
+    if package.syntax().profile() != "0.2.0" {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V2.0,
             revision: choreoform_semantic_check::CORE_V2.1,

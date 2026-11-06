@@ -244,6 +244,18 @@ endpoint authoring profile. Actual entry/handoff/correlation/multiple-obligation
 lifetime, exceptional protection/invalidation, full validator/benchmarks and
 text/visual/protected editing/user gates remain open.
 
+The qualified endpoint follow-up now supplies source 0.4.0 / companion 0.3.0,
+unchanged core/grammar meaning, designated child wait binding and an owned service
+source example. Six Rust and five Python groups cover identity, format/hash/report
+cycles, strict profiles/pins, timer/retry compatibility, declaration order and
+private/non-designated/nested/wrong-policy boundaries. 235 Rust tests plus five
+compile-fail doctests, native/Wasm and all relevant artifact/source/stage oracles
+passed. ADR-0031 is accepted after separate delegated self-review; final-head CI
+and expected-head merge remain pending. Next audit precise surviving follow-up
+entry/data lifetime rules before implementing further conditional availability;
+retain exceptional protection/invalidation and full validator/benchmark/
+text/visual/protected editing/actual user gates. No phase exit is claimed.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

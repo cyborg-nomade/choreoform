@@ -163,11 +163,11 @@ def recognize(source, start='program', rules=None):
     tokens = lex(source)
     profile = '0.2.0'
     if start == 'program':
-        if len(tokens) < 3 or tokens[2] not in [('TEXT', '0.2.0'), ('TEXT', '0.3.0')]:
+        if len(tokens) < 3 or tokens[2] not in [('TEXT', '0.2.0'), ('TEXT', '0.3.0'), ('TEXT', '0.4.0')]:
             reject("unsupported source profile")
         profile = tokens[2][1]
     if rules is None:
-        path = 'candidate-a-v0.3.ebnf' if profile == '0.3.0' else 'candidate-a.ebnf'
+        path = 'candidate-a.ebnf' if profile == '0.2.0' else 'candidate-a-v0.3.ebnf'
         rules = load_grammar(ROOT / 'docs/authoring' / path)
     if start not in rules:
         reject("unknown grammar start rule")
@@ -284,7 +284,9 @@ def strict_json(raw):
 
 
 def validate_ledger(ledger):
-    version = '0.2' if ledger.get('profile') == '0.3.0' else '0.1'
+    version = {'0.2.0': '0.1', '0.3.0': '0.2', '0.4.0': '0.3'}.get(ledger.get('profile'))
+    if version is None:
+        reject("unsupported companion profile")
     schema = json.loads((ROOT / f'schemas/authoring/bindings-{version}.schema.json').read_text())
     jsonschema.Draft202012Validator(schema).validate(ledger)
     declarations = {row['id']: row for row in ledger['declarations']}

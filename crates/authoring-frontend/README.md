@@ -4,7 +4,8 @@
 # Bounded near-English authoring frontend
 
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
-profiles 0.2.0 / companion 0.1.0 and 0.3.0 / companion 0.2.0. This prototype produces **candidate IR**, not
+profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0 and 0.4.0 /
+companion 0.3.0. This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
 
 ## API boundaries
@@ -12,9 +13,11 @@ semantic admission, execution or a production authoring editor.
 `check-reconciliation-links` and its Candidate method check surviving declaration
 routes, with bounded non-executable output and explicit host/entry/lifetime
 requirements. The old service example honestly refuses its missing follow-up.
-Direct IR can express the owned child wait; a separately versioned qualified
-endpoint source binding is the immediate follow-up. Old source visibility is
-preserved. See [ADR-0030](../../docs/decisions/0030-reconciliation-declaration-links.md).
+The [0.4.0 profile](../../docs/authoring/profile-v0.4.md) can express the owned
+child wait with a qualified outcome reference only at that scope's designated
+reconciliation endpoint. Old source and general data/outcome visibility stay
+unchanged. See [ADR-0030](../../docs/decisions/0030-reconciliation-declaration-links.md)
+and [ADR-0031](../../docs/decisions/0031-qualified-wait-endpoints.md).
 
 `check-exceptional-availability` and its Candidate method expose conditional
 handler body checks, explicit required ancestor inputs and separate ordinary/

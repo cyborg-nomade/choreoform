@@ -215,10 +215,11 @@ validated, and round-tripped.
   [ADR-0030](docs/decisions/0030-reconciliation-declaration-links.md) checks an
   actual activity scope's surviving follow-up and reachable unique wait declaration.
   Direct-IR positive cases do not supply actual accepted ownership or entry data.
-  **Immediate source follow-up:** publish a new authoring profile for qualified
-  wait-outcome endpoint references inside the designated reconciliation child;
-  preserve old lexical/data privacy and avoid dummy root nodes. This remains
-  required before owned reconciliation source packages are claimed complete.
+  [ADR-0031](docs/decisions/0031-qualified-wait-endpoints.md) and source 0.4.0
+  supply qualified wait-outcome endpoint binding inside the designated direct
+  reconciliation child, preserving old lexical/data privacy without dummy root
+  nodes. This closes that source binding dependency only; actual follow-up entry,
+  protection, handoff, correlation and multiple-obligation lifetime stay open.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

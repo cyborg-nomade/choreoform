@@ -64,7 +64,10 @@ activation/lifetime facts. Its scope index removes repeated full-data scans.
 The subsequent [ADR-0030 declaration slice](../decisions/0030-reconciliation-declaration-links.md)
 checks direct follow-up ownership/entry-to-wait links per capability activity.
 Actual handoff, entry data and multi-obligation lifetime remain unproved. The
-qualified child-endpoint authoring profile is still an explicit immediate dependency.
+qualified child-endpoint dependency is supplied by
+[source 0.4.0 / ADR-0031](../decisions/0031-qualified-wait-endpoints.md), with
+ordinary lexical/data privacy retained. This does not supply the live or entry
+judgments above.
 
 ## Distinct kinds of remaining work
 

@@ -182,9 +182,11 @@ impl<'a> Package<'a> {
         let mut lowering = Lower::new(&self.syntax, &self.ledger, resources)?;
         let root = self.syntax.tree().one("process")?;
         lowering.scope(root, None, 0)?;
+        lowering.resolve_waits()?;
         for (tree, scope) in std::mem::take(&mut lowering.pending_steps) {
             lowering.step(tree, &scope)?;
         }
+        lowering.validate_endpoints()?;
         lowering.finish_inventory()?;
         lowering.dependencies()?;
         let mut body = lowering.body;
@@ -215,6 +217,7 @@ mod expressions;
 mod graph;
 mod nodes;
 mod policies;
+mod wait_endpoints;
 use expressions::ast_reads;
 
 struct Lower<'a, 's> {
@@ -229,6 +232,8 @@ struct Lower<'a, 's> {
     pending_steps: Vec<(&'a Tree, String)>,
     join_selections: BTreeMap<String, Vec<BTreeSet<String>>>,
     wait_owners: BTreeMap<String, String>,
+    pending_waits: Vec<(&'a Tree, String, String)>,
+    exported_endpoints: Vec<(String, String, String, std::ops::Range<usize>)>,
 }
 
 fn set(items: impl IntoIterator<Item = String>) -> Value {
@@ -343,6 +348,8 @@ impl<'a, 's> Lower<'a, 's> {
             pending_steps: Vec::new(),
             join_selections: BTreeMap::new(),
             wait_owners: BTreeMap::new(),
+            pending_waits: Vec::new(),
+            exported_endpoints: Vec::new(),
         })
     }
     fn put(&mut self, section: &str, id: String, record: Value) -> Result<()> {

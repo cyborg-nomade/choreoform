@@ -27,7 +27,7 @@ impl<'a, 's> Lower<'a, 's> {
             json!({"clock":self.ledger.pin(&clock, "clock")?, "basis":self.r(tree, scope, "data", 1)?, "due":self.expression(tree.one("expression")?, scope, true, 0)?, "calendar":calendar, "pauseAuthority":self.r(tree, scope, "actor", 2)?}),
         )
     }
-    pub(super) fn policy(&mut self, tree: &Tree, scope: &str) -> Result<()> {
+    pub(super) fn policy(&mut self, tree: &'a Tree, scope: &str) -> Result<()> {
         let id = self.declare(tree, Some(scope), "policy")?;
         let kind = tree
             .rule
@@ -67,7 +67,7 @@ impl<'a, 's> Lower<'a, 's> {
                     return Err(error("retry-delays", self.syntax.span(tree)));
                 }
                 body["retry"] = json!({"maxAttempts":attempts, "delays":delays, "faults":unique_set(self.names(tree.one("names")?)?)?});
-                if self.syntax.profile() == "0.3.0" {
+                if self.syntax.profile() != "0.2.0" {
                     let bindings = tree.all("retry_binding");
                     if (attempts > 1) != !bindings.is_empty() {
                         return Err(error("retry-binding", self.syntax.span(tree)));
@@ -106,22 +106,15 @@ impl<'a, 's> Lower<'a, 's> {
                 body["match"] = self.expression(tree.one("expression")?, scope, true, 0)?;
                 body["authority"] = self.r(tree, scope, "actor", 0)?.into();
                 body["timer"] = self.timer(tree.one("timer")?, scope)?;
-                let outcomes = tree.all("outcome_reference");
-                let owner = self.r(outcomes[0], scope, "node", 0)?;
-                for outcome in &outcomes {
-                    if self.r(outcome, scope, "node", 0)? != owner {
-                        return Err(error("wait-outcome-owner", self.syntax.span(outcome)));
-                    }
-                }
-                self.wait_owners.insert(id.clone(), owner);
-                body["onObservation"] = self.alias(outcomes[0], scope)?.into();
-                body["onTimer"] = if outcomes.len() == 2 {
-                    self.alias(outcomes[1], scope)?.into()
+                if self.syntax.profile() == "0.4.0" {
+                    self.pending_waits.push((tree, scope.into(), id.clone()));
                 } else {
-                    Value::Null
-                };
-                if body["timer"].is_null() != body["onTimer"].is_null() {
-                    return Err(error("wait-timer-outcome", self.syntax.span(tree)));
+                    let (observation, timer) = self.wait_outcomes(tree, scope, &id, false)?;
+                    body["onObservation"] = observation;
+                    body["onTimer"] = timer;
+                    if body["timer"].is_null() != body["onTimer"].is_null() {
+                        return Err(error("wait-timer-outcome", self.syntax.span(tree)));
+                    }
                 }
             }
             "cancel" => {

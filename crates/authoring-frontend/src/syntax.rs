@@ -509,12 +509,13 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
         {
             Some("0.2.0") => "0.2.0",
             Some("0.3.0") => "0.3.0",
+            Some("0.4.0") => "0.4.0",
             _ => return Err(error("profile", 0..source.len())),
         }
     } else {
         "0.2.0"
     };
-    let grammar = grammar(profile == "0.3.0");
+    let grammar = grammar(profile != "0.2.0");
     let (&name, _) = grammar
         .get_key_value(rule)
         .ok_or_else(|| error("grammar-rule", 0..0))?;
