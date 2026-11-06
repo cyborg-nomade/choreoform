@@ -264,9 +264,11 @@ ordinary/handler/conditional body coverage separate. Seven Rust and four Python
 groups cover parent-value refusals, local initialization, role isolation, nested/
 unused contexts, 401 entries and owned source cycles. 242 Rust tests plus five
 compile-fail doctests, native/Wasm and all relevant artifact/source/stage oracles
-passed. ADR-0032 is accepted after separate delegated self-review; final-head CI
-and expected-head merge remain pending. Next improve actionable source diagnostic
-mapping from existing immutable source maps. Retain exceptional/follow-up
+passed. ADR-0032 is accepted after separate delegated self-review. PR #42 merged
+as `b6dbb9f6c16b68afdc8a9928d7ac68f8bfe90852` after passing final-head CI run
+`42205941353`; CodeRabbit skipped review and there were no unresolved findings.
+Next is the [frozen source diagnostic plan](0033-source-diagnostics-plan.md),
+using existing immutable source maps. Retain exceptional/follow-up
 protection/invalidation/concurrency, richer retained snapshots, actual host and
 full validator/benchmark/text/visual/protected editing/user gates. No phase exit.
 
