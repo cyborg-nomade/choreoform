@@ -211,7 +211,12 @@ validated, and round-tripped.
   the existing partial probe are not substitutes.
 - [ ] Build text → IR → text and visual → IR → visual round trips.
 - [ ] Publish small executable examples and negative examples.
-- [ ] Start a language conformance suite.
+- [x] Start a language conformance suite. The
+  [value-expression corpus](docs/conformance/README.md) begins with 69 exact
+  value/static-refusal/evaluation-fault vectors against production judgments.
+  This marks the start only; complete policy/process/benchmark and cross-form
+  conformance remains part of the open aggregate gate below. See the
+  [consolidated validator gap audit](docs/evaluation/0028-validator-gap-audit.md).
 
 ### Executable IR completion gate (still open)
 

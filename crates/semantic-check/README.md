@@ -3,6 +3,14 @@
 
 # Static contract checks, not executable admission
 
+The [value-expression conformance corpus](../../docs/conformance/README.md)
+exercises exact production static/invariant-evaluation judgments in three Rust
+test groups. Its 69 vectors cover all 29 E1 operations at catalogue level, with
+explicit invariant-context refusals for process read/policy fact. It introduces
+no public process evaluator. The
+[gap audit](../../docs/evaluation/0028-validator-gap-audit.md) records what is
+implemented, conservatively unproved, missing statically or required of a host.
+
 Settlement transfer dependencies include the receiving ancestor's actual
 cancellation/management actor requirement, as required by P6. This does not
 include its children-settlement policy or establish current receiver acceptance.

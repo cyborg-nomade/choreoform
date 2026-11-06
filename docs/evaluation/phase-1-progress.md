@@ -176,10 +176,24 @@ dependencies. It also supplies exact policy-read diagnostic paths and bounded
 closure-copy work. The old omission was reproduced before changes. Six new Rust
 and three Python groups cover direct/source behavior, inheritance, modes, links,
 500 repeated edges and both profile cycles. 201 Rust tests plus five compile-fail
-doctests, native/Wasm and relevant artifact/stage checks passed; dedicated
-final-head CI/merge remain pending. Next consolidate the remaining
-validator/lifecycle obligations and implement verified dependencies. Actual live
+doctests, native/Wasm and relevant artifact/stage checks passed. PR #36 merged as
+`ac6edfa6402c67575de4740c83017e2d97d836bb` after delegated review and passing
+final-head CI run `42172282464`; CodeRabbit skipped automatic review. Next is the
+[validator gap audit and value-expression conformance plan](0028-value-conformance-plan.md).
+Actual live
 acceptance/ownership, full benchmarks, editing/visual/user evidence remain open.
+The consolidated validator/gate audit now distinguishes implemented judgments,
+conservative refusals, missing static analyses, live host facts and product/user
+evidence. The reusable value-expression corpus starts conformance with 69 exact
+vectors (42 values, 16 static refusals, 11 selected faults) in three Rust groups;
+read/fact remain invariant-context refusals. Three Python groups check catalogue
+integrity rather than independently evaluating semantics. 204 Rust tests plus
+five compile-fail doctests, native/Wasm and all relevant artifact/stage oracles
+passed; separate delegated self-review found no open issue. Required final-head
+CI/merge remain pending. Next freeze the P4 handler-selection/invocation proposal,
+including lexical precedence, failed-selection exclusion and bounded cycle
+analysis without guessing emitted faults from retry eligibility. No phase gate
+or full validator is closed, and no Phase 2 engine work is started.
 
 ## Honest exit accounting
 
