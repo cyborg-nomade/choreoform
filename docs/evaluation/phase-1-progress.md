@@ -279,10 +279,23 @@ Four Rust and five Python groups cover actual static/control/lifecycle errors,
 generated records, wrong/missing/global paths and multibyte format/reparse cycles.
 246 Rust tests plus five compile-fail doctests, native/Wasm and all relevant
 artifact/source/stage oracles passed. ADR-0033 is accepted after separate delegated
-self-review; final-head CI/expected-head merge remain pending. Next give still-bare
-scope/data/actor/capability static failures precise record/field paths. Full
+self-review. PR #43 merged as `fa27c712eaabd9b218a8dc699d353f6934836797`
+after passing final-head CI run `42206977773`; CodeRabbit skipped review and there
+were no unresolved findings. Next is the [frozen static-path correction](0033-static-paths-plan.md)
+for still-bare scope/data/actor/capability static failures. Full
 semantic/proof/benchmark/text/visual/protected editing and actual user gates remain
 open; declaration locations do not close full diagnostics or phase exit.
+
+The static-path correction reproduced bare source errors, then added selected
+scope/input, actor, data and capability record/field paths without changing codes
+or capability short-circuit order. Five Rust and three Python groups cover exact
+raw-IR pointers, both core/all source profiles, native source spans, unused/private
+metadata, ancestry and global revision behavior. 251 Rust tests plus five compile-
+fail doctests, native/Wasm and all relevant artifact/source/stage checks passed.
+Separate delegated review found no actionable issue; final-head CI/merge remain
+pending. Next return to full RP-01/03/08 benchmark requirements/gap accounting to
+choose the next substantial slice. The forty historical scenarios and full
+validator/proof/text/visual/protected editing/user gates remain open.
 
 ## Honest exit accounting
 

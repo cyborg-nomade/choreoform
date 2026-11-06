@@ -57,6 +57,14 @@ pub struct Diagnostic {
     pub code: &'static str,
     pub path: String,
 }
+impl Diagnostic {
+    fn at_path(mut self, path: String) -> Self {
+        if self.path.is_empty() {
+            self.path = path;
+        }
+        self
+    }
+}
 pub type Result<T> = std::result::Result<T, Diagnostic>;
 fn err(code: &'static str) -> Diagnostic {
     Diagnostic {

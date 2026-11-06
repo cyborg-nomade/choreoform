@@ -102,7 +102,8 @@ impl Check<'_, '_> {
             self.cells.insert(id.clone(), ty);
         }
         for scope in object(&self.b["scopes"])?.keys() {
-            require(self.ancestors(scope)?.len() <= MAX_DEPTH, "scope-depth")?;
+            (|| require(self.ancestors(scope)?.len() <= MAX_DEPTH, "scope-depth"))()
+                .map_err(|e| e.at_path(format!("/body/scopes/{scope}/parent")))?;
         }
         let mut fanout_parameters: BTreeMap<String, Type> = BTreeMap::new();
         for node in object(&self.b["nodes"])?

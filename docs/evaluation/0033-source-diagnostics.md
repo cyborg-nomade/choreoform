@@ -43,3 +43,7 @@ after edits. Bare semantic scope/data/actor/capability validation errors still
 need more precise IR paths before source lookup can locate them. Address that
 concrete diagnostic gap next, retaining all full validator/exceptional/follow-up
 proof, benchmark, text/visual/protected editing and actual user gates.
+
+The subsequent [static-path correction](0033-static-diagnostic-paths.md) supplies
+selected scope/data/actor/capability field locations while retaining global errors
+where no precise cause is established. It does not close the broader gaps above.

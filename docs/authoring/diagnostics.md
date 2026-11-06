@@ -34,6 +34,12 @@ missing, ambiguous, unsupported or mismatched artifacts. Budget errors mean the
 bounded checker refused work; they are not proof that a process is valid or invalid.
 No successful report grants planning, execution or host authorization.
 
+Static scope policy/outcome/input, actor requirement, data protection/initializer/
+invalidation and capability contract/type/authority/effect failures carry their
+record/field paths. Input/output mismatches retain `capability-type` but point to
+the specific side. Existing deeper paths are preserved. Global structure/revision/
+resource and graph-wide errors remain unlocated when no exact cause is established.
+
 Selected examples, rather than a complete catalogue:
 
 | Code | Meaning and next inspection |

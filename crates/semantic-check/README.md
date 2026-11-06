@@ -3,6 +3,12 @@
 
 # Static contract checks, not executable admission
 
+Static scope/input, actor, data protection/initializer/invalidation and capability
+errors include record/field paths without changing their codes. Existing deeper
+paths are retained; global resource/structure/revision and graph failures are not
+assigned guessed declarations. The frontend maps known paths to original source
+spans; see the [diagnostic guide](../../docs/authoring/diagnostics.md).
+
 `check_reconciliation_availability` follows declaration links with a conditional
 body judgment for each actual reconcile-closure use. It uses zero inherited cells,
 fresh locals and one shared graph/index/budget. Parent input/initializer/result
