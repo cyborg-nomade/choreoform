@@ -644,6 +644,16 @@ Final-head CI/comment audit/signed exact merge remain required. Current checked-
 RP-01 bytes remain unchanged pending separate adoption. No actual fault, retry
 permission, continuation, scenario or phase gate is established.
 
+[PR #56](https://github.com/cyborg-nomade/choreoform/pull/56) merged into draft
+#46 as `bb6ff8a8a61b4f37927786261f50eedea946630b` after final-head CI
+`42302583387` and delegated review/comment audit `6697116702`. CodeRabbit skipped
+the stacked target and supplies no independent evidence; the merge is explicitly
+signed off. ADR-0043 remains pending parent/main integration. Active parent work
+follows the [frozen RP-01 source adoption plan](0043-rp01-adoption-plan.md).
+Add exact synthetic payment-fault-source bytes and regenerate real partial reports;
+keep all old IDs, guards, provider/type/clock/input bytes and snapshot expectations.
+Parent remains draft/unmerged; lifecycle/data/continuation and all phase gates stay open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
