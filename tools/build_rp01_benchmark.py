@@ -4,6 +4,7 @@
 import argparse
 from hashlib import sha256
 import json
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -17,6 +18,54 @@ from benchmarks.rp01_resources import types, providers, clock_resources, encoded
 ROOT = Path(__file__).resolve().parents[1]
 DESTINATION = ROOT / 'docs/benchmarks/rp01'
 LICENSE = b'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n'
+
+
+STAGES = ['check', 'check-control', 'check-protection', 'check-invalidation',
+          'check-concurrency', 'check-timing', 'check-fault-routes',
+          'check-exceptional-availability', 'check-reconciliation-links',
+          'check-reconciliation-availability']
+
+
+def derive(files, registry):
+    """Use the native frontend, retaining actual refusals without admission."""
+    with tempfile.TemporaryDirectory() as directory:
+        base = Path(directory)
+        for name, raw in files.items():
+            (base / name).parent.mkdir(parents=True, exist_ok=True)
+            (base / name).write_bytes(raw)
+        args = []
+        for r in registry:
+            name = r['path'].removeprefix('docs/benchmarks/rp01/')
+            path = base / name if name in files else ROOT / r['path']
+            args.extend(['--resource', r['id'], r['revision'], str(path)])
+        binary = ROOT / 'target/debug/choreoform-authoring-frontend'
+        def invoke(stage):
+            return subprocess.run([str(binary), stage, str(base / 'source.choreo'), str(base / 'bindings.json'), *args], capture_output=True, timeout=30)
+        lowered = invoke('lower')
+        if lowered.returncode != 0:
+            raise ValueError('whole-source lowering refused: ' + lowered.stderr.decode('utf-8'))
+        candidate = json.loads(lowered.stdout)
+        # Stored canonical bytes are the actual IR JCS encoding, without LF.
+        files['candidate.ir.json'] = rfc8785.dumps(candidate)
+        results = []
+        for stage in STAGES:
+            result = invoke(stage)
+            if result.returncode == 0:
+                report = json.loads(result.stdout)
+                if report['executable'] is not False or report['revision'] != candidate['revision']:
+                    raise ValueError('unexpected stage authority/revision')
+                path = 'reports/' + stage + '.json'
+                files[path] = encoded(report)
+                results.append({'stage': stage, 'result': 'passed', 'report': path,
+                                'reportDigest': 'sha256:' + sha256(files[path]).hexdigest()})
+            else:
+                refusal = result.stderr.decode('utf-8').strip()
+                match = re.fullmatch(r'([a-z0-9-]+) at ([^;]*)(?:; source bytes (\d+)\.\.(\d+))?', refusal)
+                if result.stdout or result.returncode != 1 or not match:
+                    raise ValueError('unexpected stage failure: ' + refusal)
+                results.append({'stage': stage, 'result': 'refused', 'code': match[1],
+                                'path': match[2], 'sourceBytes': [int(match[3]), int(match[4])] if match[3] else None})
+        return candidate, results
 
 
 def artifacts():
@@ -68,7 +117,7 @@ def artifacts():
         'path': 'docs/ir/contracts/sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt'})
     canonical_bindings = rfc8785.dumps(package.ledger)
     source_raw = files['source.choreo']
-    frame = b'choreoform-authoring-package:0.4.0\0' + len(source_raw).to_bytes(8, 'big') + source_raw + len(canonical_bindings).to_bytes(8, 'big') + canonical_bindings
+    frame = b'choreoform-authoring-package:0.5.0\0' + len(source_raw).to_bytes(8, 'big') + source_raw + len(canonical_bindings).to_bytes(8, 'big') + canonical_bindings
     requirements = [
         'authenticated-current-principal-role-relationship-and-assignment-binding',
         'exact-input-policy-claim-and-evidence-revisions-before-acceptance',
@@ -84,7 +133,7 @@ def artifacts():
     manifest = {
         'format': 'choreoform-rp01-benchmark-draft', 'version': '0.1.0',
         'status': 'whole-source-draft-awaiting-measured-profile-and-checks', 'executable': False,
-        'sourceProfile': '0.4.0', 'companionVersion': '0.3.0', 'coreProfile': '0.2.0',
+        'sourceProfile': '0.5.0', 'companionVersion': '0.4.0', 'coreProfile': '0.2.0',
         'sourceBytes': len(source_raw), 'measuredTokens': tokens,
         'tokenMeasurement': 'sum of complete-line lexing; not whole-program recognition',
         'sourceDigest': 'sha256:' + sha256(source_raw).hexdigest(),
@@ -101,27 +150,36 @@ def artifacts():
             {'id': 'RP-01-D', 'status': 'Partial', 'declarations': ['withdraw_request', 'manager_review', 'payment_commits', 'payment_request_step']},
         ],
     }
+    candidate, stage_results = derive(files, registry)
+    manifest.update(status='lowered-candidate-awaiting-semantic-dependencies',
+        canonicalIR={'path': 'candidate.ir.json', 'revision': candidate['revision'],
+                     'digest': 'sha256:' + sha256(files['candidate.ir.json']).hexdigest()},
+        semanticStageResults=stage_results)
     files['manifest.json'] = encoded(manifest)
     files['README.md'] = f'''<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 # RP-01 package draft
 
-This generated synthetic whole-source draft is **not lowered, admitted or
-executable**. No canonical IR or semantic stage result is claimed yet. It follows
+This generated synthetic whole-source draft lowers to **candidate IR** but is
+**not semantically admitted or executable**. The manifest records all ten actual
+semantic-stage results/refusals and the exact canonical IR digest. It follows
 the [frozen plan](../../evaluation/0034-rp01-package-plan.md) and preserves all four
 scenarios from the [adopted case](../../representative-processes/01-expense-reimbursement.md).
 
 The source has {len(source_raw)} UTF-8 bytes and {tokens} measured tokens. The
 measurement lexes complete lines independently and is not whole-program admission.
-The unchanged source 0.4 lexer/parser limits and ancestor-policy endpoint binding
-must be checked as actual dependencies before a supported profile is selected.
-No quota or visibility rule has been silently changed to compile this draft.
+Source 0.5 / companion 0.4 is selected explicitly under ADR-0034; core 0.2
+and all prior profiles remain unchanged. Static information flow still refuses
+the provider result capability-envelope mismatch. Granting its intended shared
+capabilities instead reproduces a core-0.2 policy cycle; a separate versioned
+contract dependency is required before semantic progress can be claimed.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 
-Regenerate with `.tools/ir-check/bin/python tools/build_rp01_benchmark.py` at the
-repository root; use `--check` for exact file comparison. Stable IDs are supplied
+Build the pinned native frontend first (`cargo build -p choreoform-authoring-frontend
+--locked`). Regenerate with `.tools/ir-check/bin/python tools/build_rp01_benchmark.py`
+at the repository root; use `--check` for exact file comparison. Stable IDs are supplied
 explicitly by the fixture assembler, independent of readable names. This is not
 a general IR exporter, ordinary authoring editor or automatic source migration.
 
@@ -146,9 +204,8 @@ ownership. The exact `confirmed no effect` retry fault name requires truthful
 authenticated classification; it is not inferred from HTTP errors or spelling.
 
 Each service occurrence owns one capability site and its declared follow-up.
-Root data names root-visible capabilities; ancestor wait policies name their
-actual activity-use follow-ups. Profile 0.4's narrower policy-own-scope source
-binding does not implement that relation. The remaining-owner finish is a P6
+Root data names root-visible capabilities; source 0.5 ancestor wait policies name
+their actual activity-use follow-ups. Older profile 0.4 keeps its narrower binding. The remaining-owner finish is a P6
 closure gate, not proof that transitive obligations vanished. Full lifetime,
 retention, invalidation/conflict/exceptional protection and accepted handoff remain
 open until actual checks and any necessary contract work establish them.
@@ -156,7 +213,8 @@ open until actual checks and any necessary contract work establish them.
 Broadly authorized fictional expense participants share the declared expense
 purpose/envelope; request payloads still separate claim, approval, payment and
 notice information. This is not a demonstrated least-privilege editor or protected
-audience view. Policy and receipt files are fictional input artifacts, not trusted
+audience view. The provider metadata still has no permitted capability recipients,
+so the declared data circle is not yet a semantically consistent policy. Policy and receipt files are fictional input artifacts, not trusted
 execution contracts or real operational evidence. All four scenarios and the
 forty-corpus accounting remain Partial. No user, host/browser/process execution,
 independent review or Phase 1 closure is claimed.
@@ -170,7 +228,7 @@ independent review or Phase 1 closure is claimed.
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
-    parser.add_argument('--probe-profile', action='store_true', help='Reproduce strict native draft/profile refusals; does not admit the source')
+    parser.add_argument('--probe-profile', action='store_true', help='Reproduce historical source 0.4 refusals; does not admit the source')
     args = parser.parse_args()
     files = artifacts()
     if args.check:
@@ -180,13 +238,20 @@ def main():
     else:
         DESTINATION.mkdir(parents=True, exist_ok=True)
         for name, raw in files.items():
+            (DESTINATION / name).parent.mkdir(parents=True, exist_ok=True)
             (DESTINATION / name).write_bytes(raw)
     manifest = json.loads(files['manifest.json'])
     print(f'RP-01 draft: {manifest["sourceBytes"]} bytes, {manifest["measuredTokens"]} measured tokens; no admission claimed.')
     if args.probe_profile:
         args_for_resources = [item for r in manifest['resources'] for item in ['--resource', r['id'], r['revision'], str(ROOT / r['path'])]]
         binary = ROOT / 'target/debug/choreoform-authoring-frontend'
-        strict = subprocess.run([str(binary), 'lower', str(DESTINATION / 'source.choreo'), str(DESTINATION / 'bindings.json'), *args_for_resources], capture_output=True, timeout=20)
+        with tempfile.TemporaryDirectory() as directory:
+            source, bindings = Path(directory) / 'old.choreo', Path(directory) / 'old.json'
+            source.write_text(files['source.choreo'].decode('utf-8').replace('"0.5.0"', '"0.4.0"', 1), encoding='utf-8')
+            ledger = json.loads(files['bindings.json'])
+            ledger.update(profile='0.4.0', version='0.3.0')
+            bindings.write_bytes(encoded(ledger))
+            strict = subprocess.run([str(binary), 'lower', str(source), str(bindings), *args_for_resources], capture_output=True, timeout=20)
         if strict.returncode == 0 or b'tokens' not in strict.stderr or strict.stdout:
             raise SystemExit('expected the current whole-program token refusal, got: ' + strict.stderr.decode('utf-8', errors='replace'))
         _, _, type_pin = types()

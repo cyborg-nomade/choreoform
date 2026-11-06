@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2026 Choreoform contributors
 // SPDX-License-Identifier: MPL-2.0
-//! Draft resource/limit evidence, not whole-package lowering or execution.
+//! Whole-source candidate/resource evidence, never execution authority.
 use choreoform_authoring_frontend::{Ledger, parse};
 use choreoform_ir_probe_core::{Resource, digest};
 use choreoform_semantic_check::{Context, Pin, Resources};
@@ -77,8 +77,22 @@ fn pin(manifest: &Value, suffix: &str) -> Pin {
 fn draft_manifest_and_resource_pins_do_not_claim_program_admission() {
     let m: Value = serde_json::from_slice(MANIFEST).unwrap();
     assert_eq!(m["executable"], false);
-    assert!(m["canonicalIR"].is_null());
-    assert_eq!(m["semanticStageResults"], json!([]));
+    let ir: Value = serde_json::from_slice(include_bytes!(
+        "../../../docs/benchmarks/rp01/candidate.ir.json"
+    ))
+    .unwrap();
+    assert_eq!(m["canonicalIR"]["revision"], ir["revision"]);
+    assert_eq!(
+        m["canonicalIR"]["digest"],
+        digest(include_bytes!(
+            "../../../docs/benchmarks/rp01/candidate.ir.json"
+        ))
+    );
+    let stages = m["semanticStageResults"].as_array().unwrap();
+    assert_eq!(stages.len(), 10);
+    assert!(stages.iter().all(|s| s["result"] == "refused"
+        && s["code"] == "information-flow"
+        && s["path"] == "/body/nodes/checks_request_step"));
     assert_eq!(m["sourceDigest"], digest(SOURCE));
     assert_eq!(m["sourceBytes"], SOURCE.len());
     assert_eq!(m["scenarios"].as_array().unwrap().len(), 4);
@@ -97,7 +111,11 @@ fn draft_manifest_and_resource_pins_do_not_claim_program_admission() {
     assert!(
         m["measuredTokens"].as_u64().unwrap() > choreoform_authoring_frontend::MAX_TOKENS as u64
     );
-    assert_eq!(parse(SOURCE).unwrap_err().code, "tokens");
+    assert_eq!(parse(SOURCE).unwrap().profile(), "0.5.0");
+    let old = std::str::from_utf8(SOURCE)
+        .unwrap()
+        .replacen("\"0.5.0\"", "\"0.4.0\"", 1);
+    assert_eq!(parse(old.as_bytes()).unwrap_err().code, "tokens");
 }
 
 #[test]

@@ -122,16 +122,16 @@ def nominal(type_pin, name):
     return {'kind': 'named', 'contract': type_pin, 'name': name}
 
 
-def protection():
+def protection(capabilities=()):
     return {
         'policy': 'expense_access', 'sensitivity': 'expense',
         'purposes': {'reimbursement': True},
         'participants': {f'{role}_actor': True for role in ['employee', 'manager', 'finance', 'operator', 'clock']},
-        'capabilities': {},
+        'capabilities': {identity: True for identity in capabilities},
     }
 
 
-def providers(type_pin):
+def providers(type_pin, shared=False):
     claim = nominal(type_pin, 'Claim')
     check_output = variant({tag: nominal(type_pin, 'Check evidence') for tag in ['clear', 'correction', 'duplicate', 'rejected']})
     payment_input = record(claim=claim, manager=nominal(type_pin, 'Review evidence'), finance=nominal(type_pin, 'Review evidence'))
@@ -152,7 +152,7 @@ def providers(type_pin):
             'kind': 'provider-contract', 'version': '0.1.0', 'id': identity,
             'input': input_type, 'output': output_type,
             'outcomes': {tag: True for tag in output_type['cases']},
-            'resultProtection': protection(), 'observations': observations,
+            'resultProtection': protection(['checks_capability', 'payment_capability', 'notice_capability'] if shared else ()), 'observations': observations,
             'idempotency': idempotency, 'effectClass': effect,
         }
         raw = encoded(document)

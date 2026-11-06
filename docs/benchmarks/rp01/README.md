@@ -3,21 +3,25 @@
 
 # RP-01 package draft
 
-This generated synthetic whole-source draft is **not lowered, admitted or
-executable**. No canonical IR or semantic stage result is claimed yet. It follows
+This generated synthetic whole-source draft lowers to **candidate IR** but is
+**not semantically admitted or executable**. The manifest records all ten actual
+semantic-stage results/refusals and the exact canonical IR digest. It follows
 the [frozen plan](../../evaluation/0034-rp01-package-plan.md) and preserves all four
 scenarios from the [adopted case](../../representative-processes/01-expense-reimbursement.md).
 
 The source has 52055 UTF-8 bytes and 8945 measured tokens. The
 measurement lexes complete lines independently and is not whole-program admission.
-The unchanged source 0.4 lexer/parser limits and ancestor-policy endpoint binding
-must be checked as actual dependencies before a supported profile is selected.
-No quota or visibility rule has been silently changed to compile this draft.
+Source 0.5 / companion 0.4 is selected explicitly under ADR-0034; core 0.2
+and all prior profiles remain unchanged. Static information flow still refuses
+the provider result capability-envelope mismatch. Granting its intended shared
+capabilities instead reproduces a core-0.2 policy cycle; a separate versioned
+contract dependency is required before semantic progress can be claimed.
 The [draft host contract](host-contract.md) specifies the remaining authority,
 provider normalization, retry classification, correlation and lifetime obligations.
 
-Regenerate with `.tools/ir-check/bin/python tools/build_rp01_benchmark.py` at the
-repository root; use `--check` for exact file comparison. Stable IDs are supplied
+Build the pinned native frontend first (`cargo build -p choreoform-authoring-frontend
+--locked`). Regenerate with `.tools/ir-check/bin/python tools/build_rp01_benchmark.py`
+at the repository root; use `--check` for exact file comparison. Stable IDs are supplied
 explicitly by the fixture assembler, independent of readable names. This is not
 a general IR exporter, ordinary authoring editor or automatic source migration.
 
@@ -42,9 +46,8 @@ ownership. The exact `confirmed no effect` retry fault name requires truthful
 authenticated classification; it is not inferred from HTTP errors or spelling.
 
 Each service occurrence owns one capability site and its declared follow-up.
-Root data names root-visible capabilities; ancestor wait policies name their
-actual activity-use follow-ups. Profile 0.4's narrower policy-own-scope source
-binding does not implement that relation. The remaining-owner finish is a P6
+Root data names root-visible capabilities; source 0.5 ancestor wait policies name
+their actual activity-use follow-ups. Older profile 0.4 keeps its narrower binding. The remaining-owner finish is a P6
 closure gate, not proof that transitive obligations vanished. Full lifetime,
 retention, invalidation/conflict/exceptional protection and accepted handoff remain
 open until actual checks and any necessary contract work establish them.
@@ -52,7 +55,8 @@ open until actual checks and any necessary contract work establish them.
 Broadly authorized fictional expense participants share the declared expense
 purpose/envelope; request payloads still separate claim, approval, payment and
 notice information. This is not a demonstrated least-privilege editor or protected
-audience view. Policy and receipt files are fictional input artifacts, not trusted
+audience view. The provider metadata still has no permitted capability recipients,
+so the declared data circle is not yet a semantically consistent policy. Policy and receipt files are fictional input artifacts, not trusted
 execution contracts or real operational evidence. All four scenarios and the
 forty-corpus accounting remain Partial. No user, host/browser/process execution,
 independent review or Phase 1 closure is claimed.

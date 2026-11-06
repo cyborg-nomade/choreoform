@@ -361,6 +361,18 @@ profile explicitly, fix the contradictory synthetic provider capability envelope
 derive canonical IR and retain actual semantic-stage results/refusals. The
 parent remains a draft and no complete benchmark/phase gate is closed.
 
+The [RP-01 candidate checkpoint](0034-rp01-checkpoint.md) now derives canonical
+IR under explicit source 0.5 / companion 0.4 and records all ten real native stage
+refusals in its manifest. The initial information-flow mismatch remains. Testing
+the intended common provider capability label revealed a genuine core-0.2
+`policy-cycle`, so the package-only fix is not adopted. Five new Python groups
+reproduce both refusals, generation/hashes/formatting, negative pins/roles and four
+scenario mappings; 258 Rust tests plus five doctests, workspace lint and all CI
+Python oracles pass. Active draft #46 remains unmerged. Next freeze a separately
+versioned finite provider-metadata read-closure contract while preserving legacy
+cycle refusal and all real dependency reads; then add explicit authoring support
+and return to remaining package/proof issues. No complete benchmark or phase exit.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

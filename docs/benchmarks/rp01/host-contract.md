@@ -4,7 +4,7 @@
 # RP-01 draft host obligations
 
 **Status:** Synthetic benchmark boundary specification, not implemented support or
-execution authorization. The source is still blocked by its declared profile.
+execution authorization. The source lowers as a candidate but still has explicit semantic/proof refusals.
 Read [package status](README.md), [manifest](manifest.json) and
 [frozen plan](../../evaluation/0034-rp01-package-plan.md).
 

@@ -43,3 +43,21 @@ not ready to merge until its original whole-package obligations are satisfied.
 All forty scenarios remain Partial and external host/participant evidence is not
 generated. Re-run required CI at final heads, separate self-review, inspect all
 comments including CodeRabbit summaries and merge only expected heads.
+
+## Measured amendment before the next semantic implementation
+
+The proposed shared provider capability label was tested on 2026-11-06. It is not
+a valid package-only fix: lower correctly refuses `policy-cycle`, because provider
+result protection adds allowed-capability contract/effect/authority references,
+including its own capability wrapper. Removing those capabilities entirely from
+all downstream data would deny required provider reuse after correction and hide
+control dependencies. Do not claim the original metadata inconsistency resolved.
+
+Keep the original strict core-0.2 synthetic bytes and actual `information-flow`
+refusal in the parent checkpoint. Store candidate IR and all ten stage refusals
+reproducibly; retain old profile probes. Add a small shared-label cycle witness
+with exact resource bytes and genuine old-core refusal. Freeze a separate versioned
+contract proposal that distinguishes metadata dependency closure from recursive
+policy execution before changing either compiler/checker. Preserve old core cycle
+refusal; do not delete edges/reads or admit unsafe recursion. This discovery changes
+the next dependency, not the full-package requirement or scenario status.

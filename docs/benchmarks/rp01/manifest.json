@@ -1,19 +1,124 @@
 {
   "format": "choreoform-rp01-benchmark-draft",
   "version": "0.1.0",
-  "status": "whole-source-draft-awaiting-measured-profile-and-checks",
+  "status": "lowered-candidate-awaiting-semantic-dependencies",
   "executable": false,
-  "sourceProfile": "0.4.0",
-  "companionVersion": "0.3.0",
+  "sourceProfile": "0.5.0",
+  "companionVersion": "0.4.0",
   "coreProfile": "0.2.0",
   "sourceBytes": 52055,
   "measuredTokens": 8945,
   "tokenMeasurement": "sum of complete-line lexing; not whole-program recognition",
-  "sourceDigest": "sha256:c0ae4f567f9fdea7aa0ec31436b1e4734da679f9b78e4f6b5c6b275bf2eab58b",
-  "bindingsDigest": "sha256:a96dd7772315e6dbdcc06799716f1bb22fc00d8589efe2009fc6b7140a0dab4d",
-  "packageDigest": "sha256:a9b725deda5af5d737f0f553e4a44fe2876a84f5dfbb9e88cfcca2fd78da9693",
-  "canonicalIR": null,
-  "semanticStageResults": [],
+  "sourceDigest": "sha256:93e3a59299d66e078e32232dd52247b72f5b53917298aac374da20dba03f38c0",
+  "bindingsDigest": "sha256:50832e73068cd8ac905582d18d030e822c8b5bff502fd7b590053625a521db08",
+  "packageDigest": "sha256:24fdb653a163e40cb5f4919d06849eeae6cfaa7f750c3b6a54b5ccf1c18d7353",
+  "canonicalIR": {
+    "path": "candidate.ir.json",
+    "revision": "sha256:a4f9bb63535a1644fe3327b305029ca7e63490ff64c35a7ba729f70b485a883b",
+    "digest": "sha256:0ed82d7fbaea854863b080db6f8847416b2a9897f2624f5d1c1f26331b67f4a1"
+  },
+  "semanticStageResults": [
+    {
+      "stage": "check",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-control",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-protection",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-invalidation",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-concurrency",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-timing",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-fault-routes",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-exceptional-availability",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-reconciliation-links",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    },
+    {
+      "stage": "check-reconciliation-availability",
+      "result": "refused",
+      "code": "information-flow",
+      "path": "/body/nodes/checks_request_step",
+      "sourceBytes": [
+        20791,
+        21147
+      ]
+    }
+  ],
   "resources": [
     {
       "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
