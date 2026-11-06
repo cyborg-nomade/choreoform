@@ -9,6 +9,14 @@ semantic admission, execution or a production authoring editor.
 
 ## API boundaries
 
+`Candidate::check_fault_routes` and `check-fault-routes` expose conservative P4
+active-context routing after prior timing/ordinary stages. Routing coverage is
+separate from ordinary handler data coverage; a checked routing scope may still
+have uncovered ordinary nodes. The native adapter bounds expanded route metadata
+and final report output to 1 MiB (`report-budget`, no partial output). No fault
+observation, invocation or execution authority is supplied. See
+[ADR-0028](../../docs/decisions/0028-conservative-fault-routing.md).
+
 The explicit [0.3.0 profile](../../docs/authoring/profile-v0.3.md) adds
 `For retries use clock "Elapsed clock", basis "Audit basis".` for multiple
 attempts. One attempt omits it. Grammar, companion, core pin and integrity domain

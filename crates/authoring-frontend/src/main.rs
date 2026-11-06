@@ -42,12 +42,13 @@ fn run() -> Result<String, String> {
                 | "check-invalidation"
                 | "check-concurrency"
                 | "check-timing"
+                | "check-fault-routes"
         )
         || args.len() > 3 + 4 * 254
         || !(args.len() - 3).is_multiple_of(4)
         || (args[0] == "integrity" && args.len() != 3)
     {
-        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|check-timing|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
+        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|check-timing|check-fault-routes|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
     }
     let source = read(std::fs::File::open(&args[1]).map_err(|_| "source-read".to_owned())?)?;
     let bindings = read(std::fs::File::open(&args[2]).map_err(|_| "companion-read".to_owned())?)?;
@@ -158,6 +159,45 @@ fn run() -> Result<String, String> {
         }).collect();
         let retries: Vec<_> = report.retry_uses().iter().map(|r| serde_json::json!({"site":r.site(),"policy":r.policy(),"clock":{"id":r.clock().id,"revision":r.clock().revision},"source":{"id":r.source().id,"revision":r.source().revision},"basis":r.basis(),"authority":r.authority(),"maxAttempts":r.max_attempts(),"delays":r.delays().iter().map(i64::to_string).collect::<Vec<_>>(),"hostRequirements":r.host_requirements()})).collect();
         return Ok(serde_json::json!({"status":"timing-checks-passed","executable":false,"revision":report.revision(),"timerUses":uses,"retryUses":retries,"checkedTimingNodes":report.checked_nodes(),"uncoveredTimingNodes":report.uncovered_nodes(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining()}).to_string());
+    }
+    if args[0] == "check-fault-routes" {
+        let report = candidate
+            .check_fault_routes(&resources)
+            .map_err(|e| format!("{} at {}", e.code, e.path))?;
+        let control = report
+            .timing()
+            .concurrency()
+            .invalidation()
+            .protection()
+            .control();
+        let selection = |s: &choreoform_semantic_check::FaultSelection| serde_json::json!({"owner":s.owner(),"policy":s.policy(),"fault":s.fault(),"handler":s.handler()});
+        let mut remaining = MAX_BYTES;
+        let mut bounded = |value: serde_json::Value| -> Result<serde_json::Value, String> {
+            let size = serde_json::to_vec(&value)
+                .map_err(|_| "report-budget".to_owned())?
+                .len();
+            remaining = remaining
+                .checked_sub(size)
+                .ok_or_else(|| "report-budget".to_owned())?;
+            Ok(value)
+        };
+        let routes:Vec<_> = report.routes().map(|r|serde_json::json!({"originScope":r.origin(),"from":r.from().map(selection),"selected":selection(r.selected())})).map(&mut bounded).collect::<Result<_,_>>()?;
+        let checked: Vec<_> = report
+            .covered_handlers()
+            .map(selection)
+            .map(&mut bounded)
+            .collect::<Result<_, _>>()?;
+        let uncovered: Vec<_> = report
+            .uncovered_handlers()
+            .map(selection)
+            .map(&mut bounded)
+            .collect::<Result<_, _>>()?;
+        let output = serde_json::json!({"status":"fault-route-checks-passed","executable":false,"revision":report.revision(),"faultRoutes":routes,"checkedHandlerSelections":checked,"uncoveredHandlerSelections":uncovered,"checkedFaultScopes":report.checked_scopes(),"uncoveredFaultScopes":report.uncovered_scopes(),"analysisContexts":report.contexts(),"unhandledFaultCases":report.unhandled_cases(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining(),"priorTimingObligations":report.timing().remaining()}).to_string();
+        return if output.len() <= MAX_BYTES {
+            Ok(output)
+        } else {
+            Err("report-budget".into())
+        };
     }
     if args[0] == "format" {
         let (source, companion) = package.formatted().map_err(|e| e.code.to_owned())?;

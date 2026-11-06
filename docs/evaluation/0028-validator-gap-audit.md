@@ -52,6 +52,12 @@ Source references: [semantic-check](../../crates/semantic-check/src/lib.rs),
 [accepted dialect rules](../dialects/README.md). Later pinned clock/calendar/retry
 profiles supplement these rules; earlier frozen artifacts are not reinterpreted.
 
+The subsequent [ADR-0028 routing slice](../decisions/0028-conservative-fault-routing.md)
+adds a bounded active-stack overapproximation for P4 selection/cycle checking.
+It partially addresses the missing graph judgment above; exceptional entry data,
+concurrent fault/handler occurrences and runtime ownership remain unproved. The
+baseline matrix is not retroactively relabeled complete.
+
 ## Distinct kinds of remaining work
 
 Missing static analysis is implementation work: P4 handler-selection/invocation

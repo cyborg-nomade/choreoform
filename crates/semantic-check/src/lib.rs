@@ -8,6 +8,7 @@ mod concurrency;
 mod control;
 mod definition;
 mod expression;
+mod faults;
 mod invalidation;
 mod protection;
 mod resources;
@@ -17,6 +18,7 @@ pub use concurrency::{ConcurrencyReport, check_concurrency};
 pub use control::{ControlReport, check_control};
 pub use definition::{Report, check};
 pub use expression::{Context, Judgment};
+pub use faults::{FaultReport, FaultRoute, FaultSelection, check_fault_routes};
 pub use invalidation::{InvalidationObligation, InvalidationReport, check_invalidation};
 pub use protection::{AccessObligation, ProtectionReport, check_protection};
 pub use resources::{

@@ -203,6 +203,10 @@ validated, and round-tripped.
   closes receiver management-authority reads into transfer policy/node footprints
   and supplies precise read-mismatch paths. Actual receiver acceptance/live
   ownership, exceptional routing and the complete validator still require evidence.
+  [ADR-0028](docs/decisions/0028-conservative-fault-routing.md) adds an indexed
+  conservative handler-selection graph with lexical/active exclusion rules and
+  explicit cycle-unproved refusal. Actual exceptional data, concurrent occurrence
+  lifetime and runtime dispatch/ownership remain separate open judgments.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
 - [ ] Implement complete structural/link/semantic validation of the accepted

@@ -116,6 +116,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::TimingReport> {
         choreoform_semantic_check::check_timing(&self.envelope, resources)
     }
+    /// Check conservative possible handler selection, not initialized handler
+    /// contexts, authenticated faults or runtime dispatch/ownership.
+    pub fn check_fault_routes(
+        &self,
+        resources: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::FaultReport> {
+        choreoform_semantic_check::check_fault_routes(&self.envelope, resources)
+    }
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {
