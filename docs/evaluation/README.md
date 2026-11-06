@@ -16,6 +16,11 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Full benchmark readiness](0034-benchmark-readiness.md) and
+  [current forty-scenario accountability](0034-corpus-accountability.md) relate
+  the implemented slices to complete RP-01/03/08 requirements. All forty remain
+  Partial; no full-package, user, host or new independent-review evidence is claimed.
+
 - [Current Phase 1 checkpoint](phase-1-progress.md) and
   [validator/gate gap audit](0028-validator-gap-audit.md) consolidate current
   delegated merges and remaining obligations. The

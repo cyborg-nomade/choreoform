@@ -292,10 +292,25 @@ or capability short-circuit order. Five Rust and three Python groups cover exact
 raw-IR pointers, both core/all source profiles, native source spans, unused/private
 metadata, ancestry and global revision behavior. 251 Rust tests plus five compile-
 fail doctests, native/Wasm and all relevant artifact/source/stage checks passed.
-Separate delegated review found no actionable issue; final-head CI/merge remain
-pending. Next return to full RP-01/03/08 benchmark requirements/gap accounting to
-choose the next substantial slice. The forty historical scenarios and full
+Separate delegated review found no actionable issue. PR #44 merged as
+`dc529b0a9ce639601661fc0833702786ec663d24` after passing final-head CI run
+`42208252170`; CodeRabbit skipped review and there were no unresolved findings.
+Next is the [frozen full-benchmark readiness audit](0034-benchmark-readiness-plan.md)
+to choose the next substantial implementation slice. The forty historical scenarios and full
 validator/proof/text/visual/protected editing/user gates remain open.
+
+The full benchmark readiness audit now traces all twelve RP-01/03/08 scenarios
+and their whole-case alternatives to current capabilities and concrete gaps.
+It verifies no-output split/repeat/fan-out restrictions and separates result
+aggregation, fault continuation, surviving data and import/protected-view needs
+from isolated checks. A current table retains all forty unique scenarios as
+Partial. Local link/anchor/SPDX/count checks and all six existing authoring-evidence
+groups passed; separate delegated document review found no actionable issue.
+Final-head CI/merge remain pending. Next freeze and implement the full RP-01
+data/resource/whole-graph package, measuring actual source/quota and stage results
+and retaining all four scenarios/alternatives and explicit unsupported boundaries.
+Any necessary contract extension gets its own ADR/version/evidence; no toy review
+is relabeled a full reimbursement package. Full phase gates remain open.
 
 ## Honest exit accounting
 
