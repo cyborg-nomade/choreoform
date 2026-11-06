@@ -286,6 +286,17 @@ for still-bare scope/data/actor/capability static failures. Full
 semantic/proof/benchmark/text/visual/protected editing and actual user gates remain
 open; declaration locations do not close full diagnostics or phase exit.
 
+The static-path correction reproduced bare source errors, then added selected
+scope/input, actor, data and capability record/field paths without changing codes
+or capability short-circuit order. Five Rust and three Python groups cover exact
+raw-IR pointers, both core/all source profiles, native source spans, unused/private
+metadata, ancestry and global revision behavior. 251 Rust tests plus five compile-
+fail doctests, native/Wasm and all relevant artifact/source/stage checks passed.
+Separate delegated review found no actionable issue; final-head CI/merge remain
+pending. Next return to full RP-01/03/08 benchmark requirements/gap accounting to
+choose the next substantial slice. The forty historical scenarios and full
+validator/proof/text/visual/protected editing/user gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

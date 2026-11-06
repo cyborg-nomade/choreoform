@@ -52,3 +52,13 @@ five compile-fail doctests, native/Wasm and all relevant artifact/source/stage
 checks. Separate completed-diff automated self-review found no remaining actionable
 issue. Accepted under delegation; require passing final-head CI/expected-head merge.
 No independent or individual owner review is claimed.
+
+The [static-path correction plan](../evaluation/0033-static-paths-plan.md),
+`eed84c2`, applies this decision to previously bare scope/input, actor, data and
+capability errors, preserving codes, deeper paths and evaluation order. Global
+graph/resource/structure/revision failures retain no guessed location. This is
+diagnostic coverage, not a changed semantic contract or a complete catalogue.
+Its [evidence](../evaluation/0033-static-diagnostic-paths.md) records separate
+delegated automated review and 251 Rust tests plus five compile-fail doctests,
+native/Wasm and relevant artifact/source/stage checks. Final-head CI and expected-
+head merge remain required; no independent or individual owner review is claimed.

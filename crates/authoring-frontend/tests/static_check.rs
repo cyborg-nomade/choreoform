@@ -5,6 +5,8 @@ use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
 use choreoform_semantic_check::{CORE, SEMANTICS, check, check_control, check_protection};
 use serde_json::{Value, json};
 
+#[path = "static/diagnostics.rs"]
+mod diagnostics;
 #[path = "static/settlement.rs"]
 mod settlement;
 

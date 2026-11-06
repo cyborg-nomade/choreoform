@@ -24,60 +24,81 @@ impl Check<'_, '_> {
     }
     pub(super) fn nodes(&mut self) -> Result<()> {
         for (scope, s) in object(&self.b["scopes"])? {
-            require(!names(&s["outcomes"])?.is_empty(), "scope-outcomes")?;
+            (|| require(!names(&s["outcomes"])?.is_empty(), "scope-outcomes"))()
+                .map_err(|e| e.at_path(format!("/body/scopes/{scope}/outcomes")))?;
             for (field, kind) in [
                 ("cancellation", "cancel"),
                 ("faults", "faults"),
                 ("closure", "closure"),
                 ("race", "race"),
             ] {
-                self.policy_kind(scope, &s[field], kind)?;
+                self.policy_kind(scope, &s[field], kind)
+                    .map_err(|e| e.at_path(format!("/body/scopes/{scope}/{field}")))?;
             }
-            for cell in object(&s["inputs"])?.values() {
-                require(
-                    self.b["data"][text(cell)?].get("initial").is_none(),
-                    "input-initializer",
-                )?;
+            for (port, cell) in object(&s["inputs"])? {
+                (|| {
+                    require(
+                        self.b["data"][text(cell)?].get("initial").is_none(),
+                        "input-initializer",
+                    )
+                })()
+                .map_err(|e| e.at_path(format!("/body/scopes/{scope}/inputs/{port}")))?;
             }
         }
         for (id, actor) in object(&self.b["actors"])? {
-            self.actor(text(&actor["scope"])?, &Value::from(id.as_str()))?;
+            (|| self.actor(text(&actor["scope"])?, &Value::from(id.as_str())))()
+                .map_err(|e| e.at_path(format!("/body/actors/{id}/requirement")))?;
         }
         for (id, data) in object(&self.b["data"])? {
             let scope = text(&data["scope"])?;
-            let refs = self.protection(scope, &data["protection"])?;
+            let refs = self
+                .protection(scope, &data["protection"])
+                .map_err(|e| e.at_path(format!("/body/data/{id}/protection")))?;
             self.protection_refs.insert(id.clone(), refs);
             if let Some(initial) = data.get("initial") {
-                require(
-                    self.expr(scope, initial, false)?.ty == self.cells[id],
-                    "initializer-type",
-                )?;
+                (|| {
+                    require(
+                        self.expr(scope, initial, false)?.ty == self.cells[id],
+                        "initializer-type",
+                    )
+                })()
+                .map_err(|e| e.at_path(format!("/body/data/{id}/initial")))?;
             }
             for node in names(&data["invalidates"])? {
                 self.visible(
                     text(&self.b["nodes"][&node]["scope"])?,
                     "data",
                     &Value::from(id.as_str()),
-                )?;
+                )
+                .map_err(|e| e.at_path(format!("/body/data/{id}/invalidates/{node}")))?;
             }
         }
-        for c in object(&self.b["capabilities"])?.values() {
+        for (id, c) in object(&self.b["capabilities"])? {
             let scope = text(&c["scope"])?;
-            let policy = self.policy_kind(scope, &c["contract"], "capability")?;
-            let p = self.resources.provider(&Pin::decode(
-                &self.b["policies"][&policy]["body"]["provider"],
-            )?)?;
-            require(
-                self.wrapped(&c["input"])? == p.input && self.wrapped(&c["output"])? == p.output,
-                "capability-type",
-            )?;
-            self.actor(scope, &c["authority"])?;
-            let effects = self.policy_kind(scope, &c["effects"], "effect")?;
+            let policy = self
+                .policy_kind(scope, &c["contract"], "capability")
+                .map_err(|e| e.at_path(format!("/body/capabilities/{id}/contract")))?;
+            let p = (|| {
+                self.resources.provider(&Pin::decode(
+                    &self.b["policies"][&policy]["body"]["provider"],
+                )?)
+            })()
+            .map_err(|e| e.at_path(format!("/body/capabilities/{id}/contract")))?;
+            (|| require(self.wrapped(&c["input"])? == p.input, "capability-type"))()
+                .map_err(|e| e.at_path(format!("/body/capabilities/{id}/input")))?;
+            (|| require(self.wrapped(&c["output"])? == p.output, "capability-type"))()
+                .map_err(|e| e.at_path(format!("/body/capabilities/{id}/output")))?;
+            self.actor(scope, &c["authority"])
+                .map_err(|e| e.at_path(format!("/body/capabilities/{id}/authority")))?;
+            let effects = self
+                .policy_kind(scope, &c["effects"], "effect")
+                .map_err(|e| e.at_path(format!("/body/capabilities/{id}/effects")))?;
             let effects = &self.b["policies"][&effects]["body"];
             require(
                 effects["class"] == p.effect && effects["idempotency"] == p.idempotency,
                 "capability-effect",
-            )?;
+            )
+            .map_err(|e| e.at_path(format!("/body/capabilities/{id}/effects")))?;
         }
         self.creation_dependencies()?;
         for (id, node) in object(&self.b["nodes"])? {
