@@ -52,6 +52,8 @@ while specifications, guides, and code describe the system as it exists now.
 
 | [0034](0034-benchmark-authoring-profile.md) | Accepted under delegation | Bound full-benchmark source and bind actual-use wait endpoints |
 
+| [0035](0035-provider-metadata-read-closure.md) | Accepted under delegation | Derive finite read closure through provider recipient metadata |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to

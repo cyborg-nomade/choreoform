@@ -55,9 +55,18 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
     for pin in object(&b["dialects"])?.values() {
         let p = Pin::decode(pin)?;
         let contract = (p.id.as_str(), p.revision.as_str());
-        require(contract == CORE || contract == CORE_V2, "dialect-contract")?;
+        require(
+            contract == CORE || contract == CORE_V2 || contract == CORE_V3,
+            "dialect-contract",
+        )?;
         resources.verify(&p)?;
-        if contract == CORE_V2 {
+        if contract == CORE_V3 {
+            resources.verify(&Pin {
+                id: CORE_V2.0.into(),
+                revision: CORE_V2.1.into(),
+            })?;
+        }
+        if contract == CORE_V2 || contract == CORE_V3 {
             resources.verify(&Pin {
                 id: CORE.0.into(),
                 revision: CORE.1.into(),

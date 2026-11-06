@@ -6,6 +6,7 @@ impl Check<'_, '_> {
     pub(super) fn policies(&mut self) -> Result<()> {
         let mut local = BTreeMap::new();
         let mut edges = BTreeMap::new();
+        let mut metadata = BTreeMap::new();
         for (id, record) in object(&self.b["policies"])? {
             let result = self.policy(id, record).map_err(|mut e| {
                 e.path = format!("/body/policies/{id}");
@@ -13,6 +14,41 @@ impl Check<'_, '_> {
             })?;
             local.insert(id.clone(), result.0);
             edges.insert(id.clone(), result.1);
+            metadata.insert(id.clone(), result.2);
+        }
+        if object(&self.b["policies"])?.values().any(|p| {
+            self.b["dialects"][p["dialect"].as_str().expect("checked dialect")]["id"] == CORE_V3.0
+        }) {
+            let graph = local
+                .into_iter()
+                .map(|(id, reads)| {
+                    let eligible = self.b["dialects"][self.b["policies"][&id]["dialect"]
+                        .as_str()
+                        .expect("checked dialect")]["id"]
+                        == CORE_V3.0;
+                    let node = PolicyReadDependencies {
+                        local: reads,
+                        strong: edges.remove(&id).expect("policy edges"),
+                        metadata: metadata.remove(&id).expect("metadata edges"),
+                        metadata_cycles: eligible,
+                    };
+                    (id, node)
+                })
+                .collect();
+            let closure = policy_read_closure(&graph, 1_000_000 - self.resources.budget.work)?;
+            self.resources.budget.charge(closure.work)?;
+            for (id, reads) in closure.reads {
+                self.resources
+                    .budget
+                    .charge(object(&self.b["policies"][&id]["body"]["reads"])?.len() + 1)?;
+                require(
+                    reads == names(&self.b["policies"][&id]["body"]["reads"])?,
+                    "policy-reads",
+                )
+                .map_err(|e| e.at_path(format!("/body/policies/{id}/body/reads")))?;
+                self.policy_reads.insert(id, reads);
+            }
+            return Ok(());
         }
         let mut dependents: BTreeMap<String, Vec<String>> = BTreeMap::new();
         let mut degrees = BTreeMap::new();
@@ -71,7 +107,11 @@ impl Check<'_, '_> {
         }
         require(self.policy_reads.len() == degrees.len(), "policy-cycle")
     }
-    fn policy(&mut self, id: &str, r: &Value) -> Result<(BTreeSet<String>, BTreeSet<String>)> {
+    fn policy(
+        &mut self,
+        id: &str,
+        r: &Value,
+    ) -> Result<(BTreeSet<String>, BTreeSet<String>, BTreeSet<String>)> {
         self.dialect(r)?;
         let scope = text(&r["scope"])?;
         let p = &r["body"];
@@ -109,6 +149,7 @@ impl Check<'_, '_> {
         fields(p, &keys)?;
         let mut reads = BTreeSet::new();
         let mut refs = BTreeSet::new();
+        let mut metadata = BTreeSet::new();
         let mut context = self.context(scope)?;
         let text_facts = |context: &mut Context, names: &[&str]| {
             for key in names {
@@ -142,7 +183,7 @@ impl Check<'_, '_> {
                 predicates.push((&p["permit"], context));
             }
             "capability" => {
-                refs.extend(self.provider_protection(scope, &Pin::decode(&p["provider"])?)?);
+                metadata.extend(self.provider_protection(scope, &Pin::decode(&p["provider"])?)?);
             }
             "effect" => {
                 require(
@@ -159,7 +200,7 @@ impl Check<'_, '_> {
                 name(&p["instructions"])?;
                 refs.insert(self.actor(scope, &p["authority"])?);
                 let retry = &p["retry"];
-                let retry_v2 = self.b["dialects"][text(&r["dialect"])?]["id"] == CORE_V2.0;
+                let retry_v2 = matches!(self.b["dialects"][text(&r["dialect"])?]["id"].as_str(), Some(id) if id == CORE_V2.0 || id == CORE_V3.0);
                 fields(
                     retry,
                     if retry_v2 {
@@ -191,12 +232,13 @@ impl Check<'_, '_> {
                         )?;
                         let clock = self.resources.clock(&Pin::decode(&retry["clock"])?)?;
                         reads.insert(self.visible(scope, "data", &retry["basis"])?);
-                        refs.extend(self.provider_protection(scope, clock.source())?);
+                        metadata.extend(self.provider_protection(scope, clock.source())?);
                     }
                 }
                 let timer = self.timer(scope, &p["timeout"], &context)?;
                 reads.extend(timer.0);
                 refs.extend(timer.1);
+                metadata.extend(timer.2);
                 if !p["compensates"].is_null() {
                     let prior = self.visible(scope, "nodes", &p["compensates"])?;
                     require(
@@ -245,6 +287,7 @@ impl Check<'_, '_> {
                 let timer = self.timer(scope, &p["timer"], &context)?;
                 reads.extend(timer.0);
                 refs.extend(timer.1);
+                metadata.extend(timer.2);
                 text_facts(
                     &mut context,
                     &["principal", "observation", "occurrence", "inputRevision"],
@@ -315,16 +358,19 @@ impl Check<'_, '_> {
             require(j.ty == Type::Boolean, "predicate-type")?;
             reads.extend(j.reads);
         }
-        Ok((reads, refs))
+        if self.b["dialects"][text(&r["dialect"])?]["id"] != CORE_V3.0 {
+            refs.append(&mut metadata);
+        }
+        Ok((reads, refs, metadata))
     }
     fn timer(
         &mut self,
         scope: &str,
         timer: &Value,
         context: &Context,
-    ) -> Result<(BTreeSet<String>, BTreeSet<String>)> {
+    ) -> Result<(BTreeSet<String>, BTreeSet<String>, BTreeSet<String>)> {
         if timer.is_null() {
-            return Ok((BTreeSet::new(), BTreeSet::new()));
+            return Ok((BTreeSet::new(), BTreeSet::new(), BTreeSet::new()));
         }
         fields(
             timer,
@@ -342,9 +388,9 @@ impl Check<'_, '_> {
         require(due.ty == Type::Integer, "timer-due-type")?;
         let mut reads = due.reads;
         reads.insert(self.visible(scope, "data", &timer["basis"])?);
-        let mut refs = self.provider_protection(scope, clock.source())?;
-        refs.insert(self.actor(scope, &timer["pauseAuthority"])?);
-        Ok((reads, refs))
+        let metadata = self.provider_protection(scope, clock.source())?;
+        let refs = BTreeSet::from([self.actor(scope, &timer["pauseAuthority"])?]);
+        Ok((reads, refs, metadata))
     }
     pub(super) fn result_type(&mut self, node: &Value) -> Result<Type> {
         if node["result"].is_null() {

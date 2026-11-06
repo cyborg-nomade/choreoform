@@ -21,6 +21,8 @@ support to the Rust probe, fixture checker or a runtime.
 | `urn:choreoform:calendar-profile:instance-intervals:0.1.0` | [Instance calendar construction](sha256-2ab8a6a78f2829ababa2d023f6743ac82d7a31acbfca1fb7a03340b7c929f35f.txt) | Exact versioned `docs/clocks/instance-calendar-v0.1.md` bytes; ADR-0025 delegated acceptance, effective upon merge |
 | `urn:choreoform:contracts:core-profile:0.2.0` | [Explicit retry clock extension](sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt) | Exact `docs/dialects/core-retry-v0.2.md` bytes; requires the exact 0.1.0 base artifact; ADR-0026 |
 
+| `urn:choreoform:contracts:core-profile:0.3.0` | [Finite provider metadata closure](sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt) | Exact `docs/dialects/core-metadata-v0.3.md` bytes; requires exact 0.2.0/0.1.0 artifacts; ADR-0035, effective on parent/main integration |
+
 Hash every byte, including the original notices and final newline. The local
 `.gitattributes` disables line-ending conversion for these snapshots. The `.txt`
 files preserve the original Markdown verbatim (the suite includes framing); relative links inside them are
