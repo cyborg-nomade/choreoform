@@ -314,6 +314,25 @@ and retaining all four scenarios/alternatives and explicit unsupported boundarie
 Any necessary contract extension gets its own ADR/version/evidence; no toy review
 is relabeled a full reimbursement package. Full phase gates remain open.
 
+RP-01 implementation is in progress under frozen plan `8304be4` on
+`codex/rp01-benchmark-package`. The generated draft has 52,055 source bytes and
+8,945 measured tokens, nine scopes and explicit request/check/review/correction/
+payment/notice/follow-up paths, exact synthetic resources and four scenario maps.
+It is **not lowerable/admitted yet**, with no canonical IR or semantic stage claim.
+The strict current source 0.4 frontend reproduces `tokens`; a separate syntax/
+schema-valid 1,097-token witness reproduces `reference-missing` for an ancestor
+policy naming the actual capability activity's child-owned follow-up endpoint.
+Four targeted Rust groups verify exact nominal/provider/clock metadata and input
+artifact integrity without host authority; native workspace lint passed. A
+provider observation-key collision found by those checks was fixed. Draft
+generation/probes are reproducible with `tools/build_rp01_benchmark.py --check --probe-profile`.
+Next keep this package as an unmerged draft and freeze a separately versioned,
+bounded authoring profile for actual-use endpoint binding and the measured token/
+parser quota need. Preserve old profiles/limits and general data privacy; then
+return to full lowering, semantic/refusal evidence and all RP-01 alternatives.
+Source/IR, full validator/proof, benchmark, visual/protected editing and actual
+user gates remain open. No phase report or Phase 2 boundary has been reached.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

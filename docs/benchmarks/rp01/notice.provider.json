@@ -1,0 +1,111 @@
+{
+  "kind": "provider-contract",
+  "version": "0.1.0",
+  "id": "urn:choreoform:benchmarks:rp01:notice:0.1.0",
+  "input": {
+    "kind": "record",
+    "fields": {
+      "claim ID": {
+        "kind": "text"
+      },
+      "claim revision": {
+        "kind": "text"
+      },
+      "recipient": {
+        "kind": "text"
+      },
+      "disposition": {
+        "kind": "text"
+      },
+      "reasons": {
+        "kind": "list",
+        "element": {
+          "kind": "text"
+        }
+      },
+      "payable reference": {
+        "kind": "option",
+        "element": {
+          "kind": "text"
+        }
+      }
+    }
+  },
+  "output": {
+    "kind": "variant",
+    "cases": {
+      "notified": {
+        "kind": "named",
+        "contract": {
+          "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+          "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+        },
+        "name": "Notice evidence"
+      }
+    }
+  },
+  "outcomes": {
+    "notified": true
+  },
+  "resultProtection": {
+    "policy": "expense_access",
+    "sensitivity": "expense",
+    "purposes": {
+      "reimbursement": true
+    },
+    "participants": {
+      "employee_actor": true,
+      "manager_actor": true,
+      "finance_actor": true,
+      "operator_actor": true,
+      "clock_actor": true
+    },
+    "capabilities": {}
+  },
+  "observations": {
+    "result-notified": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "notified": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Notice evidence"
+          }
+        }
+      },
+      "outcome": "notified"
+    },
+    "acknowledged": {
+      "state": "acknowledged",
+      "result": null,
+      "outcome": null
+    },
+    "rejected": {
+      "state": "rejected",
+      "result": null,
+      "outcome": null
+    },
+    "cancelled": {
+      "state": "cancelled",
+      "result": null,
+      "outcome": null
+    },
+    "unknown": {
+      "state": "unknown",
+      "result": null,
+      "outcome": null
+    },
+    "no-effect": {
+      "state": "no-effect",
+      "result": null,
+      "outcome": null
+    }
+  },
+  "idempotency": "stable-key",
+  "effectClass": "irreversible"
+}

@@ -1,0 +1,264 @@
+{
+  "kind": "provider-contract",
+  "version": "0.1.0",
+  "id": "urn:choreoform:benchmarks:rp01:checks:0.1.0",
+  "input": {
+    "kind": "named",
+    "contract": {
+      "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+      "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+    },
+    "name": "Claim"
+  },
+  "output": {
+    "kind": "variant",
+    "cases": {
+      "clear": {
+        "kind": "named",
+        "contract": {
+          "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+          "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+        },
+        "name": "Check evidence"
+      },
+      "correction": {
+        "kind": "named",
+        "contract": {
+          "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+          "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+        },
+        "name": "Check evidence"
+      },
+      "duplicate": {
+        "kind": "named",
+        "contract": {
+          "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+          "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+        },
+        "name": "Check evidence"
+      },
+      "rejected": {
+        "kind": "named",
+        "contract": {
+          "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+          "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+        },
+        "name": "Check evidence"
+      }
+    }
+  },
+  "outcomes": {
+    "clear": true,
+    "correction": true,
+    "duplicate": true,
+    "rejected": true
+  },
+  "resultProtection": {
+    "policy": "expense_access",
+    "sensitivity": "expense",
+    "purposes": {
+      "reimbursement": true
+    },
+    "participants": {
+      "employee_actor": true,
+      "manager_actor": true,
+      "finance_actor": true,
+      "operator_actor": true,
+      "clock_actor": true
+    },
+    "capabilities": {}
+  },
+  "observations": {
+    "result-clear": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "clear": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "correction": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "duplicate": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "rejected": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          }
+        }
+      },
+      "outcome": "clear"
+    },
+    "result-correction": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "clear": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "correction": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "duplicate": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "rejected": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          }
+        }
+      },
+      "outcome": "correction"
+    },
+    "result-duplicate": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "clear": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "correction": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "duplicate": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "rejected": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          }
+        }
+      },
+      "outcome": "duplicate"
+    },
+    "result-rejected": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "clear": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "correction": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "duplicate": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          },
+          "rejected": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+              "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd"
+            },
+            "name": "Check evidence"
+          }
+        }
+      },
+      "outcome": "rejected"
+    },
+    "acknowledged": {
+      "state": "acknowledged",
+      "result": null,
+      "outcome": null
+    },
+    "rejected": {
+      "state": "rejected",
+      "result": null,
+      "outcome": null
+    },
+    "cancelled": {
+      "state": "cancelled",
+      "result": null,
+      "outcome": null
+    },
+    "unknown": {
+      "state": "unknown",
+      "result": null,
+      "outcome": null
+    },
+    "no-effect": {
+      "state": "no-effect",
+      "result": null,
+      "outcome": null
+    }
+  },
+  "idempotency": "none",
+  "effectClass": "read-only"
+}

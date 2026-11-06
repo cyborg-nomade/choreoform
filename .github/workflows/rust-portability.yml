@@ -47,6 +47,7 @@ jobs:
           cargo build -p choreoform-text-prototype --locked
           .tools/ir-check/bin/python tools/check_text_prototype.py
           cargo build -p choreoform-authoring-frontend --locked
+          .tools/ir-check/bin/python tools/build_rp01_benchmark.py --check --probe-profile
           .tools/ir-check/bin/python tools/check_authoring_frontend.py
           .tools/ir-check/bin/python tools/check_static_contracts.py
           .tools/ir-check/bin/python tools/check_control_availability.py
