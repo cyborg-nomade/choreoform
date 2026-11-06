@@ -151,9 +151,12 @@ metadata/live obligations. Seven new Rust and three Python groups cover version,
 integrity, visibility, dependencies, independent clocks/null results, coverage and
 bounded sharing. ADR-0026 is accepted under delegated automated self-review;
 190 Rust tests plus five compile-fail doctests, native/Wasm and relevant stage/
-artifact oracles passed locally. Required final-head CI/merge remain pending.
-Next is the separately versioned near-English source profile and retry sentence;
-old source/core remain unchanged. No live retry dispatch or phase gate is closed.
+artifact oracles passed locally. PR #34 merged as
+`0eb2b77f0258b8fbe8bc7ec1c23b61cae48a9e43` after recorded delegated review and
+passing final-head CI run `42169819399`; CodeRabbit skipped automatic review.
+Next is the [separately versioned near-English source plan](0027-retry-authoring-plan.md).
+Old source/core remain unchanged. No independent review, live retry dispatch or
+phase gate closure is claimed.
 
 ## Honest exit accounting
 
