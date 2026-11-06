@@ -15,6 +15,8 @@ mod faults;
 mod historical;
 #[path = "control/reconciliation_entry.rs"]
 mod reconciliation_entry;
+#[path = "control/requirements.rs"]
+mod requirements;
 #[path = "control/settlement.rs"]
 mod settlement;
 

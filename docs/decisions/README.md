@@ -58,6 +58,8 @@ while specifications, guides, and code describe the system as it exists now.
 
 | [0037](0037-closed-ordinary-provenance.md) | Accepted under delegation | Separate proved historical origins from live invalidation inputs |
 
+| [0038](0038-invalidation-requirements.md) | Accepted under delegation | Derive advisory ordinary requirements without bypassing strict coverage |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to

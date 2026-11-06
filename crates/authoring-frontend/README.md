@@ -199,6 +199,17 @@ missing coverage or unrepresentable context dependencies, and always remains
 non-executable. It does not withdraw work, undo effects or prove concurrency safe.
 See [ADR-0021](../../docs/decisions/0021-ordinary-invalidation.md).
 
+`invalidation-requirements SOURCE COMPANION` / `Candidate::invalidation_requirements`
+derives ordinary required and missing site/cell links without editing source or
+passing the invalidation stage. It returns a separate `InvalidationRequirements`
+type; native output says `invalidation-requirements-derived`, `advisory:true` and
+`executable:false`. Resources, protection, ancestry and private contexts must still
+be proved; an error returns no partial advice. Unvisited sites are listed separately.
+Even an empty missing set requires `check-invalidation` at the final definition
+revision, followed by later checks and host obligations. `remaining` lists the
+later gates; `requiredNextCheck` explicitly retains strict invalidation checking.
+See [ADR-0038](../../docs/decisions/0038-invalidation-requirements.md).
+
 `check-concurrency SOURCE COMPANION` / `Candidate::check_concurrency` checks the
 conservative ordinary parallel independence subset in
 [ADR-0022](../../docs/decisions/0022-ordinary-concurrency.md). It separates fresh

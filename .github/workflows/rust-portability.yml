@@ -74,4 +74,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_policy_reads.py
           .tools/ir-check/bin/python tools/check_metadata_authoring.py
           .tools/ir-check/bin/python tools/check_closed_provenance.py
+          .tools/ir-check/bin/python tools/check_invalidation_requirements.py
       # Browser execution is a separate manual evidence step, not implied by CI.
