@@ -42,6 +42,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0024](0024-timer-contract-checks.md) | Accepted under delegation | Type supported timers and expose their host obligations |
 | [0025](0025-instance-calendars.md) | Accepted under delegation | Define instance calendar construction and activation obligations |
 | [0026](0026-explicit-retry-clock.md) | Accepted under delegation | Bind retry timing explicitly in a versioned core profile |
+| [0027](0027-explicit-retry-authoring.md) | Accepted under delegation | Express retry clock bindings in a versioned English sentence |
 
 ## When an ADR is required
 

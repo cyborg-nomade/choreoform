@@ -4,10 +4,20 @@
 # Bounded near-English authoring frontend
 
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
-profile 0.2.0 / companion 0.1.0. This prototype produces **candidate IR**, not
+profiles 0.2.0 / companion 0.1.0 and 0.3.0 / companion 0.2.0. This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
 
 ## API boundaries
+
+The explicit [0.3.0 profile](../../docs/authoring/profile-v0.3.md) adds
+`For retries use clock "Elapsed clock", basis "Audit basis".` for multiple
+attempts. One attempt omits it. Grammar, companion, core pin and integrity domain
+are versioned together; mixed packages refuse. `Syntax::profile()` identifies the
+parsed version; fragment parsing keeps the legacy grammar default. The CLI embeds
+both required base/new core artifacts for new packages; library callers supply
+them explicitly. Basis/source protection dependencies are derived. See
+[ADR-0027](../../docs/decisions/0027-explicit-retry-authoring.md) and
+[evidence](../../docs/evaluation/0027-explicit-retry-authoring.md).
 
 - `parse(bytes)` recognizes the checked-in EBNF, retaining original UTF-8 source,
   production tree and half-open byte spans. `parse_fragment` is a syntax-test API.
@@ -58,7 +68,7 @@ using exact-byte readers and transitive dependencies. Nominal literal membership
 is checked by the explicit static stage, not by merely lowering a candidate.
 Only the exact implemented clock/construction profiles are recognized. Timer
 typing/clock flow and host requirements are provided by ADR-0024/0025. Live
-calendar activation and retry-clock bindings remain unproved. Typed decoding does not
+calendar activation and live retry-domain/fault/basis bindings remain unproved. Typed decoding does not
 establish current clock facts, host trust or timer execution authority.
 The historic JSON probe's registry/admission is unchanged.
 
@@ -142,7 +152,7 @@ domain obligations remain; the report is non-executable.
 `check-timing SOURCE COMPANION` / `Candidate::check_timing` adds supported timer
 typing/clock-origin checks and immutable timer uses with required host judgments.
 It includes no observations/current facts or execution authority. Calendar-domain
-and retry-clock bindings remain explicitly unproved. See
+and live retry bindings remain explicitly unproved. See
 [ADR-0024](../../docs/decisions/0024-timer-contract-checks.md).
 
 `check-protection SOURCE COMPANION` / `Candidate::check_protection` adds ordinary

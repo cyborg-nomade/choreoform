@@ -5,6 +5,7 @@ use crate::{MAX_BYTES, MAX_DEPTH, MAX_TOKENS, MAX_WORK, Result, error};
 use std::{collections::BTreeMap, ops::Range, sync::OnceLock};
 
 const GRAMMAR: &str = include_str!("../../../docs/authoring/candidate-a.ebnf");
+const GRAMMAR_V3: &str = include_str!("../../../docs/authoring/candidate-a-v0.3.ebnf");
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Kind {
@@ -52,11 +53,15 @@ impl Tree {
 #[derive(Debug)]
 pub struct Syntax<'a> {
     source: &'a str,
+    profile: &'static str,
     tokens: Vec<Token>,
     tree: Tree,
 }
 
 impl Syntax<'_> {
+    pub fn profile(&self) -> &'static str {
+        self.profile
+    }
     pub fn source(&self) -> &str {
         self.source
     }
@@ -332,10 +337,16 @@ impl Meta {
 }
 
 type Grammar = BTreeMap<&'static str, Pattern>;
-fn grammar() -> &'static Grammar {
+fn grammar(v3: bool) -> &'static Grammar {
     static COMPILED: OnceLock<Grammar> = OnceLock::new();
-    COMPILED.get_or_init(|| {
-        GRAMMAR
+    static COMPILED_V3: OnceLock<Grammar> = OnceLock::new();
+    let (cache, source) = if v3 {
+        (&COMPILED_V3, GRAMMAR_V3)
+    } else {
+        (&COMPILED, GRAMMAR)
+    };
+    cache.get_or_init(|| {
+        source
             .lines()
             .filter(|line| !line.trim().is_empty() && !line.starts_with('#'))
             .map(|line| {
@@ -356,6 +367,7 @@ fn grammar() -> &'static Grammar {
 }
 
 struct Recognizer<'a> {
+    grammar: &'static Grammar,
     tokens: &'a [Token],
     position: usize,
     work: usize,
@@ -363,7 +375,7 @@ struct Recognizer<'a> {
 }
 impl Recognizer<'_> {
     fn rule(&mut self, name: &'static str, depth: usize) -> Result<Option<Tree>> {
-        if let Some(pattern) = grammar().get(name) {
+        if let Some(pattern) = self.grammar.get(name) {
             let start = self.position;
             Ok(self.pattern(pattern, depth)?.map(|children| Tree {
                 rule: name,
@@ -469,7 +481,7 @@ impl Recognizer<'_> {
     }
 }
 
-/// Parse a full profile 0.2.0 source, preserving exact source and UTF-8 spans.
+/// Parse a supported explicitly versioned source, retaining UTF-8 spans.
 pub fn parse(raw: &[u8]) -> Result<Syntax<'_>> {
     parse_fragment(raw, "program")
 }
@@ -489,17 +501,25 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
         return Err(error("bom", 0..3));
     }
     let tokens = lex(source)?;
-    if rule == "program"
-        && !tokens
+    let profile = if rule == "program" {
+        match tokens
             .get(2)
-            .is_some_and(|t| t.kind == Kind::Text && t.value == "0.2.0")
-    {
-        return Err(error("profile", 0..source.len()));
-    }
-    let (&name, _) = grammar()
+            .filter(|t| t.kind == Kind::Text)
+            .map(|t| t.value.as_str())
+        {
+            Some("0.2.0") => "0.2.0",
+            Some("0.3.0") => "0.3.0",
+            _ => return Err(error("profile", 0..source.len())),
+        }
+    } else {
+        "0.2.0"
+    };
+    let grammar = grammar(profile == "0.3.0");
+    let (&name, _) = grammar
         .get_key_value(rule)
         .ok_or_else(|| error("grammar-rule", 0..0))?;
     let mut recognizer = Recognizer {
+        grammar,
         tokens: &tokens,
         position: 0,
         work: 0,
@@ -518,6 +538,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
         })?;
     Ok(Syntax {
         source,
+        profile,
         tokens,
         tree,
     })

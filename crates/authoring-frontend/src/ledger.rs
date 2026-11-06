@@ -144,17 +144,19 @@ impl Ledger {
                 "annotations",
             ],
         )?;
-        if document["format"] != "choreoform-authoring-bindings"
-            || document["version"] != "0.1.0"
-            || document["profile"] != "0.2.0"
-        {
+        if document["format"] != "choreoform-authoring-bindings" {
             return Err(error("ledger-profile", 0..0));
         }
+        let core = match (document["profile"].as_str(), document["version"].as_str()) {
+            (Some("0.2.0"), Some("0.1.0")) => CORE,
+            (Some("0.3.0"), Some("0.2.0")) => choreoform_semantic_check::CORE_V2,
+            _ => return Err(error("ledger-profile", 0..0)),
+        };
         let mut used = BTreeSet::from([id(&document["definition"])?]);
         let root = id(&document["root"])?;
         object(&document["annotations"])?;
         fields(&document["contracts"], &["semantics", "core"])?;
-        for (kind, expected) in [("semantics", SEMANTICS), ("core", CORE)] {
+        for (kind, expected) in [("semantics", SEMANTICS), ("core", core)] {
             let pin = &document["contracts"][kind];
             fields(
                 pin,
@@ -402,6 +404,21 @@ impl Ledger {
     /// Verify exact bytes for every pin using an explicit host registry, without IO.
     /// A matching digest is not proof that a resource's policies can be enforced.
     pub fn verify_resources(&self, supplied: &[Resource<'_>]) -> Result<()> {
+        let verify = |id: &str, revision: &str| {
+            let mut matches = supplied
+                .iter()
+                .filter(|r| r.id == id && r.revision == revision);
+            let resource = matches
+                .next()
+                .ok_or_else(|| error("resource-missing-or-ambiguous", 0..0))?;
+            if matches.next().is_some() {
+                return Err(error("resource-missing-or-ambiguous", 0..0));
+            }
+            if digest(resource.bytes) != revision {
+                return Err(error("resource-digest", 0..0));
+            }
+            Ok(())
+        };
         for pin in self.document["contracts"]
             .as_object()
             .expect("checked contracts")
@@ -412,16 +429,10 @@ impl Ledger {
                     .expect("checked resources"),
             )
         {
-            let matches: Vec<_> = supplied
-                .iter()
-                .filter(|r| pin["contract"] == r.id && pin["digest"] == r.revision)
-                .collect();
-            if matches.len() != 1 {
-                return Err(error("resource-missing-or-ambiguous", 0..0));
-            }
-            if digest(matches[0].bytes) != matches[0].revision {
-                return Err(error("resource-digest", 0..0));
-            }
+            verify(string(&pin["contract"])?, string(&pin["digest"])?)?;
+        }
+        if self.document["profile"] == "0.3.0" {
+            verify(CORE.0, CORE.1)?;
         }
         Ok(())
     }

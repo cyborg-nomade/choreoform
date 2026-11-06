@@ -8,7 +8,8 @@ Core 0.2.0 adds explicit retry clock/basis fields while inheriting the exact cor
 `check_timing().retry_uses()` exposes immutable bindings/attempts/delays and live
 host requirements, never dispatch permission. Distinct retry-clock labels apply
 before work result writes and survive null results alongside timeout/activity
-origins. Source 0.2.0 retains its old payload; a new near-English profile follows.
+origins. Source 0.2.0 retains its old payload; the separate
+[source 0.3.0 profile](../../docs/authoring/profile-v0.3.md) expresses the new binding.
 See [ADR-0026](../../docs/decisions/0026-explicit-retry-clock.md) and
 [evidence](../../docs/evaluation/0026-explicit-retry-clock.md).
 

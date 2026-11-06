@@ -157,6 +157,16 @@ passing final-head CI run `42169819399`; CodeRabbit skipped automatic review.
 Next is the [separately versioned near-English source plan](0027-retry-authoring-plan.md).
 Old source/core remain unchanged. No independent review, live retry dispatch or
 phase gate closure is claimed.
+The authoring follow-up now supplies source 0.3.0 / companion 0.2.0 and an explicit
+English retry binding with exact core 0.2.0 selection. Old grammar/schema/examples
+and package digests remain intact; source/companion mismatches refuse. Five Rust
+and six independent Python groups cover full cycles, identities, version/field/
+reference refusals, dependencies, separate clocks, alias edits and bounds.
+195 Rust tests plus five compile-fail doctests, native/Wasm and all relevant
+artifact/stage oracles passed. ADR-0027 is accepted after delegated automated
+self-review; required final-head CI/merge remain pending. Next audit remaining
+validator/lifecycle judgments and implement the next verified dependency; keep
+full benchmarks, general text/visual export/editing and actual user evidence open.
 
 ## Honest exit accounting
 

@@ -161,9 +161,14 @@ def load_grammar(path=ROOT / 'docs/authoring/candidate-a.ebnf'):
 def recognize(source, start='program', rules=None):
     """All-alternative bounded recognition, never first-match language semantics."""
     tokens = lex(source)
-    if start == 'program' and (len(tokens) < 3 or tokens[2] != ('TEXT', '0.2.0')):
-        reject("unsupported source profile")
-    rules = load_grammar() if rules is None else rules
+    profile = '0.2.0'
+    if start == 'program':
+        if len(tokens) < 3 or tokens[2] not in [('TEXT', '0.2.0'), ('TEXT', '0.3.0')]:
+            reject("unsupported source profile")
+        profile = tokens[2][1]
+    if rules is None:
+        path = 'candidate-a-v0.3.ebnf' if profile == '0.3.0' else 'candidate-a.ebnf'
+        rules = load_grammar(ROOT / 'docs/authoring' / path)
     if start not in rules:
         reject("unknown grammar start rule")
     states = 0
@@ -279,7 +284,8 @@ def strict_json(raw):
 
 
 def validate_ledger(ledger):
-    schema = json.loads((ROOT / 'schemas/authoring/bindings-0.1.schema.json').read_text())
+    version = '0.2' if ledger.get('profile') == '0.3.0' else '0.1'
+    schema = json.loads((ROOT / f'schemas/authoring/bindings-{version}.schema.json').read_text())
     jsonschema.Draft202012Validator(schema).validate(ledger)
     declarations = {row['id']: row for row in ledger['declarations']}
     root = declarations.get(ledger['root'])
@@ -383,7 +389,7 @@ def package_digests(source, companion):
     canonical = rfc8785.dumps(ledger)
     if len(canonical) > MAX_BYTES:
         reject("canonical companion byte limit")
-    framed = b'choreoform-authoring-package:0.2.0\0'
+    framed = f'choreoform-authoring-package:{ledger["profile"]}\0'.encode('ascii')
     framed += len(source).to_bytes(8, 'big') + source
     framed += len(canonical).to_bytes(8, 'big') + canonical
     return {key: 'sha256:' + sha256(value).hexdigest() for key, value in
