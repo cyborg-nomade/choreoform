@@ -5,6 +5,9 @@ use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
 use choreoform_semantic_check::{CORE, SEMANTICS, check, check_control, check_protection};
 use serde_json::{Value, json};
 
+#[path = "static/settlement.rs"]
+mod settlement;
+
 const SOURCE: &[u8] = include_bytes!("../../../docs/authoring/examples/review.choreo");
 const LEDGER: &[u8] = include_bytes!("../../../docs/authoring/examples/review.bindings.json");
 const SERVICE: &[u8] = include_bytes!("../../../docs/authoring/examples/service.choreo");

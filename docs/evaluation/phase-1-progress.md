@@ -170,6 +170,16 @@ CodeRabbit skipped automatic review. The remaining-validator audit identified
 [omitted settlement receiver-authority dependencies](0019-settlement-access-plan.md)
 as the next concrete fix. Keep full lifecycle/validator, benchmarks, general
 text/visual export/editing and actual user evidence open; no phase gate closes.
+The settlement correction now checks/derives receiver management-authority reads,
+retains receiver-context visibility and excludes unrelated child settlement
+dependencies. It also supplies exact policy-read diagnostic paths and bounded
+closure-copy work. The old omission was reproduced before changes. Six new Rust
+and three Python groups cover direct/source behavior, inheritance, modes, links,
+500 repeated edges and both profile cycles. 201 Rust tests plus five compile-fail
+doctests, native/Wasm and relevant artifact/stage checks passed; dedicated
+final-head CI/merge remain pending. Next consolidate the remaining
+validator/lifecycle obligations and implement verified dependencies. Actual live
+acceptance/ownership, full benchmarks, editing/visual/user evidence remain open.
 
 ## Honest exit accounting
 

@@ -5,11 +5,13 @@ use super::*;
 
 impl<'a, 's> Lower<'a, 's> {
     pub(super) fn dependencies(&mut self) -> Result<()> {
+        let mut dependency_work = 0;
         let mut local = BTreeMap::new();
         let mut edges = BTreeMap::new();
         let mut indegrees = BTreeMap::new();
         let mut dependents: BTreeMap<String, Vec<String>> = BTreeMap::new();
         for (id, policy) in self.body["policies"].as_object().expect("map") {
+            creation::charge(&mut dependency_work, 1)?;
             let p = &policy["body"];
             let mut reads = BTreeSet::new();
             let mut refs = BTreeSet::new();
@@ -31,6 +33,23 @@ impl<'a, 's> Lower<'a, 's> {
                 refs.extend(self.protection_policy_refs(provider.protection())?);
             }
             if let Some(actor) = p["authority"].as_str() {
+                refs.insert(
+                    self.body["actors"][actor]["requirement"]
+                        .as_str()
+                        .ok_or_else(|| error("actor-requirement", 0..0))?
+                        .into(),
+                );
+            }
+            if p["kind"] == "settlement" && p["unfinished"] == "transfer" {
+                let owner = p["owner"]
+                    .as_str()
+                    .ok_or_else(|| error("settlement-owner", 0..0))?;
+                let cancellation = self.body["scopes"][owner]["cancellation"]
+                    .as_str()
+                    .ok_or_else(|| error("policy-reference", 0..0))?;
+                let actor = self.body["policies"][cancellation]["body"]["authority"]
+                    .as_str()
+                    .ok_or_else(|| error("actor-requirement", 0..0))?;
                 refs.insert(
                     self.body["actors"][actor]["requirement"]
                         .as_str()
@@ -79,6 +98,7 @@ impl<'a, 's> Lower<'a, 's> {
                 );
             }
             for target in &refs {
+                creation::charge(&mut dependency_work, 1)?;
                 if self.body["policies"].get(target).is_none() {
                     return Err(error("policy-reference", 0..0));
                 }
@@ -100,6 +120,7 @@ impl<'a, 's> Lower<'a, 's> {
         while let Some(id) = ready.pop() {
             let mut reads = local.remove(&id).expect("unique policy visit");
             for dep in &edges[&id] {
+                creation::charge(&mut dependency_work, closure[dep].len() + 1)?;
                 reads.extend(closure[dep].iter().cloned());
             }
             closure.insert(id.clone(), reads);
