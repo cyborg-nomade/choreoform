@@ -894,6 +894,18 @@ remain required. Next reviewed explicit handler entry and incoming source/contro
 contexts, then readable authoring and permitted owned continuation/cutoff/settlement.
 Parent and every scenario/phase/external gate remain draft/open.
 
+[PR #65](https://github.com/cyborg-nomade/choreoform/pull/65) merged into draft
+#46 as `b0b4771698885e50d18a085e8f3441d6ac670715` after required final-head CI
+`42397652401` and delegated review/comment audit `6710847566`. No actionable
+threads/summary findings existed; CodeRabbit skipped and supplies no review evidence.
+Merge explicitly carries the sign-off; ADR-0050 remains pending parent/main
+integration. Inspection for the next entry wire confirmed that existing routes
+retain only scope origins/last active selection, so a complete declared emitting-
+site/full-stack prerequisite is necessary first. Active dependency
+`codex/declared-fault-origins` follows its [frozen plan](0051-declared-fault-origins-plan.md).
+It cannot initialize history or close unsupported source/control/entry gates.
+Parent and every scenario/phase/external gate remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
