@@ -721,6 +721,20 @@ wait capture with source/origin/result and core 0.5 checks, initially timerless,
 without changing current source/package or proving owned recovery storage. All
 scenario/phase and actual host/fault-data/continuation requirements remain open.
 
+
+ADR-0045 raw wait capture is implemented under the frozen plan. IR 0.2/core 0.5
+add explicit timerless source/origin/result declarations with exact provider/type,
+normal visibility, complete writes/access dependencies and source/control P2 flow.
+Five wire/fifteen semantic/one budget Rust groups and seventeen shared vectors /
+four Python groups cover the boundaries; local 352 Rust plus six doctests and
+native/Wasm/all Python checks pass. Immutable equality caching lets 421 captures
+of a 2,500-field type pass the unchanged allowance without caching live authority.
+A raw full-RP-01 captured-local copy passes static/invalidation but still refuses
+stored-recovery lifetime, as required. Current source/package bytes stay unchanged;
+see [evidence](0045-wait-capture.md). Final-head CI/comment audit/signed merge remain
+required. Next freeze explicit source/companion and bounded native disclosure,
+then owned local storage/fault-data/continuation proofs. No phase/scenario gate closes.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

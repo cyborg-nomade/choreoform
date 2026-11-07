@@ -102,14 +102,14 @@ impl Check<'_, '_> {
         }
         self.creation_dependencies()?;
         for (id, node) in object(&self.b["nodes"])? {
-            self.node(node).map_err(|mut e| {
+            self.node(id, node).map_err(|mut e| {
                 e.path = format!("/body/nodes/{id}");
                 e
             })?;
         }
         Ok(())
     }
-    fn node(&mut self, n: &Value) -> Result<()> {
+    fn node(&mut self, site: &str, n: &Value) -> Result<()> {
         let scope = text(&n["scope"])?;
         let kind = text(&n["kind"])?;
         let declared = names(&n["reads"])?;
@@ -163,7 +163,7 @@ impl Check<'_, '_> {
             "activity" => {
                 self.policy_kind(scope, &n["policy"], "work")?;
                 let work = &self.b["policies"][text(&n["policy"])?];
-                if self.b["dialects"][text(&work["dialect"])?]["id"] == CORE_V4.0
+                if matches!(self.b["dialects"][text(&work["dialect"])?]["id"].as_str(),Some(id) if id==CORE_V4.0 || id==CORE_V5.0)
                     && work["body"]["retry"]["maxAttempts"]
                         .as_u64()
                         .is_some_and(|n| n > 1)
@@ -358,6 +358,7 @@ impl Check<'_, '_> {
                             .collect(),
                     "wait-outcomes",
                 )?;
+                policies.extend(self.wait_capture(site, n, &id)?);
             }
             "finish" => require(
                 outcomes.is_empty()
@@ -371,7 +372,9 @@ impl Check<'_, '_> {
                 policies.extend(self.data_protection(text(cell)?)?);
             }
         }
-        if !matches!(kind, "activity" | "compute" | "invoke") {
+        if !matches!(kind, "activity" | "compute" | "invoke")
+            && !(kind == "wait" && !n["capture"].is_null())
+        {
             require(writes.is_empty(), "node-writes")?;
         }
         for p in policies {
@@ -413,7 +416,7 @@ impl Check<'_, '_> {
     }
     /// Direct transfer only: retain sensitivity/policy identity and never widen
     /// access sets. This does not establish whole-process information flow.
-    fn flow(&mut self, source: &Value, target: &Value) -> Result<()> {
+    pub(super) fn flow(&mut self, source: &Value, target: &Value) -> Result<()> {
         self.resources
             .budget
             .charge(crate::protection::transfer_cost(source, target)?)?;

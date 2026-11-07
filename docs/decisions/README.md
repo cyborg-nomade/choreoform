@@ -69,6 +69,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0042](0042-explicit-retry-fault-source-binding.md) | Accepted under delegation | Bind eligible provider fault sources explicitly in core 0.4 without live permission claims |
 | [0043](0043-retry-fault-source-authoring.md) | Accepted under delegation | Explicit source 0.7 retry fault-source clauses and bounded declaration disclosure |
 | [0044](0044-provider-terminal-observation-metadata.md) | Accepted under delegation | Exact declared terminal provider observations, normalized types and protection without wait binding |
+| [0045](0045-explicit-timerless-wait-capture.md) | Accepted under delegation | Versioned IR-0.2/core-0.5 timerless source/origin/result capture with complete static protection and availability boundaries |
 
 ## When an ADR is required
 

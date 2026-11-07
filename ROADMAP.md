@@ -249,6 +249,12 @@ validated, and round-tripped.
   [RP-01 adoption checkpoint](docs/evaluation/0043-rp01-adoption.md) preserves all
   prior guards/IDs and keeps actual fault truth, late-result capture, owned
   continuation and all scenario/phase requirements open.
+  [ADR-0044](docs/decisions/0044-provider-terminal-observation-metadata.md) pins
+  terminal source/type/protection metadata. [ADR-0045](docs/decisions/0045-explicit-timerless-wait-capture.md)
+  adds raw IR 0.2/core 0.5 timerless capture with exact source/origin/result and
+  conditional initialization. Explicit readable source support and bounded native
+  disclosure follow separately; owned recovery storage, fault data/continuation,
+  cutoff/settlement and actual host/scenario evidence remain open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

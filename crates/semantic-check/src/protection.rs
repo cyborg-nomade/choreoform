@@ -110,6 +110,7 @@ enum ProviderRole {
     Activity,
     Clock,
     RetryClock,
+    Capture,
 }
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 struct ProviderSite {

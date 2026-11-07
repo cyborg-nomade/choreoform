@@ -92,3 +92,12 @@ cases and five invalid state/outcome cases. Rust validates actual provider/sourc
 bytes; an independent Python oracle checks declared expectations. These are metadata
 classifications, not observations, accepted facts, wait bindings or executed scenarios;
 see [ADR-0044](../decisions/0044-provider-terminal-observation-metadata.md).
+
+The [wait-capture declaration vectors](../../crates/semantic-check/tests/conformance/wait-capture.json)
+add one exact raw-IR-0.2/core-0.5 definition and seventeen finite version/binding/
+initialization/invalidation cases. Rust checks the actual SDK judgments; an
+independent limited Python schema/type/flow model checks declared expectations.
+These static sets are not runtime values or generated observations. Five structural
+and fifteen semantic integration groups additionally cover version/pin/role/type/
+protection/visibility/timer/nominal/budget boundaries and honest stored-recovery
+refusal; see [ADR-0045](../decisions/0045-explicit-timerless-wait-capture.md).

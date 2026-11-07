@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
+mod capture;
 mod creation;
+pub use capture::DeclaredWaitCapture;
 mod lifecycle;
 mod nodes;
 mod policies;
@@ -13,6 +15,7 @@ pub struct Report {
     revision: String,
     expressions: usize,
     policies: usize,
+    captures: Vec<DeclaredWaitCapture>,
 }
 impl Report {
     pub fn revision(&self) -> &str {
@@ -23,6 +26,10 @@ impl Report {
     }
     pub fn policies(&self) -> usize {
         self.policies
+    }
+    /// Every declared capture, including unvisited sites; no activation/acceptance.
+    pub fn capture_bindings(&self) -> &[DeclaredWaitCapture] {
+        &self.captures
     }
     /// Explicit residual obligations: a static-stage report cannot close these.
     pub fn remaining(&self) -> &'static [&'static str] {
@@ -56,23 +63,38 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         let p = Pin::decode(pin)?;
         let contract = (p.id.as_str(), p.revision.as_str());
         require(
-            contract == CORE || contract == CORE_V2 || contract == CORE_V3 || contract == CORE_V4,
+            contract == CORE
+                || contract == CORE_V2
+                || contract == CORE_V3
+                || contract == CORE_V4
+                || contract == CORE_V5,
             "dialect-contract",
         )?;
         resources.verify(&p)?;
-        if contract == CORE_V4 {
+        if contract == CORE_V5 {
+            require(
+                envelope.document()["version"] == "0.2.0",
+                "capture-wire-version",
+            )?;
+            resources.verify(&Pin {
+                id: CORE_V4.0.into(),
+                revision: CORE_V4.1.into(),
+            })?;
+        }
+        if contract == CORE_V4 || contract == CORE_V5 {
             resources.verify(&Pin {
                 id: CORE_V3.0.into(),
                 revision: CORE_V3.1.into(),
             })?;
         }
-        if contract == CORE_V3 || contract == CORE_V4 {
+        if contract == CORE_V3 || contract == CORE_V4 || contract == CORE_V5 {
             resources.verify(&Pin {
                 id: CORE_V2.0.into(),
                 revision: CORE_V2.1.into(),
             })?;
         }
-        if contract == CORE_V2 || contract == CORE_V3 || contract == CORE_V4 {
+        if contract == CORE_V2 || contract == CORE_V3 || contract == CORE_V4 || contract == CORE_V5
+        {
             resources.verify(&Pin {
                 id: CORE.0.into(),
                 revision: CORE.1.into(),
@@ -88,12 +110,15 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         protection_refs: BTreeMap::new(),
         creation_reads: BTreeMap::new(),
         provider_refs: BTreeMap::new(),
+        captures: Vec::new(),
+        capture_types: BTreeSet::new(),
     };
     c.run()?;
     Ok(Report {
         revision: text(&envelope.document()["revision"])?.into(),
         expressions: c.expressions.len(),
         policies: c.policy_reads.len(),
+        captures: c.capture_bindings(text(&envelope.document()["revision"])?)?,
     })
 }
 struct Check<'a, 'r> {
@@ -105,6 +130,8 @@ struct Check<'a, 'r> {
     protection_refs: BTreeMap<String, BTreeSet<String>>,
     creation_reads: BTreeMap<String, BTreeSet<String>>,
     provider_refs: BTreeMap<String, BTreeMap<Pin, BTreeSet<String>>>,
+    captures: Vec<capture::PendingCapture>,
+    capture_types: BTreeSet<(capture::CaptureTypeSubject, Pin, Pin)>,
 }
 impl Check<'_, '_> {
     fn run(&mut self) -> Result<()> {
