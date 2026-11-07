@@ -710,6 +710,17 @@ Final-head CI/comment audit/signed merge remain required. Next explicit capture
 representation/source protection/availability, then owned storage/fault data /
 continuation; all scenario and phase gates remain open.
 
+[PR #58](https://github.com/cyborg-nomade/choreoform/pull/58) merged into draft
+#46 as `f9f5bdc2b7c00756fddc9514b486bcc18fc4c872` after final-head CI
+`42357073750` and delegated review/comment audit `6704719084`. CodeRabbit skipped
+the stacked target and supplies no review evidence; merge is explicitly signed
+off. ADR-0044 remains pending parent/main integration. Active dependency
+`codex/timerless-wait-capture` follows the
+[frozen raw capture/wire/core plan](0045-wait-capture-plan.md): explicit IR 0.2
+wait capture with source/origin/result and core 0.5 checks, initially timerless,
+without changing current source/package or proving owned recovery storage. All
+scenario/phase and actual host/fault-data/continuation requirements remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
