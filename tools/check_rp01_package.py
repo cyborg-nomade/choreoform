@@ -17,6 +17,7 @@ from benchmarks.rp01_resources import types, providers
 from check_static_contracts import ROOT, run
 from check_metadata_authoring import full as unpatched_rp01, invoke as invoke_unpatched
 from benchmarks.rp01_invalidation import MISSING_LINKS, declare_links
+from benchmarks.rp01_faults import historical_v6, adopt
 
 BASE = ROOT / 'docs/benchmarks/rp01'
 
@@ -35,13 +36,15 @@ class Rp01PackageEvidence(unittest.TestCase):
 
     def test_only_exact_missing_links_change_the_body_and_all_identities_are_preserved(self):
         source, ledger, supplied = baseline = unpatched_rp01(payment_policy_revisions=True)
-        self.assertEqual(json.loads(self.bindings), ledger)
+        hs,hl=historical_v6(self.source.decode(),json.loads(self.bindings))
+        self.assertEqual(hl, ledger)
         old = json.loads(invoke_unpatched(baseline, 'lower').stdout)
         advice = json.loads(invoke_unpatched(baseline, 'invalidation-requirements').stdout)
         missing = {(o['site'], o['cell']) for o in advice['missingInvalidationObligations']}
         self.assertEqual(missing, {(site,cell) for cell, sites in MISSING_LINKS.items() for site in sites})
         self.assertEqual(len(missing),72)
-        before, after = deepcopy(old['body']), deepcopy(self.candidate['body'])
+        historical=json.loads(invoke_unpatched((hs,hl,supplied),'lower').stdout)
+        before, after = deepcopy(old['body']), deepcopy(historical['body'])
         added = set()
         for cell, data in before['data'].items():
             old_links = set(data['invalidates'])
@@ -51,12 +54,42 @@ class Rp01PackageEvidence(unittest.TestCase):
             after['data'][cell]['invalidates'] = data['invalidates']
         self.assertEqual(added,missing)
         self.assertEqual(before,after)
-        self.assertNotEqual(old['revision'],self.candidate['revision'])
-        self.assertEqual(declare_links(source,ledger).encode(),self.source)
+        self.assertNotEqual(old['revision'],historical['revision'])
+        self.assertEqual(declare_links(source,ledger),hs)
         self.assertEqual(len(grammar.lex(self.source.decode())),self.manifest['measuredTokens'])
         # The fixture assembler refuses a changed/already-patched baseline.
         with self.assertRaises(AssertionError):
-            declare_links(self.source.decode(),ledger)
+            declare_links(hs,ledger)
+
+    def test_explicit_fault_source_adoption_changes_only_accepted_versioned_fields(self):
+        current=json.loads(self.bindings)
+        hs,hl=historical_v6(self.source.decode(),current)
+        self.assertEqual((len(hs.encode()),len(grammar.lex(hs))),(56843,9466))
+        supplied=[(r['id'],r['revision'],(ROOT/r['path']).read_bytes()) for r in self.manifest['resources']]
+        prior=json.loads(invoke_unpatched((hs,hl,supplied),'lower').stdout)
+        self.assertEqual(prior['revision'],'sha256:d0bca38fb470cd0485b9a1cc22767182e6276669ca9ca131ac45d7af268269f3')
+        before,after=deepcopy(prior['body']),deepcopy(self.candidate['body'])
+        after['dialects']=before['dialects']
+        source_pin=None
+        for identity,p in after['policies'].items():
+            if p['body']['kind']=='work':
+                binding=p['body']['retry'].pop('faultSource')
+                if identity=='payment_work':self.assertIsNotNone(binding);source_pin=binding
+                else:self.assertIsNone(binding)
+        self.assertEqual(after,before)
+        provider=next({'id':i,'revision':rev} for i,rev,_ in supplied if i=='urn:choreoform:benchmarks:rp01:payment:0.1.0')
+        s,l,raw,pin=adopt(hs,hl,provider)
+        self.assertEqual((s,l),(self.source.decode(),current))
+        self.assertEqual(raw,(BASE/'payment.fault-source.json').read_bytes());self.assertEqual(pin,source_pin)
+        artifact=json.loads(raw);self.assertEqual(artifact['provider'],provider)
+        self.assertEqual(artifact['emissions'],{'confirmed no effect':{'observations':{'no-effect':True},'evidence':'definitive-no-effect'},'provider unknown':{'observations':{'unknown':True},'evidence':'unresolved'}})
+        for stage in STAGES[5:]:
+            report=json.loads((BASE/('reports/'+stage+'.json')).read_bytes());row,=report['retryFaultBindings']
+            self.assertEqual(row['source'],source_pin);self.assertEqual(row['provider'],provider);self.assertEqual(row['revision'],self.candidate['revision'])
+            self.assertEqual(set(row['faults']),{'confirmed no effect'});self.assertTrue(row['hostRequirements'])
+        fault=json.loads((BASE/'reports/check-fault-routes.json').read_bytes())
+        self.assertEqual(fault['unhandledFaultCases'],2*len(fault['checkedFaultScopes']))
+        with self.assertRaises(AssertionError):adopt(s,l,provider)
 
     def test_policy_guard_correction_preserves_all_six_old_clauses_and_only_adds_three(self):
         weak=json.loads(invoke_unpatched(unpatched_rp01(),'lower').stdout)['body']
@@ -118,14 +151,14 @@ class Rp01PackageEvidence(unittest.TestCase):
     def test_shared_result_capability_envelope_reproduces_old_core_policy_cycle(self):
         _, _, type_pin = types()
         _, raw, pin = providers(type_pin, shared=True)['checks']
-        ledger = json.loads(self.bindings)
+        historical_source,ledger = historical_v6(self.source.decode(),json.loads(self.bindings))
         ledger.update(profile='0.5.0', version='0.4.0')
         ledger['contracts']['core'].update(contract='urn:choreoform:contracts:core-profile:0.2.0', digest='sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623')
         next(r for r in ledger['resources'] if r['binding'] == 'checks_provider_binding')['digest'] = pin['revision']
         with tempfile.TemporaryDirectory() as directory:
             base = Path(directory)
             s, b, p = base / 'source.choreo', base / 'bindings.json', base / 'provider.json'
-            s.write_bytes(self.source.replace(b'authoring "0.6.0"', b'authoring "0.5.0"', 1))
+            s.write_text(historical_source.replace('authoring "0.6.0"','authoring "0.5.0"',1))
             b.write_text(json.dumps(ledger), encoding='utf-8')
             p.write_bytes(raw)
             supplied = [(i, pin['revision'], p) if i == pin['id'] else (i, digest, path) for i, digest, path in registry(self.manifest)]
@@ -139,7 +172,7 @@ class Rp01PackageEvidence(unittest.TestCase):
         manager = next(d for d in ledger['declarations'] if d['id'] == 'manager_actor')
         with tempfile.TemporaryDirectory() as directory:
             s, b = Path(directory) / 'source.choreo', Path(directory) / 'bindings.json'
-            s.write_bytes(self.source.replace(b'authoring "0.6.0"', b'authoring "0.8.0"', 1))
+            s.write_bytes(self.source.replace(b'authoring "0.7.0"', b'authoring "0.8.0"', 1))
             b.write_bytes(self.bindings)
             result = run('lower', s, b, registry(self.manifest))
             self.assertNotEqual(result.returncode, 0)

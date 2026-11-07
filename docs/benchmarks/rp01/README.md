@@ -9,10 +9,10 @@ semantic-stage results/refusals and the exact canonical IR digest. It follows
 the [frozen plan](../../evaluation/0034-rp01-package-plan.md) and preserves all four
 scenarios from the [adopted case](../../representative-processes/01-expense-reimbursement.md).
 
-The source has 56843 UTF-8 bytes and 9466 measured tokens. The
+The source has 56874 UTF-8 bytes and 9470 measured tokens. The
 measurement lexes complete lines independently and is not whole-program admission.
-Source 0.6 / companion 0.5 and core 0.3 are selected explicitly under
-ADR-0035/0036; old cores/source profiles remain unchanged. Coherent fictional
+Source 0.7 / companion 0.6 and core 0.4 are selected explicitly under
+ADR-0042/0043; old cores/source profiles remain unchanged. Coherent fictional
 business/clock recipient labels pass static, ordinary control and protection
 checks. The exact 72 missing ordinary invalidation links derived under ADR-0038
 are now declared; strict invalidation also passes. All ten existing partial
@@ -54,11 +54,16 @@ business problem; it does not turn an unknown debit into a rejection. Reconcilia
 uses an explicit terminal-fact envelope (confirmed result or correlated no-effect/
 rejected/cancelled evidence), whose supported authenticated normalization is still
 a required host boundary. A true wait predicate alone grants no correlation or
-ownership. The exact `confirmed no effect` retry fault name requires truthful
+ownership. `payment.fault-source.json` explicitly pins the unchanged payment
+provider and maps confirmed no effect to declared `no-effect` evidence; provider
+unknown maps to unresolved and remains noneligible. All five reports from timing
+onward disclose exact retry bindings and live requirements. Both names contribute
+to abstract unhandled-name accounting; these are declared possibilities, not
+actual faults. The exact `confirmed no effect` retry still requires truthful
 authenticated classification; it is not inferred from HTTP errors or spelling.
 
 Each service occurrence owns one capability site and its declared follow-up.
-Root data names root-visible capabilities; source 0.6 ancestor wait policies name
+Root data names root-visible capabilities; source 0.7 ancestor wait policies name
 their actual activity-use follow-ups. Older profile 0.4 keeps its narrower binding. The remaining-owner finish is a P6
 closure gate, not proof that transitive obligations vanished. Full lifetime,
 retention, invalidation/conflict/exceptional protection and accepted handoff remain

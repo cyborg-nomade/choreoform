@@ -242,6 +242,13 @@ validated, and round-tripped.
   source-derived guard snapshots and corrects missing payment policy-revision
   comparisons. These test-only predicate results are neither authenticated facts
   nor process transitions and do not complete any A–D scenario.
+  [ADR-0041](docs/decisions/0041-provider-fault-source-metadata.md) and
+  [ADR-0042](docs/decisions/0042-explicit-retry-fault-source-binding.md) pin declared
+  provider fault evidence and exact retry-use identity. [ADR-0043](docs/decisions/0043-retry-fault-source-authoring.md)
+  adds explicit source 0.7 authoring and bounded disclosure. The
+  [RP-01 adoption checkpoint](docs/evaluation/0043-rp01-adoption.md) preserves all
+  prior guards/IDs and keeps actual fault truth, late-result capture, owned
+  continuation and all scenario/phase requirements open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

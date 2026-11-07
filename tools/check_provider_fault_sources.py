@@ -79,7 +79,9 @@ class ProviderFaultSourceEvidence(unittest.TestCase):
             doc={'kind':'provider-fault-source','version':'0.1.0','id':'urn:test:extra-fault-source','profile':self.corpus['profile'],'provider':self.corpus['provider'],'emissions':{'confirmed no effect':{'observations':{'no-effect':True},'evidence':'definitive-no-effect'}}}
             raw=(json.dumps(doc)+'\n').encode();source.write_bytes(raw)
             profile=self.corpus['profile'];profile_path=ROOT/'docs/ir/contracts'/(profile['revision'].replace(':','-')+'.txt')
-            supplied += [(doc['id'],'sha256:'+sha256(raw).hexdigest(),source),(profile['id'],profile['revision'],profile_path)]
+            supplied.append((doc['id'],'sha256:'+sha256(raw).hexdigest(),source))
+            if not any(i==profile['id'] and rev==profile['revision'] for i,rev,_ in supplied):
+                supplied.append((profile['id'],profile['revision'],profile_path))
             after=run('check-timing',BASE/'source.choreo',BASE/'bindings.json',supplied)
         self.assertEqual(after.returncode,0,after.stderr)
         self.assertEqual(json.loads(after.stdout),json.loads(before.stdout))

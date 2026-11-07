@@ -11,6 +11,10 @@ const CANDIDATE: &[u8] = include_bytes!("../../../../docs/benchmarks/rp01/candid
 const CATALOGUE: &[u8] = include_bytes!("../../tests/conformance/rp01-guard-snapshots.json");
 const ARTIFACTS: &[(&str, &[u8])] = &[
     (
+        "payment.fault-source.json",
+        include_bytes!("../../../../docs/benchmarks/rp01/payment.fault-source.json"),
+    ),
+    (
         "types.json",
         include_bytes!("../../../../docs/benchmarks/rp01/types.json"),
     ),
@@ -51,6 +55,8 @@ impl Fixture {
             resources.push((doc["id"].as_str().unwrap().to_owned(), digest(raw), *raw));
         }
         for (pin,raw) in [
+            (CORE_V4,include_bytes!("../../../../docs/ir/contracts/sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt").as_slice()),
+            (crate::FAULT_SOURCE_PROFILE,include_bytes!("../../../../docs/ir/contracts/sha256-f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0.txt").as_slice()),
             (SEMANTICS,include_bytes!("../../../../docs/ir/contracts/sha256-0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141.txt").as_slice()),
             (CORE,include_bytes!("../../../../docs/ir/contracts/sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt").as_slice()),
             (CORE_V2,include_bytes!("../../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt").as_slice()),

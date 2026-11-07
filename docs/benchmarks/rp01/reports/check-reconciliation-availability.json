@@ -912,7 +912,42 @@
     "provider-truth-and-exact-obligation-observation-correlation",
     "full-validator-benchmark-cross-form-and-user-evidence"
   ],
-  "revision": "sha256:d0bca38fb470cd0485b9a1cc22767182e6276669ca9ca131ac45d7af268269f3",
+  "retryFaultBindings": [
+    {
+      "faults": {
+        "confirmed no effect": {
+          "evidence": "definitive-no-effect",
+          "observations": [
+            "no-effect"
+          ]
+        }
+      },
+      "hostRequirements": [
+        "supported-authenticated-provider-observation-and-non-engine-fault-emission",
+        "exact-original-attempt-occurrence-request-key-and-input-revision-correlation",
+        "current-work-target-source-protection-and-access-authority",
+        "actual-stable-key-or-definitive-correlated-no-effect-as-required",
+        "accepted-eligible-fault-budget-delay-and-unchanged-basis",
+        "atomic-no-retry-after-success-cancellation-or-ordinary-closure",
+        "owned-reconciliation-deduplication-contradictions-and-terminal-settlement"
+      ],
+      "profile": {
+        "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
+        "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+        "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d"
+      },
+      "revision": "sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4",
+      "site": "payment_request_step",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+        "revision": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223"
+      }
+    }
+  ],
+  "revision": "sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4",
   "status": "reconciliation-availability-checks-passed",
   "uncoveredNodes": []
 }

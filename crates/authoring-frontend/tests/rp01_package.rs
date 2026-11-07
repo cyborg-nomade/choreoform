@@ -18,6 +18,16 @@ const SOURCE: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/source.chore
 const BINDINGS: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/bindings.json");
 const ARTIFACTS: &[(&str, &[u8])] = &[
     (
+        "docs/benchmarks/rp01/payment.fault-source.json",
+        include_bytes!("../../../docs/benchmarks/rp01/payment.fault-source.json"),
+    ),
+    (
+        "docs/ir/contracts/sha256-f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0.txt",
+        include_bytes!(
+            "../../../docs/ir/contracts/sha256-f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0.txt"
+        ),
+    ),
+    (
         "docs/benchmarks/rp01/types.json",
         include_bytes!("../../../docs/benchmarks/rp01/types.json"),
     ),
@@ -113,10 +123,10 @@ fn draft_manifest_and_resource_pins_do_not_claim_program_admission() {
     assert!(
         m["measuredTokens"].as_u64().unwrap() > choreoform_authoring_frontend::MAX_TOKENS as u64
     );
-    assert_eq!(parse(SOURCE).unwrap().profile(), "0.6.0");
+    assert_eq!(parse(SOURCE).unwrap().profile(), "0.7.0");
     let old = std::str::from_utf8(SOURCE)
         .unwrap()
-        .replacen("\"0.6.0\"", "\"0.4.0\"", 1);
+        .replacen("\"0.7.0\"", "\"0.4.0\"", 1);
     assert_eq!(parse(old.as_bytes()).unwrap_err().code, "tokens");
 }
 

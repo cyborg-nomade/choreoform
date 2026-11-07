@@ -654,6 +654,20 @@ Add exact synthetic payment-fault-source bytes and regenerate real partial repor
 keep all old IDs, guards, provider/type/clock/input bytes and snapshot expectations.
 Parent remains draft/unmerged; lifecycle/data/continuation and all phase gates stay open.
 
+RP-01 now explicitly adopts source 0.7/companion 0.6/core 0.4 and the exact
+synthetic payment-fault-source mapping. All ten partial stages pass at revision
+`sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4`;
+source is 56,874 bytes / 9,470 tokens. Five views disclose the exact declared retry
+binding, and routing counts ten abstract unhandled cases, not observed faults.
+Only guard-catalogue revision/digest changes; all 44 cases/46 values/outcomes and
+all old graph IDs/guards/links/provider/type/clock/input bytes remain. The explicit
+historical source-0.6 counterpart retains its exact old revision and negatives.
+See [checkpoint evidence](0043-rp01-adoption.md). Local 320 Rust + six doctests,
+native/Wasm/all Python/exact regeneration probes pass; final-head parent CI/comment
+audit remain required. Parent stays draft/incomplete/unmerged. Next audit/freeze
+wait-result/fault-data and owned continuation needs before adding any fields or
+syntax. All forty scenarios and phase gates stay unresolved.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

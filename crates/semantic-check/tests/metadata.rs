@@ -49,6 +49,16 @@ impl Fixture {
             ));
         }
         f.body["dialects"]["core"] = json!({"id":CORE_V3.0,"revision":CORE_V3.1});
+        // This fixture deliberately tests historical core-0.3 metadata semantics.
+        for p in f.body["policies"].as_object_mut().unwrap().values_mut() {
+            if p["body"]["kind"] == "work" {
+                p["body"]["retry"]
+                    .as_object_mut()
+                    .unwrap()
+                    .remove("faultSource");
+            }
+        }
+
         for key in ["checks", "payment", "notice"] {
             let wrapper = format!("{key}_capability_provider");
             let id = f.body["policies"][&wrapper]["body"]["provider"]["id"]

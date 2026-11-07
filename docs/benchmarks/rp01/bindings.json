@@ -1,7 +1,7 @@
 {
   "format": "choreoform-authoring-bindings",
-  "version": "0.5.0",
-  "profile": "0.6.0",
+  "version": "0.6.0",
+  "profile": "0.7.0",
   "definition": "rp01_benchmark",
   "root": "expense",
   "contracts": {
@@ -10,8 +10,8 @@
       "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
     },
     "core": {
-      "contract": "urn:choreoform:contracts:core-profile:0.3.0",
-      "digest": "sha256:30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3",
+      "contract": "urn:choreoform:contracts:core-profile:0.4.0",
+      "digest": "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3",
       "dialect": "core"
     }
   },
@@ -849,6 +849,12 @@
       "kind": "data",
       "scope": "expense",
       "name": "Recorded notice result"
+    },
+    {
+      "id": "payment_faults_binding",
+      "kind": "resource",
+      "scope": "expense",
+      "name": "Payment faults"
     }
   ],
   "generated": [
@@ -2081,6 +2087,12 @@
       "kind": "clock",
       "contract": "urn:choreoform:benchmarks:rp01:clock:0.1.0",
       "digest": "sha256:32f46c291fe06f4248c44fc0aa802905ad4501c8fbcd714110689d922f832085"
+    },
+    {
+      "binding": "payment_faults_binding",
+      "kind": "provider-fault-source",
+      "contract": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+      "digest": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223"
     }
   ],
   "annotations": {

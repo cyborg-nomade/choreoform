@@ -10,6 +10,8 @@ import tempfile
 import unittest
 
 from check_static_contracts import ROOT,run
+from check_metadata_authoring import invoke
+from benchmarks.rp01_faults import historical_v6
 
 PIN='0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3'
 BASE=ROOT/'docs/benchmarks/rp01'
@@ -76,11 +78,12 @@ class RetryFaultBindingEvidence(unittest.TestCase):
 
     def test_existing_source_core_pair_and_reports_do_not_implicitly_upgrade(self):
         ledger=json.loads((BASE/'bindings.json').read_bytes())
+        source,ledger=historical_v6((BASE/'source.choreo').read_text(),ledger)
+        resources=[(r['id'],r['revision'],(ROOT/r['path']).read_bytes()) for r in json.loads((BASE/'manifest.json').read_bytes())['resources']]
         self.assertEqual((ledger['profile'],ledger['version']),('0.6.0','0.5.0'))
         self.assertEqual(ledger['contracts']['core']['contract'],'urn:choreoform:contracts:core-profile:0.3.0')
-        candidate=json.loads((BASE/'candidate.ir.json').read_bytes())
+        candidate=json.loads(invoke((source,ledger,resources)).stdout)
         self.assertTrue(all('faultSource' not in p['body']['retry'] for p in candidate['body']['policies'].values() if p['body']['kind']=='work'))
-        source=(BASE/'source.choreo').read_text()
         old='For retries use clock "Expense clock", basis "Payable request".'
         self.assertEqual(source.count(old),1)
         source=source.replace(old,old[:-1]+', fault source "Undeclared source".')
@@ -88,7 +91,8 @@ class RetryFaultBindingEvidence(unittest.TestCase):
         supplied=[(r['id'],r['revision'],ROOT/r['path']) for r in m['resources']]
         with tempfile.TemporaryDirectory() as directory:
             p=Path(directory)/'old-profile.choreo';p.write_text(source)
-            result=run('lower',p,BASE/'bindings.json',supplied)
+            b=Path(directory)/'legacy-bindings.json';b.write_text(json.dumps(ledger))
+            result=run('lower',p,b,supplied)
         self.assertNotEqual(result.returncode,0);self.assertIn(b'syntax',result.stderr);self.assertEqual(result.stdout,b'')
 
     def test_licensing_registry_ci_and_no_claim_of_host_or_scenario_execution(self):

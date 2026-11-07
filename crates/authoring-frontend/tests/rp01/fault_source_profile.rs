@@ -30,7 +30,7 @@ impl Fixture {
         for (pin,raw) in [
             (CORE_V4, include_bytes!("../../../../docs/ir/contracts/sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt").as_slice()),
             (FAULT_SOURCE_PROFILE, include_bytes!("../../../../docs/ir/contracts/sha256-f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0.txt").as_slice()),
-        ] { f.artifacts.push((pin.0.into(),pin.1.into(),raw.to_vec())); }
+        ] { if !f.artifacts.iter().any(|(id,rev,_)|id==pin.0 && rev==pin.1) { f.artifacts.push((pin.0.into(),pin.1.into(),raw.to_vec())); } }
         f.ledger["profile"] = "0.7.0".into();
         f.ledger["version"] = "0.6.0".into();
         f.ledger["contracts"]["core"] =
@@ -46,6 +46,14 @@ impl Fixture {
         let rev = digest(&raw);
         f.artifacts
             .push(("urn:test:source-faults".into(), rev.clone(), raw));
+        f.ledger["declarations"]
+            .as_array_mut()
+            .unwrap()
+            .retain(|d| d["id"] != "payment_faults_binding");
+        f.ledger["resources"]
+            .as_array_mut()
+            .unwrap()
+            .retain(|r| r["binding"] != "payment_faults_binding");
         f.ledger["declarations"].as_array_mut().unwrap().push(json!({"id":"payment_faults_binding","kind":"resource","scope":"expense","name":"Payment faults"}));
         f.ledger["resources"].as_array_mut().unwrap().push(json!({"binding":"payment_faults_binding","kind":"provider-fault-source","contract":"urn:test:source-faults","digest":rev}));
         f
@@ -206,6 +214,17 @@ fn strict_pairs_resource_kinds_and_versioned_retry_sentences_refuse() {
         );
     }
     let mut legacy: Value = serde_json::from_slice(BINDINGS).unwrap();
+    legacy["profile"] = "0.6.0".into();
+    legacy["version"] = "0.5.0".into();
+    legacy["contracts"]["core"] = json!({"contract":CORE_V3.0,"digest":CORE_V3.1,"dialect":"core"});
+    legacy["declarations"]
+        .as_array_mut()
+        .unwrap()
+        .retain(|d| d["id"] != "payment_faults_binding");
+    legacy["resources"]
+        .as_array_mut()
+        .unwrap()
+        .retain(|r| r["binding"] != "payment_faults_binding");
     legacy["declarations"].as_array_mut().unwrap().push(
         f.ledger["declarations"]
             .as_array()

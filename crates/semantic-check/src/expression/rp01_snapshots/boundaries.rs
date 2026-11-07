@@ -104,7 +104,11 @@ fn catalogue_revision_selector_and_resource_boundaries_fail_closed() {
     let mut r = Resources::new(&[]).unwrap();
     assert!(evaluate_case(&f, &c, &mut r).is_err());
     let mut supplied = f.supplied();
-    supplied[0].bytes = b"{}";
+    supplied
+        .iter_mut()
+        .find(|r| r.id == "urn:choreoform:benchmarks:rp01:types:0.1.0")
+        .unwrap()
+        .bytes = b"{}";
     let mut r = Resources::new(&supplied).unwrap();
     assert!(matches!(
         evaluate_case(&f, &c, &mut r),

@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 use choreoform_authoring_frontend::{Package, parse_fragment};
-use choreoform_semantic_check::{CORE, CORE_V2, CORE_V3, SEMANTICS};
+use choreoform_semantic_check::{CORE, CORE_V2, CORE_V3, CORE_V4, SEMANTICS};
 
 pub(super) fn source_resources(m: &Value) -> Vec<Resource<'_>> {
     let mut r = resources(m);
     r.extend([
+        Resource { id:CORE_V4.0,revision:CORE_V4.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt") },
         Resource { id:SEMANTICS.0,revision:SEMANTICS.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141.txt") },
         Resource { id:CORE.0,revision:CORE.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58.txt") },
         Resource { id:CORE_V2.0,revision:CORE_V2.1,bytes:include_bytes!("../../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt") },
@@ -29,7 +30,7 @@ fn whole_current_source_lowers_but_cannot_silently_rebind_legacy_metadata_cycles
     let m: Value = serde_json::from_slice(MANIFEST).unwrap();
     let r = source_resources(&m);
     let package = Package::parse(SOURCE, BINDINGS).unwrap();
-    assert_eq!(package.syntax().profile(), "0.6.0");
+    assert_eq!(package.syntax().profile(), "0.7.0");
     assert_eq!(
         package.syntax().token_count(),
         m["measuredTokens"].as_u64().unwrap() as usize
@@ -38,19 +39,29 @@ fn whole_current_source_lowers_but_cannot_silently_rebind_legacy_metadata_cycles
     let c = package.lower(&r).unwrap();
     c.check_protection(&r).unwrap();
     assert_eq!(c.document()["body"]["scopes"].as_object().unwrap().len(), 9);
-    let source = std::str::from_utf8(SOURCE).unwrap().replacen(
-        "authoring \"0.6.0\"",
-        "authoring \"0.5.0\"",
-        1,
-    );
+    let source = std::str::from_utf8(SOURCE)
+        .unwrap()
+        .replace("authoring \"0.7.0\"", "authoring \"0.5.0\"")
+        .replace(", fault source \"Payment faults\"", "");
     let mut l: Value = serde_json::from_slice(BINDINGS).unwrap();
+    l["declarations"]
+        .as_array_mut()
+        .unwrap()
+        .retain(|d| d["id"] != "payment_faults_binding");
+    l["resources"]
+        .as_array_mut()
+        .unwrap()
+        .retain(|r| r["binding"] != "payment_faults_binding");
     l["profile"] = "0.5.0".into();
     l["version"] = "0.4.0".into();
     l["contracts"]["core"]["contract"] = CORE_V2.0.into();
     l["contracts"]["core"]["digest"] = CORE_V2.1.into();
     let bytes = serde_json::to_vec(&l).unwrap();
     let old = Package::parse(source.as_bytes(), &bytes).unwrap();
-    assert_eq!(old.syntax().token_count(), package.syntax().token_count());
+    assert_eq!(
+        old.syntax().token_count() + 4,
+        package.syntax().token_count()
+    );
     assert_eq!(old.lower(&r).unwrap_err().code, "policy-cycle");
 }
 

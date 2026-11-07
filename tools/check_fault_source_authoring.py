@@ -10,6 +10,7 @@ import authoring_probe as grammar
 import check_ir_fixtures as wire
 from check_metadata_authoring import invoke
 from check_static_contracts import ROOT
+from benchmarks.rp01_faults import historical_v6
 
 BASE=ROOT/'docs/benchmarks/rp01'
 CORE4={'contract':'urn:choreoform:contracts:core-profile:0.4.0','digest':'sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3','dialect':'core'}
@@ -96,7 +97,8 @@ class FaultSourceAuthoringEvidence(unittest.TestCase):
 
     def test_format_alias_hash_cycles_and_explicit_revision_change(self):
         p=package();raw=json.loads(invoke(p).stdout)
-        old=json.loads((BASE/'candidate.ir.json').read_bytes());self.assertNotEqual(raw['revision'],old['revision'])
+        hs,hl=historical_v6((BASE/'source.choreo').read_text(),json.loads((BASE/'bindings.json').read_bytes()))
+        old=json.loads(invoke((hs,hl,p[2])).stdout);self.assertNotEqual(raw['revision'],old['revision'])
         actual=json.loads(invoke(p,'integrity').stdout)
         self.assertEqual(actual,grammar.package_digests(p[0].encode(),json.dumps(p[1],separators=(',',':')).encode()))
         formatted=json.loads(invoke(p,'format').stdout)
@@ -121,7 +123,7 @@ class FaultSourceAuthoringEvidence(unittest.TestCase):
         for old in ['0.3.0','0.4.0','0.5.0','0.6.0']:
             with self.assertRaises(ValueError): grammar.recognize(p[0].replace('authoring "0.7.0"',f'authoring "{old}"',1))
         # Ordinary old package reports gain no new field from unrelated metadata.
-        s=(BASE/'source.choreo').read_text();l=json.loads((BASE/'bindings.json').read_bytes())
+        s,l=historical_v6((BASE/'source.choreo').read_text(),json.loads((BASE/'bindings.json').read_bytes()))
         for stage in STAGES:
             result=invoke((s,l,p[2]),stage);self.assertEqual(result.returncode,0,result.stderr)
             self.assertNotIn('retryFaultBindings',json.loads(result.stdout))
