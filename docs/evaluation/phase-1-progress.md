@@ -800,6 +800,17 @@ storage case refuses and checked-in package bytes regenerate unchanged. See
 remain required. Next explicit fault data and permitted owned continuation/cutoff /
 settlement, then separate adoption; every scenario/phase/external gate stays open.
 
+
+[PR #61](https://github.com/cyborg-nomade/choreoform/pull/61) merged into draft
+#46 as `805d507836c3ba23243339522f63f699f075ab7a` after required final-head CI
+`42365524284` and delegated review/comment audit `6705837334`. No actionable
+threads or summary findings existed; CodeRabbit skipped and supplies no review
+evidence. Merge explicitly carries the sign-off; ADR-0047 remains pending parent /
+main integration. Active dependency `codex/fault-entry-contract-audit` follows the
+[frozen fault-entry/emission audit](0048-fault-entry-audit-plan.md) before designing
+fault-data representation. Actual storage/provenance/authority/handoff/cutoff /
+settlement and all scenario/phase gates remain open; parent stays draft/unmerged.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
