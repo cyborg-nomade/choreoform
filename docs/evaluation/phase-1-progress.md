@@ -920,6 +920,18 @@ remain required. Next explicit reviewed handler-entry wire/core and complete sou
 control provenance, then readable entry and permitted continuation/cutoff/settlement.
 Parent and every scenario/phase/external gate stay draft/open.
 
+[PR #66](https://github.com/cyborg-nomade/choreoform/pull/66) merged into draft
+#46 as `5d7443ee1b60ba49fbfc73c643d905294615fa36` after required final-head CI
+`42399025448` and delegated review/comment audit `6711026938`. No actionable
+threads/summary findings existed; CodeRabbit skipped and supplies no review evidence.
+Merge explicitly carries the sign-off; ADR-0051 remains pending parent/main
+integration. Active dependency `codex/typed-handler-entry` follows its
+[frozen raw SDK plan](0052-typed-handler-entry-plan.md): explicit IR 0.3/core 0.7
+read-only local entry and separate complete conditional source/control/access /
+initialization/strict invalidation proof, refusing unsupported incoming contexts.
+No implementation or actual initialization is claimed yet. Parent and every
+scenario/phase/external gate remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
