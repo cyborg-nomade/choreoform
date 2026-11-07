@@ -762,6 +762,18 @@ CI/comment audit/signed merge remain required. Next owned local-storage/lifetime
 proof, then explicit fault data and owned continuation/cutoff/settlement; all
 scenario, complete authoring/validator, external and phase gates stay open.
 
+
+[PR #60](https://github.com/cyborg-nomade/choreoform/pull/60) merged into draft
+#46 as `9a4a39f7bf9fa1080dca697d5f66b94fad3e86cf` after final-head CI
+`42363432443` and delegated review/comment audit `6705563487`. No actionable
+threads/summary findings existed; CodeRabbit skipped and supplies no review
+evidence. Merge is explicitly signed off; ADR-0046 remains pending parent/main
+integration. Active dependency `codex/owned-local-followups` follows the
+[frozen conditional local-storage plan](0047-owned-local-followups-plan.md).
+Require zero inherited values, complete conditional protection/invalidation and
+bounded separate evidence before widening the current lifetime refusal. No actual
+ownership, fault data, continuation or phase/scenario gate is closed.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
