@@ -822,6 +822,17 @@ protection and handler-local entry representation with conditional initializatio
 strict invalidation. Owned continuation/cutoff/all-settlement stays separate.
 Final-head CI/comment audit/signed merge remain required; all phase gates stay open.
 
+
+[PR #62](https://github.com/cyborg-nomade/choreoform/pull/62) merged into draft
+#46 as `a9b08627a3f9db54b69b70fc47228ec4d0918307` after required final-head CI
+`42366303371` and delegated review/comment audit `6705961928`. CodeRabbit skipped
+and supplies no review evidence; no actionable threads/summary findings existed.
+Merge explicitly carries the sign-off. Active dependency
+`codex/general-fault-source-binding` follows the
+[frozen raw core plan](0048-general-fault-source-plan.md): independent declared
+provider emission sources, with no fault history/data/receipt or current authority.
+Parent stays draft/incomplete; all actual host/scenario/phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
