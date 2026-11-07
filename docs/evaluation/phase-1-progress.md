@@ -698,6 +698,18 @@ Establish exact declared terminal source/type/protection premises without bindin
 existing waits or changing source/core/wire/package semantics. Capture, owned
 storage, fault data/continuation, all scenario and phase gates remain open.
 
+ADR-0044 terminal-observation metadata is implemented under the frozen plan and
+sharing refinement. Exact provider states derive only present terminal tags/type
+and source protection; unknown/acknowledged labels stay nonterminal. Seven Rust /
+three internal budget groups plus twelve vectors and four Python groups cover
+pins, nominal identity, classification, sharing/copy bounds and no implicit binding.
+225 distinct source aliases share one exact provider/profile schema. Local 331
+Rust + six doctests and native/Wasm/all Python checks pass; current package bytes
+and reports regenerate unchanged. See [evidence](0044-terminal-observation-source.md).
+Final-head CI/comment audit/signed merge remain required. Next explicit capture
+representation/source protection/availability, then owned storage/fault data /
+continuation; all scenario and phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

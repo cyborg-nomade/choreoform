@@ -1,0 +1,177 @@
+{
+  "format": "choreoform-terminal-source-vectors",
+  "version": "0.1.0",
+  "profile": {
+    "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+    "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+  },
+  "cases": [
+    {
+      "id": "success_only",
+      "states": {
+        "done": "succeeded"
+      },
+      "expect": {
+        "terminal": {
+          "done": "confirmed"
+        },
+        "cases": [
+          "confirmed"
+        ]
+      }
+    },
+    {
+      "id": "all_states",
+      "states": {
+        "done": "succeeded",
+        "ack": "acknowledged",
+        "uncertain": "unknown",
+        "refusal": "rejected",
+        "withdrawn": "cancelled",
+        "absent": "no-effect"
+      },
+      "expect": {
+        "terminal": {
+          "done": "confirmed",
+          "refusal": "rejected",
+          "withdrawn": "cancelled",
+          "absent": "noeffect"
+        },
+        "cases": [
+          "cancelled",
+          "confirmed",
+          "noeffect",
+          "rejected"
+        ]
+      }
+    },
+    {
+      "id": "safe_names_unknown",
+      "states": {
+        "done": "succeeded",
+        "paid": "unknown",
+        "confirmed no effect": "unknown",
+        "settled": "acknowledged"
+      },
+      "expect": {
+        "terminal": {
+          "done": "confirmed"
+        },
+        "cases": [
+          "confirmed"
+        ]
+      }
+    },
+    {
+      "id": "unknown_name_success",
+      "states": {
+        "unknown": "succeeded"
+      },
+      "expect": {
+        "terminal": {
+          "unknown": "confirmed"
+        },
+        "cases": [
+          "confirmed"
+        ]
+      }
+    },
+    {
+      "id": "multiple_successes",
+      "states": {
+        "a": "succeeded",
+        "b": "succeeded"
+      },
+      "expect": {
+        "terminal": {
+          "a": "confirmed",
+          "b": "confirmed"
+        },
+        "cases": [
+          "confirmed"
+        ]
+      }
+    },
+    {
+      "id": "unicode_distinct",
+      "states": {
+        "done": "succeeded",
+        "é": "no-effect",
+        "é": "cancelled"
+      },
+      "expect": {
+        "terminal": {
+          "done": "confirmed",
+          "é": "noeffect",
+          "é": "cancelled"
+        },
+        "cases": [
+          "cancelled",
+          "confirmed",
+          "noeffect"
+        ]
+      }
+    },
+    {
+      "id": "business_problem_success",
+      "states": {
+        "business problem": "succeeded"
+      },
+      "expect": {
+        "terminal": {
+          "business problem": "confirmed"
+        },
+        "cases": [
+          "confirmed"
+        ]
+      }
+    },
+    {
+      "id": "only_unknown_not_valid_provider",
+      "states": {
+        "pending": "unknown"
+      },
+      "expect": {
+        "code": "provider-outcomes"
+      }
+    },
+    {
+      "id": "only_ack_not_valid_provider",
+      "states": {
+        "accepted": "acknowledged"
+      },
+      "expect": {
+        "code": "provider-outcomes"
+      }
+    },
+    {
+      "id": "unknown_state",
+      "states": {
+        "done": "succeeded",
+        "x": "paid"
+      },
+      "expect": {
+        "code": "provider-observation"
+      }
+    },
+    {
+      "id": "state_alias",
+      "states": {
+        "done": "succeeded",
+        "x": "noeffect"
+      },
+      "expect": {
+        "code": "provider-observation"
+      }
+    },
+    {
+      "id": "state_case_sensitive",
+      "states": {
+        "done": "Succeeded"
+      },
+      "expect": {
+        "code": "provider-observation"
+      }
+    }
+  ]
+}
