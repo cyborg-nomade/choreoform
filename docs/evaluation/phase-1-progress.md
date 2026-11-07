@@ -668,6 +668,25 @@ audit remain required. Parent stays draft/incomplete/unmerged. Next audit/freeze
 wait-result/fault-data and owned continuation needs before adding any fields or
 syntax. All forty scenarios and phase gates stay unresolved.
 
+Draft #46 adoption checkpoint `a92e472e5f026474277aa8dd25ef32cc0b8ae386` passed
+required final-head CI `42355306461`. Parent comment audit found no unresolved
+threads or actionable summary finding; CodeRabbit skipped the draft and supplies
+no evidence. Delegated checkpoint review is comment `6704458877`. The parent remains
+draft/incomplete/unmerged. Active dependency `codex/late-observation-contract-audit`
+follows the [frozen lifecycle audit plan](0044-late-observation-audit-plan.md):
+resolve explicit wait capture versus fault data/owned continuation requirements
+before adding a versioned field or grammar. All scenario/phase gates remain open.
+
+The [late-observation/continuation audit](0044-late-observation-contract-audit.md)
+records actual capture-syntax, ordinary-fact leakage, local recovery storage,
+cross-scope flow, handler and raw closed-wire probes. One Rust/five Python groups
+preserve the boundaries; no product contract/package changes. Capture needs both
+an explicit admitted wire/policy representation and observation source/protection
+premises; a type/target label alone is insufficient. Recommended next dependency:
+exact provider terminal-observation metadata/reader, followed by separately reviewed
+capture, owned-storage and fault-data/continuation contracts. Audit final-head
+CI/comment review/signed merge remain required. No scenario/phase gate closes.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
