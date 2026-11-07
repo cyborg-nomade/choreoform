@@ -822,6 +822,32 @@ protection and handler-local entry representation with conditional initializatio
 strict invalidation. Owned continuation/cutoff/all-settlement stays separate.
 Final-head CI/comment audit/signed merge remain required; all phase gates stay open.
 
+
+[PR #62](https://github.com/cyborg-nomade/choreoform/pull/62) merged into draft
+#46 as `a9b08627a3f9db54b69b70fc47228ec4d0918307` after required final-head CI
+`42366303371` and delegated review/comment audit `6705961928`. CodeRabbit skipped
+and supplies no review evidence; no actionable threads/summary findings existed.
+Merge explicitly carries the sign-off. Active dependency
+`codex/general-fault-source-binding` follows the
+[frozen raw core plan](0048-general-fault-source-plan.md): independent declared
+provider emission sources, with no fault history/data/receipt or current authority.
+Parent stays draft/incomplete; all actual host/scenario/phase gates remain open.
+
+
+ADR-0048 raw core 0.6 is implemented under the frozen plan. Required nullable outer
+work faultSource declares provider emissions independently of attempts/eligibility;
+N=1 keeps inherited empty/null retry fields and N>1 requires exact source agreement.
+All actual/unvisited uses verify exact capability/provider identity, while unused
+policies still verify metadata/read closure but yield no use row. Static rows share
+immutable metadata/revision and carry all actual source/authority/selection/cutoff /
+settlement requirements. Eight Rust integration/one budget groups plus thirteen
+shared vectors/four Python groups cover boundaries; local 383 Rust plus six doctests
+and native/Wasm/all Python checks pass. Current package regenerates unchanged;
+see [evidence](0048-general-fault-source-binding.md). Final-head CI/comment audit /
+signed merge remain required. Next explicit readable source/native selection, then
+typed history/handler entry and owned continuation/cutoff/settlement. Parent and
+all scenario/phase/external gates remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

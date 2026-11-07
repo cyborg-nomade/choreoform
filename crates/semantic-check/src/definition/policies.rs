@@ -123,6 +123,15 @@ impl Check<'_, '_> {
             "actor" | "protection" => &["permit"],
             "capability" => &["provider"],
             "effect" => &["class", "idempotency", "reconciliation"],
+            "work" if self.b["dialects"][text(&r["dialect"])?]["id"] == CORE_V6.0 => &[
+                "instructions",
+                "authority",
+                "retry",
+                "timeout",
+                "completion",
+                "compensates",
+                "faultSource",
+            ],
             "work" => &[
                 "instructions",
                 "authority",
@@ -204,8 +213,22 @@ impl Check<'_, '_> {
                 refs.insert(self.actor(scope, &p["authority"])?);
                 let retry = &p["retry"];
                 let core = &self.b["dialects"][text(&r["dialect"])?]["id"];
-                let retry_v4 = core == CORE_V4.0 || core == CORE_V5.0;
+                let retry_v4 = retry_source_core(core);
                 let retry_v2 = core == CORE_V2.0 || metadata_core(core);
+                if core == CORE_V6.0 {
+                    if !p["faultSource"].is_null() {
+                        let source = self
+                            .resources
+                            .provider_fault_source(&Pin::decode(&p["faultSource"])?)?;
+                        metadata.extend(self.provider_protection(scope, source.provider())?);
+                    }
+                    if retry["maxAttempts"].as_u64().is_some_and(|n| n > 1) {
+                        require(
+                            p["faultSource"] == retry["faultSource"],
+                            "fault-source-retry-consistency",
+                        )?;
+                    }
+                }
                 fields(
                     retry,
                     if retry_v4 {

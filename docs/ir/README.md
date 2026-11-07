@@ -24,3 +24,8 @@ projection is not observation acceptance, runtime execution or phase admission.
 The IR is the interchange contract between future text/visual frontends and
 planning. It is neither a user-facing textual syntax nor a runtime checkpoint.
 The examples test serialization boundaries, not executable process behavior.
+
+[ADR-0048 / core 0.6](../decisions/0048-general-provider-fault-source-binding.md)
+keeps IR 0.2 unchanged and adds only a versioned outer work emission-source field.
+General declared uses stay separate from retry eligibility and actual fault/handler
+entry evidence; no unknown scope/wire field becomes admitted implicitly.

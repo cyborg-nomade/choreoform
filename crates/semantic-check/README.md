@@ -392,3 +392,14 @@ actual receipts/values/permissions. Conditional coverage stays separate from
 ordinary sets and the existing data-free `IsolatedFollowup`; actual fresh storage,
 source/correlation/authority, retained provenance, cutoff and settlement remain
 mandatory host premises. Templates share immutable metadata, never occurrences.
+
+[Core 0.6 / ADR-0048](../../docs/decisions/0048-general-provider-fault-source-binding.md)
+adds required nullable outer work `faultSource`, independent of attempts/eligibility.
+N=1 retains empty eligible faults/null inner source; N>1 requires exact agreement
+with the inherited retry source. Every actual declaration, including unvisited
+uses, checks capability/provider identity. `Report::fault_source_uses()` exposes
+immutable revision/site/policy/source/profile/provider rows sharing all emission
+metadata, never accepted faults, current eligibility or handler data. Unused
+policies verify metadata but yield no use row; null source never proves no faults.
+IR 0.2, prior captures/retries and finite metadata closure remain inherited; explicit
+source/native integration and typed fault entry are separate dependencies.

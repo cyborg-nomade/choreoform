@@ -4,7 +4,9 @@ use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
 mod capture;
 mod creation;
+mod fault_source;
 pub use capture::DeclaredWaitCapture;
+pub use fault_source::DeclaredFaultSourceUse;
 mod lifecycle;
 mod nodes;
 mod policies;
@@ -16,6 +18,7 @@ pub struct Report {
     expressions: usize,
     policies: usize,
     captures: Vec<DeclaredWaitCapture>,
+    fault_sources: Vec<DeclaredFaultSourceUse>,
 }
 impl Report {
     pub fn revision(&self) -> &str {
@@ -30,6 +33,10 @@ impl Report {
     /// Every declared capture, including unvisited sites; no activation/acceptance.
     pub fn capture_bindings(&self) -> &[DeclaredWaitCapture] {
         &self.captures
+    }
+    /// All declared general provider-source uses, even unvisited; no actual faults.
+    pub fn fault_source_uses(&self) -> &[DeclaredFaultSourceUse] {
+        &self.fault_sources
     }
     /// Explicit residual obligations: a static-stage report cannot close these.
     pub fn remaining(&self) -> &'static [&'static str] {
@@ -62,42 +69,22 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
     for pin in object(&b["dialects"])?.values() {
         let p = Pin::decode(pin)?;
         let contract = (p.id.as_str(), p.revision.as_str());
-        require(
-            contract == CORE
-                || contract == CORE_V2
-                || contract == CORE_V3
-                || contract == CORE_V4
-                || contract == CORE_V5,
-            "dialect-contract",
-        )?;
+        let level = CORE_PROFILES
+            .iter()
+            .position(|known| *known == contract)
+            .ok_or_else(|| err("dialect-contract"))?;
         resources.verify(&p)?;
-        if contract == CORE_V5 {
+        if level >= 4 {
             require(
                 envelope.document()["version"] == "0.2.0",
                 "capture-wire-version",
             )?;
-            resources.verify(&Pin {
-                id: CORE_V4.0.into(),
-                revision: CORE_V4.1.into(),
-            })?;
         }
-        if contract == CORE_V4 || contract == CORE_V5 {
+        // Exact closed list, newest inherited artifact first; preserve old order.
+        for base in CORE_PROFILES[..level].iter().rev() {
             resources.verify(&Pin {
-                id: CORE_V3.0.into(),
-                revision: CORE_V3.1.into(),
-            })?;
-        }
-        if contract == CORE_V3 || contract == CORE_V4 || contract == CORE_V5 {
-            resources.verify(&Pin {
-                id: CORE_V2.0.into(),
-                revision: CORE_V2.1.into(),
-            })?;
-        }
-        if contract == CORE_V2 || contract == CORE_V3 || contract == CORE_V4 || contract == CORE_V5
-        {
-            resources.verify(&Pin {
-                id: CORE.0.into(),
-                revision: CORE.1.into(),
+                id: base.0.into(),
+                revision: base.1.into(),
             })?;
         }
     }
@@ -112,6 +99,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         provider_refs: BTreeMap::new(),
         captures: Vec::new(),
         capture_types: BTreeSet::new(),
+        fault_sources: Vec::new(),
     };
     c.run()?;
     Ok(Report {
@@ -119,6 +107,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         expressions: c.expressions.len(),
         policies: c.policy_reads.len(),
         captures: c.capture_bindings(text(&envelope.document()["revision"])?)?,
+        fault_sources: c.fault_source_bindings(text(&envelope.document()["revision"])?)?,
     })
 }
 struct Check<'a, 'r> {
@@ -131,6 +120,7 @@ struct Check<'a, 'r> {
     creation_reads: BTreeMap<String, BTreeSet<String>>,
     provider_refs: BTreeMap<String, BTreeMap<Pin, BTreeSet<String>>>,
     captures: Vec<capture::PendingCapture>,
+    fault_sources: Vec<fault_source::PendingFaultSource>,
     capture_types: BTreeSet<(capture::CaptureTypeSubject, Pin, Pin)>,
 }
 impl Check<'_, '_> {

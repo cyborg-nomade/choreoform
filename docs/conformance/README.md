@@ -117,3 +117,11 @@ vectors. Retained creator/owner label provenance is separate from inherited valu
 or actual receipts. Native disclosures remain conditional, bounded and distinct
 from ordinary/data-free evidence; no observations, host execution or scenario exit
 are generated. See [evidence](../evaluation/0047-owned-local-followups.md).
+
+[General source-use vectors](../../crates/semantic-check/tests/conformance/general-fault-use.json)
+add thirteen finite declaration cases, including single/multiple attempts, exact
+source/provider identity, human/legacy/resource refusals and explicit unresolved
+eligibility under prevalidated stable-key metadata. Rust checks actual raw SDK
+judgments; an independent Python rule model checks expectations. No actual emission,
+retry permission or source authentication follows; see
+[ADR-0048](../decisions/0048-general-provider-fault-source-binding.md).

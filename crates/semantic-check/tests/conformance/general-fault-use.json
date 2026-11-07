@@ -1,0 +1,20 @@
+{
+  "format": "choreoform-general-fault-use-conformance",
+  "version": "0.1.0",
+  "premise": "Finite declarations over prevalidated provider metadata, not emitted or accepted faults",
+  "cases": [
+    {"id":"single-general", "attempts":1, "outer":"same", "retrySource":false, "provider":"same", "mode":"capability", "resources":true, "legacy":false, "expect":"passed"},
+    {"id":"single-null", "attempts":1, "outer":"none", "retrySource":false, "provider":"same", "mode":"capability", "resources":true, "legacy":false, "expect":"passed"},
+    {"id":"retry-agrees", "attempts":2, "outer":"same", "retrySource":true, "provider":"same", "mode":"capability", "resources":true, "legacy":false, "expect":"passed"},
+    {"id":"retry-different-source", "attempts":2, "outer":"other", "retrySource":true, "provider":"same", "mode":"capability", "resources":true, "legacy":false, "expect":"fault-source-retry-consistency"},
+    {"id":"retry-no-general", "attempts":2, "outer":"none", "retrySource":true, "provider":"same", "mode":"capability", "resources":true, "legacy":false, "expect":"fault-source-retry-consistency"},
+    {"id":"single-inner-source", "attempts":1, "outer":"same", "retrySource":true, "provider":"same", "mode":"capability", "resources":true, "legacy":false, "expect":"retry-fault-source-unused"},
+    {"id":"human-source", "attempts":1, "outer":"same", "retrySource":false, "provider":"same", "mode":"human", "resources":true, "legacy":false, "expect":"fault-source-context-unproved"},
+    {"id":"other-provider", "attempts":1, "outer":"same", "retrySource":false, "provider":"other", "mode":"capability", "resources":true, "legacy":false, "expect":"fault-source-provider"},
+    {"id":"provider-revision", "attempts":1, "outer":"same", "retrySource":false, "provider":"same-id-new-revision", "mode":"capability", "resources":true, "legacy":false, "expect":"fault-source-provider"},
+    {"id":"missing-source", "attempts":1, "outer":"same", "retrySource":false, "provider":"same", "mode":"capability", "resources":false, "legacy":false, "expect":"resource-missing"},
+    {"id":"retry-both-null", "attempts":2, "outer":"none", "retrySource":false, "provider":"same", "mode":"capability", "resources":true, "legacy":false, "expect":"retry-fault-source-required"},
+    {"id":"legacy-extra-field", "attempts":1, "outer":"none", "retrySource":false, "provider":"same", "mode":"capability", "resources":true, "legacy":true, "expect":"fields"},
+    {"id":"explicit-stable-key-unresolved-eligibility", "attempts":2, "outer":"same", "retrySource":true, "provider":"same", "mode":"capability", "resources":true, "legacy":false, "eligible":"provider unknown", "expect":"passed"}
+  ]
+}

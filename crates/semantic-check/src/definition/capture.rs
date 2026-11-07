@@ -73,7 +73,7 @@ impl Check<'_, '_> {
         }
         let p = &self.b["policies"][policy];
         require(
-            self.b["dialects"][text(&p["dialect"])?]["id"] == CORE_V5.0,
+            capture_core(&self.b["dialects"][text(&p["dialect"])?]["id"]),
             "wait-capture-dialect",
         )?;
         require(p["body"]["timer"].is_null(), "wait-capture-timer-unproved")?;
@@ -213,6 +213,7 @@ mod tests {
             provider_refs: BTreeMap::new(),
             captures: Vec::new(),
             capture_types: BTreeSet::new(),
+            fault_sources: Vec::new(),
         };
         c.resources.budget.work = 1_000_000;
         assert!(c.capture_bindings("revision-test-only").unwrap().is_empty());
