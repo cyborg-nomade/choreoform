@@ -215,12 +215,27 @@ pub(crate) fn require_entries(
     nodes: &crate::protection::DependencyMap,
     budget: &mut Budget,
 ) -> Result<BTreeSet<InvalidationObligation>> {
+    require_entries_with_codes(
+        b,
+        nodes,
+        budget,
+        "owned-local-invalidation-coverage",
+        "owned-local-invalidation-context-unproved",
+    )
+}
+pub(crate) fn require_entries_with_codes(
+    b: &Value,
+    nodes: &crate::protection::DependencyMap,
+    budget: &mut Budget,
+    coverage_code: &'static str,
+    context_code: &'static str,
+) -> Result<BTreeSet<InvalidationObligation>> {
     requirements(b, nodes, Coverage::Required, budget)
         .map(|(required, _)| required)
         .map_err(|mut e| {
             e.code = match e.code {
-                "invalidation-coverage" => "owned-local-invalidation-coverage",
-                "invalidation-context-unproved" => "owned-local-invalidation-context-unproved",
+                "invalidation-coverage" => coverage_code,
+                "invalidation-context-unproved" => context_code,
                 other => other,
             };
             e

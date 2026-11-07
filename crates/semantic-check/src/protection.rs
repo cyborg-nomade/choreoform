@@ -149,11 +149,39 @@ pub(crate) fn analyze_entries(
     })
 }
 
+pub(crate) fn analyze_history_entries(
+    b: &Value,
+    supplied: &[Resource<'_>],
+    owners: &BTreeMap<String, BTreeSet<String>>,
+    sources: &BTreeMap<String, BTreeSet<String>>,
+    entries: &BTreeMap<String, String>,
+    ordinary: &ProtectionReport,
+) -> Result<EntryAnalysis> {
+    let mut flow = Flow::new(b, supplied)?;
+    flow.provenance = None;
+    flow.collect_dependencies()?;
+    for (scope, target) in entries {
+        flow.history_scope(
+            scope,
+            target,
+            &owners[scope],
+            &sources[scope],
+            &ordinary.provenance,
+        )?;
+    }
+    Ok(EntryAnalysis {
+        transfers: flow.transfers,
+        accesses: flow.accesses,
+        dependencies: flow.dependencies.unwrap_or_default(),
+        provenance: flow.required_provenance,
+    })
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Origin {
     Cell(String),
-    // Conditional P6 retained label receipt, never a value/live cell/permission.
-    OwnedProvenance(String),
+    // Conditional retained source/control label requirement, never a value/live cell/permission.
+    RetainedProvenance(String),
     Historical { cell: String, boundary: String },
     Provider(ProviderSite),
 }

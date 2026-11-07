@@ -282,6 +282,11 @@ validated, and round-tripped.
   declared activity/source relations and complete handler stacks in a separate
   bounded SDK report. Unsupported/uncovered origins stay explicit; no actual
   event, fault-control protection snapshot or handler initializer is supplied.
+  [ADR-0052](docs/decisions/0052-typed-handler-entry.md) adds raw IR 0.3/core 0.7
+  reserved local history declarations and separate conditional source/control /
+  initialization/access/strict invalidation proof. Actual entry and readable
+  source/companion/native integration remain explicit next dependencies; older
+  exceptional coverage is unchanged and no handler resumes its parent.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

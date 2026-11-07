@@ -51,12 +51,37 @@ pub struct ArtifactRef {
     revision: String,
 }
 impl ArtifactRef {
+    fn read(value: &Value) -> Result<Self> {
+        fields(value, &["id", "revision"], &[])?;
+        let artifact_id = string(&value["id"])?;
+        let revision = string(&value["revision"])?;
+        if artifact_id.is_empty()
+            || revision.len() != 71
+            || !revision.starts_with("sha256:")
+            || !revision[7..]
+                .bytes()
+                .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+        {
+            return Err(Error::Shape);
+        }
+        Ok(Self {
+            id: artifact_id.into(),
+            revision: revision.into(),
+        })
+    }
+
     pub fn id(&self) -> &str {
         &self.id
     }
     pub fn revision(&self) -> &str {
         &self.revision
     }
+}
+/// Structural handler-local history reference; no initialized value or authority.
+#[derive(Debug)]
+pub struct FaultInput {
+    pub history: ArtifactRef,
+    pub result: DataId,
 }
 #[derive(Debug)]
 pub struct WaitCapture {
@@ -150,6 +175,7 @@ pub struct Node {
 #[derive(Debug)]
 pub struct Graph {
     pub nodes: BTreeMap<NodeId, Node>,
+    pub fault_inputs: BTreeMap<ScopeId, FaultInput>,
 }
 
 const MAPS: [&str; 8] = [
@@ -248,7 +274,13 @@ fn predicate(value: &Value) -> Result<()> {
 }
 
 impl Graph {
-    pub(crate) fn read(body: &Value, v2: bool) -> Result<Self> {
+    pub(crate) fn read(body: &Value, version: &str) -> Result<Self> {
+        if !matches!(version, "0.1.0" | "0.2.0" | "0.3.0") {
+            return Err(Error::Version);
+        }
+        let v2 = version != "0.1.0";
+        let v3 = version == "0.3.0";
+        let mut fault_inputs = BTreeMap::new();
         let mut all_ids = BTreeSet::new();
         for map in MAPS {
             for key in object(&body[map])?.keys() {
@@ -266,8 +298,7 @@ impl Graph {
         }
         let mut rooted = BTreeSet::from([root.clone()]);
         for (key, scope) in object(&body["scopes"])? {
-            fields(
-                scope,
+            let required: &[&str] = if v3 {
                 &[
                     "parent",
                     "entry",
@@ -278,9 +309,38 @@ impl Graph {
                     "faults",
                     "closure",
                     "race",
-                ],
-                &[],
-            )?;
+                    "faultInput",
+                ]
+            } else {
+                &[
+                    "parent",
+                    "entry",
+                    "inputs",
+                    "outputs",
+                    "outcomes",
+                    "cancellation",
+                    "faults",
+                    "closure",
+                    "race",
+                ]
+            };
+            fields(scope, required, &[])?;
+            if v3 && !scope["faultInput"].is_null() {
+                let binding = &scope["faultInput"];
+                fields(binding, &["history", "result"], &[])?;
+                let history = ArtifactRef::read(&binding["history"])?;
+                let result = reference(body, "data", &binding["result"])?;
+                if body["data"][&result]["scope"] != *key {
+                    return Err(Error::Scope);
+                }
+                fault_inputs.insert(
+                    ScopeId(key.clone()),
+                    FaultInput {
+                        history,
+                        result: DataId(result),
+                    },
+                );
+            }
             trace_scope(body, key, &mut rooted)?;
             let entry = reference(body, "nodes", &scope["entry"])?;
             reference(body, "scopes", &body["nodes"][&entry]["scope"])?;
@@ -421,7 +481,10 @@ impl Graph {
                 return Err(Error::Reference);
             }
         }
-        Ok(Self { nodes })
+        Ok(Self {
+            nodes,
+            fault_inputs,
+        })
     }
 }
 
@@ -550,23 +613,9 @@ fn read_kind(body: &Value, node: &Value, v2: bool) -> Result<NodeKind> {
             let capture = if v2 && !node["capture"].is_null() {
                 let c = &node["capture"];
                 fields(c, &["source", "origin", "result"], &[])?;
-                fields(&c["source"], &["id", "revision"], &[])?;
-                let source_id = string(&c["source"]["id"])?;
-                let revision = string(&c["source"]["revision"])?;
-                if source_id.is_empty()
-                    || revision.len() != 71
-                    || !revision.starts_with("sha256:")
-                    || !revision[7..]
-                        .bytes()
-                        .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
-                {
-                    return Err(Error::Shape);
-                }
+                let source = ArtifactRef::read(&c["source"])?;
                 Some(WaitCapture {
-                    source: ArtifactRef {
-                        id: source_id.into(),
-                        revision: revision.into(),
-                    },
+                    source,
                     origin: NodeId(reference(body, "nodes", &c["origin"])?),
                     result: DataId(reference(body, "data", &c["result"])?),
                 })

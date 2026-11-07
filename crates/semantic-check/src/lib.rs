@@ -9,6 +9,7 @@ mod control;
 mod definition;
 mod exceptional;
 mod expression;
+mod fault_entry;
 mod faults;
 mod initialization;
 mod invalidation;
@@ -23,9 +24,12 @@ pub use concurrency::{
     ConcurrencyReport, IsolatedFollowup, OwnedLocalFollowup, OwnedLocalReport, check_concurrency,
 };
 pub use control::{ControlReport, check_control};
-pub use definition::{DeclaredFaultSourceUse, DeclaredWaitCapture, Report, check};
+pub use definition::{
+    DeclaredFaultEntry, DeclaredFaultSourceUse, DeclaredWaitCapture, Report, check,
+};
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};
 pub use expression::{Context, Judgment};
+pub use fault_entry::{FaultEntryReport, check_fault_entries};
 pub use faults::{
     FaultOriginReport, FaultOriginRoute, FaultOriginSite, FaultReport, FaultRoute, FaultSelection,
     check_fault_origins, check_fault_routes,
@@ -84,16 +88,24 @@ pub const CORE_V6: (&str, &str) = (
     "urn:choreoform:contracts:core-profile:0.6.0",
     "sha256:27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85",
 );
-const CORE_PROFILES: &[(&str, &str)] = &[CORE, CORE_V2, CORE_V3, CORE_V4, CORE_V5, CORE_V6];
+pub const CORE_V7: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.7.0",
+    "sha256:e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b",
+);
+const CORE_PROFILES: &[(&str, &str)] =
+    &[CORE, CORE_V2, CORE_V3, CORE_V4, CORE_V5, CORE_V6, CORE_V7];
+fn general_source_core(id: &Value) -> bool {
+    matches!(id.as_str(), Some(id) if id==CORE_V6.0 || id==CORE_V7.0)
+}
 fn retry_source_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id==CORE_V4.0 || id==CORE_V5.0 || id==CORE_V6.0)
+    matches!(id.as_str(), Some(id) if id==CORE_V4.0 || id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0)
 }
 fn capture_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id==CORE_V5.0 || id==CORE_V6.0)
+    matches!(id.as_str(), Some(id) if id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0)
 }
 
 fn metadata_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0 || id == CORE_V5.0 || id == CORE_V6.0)
+    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0 || id == CORE_V5.0 || id == CORE_V6.0 || id == CORE_V7.0)
 }
 
 const MAX_DEPTH: usize = 64;

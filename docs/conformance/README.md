@@ -151,3 +151,13 @@ collection and cumulative stack/row budgets; three Python groups preserve native
 compatibility and licensing. No actual fault, current source/control envelope,
 history initialization or phase/scenario evidence follows; see
 [ADR-0051](../decisions/0051-declared-fault-origin-contexts.md).
+
+[Conditional history-entry vectors](../../crates/semantic-check/tests/conformance/fault-entry.json)
+add thirteen finite cases consumed by the actual SDK and a limited independent
+wire/source/body/access/protection/invalidation model. Six structural and fourteen
+SDK integration groups plus an internal publication-budget group cover exact
+pins/roles/types, readonly/creator barriers, source/context completeness, zero
+inherited values, pre-entry access ordering, constant/branch/initializer leaks and
+strict invalidation. Five Python groups also check schema-only delta, hashes and
+legacy reports. No actual history event, initialized host storage or phase/scenario
+evidence follows; see [ADR-0052](../decisions/0052-typed-handler-entry.md).

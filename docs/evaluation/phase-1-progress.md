@@ -932,6 +932,21 @@ initialization/strict invalidation proof, refusing unsupported incoming contexts
 No implementation or actual initialization is claimed yet. Parent and every
 scenario/phase/external gate remain draft/open.
 
+ADR-0052 raw IR 0.3/core 0.7 handler-local history is implemented under the frozen
+plan. Exact nominal/source declarations reserve a readonly local cell and reject
+all ordinary/P6 creators, ports, initializers and writers. Separate conditional
+proof requires complete supported ordinary source contexts, empty pre-entry values,
+access before initialization, retained source/fault-control provenance, local-only
+body flow and strict invalidation. Unexplored possible origins cannot be dropped;
+no-incoming bindings stay uncovered. Six structural/fourteen SDK integration and
+one publication-budget groups plus five Python groups cover thirteen finite cases
+and boundaries. Local 430 Rust plus six doctests and native/Wasm/all Python checks
+pass; old package/reports stay unchanged. See [evidence](0052-typed-handler-entry.md).
+Final-head CI/comment audit/signed merge remain required. Next explicit readable
+source/companion/native integration with separate conditional disclosure, then
+permitted owned continuation/cutoff/handoff/all-settlement. Parent and every
+scenario/phase/external gate remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
