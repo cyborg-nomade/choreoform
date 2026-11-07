@@ -121,7 +121,7 @@ class WaitCaptureEvidence(unittest.TestCase):
             elif mutation=='incomplete':del c['capture']['origin']
             elif mutation=='bad_ref':c['capture']['source']['revision']='wrong'
             elif mutation=='old_wire':d['version']='0.1.0'
-            else:d['version']='0.3.0'
+            else:d['version']='0.4.0'
             schema=wire.SCHEMA_V2 if d['version']=='0.2.0' else wire.SCHEMA
             with self.assertRaises(jsonschema.ValidationError):jsonschema.Draft202012Validator(schema).validate(d)
         self.assertEqual(Path(str(CORPUS)+'.license').read_text(),'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n')

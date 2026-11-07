@@ -61,7 +61,7 @@ impl<'a> Analysis<'a> {
                 continue;
             }
             let core = &b["dialects"][text(&p["dialect"])?]["id"];
-            let source = if core == CORE_V6.0 {
+            let source = if general_source_core(core) {
                 &p["body"]["faultSource"]
             } else if retry_source_core(core) {
                 &p["body"]["retry"]["faultSource"]

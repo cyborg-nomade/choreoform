@@ -58,7 +58,7 @@ impl Check<'_, '_> {
         n: &Value,
         work: &Value,
     ) -> Result<()> {
-        if self.b["dialects"][text(&work["dialect"])?]["id"] != CORE_V6.0
+        if !general_source_core(&self.b["dialects"][text(&work["dialect"])?]["id"])
             || work["body"]["faultSource"].is_null()
         {
             return Ok(());
@@ -152,6 +152,7 @@ mod tests {
             captures: Vec::new(),
             capture_types: BTreeSet::new(),
             fault_sources: Vec::new(),
+            fault_entries: Vec::new(),
         };
         c.resources.budget.work = 1_000_000;
         assert!(

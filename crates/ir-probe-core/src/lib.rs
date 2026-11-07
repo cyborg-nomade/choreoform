@@ -66,7 +66,7 @@ pub struct Resource<'a> {
     pub bytes: &'a [u8],
 }
 
-pub const SUPPORTED_WIRE_VERSIONS: &[&str] = &["0.1.0", "0.2.0"];
+pub const SUPPORTED_WIRE_VERSIONS: &[&str] = &["0.1.0", "0.2.0", "0.3.0"];
 
 pub const SUPPORTED_CONTRACTS: [(&str, &str); 2] = [
     (
@@ -240,7 +240,10 @@ impl DefinitionEnvelope {
         if string(&body["id"])?.is_empty() {
             return Err(Error::Shape);
         }
-        model::Graph::read(body, self.document["version"] == "0.2.0")
+        model::Graph::read(
+            body,
+            self.document["version"].as_str().ok_or(Error::Version)?,
+        )
     }
 }
 
@@ -301,7 +304,12 @@ pub fn inspect(raw: &[u8], resources: &[Resource<'_>]) -> Result<Inspected> {
     {
         return Err(Error::ContractUnsupported);
     }
-    let graph = model::Graph::read(body, document["version"] == "0.2.0")?;
+    // The original illustrative-contract inspector has no handler-entry
+    // contract. Transport/structural projection remains available separately.
+    if document["version"] == "0.3.0" {
+        return Err(Error::ContractUnsupported);
+    }
+    let graph = model::Graph::read(body, document["version"].as_str().ok_or(Error::Version)?)?;
     let canonical = canonical_definition(&document);
     let revision = digest(canonical.as_bytes());
     if document["revision"] != revision {

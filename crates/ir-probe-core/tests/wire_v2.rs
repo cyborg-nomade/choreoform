@@ -43,7 +43,7 @@ fn explicit_constructor_keeps_old_version_and_hashes_separate() {
     );
     assert_eq!(semantic_bytes(&raw).unwrap(), b.canonical());
     assert_eq!(
-        DefinitionEnvelope::from_parts_versioned("0.3.0", json!({}), json!({})).unwrap_err(),
+        DefinitionEnvelope::from_parts_versioned("0.4.0", json!({}), json!({})).unwrap_err(),
         Error::Version
     );
     // Explicit construction is transport only: old wait records still miss required capture.

@@ -128,3 +128,42 @@ fn at(code: &'static str, map: &str, id: &str) -> Diagnostic {
         path: format!("/body/{map}/{id}"),
     }
 }
+
+/// Fresh history is a conditional initialized seed, never a caller value. Check
+/// its write-access preconditions before exposing it to local initializers.
+pub(crate) fn check_history_entries(
+    b: &Value,
+    entries: &BTreeMap<String, String>,
+    mut budget: Budget,
+) -> Result<EntryCoverage> {
+    if entries.is_empty() {
+        return Ok(EntryCoverage {
+            nodes: BTreeSet::new(),
+            scopes: BTreeSet::new(),
+        });
+    }
+    budget.charge(entries.len() * 2)?;
+    let graph = Graph::build(b, &mut budget)?;
+    let mut analysis = Analysis::new(b, graph, budget)?;
+    analysis.history_entries = entries.clone();
+    for scope in entries.keys() {
+        analysis
+            .scope(scope, &BTreeSet::new(), 0)
+            .map_err(|mut e| {
+                if matches!(
+                    e.code,
+                    "data-availability-unproved"
+                        | "initial-access-availability-unproved"
+                        | "initializer-availability-unproved"
+                        | "output-availability-unproved"
+                ) {
+                    e.code = "fault-entry-availability-unproved";
+                }
+                e
+            })?;
+    }
+    Ok(EntryCoverage {
+        nodes: analysis.nodes,
+        scopes: analysis.scopes,
+    })
+}

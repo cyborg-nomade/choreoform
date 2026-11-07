@@ -29,3 +29,9 @@ The examples test serialization boundaries, not executable process behavior.
 keeps IR 0.2 unchanged and adds only a versioned outer work emission-source field.
 General declared uses stay separate from retry eligibility and actual fault/handler
 entry evidence; no unknown scope/wire field becomes admitted implicitly.
+
+[Definition IR 0.3](definition-v0.3.md) adds required nullable scope faultInput,
+with exact typed local history reference under [ADR-0052](../decisions/0052-typed-handler-entry.md).
+It inherits 0.2 wait capture and changes no earlier wire/hash domain. Structural
+projection is separate from exact core-0.7 binding and conditional entry proof;
+no actual fault/history storage, current authority or execution is supplied.
