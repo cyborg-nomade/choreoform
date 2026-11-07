@@ -109,3 +109,11 @@ normal visibility, derived reads, all declaration disclosures and honest stored-
 recovery lifetime refusal. These fixtures and promoted copies supply no actual
 observations, host/user execution or scenario completion; see
 [ADR-0046](../decisions/0046-wait-capture-authoring.md).
+
+[ADR-0047](../decisions/0047-owned-local-followups.md) adds nine Rust conditional
+local-follow-up integration groups, two cumulative budget groups and five Python
+groups with six independent finite isolation/availability/protection/invalidation
+vectors. Retained creator/owner label provenance is separate from inherited values
+or actual receipts. Native disclosures remain conditional, bounded and distinct
+from ordinary/data-free evidence; no observations, host execution or scenario exit
+are generated. See [evidence](../evaluation/0047-owned-local-followups.md).

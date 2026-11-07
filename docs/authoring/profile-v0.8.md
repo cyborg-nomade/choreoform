@@ -76,7 +76,9 @@ remain open roadmap work; this increment does not establish the final syntax.
 
 [Evidence](../evaluation/0046-wait-capture-authoring.md) uses static source fixtures
 and promoted copies. Checked-in RP-01 source 0.7/core 0.4/IR 0.1 package stays
-unchanged. Captured local storage in its surviving recovery still refuses lifetime;
-owned local storage, fault data, permitted continuation/cutoff and all-settlement
-need separate contracts. Actual host/user/browser/independent evidence and all
+unchanged. Captured local storage needs the separate
+[ADR-0047](../decisions/0047-owned-local-followups.md) conditional isolation,
+initialization, protection and invalidation proof; actual host storage remains a
+live premise. General retention, fault data, permitted continuation/cutoff and
+all-settlement need further contracts. Actual host/user/browser/independent evidence and all
 full benchmark/scenario/Phase 1 gates remain open.

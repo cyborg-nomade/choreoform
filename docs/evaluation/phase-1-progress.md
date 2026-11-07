@@ -762,6 +762,44 @@ CI/comment audit/signed merge remain required. Next owned local-storage/lifetime
 proof, then explicit fault data and owned continuation/cutoff/settlement; all
 scenario, complete authoring/validator, external and phase gates stay open.
 
+
+[PR #60](https://github.com/cyborg-nomade/choreoform/pull/60) merged into draft
+#46 as `9a4a39f7bf9fa1080dca697d5f66b94fad3e86cf` after final-head CI
+`42363432443` and delegated review/comment audit `6705563487`. No actionable
+threads/summary findings existed; CodeRabbit skipped and supplies no review
+evidence. Merge is explicitly signed off; ADR-0046 remains pending parent/main
+integration. Active dependency `codex/owned-local-followups` follows the
+[frozen conditional local-storage plan](0047-owned-local-followups-plan.md).
+Require zero inherited values, complete conditional protection/invalidation and
+bounded separate evidence before widening the current lifetime refusal. No actual
+ownership, fault data, continuation or phase/scenario gate is closed.
+
+
+Initial owned-local draft review found that zero inherited values must not erase
+creator/owner source and control protection provenance. The
+[frozen refinement](0047-owned-local-provenance-refinement.md) requires bounded
+retained label contexts and an explicit P6 provenance-retention premise, separate
+from current values/permissions and ordinary historical completion. Implementation
+remains unpublished; no new lifetime or phase claim is made yet.
+
+
+ADR-0047 conditional fresh-local follow-ups are implemented under the frozen plan
+and provenance refinement. Separate immutable evidence requires direct portless /
+childless terminal bodies, explicit capturing entry, flat timerless local-only
+nodes and no independent creator. Grouped zero-inherited-value initialization,
+retained creator/owner protection provenance, internal access/flow and strict local
+invalidation checks precede disclosure. The host must still provide actual storage,
+authenticated provenance/correlation, current access, atomic handoff/cutoff and all-
+settlement. Nine Rust integration/two budget groups and five Python groups cover
+boundaries and six independent finite vectors; a restricted creator/public capture
+now refuses, and 130 creators/130 cells refuse oversized reports before stdout.
+Local 373 Rust plus six doctests and all native/Wasm/Python checks pass. Full RP-01
+promoted fresh-local capture now has conditional evidence; the adjacent ancestor
+storage case refuses and checked-in package bytes regenerate unchanged. See
+[evidence](0047-owned-local-followups.md). Final-head CI/comment audit/signed merge
+remain required. Next explicit fault data and permitted owned continuation/cutoff /
+settlement, then separate adoption; every scenario/phase/external gate stays open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

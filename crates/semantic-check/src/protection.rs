@@ -31,6 +31,7 @@ pub struct ProtectionReport {
     control: ControlReport,
     transfers: usize,
     accesses: BTreeSet<AccessObligation>,
+    provenance: BTreeMap<String, Origins>,
 }
 impl ProtectionReport {
     pub fn revision(&self) -> &str {
@@ -92,14 +93,67 @@ pub(crate) fn analyze(
             control,
             transfers: flow.transfers,
             accesses: flow.accesses,
+            provenance: flow.provenance.unwrap_or_default(),
         },
         flow.dependencies.unwrap_or_default(),
     ))
 }
 
+/// Required occurrence-bound label retention, never an authenticated receipt,
+/// inherited value, current grant or ordinary completion assertion.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct RequiredProtectionProvenance {
+    owner: String,
+    kind: &'static str,
+    site: String,
+    role: Option<&'static str>,
+}
+impl RequiredProtectionProvenance {
+    pub fn owner(&self) -> &str {
+        &self.owner
+    }
+    pub fn kind(&self) -> &str {
+        self.kind
+    }
+    /// Data declaration or provider-bearing node; not an observed occurrence.
+    pub fn site(&self) -> &str {
+        &self.site
+    }
+    pub fn provider_role(&self) -> Option<&str> {
+        self.role
+    }
+}
+pub(crate) struct EntryAnalysis {
+    pub transfers: usize,
+    pub accesses: BTreeSet<AccessObligation>,
+    pub dependencies: Dependencies,
+    pub provenance: BTreeSet<RequiredProtectionProvenance>,
+}
+pub(crate) fn analyze_entries(
+    b: &Value,
+    supplied: &[Resource<'_>],
+    owners: &BTreeMap<String, BTreeSet<String>>,
+    ordinary: &ProtectionReport,
+) -> Result<EntryAnalysis> {
+    let mut flow = Flow::new(b, supplied)?;
+    flow.provenance = None;
+    flow.collect_dependencies()?;
+    for (scope, bodies) in owners {
+        flow.conditional_scope(scope, bodies, &ordinary.provenance)?;
+    }
+    Ok(EntryAnalysis {
+        transfers: flow.transfers,
+        accesses: flow.accesses,
+        dependencies: flow.dependencies.unwrap_or_default(),
+        provenance: flow.required_provenance,
+    })
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Origin {
     Cell(String),
+    // Conditional P6 retained label receipt, never a value/live cell/permission.
+    OwnedProvenance(String),
     Historical { cell: String, boundary: String },
     Provider(ProviderSite),
 }

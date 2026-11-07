@@ -60,6 +60,22 @@ def package(captures=1,long_pins=False,unvisited=False):
     root.declarations=[d.replace('Start at "Release remaining owner".','Start at "Observe".').replace('Step "Release remaining owner".',observe+'\nStep "Release remaining owner".') if d.startswith('Scope "Remaining work"') else d for d in root.declarations]
     return 'Choreoform authoring "0.8.0".\n'+root.render(),p.ledger,resources
 
+def promoted_local():
+    from check_late_observation_boundaries import package as current
+    s,l,r=current();s=s.replace('authoring "0.7.0"','authoring "0.8.0"',1);l.update(profile='0.8.0',version='0.7.0');l['contracts']['core']=CORE5.copy()
+    provider_pin=next({'id':i,'revision':rev} for i,rev,_ in r if i=='urn:choreoform:benchmarks:rp01:payment:0.1.0')
+    source_resource(l,r,provider_pin)
+    l['declarations'].append({'id':'recovery_local','kind':'data','scope':'payment_recovery','name':'Local terminal result'})
+    l['symbols'].append({'id':'recovery_purpose','owner':'recovery_local','role':'purpose','name':'Reimbursement','wire':'reimbursement'})
+    provider=json.loads(next(raw for i,_,raw in r if i==provider_pin['id']))
+    data=f'Keep "Local terminal result" as {type_source(normalized_type(provider))} under "Expense access". Sensitivity "expense". Purposes ["Reimbursement"]. Participants ["Employee", "Manager", "Finance reviewer", "Payment operator", "Clock observer"]. Capabilities ["Create the payable"]. Invalidate empty. Initially unavailable. End data. '
+    s=s.replace('Step "Observe Payment".',data+'Step "Observe Payment".')
+    assert s.count('Keep "Local terminal result"')==1
+    s=s.replace('Wait under "Payment reconciliation".','Wait under "Payment reconciliation" for observations from "Terminal facts" about "Request Payment" and record in "Local terminal result".')
+    p=s,l,r
+    return p
+
+
 
 class WaitCaptureAuthoringEvidence(unittest.TestCase):
     def test_readable_capture_and_all_native_stage_declarations(self):
@@ -136,22 +152,16 @@ class WaitCaptureAuthoringEvidence(unittest.TestCase):
         for stage in STAGES:
             result=invoke(p,stage);self.assertEqual(result.returncode,1,(stage,result.stderr));self.assertEqual(result.stdout,b'');self.assertEqual(result.stderr.strip(),b'report-budget')
 
-    def test_full_rp01_promoted_local_capture_still_refuses_storage_lifetime(self):
-        from check_late_observation_boundaries import package as current
-        s,l,r=current();s=s.replace('authoring "0.7.0"','authoring "0.8.0"',1);l.update(profile='0.8.0',version='0.7.0');l['contracts']['core']=CORE5.copy()
-        provider_pin=next({'id':i,'revision':rev} for i,rev,_ in r if i=='urn:choreoform:benchmarks:rp01:payment:0.1.0')
-        source_resource(l,r,provider_pin)
-        l['declarations'].append({'id':'recovery_local','kind':'data','scope':'payment_recovery','name':'Local terminal result'})
-        l['symbols'].append({'id':'recovery_purpose','owner':'recovery_local','role':'purpose','name':'Reimbursement','wire':'reimbursement'})
-        provider=json.loads(next(raw for i,_,raw in r if i==provider_pin['id']))
-        data=f'Keep "Local terminal result" as {type_source(normalized_type(provider))} under "Expense access". Sensitivity "expense". Purposes ["Reimbursement"]. Participants ["Employee", "Manager", "Finance reviewer", "Payment operator", "Clock observer"]. Capabilities ["Create the payable"]. Invalidate empty. Initially unavailable. End data. '
-        s=s.replace('Step "Observe Payment".',data+'Step "Observe Payment".')
-        self.assertEqual(s.count('Keep "Local terminal result"'),1)
-        s=s.replace('Wait under "Payment reconciliation".','Wait under "Payment reconciliation" for observations from "Terminal facts" about "Request Payment" and record in "Local terminal result".')
-        p=s,l,r
-        for stage in ['check','check-invalidation']:
+    def test_full_rp01_promoted_local_capture_has_conditional_proof_but_no_ancestor_retention(self):
+        p=promoted_local()
+        for stage in STAGES:
             result=invoke(p,stage);self.assertEqual(result.returncode,0,(stage,result.stderr))
-        result=invoke(p,'check-concurrency');self.assertEqual(result.returncode,1);self.assertEqual(result.stdout,b'');self.assertIn(b'scope-lifetime-unproved at /body/nodes/run_payment',result.stderr)
+            report=json.loads(result.stdout);self.assertIs(report['executable'],False)
+            if stage in STAGES[5:]:
+                row,=report['ownedLocalFollowups'];self.assertEqual(row['creator'],'run_payment');self.assertEqual(row['localCells'],['recovery_local'])
+                self.assertIs(report['conditionalOwnedLocalChecks']['conditional'],True)
+        s,l,r=p;s=s.replace('and record in "Local terminal result".','and record in "Local terminal result". Also read ["Payable request"].')
+        result=invoke((s,l,r),'check-concurrency');self.assertEqual(result.returncode,1);self.assertEqual(result.stdout,b'');self.assertIn(b'scope-lifetime-unproved at /body/nodes/run_payment',result.stderr)
 
 
 if __name__=='__main__':unittest.main()

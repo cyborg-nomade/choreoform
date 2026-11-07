@@ -76,6 +76,14 @@ impl Index {
             proofs: BTreeMap::new(),
         })
     }
+    pub(super) fn graph(&self) -> &Graph {
+        &self.graph
+    }
+    pub(super) fn has_storage_followup(&self, b: &Value, body: &str) -> Result<bool> {
+        let closure = text(&b["scopes"][body]["closure"])?;
+        let p = &b["policies"][closure]["body"];
+        Ok(p["mode"] == "reconcile" && self.storage.contains(text(&p["followup"])?))
+    }
     pub fn check(
         &mut self,
         b: &Value,
