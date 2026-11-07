@@ -119,6 +119,14 @@ impl Candidate {
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ProtectionReport> {
         choreoform_semantic_check::check_protection(&self.envelope, resources)
     }
+    /// Ordinary advisory requirements; missing links never produce a checked report.
+    pub fn invalidation_requirements(
+        &self,
+        supplied: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::InvalidationRequirements>
+    {
+        choreoform_semantic_check::derive_invalidation_requirements(&self.envelope, supplied)
+    }
     /// Check ordinary invalidation declarations; never execute withdrawal,
     /// authorize work or establish current runtime sufficiency.
     pub fn check_invalidation(
@@ -231,7 +239,12 @@ impl<'a> Package<'a> {
         let contracts = &self.ledger.document["contracts"];
         body.insert("semantics".into(), json!({"id": contracts["semantics"]["contract"], "revision": contracts["semantics"]["digest"]}));
         body.insert("dialects".into(), json!({ self.ledger.dialect(): {"id": contracts["core"]["contract"], "revision": contracts["core"]["digest"]} }));
-        let envelope = DefinitionEnvelope::from_parts(
+        let envelope = DefinitionEnvelope::from_parts_versioned(
+            if matches!(self.syntax.profile(), "0.8.0" | "0.9.0") {
+                "0.2.0"
+            } else {
+                "0.1.0"
+            },
             Value::Object(body),
             self.ledger.document["annotations"].clone(),
         )
@@ -355,6 +368,16 @@ impl<'a, 's> Lower<'a, 's> {
                 "calendar" => {
                     resources
                         .instance_calendar(&pin)
+                        .map_err(|e| error(e.code, 0..0))?;
+                }
+                "provider-fault-source" => {
+                    resources
+                        .provider_fault_source(&pin)
+                        .map_err(|e| error(e.code, 0..0))?;
+                }
+                "provider-terminal-observation-source" => {
+                    resources
+                        .provider_terminal_source(&pin)
                         .map_err(|e| error(e.code, 0..0))?;
                 }
                 _ => return Err(error("external-contract-lowering-unsupported", 0..0)),

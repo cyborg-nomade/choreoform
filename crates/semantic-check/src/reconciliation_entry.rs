@@ -64,6 +64,7 @@ impl ReconciliationEntryReport {
     }
     pub fn remaining(&self) -> &'static [&'static str] {
         &[
+            "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "all-prior-reconciliation-declaration-and-host-obligations",
             "actual-followup-activation-and-live-storage-lifetime",
             "richer-ancestor-retention-snapshot-and-value-provenance-proofs",

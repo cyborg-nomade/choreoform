@@ -3,7 +3,31 @@
 
 # Near-English authoring: a working design, not final syntax
 
-The [source 0.4.0 / companion 0.3.0 profile](profile-v0.4.md) adds narrowly
+The [source 0.9.0 / companion 0.8.0 profile](profile-v0.9.md) names general
+provider fault sources once with `Recognise faults from "Source".` and retains
+short clock/basis retry clauses. It selects core 0.6/IR 0.2 and shares native
+catalogues per exact pin; actual fault history/handler entry remains separate.
+
+The [source 0.8.0 / companion 0.7.0 profile](profile-v0.8.md) adds readable
+terminal-source/origin/result capture, explicitly selecting core 0.5 and IR 0.2.
+Bounded reports disclose declarations and remaining host requirements. Owned
+recovery storage and full plain-English/tool-managed editing goals remain open.
+
+The [source 0.7.0 / companion 0.6.0 profile](profile-v0.7.md) adds an explicit
+retry fault-source clause and selects core 0.4. Typed source/provider declarations
+remain separate from actual faults or retry permission.
+
+The earlier [source 0.6.0 / companion 0.5.0 profile](profile-v0.6.md) explicitly selects
+core 0.3 and derives finite provider-recipient metadata reads. Older profiles keep
+their original cores, limits and integrity domains. Full benchmark, validation,
+editing and actual user gates remain open.
+
+The earlier [source 0.5.0 / companion 0.4.0 profile](profile-v0.5.md) adds explicit
+whole-program quotas and actual-use reconciliation endpoints for larger benchmark
+drafts. It preserves private data and older profile limits; lowering remains
+separate from semantic admission.
+
+The earlier [source 0.4.0 / companion 0.3.0 profile](profile-v0.4.md) adds narrowly
 qualified wait outcomes inside a designated reconciliation follow-up. The
 [owned service example](examples/reconciliation.choreo) remains a synthetic
 declaration/body fixture, not a complete benchmark or live handoff. See the

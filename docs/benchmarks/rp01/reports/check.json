@@ -1,0 +1,14 @@
+{
+  "executable": false,
+  "expressions": 48,
+  "policies": 34,
+  "remaining": [
+    "complete-control-flow-and-definite-output-analysis",
+    "complete-information-flow-and-access-authorization",
+    "race-and-invalidation-proofs",
+    "host-trust-and-atomic-runtime-enforcement",
+    "full-benchmark-and-conformance-evidence"
+  ],
+  "revision": "sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4",
+  "status": "static-checks-passed"
+}

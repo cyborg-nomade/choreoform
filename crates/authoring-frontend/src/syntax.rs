@@ -6,6 +6,11 @@ use std::{collections::BTreeMap, ops::Range, sync::OnceLock};
 
 const GRAMMAR: &str = include_str!("../../../docs/authoring/candidate-a.ebnf");
 const GRAMMAR_V3: &str = include_str!("../../../docs/authoring/candidate-a-v0.3.ebnf");
+const GRAMMAR_V7: &str = include_str!("../../../docs/authoring/candidate-a-v0.7.ebnf");
+const GRAMMAR_V8: &str = include_str!("../../../docs/authoring/candidate-a-v0.8.ebnf");
+const GRAMMAR_V9: &str = include_str!("../../../docs/authoring/candidate-a-v0.9.ebnf");
+const V5_TOKENS: usize = 16_384;
+const V5_WORK: usize = 1_000_000;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Kind {
@@ -56,11 +61,20 @@ pub struct Syntax<'a> {
     profile: &'static str,
     tokens: Vec<Token>,
     tree: Tree,
+    parser_work: usize,
 }
 
 impl Syntax<'_> {
     pub fn profile(&self) -> &'static str {
         self.profile
+    }
+    /// Deterministic lexical size, not semantic complexity or execution evidence.
+    pub fn token_count(&self) -> usize {
+        self.tokens.len()
+    }
+    /// Recognizer pattern visits; neither wall time nor a semantic proof.
+    pub fn parser_work(&self) -> usize {
+        self.parser_work
     }
     pub fn source(&self) -> &str {
         self.source
@@ -118,10 +132,11 @@ impl Syntax<'_> {
     }
 }
 
-fn lex(source: &str) -> Result<Vec<Token>> {
+fn lex(source: &str, program: bool) -> Result<Vec<Token>> {
     let mut tokens = Vec::new();
     let mut i = 0;
     let mut delimiters = Vec::new();
+    let mut token_limit = MAX_TOKENS;
     while i < source.len() {
         let start = i;
         let c = source[i..].chars().next().expect("nonempty UTF-8 suffix");
@@ -238,7 +253,23 @@ fn lex(source: &str) -> Result<Vec<Token>> {
             value,
             span: start..i,
         });
-        if tokens.len() > MAX_TOKENS {
+        // Only a complete explicit known header prefix selects the new closed
+        // quota. Fragments and arbitrary third strings retain legacy limits.
+        if program
+            && tokens.len() == 3
+            && tokens[0].kind == Kind::Word
+            && tokens[0].value == "Choreoform"
+            && tokens[1].kind == Kind::Word
+            && tokens[1].value == "authoring"
+            && tokens[2].kind == Kind::Text
+            && matches!(
+                tokens[2].value.as_str(),
+                "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0"
+            )
+        {
+            token_limit = V5_TOKENS;
+        }
+        if tokens.len() > token_limit {
             return Err(error("tokens", start..i));
         }
     }
@@ -337,10 +368,19 @@ impl Meta {
 }
 
 type Grammar = BTreeMap<&'static str, Pattern>;
-fn grammar(v3: bool) -> &'static Grammar {
+fn grammar(profile: &str) -> &'static Grammar {
     static COMPILED: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V3: OnceLock<Grammar> = OnceLock::new();
-    let (cache, source) = if v3 {
+    static COMPILED_V7: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V8: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V9: OnceLock<Grammar> = OnceLock::new();
+    let (cache, source) = if profile == "0.9.0" {
+        (&COMPILED_V9, GRAMMAR_V9)
+    } else if profile == "0.8.0" {
+        (&COMPILED_V8, GRAMMAR_V8)
+    } else if profile == "0.7.0" {
+        (&COMPILED_V7, GRAMMAR_V7)
+    } else if profile != "0.2.0" {
         (&COMPILED_V3, GRAMMAR_V3)
     } else {
         (&COMPILED, GRAMMAR)
@@ -372,6 +412,7 @@ struct Recognizer<'a> {
     position: usize,
     work: usize,
     furthest: usize,
+    work_limit: usize,
 }
 impl Recognizer<'_> {
     fn rule(&mut self, name: &'static str, depth: usize) -> Result<Option<Tree>> {
@@ -410,7 +451,7 @@ impl Recognizer<'_> {
     }
     fn pattern(&mut self, p: &Pattern, depth: usize) -> Result<Option<Vec<Tree>>> {
         self.work += 1;
-        if self.work > MAX_WORK || depth > 512 {
+        if self.work > self.work_limit || depth > 512 {
             return Err(error(
                 "parse-budget",
                 self.tokens
@@ -500,7 +541,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
     if source.starts_with('\u{feff}') {
         return Err(error("bom", 0..3));
     }
-    let tokens = lex(source)?;
+    let tokens = lex(source, rule == "program")?;
     let profile = if rule == "program" {
         match tokens
             .get(2)
@@ -510,12 +551,17 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
             Some("0.2.0") => "0.2.0",
             Some("0.3.0") => "0.3.0",
             Some("0.4.0") => "0.4.0",
+            Some("0.5.0") => "0.5.0",
+            Some("0.6.0") => "0.6.0",
+            Some("0.7.0") => "0.7.0",
+            Some("0.8.0") => "0.8.0",
+            Some("0.9.0") => "0.9.0",
             _ => return Err(error("profile", 0..source.len())),
         }
     } else {
         "0.2.0"
     };
-    let grammar = grammar(profile != "0.2.0");
+    let grammar = grammar(profile);
     let (&name, _) = grammar
         .get_key_value(rule)
         .ok_or_else(|| error("grammar-rule", 0..0))?;
@@ -525,6 +571,11 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
         position: 0,
         work: 0,
         furthest: 0,
+        work_limit: if matches!(profile, "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0") {
+            V5_WORK
+        } else {
+            MAX_WORK
+        },
     };
     let tree = recognizer
         .rule(name, 0)?
@@ -537,10 +588,12 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
                     .map_or(source.len()..source.len(), |t| t.span.clone()),
             )
         })?;
+    let parser_work = recognizer.work;
     Ok(Syntax {
         source,
         profile,
         tokens,
         tree,
+        parser_work,
     })
 }

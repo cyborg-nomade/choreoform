@@ -6,6 +6,8 @@ use super::*;
 impl<'a, 's> Lower<'a, 's> {
     pub(super) fn dependencies(&mut self) -> Result<()> {
         let mut dependency_work = 0;
+        let metadata_core = matches!(self.syntax.profile(), "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0");
+        let mut metadata = BTreeMap::new();
         let mut local = BTreeMap::new();
         let mut edges = BTreeMap::new();
         let mut indegrees = BTreeMap::new();
@@ -15,6 +17,7 @@ impl<'a, 's> Lower<'a, 's> {
             let p = &policy["body"];
             let mut reads = BTreeSet::new();
             let mut refs = BTreeSet::new();
+            let mut provider_refs = BTreeSet::new();
             for field in ["permit", "completion", "match", "invariant"] {
                 reads.extend(ast_reads(&p[field]));
             }
@@ -30,7 +33,7 @@ impl<'a, 's> Lower<'a, 's> {
                     .resources
                     .provider(&pin)
                     .map_err(|e| error(e.code, 0..0))?;
-                refs.extend(self.protection_policy_refs(provider.protection())?);
+                provider_refs.extend(self.protection_policy_refs(provider.protection())?);
             }
             if let Some(actor) = p["authority"].as_str() {
                 refs.insert(
@@ -66,7 +69,8 @@ impl<'a, 's> Lower<'a, 's> {
                         .resources
                         .clock(&clock_pin)
                         .map_err(|e| error(e.code, 0..0))?;
-                    refs.extend(self.protection_policy_refs(clock.source_contract().protection())?);
+                    provider_refs
+                        .extend(self.protection_policy_refs(clock.source_contract().protection())?);
                     reads.extend(ast_reads(&timer["due"]));
                     if let Some(cell) = timer["basis"].as_str() {
                         reads.insert(cell.into());
@@ -89,7 +93,8 @@ impl<'a, 's> Lower<'a, 's> {
                     .resources
                     .clock(&pin)
                     .map_err(|e| error(e.code, 0..0))?;
-                refs.extend(self.protection_policy_refs(clock.source_contract().protection())?);
+                provider_refs
+                    .extend(self.protection_policy_refs(clock.source_contract().protection())?);
                 reads.insert(
                     p["retry"]["basis"]
                         .as_str()
@@ -97,46 +102,107 @@ impl<'a, 's> Lower<'a, 's> {
                         .into(),
                 );
             }
+            let fault_source = if self.syntax.profile() == "0.9.0" {
+                &p["faultSource"]
+            } else {
+                &p["retry"]["faultSource"]
+            };
+            if !fault_source.is_null() {
+                let pin = choreoform_semantic_check::Pin::decode(fault_source)
+                    .map_err(|e| error(e.code, 0..0))?;
+                let source = self
+                    .resources
+                    .provider_fault_source(&pin)
+                    .map_err(|e| error(e.code, 0..0))?;
+                provider_refs
+                    .extend(self.protection_policy_refs(source.provider_contract().protection())?);
+            }
+            if !metadata_core {
+                refs.append(&mut provider_refs);
+            }
+            for target in &provider_refs {
+                creation::charge(&mut dependency_work, 1)?;
+                if self.body["policies"].get(target).is_none() {
+                    return Err(error("policy-reference", 0..0));
+                }
+            }
+            metadata.insert(id.clone(), provider_refs);
             for target in &refs {
                 creation::charge(&mut dependency_work, 1)?;
                 if self.body["policies"].get(target).is_none() {
                     return Err(error("policy-reference", 0..0));
                 }
-                dependents
-                    .entry(target.clone())
-                    .or_default()
-                    .push(id.clone());
+                if !metadata_core {
+                    dependents
+                        .entry(target.clone())
+                        .or_default()
+                        .push(id.clone());
+                }
             }
-            indegrees.insert(id.clone(), refs.len());
+            if !metadata_core {
+                indegrees.insert(id.clone(), refs.len());
+            }
             edges.insert(id.clone(), refs);
             local.insert(id.clone(), reads);
         }
-        let mut ready: Vec<_> = indegrees
-            .iter()
-            .filter(|(_, n)| **n == 0)
-            .map(|(id, _)| id.clone())
-            .collect();
-        let mut closure: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
-        while let Some(id) = ready.pop() {
-            let mut reads = local.remove(&id).expect("unique policy visit");
-            for dep in &edges[&id] {
-                creation::charge(&mut dependency_work, closure[dep].len() + 1)?;
-                reads.extend(closure[dep].iter().cloned());
-            }
-            closure.insert(id.clone(), reads);
-            if let Some(users) = dependents.get(&id) {
-                for user in users {
-                    let n = indegrees.get_mut(user).expect("known policy");
-                    *n -= 1;
-                    if *n == 0 {
-                        ready.push(user.clone());
+        let closure = if metadata_core {
+            let graph = local
+                .into_iter()
+                .map(|(id, reads)| {
+                    let node = choreoform_semantic_check::PolicyReadDependencies {
+                        local: reads,
+                        strong: edges.remove(&id).expect("policy edges"),
+                        metadata: metadata.remove(&id).expect("provider metadata"),
+                        metadata_cycles: true,
+                    };
+                    (id, node)
+                })
+                .collect();
+            let closure = choreoform_semantic_check::policy_read_closure(
+                &graph,
+                crate::MAX_WORK - dependency_work,
+            )
+            .map_err(|e| {
+                error(
+                    if e.code == "budget" {
+                        "work-limit"
+                    } else {
+                        e.code
+                    },
+                    0..0,
+                )
+            })?;
+            creation::charge(&mut dependency_work, closure.work)?;
+            closure.reads
+        } else {
+            let mut ready: Vec<_> = indegrees
+                .iter()
+                .filter(|(_, n)| **n == 0)
+                .map(|(id, _)| id.clone())
+                .collect();
+            let mut closure: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+            while let Some(id) = ready.pop() {
+                let mut reads = local.remove(&id).expect("unique policy visit");
+                for dep in &edges[&id] {
+                    creation::charge(&mut dependency_work, closure[dep].len() + 1)?;
+                    reads.extend(closure[dep].iter().cloned());
+                }
+                closure.insert(id.clone(), reads);
+                if let Some(users) = dependents.get(&id) {
+                    for user in users {
+                        let n = indegrees.get_mut(user).expect("known policy");
+                        *n -= 1;
+                        if *n == 0 {
+                            ready.push(user.clone());
+                        }
                     }
                 }
             }
-        }
-        if closure.len() != indegrees.len() {
-            return Err(error("policy-cycle", 0..0));
-        }
+            if closure.len() != indegrees.len() {
+                return Err(error("policy-cycle", 0..0));
+            }
+            closure
+        };
         for (id, reads) in &closure {
             self.body["policies"][id]["body"]["reads"] = set(reads.iter().cloned());
         }
@@ -283,6 +349,35 @@ impl<'a, 's> Lower<'a, 's> {
                     .iter()
                     .cloned(),
                 );
+            }
+            if node["kind"] == "wait" && !node["capture"].is_null() {
+                let pin = choreoform_semantic_check::Pin::decode(&node["capture"]["source"])
+                    .map_err(|e| error(e.code, 0..0))?;
+                let source = self
+                    .resources
+                    .provider_terminal_source(&pin)
+                    .map_err(|e| error(e.code, 0..0))?;
+                let protection = source.source_protection();
+                let participants = protection["participants"]
+                    .as_object()
+                    .ok_or_else(|| error("protection-participants", 0..0))?
+                    .len();
+                let capabilities = protection["capabilities"]
+                    .as_object()
+                    .ok_or_else(|| error("protection-capabilities", 0..0))?
+                    .len();
+                // Charge the metadata walk before cloning its referenced policy IDs.
+                creation::charge(
+                    &mut dependency_work,
+                    1 + participants + capabilities.saturating_mul(3),
+                )?;
+                for policy in self.protection_policy_refs(source.source_protection())? {
+                    let dependencies = closure
+                        .get(&policy)
+                        .ok_or_else(|| error("policy-reference", 0..0))?;
+                    creation::charge(&mut dependency_work, dependencies.len() + 1)?;
+                    reads.extend(dependencies.iter().cloned());
+                }
             }
             // Data-access protection can itself depend on data. Expand to a fixed
             // point, retaining all conservative reads and their obligations.

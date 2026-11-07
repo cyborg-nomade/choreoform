@@ -1,0 +1,24 @@
+{
+  "tag": "resubmitted",
+  "value": {
+    "claim ID": "rp01-fictional-claim",
+    "revision": "claim-v2",
+    "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+    "employee": "fictional-employee",
+    "date": "2026-11-06",
+    "amount": "12000",
+    "currency": "EUR",
+    "category": "travel",
+    "business purpose": "Fictional corpus meeting",
+    "cost allocation": "fictional-project",
+    "receipt": {
+      "tag": "provided",
+      "value": {
+        "identity": "urn:choreoform:benchmarks:rp01:receipt",
+        "revision": "receipt-v1",
+        "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+        "provenance": "synthetic fixture"
+      }
+    }
+  }
+}

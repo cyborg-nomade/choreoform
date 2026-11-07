@@ -102,14 +102,14 @@ impl Check<'_, '_> {
         }
         self.creation_dependencies()?;
         for (id, node) in object(&self.b["nodes"])? {
-            self.node(node).map_err(|mut e| {
+            self.node(id, node).map_err(|mut e| {
                 e.path = format!("/body/nodes/{id}");
                 e
             })?;
         }
         Ok(())
     }
-    fn node(&mut self, n: &Value) -> Result<()> {
+    fn node(&mut self, site: &str, n: &Value) -> Result<()> {
         let scope = text(&n["scope"])?;
         let kind = text(&n["kind"])?;
         let declared = names(&n["reads"])?;
@@ -162,6 +162,28 @@ impl Check<'_, '_> {
         match kind {
             "activity" => {
                 self.policy_kind(scope, &n["policy"], "work")?;
+                let work = &self.b["policies"][text(&n["policy"])?];
+                if retry_source_core(&self.b["dialects"][text(&work["dialect"])?]["id"])
+                    && work["body"]["retry"]["maxAttempts"]
+                        .as_u64()
+                        .is_some_and(|n| n > 1)
+                {
+                    require(
+                        n["mode"] == "capability",
+                        "retry-fault-source-context-unproved",
+                    )?;
+                    let source = self.resources.provider_fault_source(&Pin::decode(
+                        &work["body"]["retry"]["faultSource"],
+                    )?)?;
+                    let cap = self.visible(scope, "capabilities", &n["target"])?;
+                    let contract = text(&self.b["capabilities"][&cap]["contract"])?;
+                    let provider = Pin::decode(&self.b["policies"][contract]["body"]["provider"])?;
+                    require(
+                        source.provider() == &provider,
+                        "retry-fault-source-provider",
+                    )?;
+                }
+                self.general_fault_source(site, n, work)?;
                 let result = self.result_type(n)?;
                 let target_type = n["result"].as_str().map_or_else(
                     || Ok(Type::empty()),
@@ -337,6 +359,7 @@ impl Check<'_, '_> {
                             .collect(),
                     "wait-outcomes",
                 )?;
+                policies.extend(self.wait_capture(site, n, &id)?);
             }
             "finish" => require(
                 outcomes.is_empty()
@@ -350,7 +373,9 @@ impl Check<'_, '_> {
                 policies.extend(self.data_protection(text(cell)?)?);
             }
         }
-        if !matches!(kind, "activity" | "compute" | "invoke") {
+        if !matches!(kind, "activity" | "compute" | "invoke")
+            && !(kind == "wait" && !n["capture"].is_null())
+        {
             require(writes.is_empty(), "node-writes")?;
         }
         for p in policies {
@@ -392,7 +417,7 @@ impl Check<'_, '_> {
     }
     /// Direct transfer only: retain sensitivity/policy identity and never widen
     /// access sets. This does not establish whole-process information flow.
-    fn flow(&mut self, source: &Value, target: &Value) -> Result<()> {
+    pub(super) fn flow(&mut self, source: &Value, target: &Value) -> Result<()> {
         self.resources
             .budget
             .charge(crate::protection::transfer_cost(source, target)?)?;

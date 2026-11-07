@@ -50,6 +50,33 @@ while specifications, guides, and code describe the system as it exists now.
 | [0032](0032-conditional-reconciliation-availability.md) | Accepted under delegation | Check surviving follow-up bodies without inherited values |
 | [0033](0033-semantic-source-locations.md) | Accepted under delegation | Locate semantic diagnostics in original source declarations |
 
+| [0034](0034-benchmark-authoring-profile.md) | Accepted under delegation | Bound full-benchmark source and bind actual-use wait endpoints |
+
+| [0035](0035-provider-metadata-read-closure.md) | Accepted under delegation | Derive finite read closure through provider recipient metadata |
+
+| [0036](0036-metadata-core-authoring.md) | Accepted under delegation | Select finite metadata closure through an explicit source/core pair |
+
+| [0037](0037-closed-ordinary-provenance.md) | Accepted under delegation | Separate proved historical origins from live invalidation inputs |
+
+| [0038](0038-invalidation-requirements.md) | Accepted under delegation | Derive advisory ordinary requirements without bypassing strict coverage |
+
+| [0039](0039-isolated-surviving-waits.md) | Accepted under delegation | Check declared isolation of synchronous surviving waits under live P6 premises |
+
+| [0040](0040-finite-guard-snapshot-conformance.md) | Accepted under delegation | Check actual guard ASTs with finite synthetic snapshots, without execution claims |
+
+| [0041](0041-provider-fault-source-metadata.md) | Accepted under delegation | Pin declared provider observation-to-fault evidence without implicit retry authority |
+
+| [0042](0042-explicit-retry-fault-source-binding.md) | Accepted under delegation | Bind eligible provider fault sources explicitly in core 0.4 without live permission claims |
+| [0043](0043-retry-fault-source-authoring.md) | Accepted under delegation | Explicit source 0.7 retry fault-source clauses and bounded declaration disclosure |
+| [0044](0044-provider-terminal-observation-metadata.md) | Accepted under delegation | Exact declared terminal provider observations, normalized types and protection without wait binding |
+| [0045](0045-explicit-timerless-wait-capture.md) | Accepted under delegation | Versioned IR-0.2/core-0.5 timerless source/origin/result capture with complete static protection and availability boundaries |
+| [0046](0046-wait-capture-authoring.md) | Accepted under delegation | Explicit source 0.8 wait-capture authoring and bounded declaration disclosure |
+| [0047](0047-owned-local-followups.md) | Accepted under delegation | Conditional isolated fresh-local storage with retained source/control protection provenance |
+| [0048](0048-general-provider-fault-source-binding.md) | Accepted under delegation | General exact provider emission-source declarations independent of retry eligibility |
+| [0049](0049-general-fault-source-authoring.md) | Accepted under delegation | Readable source 0.9 general fault-source clauses and shared bounded native catalogues |
+| [0050](0050-provider-fault-history-metadata.md) | Accepted under delegation; pending parent/main integration | Separate provider history claims from authenticated handler entry |
+| [0051](0051-declared-fault-origin-contexts.md) | Accepted under delegation; pending parent/main integration | Retain declared emitting sites and complete handler contexts |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to

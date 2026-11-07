@@ -12,6 +12,9 @@ pub(super) struct Flow<'a> {
     pub transfers: usize,
     pub accesses: BTreeSet<AccessObligation>,
     pub dependencies: Option<Dependencies>,
+    nonlocal_writes: BTreeSet<String>,
+    pub(super) provenance: Option<BTreeMap<String, Origins>>,
+    pub(super) required_provenance: BTreeSet<RequiredProtectionProvenance>,
 }
 impl<'a> Flow<'a> {
     pub fn new(b: &'a Value, supplied: &[Resource<'_>]) -> Result<Self> {
@@ -30,6 +33,14 @@ impl<'a> Flow<'a> {
                     .entry(ProviderRole::Activity)
                     .or_default()
                     .insert(id.clone(), registry.provider(&pin)?);
+            }
+            if n["kind"] == "wait" && !n["capture"].is_null() {
+                let source =
+                    registry.provider_terminal_source(&Pin::decode(&n["capture"]["source"])?)?;
+                providers
+                    .entry(ProviderRole::Capture)
+                    .or_default()
+                    .insert(id.clone(), registry.provider(source.provider())?);
             }
             let timer = match n["kind"].as_str() {
                 Some("activity") => &b["policies"][text(&n["policy"])?]["body"]["timeout"],
@@ -54,6 +65,9 @@ impl<'a> Flow<'a> {
                 }
             }
         }
+        let provenance = providers
+            .contains_key(&ProviderRole::Capture)
+            .then(BTreeMap::new);
         Ok(Self {
             b,
             graph,
@@ -63,11 +77,60 @@ impl<'a> Flow<'a> {
             transfers: 0,
             accesses: BTreeSet::new(),
             dependencies: None,
+            nonlocal_writes: BTreeSet::new(),
+            provenance,
+            required_provenance: BTreeSet::new(),
         })
+    }
+    pub(super) fn collect_dependencies(&mut self) -> Result<()> {
+        // Static checking has verified complete write inventories and visibility.
+        // Count every declaration, not only ordinary/reachable descendants.
+        for n in object(&self.b["nodes"])?.values() {
+            self.budget.charge(object(&n["writes"])?.len() + 1)?;
+            for cell in object(&n["writes"])?.keys() {
+                if self.b["data"][cell]["scope"] != n["scope"] {
+                    self.nonlocal_writes.insert(cell.clone());
+                }
+            }
+        }
+        self.dependencies = Some(Dependencies::default());
+        Ok(())
+    }
+    fn ordinary_completed(
+        &mut self,
+        origins: Origins,
+        scope: &str,
+        boundary: &str,
+        inherited: &Origins,
+    ) -> Result<Origins> {
+        if self.dependencies.is_none() {
+            return Ok(origins);
+        }
+        self.budget.charge(origins.len())?;
+        let mut result = Origins::new();
+        for origin in origins {
+            let origin = match origin {
+                Origin::Cell(cell)
+                    if self.b["data"][&cell]["scope"] == scope
+                        && !self.nonlocal_writes.contains(&cell)
+                        && !inherited.contains(&Origin::Cell(cell.clone())) =>
+                {
+                    Origin::Historical {
+                        cell,
+                        boundary: boundary.into(),
+                    }
+                }
+                other => other,
+            };
+            result.insert(origin);
+        }
+        Ok(result)
     }
     fn label(&self, origin: &Origin) -> &Value {
         match origin {
-            Origin::Cell(id) => &self.b["data"][id]["protection"],
+            Origin::Cell(id)
+            | Origin::Historical { cell: id, .. }
+            | Origin::OwnedProvenance(id) => &self.b["data"][id]["protection"],
             Origin::Provider(site) => self.providers[&site.role][&site.node].protection(),
         }
     }
@@ -140,15 +203,39 @@ impl<'a> Flow<'a> {
         }
         Ok(())
     }
-    pub fn scope(&mut self, scope: &str, inherited: &Origins, depth: usize) -> Result<Origins> {
+    pub fn scope(
+        &mut self,
+        scope: &str,
+        inherited: &Origins,
+        depth: usize,
+        creator: Option<&str>,
+    ) -> Result<Origins> {
         self.budget.tick(depth)?;
         self.budget.charge(inherited.len())?;
         if let Some(dependencies) = &mut self.dependencies {
             self.budget.charge(inherited.len() + 1)?;
+            if let Some(site) = creator {
+                for origin in inherited {
+                    if let Origin::Historical { cell, boundary } = origin {
+                        self.budget.charge(6)?;
+                        let source_scope = text(&self.b["data"][cell]["scope"])?;
+                        dependencies.historical.insert(HistoricalOrigin {
+                            site: site.into(),
+                            cell: cell.clone(),
+                            boundary: boundary.clone(),
+                            scope: source_scope.into(),
+                            closure: text(&self.b["scopes"][source_scope]["closure"])?.into(),
+                            context_scope: Some(scope.into()),
+                        });
+                    }
+                }
+            }
             dependencies.scopes.entry(scope.into()).or_default().extend(
                 inherited.iter().filter_map(|origin| match origin {
                     Origin::Cell(cell) => Some(cell.clone()),
-                    Origin::Provider(_) => None,
+                    Origin::Provider(_)
+                    | Origin::Historical { .. }
+                    | Origin::OwnedProvenance(_) => None,
                 }),
             );
         }
@@ -180,6 +267,11 @@ impl<'a> Flow<'a> {
                 entry.extend(sources);
             }
         }
+        let mut provenance = Origins::new();
+        if self.provenance.is_some() {
+            self.budget.charge(entry.len())?;
+            provenance.extend(entry.iter().cloned());
+        }
         let mut after: BTreeMap<String, Origins> = BTreeMap::new();
         let mut completed = Origins::new();
         let order = self.graph.order[scope].clone();
@@ -210,6 +302,7 @@ impl<'a> Flow<'a> {
             // successor. Keep clock and activity providers as distinct origins.
             self.source(&id, ProviderRole::Clock, &mut pc)?;
             self.source(&id, ProviderRole::RetryClock, &mut pc)?;
+            self.source(&id, ProviderRole::Capture, &mut pc)?;
             if matches!(text(&n["kind"])?, "decision" | "activity" | "wait")
                 && let Some(dependencies) = &mut self.dependencies
             {
@@ -217,12 +310,27 @@ impl<'a> Flow<'a> {
                 // Save pre-result dependencies, unioning repeated call contexts.
                 // A site's own freshly produced result cannot invalidate itself
                 // merely because publication adds it to the outgoing context.
-                dependencies.nodes.entry(id.clone()).or_default().extend(
-                    pc.iter().chain(&reads).filter_map(|origin| match origin {
-                        Origin::Cell(cell) => Some(cell.clone()),
-                        Origin::Provider(_) => None,
-                    }),
-                );
+                let cells = dependencies.nodes.entry(id.clone()).or_default();
+                for origin in pc.iter().chain(&reads) {
+                    match origin {
+                        Origin::Cell(cell) => {
+                            cells.insert(cell.clone());
+                        }
+                        Origin::Historical { cell, boundary } => {
+                            self.budget.charge(5)?;
+                            let scope = text(&self.b["data"][cell]["scope"])?;
+                            dependencies.historical.insert(HistoricalOrigin {
+                                site: id.clone(),
+                                cell: cell.clone(),
+                                boundary: boundary.clone(),
+                                scope: scope.into(),
+                                closure: text(&self.b["scopes"][scope]["closure"])?.into(),
+                                context_scope: None,
+                            });
+                        }
+                        Origin::Provider(_) | Origin::OwnedProvenance(_) => {}
+                    }
+                }
             }
             for cell in names(&n["writes"])? {
                 let deps = self.access(&id, &cell, "write")?;
@@ -249,11 +357,15 @@ impl<'a> Flow<'a> {
                         self.access(&id, target, "transfer")?;
                         self.publish(&sources, target, &id)?;
                     }
-                    pc.extend(self.scope(child, &pc.clone(), depth + 1)?);
+                    let completed = self.scope(child, &pc.clone(), depth + 1, Some(&id))?;
+                    self.child_provenance(child, &mut provenance)?;
+                    let closed = self.ordinary_completed(completed, child, &id, &pc)?;
+                    pc.extend(closed);
                     for (port, target) in object(&n["outputs"])? {
                         let source = text(&self.b["scopes"][child]["outputs"][port])?;
                         let mut sources = pc.clone();
-                        sources.extend(self.access(&id, source, "transfer")?);
+                        let output = self.access(&id, source, "transfer")?;
+                        sources.extend(self.ordinary_completed(output, child, &id, &pc)?);
                         let target = text(target)?;
                         self.access(&id, target, "transfer")?;
                         self.publish(&sources, target, &id)?;
@@ -265,12 +377,21 @@ impl<'a> Flow<'a> {
                         self.access(&id, item, "transfer")?;
                         self.publish(&pc, item, &id)?;
                     }
-                    pc.extend(self.scope(text(&n["body"])?, &pc.clone(), depth + 1)?);
+                    let body = text(&n["body"])?;
+                    let completed = self.scope(body, &pc.clone(), depth + 1, Some(&id))?;
+                    self.child_provenance(body, &mut provenance)?;
+                    let completed = if n["kind"] == "repeat" {
+                        self.ordinary_completed(completed, body, &id, &pc)?
+                    } else {
+                        completed
+                    };
+                    pc.extend(completed);
                 }
                 "split" => {
                     let snapshot = pc.clone();
                     for child in object(&n["children"])?.values() {
-                        pc.extend(self.scope(text(child)?, &snapshot, depth + 1)?);
+                        pc.extend(self.scope(text(child)?, &snapshot, depth + 1, Some(&id))?);
+                        self.child_provenance(text(child)?, &mut provenance)?;
                     }
                 }
                 "finish" => {
@@ -286,8 +407,143 @@ impl<'a> Flow<'a> {
             }
             pc.extend(names(&n["writes"])?.into_iter().map(Origin::Cell));
             self.budget.charge(pc.len())?;
+            if self.provenance.is_some() {
+                self.budget.charge(pc.len())?;
+                provenance.extend(pc.iter().cloned());
+            }
             after.insert(id, pc);
         }
+        if let Some(contexts) = &mut self.provenance {
+            self.budget.charge(provenance.len() + 1)?;
+            contexts.entry(scope.into()).or_default().extend(provenance);
+        }
         Ok(completed)
+    }
+    fn child_provenance(&mut self, child: &str, into: &mut Origins) -> Result<()> {
+        if let Some(origins) = self
+            .provenance
+            .as_ref()
+            .and_then(|contexts| contexts.get(child))
+        {
+            self.budget.charge(origins.len())?;
+            into.extend(origins.iter().cloned());
+        }
+        Ok(())
+    }
+    pub(super) fn conditional_scope(
+        &mut self,
+        scope: &str,
+        owners: &BTreeSet<String>,
+        ordinary: &BTreeMap<String, Origins>,
+    ) -> Result<()> {
+        let mut inherited = Origins::new();
+        for owner in owners {
+            self.budget.tick(0)?;
+            let origins = ordinary
+                .get(owner)
+                .ok_or_else(|| diagnostic("owned-local-provenance-unproved", "scopes", owner))?;
+            self.budget.charge(origins.len())?;
+            for origin in origins {
+                self.budget.charge(4)?;
+                let (kind, site, role) = match origin {
+                    Origin::Cell(cell)
+                    | Origin::Historical { cell, .. }
+                    | Origin::OwnedProvenance(cell) => ("cell", cell.clone(), None),
+                    Origin::Provider(site) => (
+                        "provider",
+                        site.node.clone(),
+                        Some(match site.role {
+                            ProviderRole::Activity => "activity",
+                            ProviderRole::Clock => "clock",
+                            ProviderRole::RetryClock => "retry-clock",
+                            ProviderRole::Capture => "capture",
+                        }),
+                    ),
+                };
+                self.required_provenance
+                    .insert(RequiredProtectionProvenance {
+                        owner: owner.clone(),
+                        kind,
+                        site,
+                        role,
+                    });
+                inherited.insert(match origin {
+                    Origin::Cell(cell)
+                    | Origin::Historical { cell, .. }
+                    | Origin::OwnedProvenance(cell) => Origin::OwnedProvenance(cell.clone()),
+                    Origin::Provider(site) => Origin::Provider(site.clone()),
+                });
+            }
+        }
+        self.scope(scope, &inherited, 0, None)?;
+        Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn provenance_walks_refuse_cumulatively_before_copying_and_legacy_collection_stays_off() {
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+        let document: Value = serde_json::from_slice(include_bytes!(
+            "../../../../docs/benchmarks/rp01/candidate.ir.json"
+        ))
+        .unwrap();
+        let manifest: Value = serde_json::from_slice(include_bytes!(
+            "../../../../docs/benchmarks/rp01/manifest.json"
+        ))
+        .unwrap();
+        let owned: Vec<_> = manifest["resources"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|r| {
+                (
+                    r["id"].as_str().unwrap().to_owned(),
+                    r["revision"].as_str().unwrap().to_owned(),
+                    std::fs::read(root.join(r["path"].as_str().unwrap())).unwrap(),
+                )
+            })
+            .collect();
+        let supplied: Vec<_> = owned
+            .iter()
+            .map(|(id, revision, bytes)| Resource {
+                id,
+                revision,
+                bytes,
+            })
+            .collect();
+        let mut flow = Flow::new(&document["body"], &supplied).unwrap();
+        assert!(flow.provenance.is_none());
+        let contexts = BTreeMap::from([(
+            "payment_service".into(),
+            BTreeSet::from([
+                Origin::Cell("current_claim".into()),
+                Origin::Cell("disposition".into()),
+            ]),
+        )]);
+        flow.provenance = Some(contexts.clone());
+        flow.budget.work = 999_999;
+        let mut result = Origins::new();
+        assert_eq!(
+            flow.child_provenance("payment_service", &mut result)
+                .unwrap_err()
+                .code,
+            "budget"
+        );
+        assert!(result.is_empty());
+        flow.budget.work = 999_999;
+        assert_eq!(
+            flow.conditional_scope(
+                "payment_recovery",
+                &BTreeSet::from(["payment_service".into()]),
+                &contexts
+            )
+            .unwrap_err()
+            .code,
+            "budget"
+        );
+        assert!(flow.required_provenance.is_empty());
     }
 }

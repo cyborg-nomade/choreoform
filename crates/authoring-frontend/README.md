@@ -4,9 +4,33 @@
 # Bounded near-English authoring frontend
 
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
-profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0 and 0.4.0 /
-companion 0.3.0. This prototype produces **candidate IR**, not
+profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0, 0.4.0 /
+companion 0.3.0, 0.5.0 / companion 0.4.0, 0.6.0 / companion 0.5.0,
+0.7.0 / companion 0.6.0, 0.8.0 / companion 0.7.0 and 0.9.0 / companion 0.8.0.
+This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
+
+The [0.5.0 profile](../../docs/authoring/profile-v0.5.md) adds bounded full-program
+recognition and actual declared capability-use follow-up endpoints. Read-only
+`Syntax::token_count()` and `parser_work()` expose lexical size and native pattern
+visits, without implying semantic or runtime evidence.
+
+[Source 0.6.0](../../docs/authoring/profile-v0.6.md) selects exact core 0.3 plus
+both inherited core artifacts, deriving finite provider metadata reads within the
+existing dependency-pass work bound. Compiler output still requires semantic
+revalidation; source promotion changes the core pin and semantic revision.
+
+[Source 0.7.0](../../docs/authoring/profile-v0.7.md) explicitly binds retry fault
+sources and selects exact core 0.4 plus inherited artifacts. A bounded native
+`retryFaultBindings` view from timing onward discloses only typed declarations and
+live requirements. Older reports keep their structure; no actual fault, authority
+or retry execution is inferred. Source-provider metadata contributes complete reads.
+
+`check-invalidation` and the six composed native stages expose bounded
+`historicalOrigins`: source cells/ordinary boundaries and optional scope contexts,
+with conditional host requirements. Live ancestors and protection labels remain.
+These are declarations, not values, completion receipts or permissions; see
+[ADR-0037](../../docs/decisions/0037-closed-ordinary-provenance.md).
 
 ## API boundaries
 
@@ -127,8 +151,10 @@ Call `lower` explicitly for consistency. This is not a general IR exporter,
 transactional identity editor, safe rename/move API or production formatter.
 Tests exercise original-package format/reparse/lower cycles and declared alias edits.
 
-Source/companion are each at most 1 MiB; source at most 4,096 tokens, 64 delimiter
-levels and 100,000 recognizer pattern visits. A separate 512-call recognizer-depth
+Source/companion are each at most 1 MiB. Legacy profiles/fragments allow at most
+4,096 tokens and 100,000 recognizer pattern visits; the explicit 0.5.0/0.6.0 program
+header selects 16,384 tokens and 1,000,000 visits. Keep 64 delimiter levels and
+100,000 lowering work units. A separate 512-call recognizer-depth
 guard can refuse deeply nested legal fragments. Scope/type/expression and ledger/IR
 depth are bounded; final envelopes retain existing 1 MiB / 64-level limits.
 These are prototype budgets, not measured scalability.
@@ -181,12 +207,32 @@ missing coverage or unrepresentable context dependencies, and always remains
 non-executable. It does not withdraw work, undo effects or prove concurrency safe.
 See [ADR-0021](../../docs/decisions/0021-ordinary-invalidation.md).
 
+`invalidation-requirements SOURCE COMPANION` / `Candidate::invalidation_requirements`
+derives ordinary required and missing site/cell links without editing source or
+passing the invalidation stage. It returns a separate `InvalidationRequirements`
+type; native output says `invalidation-requirements-derived`, `advisory:true` and
+`executable:false`. Resources, protection, ancestry and private contexts must still
+be proved; an error returns no partial advice. Unvisited sites are listed separately.
+Even an empty missing set requires `check-invalidation` at the final definition
+revision, followed by later checks and host obligations. `remaining` lists the
+later gates; `requiredNextCheck` explicitly retains strict invalidation checking.
+See [ADR-0038](../../docs/decisions/0038-invalidation-requirements.md).
+
 `check-concurrency SOURCE COMPANION` / `Candidate::check_concurrency` checks the
 conservative ordinary parallel independence subset in
 [ADR-0022](../../docs/decisions/0022-ordinary-concurrency.md). It separates fresh
 local storage from shared ancestor data, refuses unproved hazards/effect overlap
 and lifetimes, and reports checked/uncovered forks. Earlier evidence and host/
 domain obligations remain; the report is non-executable.
+
+Under [ADR-0039](../../docs/decisions/0039-isolated-surviving-waits.md), synchronous
+invoke/repeat may retain an explicitly owned isolated follow-up consisting solely
+of data-free timer-free waits and finishes, with no storage, ports or nested work.
+All declarations, including unvisited ones and management dependencies, are checked.
+Split/fanout retain terminal-child requirements. `ConcurrencyReport::isolated_followups`
+and all six composed native views expose `isolatedFollowups` with creator/body/
+closure/follow-up/waits and outstanding P6 host requirements. This conditional
+declaration evidence grants no actual ownership, settlement, progress or execution.
 
 `check-timing SOURCE COMPANION` / `Candidate::check_timing` adds supported timer
 typing/clock-origin checks and immutable timer uses with required host judgments.
@@ -201,3 +247,30 @@ earlier checks. The CLI supports the same explicit resource flags and returns
 input assumptions, transfer count, access obligations and residual host/validation
 judgments. The [evidence](../../docs/evaluation/0019-protected-ordinary-transfers.md)
 explains conservative refusals and the absence of actual access authorization.
+
+[Source 0.8](../../docs/authoring/profile-v0.8.md) explicitly selects core 0.5 /
+IR 0.2 and adds `Wait under "Policy" for observations from "Source" about "Origin"
+and record in "Result".` Normal visible resource/node/data references derive
+singleton writes and complete source/destination access reads. Bare waits lower
+capture:null; older profiles keep their wire output. All native checking commands
+plus advisory invalidation requirements disclose nonempty `declaredWaitCaptures`
+from retained static reports, including unvisited sites, with host requirements.
+Rows/final JSON are bounded before stdout. No acceptance/value/activation or owned
+recovery storage follows; see [ADR-0046](../../docs/decisions/0046-wait-capture-authoring.md).
+
+When [ADR-0047](../../docs/decisions/0047-owned-local-followups.md)'s isolated
+fresh-local proof applies, concurrency and later native views add
+`ownedLocalFollowups` and `conditionalOwnedLocalChecks`, including required access,
+invalidation and owner protection-provenance declarations. These are conditional
+checks with explicit live P6 requirements, not allocated storage, actual receipts,
+accepted observations or execution. Empty evidence adds no keys to old reports;
+row/final output bounds still apply before stdout.
+
+[Source 0.9](../../docs/authoring/profile-v0.9.md) selects core 0.6/IR 0.2 and
+adds optional `Recognise faults from "Source".` to work policies. Multiple attempts
+require it and use the shorter clock/basis retry sentence; lowering derives exact
+outer/inner source agreement. All checking/advisory views add nonempty
+`declaredFaultSourceUses` plus one `declaredFaultSourceCatalogues` entry per exact
+pin, with shared row/final output bounds before stdout. Retained static reports
+supply declarations and host requirements, never actual faults/history/permissions.
+Earlier profiles/JSON stay fixed; typed entry and general editing remain open.

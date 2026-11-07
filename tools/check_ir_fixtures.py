@@ -20,6 +20,7 @@ import rfc8785
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = sorted((ROOT / "examples/ir").glob("*.json"))
 SCHEMA = json.loads((ROOT / "schemas/ir/definition-0.1.schema.json").read_text(encoding="utf-8"))
+SCHEMA_V2 = json.loads((ROOT / "schemas/ir/definition-0.2.schema.json").read_text(encoding="utf-8"))
 CONTRACTS = {
     ("urn:choreoform:semantics:adr-0008",
      "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"):
@@ -112,7 +113,7 @@ def check(document, verify_revision=True):
     """Shape and selected link checks only; dialect meaning is NOT validated."""
     scalars(document)
     try:
-        jsonschema.Draft202012Validator(SCHEMA).validate(document)
+        jsonschema.Draft202012Validator(SCHEMA_V2 if document.get("version")=="0.2.0" else SCHEMA).validate(document)
     except jsonschema.ValidationError as exc:
         reject("shape: " + exc.message)
     b = document["body"]
@@ -227,6 +228,9 @@ def check(document, verify_revision=True):
         for field in ("policy", "remaining", "changes"):
             if field in node:
                 visible(scope_id, "policies", node[field])
+        if kind == "wait" and node.get("capture") is not None:
+            ref("nodes", node["capture"]["origin"])
+            ref("data", node["capture"]["result"])
         if kind == "activity":
             visible(scope_id, "actors" if node["mode"] == "human" else "capabilities", node["target"])
             if node["result"] is not None:
@@ -500,7 +504,7 @@ class WireEvidence(unittest.TestCase):
     def test_negative_mutations(self):
         """Reject selected shape, reference, dependency, and revision defects."""
         mutations = {
-            "unknown version": lambda d: d.update(version="0.2.0"),
+            "unknown version": lambda d: d.update(version="0.3.0"),
             "unknown core field": lambda d: d["body"].update(hiddenPriority=1),
             "unknown node kind": lambda d: d["body"]["nodes"]["review"].update(kind="script"),
             "missing protection": lambda d: d["body"]["data"]["expense"].pop("protection"),

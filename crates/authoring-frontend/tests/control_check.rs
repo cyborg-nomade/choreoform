@@ -11,10 +11,16 @@ use serde_json::{Value, json};
 mod exceptional;
 #[path = "control/faults.rs"]
 mod faults;
+#[path = "control/historical.rs"]
+mod historical;
 #[path = "control/reconciliation_entry.rs"]
 mod reconciliation_entry;
+#[path = "control/requirements.rs"]
+mod requirements;
 #[path = "control/settlement.rs"]
 mod settlement;
+#[path = "control/survivors.rs"]
+mod survivors;
 
 const ROOT: &str = "scope_terminal";
 const INTEGER_MARKER: &str = "424242";
@@ -1272,7 +1278,7 @@ fn invalidation_unions_repeated_child_contexts() {
 }
 
 #[test]
-fn invalidation_does_not_invent_cross_scope_links_for_local_completion_origins() {
+fn invalidation_records_proved_history_without_inventing_cross_scope_links() {
     let mut b = base();
     child(&mut b, "child");
     cell(&mut b, "local", "child", true);
@@ -1290,7 +1296,19 @@ fn invalidation_does_not_invent_cross_scope_links_for_local_completion_origins()
     compute(&mut b, "after_child", ROOT, json!({}), json!({}));
     b["flows"]["flow_call"]["target"] = "after_child".into();
     flow(&mut b, "after_next", "after_child", "next", "node_done");
-    invalidation_refuse(b, "invalidation-context-unproved");
+    let report = check_invalidation(&envelope(protected(b)), &resources()).unwrap();
+    assert!(
+        report
+            .historical_origins()
+            .iter()
+            .any(|h| h.site() == "after_child" && h.cell() == "local" && h.boundary() == "call")
+    );
+    assert!(
+        !report
+            .obligations()
+            .iter()
+            .any(|o| o.site() == "after_child" && o.cell() == "local")
+    );
 }
 
 #[test]
@@ -1592,13 +1610,43 @@ fn concurrency_retains_pre_fork_control_reads_in_child_footprints() {
 }
 
 #[test]
-fn concurrency_refuses_nonvisible_completion_context_without_aliasing_fresh_locals() {
+fn concurrency_separates_proved_history_from_unproved_nonvisible_live_context() {
     let mut b = parallel();
     child(&mut b, "seed");
     cell(&mut b, "seed_local", "seed", true);
     b["nodes"]["seed_done"]["reads"] = json!({"seed_local":true});
     invoke(&mut b, "seed_call", "seed", json!({}));
     b["flows"]["flow_seed_call"]["target"] = "fork".into();
+    let report = check_concurrency(&envelope(protected(b.clone())), &resources()).unwrap();
+    assert!(report.checked_forks().contains("fork"));
+    assert_eq!(
+        report
+            .invalidation()
+            .historical_origins()
+            .iter()
+            .filter(|h| h.site() == "fork"
+                && h.cell() == "seed_local"
+                && h.context_scope().is_some())
+            .count(),
+        2
+    );
+    child(&mut b, "seed_writer");
+    b["scopes"]["seed_writer"]["parent"] = "seed".into();
+    compute(
+        &mut b,
+        "mutate_seed",
+        "seed_writer",
+        json!({"seed_local":"zero"}),
+        json!({}),
+    );
+    b["scopes"]["seed_writer"]["entry"] = "mutate_seed".into();
+    flow(
+        &mut b,
+        "mutate_seed_done",
+        "mutate_seed",
+        "next",
+        "seed_writer_done",
+    );
     concurrency_refuse(b, "scope-context-unproved");
 }
 

@@ -220,6 +220,68 @@ validated, and round-tripped.
   reconciliation child, preserving old lexical/data privacy without dummy root
   nodes. This closes that source binding dependency only; actual follow-up entry,
   protection, handoff, correlation and multiple-obligation lifetime stay open.
+  [ADR-0034](docs/decisions/0034-benchmark-authoring-profile.md) adds bounded
+  source 0.5.0 whole-program recognition and actual-use follow-up endpoints;
+  it does not close live ownership/lifetime or full benchmark evidence.
+  [ADR-0035](docs/decisions/0035-provider-metadata-read-closure.md) specifies
+  versioned finite provider-metadata read closure with strong/legacy cycle refusal.
+  [ADR-0036](docs/decisions/0036-metadata-core-authoring.md) adds explicit source
+  0.6 support for that core; full source adoption/benchmark/proof gates remain open.
+  [ADR-0037](docs/decisions/0037-closed-ordinary-provenance.md) proves a bounded
+  historical-origin subset for ordinary invalidation while retaining mutable
+  ancestors, protection and independent lifetime/host obligations.
+  [ADR-0038](docs/decisions/0038-invalidation-requirements.md) derives advisory
+  required/missing links without bypassing strict coverage. [ADR-0039](docs/decisions/0039-isolated-surviving-waits.md)
+  checks a synchronous isolated wait-only follow-up subset under explicit live
+  P6 premises, preserving parallel terminal requirements. The full RP-01 draft now
+  passes ten partial static stages, but its [original-scenario audit](docs/evaluation/0040-rp01-scenario-audit.md)
+  retains guard conformance, fault-source classification, late-observation capture/
+  continuation and actual ownership/race/host evidence as open work. This does not
+  close full benchmark, near-English authoring, complete validation or phase gates.
+  [ADR-0040](docs/decisions/0040-finite-guard-snapshot-conformance.md) adds 44 finite
+  source-derived guard snapshots and corrects missing payment policy-revision
+  comparisons. These test-only predicate results are neither authenticated facts
+  nor process transitions and do not complete any A–D scenario.
+  [ADR-0041](docs/decisions/0041-provider-fault-source-metadata.md) and
+  [ADR-0042](docs/decisions/0042-explicit-retry-fault-source-binding.md) pin declared
+  provider fault evidence and exact retry-use identity. [ADR-0043](docs/decisions/0043-retry-fault-source-authoring.md)
+  adds explicit source 0.7 authoring and bounded disclosure. The
+  [RP-01 adoption checkpoint](docs/evaluation/0043-rp01-adoption.md) preserves all
+  prior guards/IDs and keeps actual fault truth, late-result capture, owned
+  continuation and all scenario/phase requirements open.
+  [ADR-0044](docs/decisions/0044-provider-terminal-observation-metadata.md) pins
+  terminal source/type/protection metadata. [ADR-0045](docs/decisions/0045-explicit-timerless-wait-capture.md)
+  adds raw IR 0.2/core 0.5 timerless capture with exact source/origin/result and
+  conditional initialization. Explicit readable source support and bounded native
+  disclosure are supplied by [ADR-0046](docs/decisions/0046-wait-capture-authoring.md)
+  for source 0.8/companion 0.7. General plain-English/tool-managed editing, owned
+  recovery storage, fault data/continuation,
+  cutoff/settlement and actual host/scenario evidence remain open.
+  [ADR-0047](docs/decisions/0047-owned-local-followups.md) separately checks an
+  isolated fresh-local surviving subset, including initialization, retained source /
+  control protection provenance and strict conditional invalidation. It does not
+  allocate host storage or provide actual P6 receipts. General retention, fault
+  data, permitted continuation/cutoff/settlement and full scenario evidence stay open.
+  The [fault-entry audit](docs/evaluation/0048-fault-entry-contract-audit.md)
+  distinguishes abstract routes/retry metadata from authenticated typed handler
+  data. General emission binding, explicit versioned entry and permitted owned
+  continuation/cutoff/settlement remain dependencies before benchmark adoption.
+  [ADR-0048](docs/decisions/0048-general-provider-fault-source-binding.md) binds
+  declared provider emissions independently of retry count/eligibility in raw core
+  0.6. Readable source/native selection and typed handler data/entry remain explicit
+  next dependencies, with no actual emitted-fault or host receipt implied.
+  [ADR-0049](docs/decisions/0049-general-fault-source-authoring.md) explicitly
+  selects that core with source 0.9/companion 0.8, one readable source sentence and
+  bounded shared native catalogues. Typed history/source-control protection and
+  handler-local entry remain next; no authenticated fault or scenario exit follows.
+  [ADR-0050](docs/decisions/0050-provider-fault-history-metadata.md) specifies
+  exact nominal history/source metadata and limited untrusted claim checks. It
+  supplies no authenticated fault or handler entry; complete source/control
+  provenance, actual incoming contexts and the reviewed entry wire remain open.
+  [ADR-0051](docs/decisions/0051-declared-fault-origin-contexts.md) retains
+  declared activity/source relations and complete handler stacks in a separate
+  bounded SDK report. Unsupported/uncovered origins stay explicit; no actual
+  event, fault-control protection snapshot or handler initializer is supplied.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current
