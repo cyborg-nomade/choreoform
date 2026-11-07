@@ -61,3 +61,12 @@ merge into draft #46. Then freeze the reviewed capture representation and its
 wire/policy compatibility, P2 provenance, timerless initialization and owned-local
 lifetime requirements before code. Parent stays draft/unmerged; all forty scenarios
 Partial. No per-item owner approval or Phase 2 work is introduced.
+
+Completed-diff review of the initial implementation identified repeated derived
+name/type copies when several distinct source pins name the same exact provider.
+Before refining code, share one private immutable terminal schema by provider pin
+inside Resources, while retaining exact per-source pin/profile/provider metadata
+and source-pin caches. This is declaration sharing only, never a host/value cache.
+Test shared schema addresses across source pins and no per-lookup fresh budget;
+keep direct cumulative copy/depth tests and verify failed derivation is not cached.
+No public contract, quota, source bytes or runtime meaning changes.
