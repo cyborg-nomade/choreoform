@@ -3,7 +3,7 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-06<br>
+**Updated:** 2026-11-07<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
@@ -870,6 +870,16 @@ all native/Wasm/Python checks pass; current package bytes remain unchanged. See
 signed merge remain required. Next exact typed history/source-control protection,
 then reviewed handler-local entry and permitted owned continuation/cutoff/settlement.
 Parent #46 and all scenario/phase/external gates remain draft/open.
+
+[PR #64](https://github.com/cyborg-nomade/choreoform/pull/64) merged into draft
+#46 as `6c1d51b1b71c6463950b8aab328bfc8686ac0eb1` after required final-head CI
+`42396716472` and delegated review/comment audit `6710703021`. No actionable
+threads or summary findings existed; CodeRabbit skipped and supplies no review
+evidence. Merge explicitly carries the sign-off; ADR-0049 remains pending parent /
+main integration. Active dependency `codex/provider-fault-history` follows the
+[frozen metadata plan](0050-provider-fault-history-plan.md), keeping declaration /
+claim shape distinct from authenticated occurrence/history or handler entry.
+Parent and every scenario/phase/external gate remain draft/open.
 
 ## Honest exit accounting
 
