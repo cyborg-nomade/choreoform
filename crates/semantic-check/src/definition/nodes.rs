@@ -163,7 +163,7 @@ impl Check<'_, '_> {
             "activity" => {
                 self.policy_kind(scope, &n["policy"], "work")?;
                 let work = &self.b["policies"][text(&n["policy"])?];
-                if matches!(self.b["dialects"][text(&work["dialect"])?]["id"].as_str(),Some(id) if id==CORE_V4.0 || id==CORE_V5.0)
+                if retry_source_core(&self.b["dialects"][text(&work["dialect"])?]["id"])
                     && work["body"]["retry"]["maxAttempts"]
                         .as_u64()
                         .is_some_and(|n| n > 1)
@@ -183,6 +183,7 @@ impl Check<'_, '_> {
                         "retry-fault-source-provider",
                     )?;
                 }
+                self.general_fault_source(site, n, work)?;
                 let result = self.result_type(n)?;
                 let target_type = n["result"].as_str().map_or_else(
                     || Ok(Type::empty()),

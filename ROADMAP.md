@@ -266,6 +266,10 @@ validated, and round-tripped.
   distinguishes abstract routes/retry metadata from authenticated typed handler
   data. General emission binding, explicit versioned entry and permitted owned
   continuation/cutoff/settlement remain dependencies before benchmark adoption.
+  [ADR-0048](docs/decisions/0048-general-provider-fault-source-binding.md) binds
+  declared provider emissions independently of retry count/eligibility in raw core
+  0.6. Readable source/native selection and typed handler data/entry remain explicit
+  next dependencies, with no actual emitted-fault or host receipt implied.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

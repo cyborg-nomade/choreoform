@@ -639,3 +639,6 @@ fn core5_inherits_retry_binding_and_finite_metadata_without_weakening_legacy_cyc
 
 #[path = "capture/owned.rs"]
 mod owned;
+
+#[path = "capture/general_fault.rs"]
+mod general_fault;

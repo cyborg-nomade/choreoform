@@ -237,7 +237,7 @@ pub fn check_timing(
                 delays.push(integer(delay)?);
             }
             let core = &b["dialects"][text(&b["policies"][policy]["dialect"])?]["id"];
-            let fault_source = if core == CORE_V4.0 || core == CORE_V5.0 {
+            let fault_source = if retry_source_core(core) {
                 Some(fault_binding::collect(
                     &mut resources,
                     r,

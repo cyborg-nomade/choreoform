@@ -52,13 +52,21 @@ impl<'a> Analysis<'a> {
                     names.insert(Cow::Borrowed(name.as_str()));
                 }
             }
-            if !matches!(b["dialects"][text(&p["dialect"])?]["id"].as_str(),Some(id) if id==CORE_V4.0 || id==CORE_V5.0)
-                || p["body"]["kind"] != "work"
-                || p["body"]["retry"]["faultSource"].is_null()
-            {
+            if p["body"]["kind"] != "work" {
                 continue;
             }
-            let pin = Pin::decode(&p["body"]["retry"]["faultSource"])?;
+            let core = &b["dialects"][text(&p["dialect"])?]["id"];
+            let source = if core == CORE_V6.0 {
+                &p["body"]["faultSource"]
+            } else if retry_source_core(core) {
+                &p["body"]["retry"]["faultSource"]
+            } else {
+                continue;
+            };
+            if source.is_null() {
+                continue;
+            }
+            let pin = Pin::decode(source)?;
             if sources.insert(pin.clone()) {
                 // Resource decoding and graph/name copying share one allowance.
                 resources.budget.work = budget.work;

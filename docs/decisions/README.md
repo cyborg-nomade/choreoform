@@ -72,6 +72,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0045](0045-explicit-timerless-wait-capture.md) | Accepted under delegation | Versioned IR-0.2/core-0.5 timerless source/origin/result capture with complete static protection and availability boundaries |
 | [0046](0046-wait-capture-authoring.md) | Accepted under delegation | Explicit source 0.8 wait-capture authoring and bounded declaration disclosure |
 | [0047](0047-owned-local-followups.md) | Accepted under delegation | Conditional isolated fresh-local storage with retained source/control protection provenance |
+| [0048](0048-general-provider-fault-source-binding.md) | Accepted under delegation | General exact provider emission-source declarations independent of retry eligibility |
 
 ## When an ADR is required
 
