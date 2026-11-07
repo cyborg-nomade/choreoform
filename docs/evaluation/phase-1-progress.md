@@ -746,6 +746,22 @@ follows the [frozen source/native plan](0046-wait-capture-authoring-plan.md).
 Current package and every scenario/phase gate remain unchanged/open; owned storage,
 fault data and permitted continuation/cutoff/settlement remain later proofs.
 
+
+ADR-0046 explicit source 0.8/companion 0.7 capture is implemented under the frozen
+plan, selecting raw IR 0.2/core 0.5. Readable source/origin/result references derive
+writes and complete actual-use source/destination access reads. Eleven bounded
+native checking/advisory views disclose only declarations from retained static
+reports, including unvisited sites, with all live host requirements. Nine Rust
+integration/one final-output group and six Python groups cover version/pin/role /
+visibility/type/read/alias/hash/disclosure boundaries. A 130-capture/9,523-token
+source lowers, then all report views refuse overlarge output before stdout.
+Local 362 Rust plus six doctests and all native/Wasm/Python checks pass; full RP-01
+promoted-copy capture still refuses stored-recovery lifetime and checked-in package
+regenerates unchanged. See [evidence](0046-wait-capture-authoring.md). Final-head
+CI/comment audit/signed merge remain required. Next owned local-storage/lifetime
+proof, then explicit fault data and owned continuation/cutoff/settlement; all
+scenario, complete authoring/validator, external and phase gates stay open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

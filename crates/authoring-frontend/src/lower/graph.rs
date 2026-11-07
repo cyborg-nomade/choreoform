@@ -6,7 +6,7 @@ use super::*;
 impl<'a, 's> Lower<'a, 's> {
     pub(super) fn dependencies(&mut self) -> Result<()> {
         let mut dependency_work = 0;
-        let metadata_core = matches!(self.syntax.profile(), "0.6.0" | "0.7.0");
+        let metadata_core = matches!(self.syntax.profile(), "0.6.0" | "0.7.0" | "0.8.0");
         let mut metadata = BTreeMap::new();
         let mut local = BTreeMap::new();
         let mut edges = BTreeMap::new();
@@ -344,6 +344,35 @@ impl<'a, 's> Lower<'a, 's> {
                     .iter()
                     .cloned(),
                 );
+            }
+            if node["kind"] == "wait" && !node["capture"].is_null() {
+                let pin = choreoform_semantic_check::Pin::decode(&node["capture"]["source"])
+                    .map_err(|e| error(e.code, 0..0))?;
+                let source = self
+                    .resources
+                    .provider_terminal_source(&pin)
+                    .map_err(|e| error(e.code, 0..0))?;
+                let protection = source.source_protection();
+                let participants = protection["participants"]
+                    .as_object()
+                    .ok_or_else(|| error("protection-participants", 0..0))?
+                    .len();
+                let capabilities = protection["capabilities"]
+                    .as_object()
+                    .ok_or_else(|| error("protection-capabilities", 0..0))?
+                    .len();
+                // Charge the metadata walk before cloning its referenced policy IDs.
+                creation::charge(
+                    &mut dependency_work,
+                    1 + participants + capabilities.saturating_mul(3),
+                )?;
+                for policy in self.protection_policy_refs(source.source_protection())? {
+                    let dependencies = closure
+                        .get(&policy)
+                        .ok_or_else(|| error("policy-reference", 0..0))?;
+                    creation::charge(&mut dependency_work, dependencies.len() + 1)?;
+                    reads.extend(dependencies.iter().cloned());
+                }
             }
             // Data-access protection can itself depend on data. Expand to a fixed
             // point, retaining all conservative reads and their obligations.

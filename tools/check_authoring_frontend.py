@@ -39,7 +39,7 @@ class FrontendEvidence(unittest.TestCase):
                               ('01', 'literal'), ('-0', 'literal'), ('1.0', 'literal'), ('1with', 'literal'),
                               ('"a\\n"', 'literal'), ('"a\nb"', 'literal'), ('"\u2028"', 'literal'),
                               ('Set together empty.', 'compute'), ('any report empty', 'join_condition'),
-                              (SOURCE.replace('"0.2.0"', '"0.8.0"'), 'program')]:
+                              (SOURCE.replace('"0.2.0"', '"0.9.0"'), 'program')]:
             with self.subTest(source=source), self.assertRaises(ValueError):
                 oracle.recognize(source, rule)
             self.assertNotEqual(run('parse-fragment', rule, raw=source.encode()).returncode, 0)
