@@ -735,6 +735,17 @@ see [evidence](0045-wait-capture.md). Final-head CI/comment audit/signed merge r
 required. Next freeze explicit source/companion and bounded native disclosure,
 then owned local storage/fault-data/continuation proofs. No phase/scenario gate closes.
 
+
+[PR #59](https://github.com/cyborg-nomade/choreoform/pull/59) merged into draft
+#46 as `c65cd8faf97d43ba0fd6b095b3bf04452c1e0955` after required final-head CI
+`42362368784` and delegated self-review/comment audit `6705405325`. CodeRabbit
+skipped the nondefault target and supplies no evidence; no actionable threads or
+summary findings existed. Merge explicitly carries the sign-off. ADR-0045 remains
+pending parent/main integration. Active dependency `codex/wait-capture-authoring`
+follows the [frozen source/native plan](0046-wait-capture-authoring-plan.md).
+Current package and every scenario/phase gate remain unchanged/open; owned storage,
+fault data and permitted continuation/cutoff/settlement remain later proofs.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
