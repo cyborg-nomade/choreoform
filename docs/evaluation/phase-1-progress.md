@@ -668,6 +668,15 @@ audit remain required. Parent stays draft/incomplete/unmerged. Next audit/freeze
 wait-result/fault-data and owned continuation needs before adding any fields or
 syntax. All forty scenarios and phase gates stay unresolved.
 
+Draft #46 adoption checkpoint `a92e472e5f026474277aa8dd25ef32cc0b8ae386` passed
+required final-head CI `42355306461`. Parent comment audit found no unresolved
+threads or actionable summary finding; CodeRabbit skipped the draft and supplies
+no evidence. Delegated checkpoint review is comment `6704458877`. The parent remains
+draft/incomplete/unmerged. Active dependency `codex/late-observation-contract-audit`
+follows the [frozen lifecycle audit plan](0044-late-observation-audit-plan.md):
+resolve explicit wait capture versus fault data/owned continuation requirements
+before adding a versioned field or grammar. All scenario/phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
