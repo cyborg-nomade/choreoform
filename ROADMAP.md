@@ -253,7 +253,9 @@ validated, and round-tripped.
   terminal source/type/protection metadata. [ADR-0045](docs/decisions/0045-explicit-timerless-wait-capture.md)
   adds raw IR 0.2/core 0.5 timerless capture with exact source/origin/result and
   conditional initialization. Explicit readable source support and bounded native
-  disclosure follow separately; owned recovery storage, fault data/continuation,
+  disclosure are supplied by [ADR-0046](docs/decisions/0046-wait-capture-authoring.md)
+  for source 0.8/companion 0.7. General plain-English/tool-managed editing, owned
+  recovery storage, fault data/continuation,
   cutoff/settlement and actual host/scenario evidence remain open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh

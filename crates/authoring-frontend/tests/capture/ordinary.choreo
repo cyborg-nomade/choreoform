@@ -1,0 +1,48 @@
+Choreoform authoring "0.8.0".
+Process "Capture example".
+Start at "Request".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Stop work", faults "Unhandled faults", closure "Preserve remaining work" and races "Acceptance order".
+Require actor "Employee" under "Employee authority".
+Rule for actor "Employee authority". Permit when (((the fact "roles") contains ("expense.employee")) and ((the fact "relationships") contains ("request.submitter"))). End policy.
+Require actor "Manager" under "Manager authority".
+Rule for actor "Manager authority". Permit when ((the fact "roles") contains ("expense.manager")). End policy.
+Require actor "Finance reviewer" under "Finance reviewer authority".
+Rule for actor "Finance reviewer authority". Permit when ((the fact "roles") contains ("expense.finance")). End policy.
+Require actor "Payment operator" under "Payment operator authority".
+Rule for actor "Payment operator authority". Permit when ((the fact "roles") contains ("expense.operator")). End policy.
+Require actor "Clock observer" under "Clock observer authority".
+Rule for actor "Clock observer authority". Permit when ((the fact "roles") contains ("expense.clock")). End policy.
+Require actor "Keep the deadline fixed" under "No deadline extension".
+Rule for actor "No deadline extension". Permit when (false). End policy.
+Rule for protection "Expense access". Permit access when ((the fact "purpose") equals ("reimbursement")). End policy.
+Rule for settlement "Settle children". Unfinished work cancel. End policy.
+Rule for cancel "Stop work". Authority "Payment operator". For children use "Settle children". End policy.
+Rule for cancel "Withdraw request". Authority "Employee". For children use "Settle children". End policy.
+Rule for faults "Unhandled faults". Handle empty. End policy.
+Rule for closure "Ordinary close". Fully terminal. End policy.
+Rule for race "Acceptance order". Accept in acceptance order. End policy.
+Rule for closure "Preserve remaining work". Reconcile in "Remaining work". End policy.
+Scope "Remaining work" within "Capture example".
+Start at "Observe".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Stop work", faults "Unhandled faults", closure "Ordinary close" and races "Acceptance order".
+Step "Observe". Wait under "Recovery observations". On "observed", continue with "Release remaining owner". End step.
+Step "Release remaining owner". Finish as "complete".  End step.
+End scope.
+Use capability "Capture service" from "Provider" with input record with empty and output whole number, authority "Payment operator" and effects "Effects".
+Rule for effect "Effects". Effect is read-only. Idempotency is none. Reconcile under "Recovery observations". End policy.
+Rule for wait "Recovery observations". Observe text. Match when (true). Authority "Payment operator". Timer none. On observation outcome "observed" of "Observe" in "Remaining work" in "Capture example". On timer none. End policy.
+Rule for work "Request work". Instructions "Synthetic". Authority "Payment operator". Attempts 1. Delays empty. Retry faults empty. Timeout none. Complete when (true). Compensates none. End policy.
+Let "Request input" mean (record with empty) as record with empty with parameters empty.
+Keep "Captured result" as choice with ["confirmed" as whole number] under "Expense access".
+Sensitivity "expense". Purposes ["Reimbursement"]. Participants ["Employee", "Manager", "Finance reviewer", "Payment operator", "Clock observer"].
+Capabilities ["Capture service"]. Invalidate ["Inspect"]. Initially unavailable. End data.
+Let "Captured tag" mean (the case of (the value of "Captured result")) as text with parameters empty.
+Step "Request". Request "Capture service" using "Request input" under "Request work" and record in nothing. On "done", continue with "Capture 0". End step.
+Rule for wait "Capture policy 0". Observe choice with ["confirmed" as whole number]. Match when (true). Authority "Payment operator". Timer none. On observation outcome "observed" of "Capture 0". On timer none. End policy.
+Step "Capture 0". Wait under "Capture policy 0" for observations from "Terminal facts" about "Request" and record in "Captured result". On "observed", continue with "Inspect". End step.
+Let "Confirmed result" mean ((the case of (the value of "Captured result")) equals ("confirmed")) as truth value with parameters empty.
+Step "Inspect". Choose by ["known" when "Confirmed result"]; otherwise "other". On "known", continue with "Done". On "other", continue with "Done". End step.
+Step "Done". Finish as "complete".  End step.
+End process.

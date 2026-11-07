@@ -3,9 +3,11 @@
 
 //! Native test adapter; explicit source/companion paths, no discovery or writes.
 use choreoform_authoring_frontend::{Candidate, MAX_BYTES, Package, parse_fragment};
-use choreoform_ir_probe_core::{Resource, SUPPORTED_CONTRACTS, bounded::LimitedWriter};
+use choreoform_ir_probe_core::{Resource, SUPPORTED_CONTRACTS};
 use std::io::{Read, Write};
 
+mod capture_output;
+use capture_output::capture_output;
 mod retry_output;
 use retry_output::timing_output;
 
@@ -26,6 +28,7 @@ fn semantic_error(
 // A bounded native view of conditional declaration evidence, never values or
 // actual closure/occurrence receipts. Library callers retain the typed report.
 fn invalidation_output(
+    report: &choreoform_semantic_check::Report,
     historical: &std::collections::BTreeSet<choreoform_semantic_check::HistoricalOrigin>,
     mut value: serde_json::Value,
 ) -> Result<String, String> {
@@ -45,9 +48,7 @@ fn invalidation_output(
         origins.push(record);
     }
     value["historicalOrigins"] = origins.into();
-    let mut writer = LimitedWriter::new(Vec::new(), MAX_BYTES);
-    serde_json::to_writer(&mut writer, &value).map_err(|_| "report-budget".to_owned())?;
-    String::from_utf8(writer.into_inner()).map_err(|_| "report-json".to_owned())
+    capture_output(report, value)
 }
 fn concurrency_output(
     report: &choreoform_semantic_check::ConcurrencyReport,
@@ -66,7 +67,11 @@ fn concurrency_output(
         records.push(record);
     }
     value["isolatedFollowups"] = records.into();
-    invalidation_output(report.invalidation().historical_origins(), value)
+    invalidation_output(
+        report.invalidation().protection().control().static_report(),
+        report.invalidation().historical_origins(),
+        value,
+    )
 }
 fn read(input: impl Read) -> Result<Vec<u8>, String> {
     let mut bytes = Vec::new();
@@ -163,18 +168,25 @@ fn run() -> Result<String, String> {
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt"),
         });
     }
-    if matches!(package.syntax().profile(), "0.6.0" | "0.7.0") {
+    if matches!(package.syntax().profile(), "0.6.0" | "0.7.0" | "0.8.0") {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V3.0,
             revision: choreoform_semantic_check::CORE_V3.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt"),
         });
     }
-    if package.syntax().profile() == "0.7.0" {
+    if matches!(package.syntax().profile(), "0.7.0" | "0.8.0") {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V4.0,
             revision: choreoform_semantic_check::CORE_V4.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt"),
+        });
+    }
+    if package.syntax().profile() == "0.8.0" {
+        resources.push(Resource {
+            id: choreoform_semantic_check::CORE_V5.0,
+            revision: choreoform_semantic_check::CORE_V5.1,
+            bytes: include_bytes!("../../../docs/ir/contracts/sha256-50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7.txt"),
         });
     }
     resources.extend(extra.iter().map(|(id, revision, bytes)| Resource {
@@ -189,13 +201,19 @@ fn run() -> Result<String, String> {
         let report = candidate
             .check_static(&resources)
             .map_err(|e| semantic_error(&candidate, e))?;
-        return Ok(serde_json::json!({"status":"static-checks-passed","executable":false,"revision":report.revision(),"expressions":report.expressions(),"policies":report.policies(),"remaining":report.remaining()}).to_string());
+        return capture_output(
+            &report,
+            serde_json::json!({"status":"static-checks-passed","executable":false,"revision":report.revision(),"expressions":report.expressions(),"policies":report.policies(),"remaining":report.remaining()}),
+        );
     }
     if args[0] == "check-control" {
         let report = candidate
             .check_control(&resources)
             .map_err(|e| semantic_error(&candidate, e))?;
-        return Ok(serde_json::json!({"status":"control-checks-passed","executable":false,"revision":report.revision(),"coveredNodes":report.covered_nodes(),"uncoveredNodes":report.uncovered_nodes(),"coveredScopes":report.covered_scopes(),"requiredInputs":report.required_inputs(),"remaining":report.remaining()}).to_string());
+        return capture_output(
+            report.static_report(),
+            serde_json::json!({"status":"control-checks-passed","executable":false,"revision":report.revision(),"coveredNodes":report.covered_nodes(),"uncoveredNodes":report.uncovered_nodes(),"coveredScopes":report.covered_scopes(),"requiredInputs":report.required_inputs(),"remaining":report.remaining()}),
+        );
     }
     if args[0] == "check-protection" {
         let report = candidate
@@ -206,7 +224,10 @@ fn run() -> Result<String, String> {
             .iter()
             .map(|a| serde_json::json!({"site":a.site(),"cell":a.cell(),"operation":a.operation()}))
             .collect();
-        return Ok(serde_json::json!({"status":"protection-checks-passed","executable":false,"revision":report.revision(),"transfers":report.transfers(),"accessObligations":accesses,"coveredNodes":report.control().covered_nodes(),"uncoveredNodes":report.control().uncovered_nodes(),"requiredInputs":report.control().required_inputs(),"remaining":report.remaining()}).to_string());
+        return capture_output(
+            report.control().static_report(),
+            serde_json::json!({"status":"protection-checks-passed","executable":false,"revision":report.revision(),"transfers":report.transfers(),"accessObligations":accesses,"coveredNodes":report.control().covered_nodes(),"uncoveredNodes":report.control().uncovered_nodes(),"requiredInputs":report.control().required_inputs(),"remaining":report.remaining()}),
+        );
     }
     if args[0] == "invalidation-requirements" {
         let report = candidate
@@ -220,6 +241,7 @@ fn run() -> Result<String, String> {
                 .collect::<Vec<_>>()
         };
         return invalidation_output(
+            report.protection().control().static_report(),
             report.historical_origins(),
             serde_json::json!({"status":"invalidation-requirements-derived","advisory":true,"executable":false,"revision":report.revision(),"analyzedInvalidationNodes":report.analyzed_nodes(),"uncoveredInvalidationNodes":report.uncovered_nodes(),"requiredInvalidationObligations":pairs(report.obligations()),"missingInvalidationObligations":pairs(report.missing()),"requiredInputs":report.protection().control().required_inputs(),"remaining":report.remaining(),"requiredNextCheck":report.required_check()}),
         );
@@ -234,6 +256,7 @@ fn run() -> Result<String, String> {
             .map(|o| serde_json::json!({"site":o.site(),"cell":o.cell()}))
             .collect();
         return invalidation_output(
+            report.protection().control().static_report(),
             report.historical_origins(),
             serde_json::json!({"status":"invalidation-checks-passed","executable":false,"revision":report.revision(),"checkedInvalidationNodes":report.checked_nodes(),"uncoveredInvalidationNodes":report.uncovered_nodes(),"invalidationObligations":obligations,"coveredNodes":report.protection().control().covered_nodes(),"uncoveredNodes":report.protection().control().uncovered_nodes(),"requiredInputs":report.protection().control().required_inputs(),"remaining":report.remaining()}),
         );

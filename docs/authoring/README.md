@@ -3,6 +3,11 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.8.0 / companion 0.7.0 profile](profile-v0.8.md) adds readable
+terminal-source/origin/result capture, explicitly selecting core 0.5 and IR 0.2.
+Bounded reports disclose declarations and remaining host requirements. Owned
+recovery storage and full plain-English/tool-managed editing goals remain open.
+
 The [source 0.7.0 / companion 0.6.0 profile](profile-v0.7.md) adds an explicit
 retry fault-source clause and selects core 0.4. Typed source/provider declarations
 remain separate from actual faults or retry permission.

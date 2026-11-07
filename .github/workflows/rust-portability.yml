@@ -83,4 +83,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_late_observation_boundaries.py
           .tools/ir-check/bin/python tools/check_terminal_observation_sources.py
           .tools/ir-check/bin/python tools/check_wait_capture.py
+          .tools/ir-check/bin/python tools/check_wait_capture_authoring.py
       # Browser execution is a separate manual evidence step, not implied by CI.

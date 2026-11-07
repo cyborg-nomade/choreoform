@@ -101,3 +101,11 @@ These static sets are not runtime values or generated observations. Five structu
 and fifteen semantic integration groups additionally cover version/pin/role/type/
 protection/visibility/timer/nominal/budget boundaries and honest stored-recovery
 refusal; see [ADR-0045](../decisions/0045-explicit-timerless-wait-capture.md).
+
+[Source-capture integration fixtures](../../crates/authoring-frontend/tests/capture/ordinary.choreo)
+exercise readable IR-0.2/core-0.5 capture through the frontend. Nine Rust source /
+one native output-bound group and six Python groups cover exact versions/resources,
+normal visibility, derived reads, all declaration disclosures and honest stored-
+recovery lifetime refusal. These fixtures and promoted copies supply no actual
+observations, host/user execution or scenario completion; see
+[ADR-0046](../decisions/0046-wait-capture-authoring.md).

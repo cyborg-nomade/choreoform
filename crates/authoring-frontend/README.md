@@ -5,7 +5,9 @@
 
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
 profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0, 0.4.0 /
-companion 0.3.0, 0.5.0 / companion 0.4.0 0.6.0 / companion 0.5.0 and 0.7.0 / companion 0.6.0. This prototype produces **candidate IR**, not
+companion 0.3.0, 0.5.0 / companion 0.4.0, 0.6.0 / companion 0.5.0,
+0.7.0 / companion 0.6.0 and 0.8.0 / companion 0.7.0.
+This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
 
 The [0.5.0 profile](../../docs/authoring/profile-v0.5.md) adds bounded full-program
@@ -245,3 +247,13 @@ earlier checks. The CLI supports the same explicit resource flags and returns
 input assumptions, transfer count, access obligations and residual host/validation
 judgments. The [evidence](../../docs/evaluation/0019-protected-ordinary-transfers.md)
 explains conservative refusals and the absence of actual access authorization.
+
+[Source 0.8](../../docs/authoring/profile-v0.8.md) explicitly selects core 0.5 /
+IR 0.2 and adds `Wait under "Policy" for observations from "Source" about "Origin"
+and record in "Result".` Normal visible resource/node/data references derive
+singleton writes and complete source/destination access reads. Bare waits lower
+capture:null; older profiles keep their wire output. All native checking commands
+plus advisory invalidation requirements disclose nonempty `declaredWaitCaptures`
+from retained static reports, including unvisited sites, with host requirements.
+Rows/final JSON are bounded before stdout. No acceptance/value/activation or owned
+recovery storage follows; see [ADR-0046](../../docs/decisions/0046-wait-capture-authoring.md).
