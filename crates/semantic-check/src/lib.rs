@@ -26,7 +26,10 @@ pub use control::{ControlReport, check_control};
 pub use definition::{DeclaredFaultSourceUse, DeclaredWaitCapture, Report, check};
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};
 pub use expression::{Context, Judgment};
-pub use faults::{FaultReport, FaultRoute, FaultSelection, check_fault_routes};
+pub use faults::{
+    FaultOriginReport, FaultOriginRoute, FaultOriginSite, FaultReport, FaultRoute, FaultSelection,
+    check_fault_origins, check_fault_routes,
+};
 pub use invalidation::{
     HistoricalOrigin, InvalidationObligation, InvalidationReport, InvalidationRequirements,
     check_invalidation, derive_invalidation_requirements,

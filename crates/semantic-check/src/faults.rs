@@ -4,6 +4,8 @@
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
 mod analysis;
+mod origins;
+pub use origins::{FaultOriginReport, FaultOriginRoute, FaultOriginSite};
 
 #[derive(Debug)]
 pub struct FaultSelection {
@@ -70,6 +72,9 @@ impl FaultReport {
     pub fn timing(&self) -> &TimingReport {
         &self.timing
     }
+    pub fn static_report(&self) -> &Report {
+        static_report(&self.timing)
+    }
     /// Abstract route contexts, not initialized or authorized scope occurrences.
     pub fn checked_scopes(&self) -> &BTreeSet<String> {
         &self.covered
@@ -123,5 +128,33 @@ pub fn check_fault_routes(
     supplied: &[Resource<'_>],
 ) -> Result<FaultReport> {
     let timing = check_timing(envelope, supplied)?;
-    analysis::Analysis::new(&envelope.document()["body"], supplied)?.run(timing)
+    analysis::Analysis::new(&envelope.document()["body"], supplied, None)?
+        .run(timing)
+        .map(|(faults, _)| faults)
+}
+
+/// Declared emitting-site/context relations, not actual faults or entry values.
+pub fn check_fault_origins(
+    envelope: &DefinitionEnvelope,
+    supplied: &[Resource<'_>],
+) -> Result<FaultOriginReport> {
+    let timing = check_timing(envelope, supplied)?;
+    let analysis = analysis::Analysis::new(
+        &envelope.document()["body"],
+        supplied,
+        Some(static_report(&timing)),
+    )?;
+    let (faults, records) = analysis.run(timing)?;
+    Ok(FaultOriginReport::new(
+        faults,
+        records.expect("origin collection explicitly requested"),
+    ))
+}
+fn static_report(timing: &TimingReport) -> &Report {
+    timing
+        .concurrency()
+        .invalidation()
+        .protection()
+        .control()
+        .static_report()
 }

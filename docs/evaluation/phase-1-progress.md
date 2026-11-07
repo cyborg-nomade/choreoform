@@ -894,6 +894,32 @@ remain required. Next reviewed explicit handler entry and incoming source/contro
 contexts, then readable authoring and permitted owned continuation/cutoff/settlement.
 Parent and every scenario/phase/external gate remain draft/open.
 
+[PR #65](https://github.com/cyborg-nomade/choreoform/pull/65) merged into draft
+#46 as `b0b4771698885e50d18a085e8f3441d6ac670715` after required final-head CI
+`42397652401` and delegated review/comment audit `6710847566`. No actionable
+threads/summary findings existed; CodeRabbit skipped and supplies no review evidence.
+Merge explicitly carries the sign-off; ADR-0050 remains pending parent/main
+integration. Inspection for the next entry wire confirmed that existing routes
+retain only scope origins/last active selection, so a complete declared emitting-
+site/full-stack prerequisite is necessary first. Active dependency
+`codex/declared-fault-origins` follows its [frozen plan](0051-declared-fault-origins-plan.md).
+It cannot initialize history or close unsupported source/control/entry gates.
+Parent and every scenario/phase/external gate remain draft/open.
+
+ADR-0051 separate declared-origin SDK evidence is implemented under the frozen
+plan. Exact retained general-source uses and complete before/after handler stacks
+remain distinct from actual faults or entry. Human/null/legacy sources stay
+unsupported; unvisited/unexplored declarations and declared unhandled counts remain
+explicit. Indexed metadata/interned stacks share the routing allowance; legacy
+collection stays off. Five Rust integration/four internal groups and three Python
+groups cover exact identity, nested exclusion, nine shared vectors and cumulative
+budgets. Local 409 Rust plus six doctests and all native/Wasm/Python checks pass;
+committed package and old native reports remain unchanged. See
+[evidence](0051-declared-fault-origins.md). Final-head CI/comment audit/signed merge
+remain required. Next explicit reviewed handler-entry wire/core and complete source /
+control provenance, then readable entry and permitted continuation/cutoff/settlement.
+Parent and every scenario/phase/external gate stay draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

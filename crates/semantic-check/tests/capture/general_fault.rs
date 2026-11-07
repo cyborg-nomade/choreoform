@@ -3,7 +3,7 @@
 use super::*;
 use choreoform_semantic_check::{CORE_V6, FAULT_SOURCE_PROFILE, check_fault_routes};
 
-fn fixture() -> Fixture {
+pub(super) fn fixture() -> Fixture {
     let mut f = actual_rp01_capture();
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     f.extra.push((
