@@ -14,6 +14,8 @@ support to the Rust probe, fixture checker or a runtime.
 
 | Contract ID | Artifact (SHA-256 is the filename suffix) | Source and provenance |
 | --- | --- | --- |
+| `urn:choreoform:fault-history-profile:provider-observations:0.1.0` | [Provider fault-history metadata](sha256-2f580f46eb6ef9b7fff42906f6b0b5cafc6c5fa71ae14365828935bfe2da070c.txt) | Exact `docs/dialects/provider-fault-history.md` bytes; ADR-0050 metadata/claim shape only, pending parent/main integration; no authenticated fault/handler entry |
+| `urn:choreoform:types:provider-fault-history:0.1.0` | [Fixed history nominal type](sha256-a2e177ce1dd4bad5b9cd68b74e6da7749ec2b04b68a39dae1bd72729e2aae7a7.txt) | Exact `docs/dialects/provider-fault-history.types.json` bytes; shape only, invariant true; no event attestation |
 | `urn:choreoform:contracts:core-profile:0.5.0` | [Explicit timerless wait capture](sha256-50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7.txt) | Exact `docs/dialects/core-wait-capture-v0.5.md` bytes; IR 0.2 and all four prior core artifacts required; ADR-0045 raw SDK only, pending parent/main integration |
 | `urn:choreoform:contracts:core-profile:0.6.0` | [General provider emission-source use](sha256-27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85.txt) | Exact `docs/dialects/core-emission-source-v0.6.md` bytes; IR 0.2 and all five prior cores required; ADR-0048 raw SDK pending parent/main integration, explicit source/native support follows separately |
 | `urn:choreoform:contracts:core-profile:0.4.0` | [Explicit retry fault-source binding](sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt) | Exact `docs/dialects/core-fault-source-v0.4.md` bytes; requires exact 0.3/0.2/0.1 bases; ADR-0042 raw-core support pending parent/main integration; source 0.7 explicitly selects this core under ADR-0043; older profiles retain their cores |
@@ -30,7 +32,7 @@ support to the Rust probe, fixture checker or a runtime.
 
 Hash every byte, including the original notices and final newline. The local
 `.gitattributes` disables line-ending conversion for these snapshots. The `.txt`
-files preserve the original Markdown verbatim (the suite includes framing); relative links inside them are
+files preserve the original source bytes verbatim (the suite includes framing); relative links inside them are
 historical text interpreted in the original source location, not rebased links.
 Do not reformat, update links, or change status metadata inside a snapshot.
 Editorial changes belong in the source documents, not these artifacts. A new

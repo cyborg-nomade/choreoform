@@ -132,3 +132,12 @@ resource/provider contexts, unused-policy reads, inherited capture/owned-local v
 legacy compatibility and per-source catalogue sharing. Accepted bounded sources
 also exercise all eleven output-budget refusals before stdout. Declarations and
 promoted fixtures supply no actual fault/history/host or scenario evidence.
+
+[Provider history claim vectors](../../crates/semantic-check/tests/conformance/provider-fault-history.json)
+add twenty finite untrusted claim cases consumed by the actual Rust SDK and an
+independent Python representation/mapping model. Seven Rust integration and two
+internal cumulative-budget groups cover exact metadata/type pins, sharing, lower-
+bound protection and deliberate fabricated-value limitations. Four Python groups
+also preserve old native reports and profile/hash/licensing boundaries. These
+judgments supply no authenticated fault, handler entry or host/scenario evidence;
+see [ADR-0050](../decisions/0050-provider-fault-history-metadata.md).

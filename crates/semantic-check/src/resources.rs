@@ -13,6 +13,8 @@ pub use terminal_source::{
 };
 mod fault_source;
 pub use fault_source::{FAULT_SOURCE_PROFILE, FaultEmission, FaultEvidence, ProviderFaultSource};
+mod fault_history;
+pub use fault_history::{FAULT_HISTORY_PROFILE, FAULT_HISTORY_TYPES, ProviderFaultHistory};
 
 /// Declared provider classification, never an authenticated observation.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -169,6 +171,8 @@ pub struct Resources<'a> {
     providers: BTreeMap<Pin, Arc<Provider>>,
     instance_calendars: BTreeMap<Pin, Arc<InstanceCalendar>>,
     fault_sources: BTreeMap<Pin, Arc<ProviderFaultSource>>,
+    fault_histories: BTreeMap<Pin, Arc<ProviderFaultHistory>>,
+    fault_history_type: Option<Arc<Type>>,
     terminal_sources: BTreeMap<Pin, Arc<ProviderTerminalSource>>,
     terminal_schemas: BTreeMap<(Pin, Pin), Arc<terminal_source::TerminalSchema>>,
     pub(crate) budget: Budget,
@@ -203,6 +207,8 @@ impl<'a> Resources<'a> {
             providers: BTreeMap::new(),
             instance_calendars: BTreeMap::new(),
             fault_sources: BTreeMap::new(),
+            fault_histories: BTreeMap::new(),
+            fault_history_type: None,
             terminal_sources: BTreeMap::new(),
             terminal_schemas: BTreeMap::new(),
             budget: Budget::default(),

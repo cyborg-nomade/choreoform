@@ -881,6 +881,19 @@ main integration. Active dependency `codex/provider-fault-history` follows the
 claim shape distinct from authenticated occurrence/history or handler entry.
 Parent and every scenario/phase/external gate remain draft/open.
 
+ADR-0050 raw history metadata is implemented under the frozen plan. An exact
+source descriptor and fixed nominal type remain distinct from actual events and
+handler entry. Limited claim checks return unit only; complete source/control
+provenance and current access remain mandatory. Seven Rust integration/two budget
+groups and four Python groups cover exact pins, twenty shared claim cases, alias
+sharing, cumulative exhaustion and deliberate fabricated-value limitations. Local
+400 Rust plus six doctests and all native/Wasm/Python checks pass; committed package
+bytes and old native reports stay unchanged. See
+[evidence](0050-provider-fault-history.md). Final-head CI/comment audit/signed merge
+remain required. Next reviewed explicit handler entry and incoming source/control
+contexts, then readable authoring and permitted owned continuation/cutoff/settlement.
+Parent and every scenario/phase/external gate remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

@@ -274,6 +274,10 @@ validated, and round-tripped.
   selects that core with source 0.9/companion 0.8, one readable source sentence and
   bounded shared native catalogues. Typed history/source-control protection and
   handler-local entry remain next; no authenticated fault or scenario exit follows.
+  [ADR-0050](docs/decisions/0050-provider-fault-history-metadata.md) specifies
+  exact nominal history/source metadata and limited untrusted claim checks. It
+  supplies no authenticated fault or handler entry; complete source/control
+  provenance, actual incoming contexts and the reviewed entry wire remain open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current
