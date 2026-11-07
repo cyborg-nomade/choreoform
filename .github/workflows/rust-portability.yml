@@ -81,4 +81,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_retry_fault_binding.py
           .tools/ir-check/bin/python tools/check_fault_source_authoring.py
           .tools/ir-check/bin/python tools/check_late_observation_boundaries.py
+          .tools/ir-check/bin/python tools/check_terminal_observation_sources.py
       # Browser execution is a separate manual evidence step, not implied by CI.

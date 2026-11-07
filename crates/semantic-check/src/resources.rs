@@ -7,6 +7,10 @@ mod clock;
 pub use clock::{CLOCK_PROFILE, Clock};
 mod instance_calendar;
 pub use instance_calendar::{CALENDAR_PROFILE, InstanceCalendar};
+mod terminal_source;
+pub use terminal_source::{
+    ProviderTerminalSource, TERMINAL_OBSERVATION_PROFILE, TerminalFactTag, TerminalObservation,
+};
 mod fault_source;
 pub use fault_source::{FAULT_SOURCE_PROFILE, FaultEmission, FaultEvidence, ProviderFaultSource};
 
@@ -165,6 +169,8 @@ pub struct Resources<'a> {
     providers: BTreeMap<Pin, Arc<Provider>>,
     instance_calendars: BTreeMap<Pin, Arc<InstanceCalendar>>,
     fault_sources: BTreeMap<Pin, Arc<ProviderFaultSource>>,
+    terminal_sources: BTreeMap<Pin, Arc<ProviderTerminalSource>>,
+    terminal_schemas: BTreeMap<(Pin, Pin), Arc<terminal_source::TerminalSchema>>,
     pub(crate) budget: Budget,
 }
 impl<'a> Resources<'a> {
@@ -197,6 +203,8 @@ impl<'a> Resources<'a> {
             providers: BTreeMap::new(),
             instance_calendars: BTreeMap::new(),
             fault_sources: BTreeMap::new(),
+            terminal_sources: BTreeMap::new(),
+            terminal_schemas: BTreeMap::new(),
             budget: Budget::default(),
         })
     }

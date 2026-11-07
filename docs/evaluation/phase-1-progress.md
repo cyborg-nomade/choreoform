@@ -687,6 +687,29 @@ exact provider terminal-observation metadata/reader, followed by separately revi
 capture, owned-storage and fault-data/continuation contracts. Audit final-head
 CI/comment review/signed merge remain required. No scenario/phase gate closes.
 
+[PR #57](https://github.com/cyborg-nomade/choreoform/pull/57) merged into draft
+#46 as `dca191306dc748bea0725cb163756a0f49084fc0` after final-head CI
+`42355914677` and delegated review/comment audit `6704545336`. CodeRabbit skipped
+the stacked target and supplies no evidence; merge is explicitly signed off.
+The parent stays draft/incomplete/unmerged. Active dependency:
+`codex/provider-terminal-observations`, following the
+[frozen metadata reader plan](0044-terminal-observation-source-plan.md).
+Establish exact declared terminal source/type/protection premises without binding
+existing waits or changing source/core/wire/package semantics. Capture, owned
+storage, fault data/continuation, all scenario and phase gates remain open.
+
+ADR-0044 terminal-observation metadata is implemented under the frozen plan and
+sharing refinement. Exact provider states derive only present terminal tags/type
+and source protection; unknown/acknowledged labels stay nonterminal. Seven Rust /
+three internal budget groups plus twelve vectors and four Python groups cover
+pins, nominal identity, classification, sharing/copy bounds and no implicit binding.
+225 distinct source aliases share one exact provider/profile schema. Local 331
+Rust + six doctests and native/Wasm/all Python checks pass; current package bytes
+and reports regenerate unchanged. See [evidence](0044-terminal-observation-source.md).
+Final-head CI/comment audit/signed merge remain required. Next explicit capture
+representation/source protection/availability, then owned storage/fault data /
+continuation; all scenario and phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

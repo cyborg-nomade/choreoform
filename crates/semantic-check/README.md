@@ -363,3 +363,11 @@ construction/origin activation. Initial construction trust is separate from
 requested pause/reschedule authority. See
 [ADR-0025](../../docs/decisions/0025-instance-calendars.md) and
 [evidence](../../docs/evaluation/0025-instance-calendars.md).
+
+`Resources::provider_terminal_source` decodes exact provider terminal-observation
+metadata under [ADR-0044](../../docs/decisions/0044-provider-terminal-observation-metadata.md).
+It derives only declared terminal names/tags, exact normalized/nominal type and the
+provider result-protection envelope. Unknown/acknowledged names stay nonterminal.
+Immutable cached metadata and bounded type copies supply no wait binding, accepted
+observation, current permission, surviving value or continuation. All host gates
+remain; current source/IR/reports are unchanged.

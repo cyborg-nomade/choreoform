@@ -85,3 +85,10 @@ cargo test -p choreoform-semantic-check --lib rp01_snapshots --locked
 Finite predicates do not prove snapshot reachability, assignment/authentication,
 policy permission, mandatory acceptance prechecks, process transitions, current
 host facts or irreversible safety. See the [evidence and remaining limits](../evaluation/0040-rp01-guard-snapshots.md).
+
+The [terminal-observation metadata vectors](../../crates/semantic-check/tests/conformance/terminal-observation-sources.json)
+add twelve finite provider-state classifications: seven normalized terminal-map/type
+cases and five invalid state/outcome cases. Rust validates actual provider/source
+bytes; an independent Python oracle checks declared expectations. These are metadata
+classifications, not observations, accepted facts, wait bindings or executed scenarios;
+see [ADR-0044](../decisions/0044-provider-terminal-observation-metadata.md).
