@@ -811,6 +811,17 @@ main integration. Active dependency `codex/fault-entry-contract-audit` follows t
 fault-data representation. Actual storage/provenance/authority/handoff/cutoff /
 settlement and all scenario/phase gates remain open; parent stays draft/unmerged.
 
+
+The [fault-entry/emission audit](0048-fault-entry-contract-audit.md) records actual
+ordinary-fact, unavailable-local, handler-port, exact-name abstraction, single-
+attempt source and closed-wire refusals. One Rust/six Python groups preserve them;
+unknown provider evidence remains nonterminal. No contract/package changes.
+Recommended next dependency: explicit provider emission-source binding independent
+of retry eligibility in a new core, followed by reviewed typed history/source /
+protection and handler-local entry representation with conditional initialization /
+strict invalidation. Owned continuation/cutoff/all-settlement stays separate.
+Final-head CI/comment audit/signed merge remain required; all phase gates stay open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
