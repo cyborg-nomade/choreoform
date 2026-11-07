@@ -141,3 +141,13 @@ bound protection and deliberate fabricated-value limitations. Four Python groups
 also preserve old native reports and profile/hash/licensing boundaries. These
 judgments supply no authenticated fault, handler entry or host/scenario evidence;
 see [ADR-0050](../decisions/0050-provider-fault-history-metadata.md).
+
+[Declared fault-context vectors](../../crates/semantic-check/tests/conformance/fault-origin-contexts.json)
+add nine finite nearest-selection/full-stack/exclusion cases consumed by Rust and
+an independent declarative ancestry model. Five SDK integration groups preserve
+exact source identity, unsupported/unvisited/unexplored origins, nested stacks,
+old routes and cycle refusal. Four internal groups cover vector selection, optional
+collection and cumulative stack/row budgets; three Python groups preserve native
+compatibility and licensing. No actual fault, current source/control envelope,
+history initialization or phase/scenario evidence follows; see
+[ADR-0051](../decisions/0051-declared-fault-origin-contexts.md).

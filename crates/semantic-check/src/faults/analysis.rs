@@ -28,9 +28,14 @@ pub(super) struct Analysis<'a> {
     selections: Vec<Selection<'a>>,
     root: usize,
     budget: Budget,
+    origins: Option<origins::Builder>,
 }
 impl<'a> Analysis<'a> {
-    pub fn new(b: &'a Value, supplied: &[choreoform_ir_probe_core::Resource<'_>]) -> Result<Self> {
+    pub fn new(
+        b: &'a Value,
+        supplied: &[choreoform_ir_probe_core::Resource<'_>],
+        source_report: Option<&Report>,
+    ) -> Result<Self> {
         let mut budget = Budget::default();
         let graph = Graph::build(b, &mut budget)?;
         let reachable = graph.reachable(b, &mut budget)?;
@@ -133,12 +138,24 @@ impl<'a> Analysis<'a> {
                 children,
             });
         }
+        let origins = source_report
+            .map(|report| {
+                origins::Builder::new(
+                    b,
+                    &index,
+                    &reachable,
+                    report.fault_source_uses(),
+                    &mut budget,
+                )
+            })
+            .transpose()?;
         Ok(Self {
             scopes,
             names,
             selections,
             root: index[text(&b["root"])?],
             budget,
+            origins,
         })
     }
     fn enqueue(
@@ -225,7 +242,7 @@ impl<'a> Analysis<'a> {
         }
         Ok(())
     }
-    pub fn run(mut self, timing: TimingReport) -> Result<FaultReport> {
+    pub fn run(mut self, timing: TimingReport) -> Result<(FaultReport, Option<origins::Records>)> {
         let mut seen = BTreeSet::new();
         let mut pending = VecDeque::new();
         self.enqueue(
@@ -261,7 +278,20 @@ impl<'a> Analysis<'a> {
             }
             for fault in 0..self.names.len() {
                 self.budget.tick(0)?;
-                if let Some((target, active)) = self.select(state.scope, fault, &state.active)? {
+                let selection = self.select(state.scope, fault, &state.active)?;
+                if let Some(origins) = &mut self.origins {
+                    origins.record(
+                        state.scope,
+                        self.names[fault].as_ref(),
+                        &state.active,
+                        selection
+                            .as_ref()
+                            .map(|(target, active)| (*target, active.as_slice())),
+                        static_report(&timing).fault_source_uses(),
+                        &mut self.budget,
+                    )?;
+                }
+                if let Some((target, active)) = selection {
                     self.budget.tick(0)?;
                     let from = state.active.last().copied();
                     routes.insert(Route {
@@ -307,16 +337,154 @@ impl<'a> Analysis<'a> {
                 handler: all_scopes[s.handler].clone(),
             })
             .collect();
-        Ok(FaultReport {
-            timing,
-            scopes: all_scopes,
+        Ok((
+            FaultReport {
+                timing,
+                scopes: all_scopes,
+                selections,
+                routes,
+                covered: checked,
+                uncovered,
+                selected,
+                contexts: seen.len(),
+                unhandled,
+            },
+            self.origins.map(origins::Builder::finish),
+        ))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+    #[test]
+    fn all_finite_context_vectors_use_actual_nearest_selection_and_full_exclusion() {
+        let corpus: Value = serde_json::from_slice(include_bytes!(
+            "../../tests/conformance/fault-origin-contexts.json"
+        ))
+        .unwrap();
+        let records = corpus["scopes"].as_object().unwrap();
+        let index: BTreeMap<_, _> = records
+            .keys()
+            .enumerate()
+            .map(|(i, s)| (s.as_str(), i))
+            .collect();
+        let mut scopes = Vec::new();
+        let mut selections = Vec::new();
+        let mut labels = Vec::new();
+        for (id, s) in records {
+            let mut handlers = BTreeMap::new();
+            for (fault, target) in s["handlers"].as_object().unwrap() {
+                handlers.insert(if fault == "f" { 0 } else { 1 }, selections.len());
+                labels.push(format!("{id}:{fault}"));
+                selections.push(Selection {
+                    owner: index[id.as_str()],
+                    policy: "finite-policy",
+                    fault: if fault == "f" { 0 } else { 1 },
+                    handler: index[target.as_str().unwrap()],
+                });
+            }
+            scopes.push(Scope {
+                id,
+                parent: s["parent"].as_str().map(|p| index[p]),
+                handlers,
+                children: BTreeSet::new(),
+            });
+        }
+        let labels_index: BTreeMap<_, _> = labels
+            .iter()
+            .enumerate()
+            .map(|(i, s)| (s.as_str(), i))
+            .collect();
+        let mut analysis = Analysis {
+            scopes,
+            names: vec![Cow::Borrowed("f"), Cow::Borrowed("g")],
             selections,
-            routes,
-            covered: checked,
-            uncovered,
-            selected,
-            contexts: seen.len(),
-            unhandled,
-        })
+            root: index["root"],
+            budget: Budget::default(),
+            origins: None,
+        };
+        assert_eq!(corpus["cases"].as_array().unwrap().len(), 9);
+        for c in corpus["cases"].as_array().unwrap() {
+            let before: Vec<_> = c["active"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| labels_index[v.as_str().unwrap()])
+                .collect();
+            let result = analysis
+                .select(
+                    index[c["origin"].as_str().unwrap()],
+                    if c["fault"] == "f" { 0 } else { 1 },
+                    &before,
+                )
+                .unwrap();
+            if c["selected"].is_null() {
+                assert!(result.is_none(), "{}", c["id"]);
+            } else {
+                let (selected, after) = result.unwrap();
+                assert_eq!(labels[selected], c["selected"].as_str().unwrap());
+                assert_eq!(
+                    json!(after.iter().map(|i| &labels[*i]).collect::<Vec<_>>()),
+                    c["after"],
+                    "{}",
+                    c["id"]
+                );
+            }
+        }
+    }
+    #[test]
+    fn optional_collection_off_constructs_no_origin_index_or_context_storage() {
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+        let current: Value = serde_json::from_slice(include_bytes!(
+            "../../../../docs/benchmarks/rp01/candidate.ir.json"
+        ))
+        .unwrap();
+        let envelope = choreoform_ir_probe_core::DefinitionEnvelope::from_parts(
+            current["body"].clone(),
+            current["annotations"].clone(),
+        )
+        .unwrap();
+        let manifest: Value = serde_json::from_slice(include_bytes!(
+            "../../../../docs/benchmarks/rp01/manifest.json"
+        ))
+        .unwrap();
+        let mut owned: Vec<_> = manifest["resources"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| {
+                (
+                    v["id"].as_str().unwrap(),
+                    v["revision"].as_str().unwrap(),
+                    std::fs::read(root.join(v["path"].as_str().unwrap())).unwrap(),
+                )
+            })
+            .collect();
+        for pin in [SEMANTICS, CORE, CORE_V2, CORE_V3, CORE_V4] {
+            owned.push((
+                pin.0,
+                pin.1,
+                std::fs::read(
+                    root.join(format!("docs/ir/contracts/{}.txt", pin.1.replace(':', "-"))),
+                )
+                .unwrap(),
+            ));
+        }
+        let supplied: Vec<_> = owned
+            .iter()
+            .map(|(id, revision, bytes)| Resource {
+                id,
+                revision,
+                bytes,
+            })
+            .collect();
+        let report = check(&envelope, &supplied).unwrap();
+        let legacy = Analysis::new(&current["body"], &supplied, None).unwrap();
+        let enriched = Analysis::new(&current["body"], &supplied, Some(&report)).unwrap();
+        assert!(legacy.origins.is_none());
+        assert!(enriched.origins.is_some());
+        assert!(enriched.budget.work > legacy.budget.work);
     }
 }

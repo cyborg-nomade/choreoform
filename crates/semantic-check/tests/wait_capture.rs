@@ -642,3 +642,6 @@ mod owned;
 
 #[path = "capture/general_fault.rs"]
 mod general_fault;
+
+#[path = "capture/origins.rs"]
+mod origins;

@@ -278,6 +278,10 @@ validated, and round-tripped.
   exact nominal history/source metadata and limited untrusted claim checks. It
   supplies no authenticated fault or handler entry; complete source/control
   provenance, actual incoming contexts and the reviewed entry wire remain open.
+  [ADR-0051](docs/decisions/0051-declared-fault-origin-contexts.md) retains
+  declared activity/source relations and complete handler stacks in a separate
+  bounded SDK report. Unsupported/uncovered origins stay explicit; no actual
+  event, fault-control protection snapshot or handler initializer is supplied.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

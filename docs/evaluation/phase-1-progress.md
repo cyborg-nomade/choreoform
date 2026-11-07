@@ -906,6 +906,20 @@ site/full-stack prerequisite is necessary first. Active dependency
 It cannot initialize history or close unsupported source/control/entry gates.
 Parent and every scenario/phase/external gate remain draft/open.
 
+ADR-0051 separate declared-origin SDK evidence is implemented under the frozen
+plan. Exact retained general-source uses and complete before/after handler stacks
+remain distinct from actual faults or entry. Human/null/legacy sources stay
+unsupported; unvisited/unexplored declarations and declared unhandled counts remain
+explicit. Indexed metadata/interned stacks share the routing allowance; legacy
+collection stays off. Five Rust integration/four internal groups and three Python
+groups cover exact identity, nested exclusion, nine shared vectors and cumulative
+budgets. Local 409 Rust plus six doctests and all native/Wasm/Python checks pass;
+committed package and old native reports remain unchanged. See
+[evidence](0051-declared-fault-origins.md). Final-head CI/comment audit/signed merge
+remain required. Next explicit reviewed handler-entry wire/core and complete source /
+control provenance, then readable entry and permitted continuation/cutoff/settlement.
+Parent and every scenario/phase/external gate stay draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
