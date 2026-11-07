@@ -6,8 +6,9 @@ use choreoform_authoring_frontend::{Candidate, MAX_BYTES, Package, parse_fragmen
 use choreoform_ir_probe_core::{Resource, SUPPORTED_CONTRACTS};
 use std::io::{Read, Write};
 
-mod capture_output;
-use capture_output::capture_output;
+mod static_output;
+use static_output::static_output;
+mod fault_use_output;
 mod owned_output;
 mod retry_output;
 use retry_output::timing_output;
@@ -49,7 +50,7 @@ fn invalidation_output(
         origins.push(record);
     }
     value["historicalOrigins"] = origins.into();
-    capture_output(report, value)
+    static_output(report, value)
 }
 fn concurrency_output(
     report: &choreoform_semantic_check::ConcurrencyReport,
@@ -172,25 +173,35 @@ fn run() -> Result<String, String> {
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt"),
         });
     }
-    if matches!(package.syntax().profile(), "0.6.0" | "0.7.0" | "0.8.0") {
+    if matches!(
+        package.syntax().profile(),
+        "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0"
+    ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V3.0,
             revision: choreoform_semantic_check::CORE_V3.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt"),
         });
     }
-    if matches!(package.syntax().profile(), "0.7.0" | "0.8.0") {
+    if matches!(package.syntax().profile(), "0.7.0" | "0.8.0" | "0.9.0") {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V4.0,
             revision: choreoform_semantic_check::CORE_V4.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt"),
         });
     }
-    if package.syntax().profile() == "0.8.0" {
+    if matches!(package.syntax().profile(), "0.8.0" | "0.9.0") {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V5.0,
             revision: choreoform_semantic_check::CORE_V5.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7.txt"),
+        });
+    }
+    if package.syntax().profile() == "0.9.0" {
+        resources.push(Resource {
+            id: choreoform_semantic_check::CORE_V6.0,
+            revision: choreoform_semantic_check::CORE_V6.1,
+            bytes: include_bytes!("../../../docs/ir/contracts/sha256-27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85.txt"),
         });
     }
     resources.extend(extra.iter().map(|(id, revision, bytes)| Resource {
@@ -205,7 +216,7 @@ fn run() -> Result<String, String> {
         let report = candidate
             .check_static(&resources)
             .map_err(|e| semantic_error(&candidate, e))?;
-        return capture_output(
+        return static_output(
             &report,
             serde_json::json!({"status":"static-checks-passed","executable":false,"revision":report.revision(),"expressions":report.expressions(),"policies":report.policies(),"remaining":report.remaining()}),
         );
@@ -214,7 +225,7 @@ fn run() -> Result<String, String> {
         let report = candidate
             .check_control(&resources)
             .map_err(|e| semantic_error(&candidate, e))?;
-        return capture_output(
+        return static_output(
             report.static_report(),
             serde_json::json!({"status":"control-checks-passed","executable":false,"revision":report.revision(),"coveredNodes":report.covered_nodes(),"uncoveredNodes":report.uncovered_nodes(),"coveredScopes":report.covered_scopes(),"requiredInputs":report.required_inputs(),"remaining":report.remaining()}),
         );
@@ -228,7 +239,7 @@ fn run() -> Result<String, String> {
             .iter()
             .map(|a| serde_json::json!({"site":a.site(),"cell":a.cell(),"operation":a.operation()}))
             .collect();
-        return capture_output(
+        return static_output(
             report.control().static_report(),
             serde_json::json!({"status":"protection-checks-passed","executable":false,"revision":report.revision(),"transfers":report.transfers(),"accessObligations":accesses,"coveredNodes":report.control().covered_nodes(),"uncoveredNodes":report.control().uncovered_nodes(),"requiredInputs":report.control().required_inputs(),"remaining":report.remaining()}),
         );

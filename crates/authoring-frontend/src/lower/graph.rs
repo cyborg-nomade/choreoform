@@ -6,7 +6,7 @@ use super::*;
 impl<'a, 's> Lower<'a, 's> {
     pub(super) fn dependencies(&mut self) -> Result<()> {
         let mut dependency_work = 0;
-        let metadata_core = matches!(self.syntax.profile(), "0.6.0" | "0.7.0" | "0.8.0");
+        let metadata_core = matches!(self.syntax.profile(), "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0");
         let mut metadata = BTreeMap::new();
         let mut local = BTreeMap::new();
         let mut edges = BTreeMap::new();
@@ -102,8 +102,13 @@ impl<'a, 's> Lower<'a, 's> {
                         .into(),
                 );
             }
-            if !p["retry"]["faultSource"].is_null() {
-                let pin = choreoform_semantic_check::Pin::decode(&p["retry"]["faultSource"])
+            let fault_source = if self.syntax.profile() == "0.9.0" {
+                &p["faultSource"]
+            } else {
+                &p["retry"]["faultSource"]
+            };
+            if !fault_source.is_null() {
+                let pin = choreoform_semantic_check::Pin::decode(fault_source)
                     .map_err(|e| error(e.code, 0..0))?;
                 let source = self
                     .resources

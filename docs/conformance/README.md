@@ -125,3 +125,10 @@ eligibility under prevalidated stable-key metadata. Rust checks actual raw SDK
 judgments; an independent Python rule model checks expectations. No actual emission,
 retry permission or source authentication follows; see
 [ADR-0048](../decisions/0048-general-provider-fault-source-binding.md).
+
+[Source 0.9 integration](../evaluation/0049-general-fault-source-authoring.md)
+adds eight Rust and six Python groups for readable general-source binding, exact
+resource/provider contexts, unused-policy reads, inherited capture/owned-local views,
+legacy compatibility and per-source catalogue sharing. Accepted bounded sources
+also exercise all eleven output-budget refusals before stdout. Declarations and
+promoted fixtures supply no actual fault/history/host or scenario evidence.

@@ -127,7 +127,7 @@ class FaultSourceAuthoringEvidence(unittest.TestCase):
         for stage in STAGES:
             result=invoke((s,l,p[2]),stage);self.assertEqual(result.returncode,0,result.stderr)
             self.assertNotIn('retryFaultBindings',json.loads(result.stdout))
-        with self.assertRaises(ValueError):grammar.recognize('Choreoform authoring "0.9.0". '+'bad '*5000)
+        with self.assertRaises(ValueError):grammar.recognize('Choreoform authoring "1.0.0". '+'bad '*5000)
 
     def test_source_only_metadata_reads_are_derived_in_unused_work(self):
         s,l,r=package()

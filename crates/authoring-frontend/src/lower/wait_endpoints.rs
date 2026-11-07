@@ -27,8 +27,10 @@ impl<'a, 's> Lower<'a, 's> {
         let scope_lookup = self.ledger.resolve(scope, &parts[1..], "scope");
         let target = match scope_lookup {
             Err(e)
-                if matches!(self.syntax.profile(), "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0")
-                    && e.code == "reference-missing" =>
+                if matches!(
+                    self.syntax.profile(),
+                    "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0"
+                ) && e.code == "reference-missing" =>
             {
                 self.ledger.endpoint_scope(scope, &parts[1..])
             }
@@ -42,10 +44,12 @@ impl<'a, 's> Lower<'a, 's> {
             .as_str()
             .expect("bound closure");
         let close = &self.body["policies"][closure]["body"];
-        if !matches!(self.syntax.profile(), "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0")
-            && (target.scope.as_deref() != Some(scope)
-                || close["mode"] != "reconcile"
-                || close["followup"] != target.id)
+        if !matches!(
+            self.syntax.profile(),
+            "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0"
+        ) && (target.scope.as_deref() != Some(scope)
+            || close["mode"] != "reconcile"
+            || close["followup"] != target.id)
         {
             return Err(error("wait-endpoint-boundary", self.syntax.span(reference)));
         }
@@ -120,7 +124,10 @@ impl<'a, 's> Lower<'a, 's> {
         // One immutable declared-use index, not a runtime ownership/permission
         // cache and not a full node scan for every exported observation/timer.
         let mut uses: BTreeMap<&str, BTreeSet<&str>> = BTreeMap::new();
-        if matches!(self.syntax.profile(), "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0") {
+        if matches!(
+            self.syntax.profile(),
+            "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0"
+        ) {
             for node in self.body["nodes"].as_object().expect("nodes").values() {
                 if node["kind"] != "activity" || node["mode"] != "capability" {
                     continue;
@@ -144,7 +151,10 @@ impl<'a, 's> Lower<'a, 's> {
             if n["kind"] != "wait" || n["policy"] != *policy || n["scope"] != *scope {
                 return Err(error("wait-endpoint-owner", span.clone()));
             }
-            if matches!(self.syntax.profile(), "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0") {
+            if matches!(
+                self.syntax.profile(),
+                "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0"
+            ) {
                 let declaring_scope = self.body["policies"][policy]["scope"]
                     .as_str()
                     .expect("bound policy scope");

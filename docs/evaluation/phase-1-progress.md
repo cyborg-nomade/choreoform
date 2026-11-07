@@ -859,6 +859,18 @@ integration. Active dependency `codex/general-fault-source-authoring` follows th
 Current package, typed history/handler entry, continuation/cutoff/settlement and
 all actual source/host/scenario/phase gates remain unchanged/open.
 
+ADR-0049 source 0.9 / companion 0.8 integration is implemented under the frozen
+plan. Readable work policies name general sources once, reuse exact pins for retry
+and derive complete source protection reads. All eleven native checking views
+return retained use rows and per-source catalogues within shared/final output
+bounds. Eight Rust and six Python groups cover version/resource/provider/context /
+read/compatibility/sharing/budget boundaries. Local 391 Rust plus six doctests and
+all native/Wasm/Python checks pass; current package bytes remain unchanged. See
+[evidence](0049-general-fault-source-authoring.md). Final-head CI/comment audit /
+signed merge remain required. Next exact typed history/source-control protection,
+then reviewed handler-local entry and permitted owned continuation/cutoff/settlement.
+Parent #46 and all scenario/phase/external gates remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

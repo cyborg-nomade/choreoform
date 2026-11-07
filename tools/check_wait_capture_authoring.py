@@ -114,7 +114,7 @@ class WaitCaptureAuthoringEvidence(unittest.TestCase):
         self.assertEqual(set(old_rules),set(new_rules));self.assertEqual({k:v for k,v in old_rules.items() if k!='wait'},{k:v for k,v in new_rules.items() if k!='wait'})
         for profile in ['0.2.0','0.3.0','0.4.0','0.5.0','0.6.0','0.7.0']:
             with self.assertRaises(ValueError):grammar.recognize(p[0].replace('authoring "0.8.0"',f'authoring "{profile}"'))
-        with self.assertRaises(ValueError):grammar.recognize('Choreoform authoring "0.9.0". '+'bad '*5000)
+        with self.assertRaises(ValueError):grammar.recognize('Choreoform authoring "1.0.0". '+'bad '*5000)
         for mutation,code in [('pair',b'ledger-profile'),('pin',b'contract-pin'),('kind',b'resource-format'),('missing_source',b'resource-missing-or-ambiguous'),('missing_profile',b'resource-missing'),('corrupt_profile',b'resource-digest')]:
             s,l,r=deepcopy(p)
             if mutation=='pair':l['version']='0.6.0'

@@ -6,7 +6,7 @@
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
 profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0, 0.4.0 /
 companion 0.3.0, 0.5.0 / companion 0.4.0, 0.6.0 / companion 0.5.0,
-0.7.0 / companion 0.6.0 and 0.8.0 / companion 0.7.0.
+0.7.0 / companion 0.6.0, 0.8.0 / companion 0.7.0 and 0.9.0 / companion 0.8.0.
 This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
 
@@ -265,3 +265,12 @@ invalidation and owner protection-provenance declarations. These are conditional
 checks with explicit live P6 requirements, not allocated storage, actual receipts,
 accepted observations or execution. Empty evidence adds no keys to old reports;
 row/final output bounds still apply before stdout.
+
+[Source 0.9](../../docs/authoring/profile-v0.9.md) selects core 0.6/IR 0.2 and
+adds optional `Recognise faults from "Source".` to work policies. Multiple attempts
+require it and use the shorter clock/basis retry sentence; lowering derives exact
+outer/inner source agreement. All checking/advisory views add nonempty
+`declaredFaultSourceUses` plus one `declaredFaultSourceCatalogues` entry per exact
+pin, with shared row/final output bounds before stdout. Retained static reports
+supply declarations and host requirements, never actual faults/history/permissions.
+Earlier profiles/JSON stay fixed; typed entry and general editing remain open.

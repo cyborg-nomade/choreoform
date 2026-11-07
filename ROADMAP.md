@@ -270,6 +270,10 @@ validated, and round-tripped.
   declared provider emissions independently of retry count/eligibility in raw core
   0.6. Readable source/native selection and typed handler data/entry remain explicit
   next dependencies, with no actual emitted-fault or host receipt implied.
+  [ADR-0049](docs/decisions/0049-general-fault-source-authoring.md) explicitly
+  selects that core with source 0.9/companion 0.8, one readable source sentence and
+  bounded shared native catalogues. Typed history/source-control protection and
+  handler-local entry remain next; no authenticated fault or scenario exit follows.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current
