@@ -32,6 +32,14 @@ impl<'a> Flow<'a> {
                     .or_default()
                     .insert(id.clone(), registry.provider(&pin)?);
             }
+            if n["kind"] == "wait" && !n["capture"].is_null() {
+                let source =
+                    registry.provider_terminal_source(&Pin::decode(&n["capture"]["source"])?)?;
+                providers
+                    .entry(ProviderRole::Capture)
+                    .or_default()
+                    .insert(id.clone(), registry.provider(source.provider())?);
+            }
             let timer = match n["kind"].as_str() {
                 Some("activity") => &b["policies"][text(&n["policy"])?]["body"]["timeout"],
                 Some("wait") => &b["policies"][text(&n["policy"])?]["body"]["timer"],
@@ -280,6 +288,7 @@ impl<'a> Flow<'a> {
             // successor. Keep clock and activity providers as distinct origins.
             self.source(&id, ProviderRole::Clock, &mut pc)?;
             self.source(&id, ProviderRole::RetryClock, &mut pc)?;
+            self.source(&id, ProviderRole::Capture, &mut pc)?;
             if matches!(text(&n["kind"])?, "decision" | "activity" | "wait")
                 && let Some(dependencies) = &mut self.dependencies
             {

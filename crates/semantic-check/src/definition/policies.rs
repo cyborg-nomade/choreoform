@@ -204,7 +204,7 @@ impl Check<'_, '_> {
                 refs.insert(self.actor(scope, &p["authority"])?);
                 let retry = &p["retry"];
                 let core = &self.b["dialects"][text(&r["dialect"])?]["id"];
-                let retry_v4 = core == CORE_V4.0;
+                let retry_v4 = core == CORE_V4.0 || core == CORE_V5.0;
                 let retry_v2 = core == CORE_V2.0 || metadata_core(core);
                 fields(
                     retry,

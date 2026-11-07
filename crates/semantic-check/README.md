@@ -371,3 +371,13 @@ provider result-protection envelope. Unknown/acknowledged names stay nonterminal
 Immutable cached metadata and bounded type copies supply no wait binding, accepted
 observation, current permission, surviving value or continuation. All host gates
 remain; current source/IR/reports are unchanged.
+
+[ADR-0045](../../docs/decisions/0045-explicit-timerless-wait-capture.md) adds raw
+IR-0.2/core-0.5 timerless wait capture. `Report::capture_bindings()` exposes declared
+revision/site/source/profile/provider/origin/result metadata and live requirements,
+including unvisited declarations, never an accepted value or occurrence. The same
+static report is available through `ControlReport::static_report()` and subsequent
+composed reports. Source-provider and destination types/labels/dependencies remain
+checked at actual scopes; type-equality caches retain no permission or value truth.
+Old source/native package output stays unchanged. Authoring and owned recovery
+storage/continuation require separate explicit work.

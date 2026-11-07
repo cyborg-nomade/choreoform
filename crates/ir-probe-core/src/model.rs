@@ -44,6 +44,27 @@ ids!(
     OccurrenceId
 );
 
+/// A structural external reference, not verified resource bytes or host support.
+#[derive(Debug)]
+pub struct ArtifactRef {
+    id: String,
+    revision: String,
+}
+impl ArtifactRef {
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+    pub fn revision(&self) -> &str {
+        &self.revision
+    }
+}
+#[derive(Debug)]
+pub struct WaitCapture {
+    pub source: ArtifactRef,
+    pub origin: NodeId,
+    pub result: DataId,
+}
+
 #[derive(Debug)]
 pub enum ActivityTarget {
     Human(ActorId),
@@ -80,6 +101,7 @@ pub enum NodeKind {
     },
     Wait {
         policy: PolicyId,
+        capture: Option<WaitCapture>,
     },
     Repeat {
         body: ScopeId,
@@ -226,7 +248,7 @@ fn predicate(value: &Value) -> Result<()> {
 }
 
 impl Graph {
-    pub(crate) fn read(body: &Value) -> Result<Self> {
+    pub(crate) fn read(body: &Value, v2: bool) -> Result<Self> {
         let mut all_ids = BTreeSet::new();
         for map in MAPS {
             for key in object(&body[map])?.keys() {
@@ -376,7 +398,7 @@ impl Graph {
                 .into_iter()
                 .map(DataId)
                 .collect();
-            let kind = read_kind(body, node)?;
+            let kind = read_kind(body, node, v2)?;
             nodes.insert(
                 NodeId(key.clone()),
                 Node {
@@ -424,7 +446,7 @@ fn trace_scope(body: &Value, start: &str, rooted: &mut BTreeSet<String>) -> Resu
     Ok(edges)
 }
 
-fn read_kind(body: &Value, node: &Value) -> Result<NodeKind> {
+fn read_kind(body: &Value, node: &Value, v2: bool) -> Result<NodeKind> {
     let name = string(&node["kind"])?;
     let extra: &[&str] = match name {
         "activity" => &["mode", "target", "input", "result", "policy"],
@@ -433,6 +455,7 @@ fn read_kind(body: &Value, node: &Value) -> Result<NodeKind> {
         "decision" => &["guards", "default"],
         "split" => &["children", "join"],
         "join" => &["source", "predicate", "remaining"],
+        "wait" if v2 => &["policy", "capture"],
         "wait" => &["policy"],
         "repeat" => &["body", "condition"],
         "fanout" => &[
@@ -523,9 +546,38 @@ fn read_kind(body: &Value, node: &Value) -> Result<NodeKind> {
                 remaining: PolicyId(r("policies", "remaining")?),
             }
         }
-        "wait" => NodeKind::Wait {
-            policy: PolicyId(r("policies", "policy")?),
-        },
+        "wait" => {
+            let capture = if v2 && !node["capture"].is_null() {
+                let c = &node["capture"];
+                fields(c, &["source", "origin", "result"], &[])?;
+                fields(&c["source"], &["id", "revision"], &[])?;
+                let source_id = string(&c["source"]["id"])?;
+                let revision = string(&c["source"]["revision"])?;
+                if source_id.is_empty()
+                    || revision.len() != 71
+                    || !revision.starts_with("sha256:")
+                    || !revision[7..]
+                        .bytes()
+                        .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+                {
+                    return Err(Error::Shape);
+                }
+                Some(WaitCapture {
+                    source: ArtifactRef {
+                        id: source_id.into(),
+                        revision: revision.into(),
+                    },
+                    origin: NodeId(reference(body, "nodes", &c["origin"])?),
+                    result: DataId(reference(body, "data", &c["result"])?),
+                })
+            } else {
+                None
+            };
+            NodeKind::Wait {
+                policy: PolicyId(r("policies", "policy")?),
+                capture,
+            }
+        }
         "repeat" => NodeKind::Repeat {
             body: ScopeId(r("scopes", "body")?),
             condition: ExpressionId(r("expressions", "condition")?),

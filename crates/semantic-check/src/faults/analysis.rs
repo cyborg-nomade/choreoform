@@ -52,7 +52,7 @@ impl<'a> Analysis<'a> {
                     names.insert(Cow::Borrowed(name.as_str()));
                 }
             }
-            if b["dialects"][text(&p["dialect"])?]["id"] != CORE_V4.0
+            if !matches!(b["dialects"][text(&p["dialect"])?]["id"].as_str(),Some(id) if id==CORE_V4.0 || id==CORE_V5.0)
                 || p["body"]["kind"] != "work"
                 || p["body"]["retry"]["faultSource"].is_null()
             {

@@ -18,6 +18,10 @@ pub struct ControlReport {
     required_inputs: BTreeSet<String>,
 }
 impl ControlReport {
+    /// The same checked static report retained by this composed result; no rerun.
+    pub fn static_report(&self) -> &Report {
+        &self.static_report
+    }
     pub fn revision(&self) -> &str {
         self.static_report.revision()
     }

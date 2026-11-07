@@ -21,7 +21,7 @@ mod timing;
 mod types;
 pub use concurrency::{ConcurrencyReport, IsolatedFollowup, check_concurrency};
 pub use control::{ControlReport, check_control};
-pub use definition::{Report, check};
+pub use definition::{DeclaredWaitCapture, Report, check};
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};
 pub use expression::{Context, Judgment};
 pub use faults::{FaultReport, FaultRoute, FaultSelection, check_fault_routes};
@@ -68,8 +68,13 @@ pub const CORE_V4: (&str, &str) = (
     "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3",
 );
 
+pub const CORE_V5: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.5.0",
+    "sha256:50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7",
+);
+
 fn metadata_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0)
+    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0 || id == CORE_V5.0)
 }
 
 const MAX_DEPTH: usize = 64;
