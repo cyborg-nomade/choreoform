@@ -774,6 +774,14 @@ Require zero inherited values, complete conditional protection/invalidation and
 bounded separate evidence before widening the current lifetime refusal. No actual
 ownership, fault data, continuation or phase/scenario gate is closed.
 
+
+Initial owned-local draft review found that zero inherited values must not erase
+creator/owner source and control protection provenance. The
+[frozen refinement](0047-owned-local-provenance-refinement.md) requires bounded
+retained label contexts and an explicit P6 provenance-retention premise, separate
+from current values/permissions and ordinary historical completion. Implementation
+remains unpublished; no new lifetime or phase claim is made yet.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
