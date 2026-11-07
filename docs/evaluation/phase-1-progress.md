@@ -800,6 +800,28 @@ storage case refuses and checked-in package bytes regenerate unchanged. See
 remain required. Next explicit fault data and permitted owned continuation/cutoff /
 settlement, then separate adoption; every scenario/phase/external gate stays open.
 
+
+[PR #61](https://github.com/cyborg-nomade/choreoform/pull/61) merged into draft
+#46 as `805d507836c3ba23243339522f63f699f075ab7a` after required final-head CI
+`42365524284` and delegated review/comment audit `6705837334`. No actionable
+threads or summary findings existed; CodeRabbit skipped and supplies no review
+evidence. Merge explicitly carries the sign-off; ADR-0047 remains pending parent /
+main integration. Active dependency `codex/fault-entry-contract-audit` follows the
+[frozen fault-entry/emission audit](0048-fault-entry-audit-plan.md) before designing
+fault-data representation. Actual storage/provenance/authority/handoff/cutoff /
+settlement and all scenario/phase gates remain open; parent stays draft/unmerged.
+
+
+The [fault-entry/emission audit](0048-fault-entry-contract-audit.md) records actual
+ordinary-fact, unavailable-local, handler-port, exact-name abstraction, single-
+attempt source and closed-wire refusals. One Rust/six Python groups preserve them;
+unknown provider evidence remains nonterminal. No contract/package changes.
+Recommended next dependency: explicit provider emission-source binding independent
+of retry eligibility in a new core, followed by reviewed typed history/source /
+protection and handler-local entry representation with conditional initialization /
+strict invalidation. Owned continuation/cutoff/all-settlement stays separate.
+Final-head CI/comment audit/signed merge remain required; all phase gates stay open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

@@ -262,6 +262,10 @@ validated, and round-tripped.
   control protection provenance and strict conditional invalidation. It does not
   allocate host storage or provide actual P6 receipts. General retention, fault
   data, permitted continuation/cutoff/settlement and full scenario evidence stay open.
+  The [fault-entry audit](docs/evaluation/0048-fault-entry-contract-audit.md)
+  distinguishes abstract routes/retry metadata from authenticated typed handler
+  data. General emission binding, explicit versioned entry and permitted owned
+  continuation/cutoff/settlement remain dependencies before benchmark adoption.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current
