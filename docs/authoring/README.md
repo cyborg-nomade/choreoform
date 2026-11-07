@@ -3,6 +3,11 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.9.0 / companion 0.8.0 profile](profile-v0.9.md) names general
+provider fault sources once with `Recognise faults from "Source".` and retains
+short clock/basis retry clauses. It selects core 0.6/IR 0.2 and shares native
+catalogues per exact pin; actual fault history/handler entry remains separate.
+
 The [source 0.8.0 / companion 0.7.0 profile](profile-v0.8.md) adds readable
 terminal-source/origin/result capture, explicitly selecting core 0.5 and IR 0.2.
 Bounded reports disclose declarations and remaining host requirements. Owned

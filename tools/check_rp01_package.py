@@ -172,7 +172,7 @@ class Rp01PackageEvidence(unittest.TestCase):
         manager = next(d for d in ledger['declarations'] if d['id'] == 'manager_actor')
         with tempfile.TemporaryDirectory() as directory:
             s, b = Path(directory) / 'source.choreo', Path(directory) / 'bindings.json'
-            s.write_bytes(self.source.replace(b'authoring "0.7.0"', b'authoring "0.9.0"', 1))
+            s.write_bytes(self.source.replace(b'authoring "0.7.0"', b'authoring "1.0.0"', 1))
             b.write_bytes(self.bindings)
             result = run('lower', s, b, registry(self.manifest))
             self.assertNotEqual(result.returncode, 0)

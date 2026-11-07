@@ -173,6 +173,6 @@ fn known_program_quotas_are_shared_without_migrating_legacy_or_fragment_limits()
         let s = s + "bad ";
         assert_eq!(parse(s.as_bytes()).unwrap_err().code, "tokens");
     }
-    let s = format!("Choreoform authoring \"0.9.0\". {}", "bad ".repeat(5000));
+    let s = format!("Choreoform authoring \"1.0.0\". {}", "bad ".repeat(5000));
     assert_eq!(parse(s.as_bytes()).unwrap_err().code, "tokens");
 }

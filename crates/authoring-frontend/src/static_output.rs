@@ -5,26 +5,36 @@ use choreoform_ir_probe_core::bounded::LimitedWriter;
 use choreoform_semantic_check::Report;
 use serde_json::{Value, json};
 
-pub(super) fn capture_output(report: &Report, mut value: Value) -> Result<String, String> {
+pub(super) fn static_output(report: &Report, mut value: Value) -> Result<String, String> {
     let mut remaining = super::MAX_BYTES;
     let mut rows = Vec::new();
     for capture in report.capture_bindings() {
         let pin = |p: &choreoform_semantic_check::Pin| json!({"id":p.id,"revision":p.revision});
         let row = json!({"revision":capture.revision(),"site":capture.site(),"source":pin(capture.source()),"profile":pin(capture.profile()),"provider":pin(capture.provider()),"origin":capture.origin(),"result":capture.result(),"hostRequirements":capture.remaining()});
-        let size = serde_json::to_vec(&row)
-            .map_err(|_| "report-budget".to_owned())?
-            .len();
-        remaining = remaining
-            .checked_sub(size)
-            .ok_or_else(|| "report-budget".to_owned())?;
-        rows.push(row);
+        push_row(&mut rows, row, &mut remaining)?;
     }
     if !rows.is_empty() {
         value["declaredWaitCaptures"] = rows.into();
     }
+    super::fault_use_output::append(report, &mut value, &mut remaining)?;
     let mut writer = LimitedWriter::new(Vec::new(), super::MAX_BYTES);
     serde_json::to_writer(&mut writer, &value).map_err(|_| "report-budget".to_owned())?;
     String::from_utf8(writer.into_inner()).map_err(|_| "report-json".to_owned())
+}
+
+pub(super) fn push_row(
+    rows: &mut Vec<Value>,
+    row: Value,
+    remaining: &mut usize,
+) -> Result<(), String> {
+    let size = serde_json::to_vec(&row)
+        .map_err(|_| "report-budget".to_owned())?
+        .len();
+    *remaining = remaining
+        .checked_sub(size)
+        .ok_or_else(|| "report-budget".to_owned())?;
+    rows.push(row);
+    Ok(())
 }
 
 #[cfg(test)]
@@ -81,13 +91,13 @@ mod tests {
         .unwrap();
         let r = choreoform_semantic_check::check(&e, &supplied).unwrap();
         assert!(
-            capture_output(&r, json!({"executable":false}))
+            static_output(&r, json!({"executable":false}))
                 .unwrap()
                 .len()
                 < 4096
         );
         let base = json!({"padding":"x".repeat(super::super::MAX_BYTES-100)});
         assert!(serde_json::to_vec(&base).unwrap().len() < super::super::MAX_BYTES);
-        assert_eq!(capture_output(&r, base).unwrap_err(), "report-budget");
+        assert_eq!(static_output(&r, base).unwrap_err(), "report-budget");
     }
 }

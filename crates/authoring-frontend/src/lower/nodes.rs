@@ -133,7 +133,7 @@ impl<'a, 's> Lower<'a, 's> {
             }
             "wait" => {
                 node["policy"] = self.r(action, scope, "policy", 0)?.into();
-                if self.syntax.profile() == "0.8.0" {
+                if matches!(self.syntax.profile(), "0.8.0" | "0.9.0") {
                     node["capture"] = if action.all("reference").len() > 1 {
                         let source = self.r(action, scope, "resource", 1)?;
                         let origin = self.r(action, scope, "node", 2)?;

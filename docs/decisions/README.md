@@ -73,6 +73,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0046](0046-wait-capture-authoring.md) | Accepted under delegation | Explicit source 0.8 wait-capture authoring and bounded declaration disclosure |
 | [0047](0047-owned-local-followups.md) | Accepted under delegation | Conditional isolated fresh-local storage with retained source/control protection provenance |
 | [0048](0048-general-provider-fault-source-binding.md) | Accepted under delegation | General exact provider emission-source declarations independent of retry eligibility |
+| [0049](0049-general-fault-source-authoring.md) | Accepted under delegation | Readable source 0.9 general fault-source clauses and shared bounded native catalogues |
 
 ## When an ADR is required
 

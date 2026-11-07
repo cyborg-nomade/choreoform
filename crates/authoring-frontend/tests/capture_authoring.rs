@@ -195,7 +195,7 @@ fn old_profiles_and_wrong_companion_pairs_cannot_select_capture_or_new_resource_
             .code,
         "resource-kind"
     );
-    let unknown = format!("Choreoform authoring \"0.9.0\". {}", "bad ".repeat(5000));
+    let unknown = format!("Choreoform authoring \"1.0.0\". {}", "bad ".repeat(5000));
     assert_eq!(parse(unknown.as_bytes()).unwrap_err().code, "tokens");
 }
 

@@ -8,6 +8,8 @@ use serde_json::{Value, json};
 
 #[path = "rp01/fault_source_profile.rs"]
 mod fault_source_profile;
+#[path = "rp01/general_fault_profile.rs"]
+mod general_fault_profile;
 #[path = "rp01/metadata_profile.rs"]
 mod metadata_profile;
 #[path = "rp01/profile.rs"]

@@ -848,6 +848,29 @@ signed merge remain required. Next explicit readable source/native selection, th
 typed history/handler entry and owned continuation/cutoff/settlement. Parent and
 all scenario/phase/external gates remain draft/open.
 
+
+[PR #63](https://github.com/cyborg-nomade/choreoform/pull/63) merged into draft
+#46 as `af62713386b4b5c6d437fa4ad87bee43f4e4b7f5` after required final-head CI
+`42393751009` and delegated review/comment audit `6710263812`. No actionable
+threads/summary findings existed; CodeRabbit skipped and supplies no review evidence.
+Merge explicitly carries the sign-off; ADR-0048 remains pending parent/main
+integration. Active dependency `codex/general-fault-source-authoring` follows the
+[frozen readable source/native plan](0049-general-fault-authoring-plan.md).
+Current package, typed history/handler entry, continuation/cutoff/settlement and
+all actual source/host/scenario/phase gates remain unchanged/open.
+
+ADR-0049 source 0.9 / companion 0.8 integration is implemented under the frozen
+plan. Readable work policies name general sources once, reuse exact pins for retry
+and derive complete source protection reads. All eleven native checking views
+return retained use rows and per-source catalogues within shared/final output
+bounds. Eight Rust and six Python groups cover version/resource/provider/context /
+read/compatibility/sharing/budget boundaries. Local 391 Rust plus six doctests and
+all native/Wasm/Python checks pass; current package bytes remain unchanged. See
+[evidence](0049-general-fault-source-authoring.md). Final-head CI/comment audit /
+signed merge remain required. Next exact typed history/source-control protection,
+then reviewed handler-local entry and permitted owned continuation/cutoff/settlement.
+Parent #46 and all scenario/phase/external gates remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

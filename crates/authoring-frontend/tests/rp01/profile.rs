@@ -118,7 +118,7 @@ fn strict_pair_pin_resource_and_integrity_domains_are_preserved() {
 
 #[test]
 fn new_quotas_require_the_explicit_program_header_and_stay_bounded() {
-    for profile in ["0.2.0", "0.3.0", "0.4.0", "0.9.0"] {
+    for profile in ["0.2.0", "0.3.0", "0.4.0", "1.0.0"] {
         let source = format!(
             "Choreoform authoring \"{profile}\". {}",
             "bad ".repeat(5000)

@@ -260,7 +260,7 @@ fn known_header_quota_keeps_fragments_and_unknown_headers_bounded() {
         "tokens"
     );
     assert_eq!(parse((s + "bad ").as_bytes()).unwrap_err().code, "tokens");
-    let s = format!("Choreoform authoring \"0.9.0\". {}", "bad ".repeat(5000));
+    let s = format!("Choreoform authoring \"1.0.0\". {}", "bad ".repeat(5000));
     assert_eq!(parse(s.as_bytes()).unwrap_err().code, "tokens");
 }
 

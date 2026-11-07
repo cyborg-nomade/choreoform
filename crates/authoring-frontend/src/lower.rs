@@ -240,7 +240,7 @@ impl<'a> Package<'a> {
         body.insert("semantics".into(), json!({"id": contracts["semantics"]["contract"], "revision": contracts["semantics"]["digest"]}));
         body.insert("dialects".into(), json!({ self.ledger.dialect(): {"id": contracts["core"]["contract"], "revision": contracts["core"]["digest"]} }));
         let envelope = DefinitionEnvelope::from_parts_versioned(
-            if self.syntax.profile() == "0.8.0" {
+            if matches!(self.syntax.profile(), "0.8.0" | "0.9.0") {
                 "0.2.0"
             } else {
                 "0.1.0"
