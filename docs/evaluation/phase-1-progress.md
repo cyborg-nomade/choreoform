@@ -782,6 +782,24 @@ retained label contexts and an explicit P6 provenance-retention premise, separat
 from current values/permissions and ordinary historical completion. Implementation
 remains unpublished; no new lifetime or phase claim is made yet.
 
+
+ADR-0047 conditional fresh-local follow-ups are implemented under the frozen plan
+and provenance refinement. Separate immutable evidence requires direct portless /
+childless terminal bodies, explicit capturing entry, flat timerless local-only
+nodes and no independent creator. Grouped zero-inherited-value initialization,
+retained creator/owner protection provenance, internal access/flow and strict local
+invalidation checks precede disclosure. The host must still provide actual storage,
+authenticated provenance/correlation, current access, atomic handoff/cutoff and all-
+settlement. Nine Rust integration/two budget groups and five Python groups cover
+boundaries and six independent finite vectors; a restricted creator/public capture
+now refuses, and 130 creators/130 cells refuse oversized reports before stdout.
+Local 373 Rust plus six doctests and all native/Wasm/Python checks pass. Full RP-01
+promoted fresh-local capture now has conditional evidence; the adjacent ancestor
+storage case refuses and checked-in package bytes regenerate unchanged. See
+[evidence](0047-owned-local-followups.md). Final-head CI/comment audit/signed merge
+remain required. Next explicit fault data and permitted owned continuation/cutoff /
+settlement, then separate adoption; every scenario/phase/external gate stays open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

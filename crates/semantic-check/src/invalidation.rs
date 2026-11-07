@@ -187,6 +187,55 @@ fn analyze(
     let (protection, dependencies) = crate::protection::analyze(envelope, supplied, true)?;
     let b = &envelope.document()["body"];
     let mut budget = Budget::default();
+    let (obligations, missing) = requirements(b, &dependencies.nodes, coverage, &mut budget)?;
+    let checked = dependencies.nodes.into_keys().collect::<BTreeSet<_>>();
+    let mut uncovered = BTreeSet::new();
+    for (id, n) in object(&b["nodes"])? {
+        budget.tick(0)?;
+        if matches!(text(&n["kind"])?, "decision" | "activity" | "wait") && !checked.contains(id) {
+            uncovered.insert(id.clone());
+        }
+    }
+    Ok((
+        Analysis {
+            protection,
+            checked,
+            uncovered,
+            obligations,
+            scope_contexts: dependencies.scopes,
+            historical: dependencies.historical,
+        },
+        missing,
+    ))
+}
+
+/// Reuse strict coverage for explicit conditional entries; never advisory promotion.
+pub(crate) fn require_entries(
+    b: &Value,
+    nodes: &crate::protection::DependencyMap,
+    budget: &mut Budget,
+) -> Result<BTreeSet<InvalidationObligation>> {
+    requirements(b, nodes, Coverage::Required, budget)
+        .map(|(required, _)| required)
+        .map_err(|mut e| {
+            e.code = match e.code {
+                "invalidation-coverage" => "owned-local-invalidation-coverage",
+                "invalidation-context-unproved" => "owned-local-invalidation-context-unproved",
+                other => other,
+            };
+            e
+        })
+}
+
+fn requirements(
+    b: &Value,
+    nodes: &crate::protection::DependencyMap,
+    coverage: Coverage,
+    budget: &mut Budget,
+) -> Result<(
+    BTreeSet<InvalidationObligation>,
+    BTreeSet<InvalidationObligation>,
+)> {
     let mut declared = BTreeMap::new();
     for (id, d) in object(&b["data"])? {
         budget.charge(object(&d["invalidates"])?.len() + 1)?;
@@ -194,7 +243,7 @@ fn analyze(
     }
     let mut obligations = BTreeSet::new();
     let mut missing = BTreeSet::new();
-    for (site, cells) in &dependencies.nodes {
+    for (site, cells) in nodes {
         budget.tick(0)?;
         let mut ancestors = BTreeSet::new();
         let mut scope = Some(text(&b["nodes"][site]["scope"])?);
@@ -228,23 +277,5 @@ fn analyze(
             obligations.insert(obligation);
         }
     }
-    let checked = dependencies.nodes.into_keys().collect::<BTreeSet<_>>();
-    let mut uncovered = BTreeSet::new();
-    for (id, n) in object(&b["nodes"])? {
-        budget.tick(0)?;
-        if matches!(text(&n["kind"])?, "decision" | "activity" | "wait") && !checked.contains(id) {
-            uncovered.insert(id.clone());
-        }
-    }
-    Ok((
-        Analysis {
-            protection,
-            checked,
-            uncovered,
-            obligations,
-            scope_contexts: dependencies.scopes,
-            historical: dependencies.historical,
-        },
-        missing,
-    ))
+    Ok((obligations, missing))
 }

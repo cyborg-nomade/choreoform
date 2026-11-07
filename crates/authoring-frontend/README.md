@@ -257,3 +257,11 @@ plus advisory invalidation requirements disclose nonempty `declaredWaitCaptures`
 from retained static reports, including unvisited sites, with host requirements.
 Rows/final JSON are bounded before stdout. No acceptance/value/activation or owned
 recovery storage follows; see [ADR-0046](../../docs/decisions/0046-wait-capture-authoring.md).
+
+When [ADR-0047](../../docs/decisions/0047-owned-local-followups.md)'s isolated
+fresh-local proof applies, concurrency and later native views add
+`ownedLocalFollowups` and `conditionalOwnedLocalChecks`, including required access,
+invalidation and owner protection-provenance declarations. These are conditional
+checks with explicit live P6 requirements, not allocated storage, actual receipts,
+accepted observations or execution. Empty evidence adds no keys to old reports;
+row/final output bounds still apply before stdout.

@@ -19,7 +19,9 @@ mod reconciliation_entry;
 mod resources;
 mod timing;
 mod types;
-pub use concurrency::{ConcurrencyReport, IsolatedFollowup, check_concurrency};
+pub use concurrency::{
+    ConcurrencyReport, IsolatedFollowup, OwnedLocalFollowup, OwnedLocalReport, check_concurrency,
+};
 pub use control::{ControlReport, check_control};
 pub use definition::{DeclaredWaitCapture, Report, check};
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};
@@ -30,7 +32,9 @@ pub use invalidation::{
     check_invalidation, derive_invalidation_requirements,
 };
 pub use policy_reads::{PolicyReadClosure, PolicyReadDependencies, policy_read_closure};
-pub use protection::{AccessObligation, ProtectionReport, check_protection};
+pub use protection::{
+    AccessObligation, ProtectionReport, RequiredProtectionProvenance, check_protection,
+};
 pub use reconciliation::{ReconciliationReport, ReconciliationUse, check_reconciliation_links};
 pub use reconciliation_entry::{
     ReconciliationEntry, ReconciliationEntryReport, check_reconciliation_availability,

@@ -468,8 +468,8 @@ fn actual_rp01_capture() -> Fixture {
 }
 
 #[test]
-fn promoted_rp01_binding_preserves_nominal_types_but_not_an_owned_storage_claim() {
-    let f = actual_rp01_capture();
+fn promoted_rp01_binding_gets_separate_conditional_local_proof_without_runtime_ownership() {
+    let mut f = actual_rp01_capture();
     let e = f.envelope();
     let supplied = f.supplied();
     let report = check(&e, &supplied).unwrap();
@@ -483,7 +483,22 @@ fn promoted_rp01_binding_preserves_nominal_types_but_not_an_owned_storage_claim(
         "urn:choreoform:benchmarks:rp01:payment:0.1.0"
     );
     check_invalidation(&e, &supplied).unwrap();
-    let error = choreoform_semantic_check::check_concurrency(&e, &supplied).unwrap_err();
+    let concurrency = choreoform_semantic_check::check_concurrency(&e, &supplied).unwrap();
+    let owned = concurrency.owned_local().unwrap();
+    assert_eq!(owned.revision(), e.document()["revision"]);
+    assert!(owned.checked_nodes().contains("payment_observe"));
+    assert!(
+        owned
+            .followups()
+            .iter()
+            .any(|p| p.creator() == "run_payment" && p.local_cells().contains("late_payment_fact"))
+    );
+    check_reconciliation_availability(&e, &supplied).unwrap();
+    // The adjacent retained-ancestor case remains outside this fresh-local proof.
+    f.b["data"]["late_payment_fact"]["scope"] = "payment_service".into();
+    check(&f.envelope(), &f.supplied()).unwrap();
+    let error =
+        choreoform_semantic_check::check_concurrency(&f.envelope(), &f.supplied()).unwrap_err();
     assert_eq!(error.code, "scope-lifetime-unproved");
     assert_eq!(error.path, "/body/nodes/run_payment");
 }
@@ -621,3 +636,6 @@ fn core5_inherits_retry_binding_and_finite_metadata_without_weakening_legacy_cyc
     check_reconciliation_availability(&e, &supplied).unwrap();
     assert!(check(&e, &supplied).unwrap().capture_bindings().is_empty());
 }
+
+#[path = "capture/owned.rs"]
+mod owned;

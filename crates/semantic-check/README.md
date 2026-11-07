@@ -381,3 +381,14 @@ composed reports. Source-provider and destination types/labels/dependencies rema
 checked at actual scopes; type-equality caches retain no permission or value truth.
 Old source/native package output stays unchanged. Authoring and owned recovery
 storage/continuation require separate explicit work.
+
+[ADR-0047](../../docs/decisions/0047-owned-local-followups.md) adds optional
+`ConcurrencyReport::owned_local()` evidence for direct, portless, flat timerless
+follow-ups starting with explicit capture and using only fresh local cells. Grouped
+zero-inherited-value availability, protected flow/access and strict invalidation
+checks retain ordinary creator/owner protection provenance as conditional label
+requirements. `RequiredProtectionProvenance` names declarations to retain, never
+actual receipts/values/permissions. Conditional coverage stays separate from
+ordinary sets and the existing data-free `IsolatedFollowup`; actual fresh storage,
+source/correlation/authority, retained provenance, cutoff and settlement remain
+mandatory host premises. Templates share immutable metadata, never occurrences.

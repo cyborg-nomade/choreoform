@@ -257,6 +257,11 @@ validated, and round-tripped.
   for source 0.8/companion 0.7. General plain-English/tool-managed editing, owned
   recovery storage, fault data/continuation,
   cutoff/settlement and actual host/scenario evidence remain open.
+  [ADR-0047](docs/decisions/0047-owned-local-followups.md) separately checks an
+  isolated fresh-local surviving subset, including initialization, retained source /
+  control protection provenance and strict conditional invalidation. It does not
+  allocate host storage or provide actual P6 receipts. General retention, fault
+  data, permitted continuation/cutoff/settlement and full scenario evidence stay open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

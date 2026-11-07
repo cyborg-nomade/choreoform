@@ -8,6 +8,7 @@ use std::io::{Read, Write};
 
 mod capture_output;
 use capture_output::capture_output;
+mod owned_output;
 mod retry_output;
 use retry_output::timing_output;
 
@@ -67,6 +68,9 @@ fn concurrency_output(
         records.push(record);
     }
     value["isolatedFollowups"] = records.into();
+    if let Some(owned) = report.owned_local() {
+        owned_output::append(owned, &mut value)?;
+    }
     invalidation_output(
         report.invalidation().protection().control().static_report(),
         report.invalidation().historical_origins(),
