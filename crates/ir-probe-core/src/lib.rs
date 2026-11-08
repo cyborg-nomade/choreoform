@@ -66,7 +66,7 @@ pub struct Resource<'a> {
     pub bytes: &'a [u8],
 }
 
-pub const SUPPORTED_WIRE_VERSIONS: &[&str] = &["0.1.0", "0.2.0", "0.3.0"];
+pub const SUPPORTED_WIRE_VERSIONS: &[&str] = &["0.1.0", "0.2.0", "0.3.0", "0.4.0"];
 
 pub const SUPPORTED_CONTRACTS: [(&str, &str); 2] = [
     (
@@ -306,7 +306,7 @@ pub fn inspect(raw: &[u8], resources: &[Resource<'_>]) -> Result<Inspected> {
     }
     // The original illustrative-contract inspector has no handler-entry
     // contract. Transport/structural projection remains available separately.
-    if document["version"] == "0.3.0" {
+    if matches!(document["version"].as_str(), Some("0.3.0" | "0.4.0")) {
         return Err(Error::ContractUnsupported);
     }
     let graph = model::Graph::read(body, document["version"].as_str().ok_or(Error::Version)?)?;

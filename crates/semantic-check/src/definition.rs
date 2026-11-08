@@ -6,9 +6,11 @@ mod capture;
 mod creation;
 mod fault_entry;
 mod fault_source;
+mod retained_request;
 pub use capture::DeclaredWaitCapture;
 pub use fault_entry::DeclaredFaultEntry;
 pub use fault_source::DeclaredFaultSourceUse;
+pub use retained_request::DeclaredRetainedRequest;
 mod lifecycle;
 mod nodes;
 mod policies;
@@ -22,6 +24,7 @@ pub struct Report {
     captures: Vec<DeclaredWaitCapture>,
     fault_sources: Vec<DeclaredFaultSourceUse>,
     fault_entries: Vec<DeclaredFaultEntry>,
+    retained_requests: Vec<DeclaredRetainedRequest>,
 }
 impl Report {
     pub fn revision(&self) -> &str {
@@ -44,6 +47,10 @@ impl Report {
     /// Reserved local history declarations, not initialized values or entry proof.
     pub fn fault_entries(&self) -> &[DeclaredFaultEntry] {
         &self.fault_entries
+    }
+    /// Immutable original-input declarations, not actual retained values.
+    pub fn retained_requests(&self) -> &[DeclaredRetainedRequest] {
+        &self.retained_requests
     }
     /// Explicit residual obligations: a static-stage report cannot close these.
     pub fn remaining(&self) -> &'static [&'static str] {
@@ -77,6 +84,9 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         let p = Pin::decode(pin)?;
         // Wire 0.3 entry fields must never be ignored by an older dialect.
         // The new core is admitted only once its exact contract is implemented.
+        if envelope.document()["version"] == "0.4.0" {
+            require(p.id == CORE_V8.0, "retained-request-wire-version")?;
+        }
         if envelope.document()["version"] == "0.3.0" {
             require(p.id == CORE_V7.0, "fault-entry-wire-version")?;
         }
@@ -86,7 +96,12 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
             .position(|known| *known == contract)
             .ok_or_else(|| err("dialect-contract"))?;
         resources.verify(&p)?;
-        if p.id == CORE_V7.0 {
+        if p.id == CORE_V8.0 {
+            require(
+                envelope.document()["version"] == "0.4.0",
+                "retained-request-wire-version",
+            )?;
+        } else if p.id == CORE_V7.0 {
             require(
                 envelope.document()["version"] == "0.3.0",
                 "fault-entry-wire-version",
@@ -118,10 +133,17 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         capture_types: BTreeSet::new(),
         fault_sources: Vec::new(),
         fault_entries: Vec::new(),
+        retained_requests: Vec::new(),
     };
     c.run()?;
-    if envelope.document()["version"] == "0.3.0" {
+    if matches!(
+        envelope.document()["version"].as_str(),
+        Some("0.3.0" | "0.4.0")
+    ) {
         c.fault_entry_declarations()?;
+    }
+    if envelope.document()["version"] == "0.4.0" {
+        c.retained_request_declarations()?;
     }
     Ok(Report {
         revision: text(&envelope.document()["revision"])?.into(),
@@ -130,6 +152,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         captures: c.capture_bindings(text(&envelope.document()["revision"])?)?,
         fault_sources: c.fault_source_bindings(text(&envelope.document()["revision"])?)?,
         fault_entries: c.fault_entry_bindings(text(&envelope.document()["revision"])?)?,
+        retained_requests: c.retained_request_bindings(text(&envelope.document()["revision"])?)?,
     })
 }
 struct Check<'a, 'r> {
@@ -145,6 +168,7 @@ struct Check<'a, 'r> {
     fault_sources: Vec<fault_source::PendingFaultSource>,
     fault_entries: Vec<fault_entry::PendingFaultEntry>,
     capture_types: BTreeSet<(capture::CaptureTypeSubject, Pin, Pin)>,
+    retained_requests: Vec<retained_request::PendingRetainedRequest>,
 }
 impl Check<'_, '_> {
     fn run(&mut self) -> Result<()> {

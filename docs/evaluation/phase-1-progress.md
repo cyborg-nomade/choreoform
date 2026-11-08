@@ -989,6 +989,22 @@ immutable original request declarations and conditional fresh-local proof before
 readable selection or permitted new work/cutoff/handoff/all-settlement. All actual
 host/storage/authority and every scenario/phase/external gate remain open.
 
+
+ADR-0054 raw immutable request retention is implemented under its frozen plan.
+IR 0.4/core 0.8 explicitly adds bounded original capability-input declarations and
+separate owned conditional initialization/access/source-control/protection/strict
+invalidation proof. Local readonly/type/creator/port/capture barriers and exact
+ordinary source coverage remain mandatory. Later legacy reconciliation retains
+the existing owned proof separately instead of erasing or inventing a seed.
+Three structural/eleven SDK/one publication-budget groups and five Python groups
+cover twelve shared finite cases and compatibility. Local 448 Rust plus six
+doctests and all native/Wasm/Python checks pass. Final-head CI/comment audit /
+review/merge gates remain before integration; see
+[evidence](0054-owned-request-retention.md). Committed source/report bytes stay
+unchanged. Next readable retained-request selection, then permitted new work and
+explicit cutoff/handoff/all-settlement. Parent and every scenario/phase/external
+gate remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

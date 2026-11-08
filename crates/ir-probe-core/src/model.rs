@@ -176,6 +176,7 @@ pub struct Node {
 pub struct Graph {
     pub nodes: BTreeMap<NodeId, Node>,
     pub fault_inputs: BTreeMap<ScopeId, FaultInput>,
+    pub retained_requests: BTreeMap<ScopeId, BTreeMap<DataId, NodeId>>,
 }
 
 const MAPS: [&str; 8] = [
@@ -275,11 +276,13 @@ fn predicate(value: &Value) -> Result<()> {
 
 impl Graph {
     pub(crate) fn read(body: &Value, version: &str) -> Result<Self> {
-        if !matches!(version, "0.1.0" | "0.2.0" | "0.3.0") {
+        if !matches!(version, "0.1.0" | "0.2.0" | "0.3.0" | "0.4.0") {
             return Err(Error::Version);
         }
         let v2 = version != "0.1.0";
-        let v3 = version == "0.3.0";
+        let v3 = matches!(version, "0.3.0" | "0.4.0");
+        let v4 = version == "0.4.0";
+        let mut retained_requests = BTreeMap::new();
         let mut fault_inputs = BTreeMap::new();
         let mut all_ids = BTreeSet::new();
         for map in MAPS {
@@ -324,7 +327,27 @@ impl Graph {
                     "race",
                 ]
             };
-            fields(scope, required, &[])?;
+            if v4 {
+                let mut extended = required.to_vec();
+                extended.push("retainedRequests");
+                fields(scope, &extended, &[])?;
+            } else {
+                fields(scope, required, &[])?;
+            }
+            if v4 {
+                let mut requests = BTreeMap::new();
+                for (target, origin) in object(&scope["retainedRequests"])? {
+                    let result = reference(body, "data", &Value::from(target.as_str()))?;
+                    if body["data"][&result]["scope"] != *key {
+                        return Err(Error::Scope);
+                    }
+                    let source = reference(body, "nodes", origin)?;
+                    requests.insert(DataId(result), NodeId(source));
+                }
+                if !requests.is_empty() {
+                    retained_requests.insert(ScopeId(key.clone()), requests);
+                }
+            }
             if v3 && !scope["faultInput"].is_null() {
                 let binding = &scope["faultInput"];
                 fields(binding, &["history", "result"], &[])?;
@@ -484,6 +507,7 @@ impl Graph {
         Ok(Self {
             nodes,
             fault_inputs,
+            retained_requests,
         })
     }
 }

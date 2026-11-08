@@ -91,6 +91,15 @@ pub(crate) struct EntryCoverage {
 pub(crate) fn check_entries(
     b: &Value,
     entries: &BTreeMap<String, BTreeSet<String>>,
+    budget: Budget,
+    availability_code: &'static str,
+) -> Result<EntryCoverage> {
+    check_entries_with_requests(b, entries, &BTreeMap::new(), budget, availability_code)
+}
+pub(crate) fn check_entries_with_requests(
+    b: &Value,
+    entries: &BTreeMap<String, BTreeSet<String>>,
+    requests: &BTreeMap<String, String>,
     mut budget: Budget,
     availability_code: &'static str,
 ) -> Result<EntryCoverage> {
@@ -102,6 +111,8 @@ pub(crate) fn check_entries(
     }
     let graph = Graph::build(b, &mut budget)?;
     let mut analysis = Analysis::new(b, graph, budget)?;
+    analysis.seed_access_code = "retained-request-access-precheck";
+    analysis.budget_seed_requests(requests)?;
     for (entry, inputs) in entries {
         analysis.scope(entry, inputs, 0).map_err(|mut e| {
             if matches!(

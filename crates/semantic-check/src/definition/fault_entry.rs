@@ -213,6 +213,7 @@ mod tests {
             captures: Vec::new(),
             fault_sources: Vec::new(),
             fault_entries: Vec::new(),
+            retained_requests: Vec::new(),
             capture_types: BTreeSet::new(),
         };
         c.resources.budget.work = 1_000_000;

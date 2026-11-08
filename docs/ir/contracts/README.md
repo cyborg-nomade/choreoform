@@ -75,3 +75,8 @@ identified a misleading integer-to-decimal sentence; the registered snapshot
 clarifies the already-closed AST: integer-to-decimal conversion is unsupported,
 and nominal wrapping requires an exact representation-type match. No operation
 or coercion was added. Changed source bytes require the new digest above.
+
+[Core 0.8 original-request retention](../../dialects/core-retained-request-v0.8.md)
+is pinned by `sha256:edc8195ba0c31536ab2cdc95089e8aecc3ff402489639b4435277f0a38e7b603`
+and requires all seven inherited artifacts. It selects raw IR 0.4; no current
+source profile or host execution is upgraded implicitly.

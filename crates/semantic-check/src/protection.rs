@@ -134,12 +134,17 @@ pub(crate) fn analyze_entries(
     supplied: &[Resource<'_>],
     owners: &BTreeMap<String, BTreeSet<String>>,
     ordinary: &ProtectionReport,
+    requests: &BTreeMap<String, (String, String)>,
 ) -> Result<EntryAnalysis> {
     let mut flow = Flow::new(b, supplied)?;
     flow.provenance = None;
     flow.collect_dependencies()?;
     for (scope, bodies) in owners {
-        flow.conditional_scope(scope, bodies, &ordinary.provenance)?;
+        if let Some((target, source)) = requests.get(scope) {
+            flow.request_scope(scope, target, bodies, source, &ordinary.provenance)?;
+        } else {
+            flow.conditional_scope(scope, bodies, &ordinary.provenance)?;
+        }
     }
     Ok(EntryAnalysis {
         transfers: flow.transfers,

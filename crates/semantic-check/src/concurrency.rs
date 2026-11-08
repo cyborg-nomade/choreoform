@@ -4,7 +4,7 @@
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
 mod owned;
-pub use owned::{OwnedLocalFollowup, OwnedLocalReport};
+pub use owned::{OwnedLocalFollowup, OwnedLocalReport, OwnedRequestSnapshot};
 mod summary;
 mod survivors;
 use summary::Summary;

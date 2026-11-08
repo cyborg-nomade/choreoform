@@ -1,0 +1,187 @@
+{
+  "format": "choreoform-retained-request-vectors",
+  "version": "0.1.0",
+  "premise": "Finite prevalidated type/resource/visibility/creator/provenance premises; no actual request, owned storage, host execution or handoff evidence.",
+  "cases": [
+    {
+      "id": "covered",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "covered"
+    },
+    {
+      "id": "old-core",
+      "premises": {
+        "wire": "old-core",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "retained-request-wire-version"
+    },
+    {
+      "id": "two-snapshots",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 2,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "retained-request-cardinality"
+    },
+    {
+      "id": "wrong-origin",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "other",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "retained-request-origin"
+    },
+    {
+      "id": "unvisited-origin",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "unvisited",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "retained-request-source-control-unproved"
+    },
+    {
+      "id": "missing-entry-capture",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": false,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "retained-request-capture"
+    },
+    {
+      "id": "initialized",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "initialized",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "retained-request-readonly"
+    },
+    {
+      "id": "public-snapshot",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "public",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "control-information-flow"
+    },
+    {
+      "id": "public-copy",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "public",
+        "access": "independent",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "control-information-flow"
+    },
+    {
+      "id": "self-access",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "self",
+        "invalidation": true,
+        "handler": false
+      },
+      "expect": "retained-request-access-precheck"
+    },
+    {
+      "id": "missing-invalidation",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": false,
+        "handler": false
+      },
+      "expect": "owned-local-invalidation-coverage"
+    },
+    {
+      "id": "handler-reuse",
+      "premises": {
+        "wire": "0.4.0",
+        "cardinality": 1,
+        "source": "ordinary",
+        "entryCapture": true,
+        "storage": "fresh",
+        "copyProtection": "same",
+        "access": "independent",
+        "invalidation": true,
+        "handler": true
+      },
+      "expect": "retained-request-handler"
+    }
+  ]
+}
