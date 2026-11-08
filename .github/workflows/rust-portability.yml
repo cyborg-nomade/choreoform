@@ -93,4 +93,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_fault_entry.py
           .tools/ir-check/bin/python tools/check_handler_entry_authoring.py
           .tools/ir-check/bin/python tools/check_retained_request.py
+          .tools/ir-check/bin/python tools/check_request_retention_authoring.py
       # Browser execution is a separate manual evidence step, not implied by CI.

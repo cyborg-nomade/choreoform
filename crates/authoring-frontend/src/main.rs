@@ -192,7 +192,7 @@ fn run() -> Result<String, String> {
     }
     if matches!(
         package.syntax().profile(),
-        "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0"
+        "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0"
     ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V3.0,
@@ -202,7 +202,7 @@ fn run() -> Result<String, String> {
     }
     if matches!(
         package.syntax().profile(),
-        "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0"
+        "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0"
     ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V4.0,
@@ -210,22 +210,28 @@ fn run() -> Result<String, String> {
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt"),
         });
     }
-    if matches!(package.syntax().profile(), "0.8.0" | "0.9.0" | "0.10.0") {
+    if matches!(
+        package.syntax().profile(),
+        "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0"
+    ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V5.0,
             revision: choreoform_semantic_check::CORE_V5.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7.txt"),
         });
     }
-    if matches!(package.syntax().profile(), "0.9.0" | "0.10.0") {
+    if matches!(package.syntax().profile(), "0.9.0" | "0.10.0" | "0.11.0") {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V6.0,
             revision: choreoform_semantic_check::CORE_V6.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85.txt"),
         });
     }
-    if package.syntax().profile() == "0.10.0" {
+    if matches!(package.syntax().profile(), "0.10.0" | "0.11.0") {
         resources.push(Resource{id:choreoform_semantic_check::CORE_V7.0,revision:choreoform_semantic_check::CORE_V7.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b.txt")});
+    }
+    if package.syntax().profile() == "0.11.0" {
+        resources.push(Resource{id:choreoform_semantic_check::CORE_V8.0,revision:choreoform_semantic_check::CORE_V8.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-edc8195ba0c31536ab2cdc95089e8aecc3ff402489639b4435277f0a38e7b603.txt")});
     }
     resources.extend(extra.iter().map(|(id, revision, bytes)| Resource {
         id,
@@ -438,9 +444,13 @@ fn run() -> Result<String, String> {
             remaining = remaining.checked_sub(size).ok_or_else(|| "report-budget".to_owned())?;
             Ok(value)
         }).collect::<Result<_, String>>()?;
+        let mut view = serde_json::json!({"status":"reconciliation-availability-checks-passed","executable":false,"revision":report.revision(),"reconciliationEntries":entries,"checkedReconciliationNodes":report.checked_nodes(),"checkedReconciliationScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.links().exceptional().checked_nodes(),"priorReconciliationObligations":report.links().remaining(),"remaining":report.remaining()});
+        if !report.retained_request_scopes().is_empty() {
+            view["retainedRequestScopes"] = serde_json::json!(report.retained_request_scopes());
+        }
         return retry_output::timing_output_with_entries(
             report.links().exceptional().faults().timing(),
-            serde_json::json!({"status":"reconciliation-availability-checks-passed","executable":false,"revision":report.revision(),"reconciliationEntries":entries,"checkedReconciliationNodes":report.checked_nodes(),"checkedReconciliationScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.links().exceptional().checked_nodes(),"priorReconciliationObligations":report.links().remaining(),"remaining":report.remaining()}),
+            view,
             report.links().exceptional().history_entries(),
         );
     }

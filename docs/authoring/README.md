@@ -3,6 +3,11 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.11.0 / companion 0.10.0 profile](profile-v0.11.md) adds readable
+original-request retention on existing core 0.8/IR 0.4 with bounded declarations
+and separate owned proof. Actual storage/current authority and permitted new work /
+cutoff/handoff/all-settlement remain open.
+
 The [source 0.10.0 / companion 0.9.0 profile](profile-v0.10.md) adds readable
 handler-local fault history declarations on core 0.7/IR 0.3, with separate bounded
 conditional reports. Actual events, owned continuation and general tool-managed

@@ -76,7 +76,7 @@ impl<'a, 's> Lower<'a, 's> {
             return Err(error("scope-outcomes", self.syntax.span(interface)));
         }
         let mut record = json!({"parent":parent, "entry":self.r(interface, &id, "node", 0)?, "inputs":inputs, "outputs":outputs, "outcomes":set(outcomes), "cancellation":self.r(interface, &id, "policy", 1)?, "faults":self.r(interface, &id, "policy", 2)?, "closure":self.r(interface, &id, "policy", 3)?, "race":self.r(interface, &id, "policy", 4)?});
-        if self.syntax.profile() == "0.10.0" {
+        if matches!(self.syntax.profile(), "0.10.0" | "0.11.0") {
             record["faultInput"] = if let Some(binding) = tree.all("fault_entry").first() {
                 let history = self.r(binding, &id, "resource", 0)?;
                 let result = self.r(binding, &id, "data", 1)?;
@@ -89,6 +89,20 @@ impl<'a, 's> Lower<'a, 's> {
             } else {
                 Value::Null
             };
+        }
+        if self.syntax.profile() == "0.11.0" {
+            let mut requests = Map::new();
+            if let Some(binding) = tree.all("retained_request").first() {
+                let origin = self.r(binding, &id, "node", 0)?;
+                let result = self.r(binding, &id, "data", 1)?;
+                if self.ledger.declarations[&result].scope.as_deref() != Some(&id) {
+                    return Err(error("retained-request-owner", self.syntax.span(binding)));
+                }
+                self.request_spans
+                    .insert(id.clone(), self.syntax.span(binding));
+                requests.insert(result, origin.into());
+            }
+            record["retainedRequests"] = Value::Object(requests);
         }
         self.put("scopes", id.clone(), record)?;
         for declaration in tree.all("declaration") {

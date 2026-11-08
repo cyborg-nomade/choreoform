@@ -6,7 +6,7 @@ use choreoform_semantic_check::{CORE_V7, FAULT_HISTORY_PROFILE, FAULT_HISTORY_TY
 use general_fault_profile::Fixture;
 const CLAUSE: &str =
     "Receive fault history from \"Payment history\" and record in \"Fault history\".";
-fn fixture() -> Fixture {
+pub(super) fn fixture() -> Fixture {
     let mut f = Fixture::new();
     f.source = f
         .source

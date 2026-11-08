@@ -36,6 +36,7 @@ pub struct Candidate {
     package_digest: String,
     spans: BTreeMap<String, std::ops::Range<usize>>,
     entry_spans: BTreeMap<String, std::ops::Range<usize>>,
+    request_spans: BTreeMap<String, std::ops::Range<usize>>,
 }
 /// Package integrity only; independent of binding consistency and IR admission.
 #[derive(Debug, PartialEq, Eq)]
@@ -70,7 +71,7 @@ impl Candidate {
         &self.spans
     }
     /// Locate a diagnostic from this candidate at its original declaration or
-    /// generated-record span, or explicit fault-input clause. Other fields do not
+    /// generated-record span, or explicit fault-input/retained-request clause. Other fields do not
     /// have exact token locations. This is not proof
     /// that a diagnostic supplied by the caller belongs to this revision.
     /// Global, external-resource and missing-record paths have no guessed span.
@@ -95,9 +96,16 @@ impl Candidate {
         }
         let id = parts.next()?;
         self.document()["body"].get(table)?.as_object()?.get(id)?;
+        let field = parts.next();
         if table == "scopes"
-            && parts.next() == Some("faultInput")
+            && field == Some("faultInput")
             && let Some(span) = self.entry_spans.get(id)
+        {
+            return Some(span.clone());
+        }
+        if table == "scopes"
+            && field == Some("retainedRequests")
+            && let Some(span) = self.request_spans.get(id)
         {
             return Some(span.clone());
         }
@@ -248,7 +256,9 @@ impl<'a> Package<'a> {
         body.insert("semantics".into(), json!({"id": contracts["semantics"]["contract"], "revision": contracts["semantics"]["digest"]}));
         body.insert("dialects".into(), json!({ self.ledger.dialect(): {"id": contracts["core"]["contract"], "revision": contracts["core"]["digest"]} }));
         let envelope = DefinitionEnvelope::from_parts_versioned(
-            if self.syntax.profile() == "0.10.0" {
+            if self.syntax.profile() == "0.11.0" {
+                "0.4.0"
+            } else if self.syntax.profile() == "0.10.0" {
                 "0.3.0"
             } else if matches!(self.syntax.profile(), "0.8.0" | "0.9.0") {
                 "0.2.0"
@@ -267,6 +277,7 @@ impl<'a> Package<'a> {
             package_digest: integrity.package,
             spans: lowering.spans,
             entry_spans: lowering.entry_spans,
+            request_spans: lowering.request_spans,
         })
     }
 }
@@ -290,6 +301,7 @@ struct Lower<'a, 's> {
     slots: BTreeSet<String>,
     spans: BTreeMap<String, std::ops::Range<usize>>,
     entry_spans: BTreeMap<String, std::ops::Range<usize>>,
+    request_spans: BTreeMap<String, std::ops::Range<usize>>,
     pending_steps: Vec<(&'a Tree, String)>,
     join_selections: BTreeMap<String, Vec<BTreeSet<String>>>,
     wait_owners: BTreeMap<String, String>,
@@ -422,6 +434,7 @@ impl<'a, 's> Lower<'a, 's> {
             slots: BTreeSet::new(),
             spans: BTreeMap::new(),
             entry_spans: BTreeMap::new(),
+            request_spans: BTreeMap::new(),
             pending_steps: Vec::new(),
             join_selections: BTreeMap::new(),
             wait_owners: BTreeMap::new(),

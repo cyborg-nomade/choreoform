@@ -6,8 +6,8 @@
 Implementation slice of [ADR-0015](../../docs/decisions/0015-authoring-grammar-bindings.md),
 profiles 0.2.0 / companion 0.1.0, 0.3.0 / companion 0.2.0, 0.4.0 /
 companion 0.3.0, 0.5.0 / companion 0.4.0, 0.6.0 / companion 0.5.0,
-0.7.0 / companion 0.6.0, 0.8.0 / companion 0.7.0, 0.9.0 / companion 0.8.0
-and 0.10.0 / companion 0.9.0.
+0.7.0 / companion 0.6.0, 0.8.0 / companion 0.7.0, 0.9.0 / companion 0.8.0,
+0.10.0 / companion 0.9.0 and 0.11.0 / companion 0.10.0.
 This prototype produces **candidate IR**, not
 semantic admission, execution or a production authoring editor.
 
@@ -37,6 +37,10 @@ These are declarations, not values, completion receipts or permissions; see
 clause on core 0.7/IR 0.3. All checking views disclose declarations; exceptional
 and later views retain a separate conditional proof without promoting legacy /
 ordinary coverage. Actual host events, storage and continuation remain open.
+
+[Source 0.11](../../docs/authoring/profile-v0.11.md) adds readable original-request
+retention on existing core 0.8/IR 0.4. Static declarations and the prior owned
+conditional proof remain separate from actual values, storage and authority.
 
 ## API boundaries
 
