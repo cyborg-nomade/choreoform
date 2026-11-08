@@ -120,7 +120,7 @@ fn old_wires_still_refuse_even_null_history_fields_and_unknown_wire_stays_closed
         );
     }
     assert_eq!(
-        DefinitionEnvelope::from_parts_versioned("0.4.0", body(), json!({})).unwrap_err(),
+        DefinitionEnvelope::from_parts_versioned("0.5.0", body(), json!({})).unwrap_err(),
         Error::Version
     );
 }

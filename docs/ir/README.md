@@ -35,3 +35,8 @@ with exact typed local history reference under [ADR-0052](../decisions/0052-type
 It inherits 0.2 wait capture and changes no earlier wire/hash domain. Structural
 projection is separate from exact core-0.7 binding and conditional entry proof;
 no actual fault/history storage, current authority or execution is supplied.
+
+[Definition IR 0.4](definition-v0.4.md) adds required explicit original-request
+retention maps on scopes, selected only by exact core 0.8. Structural declarations
+and conditional owned proof remain separate from actual values/storage/authority.
+Earlier source profiles and wire/core/hash domains remain fixed.

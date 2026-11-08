@@ -39,6 +39,7 @@ pub struct ReconciliationEntryReport {
     nodes: BTreeSet<String>,
     scopes: BTreeSet<String>,
     uncovered: BTreeSet<String>,
+    retained_request_scopes: BTreeSet<String>,
 }
 impl ReconciliationEntryReport {
     pub fn revision(&self) -> &str {
@@ -58,7 +59,12 @@ impl ReconciliationEntryReport {
     pub fn checked_scopes(&self) -> &BTreeSet<String> {
         &self.scopes
     }
-    /// Remaining after ordinary, handler and conditional reconciliation bodies.
+    /// Owned request proof remains in the prior concurrency report, separate from
+    /// legacy fresh-local reconciliation coverage. These are proven scope IDs.
+    pub fn retained_request_scopes(&self) -> &BTreeSet<String> {
+        &self.retained_request_scopes
+    }
+    /// Remaining after ordinary, handler and legacy reconciliation bodies.
     pub fn uncovered_nodes(&self) -> &BTreeSet<String> {
         &self.uncovered
     }
@@ -85,6 +91,25 @@ pub fn check_reconciliation_availability(
     let mut budget = Budget::default();
     let mut entries = BTreeSet::new();
     let mut assumptions = BTreeMap::new();
+    let concurrency = links.exceptional().faults().timing().concurrency();
+    let mut retained_request_scopes = BTreeSet::new();
+    if !concurrency
+        .invalidation()
+        .protection()
+        .control()
+        .static_report()
+        .retained_requests()
+        .is_empty()
+        && let Some(owned) = concurrency.owned_local()
+    {
+        for row in owned.followups() {
+            budget.tick(0)?;
+            if row.request_snapshot().is_some() {
+                budget.charge(1)?;
+                retained_request_scopes.insert(row.followup().into());
+            }
+        }
+    }
     for (owner, scope) in object(&b["scopes"])? {
         budget.tick(0)?;
         let closure = text(&scope["closure"])?;
@@ -101,7 +126,11 @@ pub fn check_reconciliation_availability(
         });
         // P6 has no follow-up ports. A surviving boundary does not establish
         // retention of any ancestor input, initializer, result or prior local.
-        assumptions.insert(followup.into(), BTreeSet::new());
+        // Its existing owned proof already checked the explicit immutable seed;
+        // legacy availability must neither erase it nor invent another one.
+        if !retained_request_scopes.contains(followup) {
+            assumptions.insert(followup.into(), BTreeSet::new());
+        }
     }
     let coverage = control::check_entries(
         b,
@@ -121,5 +150,6 @@ pub fn check_reconciliation_availability(
         nodes: coverage.nodes,
         scopes: coverage.scopes,
         uncovered,
+        retained_request_scopes,
     })
 }

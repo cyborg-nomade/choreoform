@@ -78,6 +78,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0051](0051-declared-fault-origin-contexts.md) | Accepted under delegation; pending parent/main integration | Retain declared emitting sites and complete handler contexts |
 | [0052](0052-typed-handler-entry.md) | Accepted under delegation; pending parent/main integration | Bind immutable history to explicit conditional handler-local entry |
 | [0053](0053-handler-entry-authoring.md) | Accepted under delegation; pending parent/main integration | Integrate readable history entry with separate conditional reports |
+| [0054](0054-owned-request-retention.md) | Accepted under delegation; pending parent/main integration | Retain exact immutable original requests in owned follow-ups |
 
 ## When an ADR is required
 

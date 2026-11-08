@@ -293,6 +293,11 @@ validated, and round-tripped.
   event/correlation/current authority/owned storage and permitted continuation /
   cutoff/handoff/all-settlement remain next, alongside the open general tool-managed
   near-English editing and representative-user gates.
+  [ADR-0054](docs/decisions/0054-owned-request-retention.md) adds raw IR 0.4/core 0.8
+  exact original-request snapshots and separate owned conditional seed/access /
+  protection/invalidation proof. Actual accepted immutable values/occurrence storage
+  and current authority/handoff remain host premises. Readable retention, permitted
+  new work and cutoff/all-settlement follow explicitly; no parent resume or exit.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

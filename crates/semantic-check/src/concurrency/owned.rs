@@ -12,8 +12,23 @@ struct Template {
     followup: String,
     locals: BTreeSet<String>,
     captures: BTreeSet<String>,
+    request: Option<OwnedRequestSnapshot>,
 }
 
+/// Exact original request relation under the conditional owned proof, never a value.
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct OwnedRequestSnapshot {
+    origin: String,
+    result: String,
+}
+impl OwnedRequestSnapshot {
+    pub fn origin(&self) -> &str {
+        &self.origin
+    }
+    pub fn result(&self) -> &str {
+        &self.result
+    }
+}
 /// A declared creator/template relation, conditional on occurrence-bound P6.
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct OwnedLocalFollowup {
@@ -38,6 +53,9 @@ impl OwnedLocalFollowup {
     }
     pub fn capture_sites(&self) -> &BTreeSet<String> {
         &self.template.captures
+    }
+    pub fn request_snapshot(&self) -> Option<&OwnedRequestSnapshot> {
+        self.template.request.as_ref()
     }
     pub fn host_requirements(&self) -> &'static [&'static str] {
         &[
@@ -203,6 +221,20 @@ impl Candidates {
         if b["nodes"][entry]["kind"] != "wait" || b["nodes"][entry]["capture"].is_null() {
             return Ok(None);
         }
+        let request =
+            if let Some(bindings) = s["retainedRequests"].as_object().filter(|m| !m.is_empty()) {
+                budget.charge(3)?;
+                let (result, origin) = bindings
+                    .iter()
+                    .next()
+                    .ok_or_else(|| err("retained-request-cardinality"))?;
+                Some(OwnedRequestSnapshot {
+                    origin: text(origin)?.into(),
+                    result: result.clone(),
+                })
+            } else {
+                None
+            };
         let mut reached = BTreeSet::new();
         let mut captures = BTreeSet::new();
         let mut finish = false;
@@ -250,6 +282,7 @@ impl Candidates {
             followup: followup.into(),
             locals: locals.clone(),
             captures,
+            request,
         }))
     }
     pub fn check(
@@ -261,14 +294,31 @@ impl Candidates {
     ) -> Result<OwnedLocalReport> {
         let b = &envelope.document()["body"];
         let mut entries = BTreeMap::new();
+        let mut requests = BTreeMap::new();
+        let mut request_sources = BTreeMap::new();
         for p in self.templates.values() {
             budget.tick(0)?;
             entries.insert(p.followup.clone(), BTreeSet::new());
+            if let Some(request) = &p.request {
+                if !ordinary.control().covered_nodes().contains(&request.origin) {
+                    return Err(at(
+                        "retained-request-source-control-unproved",
+                        &request.origin,
+                    ));
+                }
+                budget.charge(5)?;
+                requests.insert(p.followup.clone(), request.result.clone());
+                request_sources.insert(
+                    p.followup.clone(),
+                    (request.result.clone(), request.origin.clone()),
+                );
+            }
         }
         // One cumulative analysis per stage for all entries, not per creator.
-        let coverage = crate::control::check_entries(
+        let coverage = crate::control::check_entries_with_requests(
             b,
             &entries,
+            &requests,
             Budget::default(),
             "owned-local-availability-unproved",
         )?;
@@ -280,7 +330,8 @@ impl Candidates {
                 .or_default()
                 .insert(p.body.clone());
         }
-        let analysis = crate::protection::analyze_entries(b, supplied, &owners, ordinary)?;
+        let analysis =
+            crate::protection::analyze_entries(b, supplied, &owners, ordinary, &request_sources)?;
         let obligations =
             crate::invalidation::require_entries(b, &analysis.dependencies.nodes, budget)?;
         budget.charge(

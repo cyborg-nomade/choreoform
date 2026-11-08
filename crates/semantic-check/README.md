@@ -403,3 +403,11 @@ metadata, never accepted faults, current eligibility or handler data. Unused
 policies verify metadata but yield no use row; null source never proves no faults.
 IR 0.2, prior captures/retries and finite metadata closure remain inherited; explicit
 source/native integration and typed fault entry are separate dependencies.
+
+[ADR-0054](../../docs/decisions/0054-owned-request-retention.md) adds exact raw
+IR 0.4/core 0.8 original-request retention declarations. Static rows and the
+conditional owned snapshot relation never contain values. Pre-entry access,
+source/control protection and strict invalidation remain mandatory. Later legacy
+reconciliation retains that prior proof separately; ordinary coverage is unchanged.
+Readable selection, permitted new work and all actual host/storage/authority /
+handoff/cutoff/settlement obligations remain open.

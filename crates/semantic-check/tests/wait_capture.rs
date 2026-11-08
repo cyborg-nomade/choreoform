@@ -648,3 +648,6 @@ mod origins;
 
 #[path = "capture/fault_entry.rs"]
 mod fault_entry;
+
+#[path = "capture/retained_request.rs"]
+mod retained_request;

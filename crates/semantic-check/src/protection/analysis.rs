@@ -3,6 +3,13 @@
 use super::*;
 use crate::control::graph::Graph;
 
+struct SeedContext<'a> {
+    owners: &'a BTreeSet<String>,
+    sources: &'a BTreeSet<String>,
+    ordinary: &'a BTreeMap<String, Origins>,
+    provenance_code: &'static str,
+    provider_code: &'static str,
+}
 pub(super) struct Flow<'a> {
     b: &'a Value,
     graph: Graph,
@@ -512,16 +519,51 @@ impl<'a> Flow<'a> {
         sources: &BTreeSet<String>,
         ordinary: &BTreeMap<String, Origins>,
     ) -> Result<()> {
+        self.seeded_scope(
+            scope,
+            target,
+            SeedContext {
+                owners,
+                sources,
+                ordinary,
+                provenance_code: "fault-entry-provenance-unproved",
+                provider_code: "fault-entry-provider-provenance-unproved",
+            },
+        )
+    }
+    pub(super) fn request_scope(
+        &mut self,
+        scope: &str,
+        target: &str,
+        owners: &BTreeSet<String>,
+        source: &str,
+        ordinary: &BTreeMap<String, Origins>,
+    ) -> Result<()> {
+        self.budget.charge(1)?;
+        let sources = BTreeSet::from([source.into()]);
+        self.seeded_scope(
+            scope,
+            target,
+            SeedContext {
+                owners,
+                sources: &sources,
+                ordinary,
+                provenance_code: "retained-request-provenance-unproved",
+                provider_code: "retained-request-provider-provenance-unproved",
+            },
+        )
+    }
+    fn seeded_scope(&mut self, scope: &str, target: &str, context: SeedContext<'_>) -> Result<()> {
         let inherited =
-            self.retained_context(owners, ordinary, "fault-entry-provenance-unproved")?;
-        for site in sources {
+            self.retained_context(context.owners, context.ordinary, context.provenance_code)?;
+        for site in context.sources {
             self.budget.tick(0)?;
             require(
                 inherited.contains(&Origin::Provider(ProviderSite::new(
                     site,
                     ProviderRole::Activity,
                 ))),
-                "fault-entry-provider-provenance-unproved",
+                context.provider_code,
             )?;
         }
         self.budget.charge(2)?;

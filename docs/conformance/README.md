@@ -169,3 +169,9 @@ views retain static declarations, with separate conditional proof in the final
 three. Bounded valid sources stress catalogue sharing and complete report refusal
 before stdout; inherited raw source/control/access/provenance barriers stay tested.
 These are declaration/conditional checks, not actual host or user-study evidence.
+
+[Original-request retention](../evaluation/0054-owned-request-retention.md) adds
+raw IR 0.4/core 0.8 structural/SDK checks and twelve shared finite cases with
+explicit prevalidated premises. Exact original-input declarations and owned
+conditional availability/protection/invalidation remain separate from ordinary
+and legacy reconciliation sets. No actual request, storage or handoff is supplied.
