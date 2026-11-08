@@ -303,6 +303,12 @@ validated, and round-tripped.
   contract. Permitted separately authorized new work inside the surviving boundary
   and cutoff/atomic handoff/all-settlement remain next. General tool-managed
   near-English editing and real usability/host/independent evidence stay open.
+  [ADR-0056](docs/decisions/0056-owned-continuation-direction.md) records the
+  continuation audit: flat terminal retention cannot admit new work that needs
+  another reconciliation child. Next new exact core/distinct bounded conditional
+  proof for finite nested surviving ownership, read-only capability work first;
+  command/compensation generality and actual cutoff/handoff/all-settlement remain
+  explicit later/live obligations. No production permission changes in the audit.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

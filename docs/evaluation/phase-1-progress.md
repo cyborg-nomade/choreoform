@@ -1048,6 +1048,21 @@ terminal owned proof and capability reconciliation-child rules need an explicit
 compatible continuation/cutoff/all-settlement design before production changes.
 All actual host/storage/authority and every scenario/phase/external gate remain open.
 
+
+ADR-0056 continuation/cutoff/all-settlement critique and seven genuine SDK probe
+groups are implemented under the frozen audit plan. Flat read-only work passes
+earlier stages but lacks lifetime proof; nested recovery conflicts with current
+flat retention. Missing snapshots/ancestor shortcuts and irreversible-label /
+true-guard shortcuts remain refused. An ordinarily covered parent path is not
+late resumption. The next versioned core/distinct bounded proof will use explicit
+finite surviving ownership, read-only work first, with empty pre-entry access,
+conditional source/protection contexts and strict invalidation. Production behavior,
+accepted artifacts and committed package/report bytes stay unchanged. Local 458
+Rust plus six doctests and all native/Wasm/Python checks pass. See
+[audit](0056-owned-continuation-audit.md); final-head CI/review/comment audit /
+signed merge remain before integration. Real values/grants /
+storage/cutoff/handoff/all-settlement and every scenario/phase/external gate stay open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

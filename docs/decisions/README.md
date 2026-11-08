@@ -80,6 +80,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0053](0053-handler-entry-authoring.md) | Accepted under delegation; pending parent/main integration | Integrate readable history entry with separate conditional reports |
 | [0054](0054-owned-request-retention.md) | Accepted under delegation; pending parent/main integration | Retain exact immutable original requests in owned follow-ups |
 | [0055](0055-request-retention-authoring.md) | Accepted under delegation; pending parent/main integration | Author original-request retention with an explicit readable clause |
+| [0056](0056-owned-continuation-direction.md) | Accepted under delegation; pending parent/main integration | Extend owned work through explicit finite surviving ownership |
 
 ## When an ADR is required
 
