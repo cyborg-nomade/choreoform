@@ -1005,6 +1005,20 @@ unchanged. Next readable retained-request selection, then permitted new work and
 explicit cutoff/handoff/all-settlement. Parent and every scenario/phase/external
 gate remain draft/open.
 
+
+[PR #69](https://github.com/cyborg-nomade/choreoform/pull/69) merged into draft
+#46 as `30b3f228097692d5e63db418f570b9470f8acd2d` after required final-head CI
+`42461146774` and delegated review/comment audit `6719045244`. Refreshed audit found
+no threads/actionable summaries; CodeRabbit skipped and supplies no review evidence.
+Merge explicitly carries the sign-off; ADR-0054 remains pending parent/main
+integration. Local 448 Rust plus six doctests and all native/Wasm/Python checks
+passed. Active dependency `codex/request-retention-authoring` follows its
+[frozen integration plan](0055-request-retention-authoring-plan.md): explicit source
+0.11/companion 0.10 selecting existing core 0.8/IR 0.4, readable clause and bounded
+native disclosure with legacy/owned proof separation. Then permitted new work and
+cutoff/handoff/all-settlement. All actual host/storage/authority and every scenario /
+phase/external gate remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
