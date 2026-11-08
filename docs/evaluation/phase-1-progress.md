@@ -3,7 +3,7 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-07<br>
+**Updated:** 2026-11-08<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
@@ -946,6 +946,19 @@ Final-head CI/comment audit/signed merge remain required. Next explicit readable
 source/companion/native integration with separate conditional disclosure, then
 permitted owned continuation/cutoff/handoff/all-settlement. Parent and every
 scenario/phase/external gate remain draft/open.
+
+[PR #67](https://github.com/cyborg-nomade/choreoform/pull/67) merged into draft
+#46 as `c7983201e4dd81ce2289a00cf236da740fcefbb2` after required final-head CI
+`42407851393` and delegated review/refreshed comment audit `6718557503`. No actionable
+threads/summary findings existed; CodeRabbit skipped and supplies no review evidence.
+The first review-comment attempt did not execute because automatic approval review
+hit its usage limit; after the owner reported reset, the audit was refreshed and
+recorded successfully. Merge explicitly carries the sign-off; ADR-0052 remains
+pending parent/main integration. Active dependency `codex/handler-entry-authoring`
+follows its [frozen integration plan](0053-handler-entry-authoring-plan.md): readable
+scope clause and explicit pair, shared retained evidence, bounded declarations and
+separate conditional native proof. All actual event/storage/authority, continuation /
+cutoff/settlement and every scenario/phase/external gate remain open.
 
 ## Honest exit accounting
 
