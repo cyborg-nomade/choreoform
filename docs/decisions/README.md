@@ -76,6 +76,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0049](0049-general-fault-source-authoring.md) | Accepted under delegation | Readable source 0.9 general fault-source clauses and shared bounded native catalogues |
 | [0050](0050-provider-fault-history-metadata.md) | Accepted under delegation; pending parent/main integration | Separate provider history claims from authenticated handler entry |
 | [0051](0051-declared-fault-origin-contexts.md) | Accepted under delegation; pending parent/main integration | Retain declared emitting sites and complete handler contexts |
+| [0052](0052-typed-handler-entry.md) | Accepted under delegation; pending parent/main integration | Bind immutable history to explicit conditional handler-local entry |
 
 ## When an ADR is required
 

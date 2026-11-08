@@ -90,4 +90,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_general_fault_authoring.py
           .tools/ir-check/bin/python tools/check_fault_history.py
           .tools/ir-check/bin/python tools/check_fault_origins.py
+          .tools/ir-check/bin/python tools/check_fault_entry.py
       # Browser execution is a separate manual evidence step, not implied by CI.

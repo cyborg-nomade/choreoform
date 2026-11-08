@@ -645,3 +645,6 @@ mod general_fault;
 
 #[path = "capture/origins.rs"]
 mod origins;
+
+#[path = "capture/fault_entry.rs"]
+mod fault_entry;

@@ -213,7 +213,7 @@ fn cases() -> Vec<Case> {
         cases.push(c);
     }
     for (name, pointer, value, expected) in [
-        ("unsupported-version", "/version", json!("0.3.0"), "version"),
+        ("unsupported-version", "/version", json!("0.4.0"), "version"),
         ("wrong-format", "/format", json!("other"), "envelope"),
         ("wrong-artifact", "/kind", json!("plan"), "envelope"),
         (

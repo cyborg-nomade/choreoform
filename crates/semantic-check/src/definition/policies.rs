@@ -123,7 +123,7 @@ impl Check<'_, '_> {
             "actor" | "protection" => &["permit"],
             "capability" => &["provider"],
             "effect" => &["class", "idempotency", "reconciliation"],
-            "work" if self.b["dialects"][text(&r["dialect"])?]["id"] == CORE_V6.0 => &[
+            "work" if general_source_core(&self.b["dialects"][text(&r["dialect"])?]["id"]) => &[
                 "instructions",
                 "authority",
                 "retry",
@@ -215,7 +215,7 @@ impl Check<'_, '_> {
                 let core = &self.b["dialects"][text(&r["dialect"])?]["id"];
                 let retry_v4 = retry_source_core(core);
                 let retry_v2 = core == CORE_V2.0 || metadata_core(core);
-                if core == CORE_V6.0 {
+                if general_source_core(core) {
                     if !p["faultSource"].is_null() {
                         let source = self
                             .resources

@@ -13,6 +13,7 @@ pub(super) struct Flow<'a> {
     pub accesses: BTreeSet<AccessObligation>,
     pub dependencies: Option<Dependencies>,
     nonlocal_writes: BTreeSet<String>,
+    history_entries: BTreeMap<String, String>,
     pub(super) provenance: Option<BTreeMap<String, Origins>>,
     pub(super) required_provenance: BTreeSet<RequiredProtectionProvenance>,
 }
@@ -65,9 +66,11 @@ impl<'a> Flow<'a> {
                 }
             }
         }
-        let provenance = providers
-            .contains_key(&ProviderRole::Capture)
-            .then(BTreeMap::new);
+        let provenance = (providers.contains_key(&ProviderRole::Capture)
+            || object(&b["scopes"])?
+                .values()
+                .any(|s| !s["faultInput"].is_null()))
+        .then(BTreeMap::new);
         Ok(Self {
             b,
             graph,
@@ -78,6 +81,7 @@ impl<'a> Flow<'a> {
             accesses: BTreeSet::new(),
             dependencies: None,
             nonlocal_writes: BTreeSet::new(),
+            history_entries: BTreeMap::new(),
             provenance,
             required_provenance: BTreeSet::new(),
         })
@@ -130,7 +134,7 @@ impl<'a> Flow<'a> {
         match origin {
             Origin::Cell(id)
             | Origin::Historical { cell: id, .. }
-            | Origin::OwnedProvenance(id) => &self.b["data"][id]["protection"],
+            | Origin::RetainedProvenance(id) => &self.b["data"][id]["protection"],
             Origin::Provider(site) => self.providers[&site.role][&site.node].protection(),
         }
     }
@@ -235,7 +239,7 @@ impl<'a> Flow<'a> {
                     Origin::Cell(cell) => Some(cell.clone()),
                     Origin::Provider(_)
                     | Origin::Historical { .. }
-                    | Origin::OwnedProvenance(_) => None,
+                    | Origin::RetainedProvenance(_) => None,
                 }),
             );
         }
@@ -246,6 +250,18 @@ impl<'a> Flow<'a> {
             let deps = self.access(scope, id, "write")?;
             self.publish(inherited, id, scope)?;
             entry.extend(deps);
+        }
+        if let Some(target) = self.history_entries.get(scope).cloned() {
+            self.budget.charge(inherited.len() + 1)?;
+            let mut sources = inherited.clone();
+            sources.extend(
+                self.access(scope, &target, "write")?
+                    .into_iter()
+                    .filter(|x| !matches!(x,Origin::Cell(cell) if cell==&target)),
+            );
+            self.publish(&sources, &target, scope)?;
+            entry.extend(sources);
+            entry.insert(Origin::Cell(target));
         }
         self.budget
             .charge(self.initializers.get(scope).map_or(0, Vec::len))?;
@@ -328,7 +344,7 @@ impl<'a> Flow<'a> {
                                 context_scope: None,
                             });
                         }
-                        Origin::Provider(_) | Origin::OwnedProvenance(_) => {}
+                        Origin::Provider(_) | Origin::RetainedProvenance(_) => {}
                     }
                 }
             }
@@ -436,19 +452,30 @@ impl<'a> Flow<'a> {
         owners: &BTreeSet<String>,
         ordinary: &BTreeMap<String, Origins>,
     ) -> Result<()> {
+        let inherited =
+            self.retained_context(owners, ordinary, "owned-local-provenance-unproved")?;
+        self.scope(scope, &inherited, 0, None)?;
+        Ok(())
+    }
+    fn retained_context(
+        &mut self,
+        owners: &BTreeSet<String>,
+        ordinary: &BTreeMap<String, Origins>,
+        code: &'static str,
+    ) -> Result<Origins> {
         let mut inherited = Origins::new();
         for owner in owners {
             self.budget.tick(0)?;
             let origins = ordinary
                 .get(owner)
-                .ok_or_else(|| diagnostic("owned-local-provenance-unproved", "scopes", owner))?;
+                .ok_or_else(|| diagnostic(code, "scopes", owner))?;
             self.budget.charge(origins.len())?;
             for origin in origins {
                 self.budget.charge(4)?;
                 let (kind, site, role) = match origin {
                     Origin::Cell(cell)
                     | Origin::Historical { cell, .. }
-                    | Origin::OwnedProvenance(cell) => ("cell", cell.clone(), None),
+                    | Origin::RetainedProvenance(cell) => ("cell", cell.clone(), None),
                     Origin::Provider(site) => (
                         "provider",
                         site.node.clone(),
@@ -470,11 +497,35 @@ impl<'a> Flow<'a> {
                 inherited.insert(match origin {
                     Origin::Cell(cell)
                     | Origin::Historical { cell, .. }
-                    | Origin::OwnedProvenance(cell) => Origin::OwnedProvenance(cell.clone()),
+                    | Origin::RetainedProvenance(cell) => Origin::RetainedProvenance(cell.clone()),
                     Origin::Provider(site) => Origin::Provider(site.clone()),
                 });
             }
         }
+        Ok(inherited)
+    }
+    pub(super) fn history_scope(
+        &mut self,
+        scope: &str,
+        target: &str,
+        owners: &BTreeSet<String>,
+        sources: &BTreeSet<String>,
+        ordinary: &BTreeMap<String, Origins>,
+    ) -> Result<()> {
+        let inherited =
+            self.retained_context(owners, ordinary, "fault-entry-provenance-unproved")?;
+        for site in sources {
+            self.budget.tick(0)?;
+            require(
+                inherited.contains(&Origin::Provider(ProviderSite::new(
+                    site,
+                    ProviderRole::Activity,
+                ))),
+                "fault-entry-provider-provenance-unproved",
+            )?;
+        }
+        self.budget.charge(2)?;
+        self.history_entries.insert(scope.into(), target.into());
         self.scope(scope, &inherited, 0, None)?;
         Ok(())
     }

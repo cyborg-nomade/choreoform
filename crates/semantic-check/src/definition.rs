@@ -4,8 +4,10 @@ use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
 mod capture;
 mod creation;
+mod fault_entry;
 mod fault_source;
 pub use capture::DeclaredWaitCapture;
+pub use fault_entry::DeclaredFaultEntry;
 pub use fault_source::DeclaredFaultSourceUse;
 mod lifecycle;
 mod nodes;
@@ -19,6 +21,7 @@ pub struct Report {
     policies: usize,
     captures: Vec<DeclaredWaitCapture>,
     fault_sources: Vec<DeclaredFaultSourceUse>,
+    fault_entries: Vec<DeclaredFaultEntry>,
 }
 impl Report {
     pub fn revision(&self) -> &str {
@@ -37,6 +40,10 @@ impl Report {
     /// All declared general provider-source uses, even unvisited; no actual faults.
     pub fn fault_source_uses(&self) -> &[DeclaredFaultSourceUse] {
         &self.fault_sources
+    }
+    /// Reserved local history declarations, not initialized values or entry proof.
+    pub fn fault_entries(&self) -> &[DeclaredFaultEntry] {
+        &self.fault_entries
     }
     /// Explicit residual obligations: a static-stage report cannot close these.
     pub fn remaining(&self) -> &'static [&'static str] {
@@ -68,13 +75,23 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
     resources.verify(&semantics)?;
     for pin in object(&b["dialects"])?.values() {
         let p = Pin::decode(pin)?;
+        // Wire 0.3 entry fields must never be ignored by an older dialect.
+        // The new core is admitted only once its exact contract is implemented.
+        if envelope.document()["version"] == "0.3.0" {
+            require(p.id == CORE_V7.0, "fault-entry-wire-version")?;
+        }
         let contract = (p.id.as_str(), p.revision.as_str());
         let level = CORE_PROFILES
             .iter()
             .position(|known| *known == contract)
             .ok_or_else(|| err("dialect-contract"))?;
         resources.verify(&p)?;
-        if level >= 4 {
+        if p.id == CORE_V7.0 {
+            require(
+                envelope.document()["version"] == "0.3.0",
+                "fault-entry-wire-version",
+            )?;
+        } else if level >= 4 {
             require(
                 envelope.document()["version"] == "0.2.0",
                 "capture-wire-version",
@@ -100,14 +117,19 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         captures: Vec::new(),
         capture_types: BTreeSet::new(),
         fault_sources: Vec::new(),
+        fault_entries: Vec::new(),
     };
     c.run()?;
+    if envelope.document()["version"] == "0.3.0" {
+        c.fault_entry_declarations()?;
+    }
     Ok(Report {
         revision: text(&envelope.document()["revision"])?.into(),
         expressions: c.expressions.len(),
         policies: c.policy_reads.len(),
         captures: c.capture_bindings(text(&envelope.document()["revision"])?)?,
         fault_sources: c.fault_source_bindings(text(&envelope.document()["revision"])?)?,
+        fault_entries: c.fault_entry_bindings(text(&envelope.document()["revision"])?)?,
     })
 }
 struct Check<'a, 'r> {
@@ -121,6 +143,7 @@ struct Check<'a, 'r> {
     provider_refs: BTreeMap<String, BTreeMap<Pin, BTreeSet<String>>>,
     captures: Vec<capture::PendingCapture>,
     fault_sources: Vec<fault_source::PendingFaultSource>,
+    fault_entries: Vec<fault_entry::PendingFaultEntry>,
     capture_types: BTreeSet<(capture::CaptureTypeSubject, Pin, Pin)>,
 }
 impl Check<'_, '_> {

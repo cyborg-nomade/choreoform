@@ -214,6 +214,7 @@ mod tests {
             captures: Vec::new(),
             capture_types: BTreeSet::new(),
             fault_sources: Vec::new(),
+            fault_entries: Vec::new(),
         };
         c.resources.budget.work = 1_000_000;
         assert!(c.capture_bindings("revision-test-only").unwrap().is_empty());
