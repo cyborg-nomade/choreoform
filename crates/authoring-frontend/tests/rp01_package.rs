@@ -16,6 +16,8 @@ mod handler_entry_profile;
 mod metadata_profile;
 #[path = "rp01/profile.rs"]
 mod profile;
+#[path = "rp01/request_retention_profile.rs"]
+mod request_retention_profile;
 
 const MANIFEST: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/manifest.json");
 const SOURCE: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/source.choreo");

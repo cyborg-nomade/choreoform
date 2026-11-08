@@ -14,7 +14,10 @@ pub(super) fn static_output_with_entries(
     entries: Option<&choreoform_semantic_check::FaultEntryReport>,
 ) -> Result<String, String> {
     let mut remaining = super::MAX_BYTES;
-    if !report.fault_entries().is_empty() || entries.is_some() {
+    if !report.fault_entries().is_empty()
+        || !report.retained_requests().is_empty()
+        || entries.is_some()
+    {
         reserve(&value, &mut remaining)?;
     }
     let mut rows = Vec::new();
@@ -28,6 +31,17 @@ pub(super) fn static_output_with_entries(
     }
     super::fault_use_output::append(report, &mut value, &mut remaining)?;
     super::fault_entry_output::append_declared(report, &mut value, &mut remaining)?;
+    let mut requests = Vec::new();
+    for request in report.retained_requests() {
+        push_row(
+            &mut requests,
+            json!({"revision":request.revision(),"scope":request.scope(),"origin":request.origin(),"result":request.result(),"hostRequirements":request.host_requirements()}),
+            &mut remaining,
+        )?;
+    }
+    if !requests.is_empty() {
+        value["declaredRetainedRequests"] = requests.into();
+    }
     if let Some(entries) = entries {
         if entries.revision() != report.revision() {
             return Err("report-revision".into());

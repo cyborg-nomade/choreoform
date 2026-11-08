@@ -8,6 +8,7 @@ const GRAMMAR: &str = include_str!("../../../docs/authoring/candidate-a.ebnf");
 const GRAMMAR_V3: &str = include_str!("../../../docs/authoring/candidate-a-v0.3.ebnf");
 const GRAMMAR_V7: &str = include_str!("../../../docs/authoring/candidate-a-v0.7.ebnf");
 const GRAMMAR_V8: &str = include_str!("../../../docs/authoring/candidate-a-v0.8.ebnf");
+const GRAMMAR_V11: &str = include_str!("../../../docs/authoring/candidate-a-v0.11.ebnf");
 const GRAMMAR_V10: &str = include_str!("../../../docs/authoring/candidate-a-v0.10.ebnf");
 const GRAMMAR_V9: &str = include_str!("../../../docs/authoring/candidate-a-v0.9.ebnf");
 const V5_TOKENS: usize = 16_384;
@@ -265,7 +266,7 @@ fn lex(source: &str, program: bool) -> Result<Vec<Token>> {
             && tokens[2].kind == Kind::Text
             && matches!(
                 tokens[2].value.as_str(),
-                "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0"
+                "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0"
             )
         {
             token_limit = V5_TOKENS;
@@ -376,7 +377,10 @@ fn grammar(profile: &str) -> &'static Grammar {
     static COMPILED_V8: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V9: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V10: OnceLock<Grammar> = OnceLock::new();
-    let (cache, source) = if profile == "0.10.0" {
+    static COMPILED_V11: OnceLock<Grammar> = OnceLock::new();
+    let (cache, source) = if profile == "0.11.0" {
+        (&COMPILED_V11, GRAMMAR_V11)
+    } else if profile == "0.10.0" {
         (&COMPILED_V10, GRAMMAR_V10)
     } else if profile == "0.9.0" {
         (&COMPILED_V9, GRAMMAR_V9)
@@ -561,6 +565,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
             Some("0.8.0") => "0.8.0",
             Some("0.9.0") => "0.9.0",
             Some("0.10.0") => "0.10.0",
+            Some("0.11.0") => "0.11.0",
             _ => return Err(error("profile", 0..source.len())),
         }
     } else {
@@ -578,7 +583,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
         furthest: 0,
         work_limit: if matches!(
             profile,
-            "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0"
+            "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0"
         ) {
             V5_WORK
         } else {

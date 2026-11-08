@@ -175,3 +175,8 @@ raw IR 0.4/core 0.8 structural/SDK checks and twelve shared finite cases with
 explicit prevalidated premises. Exact original-input declarations and owned
 conditional availability/protection/invalidation remain separate from ordinary
 and legacy reconciliation sets. No actual request, storage or handoff is supplied.
+
+[Readable request retention](../evaluation/0055-request-retention-authoring.md)
+composes source/native original requests with capture/retry/handler history through
+all eleven views. Explicit grammar/schema/versioning, alias/hash/span/role/refusal
+and combined bounded output checks retain all prior evidence and external gates.

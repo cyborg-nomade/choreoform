@@ -298,6 +298,11 @@ validated, and round-tripped.
   protection/invalidation proof. Actual accepted immutable values/occurrence storage
   and current authority/handoff remain host premises. Readable retention, permitted
   new work and cutoff/all-settlement follow explicitly; no parent resume or exit.
+  [ADR-0055](docs/decisions/0055-request-retention-authoring.md) adds explicit source
+  0.11/companion 0.10 and bounded native disclosure of the existing retention
+  contract. Permitted separately authorized new work inside the surviving boundary
+  and cutoff/atomic handoff/all-settlement remain next. General tool-managed
+  near-English editing and real usability/host/independent evidence stay open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

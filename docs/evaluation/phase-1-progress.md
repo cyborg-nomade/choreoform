@@ -1019,6 +1019,22 @@ native disclosure with legacy/owned proof separation. Then permitted new work an
 cutoff/handoff/all-settlement. All actual host/storage/authority and every scenario /
 phase/external gate remain open.
 
+
+ADR-0055 readable original-request retention is implemented under its frozen plan.
+Source 0.11/companion 0.10 explicitly selects existing core 0.8/IR 0.4; normal
+origin/local-result resolution adds no value or initializer. All eleven native
+views disclose bounded static declarations, owned rows add originalRequest, and
+final reconciliation names retainedRequestScopes without legacy coverage promotion.
+Three frontend Rust and six Python groups cover full capture/retry/history/request
+composition, compatibility/identity/format/Unicode spans, refusals and valid
+14,257-token combined report overflow with no stdout. Local 451 Rust plus six
+doctests and all native/Wasm/Python checks pass. Final-head CI/comment audit /
+review/merge gates remain before integration; see
+[evidence](0055-request-retention-authoring.md). Committed package/report bytes
+stay unchanged. Next permitted new work with current authority inside the surviving
+boundary and explicit cutoff/atomic handoff/all-settlement. Parent and every
+scenario/phase/external gate remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
