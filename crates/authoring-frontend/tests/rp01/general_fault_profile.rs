@@ -5,10 +5,10 @@ use choreoform_authoring_frontend::{Candidate, Package, parse_fragment};
 use choreoform_ir_probe_core::DefinitionEnvelope;
 use choreoform_semantic_check::{CORE_V5, CORE_V6, FAULT_SOURCE_PROFILE};
 
-struct Fixture {
-    source: String,
-    ledger: Value,
-    artifacts: Vec<(String, String, Vec<u8>)>,
+pub(super) struct Fixture {
+    pub(super) source: String,
+    pub(super) ledger: Value,
+    pub(super) artifacts: Vec<(String, String, Vec<u8>)>,
 }
 fn recognise(source: &mut String, work: &str, name: &str) {
     let start = source.find(&format!("Rule for work \"{work}\".")).unwrap();
@@ -21,7 +21,7 @@ fn recognise(source: &mut String, work: &str, name: &str) {
     source.replace_range(start..end, &block);
 }
 impl Fixture {
-    fn new() -> Self {
+    pub(super) fn new() -> Self {
         let m: Value = serde_json::from_slice(MANIFEST).unwrap();
         let mut f = Self {
             source: std::str::from_utf8(SOURCE)
@@ -66,7 +66,7 @@ impl Fixture {
         recognise(&mut f.source, "Notice work", "Notice faults");
         f
     }
-    fn resources(&self) -> Vec<Resource<'_>> {
+    pub(super) fn resources(&self) -> Vec<Resource<'_>> {
         self.artifacts
             .iter()
             .map(|(id, revision, bytes)| Resource {
@@ -76,7 +76,7 @@ impl Fixture {
             })
             .collect()
     }
-    fn lower(&self) -> Candidate {
+    pub(super) fn lower(&self) -> Candidate {
         Package::parse(
             self.source.as_bytes(),
             &serde_json::to_vec(&self.ledger).unwrap(),

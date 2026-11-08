@@ -75,7 +75,22 @@ impl<'a, 's> Lower<'a, 's> {
         if outcomes.is_empty() {
             return Err(error("scope-outcomes", self.syntax.span(interface)));
         }
-        self.put("scopes", id.clone(), json!({"parent":parent, "entry":self.r(interface, &id, "node", 0)?, "inputs":inputs, "outputs":outputs, "outcomes":set(outcomes), "cancellation":self.r(interface, &id, "policy", 1)?, "faults":self.r(interface, &id, "policy", 2)?, "closure":self.r(interface, &id, "policy", 3)?, "race":self.r(interface, &id, "policy", 4)?}))?;
+        let mut record = json!({"parent":parent, "entry":self.r(interface, &id, "node", 0)?, "inputs":inputs, "outputs":outputs, "outcomes":set(outcomes), "cancellation":self.r(interface, &id, "policy", 1)?, "faults":self.r(interface, &id, "policy", 2)?, "closure":self.r(interface, &id, "policy", 3)?, "race":self.r(interface, &id, "policy", 4)?});
+        if self.syntax.profile() == "0.10.0" {
+            record["faultInput"] = if let Some(binding) = tree.all("fault_entry").first() {
+                let history = self.r(binding, &id, "resource", 0)?;
+                let result = self.r(binding, &id, "data", 1)?;
+                if self.ledger.declarations[&result].scope.as_deref() != Some(&id) {
+                    return Err(error("fault-entry-owner", self.syntax.span(binding)));
+                }
+                self.entry_spans
+                    .insert(id.clone(), self.syntax.span(binding));
+                json!({"history":self.ledger.pin(&history,"provider-fault-history")?,"result":result})
+            } else {
+                Value::Null
+            };
+        }
+        self.put("scopes", id.clone(), record)?;
         for declaration in tree.all("declaration") {
             let node = declaration.first()?;
             match node.rule {

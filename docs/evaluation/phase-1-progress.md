@@ -3,7 +3,7 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-07<br>
+**Updated:** 2026-11-08<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
@@ -946,6 +946,35 @@ Final-head CI/comment audit/signed merge remain required. Next explicit readable
 source/companion/native integration with separate conditional disclosure, then
 permitted owned continuation/cutoff/handoff/all-settlement. Parent and every
 scenario/phase/external gate remain draft/open.
+
+[PR #67](https://github.com/cyborg-nomade/choreoform/pull/67) merged into draft
+#46 as `c7983201e4dd81ce2289a00cf236da740fcefbb2` after required final-head CI
+`42407851393` and delegated review/refreshed comment audit `6718557503`. No actionable
+threads/summary findings existed; CodeRabbit skipped and supplies no review evidence.
+The first review-comment attempt did not execute because automatic approval review
+hit its usage limit; after the owner reported reset, the audit was refreshed and
+recorded successfully. Merge explicitly carries the sign-off; ADR-0052 remains
+pending parent/main integration. Active dependency `codex/handler-entry-authoring`
+follows its [frozen integration plan](0053-handler-entry-authoring-plan.md): readable
+scope clause and explicit pair, shared retained evidence, bounded declarations and
+separate conditional native proof. All actual event/storage/authority, continuation /
+cutoff/settlement and every scenario/phase/external gate remain open.
+
+
+ADR-0053 readable history entry/native integration is implemented under its frozen
+plan. Source 0.10/companion 0.9 explicitly selects existing core 0.7/IR 0.3; exact
+resources and local readonly bindings remain separate from values. Exceptional and
+later checks share one retained chain and expose conditional body evidence without
+promoting ordinary/legacy coverage. All eleven native views disclose declarations
+and per-pin catalogues; complete cumulative/final output bounds refuse before
+stdout. Three new Rust frontend groups and seven Python groups cover compatibility,
+identity/format/UTF-8 spans, exact resources, source/access/protection/invalidation
+refusals, capture/owned/retry composition, uncovered entries and valid 13,829-token
+report overflow. Local validation and final-head CI/review/merge are recorded in
+[evidence](0053-handler-entry-authoring.md); final-head gates remain required before
+merge. Committed package/report bytes stay unchanged. Next permitted owned
+continuation with retained request/value identity, cutoff/handoff/all-settlement.
+Parent and every scenario/phase/external gate remain draft/open.
 
 ## Honest exit accounting
 

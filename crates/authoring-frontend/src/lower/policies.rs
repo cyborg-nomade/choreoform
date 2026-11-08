@@ -50,7 +50,7 @@ impl<'a, 's> Lower<'a, 's> {
             "work" => {
                 body["instructions"] = self.syntax.text(tree.all("NAME")[1])?.into();
                 body["authority"] = self.r(tree, scope, "actor", 0)?.into();
-                if self.syntax.profile() == "0.9.0" {
+                if matches!(self.syntax.profile(), "0.9.0" | "0.10.0") {
                     body["faultSource"] = if let Some(binding) = tree.all("fault_binding").first() {
                         let source = self.r(binding, scope, "resource", 0)?;
                         self.ledger.pin(&source, "provider-fault-source")?
@@ -91,25 +91,29 @@ impl<'a, 's> Lower<'a, 's> {
                     };
                     body["retry"]["clock"] = clock;
                     body["retry"]["basis"] = basis;
-                    if matches!(self.syntax.profile(), "0.7.0" | "0.8.0" | "0.9.0") {
-                        body["retry"]["faultSource"] = if self.syntax.profile() == "0.9.0" {
-                            if attempts > 1 {
-                                if body["faultSource"].is_null() {
-                                    return Err(error(
-                                        "fault-source-required",
-                                        self.syntax.span(tree),
-                                    ));
+                    if matches!(
+                        self.syntax.profile(),
+                        "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0"
+                    ) {
+                        body["retry"]["faultSource"] =
+                            if matches!(self.syntax.profile(), "0.9.0" | "0.10.0") {
+                                if attempts > 1 {
+                                    if body["faultSource"].is_null() {
+                                        return Err(error(
+                                            "fault-source-required",
+                                            self.syntax.span(tree),
+                                        ));
+                                    }
+                                    body["faultSource"].clone()
+                                } else {
+                                    Value::Null
                                 }
-                                body["faultSource"].clone()
+                            } else if let Some(binding) = bindings.first() {
+                                let source = self.r(binding, scope, "resource", 2)?;
+                                self.ledger.pin(&source, "provider-fault-source")?
                             } else {
                                 Value::Null
-                            }
-                        } else if let Some(binding) = bindings.first() {
-                            let source = self.r(binding, scope, "resource", 2)?;
-                            self.ledger.pin(&source, "provider-fault-source")?
-                        } else {
-                            Value::Null
-                        };
+                            };
                     }
                 }
                 body["timeout"] = self.timer(tree.one("timer")?, scope)?;
@@ -136,7 +140,7 @@ impl<'a, 's> Lower<'a, 's> {
                 body["timer"] = self.timer(tree.one("timer")?, scope)?;
                 if matches!(
                     self.syntax.profile(),
-                    "0.4.0" | "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0"
+                    "0.4.0" | "0.5.0" | "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0"
                 ) {
                     self.pending_waits.push((tree, scope.into(), id.clone()));
                 } else {

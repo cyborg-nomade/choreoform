@@ -5,8 +5,18 @@ use choreoform_ir_probe_core::bounded::LimitedWriter;
 use choreoform_semantic_check::Report;
 use serde_json::{Value, json};
 
-pub(super) fn static_output(report: &Report, mut value: Value) -> Result<String, String> {
+pub(super) fn static_output(report: &Report, value: Value) -> Result<String, String> {
+    static_output_with_entries(report, value, None)
+}
+pub(super) fn static_output_with_entries(
+    report: &Report,
+    mut value: Value,
+    entries: Option<&choreoform_semantic_check::FaultEntryReport>,
+) -> Result<String, String> {
     let mut remaining = super::MAX_BYTES;
+    if !report.fault_entries().is_empty() || entries.is_some() {
+        reserve(&value, &mut remaining)?;
+    }
     let mut rows = Vec::new();
     for capture in report.capture_bindings() {
         let pin = |p: &choreoform_semantic_check::Pin| json!({"id":p.id,"revision":p.revision});
@@ -17,6 +27,13 @@ pub(super) fn static_output(report: &Report, mut value: Value) -> Result<String,
         value["declaredWaitCaptures"] = rows.into();
     }
     super::fault_use_output::append(report, &mut value, &mut remaining)?;
+    super::fault_entry_output::append_declared(report, &mut value, &mut remaining)?;
+    if let Some(entries) = entries {
+        if entries.revision() != report.revision() {
+            return Err("report-revision".into());
+        }
+        super::fault_entry_output::append_conditional(entries, &mut value, &mut remaining)?;
+    }
     let mut writer = LimitedWriter::new(Vec::new(), super::MAX_BYTES);
     serde_json::to_writer(&mut writer, &value).map_err(|_| "report-budget".to_owned())?;
     String::from_utf8(writer.into_inner()).map_err(|_| "report-json".to_owned())
@@ -27,13 +44,15 @@ pub(super) fn push_row(
     row: Value,
     remaining: &mut usize,
 ) -> Result<(), String> {
-    let size = serde_json::to_vec(&row)
-        .map_err(|_| "report-budget".to_owned())?
-        .len();
-    *remaining = remaining
-        .checked_sub(size)
-        .ok_or_else(|| "report-budget".to_owned())?;
+    reserve(&row, remaining)?;
     rows.push(row);
+    Ok(())
+}
+
+pub(super) fn reserve(value: &Value, remaining: &mut usize) -> Result<(), String> {
+    let mut writer = LimitedWriter::new(Vec::new(), *remaining);
+    serde_json::to_writer(&mut writer, value).map_err(|_| "report-budget".to_owned())?;
+    *remaining -= writer.into_inner().len();
     Ok(())
 }
 
