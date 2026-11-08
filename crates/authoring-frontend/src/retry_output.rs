@@ -4,7 +4,14 @@
 use choreoform_semantic_check::TimingReport;
 use serde_json::{Value, json};
 
-pub(super) fn timing_output(report: &TimingReport, mut value: Value) -> Result<String, String> {
+pub(super) fn timing_output(report: &TimingReport, value: Value) -> Result<String, String> {
+    timing_output_with_entries(report, value, None)
+}
+pub(super) fn timing_output_with_entries(
+    report: &TimingReport,
+    mut value: Value,
+    entries: Option<&choreoform_semantic_check::FaultEntryReport>,
+) -> Result<String, String> {
     let mut remaining = super::MAX_BYTES;
     let mut rows = Vec::new();
     for binding in report.retry_uses().iter().filter_map(|r| r.fault_source()) {
@@ -38,5 +45,5 @@ pub(super) fn timing_output(report: &TimingReport, mut value: Value) -> Result<S
     if !rows.is_empty() {
         value["retryFaultBindings"] = rows.into();
     }
-    super::concurrency_output(report.concurrency(), value)
+    super::concurrency_output_with_entries(report.concurrency(), value, entries)
 }

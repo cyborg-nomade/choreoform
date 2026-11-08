@@ -960,6 +960,22 @@ scope clause and explicit pair, shared retained evidence, bounded declarations a
 separate conditional native proof. All actual event/storage/authority, continuation /
 cutoff/settlement and every scenario/phase/external gate remain open.
 
+
+ADR-0053 readable history entry/native integration is implemented under its frozen
+plan. Source 0.10/companion 0.9 explicitly selects existing core 0.7/IR 0.3; exact
+resources and local readonly bindings remain separate from values. Exceptional and
+later checks share one retained chain and expose conditional body evidence without
+promoting ordinary/legacy coverage. All eleven native views disclose declarations
+and per-pin catalogues; complete cumulative/final output bounds refuse before
+stdout. Three new Rust frontend groups and seven Python groups cover compatibility,
+identity/format/UTF-8 spans, exact resources, source/access/protection/invalidation
+refusals, capture/owned/retry composition, uncovered entries and valid 13,829-token
+report overflow. Local validation and final-head CI/review/merge are recorded in
+[evidence](0053-handler-entry-authoring.md); final-head gates remain required before
+merge. Committed package/report bytes stay unchanged. Next permitted owned
+continuation with retained request/value identity, cutoff/handoff/all-settlement.
+Parent and every scenario/phase/external gate remain draft/open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

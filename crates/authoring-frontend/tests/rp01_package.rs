@@ -10,6 +10,8 @@ use serde_json::{Value, json};
 mod fault_source_profile;
 #[path = "rp01/general_fault_profile.rs"]
 mod general_fault_profile;
+#[path = "rp01/handler_entry_profile.rs"]
+mod handler_entry_profile;
 #[path = "rp01/metadata_profile.rs"]
 mod metadata_profile;
 #[path = "rp01/profile.rs"]

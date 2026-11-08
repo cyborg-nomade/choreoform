@@ -182,12 +182,18 @@ fn conditional_history_initialization_flow_and_strict_local_invalidation_are_sep
             .covered_nodes()
             .contains("history_branch")
     );
-    assert_eq!(
-        choreoform_semantic_check::check_exceptional_availability(&e, &supplied)
-            .unwrap_err()
-            .code,
-        "exceptional-availability-unproved"
+    let exceptional =
+        choreoform_semantic_check::check_exceptional_availability(&e, &supplied).unwrap();
+    assert!(!exceptional.checked_nodes().contains("history_branch"));
+    assert!(exceptional.uncovered_nodes().contains("history_branch"));
+    assert!(
+        !exceptional
+            .entry_assumptions()
+            .contains_key("provider_handler")
     );
+    let typed = exceptional.history_entries().unwrap();
+    assert!(typed.checked_nodes().contains("history_branch"));
+    assert!(std::ptr::eq(exceptional.faults(), typed.origins().faults()));
 }
 
 fn proof_refuse(f: &Fixture, code: &str) {

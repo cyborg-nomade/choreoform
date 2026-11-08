@@ -77,6 +77,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0050](0050-provider-fault-history-metadata.md) | Accepted under delegation; pending parent/main integration | Separate provider history claims from authenticated handler entry |
 | [0051](0051-declared-fault-origin-contexts.md) | Accepted under delegation; pending parent/main integration | Retain declared emitting sites and complete handler contexts |
 | [0052](0052-typed-handler-entry.md) | Accepted under delegation; pending parent/main integration | Bind immutable history to explicit conditional handler-local entry |
+| [0053](0053-handler-entry-authoring.md) | Accepted under delegation; pending parent/main integration | Integrate readable history entry with separate conditional reports |
 
 ## When an ADR is required
 

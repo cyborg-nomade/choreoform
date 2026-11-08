@@ -8,6 +8,7 @@ use std::io::{Read, Write};
 
 mod static_output;
 use static_output::static_output;
+mod fault_entry_output;
 mod fault_use_output;
 mod owned_output;
 mod retry_output;
@@ -32,7 +33,15 @@ fn semantic_error(
 fn invalidation_output(
     report: &choreoform_semantic_check::Report,
     historical: &std::collections::BTreeSet<choreoform_semantic_check::HistoricalOrigin>,
+    value: serde_json::Value,
+) -> Result<String, String> {
+    invalidation_output_with_entries(report, historical, value, None)
+}
+fn invalidation_output_with_entries(
+    report: &choreoform_semantic_check::Report,
+    historical: &std::collections::BTreeSet<choreoform_semantic_check::HistoricalOrigin>,
     mut value: serde_json::Value,
+    entries: Option<&choreoform_semantic_check::FaultEntryReport>,
 ) -> Result<String, String> {
     let mut remaining = MAX_BYTES;
     let mut origins = Vec::new();
@@ -50,11 +59,18 @@ fn invalidation_output(
         origins.push(record);
     }
     value["historicalOrigins"] = origins.into();
-    static_output(report, value)
+    static_output::static_output_with_entries(report, value, entries)
 }
 fn concurrency_output(
     report: &choreoform_semantic_check::ConcurrencyReport,
+    value: serde_json::Value,
+) -> Result<String, String> {
+    concurrency_output_with_entries(report, value, None)
+}
+fn concurrency_output_with_entries(
+    report: &choreoform_semantic_check::ConcurrencyReport,
     mut value: serde_json::Value,
+    entries: Option<&choreoform_semantic_check::FaultEntryReport>,
 ) -> Result<String, String> {
     let mut remaining = MAX_BYTES;
     let mut records = Vec::new();
@@ -72,10 +88,11 @@ fn concurrency_output(
     if let Some(owned) = report.owned_local() {
         owned_output::append(owned, &mut value)?;
     }
-    invalidation_output(
+    invalidation_output_with_entries(
         report.invalidation().protection().control().static_report(),
         report.invalidation().historical_origins(),
         value,
+        entries,
     )
 }
 fn read(input: impl Read) -> Result<Vec<u8>, String> {
@@ -175,7 +192,7 @@ fn run() -> Result<String, String> {
     }
     if matches!(
         package.syntax().profile(),
-        "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0"
+        "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0"
     ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V3.0,
@@ -183,26 +200,32 @@ fn run() -> Result<String, String> {
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt"),
         });
     }
-    if matches!(package.syntax().profile(), "0.7.0" | "0.8.0" | "0.9.0") {
+    if matches!(
+        package.syntax().profile(),
+        "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0"
+    ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V4.0,
             revision: choreoform_semantic_check::CORE_V4.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt"),
         });
     }
-    if matches!(package.syntax().profile(), "0.8.0" | "0.9.0") {
+    if matches!(package.syntax().profile(), "0.8.0" | "0.9.0" | "0.10.0") {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V5.0,
             revision: choreoform_semantic_check::CORE_V5.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7.txt"),
         });
     }
-    if package.syntax().profile() == "0.9.0" {
+    if matches!(package.syntax().profile(), "0.9.0" | "0.10.0") {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V6.0,
             revision: choreoform_semantic_check::CORE_V6.1,
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85.txt"),
         });
+    }
+    if package.syntax().profile() == "0.10.0" {
+        resources.push(Resource{id:choreoform_semantic_check::CORE_V7.0,revision:choreoform_semantic_check::CORE_V7.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b.txt")});
     }
     resources.extend(extra.iter().map(|(id, revision, bytes)| Resource {
         id,
@@ -364,9 +387,10 @@ fn run() -> Result<String, String> {
                 Ok(value)
             })
             .collect::<Result<_, String>>()?;
-        return timing_output(
+        return retry_output::timing_output_with_entries(
             report.faults().timing(),
             serde_json::json!({"status":"exceptional-availability-checks-passed","executable":false,"revision":report.revision(),"handlerEntries":entries,"checkedExceptionalNodes":report.checked_nodes(),"checkedExceptionalScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"ordinaryUncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedFaultScopes":report.faults().checked_scopes(),"uncoveredFaultScopes":report.faults().uncovered_scopes(),"remaining":report.remaining(),"priorFaultRouteObligations":report.faults().remaining(),"priorTimingObligations":report.faults().timing().remaining()}),
+            report.history_entries(),
         );
     }
     if args[0] == "check-reconciliation-links" {
@@ -388,9 +412,10 @@ fn run() -> Result<String, String> {
             remaining=remaining.checked_sub(size).ok_or_else(||"report-budget".to_owned())?;
             Ok(value)
         }).collect::<Result<_,String>>()?;
-        return timing_output(
+        return retry_output::timing_output_with_entries(
             report.exceptional().faults().timing(),
             serde_json::json!({"status":"reconciliation-links-checked","executable":false,"revision":report.revision(),"reconciliationUses":uses,"ordinaryUnvisitedReconciliationSites":report.ordinary_unvisited_sites(),"unusedEffectContexts":report.unused_effects(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.exceptional().checked_nodes(),"uncoveredNodes":report.exceptional().uncovered_nodes(),"remaining":report.remaining(),"priorExceptionalObligations":report.exceptional().remaining(),"priorFaultRouteObligations":report.exceptional().faults().remaining(),"priorTimingObligations":report.exceptional().faults().timing().remaining()}),
+            report.exceptional().history_entries(),
         );
     }
     if args[0] == "check-reconciliation-availability" {
@@ -413,9 +438,10 @@ fn run() -> Result<String, String> {
             remaining = remaining.checked_sub(size).ok_or_else(|| "report-budget".to_owned())?;
             Ok(value)
         }).collect::<Result<_, String>>()?;
-        return timing_output(
+        return retry_output::timing_output_with_entries(
             report.links().exceptional().faults().timing(),
             serde_json::json!({"status":"reconciliation-availability-checks-passed","executable":false,"revision":report.revision(),"reconciliationEntries":entries,"checkedReconciliationNodes":report.checked_nodes(),"checkedReconciliationScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.links().exceptional().checked_nodes(),"priorReconciliationObligations":report.links().remaining(),"remaining":report.remaining()}),
+            report.links().exceptional().history_entries(),
         );
     }
     if args[0] == "format" {

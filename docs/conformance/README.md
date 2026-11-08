@@ -161,3 +161,11 @@ inherited values, pre-entry access ordering, constant/branch/initializer leaks a
 strict invalidation. Five Python groups also check schema-only delta, hashes and
 legacy reports. No actual history event, initialized host storage or phase/scenario
 evidence follows; see [ADR-0052](../decisions/0052-typed-handler-entry.md).
+
+[Readable handler-entry integration](../evaluation/0053-handler-entry-authoring.md)
+adds frontend/native checks of the explicit source/companion/core/wire pair, exact
+resources, formatting/aliases/hash framing and UTF-8 clause diagnostics. All eleven
+views retain static declarations, with separate conditional proof in the final
+three. Bounded valid sources stress catalogue sharing and complete report refusal
+before stdout; inherited raw source/control/access/provenance barriers stay tested.
+These are declaration/conditional checks, not actual host or user-study evidence.

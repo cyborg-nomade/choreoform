@@ -287,6 +287,12 @@ validated, and round-tripped.
   initialization/access/strict invalidation proof. Actual entry and readable
   source/companion/native integration remain explicit next dependencies; older
   exceptional coverage is unchanged and no handler resumes its parent.
+  [ADR-0053](docs/decisions/0053-handler-entry-authoring.md) adds explicit source
+  0.10/companion 0.9 and bounded native disclosure, integrating typed proof
+  separately through later checks. Legacy uncovered sets remain explicit. Actual
+  event/correlation/current authority/owned storage and permitted continuation /
+  cutoff/handoff/all-settlement remain next, alongside the open general tool-managed
+  near-English editing and representative-user gates.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

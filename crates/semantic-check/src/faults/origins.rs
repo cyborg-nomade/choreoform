@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 //! Optional declared emitter contexts, not event receipts or handler snapshots.
 use super::*;
+use std::sync::Arc;
 
 #[derive(Debug)]
 struct Site {
@@ -30,12 +31,18 @@ pub(super) struct Records {
 /// Declared source/activity/selection cases; never initialized or live handlers.
 #[derive(Debug)]
 pub struct FaultOriginReport {
-    faults: FaultReport,
+    faults: Arc<FaultReport>,
     records: Records,
 }
 impl FaultOriginReport {
     pub(super) fn new(faults: FaultReport, records: Records) -> Self {
-        Self { faults, records }
+        Self {
+            faults: Arc::new(faults),
+            records,
+        }
+    }
+    pub(crate) fn shared_faults(&self) -> Arc<FaultReport> {
+        self.faults.clone()
     }
     pub fn revision(&self) -> &str {
         self.faults.revision()

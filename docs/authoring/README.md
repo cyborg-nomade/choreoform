@@ -3,6 +3,11 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.10.0 / companion 0.9.0 profile](profile-v0.10.md) adds readable
+handler-local fault history declarations on core 0.7/IR 0.3, with separate bounded
+conditional reports. Actual events, owned continuation and general tool-managed
+English editing remain open.
+
 The [source 0.9.0 / companion 0.8.0 profile](profile-v0.9.md) names general
 provider fault sources once with `Recognise faults from "Source".` and retains
 short clock/basis retry clauses. It selects core 0.6/IR 0.2 and shares native
