@@ -651,3 +651,6 @@ mod fault_entry;
 
 #[path = "capture/retained_request.rs"]
 mod retained_request;
+
+#[path = "capture/continuation_audit.rs"]
+mod continuation_audit;

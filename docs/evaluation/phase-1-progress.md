@@ -1035,6 +1035,34 @@ stay unchanged. Next permitted new work with current authority inside the surviv
 boundary and explicit cutoff/atomic handoff/all-settlement. Parent and every
 scenario/phase/external gate remain draft/open.
 
+
+[PR #70](https://github.com/cyborg-nomade/choreoform/pull/70) merged into draft
+#46 as `e5a975af1ac1a5dad2a4cf6a5be506dc331e36f6` after required final-head CI
+`42462652108` and delegated review/comment audit `6719244035`. Refreshed audit found
+no threads/actionable summaries; CodeRabbit skipped and supplies no review evidence.
+Merge explicitly carries the sign-off; ADR-0055 remains pending parent/main
+integration. Local 451 Rust plus six doctests and all native/Wasm/Python checks
+passed. Active dependency `codex/owned-continuation-audit` follows the
+[frozen contract audit plan](0056-owned-continuation-audit-plan.md): current flat
+terminal owned proof and capability reconciliation-child rules need an explicit
+compatible continuation/cutoff/all-settlement design before production changes.
+All actual host/storage/authority and every scenario/phase/external gate remain open.
+
+
+ADR-0056 continuation/cutoff/all-settlement critique and seven genuine SDK probe
+groups are implemented under the frozen audit plan. Flat read-only work passes
+earlier stages but lacks lifetime proof; nested recovery conflicts with current
+flat retention. Missing snapshots/ancestor shortcuts and irreversible-label /
+true-guard shortcuts remain refused. An ordinarily covered parent path is not
+late resumption. The next versioned core/distinct bounded proof will use explicit
+finite surviving ownership, read-only work first, with empty pre-entry access,
+conditional source/protection contexts and strict invalidation. Production behavior,
+accepted artifacts and committed package/report bytes stay unchanged. Local 458
+Rust plus six doctests and all native/Wasm/Python checks pass. See
+[audit](0056-owned-continuation-audit.md); final-head CI/review/comment audit /
+signed merge remain before integration. Real values/grants /
+storage/cutoff/handoff/all-settlement and every scenario/phase/external gate stay open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

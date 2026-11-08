@@ -180,3 +180,8 @@ and legacy reconciliation sets. No actual request, storage or handoff is supplie
 composes source/native original requests with capture/retry/handler history through
 all eleven views. Explicit grammar/schema/versioning, alias/hash/span/role/refusal
 and combined bounded output checks retain all prior evidence and external gates.
+
+[Owned continuation critique](../evaluation/0056-owned-continuation-audit.md) adds
+seven actual SDK probes for flat read-only/nested/irreversible work, original versus
+missing/ancestor values and ordinary-parent paths. They preserve production behavior
+and accepted artifacts and establish no actual dispatch, grant, storage or settlement.
