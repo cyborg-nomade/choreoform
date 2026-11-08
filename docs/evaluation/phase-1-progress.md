@@ -976,6 +976,19 @@ merge. Committed package/report bytes stay unchanged. Next permitted owned
 continuation with retained request/value identity, cutoff/handoff/all-settlement.
 Parent and every scenario/phase/external gate remain draft/open.
 
+
+[PR #68](https://github.com/cyborg-nomade/choreoform/pull/68) merged into draft
+#46 as `54becbad2235e76cd9681a9b59120f261b57f818` after required final-head CI
+`42459626079` and delegated review/comment audit `6718840662`. Refreshed audit found
+no threads/actionable summaries; CodeRabbit skipped and supplies no review evidence.
+Merge explicitly carries the sign-off; ADR-0053 remains pending parent/main
+integration. Local 433 Rust plus six doctests and all native/Wasm/Python checks
+passed. Active dependency `codex/retained-request-snapshots` follows the
+[frozen raw request-retention plan](0054-retained-request-plan.md). It targets exact
+immutable original request declarations and conditional fresh-local proof before
+readable selection or permitted new work/cutoff/handoff/all-settlement. All actual
+host/storage/authority and every scenario/phase/external gate remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
