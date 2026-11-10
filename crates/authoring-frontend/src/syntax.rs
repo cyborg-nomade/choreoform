@@ -8,6 +8,7 @@ const GRAMMAR: &str = include_str!("../../../docs/authoring/candidate-a.ebnf");
 const GRAMMAR_V3: &str = include_str!("../../../docs/authoring/candidate-a-v0.3.ebnf");
 const GRAMMAR_V7: &str = include_str!("../../../docs/authoring/candidate-a-v0.7.ebnf");
 const GRAMMAR_V8: &str = include_str!("../../../docs/authoring/candidate-a-v0.8.ebnf");
+const GRAMMAR_V15: &str = include_str!("../../../docs/authoring/candidate-a-v0.15.ebnf");
 const GRAMMAR_V14: &str = include_str!("../../../docs/authoring/candidate-a-v0.14.ebnf");
 const GRAMMAR_V13: &str = include_str!("../../../docs/authoring/candidate-a-v0.13.ebnf");
 const GRAMMAR_V12: &str = include_str!("../../../docs/authoring/candidate-a-v0.12.ebnf");
@@ -15,6 +16,7 @@ const GRAMMAR_V11: &str = include_str!("../../../docs/authoring/candidate-a-v0.1
 const GRAMMAR_V10: &str = include_str!("../../../docs/authoring/candidate-a-v0.10.ebnf");
 const GRAMMAR_V9: &str = include_str!("../../../docs/authoring/candidate-a-v0.9.ebnf");
 const V5_TOKENS: usize = 16_384;
+const V15_TOKENS: usize = 131_072;
 const V5_WORK: usize = 1_000_000;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -279,9 +281,14 @@ fn lex(source: &str, program: bool) -> Result<Vec<Token>> {
                     | "0.12.0"
                     | "0.13.0"
                     | "0.14.0"
+                    | "0.15.0"
             )
         {
-            token_limit = V5_TOKENS;
+            token_limit = if tokens[2].value == "0.15.0" {
+                V15_TOKENS
+            } else {
+                V5_TOKENS
+            };
         }
         if tokens.len() > token_limit {
             return Err(error("tokens", start..i));
@@ -393,7 +400,10 @@ fn grammar(profile: &str) -> &'static Grammar {
     static COMPILED_V12: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V13: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V14: OnceLock<Grammar> = OnceLock::new();
-    let (cache, source) = if profile == "0.14.0" {
+    static COMPILED_V15: OnceLock<Grammar> = OnceLock::new();
+    let (cache, source) = if profile == "0.15.0" {
+        (&COMPILED_V15, GRAMMAR_V15)
+    } else if profile == "0.14.0" {
         (&COMPILED_V14, GRAMMAR_V14)
     } else if profile == "0.13.0" {
         (&COMPILED_V13, GRAMMAR_V13)
@@ -590,6 +600,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
             Some("0.12.0") => "0.12.0",
             Some("0.13.0") => "0.13.0",
             Some("0.14.0") => "0.14.0",
+            Some("0.15.0") => "0.15.0",
             _ => return Err(error("profile", 0..source.len())),
         }
     } else {
@@ -617,6 +628,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
                 | "0.12.0"
                 | "0.13.0"
                 | "0.14.0"
+                | "0.15.0"
         ) {
             V5_WORK
         } else {
@@ -642,4 +654,27 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
         tree,
         parser_work,
     })
+}
+
+#[cfg(test)]
+mod capacity_tests {
+    use super::*;
+    #[test]
+    fn exact_token_limits_are_explicit_per_program_profile_and_fragments_stay_legacy() {
+        for (profile, limit) in [
+            ("0.4.0", MAX_TOKENS),
+            ("0.14.0", V5_TOKENS),
+            ("0.15.0", V15_TOKENS),
+        ] {
+            let source = format!(
+                "Choreoform authoring \"{profile}\". {}",
+                "x ".repeat(limit - 4)
+            );
+            assert_eq!(lex(&source, true).unwrap().len(), limit);
+            assert_eq!(lex(&(source + "x"), true).unwrap_err().code, "tokens");
+        }
+        let fragment = "x ".repeat(MAX_TOKENS);
+        assert_eq!(lex(&fragment, false).unwrap().len(), MAX_TOKENS);
+        assert_eq!(lex(&(fragment + "x"), false).unwrap_err().code, "tokens");
+    }
 }

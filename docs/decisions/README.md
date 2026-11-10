@@ -92,6 +92,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0065](0065-rp01-current-contract-direction.md) | Accepted under delegation; pending parent/main integration | Adopt demonstrated RP-01 capture before further generalization |
 | [0066](0066-rp01-capture-adoption.md) | Accepted under delegation; pending parent/main integration | Publish the full RP-01 typed late-capture checkpoint |
 | [0067](0067-rp03-package-draft.md) | Accepted under delegation; pending parent/main integration | Preserve the whole RP-03 draft and its actual capacity refusal |
+| [0068](0068-source-capacity.md) | Accepted under delegation; pending parent/main integration | Version measured source capacity without wider semantics |
 
 ## When an ADR is required
 

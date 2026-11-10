@@ -1472,6 +1472,30 @@ Parent #46 draft, all scenarios Partial, G1–G4 conditional; original optional 
 full-case/RP-08/validator/editing/visual/actual user/host/browser/independent/phase
 gates remain open. No external blocker or Phase 2 is claimed.
 
+ADR-0068 capacity is implemented under signed plan `ae8a44e`: explicit source
+0.15/companion 0.14 selects unchanged core 0.11/IR 0.4 and 131,072 program tokens;
+all old quotas, other bounds, accepted semantics and RP-01/RP-03 bytes stay fixed.
+The full temporary order promotion recognizes 77,135 tokens in 832,138 native
+pattern visits under existing 1,000,000 work, then lowering genuinely refuses the
+sibling-private compensation activity reference at 60937..61023, empty stdout.
+No candidate/revision or semantic report follows. Python independently hits its
+unchanged state bound; no full-case Python recognition is claimed. Small paired
+programs have exact identical semantic documents and eleven native reports, with
+separate source-package identity. Three public SDK/one lexer group plus six Python
+groups cover pairs/core/base resources/future/old-new token/fragment/depth boundaries
+and genuine whole-case refusals. Offset regex matching avoids oracle suffix-copy
+quadratic work without changing tokens. Local 557 Rust + six doctests/native/Wasm /
+all 64 Python commands pass; separate completed-diff delegated review found no
+remaining actionable capacity-scope issue. See [evidence](0068-source-capacity.md).
+Final-head CI/full comment audit/signed expected-head merge remain required. Next
+separately freeze a test/docs audit of raw P3 identity/context versus purpose-only
+readable sibling-private prior references, preserving ordinary private values /
+outcomes and all live eligibility/correlation/current authority/ownership gates.
+No privacy/semantic contract is widened here. Parent #46 draft, all forty scenarios
+Partial, G1–G4 conditional; full validator/benchmarks/RP-08/optional cases/near-English
+factoring/identity-managed protected accessible text-visual/actual users/host /
+browser/independent/phase exits remain open. No Phase 2 or external blocker.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

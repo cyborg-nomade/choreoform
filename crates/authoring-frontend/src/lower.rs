@@ -258,7 +258,7 @@ impl<'a> Package<'a> {
         let envelope = DefinitionEnvelope::from_parts_versioned(
             if matches!(
                 self.syntax.profile(),
-                "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0"
+                "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0"
             ) {
                 "0.4.0"
             } else if self.syntax.profile() == "0.10.0" {

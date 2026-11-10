@@ -177,3 +177,9 @@ not that study's particular visual task or its results, as relevant precedent.
 The process-specific tasks here also test authoring, correction and review, and
 provide text-only evidence alternatives.
 [How to Evaluate Controlled Natural Languages](https://arxiv.org/abs/0907.1251).
+
+[Source 0.15 capacity](profile-v0.15.md) explicitly keeps core 0.11/IR 0.4 and
+source-0.14 meaning while allowing 131,072 program tokens; all old/other limits
+remain. It recognizes the whole order grammar but retains an actual private
+compensation reference refusal. It supplies no benchmark adoption or readability /
+semantic/host/phase closure. See [measured evidence](../evaluation/0068-source-capacity.md).
