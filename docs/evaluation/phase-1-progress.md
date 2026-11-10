@@ -1123,6 +1123,21 @@ signed merge remain before integration. Next command/compensation and richer
 ownership/fault judgments; actual grants/storage/cutoff/accepted handoff/all-activated
 transitive settlement and every scenario/phase/external gate remain open.
 
+[PR #73](https://github.com/cyborg-nomade/choreoform/pull/73) merged into draft
+#46 as `2cdcfccb30321597fee25528294d49da6850e0cb` after required final-head CI
+`42837043158` and delegated review/comment audit `6770421222`. Refreshed audit found
+no threads/actionable summaries; CodeRabbit skipped and supplies no review evidence.
+The expected-head merge explicitly carries the sign-off. ADR-0058 remains pending
+parent/main integration. Local 482 Rust plus six doctests and all native/Wasm/55
+Python checks passed; committed benchmark/report bytes stayed fixed. Active dependency
+`codex/owned-entry-command-audit` follows the
+[frozen contract audit](0059-owned-entry-command-audit-plan.md): assess useful
+preterminal owned work, original/new commands, compensation and distinct P4/P6 entry /
+ownership requirements before changing production. Existing capturing entry accepts
+terminal facts; unknown/acknowledged observations have no terminal declaration.
+No event, value, storage, grant, handoff or settlement evidence is inferred. All
+scenario/phase/external gates remain open, parent #46 draft/incomplete.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
