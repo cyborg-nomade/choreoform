@@ -16,6 +16,11 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Finite read-only pre-capture entry](0060-owned-pre-capture-entry.md) records
+  raw core 0.10 conditional SDK proof, capture integrity and bounded conformance;
+  actual host activation and every phase exit gate remain open.
+
+
 - [Full benchmark readiness](0034-benchmark-readiness.md) and
   [current forty-scenario accountability](0034-corpus-accountability.md) relate
   the implemented slices to complete RP-01/03/08 requirements. All forty remain

@@ -96,4 +96,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_request_retention_authoring.py
           .tools/ir-check/bin/python tools/check_owned_readonly.py
           .tools/ir-check/bin/python tools/check_readonly_continuation_authoring.py
+          .tools/ir-check/bin/python tools/check_pre_capture_entry.py
       # Browser execution is a separate manual evidence step, not implied by CI.

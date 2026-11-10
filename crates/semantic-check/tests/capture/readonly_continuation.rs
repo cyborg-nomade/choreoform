@@ -213,8 +213,7 @@ fn query_provider_egress_needs_the_entire_source_envelope() {
     check(&env(&f), &f.supplied()).unwrap();
     refuse(&f, "owned-continuation-recipient");
 }
-#[test]
-fn a_query_without_a_result_still_cannot_disclose_a_narrower_branch_context() {
+pub(super) fn no_result_fixture() -> Fixture {
     let mut f = fixture();
     let empty = json!({"kind":"record","fields":{}});
     let mut provider = f.provider.clone();
@@ -243,6 +242,11 @@ fn a_query_without_a_result_still_cannot_disclose_a_narrower_branch_context() {
     let faults = f.artifact(json!({"kind":"provider-fault-source","version":"0.1.0","id":"urn:test:empty-query-faults","profile":{"id":FAULT_SOURCE_PROFILE.0,"revision":FAULT_SOURCE_PROFILE.1},"provider":provider,"emissions":{"lookup uncertainty":{"observations":{"unknown":true},"evidence":"unresolved"}}}));
     f.b["policies"]["lookup_work"]["body"]["faultSource"] =
         json!({"id":faults.id,"revision":faults.revision});
+    f
+}
+#[test]
+fn a_query_without_a_result_still_cannot_disclose_a_narrower_branch_context() {
+    let mut f = no_result_fixture();
     check_reconciliation_availability(&env(&f), &f.supplied()).unwrap();
     for cell in ["captured", "lookup_request", "lookup_captured"] {
         f.b["data"][cell]["protection"]["capabilities"] = json!({"adapter":true});
@@ -411,8 +415,7 @@ fn committed_static_definition_and_shared_vectors_run_through_the_real_sdk() {
         assert_eq!(actual, case["expect"], "{}: {:?}", case["id"], result.err());
     }
 }
-#[test]
-fn three_levels_keep_each_query_context_and_its_own_original_request() {
+pub(super) fn three_level_fixture() -> Fixture {
     let mut f = fixture();
     let mut third = f.b["scopes"]["lookup_recovery"].clone();
     third["parent"] = "lookup_recovery".into();
@@ -492,6 +495,11 @@ fn three_levels_keep_each_query_context_and_its_own_original_request() {
     let faults = f.artifact(json!({"kind":"provider-fault-source","version":"0.1.0","id":"urn:test:three-level-faults","profile":{"id":FAULT_SOURCE_PROFILE.0,"revision":FAULT_SOURCE_PROFILE.1},"provider":provider,"emissions":{"lookup uncertainty":{"observations":{"unknown":true},"evidence":"unresolved"}}}));
     f.b["policies"]["lookup_work"]["body"]["faultSource"] =
         json!({"id":faults.id,"revision":faults.revision});
+    f
+}
+#[test]
+fn three_levels_keep_each_query_context_and_its_own_original_request() {
+    let mut f = three_level_fixture();
     let r = check_reconciliation_availability(&env(&f), &f.supplied()).unwrap();
     let t = r
         .links()

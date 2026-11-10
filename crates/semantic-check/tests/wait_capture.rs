@@ -660,3 +660,6 @@ mod readonly_continuation;
 
 #[path = "capture/owned_entry_audit.rs"]
 mod owned_entry_audit;
+
+#[path = "capture/pre_capture_entry.rs"]
+mod pre_capture_entry;

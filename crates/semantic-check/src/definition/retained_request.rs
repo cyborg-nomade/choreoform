@@ -55,6 +55,14 @@ impl Check<'_, '_> {
             return Ok(());
         }
         let advanced_continuation = continuation_core(self.b);
+        let source_waits = if pre_capture_core(self.b) {
+            Some(crate::source_wait::SourceWaits::new(
+                self.b,
+                &mut self.resources.budget,
+            )?)
+        } else {
+            None
+        };
         let mut children: BTreeMap<&str, BTreeSet<&str>> = BTreeMap::new();
         let mut nested = BTreeSet::new();
         let mut handlers = BTreeSet::new();
@@ -151,10 +159,24 @@ impl Check<'_, '_> {
                     "retained-request-origin",
                 )?;
                 let entry = &self.b["nodes"][text(&s["entry"])?];
-                require(
-                    entry["kind"] == "wait" && entry["capture"]["origin"] == origin,
-                    "retained-request-capture",
-                )?;
+                let capturing_entry =
+                    entry["kind"] == "wait" && entry["capture"]["origin"] == origin;
+                if !capturing_entry {
+                    require(
+                        tree_child
+                            && source_waits.is_some()
+                            && matches!(
+                                entry["kind"].as_str(),
+                                Some("compute" | "decision" | "activity")
+                            ),
+                        "retained-request-capture",
+                    )?;
+                    source_waits.as_ref().unwrap().capture(
+                        scope,
+                        origin,
+                        &mut self.resources.budget,
+                    )?;
+                }
                 require(
                     captures
                         .get(scope.as_str())

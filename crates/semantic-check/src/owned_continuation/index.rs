@@ -10,6 +10,7 @@ pub(crate) struct Candidates<'a> {
     handlers: BTreeSet<&'a str>,
     templates: BTreeMap<String, Arc<Template>>,
     roots: BTreeSet<OwnedContinuation>,
+    source_waits: Option<crate::source_wait::SourceWaits<'a>>,
 }
 
 impl<'a> Candidates<'a> {
@@ -54,6 +55,11 @@ impl<'a> Candidates<'a> {
             handlers,
             templates: BTreeMap::new(),
             roots: BTreeSet::new(),
+            source_waits: if pre_capture_core(b) {
+                Some(crate::source_wait::SourceWaits::new(b, budget)?)
+            } else {
+                None
+            },
         })
     }
     pub fn consider(
@@ -147,10 +153,29 @@ impl<'a> Candidates<'a> {
             .map_err(|e| e.at_path(format!("/body/scopes/{scope}/retainedRequests")))?;
             let entry = text(&s["entry"])?;
             let e = &b["nodes"][entry];
-            require(
-                e["kind"] == "wait" && e["capture"]["origin"] == source,
-                "owned-continuation-entry-unproved",
-            )?;
+            let capturing_entry = e["kind"] == "wait" && e["capture"]["origin"] == source;
+            let source_wait = if capturing_entry {
+                entry
+            } else {
+                require(
+                    self.source_waits.is_some()
+                        && b["policies"][text(&s["closure"])?]["body"]["mode"] == "reconcile",
+                    "owned-continuation-entry-unproved",
+                )?;
+                self.source_waits
+                    .as_ref()
+                    .unwrap()
+                    .capture(scope, source, budget)?
+            };
+            let pre_capture = if capturing_entry {
+                None
+            } else {
+                budget.charge(3)?;
+                Some(OwnedPreCaptureEntry {
+                    entry: entry.into(),
+                    capture_wait: source_wait.into(),
+                })
+            };
             let local = self
                 .locals
                 .get(scope)
@@ -192,7 +217,7 @@ impl<'a> Candidates<'a> {
                     "compute" | "decision" | "finish" => {}
                     "wait" => {
                         if !b["policies"][text(&n["policy"])?]["body"]["timer"].is_null()
-                            || (child.is_some() && id != entry)
+                            || (child.is_some() && id != source_wait)
                         {
                             return Err(at("owned-continuation-wait-unproved", scope));
                         }
@@ -216,6 +241,9 @@ impl<'a> Candidates<'a> {
             if !finish || child.is_some() != query.is_some() {
                 return Err(at("owned-continuation-body-unproved", scope));
             }
+            if pre_capture.is_some() && !reached.contains(source_wait) {
+                return Err(at("owned-continuation-capture-unreachable", scope));
+            }
             budget.charge(8)?;
             levels.push(Level {
                 entry: Entry {
@@ -228,6 +256,7 @@ impl<'a> Candidates<'a> {
                 closure: closure.into(),
                 query: query.map(str::to_owned),
                 child: child.map(str::to_owned),
+                pre_capture,
             });
             if child.is_none() {
                 break;
@@ -373,6 +402,51 @@ impl<'a> Candidates<'a> {
 mod tests {
     use super::*;
     use crate::owned_continuation::tests::{fixture, resources};
+    #[test]
+    fn new_entry_templates_and_final_rows_obey_the_shared_remaining_budget() {
+        let (e, artifacts) = crate::owned_continuation::tests::pre_capture_fixture();
+        let b = &e.document()["body"];
+        let supplied = resources(&artifacts);
+        let ordinary = check_protection(&e, &supplied).unwrap();
+        let mut budget = Budget::default();
+        let graph = Graph::build(b, &mut budget).unwrap();
+        let mut c = Candidates::new(b, &mut budget).unwrap();
+        let mut measured = Budget::default();
+        let template = c.prove(&graph, "root", &mut measured).unwrap();
+        assert!(template.levels[0].pre_capture.is_some());
+        let mut limited = Budget {
+            work: 1_000_000 - measured.work + 1,
+        };
+        assert_eq!(
+            c.consider(&graph, "root", "run_owner", &mut limited)
+                .unwrap_err()
+                .code,
+            "budget"
+        );
+        assert!(c.templates.is_empty());
+        assert!(c.roots.is_empty());
+        c.consider(&graph, "root", "run_owner", &mut budget)
+            .unwrap();
+        c.consider(&graph, "root", "again", &mut budget).unwrap();
+        let roots: Vec<_> = c.roots.iter().collect();
+        assert!(Arc::ptr_eq(&roots[0].template, &roots[1].template));
+        let mut measured = Budget::default();
+        c.check(&e, &supplied, &ordinary, &mut measured).unwrap();
+        let mut c = Candidates::new(b, &mut Budget::default()).unwrap();
+        c.consider(&graph, "root", "run_owner", &mut Budget::default())
+            .unwrap();
+        c.consider(&graph, "root", "again", &mut Budget::default())
+            .unwrap();
+        let mut limited = Budget {
+            work: 1_000_000 - measured.work + 1,
+        };
+        assert_eq!(
+            c.check(&e, &supplied, &ordinary, &mut limited)
+                .unwrap_err()
+                .code,
+            "budget"
+        );
+    }
     #[test]
     fn indexing_templates_and_publication_refuse_cumulatively_without_partial_rows() {
         let (e, artifacts) = fixture();

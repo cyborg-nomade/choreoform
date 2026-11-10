@@ -1,0 +1,196 @@
+{
+  "format": "choreoform-pre-capture-entry-vectors",
+  "base": "owned-readonly-definition.json",
+  "premise": "Twelve isolated mutations of an exact prevalidated two-level static definition; no actual observations, values, storage, grants or receipts. Limited independent model is not general admission.",
+  "core": {
+    "id": "urn:choreoform:contracts:core-profile:0.10.0",
+    "revision": "sha256:74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f"
+  },
+  "layout": [
+    {
+      "path": "/scopes/recovery/entry",
+      "value": "lookup"
+    },
+    {
+      "path": "/flows/lookup_next/target",
+      "value": "capture_wait"
+    },
+    {
+      "path": "/flows/read_yes/target",
+      "value": "done"
+    }
+  ],
+  "cases": [
+    {
+      "id": "query-before-original-capture",
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "unchanged-old-core-entry-rule",
+      "put": [
+        {
+          "path": "/dialects/core",
+          "value": {
+            "id": "urn:choreoform:contracts:core-profile:0.9.0",
+            "revision": "sha256:5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f"
+          }
+        }
+      ],
+      "expect": "retained-request-capture"
+    },
+    {
+      "id": "mixed-core-alias",
+      "put": [
+        {
+          "path": "/dialects/older",
+          "value": {
+            "id": "urn:choreoform:contracts:core-profile:0.9.0",
+            "revision": "sha256:5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f"
+          }
+        }
+      ],
+      "expect": "retained-request-wire-version"
+    },
+    {
+      "id": "unreachable-source-wait",
+      "put": [
+        {
+          "path": "/flows/lookup_next/target",
+          "value": "done"
+        }
+      ],
+      "expect": "owned-continuation-capture-unreachable"
+    },
+    {
+      "id": "wrong-actual-use-wait",
+      "put": [
+        {
+          "path": "/policies/effects/body/reconciliation",
+          "value": "recovery_wait"
+        }
+      ],
+      "expect": "retained-request-source-wait"
+    },
+    {
+      "id": "actual-use-wait-without-capture",
+      "put": [
+        {
+          "path": "/nodes/capture_wait/capture",
+          "value": null
+        },
+        {
+          "path": "/nodes/capture_wait/writes",
+          "value": {}
+        }
+      ],
+      "expect": "retained-request-source-wait"
+    },
+    {
+      "id": "unvisited-ordinary-source",
+      "put": [
+        {
+          "path": "/scopes/root/entry",
+          "value": "owner_done"
+        }
+      ],
+      "expect": "owned-continuation-source-unproved"
+    },
+    {
+      "id": "unvisited-conditional-query",
+      "put": [
+        {
+          "path": "/scopes/recovery/entry",
+          "value": "capture_wait"
+        }
+      ],
+      "expect": "owned-continuation-source-unproved"
+    },
+    {
+      "id": "constructed-query-input",
+      "put": [
+        {
+          "path": "/expressions/lookup_input/body",
+          "value": {
+            "op": "record",
+            "fields": {}
+          }
+        },
+        {
+          "path": "/expressions/lookup_input/reads",
+          "value": {}
+        },
+        {
+          "path": "/nodes/lookup/reads",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-query-input"
+    },
+    {
+      "id": "missing-original-request-binding",
+      "put": [
+        {
+          "path": "/scopes/recovery/retainedRequests",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-request-unproved"
+    },
+    {
+      "id": "missing-entry-request-invalidation",
+      "put": [
+        {
+          "path": "/data/original_request/invalidates",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-invalidation-coverage"
+    },
+    {
+      "id": "captured-value-before-wait",
+      "put": [
+        {
+          "path": "/scopes/recovery/entry",
+          "value": "early_check"
+        },
+        {
+          "path": "/nodes/early_check",
+          "value": {
+            "kind": "decision",
+            "scope": "recovery",
+            "reads": {
+              "captured": true
+            },
+            "writes": {},
+            "outcomes": {
+              "yes": true,
+              "no": true
+            },
+            "guards": {
+              "yes": "capture_is_confirmed"
+            },
+            "default": "no"
+          }
+        },
+        {
+          "path": "/flows/early_yes",
+          "value": {
+            "source": "early_check",
+            "outcome": "yes",
+            "target": "lookup"
+          }
+        },
+        {
+          "path": "/flows/early_no",
+          "value": {
+            "source": "early_check",
+            "outcome": "no",
+            "target": "lookup"
+          }
+        }
+      ],
+      "expect": "owned-continuation-availability-unproved"
+    }
+  ]
+}

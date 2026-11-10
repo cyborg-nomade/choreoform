@@ -21,6 +21,31 @@ struct Level {
     closure: String,
     query: Option<String>,
     child: Option<String>,
+    pre_capture: Option<OwnedPreCaptureEntry>,
+}
+/// New-mode declaration only, never an enabled entry or accepted handoff.
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct OwnedPreCaptureEntry {
+    entry: String,
+    capture_wait: String,
+}
+impl OwnedPreCaptureEntry {
+    pub fn entry(&self) -> &str {
+        &self.entry
+    }
+    pub fn capture_wait(&self) -> &str {
+        &self.capture_wait
+    }
+    pub fn host_requirements(&self) -> &'static [&'static str] {
+        &[
+            "actual-accepted-occurrence-bound-P6-registration-and-atomic-handoff-before-entry",
+            "fresh-current-grants-open-noncancelled-receiver-and-source-cutoff-disposal-enforced",
+            "exact-immutable-original-accepted-request-only-no-source-result-or-unknown-fact-seeded",
+            "original-unresolved-source-and-all-activated-transitive-effects-subscriptions-children-remain-accountable",
+            "no-activation-from-graph-outcome-true-predicate-missing-fact-or-query-success",
+            "no-parent-result-resumption-cancellation-clear-terminal-reopening-or-liveness-claim",
+        ]
+    }
 }
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 struct Template {
@@ -76,6 +101,9 @@ impl OwnedContinuationScope<'_> {
     }
     pub fn child(&self) -> Option<&str> {
         self.level.child.as_deref()
+    }
+    pub fn pre_capture_entry(&self) -> Option<&OwnedPreCaptureEntry> {
+        self.level.pre_capture.as_ref()
     }
 }
 /// A mandatory future host gate at a declaration, never an accepted transition.
@@ -224,5 +252,27 @@ pub(crate) mod tests {
                 bytes,
             })
             .collect()
+    }
+    pub(crate) fn pre_capture_fixture() -> (DefinitionEnvelope, Artifacts) {
+        let (e, mut artifacts) = fixture();
+        let mut b = e.document()["body"].clone();
+        b["dialects"]["core"] = serde_json::json!({"id":CORE_V10.0,"revision":CORE_V10.1});
+        b["scopes"]["recovery"]["entry"] = "lookup".into();
+        b["flows"]["lookup_next"]["target"] = "capture_wait".into();
+        b["flows"]["read_yes"]["target"] = "done".into();
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+        artifacts.push((
+            CORE_V10.0.into(),
+            CORE_V10.1.into(),
+            std::fs::read(root.join(format!(
+                "docs/ir/contracts/{}.txt",
+                CORE_V10.1.replace(':', "-")
+            )))
+            .unwrap(),
+        ));
+        (
+            DefinitionEnvelope::from_parts_versioned("0.4.0", b, serde_json::json!({})).unwrap(),
+            artifacts,
+        )
     }
 }

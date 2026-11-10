@@ -327,6 +327,11 @@ validated, and round-tripped.
   P6 handoff/cutoff and all-transitive accountability. General commands/compensation,
   request construction and richer P4/ownership contexts remain later; no production
   permission or scenario promotion is made by the audit.
+  [ADR-0060](docs/decisions/0060-owned-pre-capture-entry.md) implements that narrow
+  raw core 0.10 proof on existing IR 0.4, including exclusive uninitialized capture
+  targets and bounded conditional entry/capture relations. Next explicit readable /
+  native selection, then commands/compensation/new inputs/richer ownership; no live
+  activation, full benchmark or phase gate closes.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

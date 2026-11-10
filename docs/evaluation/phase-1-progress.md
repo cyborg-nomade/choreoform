@@ -1172,6 +1172,23 @@ later commands/compensation/new request construction/richer ownership/fault work
 No actual event/value/storage/grant/handoff/settlement is inferred; every scenario /
 phase/external gate remains open and parent #46 draft/incomplete.
 
+ADR-0060 implements finite read-only intermediate owned entry before original
+capture under signed frozen plan `57345e2`. Exact core 0.10 and all nine prior
+bases use existing IR 0.4; source 0.12/native outputs remain fixed at core 0.9.
+Actual-use wait binding, local uninitialized exclusive capture targets, conditional
+source/request/access/protection/recipient/invalidation checks and optional immutable
+entry/capture relations remain separate from ordinary/legacy/old-flat proof.
+Sixteen complete-SDK groups, two internal cumulative-budget groups and twelve shared
+isolated vectors/four limited Python groups cover the new mode. Completed-diff
+agent review found and fixed initializer/compute fabricated-capture availability;
+the genuine initializer regression failed before the fix. Local 508 Rust tests plus
+six compile-fail doctests and all native/Wasm/56 Python workflow checks pass.
+Final-head CI/comment audit/signed expected-head merge remain required; see
+[evidence](0060-owned-pre-capture-entry.md). Next explicit readable/native selection,
+then command/compensation/new input/richer ownership and fault work. Actual accepted
+P6 activation, fresh grants, immutable occurrence storage, atomic handoff and all
+activated transitive settlement remain host gates; no phase/scenario is promoted.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
