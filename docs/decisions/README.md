@@ -85,6 +85,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0058](0058-readonly-continuation-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose finite continuations explicitly in readable source |
 | [0059](0059-owned-entry-command-direction.md) | Accepted under delegation; pending parent/main integration | Enable useful owned read-only entry before broad command work |
 | [0060](0060-owned-pre-capture-entry.md) | Accepted under delegation; pending parent/main integration | Check finite read-only owned entry before source capture |
+| [0061](0061-pre-capture-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose pre-capture entry explicitly in readable source |
 
 ## When an ADR is required
 

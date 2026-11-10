@@ -211,3 +211,9 @@ isolated vectors with four limited Python groups. They check exact new core/base
 pins, actual-use wait binding, capture integrity, conditional access/protection /
 provenance/invalidation, old compatibility and separate report relations. No actual
 event, value, storage, current grant, accepted gate or liveness is supplied.
+
+[Readable pre-capture entry](../evaluation/0061-pre-capture-authoring.md) adds four
+frontend and one native unit group plus six limited Python groups for explicit
+source 0.13/core 0.10 selection, exact raw relations, all eleven SDK/native views,
+capture integrity/availability, identity/spans, old omissions, shared rows and valid
+combined report exhaustion. No actual event/storage/grant/accepted gate is supplied.

@@ -52,7 +52,7 @@ impl<'a, 's> Lower<'a, 's> {
                 body["authority"] = self.r(tree, scope, "actor", 0)?.into();
                 if matches!(
                     self.syntax.profile(),
-                    "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0"
+                    "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0"
                 ) {
                     body["faultSource"] = if let Some(binding) = tree.all("fault_binding").first() {
                         let source = self.r(binding, scope, "resource", 0)?;
@@ -96,11 +96,11 @@ impl<'a, 's> Lower<'a, 's> {
                     body["retry"]["basis"] = basis;
                     if matches!(
                         self.syntax.profile(),
-                        "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0"
+                        "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0"
                     ) {
                         body["retry"]["faultSource"] = if matches!(
                             self.syntax.profile(),
-                            "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0"
+                            "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0"
                         ) {
                             if attempts > 1 {
                                 if body["faultSource"].is_null() {
@@ -154,6 +154,7 @@ impl<'a, 's> Lower<'a, 's> {
                         | "0.10.0"
                         | "0.11.0"
                         | "0.12.0"
+                        | "0.13.0"
                 ) {
                     self.pending_waits.push((tree, scope.into(), id.clone()));
                 } else {

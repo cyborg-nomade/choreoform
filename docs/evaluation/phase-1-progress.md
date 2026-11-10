@@ -1189,6 +1189,37 @@ then command/compensation/new input/richer ownership and fault work. Actual acce
 P6 activation, fresh grants, immutable occurrence storage, atomic handoff and all
 activated transitive settlement remain host gates; no phase/scenario is promoted.
 
+[PR #75](https://github.com/cyborg-nomade/choreoform/pull/75) merged into draft
+#46 as `0854812423b804b979f6fca8e27b9b94d7774a5b` after required exact-head CI
+`42858635943` at `c246acf6e211a283b6c62de4cd0ad57f80551ca9` and delegated
+completed-diff review `5845821568`. Refreshed audit found no review threads or
+actionable summary findings; CodeRabbit skipped and supplies no review evidence.
+The expected-head merge explicitly carries the sign-off. ADR-0060 remains pending
+parent/main integration. All 508 Rust + six doctests/native/Wasm/56 Python workflow
+checks pass. Parent #46 stays draft/incomplete; all scenarios remain Partial and
+gates open. Active dependency `codex/pre-capture-authoring` follows the
+[frozen readable plan](0061-pre-capture-authoring-plan.md), then commands /
+compensation/new request/richer ownership and fault work. No host event/value /
+storage/grant/accepted activation/handoff/settlement or Phase 2 is inferred.
+
+ADR-0061 readable pre-capture integration is implemented under signed frozen
+plan `73e2da2`: explicit source 0.13/companion 0.12 selects existing core 0.10/IR
+0.4 with all nine inherited bases and unchanged grammar productions. The six later
+native views add optional entry/captureWait/mandatory hostRequirements only on
+new-mode scope rows; older/capturing-first/passive-leaf fields remain omitted.
+Immutable proof reuse, shared creator catalogue, complete-row/inherited/final
+bounds preserve whole-report refusal before stdout. Four frontend groups, one
+native unit group and six limited independent Python groups cover all eleven SDK /
+native views, exact selection/resources/raw relations, identity/spans, capture
+integrity/availability, actual earlier refusals and valid combined stress evidence.
+Local 513 Rust tests plus six compile-fail doctests and all native/Wasm/57 Python
+workflow checks pass. Completed-diff delegated agent review found no remaining
+actionable issue; final-head CI/comment audit/signed expected-head merge remain
+required. See [evidence](0061-pre-capture-authoring.md). Next command/compensation /
+new request/richer P4/ownership judgments, with all live activation/authority /
+cutoff/handoff/transitive settlement, scenario and phase gates still open. Parent
+#46 remains draft/incomplete; no Phase 2 or actual host evidence is inferred.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
