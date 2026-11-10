@@ -1220,6 +1220,37 @@ new request/richer P4/ownership judgments, with all live activation/authority /
 cutoff/handoff/transitive settlement, scenario and phase gates still open. Parent
 #46 remains draft/incomplete; no Phase 2 or actual host evidence is inferred.
 
+[PR #76](https://github.com/cyborg-nomade/choreoform/pull/76) merged into draft
+#46 as `e1cdfc45d621a09c170eb3c5f1807efe17a0604d` after required exact-head CI
+`42860819725` at `edf8e088585e99c5299f41a8d99a2ec5277bcd01` and delegated
+completed-diff review `5846006944`. Refreshed thread/summary audit found no threads
+or actionable findings; CodeRabbit skipped and supplies no review evidence. The
+expected-head merge explicitly carries the sign-off; ADR-0061 remains pending
+parent/main integration. Local 513 Rust + six doctests/native/Wasm/57 Python workflow
+checks pass. Active dependency `codex/owned-command-audit` follows the
+[frozen next audit](0062-owned-command-audit-plan.md), distinguishing own effect
+class, explicit compensation link and constructed input/ownership before another
+production contract. Parent #46 remains draft/incomplete; all scenario/phase/live
+host gates stay open and no Phase 2 is inferred.
+
+ADR-0062 command/compensation/constructed-input audit is implemented under signed
+plan `0d4f884`, changing only tests/docs. Eight SDK groups plus one frontend group
+include 24 matched original/new class/link/layout cases, independent read-only
+compensation, supported key variants, exact earlier metadata/type/read refusals,
+typed capture-derived new input with a differently typed child seed, and hidden
+second-work refusal. Existing IR/source represents the concrete cases; current
+query-effect/query-policy/query-input restrictions remain intact. Next separately
+freeze an explicit raw finite work/pure local input contract, preserving old query
+meaning; initially commands and all explicit compensators require capture-first
+entry, non-read-only commands stable-key, one activity/direct child and live new-key /
+correlation/conflict/authority/cutoff/handoff/transitive settlement gates. Broader
+preterminal/possibly-completed compensation and P4/ownership remain later. Local
+522 Rust + six doctests/native/Wasm/57 existing Python workflow checks pass; separate
+completed-diff delegated agent review found no remaining actionable issue. See
+[critique](0062-owned-command-audit.md). Exact-head CI/comment audit/signed merge
+remain required. Parent #46 stays draft/incomplete, every scenario Partial and all
+phase/live host gates open; no new production permission or Phase 2 is inferred.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

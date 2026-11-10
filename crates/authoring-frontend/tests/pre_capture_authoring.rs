@@ -229,3 +229,42 @@ fn source_cannot_fabricate_or_use_the_original_capture_before_its_wait() {
         "owned-continuation-availability-unproved"
     );
 }
+
+#[test]
+fn existing_sentences_represent_constructed_inputs_and_an_independent_compensation_link() {
+    for input in [
+        "record with empty",
+        "if (true) then (the value of \"Original request\") otherwise (the value of \"Original request\")",
+    ] {
+        let mut f = Fixture::new();
+        f.source = f.source.replace(
+            "Let \"Lookup input\" mean (the value of \"Original request\")",
+            &format!("Let \"Lookup input\" mean ({input})"),
+        );
+        let c = f.lower();
+        c.check_static(&f.supplied()).unwrap();
+        assert_eq!(
+            c.check_concurrency(&f.supplied()).unwrap_err().code,
+            "owned-continuation-query-input"
+        );
+    }
+    let mut f = Fixture::new();
+    let start = f.source.find("Rule for work \"Lookup work\".").unwrap();
+    let end = start + f.source[start..].find('\n').unwrap() + 1;
+    let policy = f.source[start..end].replace("Compensates none.", "Compensates \"Origin\".");
+    f.source.replace_range(start..end, "");
+    let clause =
+        "Retain the original request from \"Origin\" and record in \"Original request\".\n";
+    f.source = f.source.replace(clause, &format!("{clause}{policy}"));
+    for row in f.ledger["declarations"].as_array_mut().unwrap() {
+        if row["id"] == "lookup_work" {
+            row["scope"] = "recovery".into();
+        }
+    }
+    let c = f.lower();
+    c.check_static(&f.supplied()).unwrap();
+    assert_eq!(
+        c.check_concurrency(&f.supplied()).unwrap_err().code,
+        "owned-continuation-query-policy"
+    );
+}

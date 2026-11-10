@@ -3,7 +3,7 @@
 //! Conditional pre-capture declarations, never actual entry or source observations.
 use super::*;
 use choreoform_semantic_check::{CORE_V9, CORE_V10, check_concurrency};
-fn fixture() -> Fixture {
+pub(super) fn fixture() -> Fixture {
     promote(super::readonly_continuation::fixture())
 }
 fn promote(mut f: Fixture) -> Fixture {

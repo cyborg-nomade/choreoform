@@ -663,3 +663,6 @@ mod owned_entry_audit;
 
 #[path = "capture/pre_capture_entry.rs"]
 mod pre_capture_entry;
+
+#[path = "capture/command_audit.rs"]
+mod command_audit;
