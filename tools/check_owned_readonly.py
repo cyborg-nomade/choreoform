@@ -119,7 +119,7 @@ class OwnedReadonlyEvidence(unittest.TestCase):
             self.assertEqual((DIRECTORY / (name + '.license')).read_text(), notice)
         self.assertIn('tools/check_owned_readonly.py', (ROOT / '.github/workflows/rust-portability.yml').read_text())
         # No source upgrade is silently selected by this raw SDK increment.
-        self.assertEqual(json.loads((ROOT / 'docs/benchmarks/rp01/candidate.ir.json').read_bytes())['version'], '0.1.0')
+        self.assertEqual(json.loads((ROOT / 'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes())['version'], '0.1.0')
 
 
 if __name__ == '__main__':

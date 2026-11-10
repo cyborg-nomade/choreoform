@@ -15,6 +15,7 @@ from authoring_probe import lex, validate_ledger, recognize
 from benchmarks.rp01_graph import build, endpoint_probe
 from benchmarks.rp01_invalidation import declare_links
 from benchmarks.rp01_faults import adopt, PROFILE as FAULT_PROFILE
+from benchmarks.rp01_capture import adopt as adopt_capture, PROFILE as TERMINAL_PROFILE
 from benchmarks.rp01_resources import types, providers, clock_resources, encoded, pin
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,13 +23,15 @@ DESTINATION = ROOT / 'docs/benchmarks/rp01'
 LICENSE = b'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n'
 
 
-STAGES = ['check', 'check-control', 'check-protection', 'check-invalidation',
+HISTORICAL_STAGES = ['check', 'check-control', 'check-protection', 'check-invalidation',
           'check-concurrency', 'check-timing', 'check-fault-routes',
           'check-exceptional-availability', 'check-reconciliation-links',
           'check-reconciliation-availability']
 
+STAGES = [*HISTORICAL_STAGES[:4], 'invalidation-requirements', *HISTORICAL_STAGES[4:]]
 
-def derive(files, registry):
+
+def derive(files, registry, stages=STAGES):
     """Use the native frontend, retaining actual refusals without admission."""
     with tempfile.TemporaryDirectory() as directory:
         base = Path(directory)
@@ -50,7 +53,7 @@ def derive(files, registry):
         # Stored canonical bytes are the actual IR JCS encoding, without LF.
         files['candidate.ir.json'] = rfc8785.dumps(candidate)
         results = []
-        for stage in STAGES:
+        for stage in stages:
             result = invoke(stage)
             if result.returncode == 0:
                 report = json.loads(result.stdout)
@@ -70,7 +73,7 @@ def derive(files, registry):
         return candidate, results
 
 
-def artifacts():
+def historical_artifacts():
     files = {}
     _, type_raw, type_pin = types()
     resources = providers(type_pin, shared=True) | clock_resources(shared=True)
@@ -156,7 +159,7 @@ def artifacts():
             {'id': 'RP-01-D', 'status': 'Partial', 'declarations': ['withdraw_request', 'manager_review', 'payment_commits', 'payment_request_step']},
         ],
     }
-    candidate, stage_results = derive(files, registry)
+    candidate, stage_results = derive(files, registry, HISTORICAL_STAGES)
     manifest.update(status='lowered-candidate-with-partial-static-evidence',
         canonicalIR={'path': 'candidate.ir.json', 'revision': candidate['revision'],
                      'digest': 'sha256:' + sha256(files['candidate.ir.json']).hexdigest()},
@@ -249,6 +252,115 @@ independent review or Phase 1 closure is claimed.
     return files
 
 
+def artifacts():
+    historical = historical_artifacts()
+    assert len(historical['source.choreo']) == 56874
+    assert json.loads(historical['candidate.ir.json'])['revision'] == 'sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4'
+    assert sha256(historical['candidate.ir.json']).hexdigest() == 'c012c1493ad7b04abc5e5f81529eea6231b720a54ee6a8db867fd2e207fd546a'
+    assert sha256(historical['manifest.json']).hexdigest() == 'fd1ca83a022d7ccd8e3f21cf85305d662725e2ac5172cd201615ded0c7471ffb'
+    files = dict(historical)
+    manifest = json.loads(historical['manifest.json'])
+    body = json.loads(historical['candidate.ir.json'])['body']
+    provider = next({'id': r['id'], 'revision': r['revision']} for r in manifest['resources'] if r['path'].endswith('/payment.provider.json'))
+    source, ledger, raw, source_pin = adopt_capture(historical['source.choreo'].decode(), json.loads(historical['bindings.json']), body, provider)
+    files.update({'source.choreo': source.encode(), 'bindings.json': encoded(ledger), 'payment.terminal-source.json': raw, 'payment.terminal-source.json.license': LICENSE})
+    registry = manifest['resources']
+    registry += [{'id': source_pin['id'], 'revision': source_pin['revision'], 'path': 'docs/benchmarks/rp01/payment.terminal-source.json'},
+                 {'id': TERMINAL_PROFILE['id'], 'revision': TERMINAL_PROFILE['revision'], 'path': 'docs/ir/contracts/'+TERMINAL_PROFILE['revision'].replace(':','-')+'.txt'}]
+    candidate, results = derive(files, registry)
+    canonical_bindings = rfc8785.dumps(ledger)
+    source_raw = files['source.choreo']
+    frame = b'choreoform-authoring-package:0.14.0\0' + len(source_raw).to_bytes(8, 'big') + source_raw + len(canonical_bindings).to_bytes(8, 'big') + canonical_bindings
+    manifest.update(sourceProfile='0.14.0', companionVersion='0.13.0', coreProfile='0.11.0',
+        sourceBytes=len(source_raw), measuredTokens=len(lex(source)),
+        tokenMeasurement='whole-source bounded lexing; not semantic admission',
+        sourceDigest='sha256:'+sha256(source_raw).hexdigest(), bindingsDigest='sha256:'+sha256(canonical_bindings).hexdigest(),
+        packageDigest='sha256:'+sha256(frame).hexdigest(), contracts=ledger['contracts'],
+        canonicalIR={'path': 'candidate.ir.json', 'revision': candidate['revision'], 'digest': 'sha256:'+sha256(files['candidate.ir.json']).hexdigest()},
+        semanticStageResults=results)
+    manifest['hostRequirements'] += ['immutable-original-request-and-terminal-capture-lifetime', 'receipt-matching-and-accountable-contradictory-evidence-review']
+    manifest['scenarios'][2]['declarations'] += ['retained_payment_request', 'late_payment_capture', 'classify_late_payment', 'late_payment_category']
+    files['manifest.json'] = encoded(manifest)
+    files['reports/invalidation-requirements.json.license'] = LICENSE
+    files['README.md'] = current_readme(manifest).encode()
+    for name, raw in historical.items():
+        if name == 'README.md': continue
+        files['history/source-0.7/'+name] = raw
+    files['history/source-0.7/README.md'] = b"""<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
+# Historical source-0.7 RP-01 checkpoint
+
+Exact generated historical source/companion/IR/resource/input/ten-report evidence
+from a92e472, preserved under ADR-0066. This is source 0.7/core 0.4/IR 0.1,
+not the current checkpoint. The original manifest and all resource/report digests
+stay fixed. Its repository-relative resource paths resolve the identical original
+artifacts at the package root. Tests explicitly select this history for old profile
+semantics. See [current package](../../README.md) for current evidence and open gates.
+No accepted event, host execution, scenario or phase closure is claimed.
+"""
+    return files
+
+
+def current_readme(manifest):
+    return f'''<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
+# RP-01 typed late-capture checkpoint
+
+This synthetic whole-source package is **candidate IR**, **not semantically admitted
+or executable**. Source 0.14/companion 0.13 explicitly selects existing core 0.11 /
+IR 0.4 under [ADR-0066](../../decisions/0066-rp01-capture-adoption.md) and its
+[frozen plan](../../evaluation/0066-rp01-capture-adoption-plan.md). The manifest
+records eleven actual checking/advisory views and their report digests. All four
+[original scenarios](../../representative-processes/01-expense-reimbursement.md)
+remain Partial. No provider, host/browser/user or independent execution evidence.
+
+Source is {manifest['sourceBytes']} UTF-8 bytes / {manifest['measuredTokens']} measured
+tokens. Revision: `{manifest['canonicalIR']['revision']}`. The exact generated
+[historical checkpoint](history/source-0.7/README.md) retains source 0.7/core 0.4 /
+IR 0.1 and its original ten-view evidence. Original provider/type/clock/policy/input /
+fault-source bytes and ordinary guards are unchanged; current candidate identity
+and report/package digests are explicitly regenerated. All 44 guard cases / 46
+values / expectations are preserved with only their candidate binding repinned.
+
+The payment wait now captures an exact typed terminal envelope in its local recovery
+body. The new terminal-source descriptor pins the unchanged payment provider and
+accepted normalization profile. The exact accepted original request is a separate
+readonly seed. The local classifier reuses the original payment completion predicate,
+substituting only captured confirmed payload and retained original request; it checks
+claim identity, revision, amount and currency. A paid tag alone is insufficient.
+Mismatches record mismatched-evidence and preserve the capture for accountable
+conflict review. Definitive noeffect/rejected/cancelled remain distinct; unknown /
+acknowledged stay pending. Neither matched receipt nor no-effect text grants retry
+or a new dispatch; new business work is not a technical retry.
+
+The new capture/request/category keep the same Expense access/purpose/participant /
+capability envelope. Ordinary ports and ancestor current_claim dependencies remain.
+Reports disclose separate conditional flat owned proof and retained-request scope;
+legacy reconciliation coverage leaves the retained-seed body uncovered. The other
+two surviving declarations remain isolated. No value is copied from a live ancestor
+into recovery, no ordinary parent result is written/resumed, and cancellation is
+never cleared. Local finish/mismatch text does not settle a conflict. Required
+protection provenance contains labels, not live storage or authority.
+
+All actual provider truth/normalization/correlation/current authority/immutable
+request and capture storage/P6 cutoff/receiver acceptance/atomic handoff/transitive
+settlement requirements in the [host contract](host-contract.md) remain open.
+The stable-key confirmed-no-effect fault-source retry and ordinary approval/policy /
+withdrawal guards are preserved. Fictional input ports are not accepted observations;
+broadly shared fictional recipients do not demonstrate least privilege or protected
+accessible editing. Sequential checks and omitted optional business-calendar reminders
+remain the same first variant. General tool-managed near-English/text-visual editing,
+complete validator/RP-01/03/08 and all Phase 1 exit gates remain open.
+
+Build the pinned native frontend, then regenerate with
+`.tools/ir-check/bin/python tools/build_rp01_benchmark.py`; `--check` compares exact
+bytes including the historical checkpoint. The controlled assembler has explicit
+stable IDs and is not a general IR exporter, editor or automatic migration.
+'''
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
@@ -267,6 +379,9 @@ def main():
     manifest = json.loads(files['manifest.json'])
     print(f'RP-01 draft: {manifest["sourceBytes"]} bytes, {manifest["measuredTokens"]} measured tokens; no admission claimed.')
     if args.probe_profile:
+        # The refusal witness selects the exact historical source/profile pair.
+        files = historical_artifacts()
+        manifest = json.loads(files['manifest.json'])
         args_for_resources = [item for r in manifest['resources'] for item in ['--resource', r['id'], r['revision'], str(ROOT / r['path'])]]
         binary = ROOT / 'target/debug/choreoform-authoring-frontend'
         with tempfile.TemporaryDirectory() as directory:

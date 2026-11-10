@@ -14,7 +14,8 @@ from check_metadata_authoring import invoke
 from benchmarks.rp01_faults import historical_v6
 
 PIN='0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3'
-BASE=ROOT/'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE=ROOT/'docs/benchmarks/rp01/history/source-0.7'
 
 
 def check_binding(retry,emissions,provider,site,idempotency='stable-key'):

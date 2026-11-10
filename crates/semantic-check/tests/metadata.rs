@@ -20,11 +20,12 @@ impl Fixture {
     fn new() -> Self {
         let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
         let m: Value = serde_json::from_slice(
-            &std::fs::read(root.join("docs/benchmarks/rp01/manifest.json")).unwrap(),
+            &std::fs::read(root.join("docs/benchmarks/rp01/history/source-0.7/manifest.json"))
+                .unwrap(),
         )
         .unwrap();
         let candidate: Value = serde_json::from_slice(include_bytes!(
-            "../../../docs/benchmarks/rp01/candidate.ir.json"
+            "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
         ))
         .unwrap();
         let mut f = Self {

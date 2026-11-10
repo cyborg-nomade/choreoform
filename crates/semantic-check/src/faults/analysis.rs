@@ -438,7 +438,7 @@ mod tests {
     fn optional_collection_off_constructs_no_origin_index_or_context_storage() {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
         let current: Value = serde_json::from_slice(include_bytes!(
-            "../../../../docs/benchmarks/rp01/candidate.ir.json"
+            "../../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
         ))
         .unwrap();
         let envelope = choreoform_ir_probe_core::DefinitionEnvelope::from_parts(
@@ -447,7 +447,7 @@ mod tests {
         )
         .unwrap();
         let manifest: Value = serde_json::from_slice(include_bytes!(
-            "../../../../docs/benchmarks/rp01/manifest.json"
+            "../../../../docs/benchmarks/rp01/history/source-0.7/manifest.json"
         ))
         .unwrap();
         let mut owned: Vec<_> = manifest["resources"]

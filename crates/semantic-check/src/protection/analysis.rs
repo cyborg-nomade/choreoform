@@ -679,11 +679,11 @@ mod tests {
     fn provenance_walks_refuse_cumulatively_before_copying_and_legacy_collection_stays_off() {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
         let document: Value = serde_json::from_slice(include_bytes!(
-            "../../../../docs/benchmarks/rp01/candidate.ir.json"
+            "../../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
         ))
         .unwrap();
         let manifest: Value = serde_json::from_slice(include_bytes!(
-            "../../../../docs/benchmarks/rp01/manifest.json"
+            "../../../../docs/benchmarks/rp01/history/source-0.7/manifest.json"
         ))
         .unwrap();
         let owned: Vec<_> = manifest["resources"]

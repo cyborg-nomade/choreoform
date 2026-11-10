@@ -1,7 +1,7 @@
 {
   "format": "choreoform-authoring-bindings",
-  "version": "0.6.0",
-  "profile": "0.7.0",
+  "version": "0.13.0",
+  "profile": "0.14.0",
   "definition": "rp01_benchmark",
   "root": "expense",
   "contracts": {
@@ -10,8 +10,8 @@
       "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
     },
     "core": {
-      "contract": "urn:choreoform:contracts:core-profile:0.4.0",
-      "digest": "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3",
+      "contract": "urn:choreoform:contracts:core-profile:0.11.0",
+      "digest": "sha256:246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e",
       "dialect": "core"
     }
   },
@@ -855,6 +855,36 @@
       "kind": "resource",
       "scope": "expense",
       "name": "Payment faults"
+    },
+    {
+      "id": "payment_terminal_binding",
+      "kind": "resource",
+      "scope": "expense",
+      "name": "Payment terminal facts"
+    },
+    {
+      "id": "retained_payment_request",
+      "kind": "data",
+      "scope": "payment_recovery",
+      "name": "Original payment request"
+    },
+    {
+      "id": "late_payment_capture",
+      "kind": "data",
+      "scope": "payment_recovery",
+      "name": "Late payment evidence"
+    },
+    {
+      "id": "late_payment_category",
+      "kind": "data",
+      "scope": "payment_recovery",
+      "name": "Late payment category"
+    },
+    {
+      "id": "classify_late_payment",
+      "kind": "node",
+      "scope": "payment_recovery",
+      "name": "Classify late payment"
     }
   ],
   "generated": [
@@ -1373,6 +1403,18 @@
       "owner": "payable_reference",
       "role": "initial",
       "key": null
+    },
+    {
+      "id": "classify_late_payment_assignment",
+      "owner": "classify_late_payment",
+      "role": "assignment",
+      "key": "late_payment_category"
+    },
+    {
+      "id": "classify_late_payment_flow",
+      "owner": "classify_late_payment",
+      "role": "flow",
+      "key": "classify_late_payment_next"
     }
   ],
   "symbols": [
@@ -2054,6 +2096,34 @@
       "role": "purpose",
       "name": "Reimbursement",
       "wire": "reimbursement"
+    },
+    {
+      "id": "retained_payment_request_purpose",
+      "owner": "retained_payment_request",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "late_payment_capture_purpose",
+      "owner": "late_payment_capture",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "late_payment_category_purpose",
+      "owner": "late_payment_category",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "classify_late_payment_next",
+      "owner": "classify_late_payment",
+      "role": "outcome",
+      "name": "next",
+      "wire": "next"
     }
   ],
   "retired": [],
@@ -2093,6 +2163,12 @@
       "kind": "provider-fault-source",
       "contract": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
       "digest": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223"
+    },
+    {
+      "binding": "payment_terminal_binding",
+      "kind": "provider-terminal-observation-source",
+      "contract": "urn:choreoform:benchmarks:rp01:payment-terminal:0.1.0",
+      "digest": "sha256:20c093752af57f36ae4204e1a28687edcc7b66bb440aa6b4dd1fb4900ae74fe7"
     }
   ],
   "annotations": {

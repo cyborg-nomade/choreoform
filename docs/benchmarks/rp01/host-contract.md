@@ -6,8 +6,10 @@
 **Status:** Synthetic benchmark boundary specification, not implemented support or
 execution authorization. The source lowers and passes supported static/control/
 protection/invalidation checks and all six later partial static stages. Those
-later reports disclose three isolated wait-only surviving declarations and
-outstanding occurrence ownership/correlation/handoff/settlement premises.
+later reports disclose two isolated surviving declarations and one separate
+conditional flat owned payment-capture/request/local-classification proof, with
+outstanding occurrence ownership/correlation/authority/storage/handoff/settlement
+premises. The retained-seed body stays outside legacy reconciliation coverage.
 Actual surviving lifetime, progress and irreversible safety remain unproved.
 Read [package status](README.md), [manifest](manifest.json) and
 [frozen plan](../../evaluation/0034-rp01-package-plan.md).
@@ -75,8 +77,10 @@ Only the exact eligible fault `confirmed no effect` is selected for another
 payment attempt. The host must bind that classification to accepted definitive
 no-effect evidence for the exact original request/effect, not to a timeout, HTTP
 code, arbitrary caller string or a misleading fault name. The core does not infer
-such an emission/classification contract from spelling; stronger fault-source
-proof remains an explicit unresolved boundary. Current authority, cancellation,
+such an emission/classification contract from spelling. The exact fault-source
+descriptor now proves the declared static provider/profile/emission binding; actual
+authenticated emission and definitive classification remain host obligations.
+Current authority, cancellation,
 budget, unchanged request/input/basis, stable key and accepted clock stamp/delay
 checks still apply. Changed business input requires new work, not a new attempt
 using the old key or budget.
@@ -98,6 +102,19 @@ that mapping. Unknown/acknowledged facts must stay pending; stale/duplicate or
 contradictory facts must not confirm or settle twice. The true match predicate
 operates only after mandatory source/correlation/authority checks and supplies
 none of those checks by itself.
+
+The payment recovery now declares fresh local typed evidence capture, a separate
+readonly exact original request, and a local receipt-matched category. Its terminal
+source descriptor pins the unchanged provider/normalization profile. The original
+completion predicate is rebound only to captured confirmed payload and retained
+request: claim/revision/amount/currency must match before recording paid. A tag alone
+is insufficient; mismatched-evidence preserves the captured payload for accountable
+review. Neither that text nor finishing the local body settles a conflict. The
+category writes no ordinary payment result, resumes no parent and clears no
+cancellation. Original request/capture values require actual accepted immutable
+storage and protection for their whole lifetime. Provenance labels in reports
+supply no live ancestor value or authority. Matched/no-effect categories grant no
+new dispatch or safe technical retry by themselves.
 
 Create each designated surviving follow-up before disposal of its current owner.
 There is one capability site per service occurrence; technical retries retain the

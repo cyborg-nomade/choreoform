@@ -53,6 +53,110 @@
     "run_payment",
     "stale_payment"
   ],
+  "declaredFaultSourceCatalogues": [
+    {
+      "emissions": {
+        "confirmed no effect": {
+          "evidence": "definitive-no-effect",
+          "observations": [
+            "no-effect"
+          ]
+        },
+        "provider unknown": {
+          "evidence": "unresolved",
+          "observations": [
+            "unknown"
+          ]
+        }
+      },
+      "profile": {
+        "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
+        "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+        "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d"
+      },
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+        "revision": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223"
+      }
+    }
+  ],
+  "declaredFaultSourceUses": [
+    {
+      "hostRequirements": [
+        "supported-authenticated-provider-and-actual-non-engine-emission-classification",
+        "exact-live-source-occurrence-attempt-logical-effect-request-key-cause-input-revisions",
+        "current-source-work-access-protection-and-management-authority",
+        "actual-eligible-evidence-delay-basis-budget-and-cancellation-cutoff-for-any-retry",
+        "accepted-exact-nearest-handler-selection-exclusion-and-fresh-entry-snapshot",
+        "retained-source-control-provenance-and-owned-atomic-settlement",
+        "typed-fault-data-and-permitted-continuation-not-supplied-by-this-declaration"
+      ],
+      "policy": "payment_work",
+      "profile": {
+        "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
+        "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+        "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d"
+      },
+      "revision": "sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285",
+      "site": "payment_request_step",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+        "revision": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223"
+      }
+    }
+  ],
+  "declaredRetainedRequests": [
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "payment_request_step",
+      "result": "retained_payment_request",
+      "revision": "sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285",
+      "scope": "payment_recovery"
+    }
+  ],
+  "declaredWaitCaptures": [
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "payment_request_step",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+        "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d"
+      },
+      "result": "late_payment_capture",
+      "revision": "sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285",
+      "site": "payment_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp01:payment-terminal:0.1.0",
+        "revision": "sha256:20c093752af57f36ae4204e1a28687edcc7b66bb440aa6b4dd1fb4900ae74fe7"
+      }
+    }
+  ],
   "executable": false,
   "historicalOrigins": [
     {
@@ -1131,7 +1235,7 @@
     "current_claim",
     "payment_due"
   ],
-  "revision": "sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4",
+  "revision": "sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285",
   "status": "invalidation-checks-passed",
   "uncoveredInvalidationNodes": [
     "checks_observe",
@@ -1141,6 +1245,7 @@
   "uncoveredNodes": [
     "checks_observe",
     "checks_recovered",
+    "classify_late_payment",
     "notice_observe",
     "notice_recovered",
     "payment_observe",

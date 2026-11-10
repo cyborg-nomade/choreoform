@@ -186,7 +186,7 @@ mod tests {
     #[test]
     fn indexing_and_cached_evidence_copying_charge_the_same_total_budget() {
         let v: Value = serde_json::from_slice(include_bytes!(
-            "../../../../docs/benchmarks/rp01/candidate.ir.json"
+            "../../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
         ))
         .unwrap();
         let b = &v["body"];

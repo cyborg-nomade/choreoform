@@ -44,10 +44,10 @@ class FaultOriginEvidence(unittest.TestCase):
 
     def test_legacy_native_routes_and_all_committed_package_bytes_remain_unchanged(self):
         p=package();result=invoke(p,'check-fault-routes');self.assertEqual(result.returncode,0,result.stderr)
-        expected=json.loads((ROOT/'docs/benchmarks/rp01/reports/check-fault-routes.json').read_bytes())
+        expected=json.loads((ROOT/'docs/benchmarks/rp01/history/source-0.7/reports/check-fault-routes.json').read_bytes())
         self.assertEqual(json.loads(result.stdout),expected)
         result=invoke(p);self.assertEqual(result.returncode,0,result.stderr)
-        self.assertEqual(json.loads(result.stdout),json.loads((ROOT/'docs/benchmarks/rp01/candidate.ir.json').read_bytes()))
+        self.assertEqual(json.loads(result.stdout),json.loads((ROOT/'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes()))
 
     def test_licensing_and_required_ci_keep_this_finite_model_separate(self):
         self.assertEqual((CORPUS.parent/(CORPUS.name+'.license')).read_text(),'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n')

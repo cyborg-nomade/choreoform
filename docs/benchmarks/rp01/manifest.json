@@ -3,80 +3,86 @@
   "version": "0.1.0",
   "status": "lowered-candidate-with-partial-static-evidence",
   "executable": false,
-  "sourceProfile": "0.7.0",
-  "companionVersion": "0.6.0",
-  "coreProfile": "0.4.0",
-  "sourceBytes": 56874,
-  "measuredTokens": 9470,
-  "tokenMeasurement": "sum of complete-line lexing; not whole-program recognition",
-  "sourceDigest": "sha256:ade9cf1d55ceae1e105f77f8cbbaf2556fbe6d89b4d507b7e8195f4dbab06335",
-  "bindingsDigest": "sha256:4b38bf40a897f793863fab35a8dcec78a8bcbdea59c97c3a2efd193ea30c2b62",
-  "packageDigest": "sha256:bdf876516b7578f55f99f779af460cc2f950d2804edf4137e30cc7f1725e3fe3",
+  "sourceProfile": "0.14.0",
+  "companionVersion": "0.13.0",
+  "coreProfile": "0.11.0",
+  "sourceBytes": 61211,
+  "measuredTokens": 10223,
+  "tokenMeasurement": "whole-source bounded lexing; not semantic admission",
+  "sourceDigest": "sha256:ee938aa652624f5b430fa49400b9c7f8fd1a1d7613bda05116c3fa3636cf82e8",
+  "bindingsDigest": "sha256:5fd345fcced8d6e61f46ab93f33e3151e837e43e68398bc117ee78c29270128d",
+  "packageDigest": "sha256:79832dd34fd7c3ef3d9000a018a0750ef47cf7e63f2f8665dd32c36a197da5de",
   "canonicalIR": {
     "path": "candidate.ir.json",
-    "revision": "sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4",
-    "digest": "sha256:c012c1493ad7b04abc5e5f81529eea6231b720a54ee6a8db867fd2e207fd546a"
+    "revision": "sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285",
+    "digest": "sha256:90c5ee32e45c97adf746355ac0337111fd408071ac622317874e8f0efe942fd6"
   },
   "semanticStageResults": [
     {
       "stage": "check",
       "result": "passed",
       "report": "reports/check.json",
-      "reportDigest": "sha256:52fe983245bf7da258725a6a38bcce9e2d74907fe244e8ae97972ef90a8a0fe7"
+      "reportDigest": "sha256:948e9c51077c4deccbb9a12bcce15ed6daf11edcbbbee1a133ba102b79816651"
     },
     {
       "stage": "check-control",
       "result": "passed",
       "report": "reports/check-control.json",
-      "reportDigest": "sha256:9f24cf4700be9662a18abd624ccfb951adc582a0e4e5ea07a7b3e25dff598371"
+      "reportDigest": "sha256:8c00317b4e7f84ea3678a5cc170c74dbd1e3f6a4329324c452ae15b9f61b0b34"
     },
     {
       "stage": "check-protection",
       "result": "passed",
       "report": "reports/check-protection.json",
-      "reportDigest": "sha256:454009dddaffa226f69a2c27c0e1c1d135e68b030d3f64dcdbeac95cc265d8a1"
+      "reportDigest": "sha256:3f5884c4fe8e10ca452d214653277a2f0076f4e16abff55af178916985febb1b"
     },
     {
       "stage": "check-invalidation",
       "result": "passed",
       "report": "reports/check-invalidation.json",
-      "reportDigest": "sha256:28e1079ad9e43288e6b69c328bd86e360a62ab21e20db03b8673a9ca64bb4991"
+      "reportDigest": "sha256:4e8819572f274419312691624a62cfe3e0dd7f3e4e4bcf74c66a64fd2b738887"
+    },
+    {
+      "stage": "invalidation-requirements",
+      "result": "passed",
+      "report": "reports/invalidation-requirements.json",
+      "reportDigest": "sha256:5983b8fa7d430bc0bf0c84584e2708f1c15bca31cc09970bc035baff44466cba"
     },
     {
       "stage": "check-concurrency",
       "result": "passed",
       "report": "reports/check-concurrency.json",
-      "reportDigest": "sha256:acd918ae85b7f2e1cd61c372c11409e8e4ef0203b8cf9a05bca9385fe9a289db"
+      "reportDigest": "sha256:55f2054da74661775cf973eb7cadfd2632345dae903ea164aa24034ced4a903b"
     },
     {
       "stage": "check-timing",
       "result": "passed",
       "report": "reports/check-timing.json",
-      "reportDigest": "sha256:145c79f1e5d397024ddc3b41d8cd8ee255dffff50658707636b8eecbddcfee8d"
+      "reportDigest": "sha256:afe5a5a85c3799270a47ffe383d4d877042fda527c1ad7f6458ca791cc862958"
     },
     {
       "stage": "check-fault-routes",
       "result": "passed",
       "report": "reports/check-fault-routes.json",
-      "reportDigest": "sha256:8f82af4abf07af4641b57cc4cbdc9b5d598ca7909544362ae4d682be4f66b365"
+      "reportDigest": "sha256:a24bfe9141c5095099df258bf9f8238bd16655f6a754729f39df8649c15180a1"
     },
     {
       "stage": "check-exceptional-availability",
       "result": "passed",
       "report": "reports/check-exceptional-availability.json",
-      "reportDigest": "sha256:ff065299e1d494828990840f17ce40f552e31ce437f5e05f74454f7914216369"
+      "reportDigest": "sha256:90bc75ccaac6f4dcd4bebc6acf2527eb48431c5d9ff0844538f241d077772ee4"
     },
     {
       "stage": "check-reconciliation-links",
       "result": "passed",
       "report": "reports/check-reconciliation-links.json",
-      "reportDigest": "sha256:d3b32ccbea81524db0617d12710c1c4333b75589676cabfc3a125c5e97c0b757"
+      "reportDigest": "sha256:5d0cff8e993d75bc6c92d093347f86ee2ed79357847c0f3ff5b24e496d0e1bc2"
     },
     {
       "stage": "check-reconciliation-availability",
       "result": "passed",
       "report": "reports/check-reconciliation-availability.json",
-      "reportDigest": "sha256:d0c6b0adb4649127143413bfd8042532b605dff9501182066388d2d85c80acbd"
+      "reportDigest": "sha256:712fc3abc08e023942edd26494dd54681675667c5b0a80fef00b4ceb9bcc0369"
     }
   ],
   "resources": [
@@ -124,6 +130,16 @@
       "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
       "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0",
       "path": "docs/ir/contracts/sha256-f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0.txt"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp01:payment-terminal:0.1.0",
+      "revision": "sha256:20c093752af57f36ae4204e1a28687edcc7b66bb440aa6b4dd1fb4900ae74fe7",
+      "path": "docs/benchmarks/rp01/payment.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+      "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead",
+      "path": "docs/ir/contracts/sha256-a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead.txt"
     }
   ],
   "contracts": {
@@ -132,8 +148,8 @@
       "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
     },
     "core": {
-      "contract": "urn:choreoform:contracts:core-profile:0.4.0",
-      "digest": "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3",
+      "contract": "urn:choreoform:contracts:core-profile:0.11.0",
+      "digest": "sha256:246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e",
       "dialect": "core"
     }
   },
@@ -173,7 +189,9 @@
     "accepted-authorized-atomic-surviving-ownership-and-subscription-handoff",
     "transitive-lifetime-and-all-obligation-settlement-before-terminal-disposal",
     "atomic-cancellation-order-and-provider-irrevocable-cutoff",
-    "history-retention-late-duplicate-and-contradictory-observation-handling"
+    "history-retention-late-duplicate-and-contradictory-observation-handling",
+    "immutable-original-request-and-terminal-capture-lifetime",
+    "receipt-matching-and-accountable-contradictory-evidence-review"
   ],
   "scenarios": [
     {
@@ -213,7 +231,11 @@
         "payment_work",
         "payment_close",
         "payment_wait",
-        "payment_observe"
+        "payment_observe",
+        "retained_payment_request",
+        "late_payment_capture",
+        "classify_late_payment",
+        "late_payment_category"
       ]
     },
     {

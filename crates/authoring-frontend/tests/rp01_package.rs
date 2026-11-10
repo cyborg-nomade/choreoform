@@ -19,9 +19,12 @@ mod profile;
 #[path = "rp01/request_retention_profile.rs"]
 mod request_retention_profile;
 
-const MANIFEST: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/manifest.json");
-const SOURCE: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/source.choreo");
-const BINDINGS: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/bindings.json");
+const MANIFEST: &[u8] =
+    include_bytes!("../../../docs/benchmarks/rp01/history/source-0.7/manifest.json");
+const SOURCE: &[u8] =
+    include_bytes!("../../../docs/benchmarks/rp01/history/source-0.7/source.choreo");
+const BINDINGS: &[u8] =
+    include_bytes!("../../../docs/benchmarks/rp01/history/source-0.7/bindings.json");
 const ARTIFACTS: &[(&str, &[u8])] = &[
     (
         "docs/benchmarks/rp01/payment.fault-source.json",
@@ -98,14 +101,14 @@ fn draft_manifest_and_resource_pins_do_not_claim_program_admission() {
     let m: Value = serde_json::from_slice(MANIFEST).unwrap();
     assert_eq!(m["executable"], false);
     let ir: Value = serde_json::from_slice(include_bytes!(
-        "../../../docs/benchmarks/rp01/candidate.ir.json"
+        "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
     ))
     .unwrap();
     assert_eq!(m["canonicalIR"]["revision"], ir["revision"]);
     assert_eq!(
         m["canonicalIR"]["digest"],
         digest(include_bytes!(
-            "../../../docs/benchmarks/rp01/candidate.ir.json"
+            "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
         ))
     );
     let stages = m["semanticStageResults"].as_array().unwrap();

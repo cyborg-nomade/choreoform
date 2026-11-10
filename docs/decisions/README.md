@@ -90,6 +90,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0063](0063-finite-owned-work.md) | Accepted under delegation; pending parent/main integration | Check finite owned work and pure local input construction |
 | [0064](0064-finite-work-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose finite owned work in readable source |
 | [0065](0065-rp01-current-contract-direction.md) | Accepted under delegation; pending parent/main integration | Adopt demonstrated RP-01 capture before further generalization |
+| [0066](0066-rp01-capture-adoption.md) | Accepted under delegation; pending parent/main integration | Publish the full RP-01 typed late-capture checkpoint |
 
 ## When an ADR is required
 

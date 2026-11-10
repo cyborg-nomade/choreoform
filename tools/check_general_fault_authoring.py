@@ -109,7 +109,7 @@ class GeneralFaultAuthoringEvidence(unittest.TestCase):
             result=invoke(p,stage);self.assertEqual(result.returncode,1,(stage,result.stderr));self.assertEqual(result.stdout,b'');self.assertEqual(result.stderr.strip(),b'report-budget')
 
     def test_current_package_and_all_old_native_views_regenerate_unchanged(self):
-        p=current();result=invoke(p);self.assertEqual(result.returncode,0,result.stderr);self.assertEqual(json.loads(result.stdout),json.loads((ROOT/'docs/benchmarks/rp01/candidate.ir.json').read_bytes()))
+        p=current();result=invoke(p);self.assertEqual(result.returncode,0,result.stderr);self.assertEqual(json.loads(result.stdout),json.loads((ROOT/'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes()))
         for stage in STAGES:
             result=invoke(p,stage);self.assertEqual(result.returncode,0,(stage,result.stderr));report=json.loads(result.stdout)
             self.assertNotIn('declaredFaultSourceUses',report);self.assertNotIn('declaredFaultSourceCatalogues',report)

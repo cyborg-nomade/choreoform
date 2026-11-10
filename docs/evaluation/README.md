@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Full RP-01 typed late-capture checkpoint](0066-rp01-capture-adoption.md) publishes
+  the demonstrated existing-profile integration with exact historical evidence and
+  unchanged original guard meanings; all full scenario/phase gates stay open.
+
 - [Full RP-01 current-contract critique](0065-rp01-current-contract-audit.md)
   demonstrates experimental profile promotion/capture/request/matched late records
   without modifying benchmark bytes; adoption and all full scenario gates stay open.

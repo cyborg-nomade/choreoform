@@ -41,7 +41,7 @@ class RetainedRequestEvidence(unittest.TestCase):
         d['$id']=old['$id'];d['$comment']=old['$comment'];d['properties']['version']['const']='0.3.0'
         m=d['$defs']['scope']['properties'].pop('retainedRequests');d['$defs']['scope']['required'].remove('retainedRequests');self.assertEqual(d,old)
         self.assertEqual(m,{'type':'object','propertyNames':{'$ref':'#/$defs/id'},'additionalProperties':{'$ref':'#/$defs/id'}})
-        v=json.loads((ROOT/'docs/benchmarks/rp01/candidate.ir.json').read_bytes());v['version']='0.4.0'
+        v=json.loads((ROOT/'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes());v['version']='0.4.0'
         for s in v['body']['scopes'].values():s.update(faultInput=None,retainedRequests={})
         for n in v['body']['nodes'].values():
             if n['kind']=='wait':n['capture']=None
@@ -60,7 +60,7 @@ class RetainedRequestEvidence(unittest.TestCase):
         p=package()
         for stage in ['lower','check','check-control','check-protection','check-fault-routes','check-exceptional-availability','check-reconciliation-availability']:
             r=invoke(p,stage);self.assertEqual(r.returncode,0,(stage,r.stderr))
-            path=ROOT/'docs/benchmarks/rp01'/('candidate.ir.json' if stage=='lower' else f'reports/{stage}.json')
+            path=ROOT/'docs/benchmarks/rp01/history/source-0.7'/('candidate.ir.json' if stage=='lower' else f'reports/{stage}.json')
             self.assertEqual(json.loads(r.stdout),json.loads(path.read_bytes()))
         self.assertEqual(p[1]['profile'],'0.7.0')
 

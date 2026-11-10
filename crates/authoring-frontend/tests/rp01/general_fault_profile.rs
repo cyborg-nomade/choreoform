@@ -155,7 +155,7 @@ fn formatting_aliases_and_revision_domain_preserve_semantic_identity_within_prof
     assert_eq!(renamed.document(), c.document());
     assert_ne!(renamed.package_digest(), c.package_digest());
     let old: Value = serde_json::from_slice(include_bytes!(
-        "../../../../docs/benchmarks/rp01/candidate.ir.json"
+        "../../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
     ))
     .unwrap();
     assert_ne!(c.document()["revision"], old["revision"]);

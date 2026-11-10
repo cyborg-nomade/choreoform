@@ -12,7 +12,8 @@ import check_ir_fixtures as wire
 from check_static_contracts import ROOT,run
 
 CORPUS=ROOT/'crates/semantic-check/tests/conformance/provider-fault-sources.json'
-BASE=ROOT/'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE=ROOT/'docs/benchmarks/rp01/history/source-0.7'
 DOC=ROOT/'docs/dialects/provider-fault-sources.md'
 
 

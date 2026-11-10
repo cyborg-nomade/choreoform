@@ -61,7 +61,7 @@ class FaultEntryBoundaries(unittest.TestCase):
 
     def test_old_and_new_wire_schema_scope_records_stay_closed(self):
         import jsonschema
-        original=json.loads((ROOT/'docs/benchmarks/rp01/candidate.ir.json').read_bytes())
+        original=json.loads((ROOT/'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes())
         for version,schema in [('0.1.0',wire.SCHEMA),('0.2.0',wire.SCHEMA_V2)]:
             d=deepcopy(original);d['version']=version
             if version=='0.2.0':
@@ -75,7 +75,7 @@ class FaultEntryBoundaries(unittest.TestCase):
 
     def test_unresolved_fault_metadata_does_not_make_an_unknown_provider_state_terminal(self):
         from check_terminal_observation_sources import normalized_type
-        base=ROOT/'docs/benchmarks/rp01'
+        base=ROOT/'docs/benchmarks/rp01/history/source-0.7'
         provider=json.loads((base/'payment.provider.json').read_bytes());source=json.loads((base/'payment.fault-source.json').read_bytes())
         unknown=source['emissions']['provider unknown'];self.assertEqual(unknown['evidence'],'unresolved')
         self.assertEqual(set(unknown['observations']),{'unknown'});self.assertEqual(provider['observations']['unknown']['state'],'unknown')

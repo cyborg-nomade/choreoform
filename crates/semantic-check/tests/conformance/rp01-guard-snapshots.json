@@ -1,8 +1,8 @@
 {
   "format": "choreoform-rp01-guard-snapshots",
   "version": "0.1.0",
-  "candidateRevision": "sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4",
-  "candidateDigest": "sha256:c012c1493ad7b04abc5e5f81529eea6231b720a54ee6a8db867fd2e207fd546a",
+  "candidateRevision": "sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285",
+  "candidateDigest": "sha256:90c5ee32e45c97adf746355ac0337111fd408071ac622317874e8f0efe942fd6",
   "values": {
     "claim_v1": {
       "claim ID": "rp01-fictional-claim",

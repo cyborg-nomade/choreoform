@@ -5,7 +5,7 @@ use choreoform_ir_probe_core::{DefinitionEnvelope, Error, model::NodeKind};
 use serde_json::{Value, json};
 fn body() -> Value {
     let v: Value = serde_json::from_slice(include_bytes!(
-        "../../../docs/benchmarks/rp01/candidate.ir.json"
+        "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
     ))
     .unwrap();
     let mut b = v["body"].clone();
