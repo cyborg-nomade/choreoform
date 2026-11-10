@@ -355,6 +355,11 @@ validated, and round-tripped.
   receipt-matched local late records without new permission or changed benchmark
   bytes. Next explicitly freeze/adopt that checkpoint using existing contracts;
   preserve original scenario/guard/resource scope and all host/visual/user/phase gates.
+  [ADR-0066](docs/decisions/0066-rp01-capture-adoption.md) publishes that controlled
+  full-case checkpoint using existing profiles, preserving an exact source-0.7
+  history and every original guard/resource meaning. Next assess remaining original
+  scenarios/validator/RP-03/08 and near-English/protected accessible text-visual gaps;
+  local late classification is partial evidence and closes no phase/host gate.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

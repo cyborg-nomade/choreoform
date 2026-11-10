@@ -45,7 +45,7 @@ class GeneralFaultUseEvidence(unittest.TestCase):
         for c in cases:self.assertEqual(expected(c),c['expect'],c['id'])
 
     def test_wire_hash_promotion_adds_only_core_work_source_and_nullable_wait_fields(self):
-        old=json.loads((ROOT/'docs/benchmarks/rp01/candidate.ir.json').read_bytes());new=deepcopy(old);new['version']='0.2.0';new['body']['dialects']['core']=CORE6
+        old=json.loads((ROOT/'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes());new=deepcopy(old);new['version']='0.2.0';new['body']['dialects']['core']=CORE6
         for p in new['body']['policies'].values():
             if p['body']['kind']=='work':p['body']['faultSource']=deepcopy(p['body']['retry']['faultSource'])
         for n in new['body']['nodes'].values():
@@ -62,7 +62,7 @@ class GeneralFaultUseEvidence(unittest.TestCase):
         from check_late_observation_boundaries import package as current
         from check_owned_local_followups import package as v8
         p=current();result=invoke(p);self.assertEqual(result.returncode,0,result.stderr)
-        self.assertEqual(json.loads(result.stdout),json.loads((ROOT/'docs/benchmarks/rp01/candidate.ir.json').read_bytes()))
+        self.assertEqual(json.loads(result.stdout),json.loads((ROOT/'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes()))
         s,l,r=v8();l['contracts']['core']={'contract':CORE6['id'],'digest':CORE6['revision'],'dialect':'core'}
         result=invoke((s,l,r));self.assertEqual(result.returncode,1);self.assertEqual(result.stdout,b'');self.assertIn(b'contract-pin',result.stderr)
 

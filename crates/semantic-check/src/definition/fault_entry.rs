@@ -157,7 +157,7 @@ mod tests {
     fn empty_legacy_adds_no_work_and_nonempty_publication_refuses_before_drain() {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
         let manifest: Value = serde_json::from_slice(include_bytes!(
-            "../../../../docs/benchmarks/rp01/manifest.json"
+            "../../../../docs/benchmarks/rp01/history/source-0.7/manifest.json"
         ))
         .unwrap();
         let mut owned: Vec<_> = manifest["resources"]

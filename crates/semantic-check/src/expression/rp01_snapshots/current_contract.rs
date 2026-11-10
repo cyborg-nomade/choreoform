@@ -6,10 +6,44 @@ use super::*;
 #[test]
 fn late_category_reuses_receipt_predicate_and_matches_its_retained_request() {
     let f = Fixture::new();
-    let corpus: Value = serde_json::from_slice(include_bytes!(
+    let mut corpus: Value = serde_json::from_slice(include_bytes!(
         "../../../tests/conformance/rp01-late-classification.json"
     ))
     .unwrap();
+    fn official_ids(value: &mut Value) {
+        if value["op"] == "literal" {
+            return;
+        }
+        if value["op"] == "read" {
+            value["cell"] = match value["cell"].as_str().unwrap() {
+                "audit_payment_capture" => "late_payment_capture",
+                "audit_payment_request" => "retained_payment_request",
+                _ => panic!("unexpected read"),
+            }
+            .into();
+        } else {
+            match value {
+                Value::Object(m) => {
+                    for child in m.values_mut() {
+                        if child.is_object() || child.is_array() {
+                            official_ids(child);
+                        }
+                    }
+                }
+                Value::Array(a) => {
+                    for child in a {
+                        official_ids(child);
+                    }
+                }
+                _ => {}
+            }
+        }
+    }
+    official_ids(&mut corpus["expression"]);
+    assert_eq!(
+        corpus["expression"],
+        f.candidate["body"]["expressions"]["classify_late_payment_assignment"]["body"]
+    );
     let supplied = f.supplied();
     let mut r = Resources::new(&supplied).unwrap();
     let ty = r
@@ -25,24 +59,24 @@ fn late_category_reuses_receipt_predicate_and_matches_its_retained_request() {
     let mut context = Context::default();
     context
         .cells
-        .insert("audit_payment_capture".into(), ty.clone());
+        .insert("late_payment_capture".into(), ty.clone());
     context
         .cells
-        .insert("audit_payment_request".into(), request_type.clone());
+        .insert("retained_payment_request".into(), request_type.clone());
     let judgment = r.expression(&corpus["expression"], &context).unwrap();
     assert_eq!(judgment.ty, Type::Text);
     assert_eq!(
         judgment.reads,
         BTreeSet::from([
-            "audit_payment_capture".into(),
-            "audit_payment_request".into()
+            "late_payment_capture".into(),
+            "retained_payment_request".into()
         ])
     );
     fn bind(v: &mut Value) {
         if v["op"] == "read" {
             let name = match v["cell"].as_str().unwrap() {
-                "audit_payment_capture" => "capture",
-                "audit_payment_request" => "request",
+                "late_payment_capture" => "capture",
+                "retained_payment_request" => "request",
                 _ => panic!("unexpected live cell"),
             };
             *v = json!({"op":"param","name":name});

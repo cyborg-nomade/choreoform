@@ -11,7 +11,8 @@ from check_closed_provenance import package, invoke, large_package
 from check_static_contracts import ROOT, run
 from check_metadata_authoring import full as unpatched_rp01, invoke as invoke_unpatched
 
-BASE = ROOT / 'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE = ROOT / 'docs/benchmarks/rp01/history/source-0.7'
 
 
 def missing_case():

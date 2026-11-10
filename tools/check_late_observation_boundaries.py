@@ -9,7 +9,8 @@ from check_closed_provenance import package as isolated
 from check_metadata_authoring import invoke
 from check_static_contracts import ROOT
 
-BASE=ROOT/'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE=ROOT/'docs/benchmarks/rp01/history/source-0.7'
 
 
 def package():

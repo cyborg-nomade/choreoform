@@ -6,7 +6,7 @@ use serde_json::{Value, json};
 #[test]
 fn old_and_new_known_wires_refuse_scope_fault_input_even_null() {
     let original: Value = serde_json::from_slice(include_bytes!(
-        "../../../docs/benchmarks/rp01/candidate.ir.json"
+        "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
     ))
     .unwrap();
     for version in ["0.1.0", "0.2.0"] {

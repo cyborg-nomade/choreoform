@@ -98,7 +98,7 @@ fn full_explicit_source_lowers_checks_and_formats_without_changing_old_package()
     assert_eq!(binding.profile().revision, FAULT_SOURCE_PROFILE.1);
     assert_eq!(c.document()["body"]["dialects"]["core"]["id"], CORE_V4.0);
     let old: Value = serde_json::from_slice(include_bytes!(
-        "../../../../docs/benchmarks/rp01/candidate.ir.json"
+        "../../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
     ))
     .unwrap();
     assert_ne!(c.document()["revision"], old["revision"]);

@@ -241,3 +241,10 @@ adds four SDK groups/one production pure-evaluator group and thirteen synthetic
 receipt cases/six bounded Python groups. Whole experimental current-profile /
 capture/request/matched-local-record graphs pass; old benchmark/44 guard cases/46
 values remain byte-identical. No actual provider/host/user evidence or adoption.
+
+[Full RP-01 typed late-capture checkpoint](../evaluation/0066-rp01-capture-adoption.md)
+adds seven bounded current native/generation/delta/identity/refusal/format oracles.
+The original 44 guard cases/46 values are repinned only; the production pure harness
+now evaluates the actual compiled current classifier against the unchanged thirteen
+synthetic late cases. Historical tests explicitly select exact source-0.7 fixtures;
+no host/observation/independent evidence or scenario/phase closure is inferred.

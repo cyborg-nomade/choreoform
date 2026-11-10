@@ -34,7 +34,7 @@ def model(p):
 
 
 def candidate():
-    v=wire.load((ROOT/'docs/benchmarks/rp01/candidate.ir.json').read_bytes())
+    v=wire.load((ROOT/'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes())
     v['version']='0.3.0'
     for s in v['body']['scopes'].values():s['faultInput']=None
     for n in v['body']['nodes'].values():
@@ -85,9 +85,9 @@ class FaultEntryEvidence(unittest.TestCase):
         p=package()
         for stage in ['lower','check','check-control','check-protection','check-fault-routes','check-exceptional-availability','check-reconciliation-availability']:
             r=invoke(p,stage);self.assertEqual(r.returncode,0,(stage,r.stderr))
-            path=ROOT/'docs/benchmarks/rp01'/('candidate.ir.json' if stage=='lower' else 'reports/'+stage+'.json')
+            path=ROOT/'docs/benchmarks/rp01/history/source-0.7'/('candidate.ir.json' if stage=='lower' else 'reports/'+stage+'.json')
             self.assertEqual(json.loads(r.stdout),json.loads(path.read_bytes()),stage)
-        self.assertEqual(json.loads((ROOT/'docs/benchmarks/rp01/candidate.ir.json').read_bytes())['version'],'0.1.0')
+        self.assertEqual(json.loads((ROOT/'docs/benchmarks/rp01/history/source-0.7/candidate.ir.json').read_bytes())['version'],'0.1.0')
 
     def test_licensing_ci_and_non_execution_scope(self):
         notice='SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n'

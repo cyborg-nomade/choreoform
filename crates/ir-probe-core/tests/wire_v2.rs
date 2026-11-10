@@ -7,7 +7,8 @@ use choreoform_ir_probe_core::{
 use serde_json::{Value, json};
 use std::collections::BTreeSet;
 
-const RP: &[u8] = include_bytes!("../../../docs/benchmarks/rp01/candidate.ir.json");
+const RP: &[u8] =
+    include_bytes!("../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json");
 fn body() -> Value {
     let d: Value = serde_json::from_slice(RP).unwrap();
     promote(d["body"].clone())

@@ -1,80 +1,55 @@
 <!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# RP-01 package draft
+# RP-01 typed late-capture checkpoint
 
-This generated synthetic whole-source draft lowers to **candidate IR** but is
-**not semantically admitted or executable**. The manifest records all ten actual
-semantic-stage results/refusals and the exact canonical IR digest. It follows
-the [frozen plan](../../evaluation/0034-rp01-package-plan.md) and preserves all four
-scenarios from the [adopted case](../../representative-processes/01-expense-reimbursement.md).
+This synthetic whole-source package is **candidate IR**, **not semantically admitted
+or executable**. Source 0.14/companion 0.13 explicitly selects existing core 0.11 /
+IR 0.4 under [ADR-0066](../../decisions/0066-rp01-capture-adoption.md) and its
+[frozen plan](../../evaluation/0066-rp01-capture-adoption-plan.md). The manifest
+records eleven actual checking/advisory views and their report digests. All four
+[original scenarios](../../representative-processes/01-expense-reimbursement.md)
+remain Partial. No provider, host/browser/user or independent execution evidence.
 
-The source has 56874 UTF-8 bytes and 9470 measured tokens. The
-measurement lexes complete lines independently and is not whole-program admission.
-Source 0.7 / companion 0.6 and core 0.4 are selected explicitly under
-ADR-0042/0043; old cores/source profiles remain unchanged. Coherent fictional
-business/clock recipient labels pass static, ordinary control and protection
-checks. The exact 72 missing ordinary invalidation links derived under ADR-0038
-are now declared; strict invalidation also passes. All ten existing partial
-static stages now pass. Concurrency and later views disclose three isolated
-surviving follow-up declarations under ADR-0039, with outstanding live ownership,
-correlation, atomic handoff and terminal-settlement premises. These reports prove
-no actual lifetime, progress, general race safety or whole-process admission.
-Closed private influence is handled only by the bounded ADR-0037 proof subset,
-retaining all mutable ancestor dependencies. This fixture patch preserves all
-existing invalidation links and changes no other semantic body fields. The
-ADR-0039 checker refinement changes no source, IR revision or resource bytes.
-The ADR-0040 finite-snapshot correction explicitly rechecks both approval policy
-revisions and the current claim policy revision at the payment commit guard;
-it preserves the six earlier clauses. This changes the current candidate's
-semantic revision, while historical profile fixtures keep their original guard.
-The [draft host contract](host-contract.md) specifies the remaining authority,
-provider normalization, retry classification, correlation and lifetime obligations.
+Source is 61211 UTF-8 bytes / 10223 measured
+tokens. Revision: `sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285`. The exact generated
+[historical checkpoint](history/source-0.7/README.md) retains source 0.7/core 0.4 /
+IR 0.1 and its original ten-view evidence. Original provider/type/clock/policy/input /
+fault-source bytes and ordinary guards are unchanged; current candidate identity
+and report/package digests are explicitly regenerated. All 44 guard cases / 46
+values / expectations are preserved with only their candidate binding repinned.
 
-Build the pinned native frontend first (`cargo build -p choreoform-authoring-frontend
---locked`). Regenerate with `.tools/ir-check/bin/python tools/build_rp01_benchmark.py`
-at the repository root; use `--check` for exact file comparison. Stable IDs are supplied
-explicitly by the fixture assembler, independent of readable names. This is not
-a general IR exporter, ordinary authoring editor or automatic source migration.
+The payment wait now captures an exact typed terminal envelope in its local recovery
+body. The new terminal-source descriptor pins the unchanged payment provider and
+accepted normalization profile. The exact accepted original request is a separate
+readonly seed. The local classifier reuses the original payment completion predicate,
+substituting only captured confirmed payload and retained original request; it checks
+claim identity, revision, amount and currency. A paid tag alone is insufficient.
+Mismatches record mismatched-evidence and preserve the capture for accountable
+conflict review. Definitive noeffect/rejected/cancelled remain distinct; unknown /
+acknowledged stay pending. Neither matched receipt nor no-effect text grants retry
+or a new dispatch; new business work is not a technical retry.
 
-The first variant runs policy/duplicate checks sequentially and omits optional
-business-calendar reminders. Payment timeout/retry use an explicit instance clock
-and input deadline, with no implicit current time. A named claim invariant checks
-selected fictional constraints, not dates, receipt authenticity or policy truth.
-Human result variants retain attributable reasons and current revision checks;
-actual identity/assignment authentication remains a host requirement.
-`launch-values.json` supplies only synthetic port values, and `correction-value.json`
-is only a typed proposed resubmission value. Neither is an accepted observation,
-authenticated completion or running instance. Claim v2 is correction data for the
-same claim, not a replacement definition or a second payable request.
+The new capture/request/category keep the same Expense access/purpose/participant /
+capability envelope. Ordinary ports and ancestor current_claim dependencies remain.
+Reports disclose separate conditional flat owned proof and retained-request scope;
+legacy reconciliation coverage leaves the retained-seed body uncovered. The other
+two surviving declarations remain isolated. No value is copied from a live ancestor
+into recovery, no ordinary parent result is written/resumed, and cancellation is
+never cleared. Local finish/mismatch text does not settle a conflict. Required
+protection provenance contains labels, not live storage or authority.
 
-Check findings, payment command business results, unknown effects and faults are
-distinct. A successful payment-command `problem` result means a confirmed terminal
-business problem; it does not turn an unknown debit into a rejection. Reconciliation
-uses an explicit terminal-fact envelope (confirmed result or correlated no-effect/
-rejected/cancelled evidence), whose supported authenticated normalization is still
-a required host boundary. A true wait predicate alone grants no correlation or
-ownership. `payment.fault-source.json` explicitly pins the unchanged payment
-provider and maps confirmed no effect to declared `no-effect` evidence; provider
-unknown maps to unresolved and remains noneligible. All five reports from timing
-onward disclose exact retry bindings and live requirements. Both names contribute
-to abstract unhandled-name accounting; these are declared possibilities, not
-actual faults. The exact `confirmed no effect` retry still requires truthful
-authenticated classification; it is not inferred from HTTP errors or spelling.
+All actual provider truth/normalization/correlation/current authority/immutable
+request and capture storage/P6 cutoff/receiver acceptance/atomic handoff/transitive
+settlement requirements in the [host contract](host-contract.md) remain open.
+The stable-key confirmed-no-effect fault-source retry and ordinary approval/policy /
+withdrawal guards are preserved. Fictional input ports are not accepted observations;
+broadly shared fictional recipients do not demonstrate least privilege or protected
+accessible editing. Sequential checks and omitted optional business-calendar reminders
+remain the same first variant. General tool-managed near-English/text-visual editing,
+complete validator/RP-01/03/08 and all Phase 1 exit gates remain open.
 
-Each service occurrence owns one capability site and its declared follow-up.
-Root data names root-visible capabilities; source 0.7 ancestor wait policies name
-their actual activity-use follow-ups. Older profile 0.4 keeps its narrower binding. The remaining-owner finish is a P6
-closure gate, not proof that transitive obligations vanished. Full lifetime,
-retention, invalidation/conflict/exceptional protection and accepted handoff remain
-open until actual checks and any necessary contract work establish them.
-
-Broadly authorized fictional expense participants share the declared expense
-purpose/envelope; request payloads still separate claim, approval, payment and
-notice information. This is not a demonstrated least-privilege editor or protected
-audience view. All three business adapters and the clock-result source explicitly
-permit that same downstream recipient circle; data/pin equality still grants no
-current authority, truthful observation or least-privilege guarantee. Policy and receipt files are fictional input artifacts, not trusted
-execution contracts or real operational evidence. All four scenarios and the
-forty-corpus accounting remain Partial. No user, host/browser/process execution,
-independent review or Phase 1 closure is claimed.
+Build the pinned native frontend, then regenerate with
+`.tools/ir-check/bin/python tools/build_rp01_benchmark.py`; `--check` compares exact
+bytes including the historical checkpoint. The controlled assembler has explicit
+stable IDs and is not a general IR exporter, editor or automatic migration.

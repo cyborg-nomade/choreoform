@@ -9,11 +9,12 @@ use choreoform_semantic_check::{
 fn fixture() -> Fixture {
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     let original: Value = serde_json::from_slice(
-        &std::fs::read(root.join("docs/benchmarks/rp01/candidate.ir.json")).unwrap(),
+        &std::fs::read(root.join("docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"))
+            .unwrap(),
     )
     .unwrap();
     let manifest: Value = serde_json::from_slice(
-        &std::fs::read(root.join("docs/benchmarks/rp01/manifest.json")).unwrap(),
+        &std::fs::read(root.join("docs/benchmarks/rp01/history/source-0.7/manifest.json")).unwrap(),
     )
     .unwrap();
     let mut b = original["body"].clone();

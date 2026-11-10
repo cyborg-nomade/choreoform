@@ -12,7 +12,8 @@ from check_metadata_authoring import invoke
 from check_static_contracts import ROOT
 from benchmarks.rp01_faults import historical_v6
 
-BASE=ROOT/'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE=ROOT/'docs/benchmarks/rp01/history/source-0.7'
 CORE4={'contract':'urn:choreoform:contracts:core-profile:0.4.0','digest':'sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3','dialect':'core'}
 FAULT_PROFILE={'id':'urn:choreoform:fault-source-profile:provider-observations:0.1.0','revision':'sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0'}
 STAGES=['check-timing','check-fault-routes','check-exceptional-availability','check-reconciliation-links','check-reconciliation-availability']

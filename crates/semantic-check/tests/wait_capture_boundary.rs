@@ -7,7 +7,7 @@ use serde_json::{Value, json};
 #[test]
 fn current_wait_wire_cannot_gain_a_capture_field_from_a_core_or_source_change() {
     let current: Value = serde_json::from_slice(include_bytes!(
-        "../../../docs/benchmarks/rp01/candidate.ir.json"
+        "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
     ))
     .unwrap();
     let original = DefinitionEnvelope::from_parts(current["body"].clone(), json!({})).unwrap();

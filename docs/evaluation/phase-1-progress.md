@@ -1373,6 +1373,31 @@ historical source-0.7 checkpoint and original resources/guard meanings. No new c
 increment, ordinary parent resumption or host authorization. Parent #46 stays draft,
 all scenarios Partial, G1–G4 conditional and all genuine external/phase gates open.
 
+ADR-0066 controlled full RP-01 capture adoption is implemented under signed plan
+`262fdc0`, existing source 0.14/companion 0.13/core 0.11/IR 0.4 and unchanged
+production rules/contracts/quotas. Current source 61,211 bytes/10,223 tokens,
+revision `sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285`,
+canonical wire digest `sha256:90c5ee32e45c97adf746355ac0337111fd408071ac622317874e8f0efe942fd6`.
+All eleven checking/advisory views pass with exact new terminal source, readonly
+original request, fresh capture and receipt-matched local category; no ancestor /
+ordinary result/parent resumption/cancellation clear. Complete body-delta equality
+preserves every original guard/flow/data/resource meaning. All 53 archived files
+match pre-adoption bytes; old tests explicitly select the source-0.7 checkpoint.
+Only the two candidate pins change in the 44-case/46-value guard catalogue. The
+production pure harness checks the actual compiled classifier against all thirteen
+unchanged synthetic late cases. Seven new bounded Python groups cover current
+native/generation/identity/refusal/format/coverage; separate flat owned proof leaves
+the retained-seed body legacy-uncovered and preserves two other isolated declarations.
+Local 548 Rust + six doctests/native/Wasm/all 61 Python workflow commands pass;
+completed-diff delegated agent review found no remaining actionable issue. See
+[evidence](0066-rp01-capture-adoption.md). Final-head CI/comment audit/signed merge
+remain required. Next build the original complete declared two-line RP-03 package
+and record actual first refusals using existing profiles, retaining RP-01 gaps and
+all real provider/correlation/current authority/storage/P6 cutoff/accepted handoff /
+transitive settlement/conflict review requirements. RP-08/complete validator/general
+near-English/protected accessible text-visual/user/host/browser/independent/phase
+gates remain open. Parent #46 draft, all scenarios Partial, G1–G4 conditional.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

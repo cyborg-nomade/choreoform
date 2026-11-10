@@ -11,7 +11,8 @@ from check_static_contracts import ROOT,run
 
 PIN='a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead'
 PROFILE={'id':'urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0','revision':'sha256:'+PIN}
-BASE=ROOT/'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE=ROOT/'docs/benchmarks/rp01/history/source-0.7'
 CORPUS=ROOT/'crates/semantic-check/tests/conformance/terminal-observation-sources.json'
 TAGS={'succeeded':'confirmed','rejected':'rejected','cancelled':'cancelled','no-effect':'noeffect'}
 NONTERMINAL={'acknowledged','unknown'}

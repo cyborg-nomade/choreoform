@@ -361,7 +361,7 @@ mod tests {
     #[test]
     fn indexing_and_cached_template_rows_use_the_existing_total_budget() {
         let document: Value = serde_json::from_slice(include_bytes!(
-            "../../../../docs/benchmarks/rp01/candidate.ir.json"
+            "../../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
         ))
         .unwrap();
         let mut b = document["body"].clone();

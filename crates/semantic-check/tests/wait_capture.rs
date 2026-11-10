@@ -430,11 +430,11 @@ fn actual_rp01_capture() -> Fixture {
     let mut f = Fixture::new();
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     let manifest: Value = serde_json::from_slice(
-        &std::fs::read(root.join("docs/benchmarks/rp01/manifest.json")).unwrap(),
+        &std::fs::read(root.join("docs/benchmarks/rp01/history/source-0.7/manifest.json")).unwrap(),
     )
     .unwrap();
     let current: Value = serde_json::from_slice(include_bytes!(
-        "../../../docs/benchmarks/rp01/candidate.ir.json"
+        "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
     ))
     .unwrap();
     f.b = current["body"].clone();

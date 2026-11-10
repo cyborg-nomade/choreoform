@@ -16,7 +16,7 @@ struct Fixture {
 impl Fixture {
     fn new() -> Self {
         let candidate: Value = serde_json::from_slice(include_bytes!(
-            "../../../docs/benchmarks/rp01/candidate.ir.json"
+            "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
         ))
         .unwrap();
         let mut f = Self {
@@ -125,7 +125,7 @@ fn raw_v4_package_binds_actual_source_provider_and_revision_without_permission()
     );
     assert!(!source.host_requirements().is_empty());
     let old: Value = serde_json::from_slice(include_bytes!(
-        "../../../docs/benchmarks/rp01/candidate.ir.json"
+        "../../../docs/benchmarks/rp01/history/source-0.7/candidate.ir.json"
     ))
     .unwrap();
     assert_ne!(old["revision"], e.document()["revision"]);

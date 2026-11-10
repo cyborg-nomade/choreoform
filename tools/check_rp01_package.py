@@ -12,14 +12,15 @@ import rfc8785
 
 import authoring_probe as grammar
 import check_ir_fixtures as wire
-from build_rp01_benchmark import artifacts, STAGES
+from build_rp01_benchmark import historical_artifacts as artifacts, HISTORICAL_STAGES as STAGES
 from benchmarks.rp01_resources import types, providers
 from check_static_contracts import ROOT, run
 from check_metadata_authoring import full as unpatched_rp01, invoke as invoke_unpatched
 from benchmarks.rp01_invalidation import MISSING_LINKS, declare_links
 from benchmarks.rp01_faults import historical_v6, adopt
 
-BASE = ROOT / 'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE = ROOT / 'docs/benchmarks/rp01/history/source-0.7'
 
 
 def registry(manifest):
@@ -109,6 +110,10 @@ class Rp01PackageEvidence(unittest.TestCase):
     def test_generation_repeats_native_candidate_and_all_ten_actual_stage_results(self):
         generated = artifacts()
         for name, raw in generated.items():
+            # The archive has a contextual history README; code/data/report bytes
+            # remain the exact checkpoint. The current-generation oracle checks
+            # the contextual README too.
+            if name == 'README.md': continue
             self.assertEqual((BASE / name).read_bytes(), raw, name)
         manifest = json.loads(generated['manifest.json'])
         self.assertIs(manifest['executable'], False)

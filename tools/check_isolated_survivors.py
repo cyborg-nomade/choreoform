@@ -15,7 +15,8 @@ from check_static_contracts import ROOT, run
 STAGES = ['check-concurrency','check-timing','check-fault-routes',
           'check-exceptional-availability','check-reconciliation-links',
           'check-reconciliation-availability']
-BASE=ROOT/'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE=ROOT/'docs/benchmarks/rp01/history/source-0.7'
 
 
 def dense(calls=230,waits=100):

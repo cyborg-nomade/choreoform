@@ -11,7 +11,9 @@ from check_readonly_continuation_authoring import STAGES
 from benchmarks.rp01_resources import encoded
 from benchmarks.rp01_source import type_source, expression_source, names, quote
 
-BASE = ROOT/'docs/benchmarks/rp01'
+CHECKPOINT = ROOT/'docs/benchmarks/rp01'
+# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
+BASE = CHECKPOINT/'history/source-0.7'
 CORE = {'contract':'urn:choreoform:contracts:core-profile:0.11.0',
         'digest':'sha256:246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e', 'dialect':'core'}
 
@@ -93,7 +95,7 @@ def captured(retain=True, record_status=False):
 
 
 def fixed_bytes():
-    paths = [p for p in BASE.rglob('*') if p.is_file()]
+    paths = [p for p in CHECKPOINT.rglob('*') if p.is_file()]
     paths += [ROOT/'crates/semantic-check/tests/conformance/rp01-guard-snapshots.json']
     return {str(p.relative_to(ROOT)):sha256(p.read_bytes()).hexdigest() for p in paths}
 

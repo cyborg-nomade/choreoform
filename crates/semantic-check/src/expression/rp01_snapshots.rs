@@ -12,6 +12,10 @@ const CANDIDATE: &[u8] = include_bytes!("../../../../docs/benchmarks/rp01/candid
 const CATALOGUE: &[u8] = include_bytes!("../../tests/conformance/rp01-guard-snapshots.json");
 const ARTIFACTS: &[(&str, &[u8])] = &[
     (
+        "payment.terminal-source.json",
+        include_bytes!("../../../../docs/benchmarks/rp01/payment.terminal-source.json"),
+    ),
+    (
         "payment.fault-source.json",
         include_bytes!("../../../../docs/benchmarks/rp01/payment.fault-source.json"),
     ),
@@ -63,6 +67,14 @@ impl Fixture {
             (CORE_V2,include_bytes!("../../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt").as_slice()),
             (CORE_V3,include_bytes!("../../../../docs/ir/contracts/sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt").as_slice()),
             (crate::CLOCK_PROFILE,include_bytes!("../../../../docs/ir/contracts/sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt").as_slice()),
+            (crate::CORE_V5,include_bytes!("../../../../docs/ir/contracts/sha256-50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7.txt").as_slice()),
+            (crate::CORE_V6,include_bytes!("../../../../docs/ir/contracts/sha256-27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85.txt").as_slice()),
+            (crate::CORE_V7,include_bytes!("../../../../docs/ir/contracts/sha256-e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b.txt").as_slice()),
+            (crate::CORE_V8,include_bytes!("../../../../docs/ir/contracts/sha256-edc8195ba0c31536ab2cdc95089e8aecc3ff402489639b4435277f0a38e7b603.txt").as_slice()),
+            (crate::CORE_V9,include_bytes!("../../../../docs/ir/contracts/sha256-5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f.txt").as_slice()),
+            (crate::CORE_V10,include_bytes!("../../../../docs/ir/contracts/sha256-74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f.txt").as_slice()),
+            (crate::CORE_V11,include_bytes!("../../../../docs/ir/contracts/sha256-246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e.txt").as_slice()),
+            (crate::TERMINAL_OBSERVATION_PROFILE,include_bytes!("../../../../docs/ir/contracts/sha256-a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead.txt").as_slice()),
         ] { resources.push((pin.0.into(),pin.1.into(),raw)); }
         let f = Self {
             candidate,
@@ -70,7 +82,12 @@ impl Fixture {
             resources,
         };
         f.validate_catalogue().unwrap();
-        let e = DefinitionEnvelope::from_parts(f.candidate["body"].clone(), json!({})).unwrap();
+        let e = DefinitionEnvelope::from_parts_versioned(
+            f.candidate["version"].as_str().unwrap(),
+            f.candidate["body"].clone(),
+            json!({}),
+        )
+        .unwrap();
         assert_eq!(e.document()["revision"], f.candidate["revision"]);
         crate::check_reconciliation_availability(&e, &f.supplied()).unwrap();
         f

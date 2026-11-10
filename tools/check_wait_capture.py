@@ -127,7 +127,7 @@ class WaitCaptureEvidence(unittest.TestCase):
         self.assertEqual(Path(str(CORPUS)+'.license').read_text(),'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n')
 
     def test_current_source_package_stays_on_old_wire_and_rejects_new_capture_syntax(self):
-        base=ROOT/'docs/benchmarks/rp01';m=json.loads((base/'manifest.json').read_bytes());candidate=json.loads((base/'candidate.ir.json').read_bytes())
+        base=ROOT/'docs/benchmarks/rp01/history/source-0.7';m=json.loads((base/'manifest.json').read_bytes());candidate=json.loads((base/'candidate.ir.json').read_bytes())
         self.assertEqual(candidate['version'],'0.1.0');self.assertEqual(m['sourceProfile'],'0.7.0')
         self.assertTrue(all('capture' not in n for n in candidate['body']['nodes'].values() if n['kind']=='wait'))
         supplied=[(r['id'],r['revision'],ROOT/r['path']) for r in m['resources']]
