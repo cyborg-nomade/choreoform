@@ -16,6 +16,11 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Readable pre-capture entry](0061-pre-capture-authoring.md) records explicit
+  source selection, optional bounded native host-premise disclosure and unchanged
+  old reports; actual host activation and phase exit gates remain open.
+
+
 - [Finite read-only pre-capture entry](0060-owned-pre-capture-entry.md) records
   raw core 0.10 conditional SDK proof, capture integrity and bounded conformance;
   actual host activation and every phase exit gate remain open.

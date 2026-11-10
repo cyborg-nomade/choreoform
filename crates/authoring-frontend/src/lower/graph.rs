@@ -8,7 +8,7 @@ impl<'a, 's> Lower<'a, 's> {
         let mut dependency_work = 0;
         let metadata_core = matches!(
             self.syntax.profile(),
-            "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0"
+            "0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0"
         );
         let mut metadata = BTreeMap::new();
         let mut local = BTreeMap::new();
@@ -107,7 +107,7 @@ impl<'a, 's> Lower<'a, 's> {
             }
             let fault_source = if matches!(
                 self.syntax.profile(),
-                "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0"
+                "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0"
             ) {
                 &p["faultSource"]
             } else {

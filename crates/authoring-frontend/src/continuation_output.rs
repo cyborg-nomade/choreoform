@@ -25,11 +25,11 @@ pub(super) fn append(report: &OwnedContinuationReport, value: &mut Value) -> Res
             if seen.contains(scope.scope()) {
                 continue;
             }
-            push(
-                &mut scopes,
-                json!({"rootOwner":root.owner(),"owner":scope.owner(),"scope":scope.scope(),"closure":scope.closure(),"source":scope.source(),"request":scope.request(),"conditionalSource":scope.conditional_source(),"query":scope.query(),"child":scope.child()}),
-                &mut remaining,
-            )?;
+            let mut row = json!({"rootOwner":root.owner(),"owner":scope.owner(),"scope":scope.scope(),"closure":scope.closure(),"source":scope.source(),"request":scope.request(),"conditionalSource":scope.conditional_source(),"query":scope.query(),"child":scope.child()});
+            if let Some(entry) = scope.pre_capture_entry() {
+                row["preCaptureEntry"] = json!({"entry":entry.entry(),"captureWait":entry.capture_wait(),"hostRequirements":entry.host_requirements()});
+            }
+            push(&mut scopes, row, &mut remaining)?;
             seen.insert(scope.scope().to_owned());
         }
     }
@@ -81,14 +81,13 @@ pub(super) fn append(report: &OwnedContinuationReport, value: &mut Value) -> Res
 mod tests {
     use super::*;
     use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
-    #[test]
-    fn inherited_output_and_shared_scope_catalogue_are_bounded_without_partial_mutation() {
+    fn assert_bounded_catalogue(pre_capture: bool) {
         let raw: Value = serde_json::from_slice(include_bytes!(
             "../../semantic-check/tests/conformance/owned-readonly-definition.json"
         ))
         .unwrap();
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
-        let artifacts: Vec<_> = raw["normative"]
+        let mut artifacts: Vec<_> = raw["normative"]
             .as_array()
             .unwrap()
             .iter()
@@ -107,6 +106,18 @@ mod tests {
                 (r["id"].as_str().unwrap().to_owned(), revision, bytes)
             })
             .collect();
+        if pre_capture {
+            use choreoform_semantic_check::CORE_V10;
+            artifacts.push((
+                CORE_V10.0.into(),
+                CORE_V10.1.into(),
+                std::fs::read(root.join(format!(
+                    "docs/ir/contracts/{}.txt",
+                    CORE_V10.1.replace(':', "-")
+                )))
+                .unwrap(),
+            ));
+        }
         let supplied: Vec<_> = artifacts
             .iter()
             .map(|(id, revision, bytes)| Resource {
@@ -116,6 +127,13 @@ mod tests {
             })
             .collect();
         let mut b = raw["definition"]["body"].clone();
+        if pre_capture {
+            use choreoform_semantic_check::CORE_V10;
+            b["dialects"]["core"] = json!({"id":CORE_V10.0,"revision":CORE_V10.1});
+            b["scopes"]["recovery"]["entry"] = "lookup".into();
+            b["flows"]["lookup_next"]["target"] = "capture_wait".into();
+            b["flows"]["read_yes"]["target"] = "done".into();
+        }
         b["nodes"]["run_again"] = b["nodes"]["run_owner"].clone();
         b["flows"]["main_next"]["target"] = "run_again".into();
         b["flows"]["again_next"] =
@@ -137,11 +155,33 @@ mod tests {
                 .len(),
             7
         );
+        for row in value["ownedContinuationScopes"].as_array().unwrap() {
+            if pre_capture && row["scope"] == "recovery" {
+                assert_eq!(row["preCaptureEntry"]["entry"], "lookup");
+                assert_eq!(row["preCaptureEntry"]["captureWait"], "capture_wait");
+                assert!(
+                    !row["preCaptureEntry"]["hostRequirements"]
+                        .as_array()
+                        .unwrap()
+                        .is_empty()
+                );
+            } else {
+                assert!(row.get("preCaptureEntry").is_none());
+            }
+        }
         let mut value = json!({"revision":tree.revision(),"inherited":"x".repeat(super::super::MAX_BYTES-1000)});
         let before = value.clone();
         assert_eq!(append(tree, &mut value).unwrap_err(), "report-budget");
         assert_eq!(value, before);
         let mut value = json!({"revision":"other"});
         assert_eq!(append(tree, &mut value).unwrap_err(), "report-revision");
+    }
+    #[test]
+    fn inherited_output_and_shared_scope_catalogue_are_bounded_without_partial_mutation() {
+        assert_bounded_catalogue(false);
+    }
+    #[test]
+    fn pre_capture_relations_require_host_acceptance_and_share_bounded_immutable_rows() {
+        assert_bounded_catalogue(true);
     }
 }

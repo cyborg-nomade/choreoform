@@ -332,6 +332,10 @@ validated, and round-tripped.
   targets and bounded conditional entry/capture relations. Next explicit readable /
   native selection, then commands/compensation/new inputs/richer ownership; no live
   activation, full benchmark or phase gate closes.
+  [ADR-0061](docs/decisions/0061-pre-capture-authoring.md) explicitly selects that
+  narrow proof with source 0.13/companion 0.12 and optional bounded native entry /
+  capture/host-premise disclosure. Commands/compensation/new request/richer P4 /
+  ownership work stays next; accepted live activation and phase gates remain open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

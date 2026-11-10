@@ -3,6 +3,12 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.13 / companion 0.12 profile](profile-v0.13.md) explicitly selects
+existing core 0.10/IR 0.4 for finite read-only intermediate owned entry before
+original capture. Existing sentences express the layout; bounded native reports
+expose optional entry/capture relations and mandatory live host requirements.
+Older profiles and capturing-first/passive-leaf output remain fixed.
+
 The [source 0.12.0 / companion 0.11.0 profile](profile-v0.12.md) selects existing
 core 0.9/IR 0.4 for finite read-only surviving continuations. Existing sentences
 and quotas remain; bounded native conditional scope/gate disclosure stays separate
