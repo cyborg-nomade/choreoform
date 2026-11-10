@@ -8,6 +8,7 @@ const GRAMMAR: &str = include_str!("../../../docs/authoring/candidate-a.ebnf");
 const GRAMMAR_V3: &str = include_str!("../../../docs/authoring/candidate-a-v0.3.ebnf");
 const GRAMMAR_V7: &str = include_str!("../../../docs/authoring/candidate-a-v0.7.ebnf");
 const GRAMMAR_V8: &str = include_str!("../../../docs/authoring/candidate-a-v0.8.ebnf");
+const GRAMMAR_V14: &str = include_str!("../../../docs/authoring/candidate-a-v0.14.ebnf");
 const GRAMMAR_V13: &str = include_str!("../../../docs/authoring/candidate-a-v0.13.ebnf");
 const GRAMMAR_V12: &str = include_str!("../../../docs/authoring/candidate-a-v0.12.ebnf");
 const GRAMMAR_V11: &str = include_str!("../../../docs/authoring/candidate-a-v0.11.ebnf");
@@ -277,6 +278,7 @@ fn lex(source: &str, program: bool) -> Result<Vec<Token>> {
                     | "0.11.0"
                     | "0.12.0"
                     | "0.13.0"
+                    | "0.14.0"
             )
         {
             token_limit = V5_TOKENS;
@@ -390,7 +392,10 @@ fn grammar(profile: &str) -> &'static Grammar {
     static COMPILED_V11: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V12: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V13: OnceLock<Grammar> = OnceLock::new();
-    let (cache, source) = if profile == "0.13.0" {
+    static COMPILED_V14: OnceLock<Grammar> = OnceLock::new();
+    let (cache, source) = if profile == "0.14.0" {
+        (&COMPILED_V14, GRAMMAR_V14)
+    } else if profile == "0.13.0" {
         (&COMPILED_V13, GRAMMAR_V13)
     } else if profile == "0.12.0" {
         (&COMPILED_V12, GRAMMAR_V12)
@@ -584,6 +589,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
             Some("0.11.0") => "0.11.0",
             Some("0.12.0") => "0.12.0",
             Some("0.13.0") => "0.13.0",
+            Some("0.14.0") => "0.14.0",
             _ => return Err(error("profile", 0..source.len())),
         }
     } else {
@@ -610,6 +616,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
                 | "0.11.0"
                 | "0.12.0"
                 | "0.13.0"
+                | "0.14.0"
         ) {
             V5_WORK
         } else {

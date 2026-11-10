@@ -229,3 +229,9 @@ groups/one private cumulative-budget group and 21 shared finite cases/five limit
 Python groups. Matched class/compensation, typed inputs/child seeds, mixed chains,
 actual-use capture integrity, no-result recipients, clocks, old compatibility and
 all live host boundaries remain explicit; no dispatch/accepted event is supplied.
+
+[Readable finite work](../evaluation/0064-finite-work-authoring.md) adds four
+frontend/one native unit group and six limited Python groups for explicit source
+0.14/core 0.11, typed constructed inputs/different child seeds, independent class /
+compensation relations, exact metadata/identities/spans/old omissions and valid
+combined whole-report exhaustion. No actual provider/host/user event is supplied.
