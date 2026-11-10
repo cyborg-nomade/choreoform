@@ -45,7 +45,7 @@ Seven new raw SDK groups and one readable frontend group establish these results
 | Wrong provider/idempotency or nonactivity compensation target | fault-source-provider / capability-effect / compensation-target | Real earlier refusal; no later ownership check is claimed |
 | Query entry before the original capturing wait | Existing IR 0.4 and source 0.12 lower; retained-request-capture | Relations are representable; current semantic entry contract refuses them |
 | Passive finish or local request-copy compute as entry | retained-request-capture | Dropping or moving the capturing entry is not an implicit capability permission |
-| Fresh pure record as new query input | Static pass; owned-continuation-query-input | Input equality/type alone cannot counterfeit the exact accepted original request |
+| Fresh pure record or pure identity wrapper as query input | Static pass; owned-continuation-query-input | Input type/complete reads alone cannot replace the exact original-request expression |
 | Same P4 history handler and P6 surviving scope, with original request | fault-entry-creator | Distinct activation/lifetime roles cannot be combined by reusing one scope |
 | No explicit request binding, with or without an initializer | Static pass; owned-continuation-request-unproved | An initializer or a caption does not supply an original occurrence-bound seed |
 

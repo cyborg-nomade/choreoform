@@ -183,6 +183,14 @@ fn a_new_pure_request_projection_is_not_the_exact_original_request_rule() {
     f.b["nodes"]["lookup"]["reads"] = json!({});
     check(&env(&f), &f.supplied()).unwrap();
     refuse(&f, "owned-continuation-query-input");
+    let mut f = fixture();
+    let original = json!({"op":"read","cell":"original_request"});
+    f.b["expressions"]["lookup_input"]["body"] =
+        json!({"op":"if","condition":boolean(true),"then":original,"else":original});
+    // Even a pure identity wrapper with unchanged complete reads is not the
+    // current family's exact original-request expression. No value is supplied.
+    check(&env(&f), &f.supplied()).unwrap();
+    refuse(&f, "owned-continuation-query-input");
 }
 #[test]
 fn p4_history_and_p6_ownership_cannot_be_combined_by_reusing_one_scope() {
