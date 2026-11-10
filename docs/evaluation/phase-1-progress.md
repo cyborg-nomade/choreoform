@@ -3,9 +3,22 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-08<br>
+**Updated:** 2026-11-10<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
+
+## Current focus
+
+PR #81 merged the controlled full RP-01 capture checkpoint into draft parent #46
+as `fc5a80dd3ead724806811adc20b86af820fd6f41`. Current source is 0.14/core 0.11 /
+IR 0.4 with eleven passing checking/advisory views; exact historical source-0.7
+fixtures and original guard meanings are preserved. Active branch
+`codex/rp03-benchmark-package` follows the [frozen whole two-line plan](0067-rp03-package-plan.md).
+Build original RP-03-A/B/C/D and alternatives using existing profiles and record
+actual results/refusals. All forty scenarios remain Partial, G1–G4 conditional,
+parent #46 draft/incomplete. RP-01 live host/conflict/settlement evidence, RP-08,
+complete validator/general near-English/protected accessible text-visual/actual
+user/browser/independent/phase gates remain open. No Phase 2 is authorized.
 
 ## Verified baseline
 
@@ -1397,6 +1410,23 @@ all real provider/correlation/current authority/storage/P6 cutoff/accepted hando
 transitive settlement/conflict review requirements. RP-08/complete validator/general
 near-English/protected accessible text-visual/user/host/browser/independent/phase
 gates remain open. Parent #46 draft, all scenarios Partial, G1–G4 conditional.
+
+[PR #81](https://github.com/cyborg-nomade/choreoform/pull/81) merged into draft
+#46 as `fc5a80dd3ead724806811adc20b86af820fd6f41` after required exact-head CI
+`42910491488` at `49dfb53bbf89dad9471f43767aad10a0885269a2` and delegated
+completed-diff review `5850156682`. Refreshed threads/summary audit found no threads
+or actionable findings; CodeRabbit skipped and supplies no review evidence. Parent
+#46 was also rechecked: no threads, skipped draft review and historical checkpoint
+agent comment only, supplying no current independent review. Expected-head merge
+explicitly carries sign-off; ADR-0066 remains pending parent/main integration.
+Local 548 Rust + six doctests/native/Wasm/all 61 Python commands pass. Active
+`codex/rp03-benchmark-package` follows [the frozen plan](0067-rp03-package-plan.md):
+complete original declared two-line order graph/resources/guard responsibilities
+with existing profiles and actual measured results/refusals. No hidden aggregate
+approval, fabricated transitions or dropped compensation/race/duplicate obligations.
+RP-01 current/history/guard bytes stay fixed. RP-08/complete validator/general
+near-English/protected accessible text-visual/actual users/host/browser/independent /
+phase exits remain open, all scenarios Partial and G1–G4 conditional. No Phase 2.
 
 ## Honest exit accounting
 

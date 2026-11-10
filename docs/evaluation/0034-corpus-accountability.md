@@ -85,3 +85,18 @@ treated as covered by the target packages.
 Rows are requirements/code inspections by the implementation agent, not newly
 observed participant or operational outcomes. Independent/domain/participant
 review and the phase report's owner approval remain distinct external evidence.
+
+## Later checkpoint: 2026-11-10
+
+The table above retains its dated audit baseline and does not erase historical
+observations. [ADR-0066 evidence](0066-rp01-capture-adoption.md) now supplies the
+whole RP-01 ordinary checks/review/correction/payment/notice graph, all original
+44 guard cases/46 values and typed local late capture/exact request/receipt-matched
+classification, with eleven passing checking/advisory views and exact old fixtures.
+This advances the first four rows' implementation evidence without promoting their
+Partial status. Actual correlation/authority/cutoff/immutable storage/accepted
+handoff/all-transitive settlement/contradictory-evidence review and complete
+cross-form/user/host/browser/independent evidence still remain. Current dependency
+is the [whole declared two-line order package](0067-rp03-package-plan.md), followed
+by actual demonstrated validator/RP-08/text-visual gaps. Totals remain 0 Supported /
+40 Partial, not forty complete executable processes. See [progress](phase-1-progress.md).
