@@ -248,3 +248,11 @@ The original 44 guard cases/46 values are repinned only; the production pure har
 now evaluates the actual compiled current classifier against the unchanged thirteen
 synthetic late cases. Historical tests explicitly select exact source-0.7 fixtures;
 no host/observation/independent evidence or scenario/phase closure is inferred.
+
+[RP-03 whole-source draft](../evaluation/0067-rp03-package-draft.md) adds three SDK
+resource/value groups, all 23 emitted receipt AST type judgments, two private
+production E1 groups with 22 receipt/eight recovery-guard cases and eight bounded
+Python groups.
+The actual whole source refuses the old token quota with no IR/reports; these
+independent finite checks do not admit it or supply event/deduplication/host evidence.
+RP-01 current/history/guard bytes stay fixed; every scenario/phase gate remains open.

@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [RP-03 whole-source draft and capacity refusal](0067-rp03-package-draft.md) records
+  the full declared two-line source, exact resources and actual token refusal;
+  pure resource/receipt evidence does not admit the order or close a phase gate.
+
 - [Full RP-01 typed late-capture checkpoint](0066-rp01-capture-adoption.md) publishes
   the demonstrated existing-profile integration with exact historical evidence and
   unchanged original guard meanings; all full scenario/phase gates stay open.

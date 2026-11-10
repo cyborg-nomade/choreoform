@@ -3,9 +3,22 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-08<br>
+**Updated:** 2026-11-11<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
+
+## Current focus
+
+PR #81 merged the controlled full RP-01 capture checkpoint into draft parent #46
+as `fc5a80dd3ead724806811adc20b86af820fd6f41`. Current source is 0.14/core 0.11 /
+IR 0.4 with eleven passing checking/advisory views; exact historical source-0.7
+fixtures and original guard meanings are preserved. Active branch
+`codex/rp03-benchmark-package` follows the [frozen whole two-line plan](0067-rp03-package-plan.md).
+Build original RP-03-A/B/C/D and alternatives using existing profiles and record
+actual results/refusals. All forty scenarios remain Partial, G1–G4 conditional,
+parent #46 draft/incomplete. RP-01 live host/conflict/settlement evidence, RP-08,
+complete validator/general near-English/protected accessible text-visual/actual
+user/browser/independent/phase gates remain open. No Phase 2 is authorized.
 
 ## Verified baseline
 
@@ -1397,6 +1410,49 @@ all real provider/correlation/current authority/storage/P6 cutoff/accepted hando
 transitive settlement/conflict review requirements. RP-08/complete validator/general
 near-English/protected accessible text-visual/user/host/browser/independent/phase
 gates remain open. Parent #46 draft, all scenarios Partial, G1–G4 conditional.
+
+[PR #81](https://github.com/cyborg-nomade/choreoform/pull/81) merged into draft
+#46 as `fc5a80dd3ead724806811adc20b86af820fd6f41` after required exact-head CI
+`42910491488` at `49dfb53bbf89dad9471f43767aad10a0885269a2` and delegated
+completed-diff review `5850156682`. Refreshed threads/summary audit found no threads
+or actionable findings; CodeRabbit skipped and supplies no review evidence. Parent
+#46 was also rechecked: no threads, skipped draft review and historical checkpoint
+agent comment only, supplying no current independent review. Expected-head merge
+explicitly carries sign-off; ADR-0066 remains pending parent/main integration.
+Local 548 Rust + six doctests/native/Wasm/all 61 Python commands pass. Active
+`codex/rp03-benchmark-package` follows [the frozen plan](0067-rp03-package-plan.md):
+complete original declared two-line order graph/resources/guard responsibilities
+with existing profiles and actual measured results/refusals. No hidden aggregate
+approval, fabricated transitions or dropped compensation/race/duplicate obligations.
+RP-01 current/history/guard bytes stay fixed. RP-08/complete validator/general
+near-English/protected accessible text-visual/actual users/host/browser/independent /
+phase exits remain open, all scenarios Partial and G1–G4 conditional. No Phase 2.
+
+ADR-0067 whole two-line order source draft is implemented under signed plan
+`c63367b`, preserving every accepted production rule/profile/quota and all 113 RP-01
+files/44 guard cases/46 values. Source 505,980 bytes / 77,135 complete-line tokens,
+658 declarations/445 symbols/263 generated identities/48 resource bindings. Native
+source 0.14 refuses `tokens at 108626..108627`, empty stdout: no candidate/revision
+or semantic-stage report. Exact metadata/type/provider/terminal-source/clock bytes,
+original four scenario IDs and explicit compensation/parallel/physical/exception
+responsibilities stay visible. Three SDK groups, 23 emitted receipt type judgments,
+two private production E1 groups (22 receipts/eight recovery guards) and eight Python
+groups cover real finite checks without claiming a process trace or admission.
+Review fixed absence-based release/refund assumptions, implicit partial fulfillment,
+missing explicit support inputs, identity/caption collisions and receipt quantity /
+warehouse/principal binding. Recovery receives a partial known-record view, not an
+accepted activation/unknown-obligation ledger. All actual truth/current authority /
+clock/physical cutoff/immutable context/accepted handoff/all-transitive settlement /
+duplicate/conflict proof remains open. Local 553 Rust + six doctests/native/Wasm /
+all 63 Python workflow commands pass; separate delegated completed-diff review found
+no remaining actionable checkpoint issue. See [evidence](0067-rp03-package-draft.md).
+Exact-head CI/full comment audit/signed merge remain required. Next separately freeze
+measured source-profile capacity, preserve old quotas and retain the next genuine
+parser/qualification/semantic/report refusal. Optional backorder/substitution /
+reallocation and full case evidence stay open; source verbosity/reusable near-English
+formulations/identity-managed editing/protected accessible summaries remain explicit
+Phase 1 work. Parent #46 draft, all forty scenarios Partial, G1–G4 conditional; no
+external blocker, phase report boundary or Phase 2 is claimed.
 
 ## Honest exit accounting
 

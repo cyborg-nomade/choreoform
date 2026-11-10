@@ -16,7 +16,7 @@ def quote(value):
     return json.dumps(value, ensure_ascii=False)
 
 
-def type_source(ty):
+def type_source(ty, type_name="Expense types"):
     kind = ty['kind']
     if kind == 'text':
         return 'text'
@@ -27,20 +27,21 @@ def type_source(ty):
     if kind == 'decimal':
         return f'decimal with {ty["scale"]} places'
     if kind == 'named':
-        return f'type {quote(ty["name"])} from "Expense types"'
+        return f'type {quote(ty["name"])} from {quote(type_name)}'
     if kind == 'option':
-        return 'optional ' + type_source(ty['element'])
+        return 'optional ' + type_source(ty['element'], type_name)
     if kind == 'list':
-        return 'list of ' + type_source(ty['element'])
+        return 'list of ' + type_source(ty['element'], type_name)
     if kind == 'record':
-        fields = ', '.join(f'{quote(k)} as {type_source(v)}' for k, v in ty['fields'].items())
+        fields = ', '.join(f'{quote(k)} as {type_source(v, type_name)}' for k, v in ty['fields'].items())
         return 'record with ' + (f'[{fields}]' if fields else 'empty')
     if kind == 'variant':
-        return 'choice with [' + ', '.join(f'{quote(k)} as {type_source(v)}' for k, v in ty['cases'].items()) + ']'
+        return 'choice with [' + ', '.join(f'{quote(k)} as {type_source(v, type_name)}' for k, v in ty['cases'].items()) + ']'
     raise ValueError(kind)
 
 
-def expression_source(expr):
+def expression_source(expr, type_name="Expense types"):
+    render = lambda value: expression_source(value, type_name)
     op = expr['op']
     unary = {
         'not': lambda value: f'not ({value})',
@@ -59,32 +60,43 @@ def expression_source(expr):
             return quote(value)
         if ty['kind'] == 'integer':
             return value
+        if ty['kind'] == 'decimal':
+            scale, integer = ty['scale'], int(value)
+            if str(integer) != value or not isinstance(scale, int) or isinstance(scale, bool) or not 0 <= scale <= 18:
+                raise ValueError('fixture decimal must have canonical units and supported scale')
+            digits = str(abs(integer)).rjust(scale + 1, '0')
+            number = ('-' if integer < 0 else '') + (digits[:-scale] + '.' + digits[-scale:] if scale else digits)
+            return f'decimal {number} with {scale} places'
         raise ValueError('fixture literal requires an explicit supported encoding')
     if op == 'read':
         return 'the value of ' + quote(expr['cell'])
     if op == 'fact':
         return 'the fact ' + quote(expr['name'])
     if op == 'field':
-        return f'field {quote(expr["name"])} of ({expression_source(expr["value"])})'
+        return f'field {quote(expr["name"])} of ({render(expr["value"])})'
     if op in unary:
-        return unary[op](expression_source(expr['value']))
+        return unary[op](render(expr['value']))
     if op == 'payload':
-        return f'the payload of ({expression_source(expr["value"])}) for {quote(expr["tag"])}'
+        return f'the payload of ({render(expr["value"])}) for {quote(expr["tag"])}'
+    if op == 'variant':
+        return f'case {quote(expr["tag"])} of {type_source(expr["type"], type_name)} containing ({render(expr["value"])})'
+    if op == 'wrap':
+        return f'({render(expr["value"])}) as named {type_source(expr["type"], type_name)}'
     if op == 'none':
-        return 'no value of ' + type_source(expr['element'])
+        return 'no value of ' + type_source(expr['element'], type_name)
     if op == 'record':
-        pairs = ', '.join(f'{quote(k)} is ({expression_source(v)})' for k, v in expr['fields'].items())
+        pairs = ', '.join(f'{quote(k)} is ({render(v)})' for k, v in expr['fields'].items())
         return 'record with ' + (f'[{pairs}]' if pairs else 'empty')
     if op == 'if':
-        return f'if ({expression_source(expr["condition"])}) then ({expression_source(expr["then"])}) otherwise ({expression_source(expr["else"])})'
+        return f'if ({render(expr["condition"])}) then ({render(expr["then"])}) otherwise ({render(expr["else"])})'
     if op == 'contains':
-        return f'({expression_source(expr["list"])}) contains ({expression_source(expr["value"])})'
+        return f'({render(expr["list"])}) contains ({render(expr["value"])})'
     if op == 'list':
-        items = ', '.join(f'({expression_source(v)})' for v in expr['items'])
-        return f'list of {type_source(expr["element"])} containing ' + (f'[{items}]' if items else 'empty')
-    operators = {'and': 'and', 'or': 'or', 'eq': 'equals', 'lt': 'is less than', 'add': 'plus', 'sub': 'minus'}
+        items = ', '.join(f'({render(v)})' for v in expr['items'])
+        return f'list of {type_source(expr["element"], type_name)} containing ' + (f'[{items}]' if items else 'empty')
+    operators = {'and': 'and', 'or': 'or', 'eq': 'equals', 'lt': 'is less than', 'add': 'plus', 'sub': 'minus', 'mul': 'times'}
     if op in operators:
-        return f'({expression_source(expr["left"])}) {operators[op]} ({expression_source(expr["right"])})'
+        return f'({render(expr["left"])}) {operators[op]} ({render(expr["right"])})'
     raise ValueError(op)
 
 
@@ -93,11 +105,15 @@ def names(items):
 
 
 class Package:
-    def __init__(self):
+    def __init__(self, *, definition='rp01_benchmark', root='expense',
+                 profile='0.4.0', version='0.3.0', core=CORE, type_name='Expense types',
+                 purpose=('reimbursement', 'Reimbursement'), protection_policy='Expense access', sensitivity='expense'):
+        self.type_name, self.purpose = type_name, purpose
+        self.protection_policy, self.sensitivity = protection_policy, sensitivity
         self.ledger = {
-            'format': 'choreoform-authoring-bindings', 'version': '0.3.0', 'profile': '0.4.0',
-            'definition': 'rp01_benchmark', 'root': 'expense',
-            'contracts': {'semantics': SEMANTICS, 'core': CORE},
+            'format': 'choreoform-authoring-bindings', 'version': version, 'profile': profile,
+            'definition': definition, 'root': root,
+            'contracts': {'semantics': SEMANTICS.copy(), 'core': core.copy()},
             'declarations': [], 'generated': [], 'symbols': [], 'retired': [],
             'resources': [], 'annotations': {'benchmark': 'RP-01', 'synthetic': True},
         }
@@ -123,7 +139,7 @@ class Package:
         self.ledger['generated'].append({'id': self.identity(identity), 'owner': owner, 'role': role, 'key': key})
 
     def resource(self, identity, name, kind, pin):
-        self.declaration(identity, 'resource', 'expense', name)
+        self.declaration(identity, 'resource', self.ledger['root'], name)
         self.ledger['resources'].append({'binding': identity, 'kind': kind, 'contract': pin['id'], 'digest': pin['revision']})
 
     def companion(self):
@@ -164,25 +180,26 @@ End {'scope' if self.parent else 'process'}.'''
         self.package.declaration(identity, 'actor', self.id, name)
         self.declarations.append(f'Require actor {quote(name)} under {quote(requirement)}.')
 
-    def data(self, identity, name, ty, initial=None, invalidates=(), participants=(), capabilities=(), policy='Expense access'):
+    def data(self, identity, name, ty, initial=None, invalidates=(), participants=(), capabilities=(), policy=None):
+        if policy is None: policy = self.package.protection_policy
         self.package.declaration(identity, 'data', self.id, name)
-        self.package.symbol(identity, 'purpose', 'reimbursement', 'Reimbursement')
+        self.package.symbol(identity, 'purpose', *self.package.purpose)
         if initial is not None:
             self.package.generated(f'{identity}_initial', identity, 'initial')
-        value = '(' + expression_source(initial) + ')' if initial is not None else 'unavailable'
+        value = '(' + expression_source(initial, self.package.type_name) + ')' if initial is not None else 'unavailable'
         invalidation = '[' + ', '.join(invalidates) + ']' if invalidates else 'empty'
-        self.declarations.append(f'''Keep {quote(name)} as {type_source(ty)} under {quote(policy)}.
-Sensitivity "expense". Purposes ["Reimbursement"]. Participants {names(participants)}.
+        self.declarations.append(f'''Keep {quote(name)} as {type_source(ty, self.package.type_name)} under {quote(policy)}.
+Sensitivity {quote(self.package.sensitivity)}. Purposes [{quote(self.package.purpose[1])}]. Participants {names(participants)}.
 Capabilities {names(capabilities)}. Invalidate {invalidation}. Initially {value}. End data.''')
 
     def expression(self, identity, name, ty, expr):
         self.package.declaration(identity, 'expression', self.id, name)
-        self.declarations.append(f'Let {quote(name)} mean ({expression_source(expr)}) as {type_source(ty)} with parameters empty.')
+        self.declarations.append(f'Let {quote(name)} mean ({expression_source(expr, self.package.type_name)}) as {type_source(ty, self.package.type_name)} with parameters empty.')
 
     def capability(self, identity, name, provider, input_type, output_type, authority, effects):
         self.package.declaration(identity, 'capability', self.id, name)
         self.package.generated(f'{identity}_provider', identity, 'provider-policy')
-        self.declarations.append(f'Use capability {quote(name)} from {quote(provider)} with input {type_source(input_type)} and output {type_source(output_type)}, authority {quote(authority)} and effects {quote(effects)}.')
+        self.declarations.append(f'Use capability {quote(name)} from {quote(provider)} with input {type_source(input_type, self.package.type_name)} and output {type_source(output_type, self.package.type_name)}, authority {quote(authority)} and effects {quote(effects)}.')
 
     def step(self, identity, name, action, successors=(), assignments=()):
         self.package.declaration(identity, 'node', self.id, name)
@@ -198,7 +215,7 @@ Capabilities {names(capabilities)}. Invalidate {invalidation}. Initially {value}
 
     def compute(self, identity, name, assignments, target):
         # Caller supplies stable cell IDs as well as readable names explicitly.
-        pairs = ', '.join(f'{quote(display)} to ({expression_source(expr)})' for _, display, expr in assignments)
+        pairs = ', '.join(f'{quote(display)} to ({expression_source(expr, self.package.type_name)})' for _, display, expr in assignments)
         self.step(identity, name, f'Set together [{pairs}].', [('next', target)], [cell for cell, _, _ in assignments])
 
     def child(self, scope):
