@@ -7,6 +7,8 @@ use serde_json::json;
 mod conformance;
 #[cfg(test)]
 mod rp01_snapshots;
+#[cfg(test)]
+mod rp03_receipts;
 
 /// Explicit static bindings; empty facts means ordinary expressions/invariants.
 #[derive(Default)]

@@ -112,6 +112,11 @@ validated, and round-tripped.
   representative non-programmer comprehension, authoring, correction and review
   tasks. Document accessibility evidence and unresolved gaps. PR #14's low-level
   declaration prototype does **not** satisfy this item or settle final syntax.
+  Within this Phase 1 item, deliver reusable near-English formulations for repeated
+  protection/receipt clauses, identity-managed editing and protected accessible
+  summaries on full RP-01/03/08 before user evaluation. The measured RP-03 source
+  verbosity in [ADR-0067](docs/decisions/0067-rp03-package-draft.md) is a concrete
+  bottleneck; a larger parser quota will not satisfy or defer this work to Phase 2.
   In progress: [ADR-0014](docs/decisions/0014-near-english-authoring.md) accepts
   Candidate A as a provisional working direction, with the
   [authoring comparison](docs/authoring/README.md); Project Owner approved
@@ -360,6 +365,10 @@ validated, and round-tripped.
   history and every original guard/resource meaning. Next assess remaining original
   scenarios/validator/RP-03/08 and near-English/protected accessible text-visual gaps;
   local late classification is partial evidence and closes no phase/host gate.
+  [ADR-0067](docs/decisions/0067-rp03-package-draft.md) supplies the whole declared
+  two-line RP-03 source/resources and an actual unchanged-profile token refusal.
+  No candidate IR/semantic-stage success is claimed; next separately freeze
+  capacity evidence, preserve old quotas, then retain the next real admission gap.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

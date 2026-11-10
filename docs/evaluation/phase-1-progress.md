@@ -3,7 +3,7 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-10<br>
+**Updated:** 2026-11-11<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
@@ -1427,6 +1427,32 @@ approval, fabricated transitions or dropped compensation/race/duplicate obligati
 RP-01 current/history/guard bytes stay fixed. RP-08/complete validator/general
 near-English/protected accessible text-visual/actual users/host/browser/independent /
 phase exits remain open, all scenarios Partial and G1–G4 conditional. No Phase 2.
+
+ADR-0067 whole two-line order source draft is implemented under signed plan
+`c63367b`, preserving every accepted production rule/profile/quota and all 113 RP-01
+files/44 guard cases/46 values. Source 505,980 bytes / 77,135 complete-line tokens,
+658 declarations/445 symbols/263 generated identities/48 resource bindings. Native
+source 0.14 refuses `tokens at 108626..108627`, empty stdout: no candidate/revision
+or semantic-stage report. Exact metadata/type/provider/terminal-source/clock bytes,
+original four scenario IDs and explicit compensation/parallel/physical/exception
+responsibilities stay visible. Three SDK groups, 23 emitted receipt type judgments,
+two private production E1 groups (22 receipts/eight recovery guards) and eight Python
+groups cover real finite checks without claiming a process trace or admission.
+Review fixed absence-based release/refund assumptions, implicit partial fulfillment,
+missing explicit support inputs, identity/caption collisions and receipt quantity /
+warehouse/principal binding. Recovery receives a partial known-record view, not an
+accepted activation/unknown-obligation ledger. All actual truth/current authority /
+clock/physical cutoff/immutable context/accepted handoff/all-transitive settlement /
+duplicate/conflict proof remains open. Local 553 Rust + six doctests/native/Wasm /
+all 63 Python workflow commands pass; separate delegated completed-diff review found
+no remaining actionable checkpoint issue. See [evidence](0067-rp03-package-draft.md).
+Exact-head CI/full comment audit/signed merge remain required. Next separately freeze
+measured source-profile capacity, preserve old quotas and retain the next genuine
+parser/qualification/semantic/report refusal. Optional backorder/substitution /
+reallocation and full case evidence stay open; source verbosity/reusable near-English
+formulations/identity-managed editing/protected accessible summaries remain explicit
+Phase 1 work. Parent #46 draft, all forty scenarios Partial, G1–G4 conditional; no
+external blocker, phase report boundary or Phase 2 is claimed.
 
 ## Honest exit accounting
 
