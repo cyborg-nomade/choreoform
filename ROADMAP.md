@@ -342,6 +342,10 @@ validated, and round-tripped.
   entry, stable-key metadata and distinct work reports. Broader preterminal commands /
   possibly-completed compensation, general P4/ownership and actual authority/conflict /
   occurrence/atomic handoff/all-transitive settlement remain explicit later gates.
+  [ADR-0063](docs/decisions/0063-finite-owned-work.md) implements the narrow raw
+  core 0.11 finite work/pure-input proof, distinct from old query reports. Next
+  explicit readable/native selection; broader preterminal/possibly-completed
+  compensation, richer P4/ownership and all genuine host/phase evidence stay open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

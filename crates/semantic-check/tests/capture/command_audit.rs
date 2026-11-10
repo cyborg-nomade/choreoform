@@ -5,7 +5,7 @@ use super::owned_entry_audit::provider;
 use super::*;
 use choreoform_semantic_check::check_concurrency;
 
-fn fixture(capturing: bool) -> Fixture {
+pub(super) fn fixture(capturing: bool) -> Fixture {
     let mut f = super::pre_capture_entry::fixture();
     if capturing {
         f.b["scopes"]["recovery"]["entry"] = "capture_wait".into();
@@ -23,11 +23,11 @@ fn refusal(f: &Fixture, code: &str) {
         Ok(_) => panic!("expected {code}"),
     }
 }
-fn compensates(f: &mut Fixture) {
+pub(super) fn compensates(f: &mut Fixture) {
     f.b["policies"]["lookup_work"]["scope"] = "recovery".into();
     f.b["policies"]["lookup_work"]["body"]["compensates"] = "origin".into();
 }
-fn captured_input(capturing: bool) -> Fixture {
+pub(super) fn captured_input(capturing: bool) -> Fixture {
     let mut f = fixture(capturing);
     // Only the new capability takes an integer. Original source/request stays
     // the original empty record; the new child's seed has the new exact type.

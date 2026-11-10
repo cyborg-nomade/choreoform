@@ -87,6 +87,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0060](0060-owned-pre-capture-entry.md) | Accepted under delegation; pending parent/main integration | Check finite read-only owned entry before source capture |
 | [0061](0061-pre-capture-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose pre-capture entry explicitly in readable source |
 | [0062](0062-owned-command-direction.md) | Accepted under delegation; pending parent/main integration | Separate finite owned work from read-only query semantics |
+| [0063](0063-finite-owned-work.md) | Accepted under delegation; pending parent/main integration | Check finite owned work and pure local input construction |
 
 ## When an ADR is required
 

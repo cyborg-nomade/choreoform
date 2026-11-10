@@ -666,3 +666,6 @@ mod pre_capture_entry;
 
 #[path = "capture/command_audit.rs"]
 mod command_audit;
+
+#[path = "capture/finite_work.rs"]
+mod finite_work;

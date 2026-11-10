@@ -1266,6 +1266,27 @@ P6 cutoff/accepted handoff/transitive settlement gates. Separate readable select
 follows; broader preterminal/possibly-completed compensation/P4/ownership remain
 later. Parent #46 draft, all scenarios Partial and all phase/external gates open.
 
+ADR-0063 finite work/pure local inputs is implemented under signed raw plan
+`cd9904b`. Exact core 0.11/all ten bases uses existing IR 0.4 and leaves source
+0.13/native selection and all prior artifacts/reports/benchmarks fixed. New immutable
+work/site/capability/input/closed-class/compensation relations preserve query meaning;
+actual activities, including commands with query=None, become next conditional
+sources. Commands/all explicit compensators require capture-first actual-use wait
+and exclusive uninitialized target; non-read-only work stable-key, every activity
+one-attempt/timerless/matching general source. Pure inputs retain normal type/reads
+and conditional availability/access/protection/actual recipients/invalidation, with
+exact differently typed child seeds and no extra live values. Fifteen SDK groups,
+one private budget group and 21 shared finite cases/five limited Python groups cover
+mixed chains, no-result/constant-input control leakage, real clock retry/timeout
+refusals, old compatibility, source/wait/compensation boundaries and shared budgets.
+Local 538 Rust + six doctests/native/Wasm/58 Python workflow checks pass; separate
+completed-diff delegated self-review found no actionable issue. See
+[evidence](0063-finite-owned-work.md). Final-head CI/full comment audit/signed merge
+remain required. Next separate readable/native selection; broader preterminal /
+possibly-completed compensation/P4/ownership and every actual new-key/eligible-prior /
+authority/conflict/P6 cutoff/accepted handoff/transitive settlement gate remain open.
+Parent #46 stays draft, forty scenarios Partial, G1–G4 conditional; no Phase 2.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

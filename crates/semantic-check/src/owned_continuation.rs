@@ -22,7 +22,10 @@ struct Level {
     query: Option<String>,
     child: Option<String>,
     pre_capture: Option<OwnedPreCaptureEntry>,
+    work: Option<OwnedContinuationWork>,
 }
+mod work;
+pub use work::{OwnedContinuationWork, OwnedWorkEffect};
 /// New-mode declaration only, never an enabled entry or accepted handoff.
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct OwnedPreCaptureEntry {
@@ -72,7 +75,7 @@ impl OwnedContinuation {
             .map(|level| OwnedContinuationScope { level })
     }
 }
-/// Borrowed source/query/child relation under a distinct conditional proof.
+/// Borrowed source/work/child relation under a distinct conditional proof.
 pub struct OwnedContinuationScope<'a> {
     level: &'a Level,
 }
@@ -104,6 +107,9 @@ impl OwnedContinuationScope<'_> {
     }
     pub fn pre_capture_entry(&self) -> Option<&OwnedPreCaptureEntry> {
         self.level.pre_capture.as_ref()
+    }
+    pub fn work(&self) -> Option<&OwnedContinuationWork> {
+        self.level.work.as_ref()
     }
 }
 /// A mandatory future host gate at a declaration, never an accepted transition.
@@ -267,6 +273,28 @@ pub(crate) mod tests {
             std::fs::read(root.join(format!(
                 "docs/ir/contracts/{}.txt",
                 CORE_V10.1.replace(':', "-")
+            )))
+            .unwrap(),
+        ));
+        (
+            DefinitionEnvelope::from_parts_versioned("0.4.0", b, serde_json::json!({})).unwrap(),
+            artifacts,
+        )
+    }
+    pub(crate) fn finite_work_fixture() -> (DefinitionEnvelope, Artifacts) {
+        let (e, mut artifacts) = pre_capture_fixture();
+        let mut b = e.document()["body"].clone();
+        b["dialects"]["core"] = serde_json::json!({"id":CORE_V11.0,"revision":CORE_V11.1});
+        b["expressions"]["lookup_input"]["body"] = serde_json::json!({"op":"record","fields":{}});
+        b["expressions"]["lookup_input"]["reads"] = serde_json::json!({});
+        b["nodes"]["lookup"]["reads"] = serde_json::json!({});
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+        artifacts.push((
+            CORE_V11.0.into(),
+            CORE_V11.1.into(),
+            std::fs::read(root.join(format!(
+                "docs/ir/contracts/{}.txt",
+                CORE_V11.1.replace(':', "-")
             )))
             .unwrap(),
         ));
