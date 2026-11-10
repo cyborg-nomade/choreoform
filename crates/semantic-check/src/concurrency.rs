@@ -17,6 +17,7 @@ pub struct ConcurrencyReport {
     uncovered: BTreeSet<String>,
     isolated: BTreeSet<IsolatedFollowup>,
     owned_local: Option<OwnedLocalReport>,
+    owned_continuations: Option<OwnedContinuationReport>,
 }
 impl ConcurrencyReport {
     pub fn revision(&self) -> &str {
@@ -37,6 +38,10 @@ impl ConcurrencyReport {
     /// Conditional fresh-local checks, without changing ordinary coverage.
     pub fn owned_local(&self) -> Option<&OwnedLocalReport> {
         self.owned_local.as_ref()
+    }
+    /// Distinct finite conditional ownership proof; no ordinary coverage promotion.
+    pub fn owned_continuations(&self) -> Option<&OwnedContinuationReport> {
+        self.owned_continuations.as_ref()
     }
     pub fn remaining(&self) -> &'static [&'static str] {
         &[
@@ -69,6 +74,8 @@ pub fn check_concurrency(
     let mut isolated = BTreeSet::new();
     let mut survivor_index = None;
     let mut owned_candidates = None;
+    let mut continuation_candidates = None;
+    let advanced_continuation = continuation_core(b);
     for (id, n) in object(&b["nodes"])? {
         budget.tick(0)?;
         let kind = text(&n["kind"])?;
@@ -87,16 +94,33 @@ pub fn check_concurrency(
                 }
                 let index = survivor_index.as_mut().unwrap();
                 if index.has_storage_followup(b, body)? {
-                    if owned_candidates.is_none() {
-                        owned_candidates = Some(owned::Candidates::new(b, &mut budget)?);
+                    let followup = text(&b["policies"][closure]["body"]["followup"])?;
+                    let next_closure = text(&b["scopes"][followup]["closure"])?;
+                    if advanced_continuation
+                        && b["policies"][next_closure]["body"]["mode"] == "reconcile"
+                    {
+                        if continuation_candidates.is_none() {
+                            continuation_candidates =
+                                Some(crate::owned_continuation::Candidates::new(b, &mut budget)?);
+                        }
+                        continuation_candidates.as_mut().unwrap().consider(
+                            index.graph(),
+                            body,
+                            id,
+                            &mut budget,
+                        )?;
+                    } else {
+                        if owned_candidates.is_none() {
+                            owned_candidates = Some(owned::Candidates::new(b, &mut budget)?);
+                        }
+                        owned_candidates.as_mut().unwrap().consider(
+                            b,
+                            index.graph(),
+                            body,
+                            id,
+                            &mut budget,
+                        )?;
                     }
-                    owned_candidates.as_mut().unwrap().consider(
-                        b,
-                        index.graph(),
-                        body,
-                        id,
-                        &mut budget,
-                    )?;
                 } else {
                     isolated.insert(index.check(b, body, id, &mut budget)?);
                 }
@@ -140,12 +164,16 @@ pub fn check_concurrency(
     let owned_local = owned_candidates
         .map(|c| c.check(envelope, supplied, invalidation.protection(), &mut budget))
         .transpose()?;
+    let owned_continuations = continuation_candidates
+        .map(|c| c.check(envelope, supplied, invalidation.protection(), &mut budget))
+        .transpose()?;
     Ok(ConcurrencyReport {
         invalidation,
         checked,
         uncovered,
         isolated,
         owned_local,
+        owned_continuations,
     })
 }
 

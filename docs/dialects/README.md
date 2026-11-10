@@ -124,3 +124,10 @@ table. Reject before recursive evaluation exceeds these limits. Host budgets may
 be stricter and must produce explicit resource refusal, never silent truncation.
 Budgets do not change the population of a fan-out or settle remaining work.
 Resource limits are not claims of production performance or memory bounds.
+
+[Core 0.9](core-owned-readonly-v0.9.md) explicitly reuses IR 0.4 for distinct finite
+read-only surviving continuation proofs, with all eight exact inherited bases.
+Conditional query recipients and source/control/access/provenance/invalidation
+are checked separately from ordinary and legacy coverage. Current authority,
+registration/cutoff/atomic handoff/all-settlement and actual host evidence remain
+open; source/native selection follows a separate explicit profile increment.

@@ -37,6 +37,11 @@ projection is separate from exact core-0.7 binding and conditional entry proof;
 no actual fault/history storage, current authority or execution is supplied.
 
 [Definition IR 0.4](definition-v0.4.md) adds required explicit original-request
-retention maps on scopes, selected only by exact core 0.8. Structural declarations
+retention maps on scopes, initially selected by exact core 0.8. Structural declarations
 and conditional owned proof remain separate from actual values/storage/authority.
 Earlier source profiles and wire/core/hash domains remain fixed.
+
+[Core 0.9](../dialects/core-owned-readonly-v0.9.md) explicitly reuses IR 0.4 for
+finite read-only surviving continuations and requires all eight prior bases.
+Static declaration, distinct conditional proof and actual host enforcement remain
+separate. Earlier source selection is unchanged; mixed selected core aliases refuse.

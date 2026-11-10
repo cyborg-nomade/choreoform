@@ -13,10 +13,14 @@ mod fault_entry;
 mod faults;
 mod initialization;
 mod invalidation;
+mod owned_continuation;
 mod policy_reads;
 mod protection;
 mod reconciliation;
 mod reconciliation_entry;
+pub use owned_continuation::{
+    OwnedContinuation, OwnedContinuationGate, OwnedContinuationReport, OwnedContinuationScope,
+};
 mod resources;
 mod timing;
 mod types;
@@ -98,23 +102,32 @@ pub const CORE_V8: (&str, &str) = (
     "urn:choreoform:contracts:core-profile:0.8.0",
     "sha256:edc8195ba0c31536ab2cdc95089e8aecc3ff402489639b4435277f0a38e7b603",
 );
+pub const CORE_V9: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.9.0",
+    "sha256:5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f",
+);
 const CORE_PROFILES: &[(&str, &str)] = &[
-    CORE, CORE_V2, CORE_V3, CORE_V4, CORE_V5, CORE_V6, CORE_V7, CORE_V8,
+    CORE, CORE_V2, CORE_V3, CORE_V4, CORE_V5, CORE_V6, CORE_V7, CORE_V8, CORE_V9,
 ];
 fn general_source_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0)
+    matches!(id.as_str(), Some(id) if id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0)
 }
 fn retry_source_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id==CORE_V4.0 || id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0)
+    matches!(id.as_str(), Some(id) if id==CORE_V4.0 || id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0)
 }
 fn capture_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0)
+    matches!(id.as_str(), Some(id) if id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0)
 }
 
 fn metadata_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0 || id == CORE_V5.0 || id == CORE_V6.0 || id == CORE_V7.0 || id == CORE_V8.0)
+    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0 || id == CORE_V5.0 || id == CORE_V6.0 || id == CORE_V7.0 || id == CORE_V8.0 || id == CORE_V9.0)
 }
 
+fn continuation_core(b: &Value) -> bool {
+    b["dialects"]
+        .as_object()
+        .is_some_and(|m| m.values().any(|p| p["id"] == CORE_V9.0))
+}
 const MAX_DEPTH: usize = 64;
 const MAX_ITEMS: usize = 10_000;
 
