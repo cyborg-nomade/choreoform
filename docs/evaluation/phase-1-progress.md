@@ -1063,6 +1063,37 @@ Rust plus six doctests and all native/Wasm/Python checks pass. See
 signed merge remain before integration. Real values/grants /
 storage/cutoff/handoff/all-settlement and every scenario/phase/external gate stay open.
 
+
+[PR #71](https://github.com/cyborg-nomade/choreoform/pull/71) merged into draft
+#46 as `ae28e9467724d1acf681ac0800f82e49485aff8c` after required final-head CI
+`42464776398` and delegated review/comment audit `6719511786`. Refreshed audit found
+no threads/actionable summaries; CodeRabbit skipped and supplies no review evidence.
+Merge explicitly carries the sign-off; ADR-0056 remains pending parent/main
+integration. Local 458 Rust plus six doctests and all native/Wasm/Python checks
+passed. Active dependency `codex/owned-readonly-continuations` follows the
+[frozen raw SDK plan](0057-owned-readonly-continuations-plan.md): new exact core 0.9
+on existing IR 0.4, distinct finite read-only ownership-tree proof, preserved old
+flat/ordinary/legacy sets, conditional source/protection/access/invalidation and
+explicit live registration/cutoff/handoff/all-settlement gates. No implementation
+or actual host permission/storage/settlement is claimed yet. Every scenario/phase /
+external gate remains open.
+
+ADR-0057 raw finite read-only surviving continuations are implemented under signed
+plan `22654bb`. Exact core 0.9 on existing IR 0.4 requires all eight bases and
+uniform selected aliases. A distinct bounded owner-before-child proof checks exact
+requests, conditional sources, empty seed access, complete source/control/provider
+provenance, capability recipients and strict invalidation. It shares immutable
+templates and preserves ordinary/legacy/old-flat coverage and fault-entry barriers.
+Registration/cutoff/handoff/terminal gates are mandatory live host premises, never
+accepted transitions or event/value/storage evidence. Twenty Rust groups and
+eleven shared vectors/five limited independent Python groups cover positive chains,
+reuse, refusals and cumulative bounds. Local 478 Rust plus six doctests and all
+native/Wasm/54 Python checks pass. See [evidence](0057-owned-readonly-continuations.md).
+Final-head CI/comment audit/signed expected-head merge remain before integration.
+Next explicit readable/native selection, then command/compensation and richer
+ownership/fault contexts. Parent #46 stays draft; all forty scenarios Partial,
+G1–G4 conditional and every genuine external/phase gate remains open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

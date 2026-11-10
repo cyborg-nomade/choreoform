@@ -309,6 +309,12 @@ validated, and round-tripped.
   proof for finite nested surviving ownership, read-only capability work first;
   command/compensation generality and actual cutoff/handoff/all-settlement remain
   explicit later/live obligations. No production permission changes in the audit.
+  [ADR-0057](docs/decisions/0057-owned-readonly-continuations.md) adds exact core 0.9
+  on existing IR 0.4 with a distinct finite read-only ownership-tree proof. Conditional
+  sources, exact request/recipient/access/control/provenance/invalidation and mandatory
+  registration/cutoff/atomic handoff/all-settlement gates remain separate from actual
+  host acceptance. Next explicit readable/native selection, then command/compensation
+  and richer ownership/fault contexts. No accepted benchmark or scenario is promoted.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

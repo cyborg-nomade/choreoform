@@ -6,7 +6,7 @@ use choreoform_semantic_check::{CORE_V6, CORE_V7, CORE_V8, check_concurrency};
 fn env(f: &Fixture) -> DefinitionEnvelope {
     DefinitionEnvelope::from_parts_versioned("0.4.0", f.b.clone(), json!({})).unwrap()
 }
-fn refresh(f: &mut Fixture) {
+pub(super) fn refresh(f: &mut Fixture) {
     for scope in ["recovery", "lookup_recovery"] {
         let nodes: serde_json::Map<String, Value> = f.b["nodes"]
             .as_object()
@@ -105,7 +105,7 @@ fn baseline() -> Fixture {
     refresh(&mut f);
     f
 }
-fn flat_query() -> Fixture {
+pub(super) fn flat_query() -> Fixture {
     let mut f = baseline();
     f.b["expressions"]["lookup_input"] = json!({"scope":"recovery","dialect":"core","parameters":{},"reads":{"original_request":true},"resultType":wrap(json!({"kind":"record","fields":{}})),"body":{"op":"read","cell":"original_request"}});
     let mut result = f.b["data"]["original_request"].clone();

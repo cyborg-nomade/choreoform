@@ -185,3 +185,10 @@ and combined bounded output checks retain all prior evidence and external gates.
 seven actual SDK probes for flat read-only/nested/irreversible work, original versus
 missing/ancestor values and ordinary-parent paths. They preserve production behavior
 and accepted artifacts and establish no actual dispatch, grant, storage or settlement.
+
+[Finite read-only continuations](../evaluation/0057-owned-readonly-continuations.md)
+add distinct core-0.9 conditional ownership/source/access/protection/invalidation
+proofs on existing IR 0.4, twenty Rust groups and eleven shared isolated vectors
+with five limited independent Python groups. Exact query recipients, all-declaration
+inspection, ordinary-only fault-entry barriers and cumulative bounds stay explicit.
+No actual events, values, storage, grants, accepted host gates or liveness are proved.

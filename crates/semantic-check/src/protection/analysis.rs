@@ -21,6 +21,7 @@ pub(super) struct Flow<'a> {
     pub dependencies: Option<Dependencies>,
     nonlocal_writes: BTreeSet<String>,
     history_entries: BTreeMap<String, String>,
+    pub(super) continuation_egress: bool,
     pub(super) provenance: Option<BTreeMap<String, Origins>>,
     pub(super) required_provenance: BTreeSet<RequiredProtectionProvenance>,
 }
@@ -89,6 +90,7 @@ impl<'a> Flow<'a> {
             dependencies: None,
             nonlocal_writes: BTreeSet::new(),
             history_entries: BTreeMap::new(),
+            continuation_egress: false,
             provenance,
             required_provenance: BTreeSet::new(),
         })
@@ -326,6 +328,20 @@ impl<'a> Flow<'a> {
             self.source(&id, ProviderRole::Clock, &mut pc)?;
             self.source(&id, ProviderRole::RetryClock, &mut pc)?;
             self.source(&id, ProviderRole::Capture, &mut pc)?;
+            if self.continuation_egress && n["kind"] == "activity" && n["mode"] == "capability" {
+                // resultProtection is a source envelope, not an input recipient
+                // contract. Check the actual capability identity against every
+                // retained, input, access and control label before publication.
+                let recipient = text(&n["target"])?;
+                self.budget.charge(pc.len() + reads.len())?;
+                for origin in pc.iter().chain(&reads) {
+                    require(
+                        object(&self.label(origin)["capabilities"])?.contains_key(recipient),
+                        "owned-continuation-recipient",
+                    )
+                    .map_err(|e| e.at_path(format!("/body/nodes/{id}")))?;
+                }
+            }
             if matches!(text(&n["kind"])?, "decision" | "activity" | "wait")
                 && let Some(dependencies) = &mut self.dependencies
             {
@@ -476,40 +492,92 @@ impl<'a> Flow<'a> {
             let origins = ordinary
                 .get(owner)
                 .ok_or_else(|| diagnostic(code, "scopes", owner))?;
-            self.budget.charge(origins.len())?;
-            for origin in origins {
-                self.budget.charge(4)?;
-                let (kind, site, role) = match origin {
-                    Origin::Cell(cell)
-                    | Origin::Historical { cell, .. }
-                    | Origin::RetainedProvenance(cell) => ("cell", cell.clone(), None),
-                    Origin::Provider(site) => (
-                        "provider",
-                        site.node.clone(),
-                        Some(match site.role {
-                            ProviderRole::Activity => "activity",
-                            ProviderRole::Clock => "clock",
-                            ProviderRole::RetryClock => "retry-clock",
-                            ProviderRole::Capture => "capture",
-                        }),
-                    ),
-                };
-                self.required_provenance
-                    .insert(RequiredProtectionProvenance {
-                        owner: owner.clone(),
-                        kind,
-                        site,
-                        role,
-                    });
-                inherited.insert(match origin {
-                    Origin::Cell(cell)
-                    | Origin::Historical { cell, .. }
-                    | Origin::RetainedProvenance(cell) => Origin::RetainedProvenance(cell.clone()),
-                    Origin::Provider(site) => Origin::Provider(site.clone()),
-                });
-            }
+            self.retained_owner_labels(owner, origins, &mut inherited)?;
         }
         Ok(inherited)
+    }
+    fn retained_owner_labels(
+        &mut self,
+        owner: &str,
+        origins: &Origins,
+        inherited: &mut Origins,
+    ) -> Result<()> {
+        self.budget.charge(origins.len())?;
+        for origin in origins {
+            self.budget.charge(4)?;
+            let (kind, site, role) = match origin {
+                Origin::Cell(cell)
+                | Origin::Historical { cell, .. }
+                | Origin::RetainedProvenance(cell) => ("cell", cell.clone(), None),
+                Origin::Provider(site) => (
+                    "provider",
+                    site.node.clone(),
+                    Some(match site.role {
+                        ProviderRole::Activity => "activity",
+                        ProviderRole::Clock => "clock",
+                        ProviderRole::RetryClock => "retry-clock",
+                        ProviderRole::Capture => "capture",
+                    }),
+                ),
+            };
+            self.required_provenance
+                .insert(RequiredProtectionProvenance {
+                    owner: owner.into(),
+                    kind,
+                    site,
+                    role,
+                });
+            inherited.insert(match origin {
+                Origin::Cell(cell)
+                | Origin::Historical { cell, .. }
+                | Origin::RetainedProvenance(cell) => Origin::RetainedProvenance(cell.clone()),
+                Origin::Provider(site) => Origin::Provider(site.clone()),
+            });
+        }
+        Ok(())
+    }
+    pub(super) fn continuation_scope(
+        &mut self,
+        entry: &crate::owned_continuation::Entry,
+        ordinary: &ProtectionReport,
+    ) -> Result<()> {
+        let mut inherited = Origins::new();
+        if entry.conditional_source {
+            let origins = self
+                .provenance
+                .as_mut()
+                .and_then(|m| m.remove(&entry.owner))
+                .ok_or_else(|| {
+                    diagnostic(
+                        "owned-continuation-provenance-unproved",
+                        "scopes",
+                        &entry.owner,
+                    )
+                })?;
+            self.retained_owner_labels(&entry.owner, &origins, &mut inherited)?;
+        } else {
+            let origins = ordinary.provenance.get(&entry.owner).ok_or_else(|| {
+                diagnostic(
+                    "owned-continuation-provenance-unproved",
+                    "scopes",
+                    &entry.owner,
+                )
+            })?;
+            self.retained_owner_labels(&entry.owner, origins, &mut inherited)?;
+        };
+        self.budget.tick(0)?;
+        require(
+            inherited.contains(&Origin::Provider(ProviderSite::new(
+                &entry.source,
+                ProviderRole::Activity,
+            ))),
+            "owned-continuation-provider-provenance-unproved",
+        )?;
+        self.budget.charge(2)?;
+        self.history_entries
+            .insert(entry.scope.clone(), entry.request.clone());
+        self.scope(&entry.scope, &inherited, 0, None)?;
+        Ok(())
     }
     pub(super) fn history_scope(
         &mut self,
@@ -576,6 +644,37 @@ impl<'a> Flow<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn continuation_contexts_require_prior_coverage_and_charge_before_copying() {
+        let (e, artifacts) = crate::owned_continuation::tests::fixture();
+        let supplied = crate::owned_continuation::tests::resources(&artifacts);
+        let ordinary = check_protection(&e, &supplied).unwrap();
+        let mut flow = Flow::new(&e.document()["body"], &supplied).unwrap();
+        flow.provenance = Some(BTreeMap::new());
+        let mut entry = crate::owned_continuation::Entry {
+            owner: "root".into(),
+            scope: "recovery".into(),
+            source: "origin".into(),
+            request: "original_request".into(),
+            conditional_source: false,
+        };
+        flow.budget.work = 999_999;
+        assert_eq!(
+            flow.continuation_scope(&entry, &ordinary).unwrap_err().code,
+            "budget"
+        );
+        assert!(flow.required_provenance.is_empty());
+        flow.budget = Budget::default();
+        entry.owner = "recovery".into();
+        entry.scope = "lookup_recovery".into();
+        entry.source = "lookup".into();
+        entry.request = "lookup_request".into();
+        entry.conditional_source = true;
+        assert_eq!(
+            flow.continuation_scope(&entry, &ordinary).unwrap_err().code,
+            "owned-continuation-provenance-unproved"
+        );
+    }
     #[test]
     fn provenance_walks_refuse_cumulatively_before_copying_and_legacy_collection_stays_off() {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");

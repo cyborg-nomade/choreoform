@@ -243,3 +243,24 @@ pub(crate) fn transfer(source: &Value, target: &Value) -> Result<()> {
     }
     Ok(())
 }
+
+pub(crate) fn analyze_continuation_entries(
+    b: &Value,
+    supplied: &[Resource<'_>],
+    entries: &[&crate::owned_continuation::Entry],
+    ordinary: &ProtectionReport,
+) -> Result<EntryAnalysis> {
+    let mut flow = Flow::new(b, supplied)?;
+    flow.continuation_egress = true;
+    flow.provenance = Some(BTreeMap::new());
+    flow.collect_dependencies()?;
+    for entry in entries {
+        flow.continuation_scope(entry, ordinary)?;
+    }
+    Ok(EntryAnalysis {
+        transfers: flow.transfers,
+        accesses: flow.accesses,
+        dependencies: flow.dependencies.unwrap_or_default(),
+        provenance: flow.required_provenance,
+    })
+}

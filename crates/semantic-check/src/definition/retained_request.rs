@@ -54,15 +54,21 @@ impl Check<'_, '_> {
         }) {
             return Ok(());
         }
+        let advanced_continuation = continuation_core(self.b);
+        let mut children: BTreeMap<&str, BTreeSet<&str>> = BTreeMap::new();
         let mut nested = BTreeSet::new();
         let mut handlers = BTreeSet::new();
         let mut creators = BTreeSet::new();
         let mut writers = BTreeSet::new();
         let mut captures: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
-        for s in object(&self.b["scopes"])?.values() {
+        for (id, s) in object(&self.b["scopes"])? {
             self.resources.budget.tick(0)?;
             if let Some(p) = s["parent"].as_str() {
                 nested.insert(p);
+                if advanced_continuation {
+                    self.resources.budget.charge(2)?;
+                    children.entry(p).or_default().insert(id.as_str());
+                }
             }
             let policy = &self.b["policies"][text(&s["faults"])?]["body"];
             for target in object(&policy["handlers"])?.values() {
@@ -108,8 +114,18 @@ impl Check<'_, '_> {
                     closure["mode"] == "reconcile" && closure["followup"] == *scope,
                     "retained-request-owner",
                 )?;
+                let own_closure = &self.b["policies"][text(&s["closure"])?]["body"];
+                let tree_child = advanced_continuation
+                    && own_closure["mode"] == "reconcile"
+                    && children.get(scope.as_str()).is_some_and(|cs| {
+                        cs.len() == 1
+                            && own_closure["followup"]
+                                .as_str()
+                                .is_some_and(|target| cs.contains(target))
+                    });
                 require(
-                    !creators.contains(scope.as_str()) && !nested.contains(scope.as_str()),
+                    !creators.contains(scope.as_str())
+                        && (!nested.contains(scope.as_str()) || tree_child),
                     "retained-request-creator",
                 )?;
                 require(
@@ -121,7 +137,7 @@ impl Check<'_, '_> {
                     "retained-request-ports",
                 )?;
                 require(
-                    self.b["policies"][text(&s["closure"])?]["body"]["mode"] == "terminal",
+                    own_closure["mode"] == "terminal" || tree_child,
                     "retained-request-closure",
                 )?;
                 let (result, origin) = requests

@@ -178,3 +178,54 @@ pub(crate) fn check_history_entries(
         scopes: analysis.scopes,
     })
 }
+
+/// Conditional ownership entries share one graph and carry no caller values.
+pub(crate) fn check_continuation_entries(
+    b: &Value,
+    entries: &[&crate::owned_continuation::Entry],
+    ordinary: &ControlReport,
+    mut budget: Budget,
+) -> Result<EntryCoverage> {
+    if entries.is_empty() {
+        return Ok(EntryCoverage {
+            nodes: BTreeSet::new(),
+            scopes: BTreeSet::new(),
+        });
+    }
+    budget.charge(entries.len() * 2)?;
+    let graph = Graph::build(b, &mut budget)?;
+    let mut analysis = Analysis::new(b, graph, budget)?;
+    let seeds = entries
+        .iter()
+        .map(|e| (e.scope.clone(), e.request.clone()))
+        .collect();
+    analysis.budget_seed_requests(&seeds)?;
+    analysis.seed_access_code = "owned-continuation-access-precheck";
+    for entry in entries {
+        let covered = if entry.conditional_source {
+            analysis.scopes.contains(&entry.owner) && analysis.nodes.contains(&entry.source)
+        } else {
+            ordinary.covered_nodes().contains(&entry.source)
+        };
+        require(covered, "owned-continuation-source-unproved")
+            .map_err(|e| e.at_path(format!("/body/nodes/{}", entry.source)))?;
+        analysis
+            .scope(&entry.scope, &BTreeSet::new(), 0)
+            .map_err(|mut e| {
+                if matches!(
+                    e.code,
+                    "data-availability-unproved"
+                        | "initial-access-availability-unproved"
+                        | "initializer-availability-unproved"
+                        | "output-availability-unproved"
+                ) {
+                    e.code = "owned-continuation-availability-unproved";
+                }
+                e
+            })?;
+    }
+    Ok(EntryCoverage {
+        nodes: analysis.nodes,
+        scopes: analysis.scopes,
+    })
+}

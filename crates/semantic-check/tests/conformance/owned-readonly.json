@@ -1,0 +1,240 @@
+{
+  "format": "choreoform-owned-readonly-vectors",
+  "premise": "Limited one-fault-source, two-level static fixture; exact local types and immutable metadata, no actual events, values, storage, grants or receipts. Independent model covers only the listed isolated mutations, not general admission.",
+  "cases": [
+    {
+      "id": "two-level-definition",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": true,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": true,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [],
+      "expect": "covered"
+    },
+    {
+      "id": "missing-child-snapshot",
+      "premises": {
+        "snapshot": false,
+        "coveredSource": true,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": true,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/scopes/lookup_recovery/retainedRequests",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-request-unproved"
+    },
+    {
+      "id": "unvisited-nested-source",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": false,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": true,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/flows/read_yes/target",
+          "value": "done"
+        }
+      ],
+      "expect": "owned-continuation-source-unproved"
+    },
+    {
+      "id": "unvisited-ordinary-source",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": false,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": true,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/scopes/root/entry",
+          "value": "owner_done"
+        }
+      ],
+      "expect": "owned-continuation-source-unproved"
+    },
+    {
+      "id": "transformed-request",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": true,
+        "exactInput": false,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": true,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/expressions/lookup_input/body",
+          "value": {
+            "op": "record",
+            "fields": {}
+          }
+        },
+        {
+          "path": "/expressions/lookup_input/reads",
+          "value": {}
+        },
+        {
+          "path": "/nodes/lookup/reads",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-query-input"
+    },
+    {
+      "id": "missing-query-general-source",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": true,
+        "exactInput": true,
+        "generalSource": false,
+        "localWrite": true,
+        "invalidation": true,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/policies/lookup_work/body/faultSource",
+          "value": null
+        }
+      ],
+      "expect": "owned-continuation-query-policy"
+    },
+    {
+      "id": "foreign-write",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": true,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": false,
+        "invalidation": true,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/nodes/lookup/result",
+          "value": "origin_value"
+        },
+        {
+          "path": "/nodes/lookup/writes",
+          "value": {
+            "origin_value": true
+          }
+        }
+      ],
+      "expect": "owned-continuation-storage-unproved"
+    },
+    {
+      "id": "first-snapshot-invalidation",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": true,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": false,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/data/original_request/invalidates",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-invalidation-coverage"
+    },
+    {
+      "id": "nested-capture-invalidation",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": true,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": false,
+        "captureProtection": true,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/data/lookup_captured/invalidates",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-invalidation-coverage"
+    },
+    {
+      "id": "wider-nested-capture",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": true,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": true,
+        "captureProtection": false,
+        "recipient": true
+      },
+      "replace": [
+        {
+          "path": "/data/lookup_captured/protection/sensitivity",
+          "value": "public"
+        }
+      ],
+      "expect": "information-flow"
+    },
+    {
+      "id": "protected-branch-excludes-query-recipient",
+      "premises": {
+        "snapshot": true,
+        "coveredSource": true,
+        "exactInput": true,
+        "generalSource": true,
+        "localWrite": true,
+        "invalidation": true,
+        "captureProtection": true,
+        "recipient": false
+      },
+      "replace": [
+        {
+          "path": "/data/captured/protection/capabilities",
+          "value": {
+            "adapter": true
+          }
+        }
+      ],
+      "expect": "owned-continuation-recipient"
+    }
+  ]
+}

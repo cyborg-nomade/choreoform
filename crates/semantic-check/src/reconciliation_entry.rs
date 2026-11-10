@@ -40,6 +40,7 @@ pub struct ReconciliationEntryReport {
     scopes: BTreeSet<String>,
     uncovered: BTreeSet<String>,
     retained_request_scopes: BTreeSet<String>,
+    continuation_scopes: BTreeSet<String>,
 }
 impl ReconciliationEntryReport {
     pub fn revision(&self) -> &str {
@@ -63,6 +64,10 @@ impl ReconciliationEntryReport {
     /// legacy fresh-local reconciliation coverage. These are proven scope IDs.
     pub fn retained_request_scopes(&self) -> &BTreeSet<String> {
         &self.retained_request_scopes
+    }
+    /// Finite continuation coverage remains in the distinct prior owned report.
+    pub fn continuation_scopes(&self) -> &BTreeSet<String> {
+        &self.continuation_scopes
     }
     /// Remaining after ordinary, handler and legacy reconciliation bodies.
     pub fn uncovered_nodes(&self) -> &BTreeSet<String> {
@@ -110,6 +115,12 @@ pub fn check_reconciliation_availability(
             }
         }
     }
+    let continuation_scopes = if let Some(continuation) = concurrency.owned_continuations() {
+        budget.charge(continuation.checked_scopes().len())?;
+        continuation.checked_scopes().clone()
+    } else {
+        BTreeSet::new()
+    };
     for (owner, scope) in object(&b["scopes"])? {
         budget.tick(0)?;
         let closure = text(&scope["closure"])?;
@@ -128,7 +139,7 @@ pub fn check_reconciliation_availability(
         // retention of any ancestor input, initializer, result or prior local.
         // Its existing owned proof already checked the explicit immutable seed;
         // legacy availability must neither erase it nor invent another one.
-        if !retained_request_scopes.contains(followup) {
+        if !retained_request_scopes.contains(followup) && !continuation_scopes.contains(followup) {
             assumptions.insert(followup.into(), BTreeSet::new());
         }
     }
@@ -151,5 +162,6 @@ pub fn check_reconciliation_availability(
         scopes: coverage.scopes,
         uncovered,
         retained_request_scopes,
+        continuation_scopes,
     })
 }

@@ -654,3 +654,6 @@ mod retained_request;
 
 #[path = "capture/continuation_audit.rs"]
 mod continuation_audit;
+
+#[path = "capture/readonly_continuation.rs"]
+mod readonly_continuation;
