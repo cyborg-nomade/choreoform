@@ -315,6 +315,11 @@ validated, and round-tripped.
   registration/cutoff/atomic handoff/all-settlement gates remain separate from actual
   host acceptance. Next explicit readable/native selection, then command/compensation
   and richer ownership/fault contexts. No accepted benchmark or scenario is promoted.
+  [ADR-0058](docs/decisions/0058-readonly-continuation-authoring.md) explicitly selects
+  that proof with source 0.12/companion 0.11 and unchanged grammar, adding bounded
+  distinct native scope/gate disclosure. General command/compensation and richer
+  ownership/fault judgments remain next, with all actual authority/cutoff/handoff /
+  transitive settlement and general near-English editing/usability gates still open.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

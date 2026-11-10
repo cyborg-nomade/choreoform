@@ -192,3 +192,9 @@ proofs on existing IR 0.4, twenty Rust groups and eleven shared isolated vectors
 with five limited independent Python groups. Exact query recipients, all-declaration
 inspection, ordinary-only fault-entry barriers and cumulative bounds stay explicit.
 No actual events, values, storage, grants, accepted host gates or liveness are proved.
+
+[Readable continuation integration](../evaluation/0058-readonly-continuation-authoring.md)
+checks explicit source 0.12/core 0.9 selection and bounded distinct native disclosure
+using the existing grammar. Four Rust and six independent Python groups cover SDK /
+native composition, aliases/format/UTF-8 spans, inherited barriers, shared catalogues,
+old omissions and valid combined report refusal. All genuine external gates stay open.
