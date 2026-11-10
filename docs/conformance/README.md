@@ -217,3 +217,9 @@ frontend and one native unit group plus six limited Python groups for explicit
 source 0.13/core 0.10 selection, exact raw relations, all eleven SDK/native views,
 capture integrity/availability, identity/spans, old omissions, shared rows and valid
 combined report exhaustion. No actual event/storage/grant/accepted gate is supplied.
+
+[Owned command/input audit](../evaluation/0062-owned-command-audit.md) adds eight
+SDK groups and one frontend group, including 24 matched class/link/layout cases,
+new typed constructor/child seeds and actual earlier type/read/provider refusals.
+Production contracts/reports stay fixed; no dispatch, new permission, accepted
+compensation or actual host evidence follows.

@@ -336,6 +336,12 @@ validated, and round-tripped.
   narrow proof with source 0.13/companion 0.12 and optional bounded native entry /
   capture/host-premise disclosure. Commands/compensation/new request/richer P4 /
   ownership work stays next; accepted live activation and phase gates remain open.
+  [ADR-0062](docs/decisions/0062-owned-command-direction.md) audits matched command /
+  compensation/input cases without production changes. Next a separately frozen
+  raw finite work/constructed-input contract; initial commands require capture-first
+  entry, stable-key metadata and distinct work reports. Broader preterminal commands /
+  possibly-completed compensation, general P4/ownership and actual authority/conflict /
+  occurrence/atomic handoff/all-transitive settlement remain explicit later gates.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

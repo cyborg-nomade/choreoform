@@ -1233,6 +1233,24 @@ class, explicit compensation link and constructed input/ownership before another
 production contract. Parent #46 remains draft/incomplete; all scenario/phase/live
 host gates stay open and no Phase 2 is inferred.
 
+ADR-0062 command/compensation/constructed-input audit is implemented under signed
+plan `0d4f884`, changing only tests/docs. Eight SDK groups plus one frontend group
+include 24 matched original/new class/link/layout cases, independent read-only
+compensation, supported key variants, exact earlier metadata/type/read refusals,
+typed capture-derived new input with a differently typed child seed, and hidden
+second-work refusal. Existing IR/source represents the concrete cases; current
+query-effect/query-policy/query-input restrictions remain intact. Next separately
+freeze an explicit raw finite work/pure local input contract, preserving old query
+meaning; initially commands and all explicit compensators require capture-first
+entry, non-read-only commands stable-key, one activity/direct child and live new-key /
+correlation/conflict/authority/cutoff/handoff/transitive settlement gates. Broader
+preterminal/possibly-completed compensation and P4/ownership remain later. Local
+522 Rust + six doctests/native/Wasm/57 existing Python workflow checks pass; separate
+completed-diff delegated agent review found no remaining actionable issue. See
+[critique](0062-owned-command-audit.md). Exact-head CI/comment audit/signed merge
+remain required. Parent #46 stays draft/incomplete, every scenario Partial and all
+phase/live host gates open; no new production permission or Phase 2 is inferred.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

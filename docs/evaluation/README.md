@@ -16,6 +16,11 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Owned command/input critique](0062-owned-command-audit.md) distinguishes
+  effect class, compensation link, typed input construction and finite ownership /
+  report barriers using actual SDK/frontend refusals; production remains fixed.
+
+
 - [Readable pre-capture entry](0061-pre-capture-authoring.md) records explicit
   source selection, optional bounded native host-premise disclosure and unchanged
   old reports; actual host activation and phase exit gates remain open.
