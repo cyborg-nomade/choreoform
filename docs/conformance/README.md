@@ -204,3 +204,10 @@ adds eight genuine SDK/frontend probe groups without production changes. They
 distinguish original/new command classes, terminal versus unknown facts, current
 entry and request rules, representation versus permission, P4/P6 roles and real
 earlier metadata refusals. No runtime event, value, grant or accepted gate is supplied.
+
+[Pre-capture owned entry](../evaluation/0060-owned-pre-capture-entry.md) adds
+sixteen complete-SDK groups, two private cumulative-budget groups and twelve shared
+isolated vectors with four limited Python groups. They check exact new core/base
+pins, actual-use wait binding, capture integrity, conditional access/protection /
+provenance/invalidation, old compatibility and separate report relations. No actual
+event, value, storage, current grant, accepted gate or liveness is supplied.

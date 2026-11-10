@@ -131,3 +131,9 @@ Conditional query recipients and source/control/access/provenance/invalidation
 are checked separately from ordinary and legacy coverage. Current authority,
 registration/cutoff/atomic handoff/all-settlement and actual host evidence remain
 open; source/native selection follows a separate explicit profile increment.
+
+[Core 0.10](core-owned-pre-capture-v0.10.md) adds only finite intermediate owned
+read-only entry before the original capture, preserving its actual-use reachable
+wait and exclusive uninitialized capture target. It requires all nine exact bases
+on IR 0.4; older paths stay fixed. Readable selection and live host gates remain
+separate. See [ADR-0060](../decisions/0060-owned-pre-capture-entry.md).

@@ -1154,6 +1154,41 @@ doctests and all native/Wasm/55 Python checks pass; see
 merge remain before integration. Parent #46 draft/incomplete, every scenario Partial,
 G1–G4 conditional and all genuine host/user/independent/phase gates remain open.
 
+[PR #74](https://github.com/cyborg-nomade/choreoform/pull/74) merged into draft
+#46 as `6508214ed894b869c43ded8a34d872fbe9c6cd4c` after required final-head CI
+`42843029417` and delegated review/comment audit `6771231986`. The follow-up test
+push did not schedule CI; closing/reopening the PR triggered that successful exact-
+head run. Earlier-head CI is not substituted. Refreshed audit found no threads or
+actionable summaries; CodeRabbit skipped and supplies no review evidence. The
+expected-head merge explicitly carries the sign-off. ADR-0059 remains pending
+parent/main integration. Local 490 Rust plus six doctests and all native/Wasm/55
+Python checks passed; production/artifact/benchmark/report bytes stayed fixed.
+Active dependency `codex/owned-pre-capture-entry` follows the
+[frozen raw plan](0060-owned-pre-capture-entry-plan.md): exact core 0.10 on existing
+IR 0.4 for finite read-only intermediate owned entry before its original capture,
+with that actual-use wait still reachable and all P6 activation/authority/cutoff /
+transitive accountability gates explicit. Then separate readable selection and
+later commands/compensation/new request construction/richer ownership/fault work.
+No actual event/value/storage/grant/handoff/settlement is inferred; every scenario /
+phase/external gate remains open and parent #46 draft/incomplete.
+
+ADR-0060 implements finite read-only intermediate owned entry before original
+capture under signed frozen plan `57345e2`. Exact core 0.10 and all nine prior
+bases use existing IR 0.4; source 0.12/native outputs remain fixed at core 0.9.
+Actual-use wait binding, local uninitialized exclusive capture targets, conditional
+source/request/access/protection/recipient/invalidation checks and optional immutable
+entry/capture relations remain separate from ordinary/legacy/old-flat proof.
+Sixteen complete-SDK groups, two internal cumulative-budget groups and twelve shared
+isolated vectors/four limited Python groups cover the new mode. Completed-diff
+agent review found and fixed initializer/compute fabricated-capture availability;
+the genuine initializer regression failed before the fix. Local 508 Rust tests plus
+six compile-fail doctests and all native/Wasm/56 Python workflow checks pass.
+Final-head CI/comment audit/signed expected-head merge remain required; see
+[evidence](0060-owned-pre-capture-entry.md). Next explicit readable/native selection,
+then command/compensation/new input/richer ownership and fault work. Actual accepted
+P6 activation, fresh grants, immutable occurrence storage, atomic handoff and all
+activated transitive settlement remain host gates; no phase/scenario is promoted.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

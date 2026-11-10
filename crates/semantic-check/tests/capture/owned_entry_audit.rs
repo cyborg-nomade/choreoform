@@ -18,7 +18,7 @@ fn refuse(f: &Fixture, code: &str) {
         Ok(_) => panic!("expected {code}"),
     }
 }
-fn provider(f: &mut Fixture, node: &str, class: &str, idempotency: &str) {
+pub(super) fn provider(f: &mut Fixture, node: &str, class: &str, idempotency: &str) {
     let mut p = f.provider.clone();
     p["id"] = format!("urn:test:entry-audit:{node}:{class}").into();
     p["effectClass"] = class.into();
