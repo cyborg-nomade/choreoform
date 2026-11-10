@@ -1358,6 +1358,21 @@ resource bytes. Broader active root/compensation/P4 follow only actual scenario 
 Parent #46 draft, all forty scenarios Partial, G1–G4 conditional and all live host /
 text-visual/user/independent/phase gates open; no new permission or Phase 2.
 
+[PR #80](https://github.com/cyborg-nomade/choreoform/pull/80) merged into draft
+#46 as `47bf1c5e907bbeedde1856a27d76835e9c7e287d` after required exact-head CI
+`42908022628` at `708b5272de7c398cc40ff97bf1a2bf05adaee6a0` and delegated
+completed-diff review `5849946900`. Refreshed threads/summary audit found no threads
+or actionable findings; CodeRabbit skipped and supplies no review evidence. The
+expected-head merge explicitly carries sign-off; ADR-0065 remains pending parent /
+main integration. Local 548 Rust + six doctests/native/Wasm/sixty Python commands
+pass; benchmark/guard/production/accepted contract bytes stayed fixed. Active
+`codex/rp01-capture-adoption` follows the [separate frozen adoption plan](0066-rp01-capture-adoption-plan.md):
+publish demonstrated exact typed capture/original request/receipt-matched local
+record using existing source 0.14/core 0.11/IR 0.4, preserving a generated exact
+historical source-0.7 checkpoint and original resources/guard meanings. No new core
+increment, ordinary parent resumption or host authorization. Parent #46 stays draft,
+all scenarios Partial, G1–G4 conditional and all genuine external/phase gates open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
