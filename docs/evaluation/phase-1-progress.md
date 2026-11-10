@@ -1287,6 +1287,21 @@ possibly-completed compensation/P4/ownership and every actual new-key/eligible-p
 authority/conflict/P6 cutoff/accepted handoff/transitive settlement gate remain open.
 Parent #46 stays draft, forty scenarios Partial, G1–G4 conditional; no Phase 2.
 
+[PR #78](https://github.com/cyborg-nomade/choreoform/pull/78) merged into draft
+#46 as `c3ce9d2081735675670cfb48e7a4bd4ef8cd90ae` after required exact-head CI
+`42866921148` at `83fd5a8d95f3d363ae869670bc5de2762f14635a` and delegated
+completed-diff review `5846518411`. Refreshed audit found no threads or actionable
+summaries; CodeRabbit skipped and supplies no review evidence. Expected-head merge
+explicitly carries sign-off; ADR-0063 remains pending parent/main integration.
+Local 538 Rust + six doctests/native/Wasm/58 Python workflow checks pass. Active
+dependency `codex/finite-work-authoring` follows the
+[frozen integration plan](0064-finite-work-authoring-plan.md): source 0.14/companion
+0.13 explicitly selects core 0.11, with bounded optional work/class/input/compensation /
+host-requirement disclosure and old query meanings intact. Broader preterminal /
+possibly-completed compensation/richer P4/ownership follow separately. Parent #46
+remains draft, all scenarios Partial and all genuine live host/phase/external gates
+open; no actual new-key/value/grant/accepted activation/handoff/settlement is inferred.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
