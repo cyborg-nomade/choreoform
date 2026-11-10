@@ -1220,6 +1220,19 @@ new request/richer P4/ownership judgments, with all live activation/authority /
 cutoff/handoff/transitive settlement, scenario and phase gates still open. Parent
 #46 remains draft/incomplete; no Phase 2 or actual host evidence is inferred.
 
+[PR #76](https://github.com/cyborg-nomade/choreoform/pull/76) merged into draft
+#46 as `e1cdfc45d621a09c170eb3c5f1807efe17a0604d` after required exact-head CI
+`42860819725` at `edf8e088585e99c5299f41a8d99a2ec5277bcd01` and delegated
+completed-diff review `5846006944`. Refreshed thread/summary audit found no threads
+or actionable findings; CodeRabbit skipped and supplies no review evidence. The
+expected-head merge explicitly carries the sign-off; ADR-0061 remains pending
+parent/main integration. Local 513 Rust + six doctests/native/Wasm/57 Python workflow
+checks pass. Active dependency `codex/owned-command-audit` follows the
+[frozen next audit](0062-owned-command-audit-plan.md), distinguishing own effect
+class, explicit compensation link and constructed input/ownership before another
+production contract. Parent #46 remains draft/incomplete; all scenario/phase/live
+host gates stay open and no Phase 2 is inferred.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
