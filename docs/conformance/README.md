@@ -223,3 +223,9 @@ SDK groups and one frontend group, including 24 matched class/link/layout cases,
 new typed constructor/child seeds and actual earlier type/read/provider refusals.
 Production contracts/reports stay fixed; no dispatch, new permission, accepted
 compensation or actual host evidence follows.
+
+[Finite owned work](../evaluation/0063-finite-owned-work.md) adds fifteen SDK
+groups/one private cumulative-budget group and 21 shared finite cases/five limited
+Python groups. Matched class/compensation, typed inputs/child seeds, mixed chains,
+actual-use capture integrity, no-result recipients, clocks, old compatibility and
+all live host boundaries remain explicit; no dispatch/accepted event is supplied.

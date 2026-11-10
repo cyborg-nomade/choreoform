@@ -11,6 +11,7 @@ pub(crate) struct Candidates<'a> {
     templates: BTreeMap<String, Arc<Template>>,
     roots: BTreeSet<OwnedContinuation>,
     source_waits: Option<crate::source_wait::SourceWaits<'a>>,
+    finite_work: bool,
 }
 
 impl<'a> Candidates<'a> {
@@ -55,6 +56,7 @@ impl<'a> Candidates<'a> {
             handlers,
             templates: BTreeMap::new(),
             roots: BTreeSet::new(),
+            finite_work: work_core(b),
             source_waits: if pre_capture_core(b) {
                 Some(crate::source_wait::SourceWaits::new(b, budget)?)
             } else {
@@ -198,6 +200,8 @@ impl<'a> Candidates<'a> {
                 return Err(at("owned-continuation-child-unproved", scope));
             }
             let mut query = None;
+            let mut activity = None;
+            let mut work = None;
             let mut reached = BTreeSet::new();
             let mut finish = false;
             for id in &graph.order[scope] {
@@ -222,9 +226,28 @@ impl<'a> Candidates<'a> {
                             return Err(at("owned-continuation-wait-unproved", scope));
                         }
                     }
-                    "activity" if child.is_some() && query.is_none() => {
-                        self.query(n, request, scope, budget)?;
-                        query = Some(id.as_str());
+                    "activity" if child.is_some() && activity.is_none() => {
+                        if self.finite_work {
+                            let declaration = super::work::check(b, id, n, scope, source, budget)?;
+                            if declaration.is_query() {
+                                query = Some(id.as_str());
+                            } else {
+                                require(capturing_entry, "owned-continuation-work-entry")?;
+                                require(
+                                    self.source_waits
+                                        .as_ref()
+                                        .unwrap()
+                                        .capture(scope, source, budget)?
+                                        == entry,
+                                    "owned-continuation-work-entry",
+                                )?;
+                            }
+                            work = Some(declaration);
+                        } else {
+                            self.query(n, request, scope, budget)?;
+                            query = Some(id.as_str());
+                        }
+                        activity = Some(id.as_str());
                     }
                     _ => return Err(at("owned-continuation-body-unproved", scope)),
                 }
@@ -238,7 +261,7 @@ impl<'a> Candidates<'a> {
                     finish |= kind == "finish";
                 }
             }
-            if !finish || child.is_some() != query.is_some() {
+            if !finish || child.is_some() != activity.is_some() {
                 return Err(at("owned-continuation-body-unproved", scope));
             }
             if pre_capture.is_some() && !reached.contains(source_wait) {
@@ -257,12 +280,13 @@ impl<'a> Candidates<'a> {
                 query: query.map(str::to_owned),
                 child: child.map(str::to_owned),
                 pre_capture,
+                work,
             });
             if child.is_none() {
                 break;
             }
             owner = scope;
-            expected_source = query;
+            expected_source = activity;
         }
         require(levels.len() > 1, "owned-continuation-body-unproved")?;
         Ok(Template {
@@ -402,9 +426,13 @@ impl<'a> Candidates<'a> {
 mod tests {
     use super::*;
     use crate::owned_continuation::tests::{fixture, resources};
-    #[test]
-    fn new_entry_templates_and_final_rows_obey_the_shared_remaining_budget() {
-        let (e, artifacts) = crate::owned_continuation::tests::pre_capture_fixture();
+    fn template_budget(
+        (e, artifacts): (
+            DefinitionEnvelope,
+            crate::owned_continuation::tests::Artifacts,
+        ),
+        new_work: bool,
+    ) {
         let b = &e.document()["body"];
         let supplied = resources(&artifacts);
         let ordinary = check_protection(&e, &supplied).unwrap();
@@ -414,6 +442,7 @@ mod tests {
         let mut measured = Budget::default();
         let template = c.prove(&graph, "root", &mut measured).unwrap();
         assert!(template.levels[0].pre_capture.is_some());
+        assert_eq!(template.levels[0].work.is_some(), new_work);
         let mut limited = Budget {
             work: 1_000_000 - measured.work + 1,
         };
@@ -445,6 +474,20 @@ mod tests {
                 .unwrap_err()
                 .code,
             "budget"
+        );
+    }
+    #[test]
+    fn new_entry_templates_and_final_rows_obey_the_shared_remaining_budget() {
+        template_budget(
+            crate::owned_continuation::tests::pre_capture_fixture(),
+            false,
+        );
+    }
+    #[test]
+    fn new_work_copies_templates_and_final_rows_obey_the_shared_remaining_budget() {
+        template_budget(
+            crate::owned_continuation::tests::finite_work_fixture(),
+            true,
         );
     }
     #[test]

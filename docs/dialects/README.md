@@ -137,3 +137,10 @@ read-only entry before the original capture, preserving its actual-use reachable
 wait and exclusive uninitialized capture target. It requires all nine exact bases
 on IR 0.4; older paths stay fixed. Readable selection and live host gates remain
 separate. See [ADR-0060](../decisions/0060-owned-pre-capture-entry.md).
+
+[Core 0.11](core-owned-work-v0.11.md) selects finite owned work/pure local inputs
+on existing IR 0.4 and all ten prior bases. Non-read-only commands and explicit
+compensators require capturing-first entry; old query meanings and ordinary/legacy
+coverage stay fixed. New work/class/input/compensation relations are immutable
+conditional SDK declarations, not live authorization. See
+[ADR-0063](../decisions/0063-finite-owned-work.md).

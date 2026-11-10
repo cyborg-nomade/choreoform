@@ -16,6 +16,11 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Finite owned work/pure inputs](0063-finite-owned-work.md) records raw core 0.11
+  conditional SDK proof for capture-first commands/compensators and typed local
+  inputs; actual activation/authority/conflict/settlement and phase gates stay open.
+
+
 - [Owned command/input critique](0062-owned-command-audit.md) distinguishes
   effect class, compensation link, typed input construction and finite ownership /
   report barriers using actual SDK/frontend refusals; production remains fixed.

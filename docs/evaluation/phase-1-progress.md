@@ -1251,6 +1251,42 @@ completed-diff delegated agent review found no remaining actionable issue. See
 remain required. Parent #46 stays draft/incomplete, every scenario Partial and all
 phase/live host gates open; no new production permission or Phase 2 is inferred.
 
+[PR #77](https://github.com/cyborg-nomade/choreoform/pull/77) merged into draft
+#46 as `24d91c6f4b71e3aa6400250997301842d38420b0` after required exact-head CI
+`42862964074` at `55ff19f4b78423a5711c5b82a5bc769098846735` and delegated
+completed-diff review `5846188858`. Refreshed audit found no threads/actionable
+summaries; CodeRabbit skipped and supplies no review evidence. Expected-head merge
+explicitly carries sign-off; ADR-0062 remains pending parent/main integration.
+Local 522 Rust + six doctests/native/Wasm/57 existing Python checks pass; production /
+accepted artifacts stayed fixed. Active dependency `codex/finite-owned-work` follows
+the [frozen raw plan](0063-finite-owned-work-plan.md): explicit core 0.11 on IR 0.4,
+finite work/pure local inputs, capture-first commands/explicit compensators and
+separate immutable work relations, retaining all live identity/authority/conflict /
+P6 cutoff/accepted handoff/transitive settlement gates. Separate readable selection
+follows; broader preterminal/possibly-completed compensation/P4/ownership remain
+later. Parent #46 draft, all scenarios Partial and all phase/external gates open.
+
+ADR-0063 finite work/pure local inputs is implemented under signed raw plan
+`cd9904b`. Exact core 0.11/all ten bases uses existing IR 0.4 and leaves source
+0.13/native selection and all prior artifacts/reports/benchmarks fixed. New immutable
+work/site/capability/input/closed-class/compensation relations preserve query meaning;
+actual activities, including commands with query=None, become next conditional
+sources. Commands/all explicit compensators require capture-first actual-use wait
+and exclusive uninitialized target; non-read-only work stable-key, every activity
+one-attempt/timerless/matching general source. Pure inputs retain normal type/reads
+and conditional availability/access/protection/actual recipients/invalidation, with
+exact differently typed child seeds and no extra live values. Fifteen SDK groups,
+one private budget group and 21 shared finite cases/five limited Python groups cover
+mixed chains, no-result/constant-input control leakage, real clock retry/timeout
+refusals, old compatibility, source/wait/compensation boundaries and shared budgets.
+Local 538 Rust + six doctests/native/Wasm/58 Python workflow checks pass; separate
+completed-diff delegated self-review found no actionable issue. See
+[evidence](0063-finite-owned-work.md). Final-head CI/full comment audit/signed merge
+remain required. Next separate readable/native selection; broader preterminal /
+possibly-completed compensation/P4/ownership and every actual new-key/eligible-prior /
+authority/conflict/P6 cutoff/accepted handoff/transitive settlement gate remain open.
+Parent #46 stays draft, forty scenarios Partial, G1–G4 conditional; no Phase 2.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
