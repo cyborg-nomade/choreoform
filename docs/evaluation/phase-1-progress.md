@@ -1338,6 +1338,26 @@ unchanged; experimental promotions are not adoption. Real access/provenance/P4 /
 P6/late outcome versus parent-resumption gaps drive the next dependency. Parent #46
 stays draft, all scenarios Partial and all live host/phase/external gates open.
 
+ADR-0065 full-case current-contract audit is implemented under signed plan
+`8728265`: tests/docs only, with every production rule, benchmark byte and original
+44 guard cases/46 values/expectations fixed. Explicit source 0.14/core 0.11 promotion
+requires the general fault-source retry syntax; full-body delta checks pass. Actual
+full RP-01 capture/exact original request/receipt-matched local category pass all
+eleven native views under unchanged provider/type/protection metadata. Separate
+flat owned proof retains ancestor protection labels rather than live values. Review
+caught and replaced a tag-only classifier that accepted a typed wrong-amount paid
+receipt; the final form rebinds the original completion predicate to capture + exact
+retained request. Four SDK groups/one production pure-evaluator group/thirteen
+synthetic cases/six limited Python groups preserve partial/host boundaries. Local
+548 Rust + six doctests/native/Wasm/all sixty Python workflow checks pass; separate
+completed-diff delegated self-review found no remaining actionable issue. See
+[audit](0065-rp01-current-contract-audit.md). Exact-head CI/full comment audit/signed
+merge remain required. Next separately freeze controlled adoption using existing
+profiles, preserving an exact historical source-0.7 counterpart and original guards /
+resource bytes. Broader active root/compensation/P4 follow only actual scenario need.
+Parent #46 draft, all forty scenarios Partial, G1–G4 conditional and all live host /
+text-visual/user/independent/phase gates open; no new permission or Phase 2.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

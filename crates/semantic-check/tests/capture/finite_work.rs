@@ -29,7 +29,7 @@ fn promote(mut f: Fixture) -> Fixture {
     f.b["dialects"]["core"] = json!({"id":CORE_V11.0,"revision":CORE_V11.1});
     f
 }
-fn fixture(class: &str, linked: bool, capturing: bool) -> Fixture {
+pub(super) fn fixture(class: &str, linked: bool, capturing: bool) -> Fixture {
     let mut f = promote(command_audit::fixture(capturing));
     provider(
         &mut f,

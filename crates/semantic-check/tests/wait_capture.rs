@@ -669,3 +669,6 @@ mod command_audit;
 
 #[path = "capture/finite_work.rs"]
 mod finite_work;
+
+#[path = "capture/rp01_audit.rs"]
+mod rp01_audit;
