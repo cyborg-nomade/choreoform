@@ -1123,6 +1123,37 @@ signed merge remain before integration. Next command/compensation and richer
 ownership/fault judgments; actual grants/storage/cutoff/accepted handoff/all-activated
 transitive settlement and every scenario/phase/external gate remain open.
 
+[PR #73](https://github.com/cyborg-nomade/choreoform/pull/73) merged into draft
+#46 as `2cdcfccb30321597fee25528294d49da6850e0cb` after required final-head CI
+`42837043158` and delegated review/comment audit `6770421222`. Refreshed audit found
+no threads/actionable summaries; CodeRabbit skipped and supplies no review evidence.
+The expected-head merge explicitly carries the sign-off. ADR-0058 remains pending
+parent/main integration. Local 482 Rust plus six doctests and all native/Wasm/55
+Python checks passed; committed benchmark/report bytes stayed fixed. Active dependency
+`codex/owned-entry-command-audit` follows the
+[frozen contract audit](0059-owned-entry-command-audit-plan.md): assess useful
+preterminal owned work, original/new commands, compensation and distinct P4/P6 entry /
+ownership requirements before changing production. Existing capturing entry accepts
+terminal facts; unknown/acknowledged observations have no terminal declaration.
+No event, value, storage, grant, handoff or settlement evidence is inferred. All
+scenario/phase/external gates remain open, parent #46 draft/incomplete.
+
+ADR-0059 owned entry/command critique and eight genuine SDK/frontend probe groups
+are implemented under signed plan `d49a96f`, with no production or accepted artifact
+changes. Original irreversible work plus read-only continuation passes conditionally;
+matched new command/compensation is refused independently of metadata mismatch.
+Unknown observations stay nonterminal. A query-before-original-capture layout fits
+existing IR/source but current retained-request entry rules refuse it. P4/P6 reuse,
+counterfeit seeds/projections and wrong metadata retain their real first refusals.
+Next explicit finite read-only preterminal owned entry, after actual accepted P6
+handoff and with the original reachable capture/source/transitive accountability
+preserved; general commands/compensation and richer handler/ownership contexts stay
+later. Freeze a separate signed implementation plan first. Local 490 Rust plus six
+doctests and all native/Wasm/55 Python checks pass; see
+[critique](0059-owned-entry-command-audit.md). Final-head CI/comment audit/signed
+merge remain before integration. Parent #46 draft/incomplete, every scenario Partial,
+G1–G4 conditional and all genuine host/user/independent/phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

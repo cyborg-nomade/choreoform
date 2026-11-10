@@ -174,3 +174,35 @@ fn exact_new_pair_and_all_required_artifacts_do_not_upgrade_an_older_profile() {
         "retained-request-creator"
     );
 }
+
+#[test]
+fn preterminal_query_shape_lowers_without_a_new_wire_but_has_no_current_semantic_permission() {
+    let mut f = Fixture::new();
+    // Same normal source/retention/capture/closure declarations; only entry and
+    // existing control edges change. No observation, storage or grant is seeded.
+    f.source = f
+        .source
+        .replace("Start at \"Capture wait\".", "Start at \"Lookup\".")
+        .replace(
+            "On \"done\", continue with \"Done\".",
+            "On \"done\", continue with \"Capture wait\".",
+        )
+        .replace(
+            "On \"yes\", continue with \"Lookup\".",
+            "On \"yes\", continue with \"Done\".",
+        );
+    let c = f.lower();
+    assert_eq!(c.document()["version"], "0.4.0");
+    assert_eq!(
+        c.document()["body"]["scopes"]["recovery"]["entry"],
+        "lookup"
+    );
+    assert_eq!(
+        c.document()["body"]["flows"]["lookup_next"]["target"],
+        "capture_wait"
+    );
+    assert_eq!(
+        c.check_static(&f.supplied()).unwrap_err().code,
+        "retained-request-capture"
+    );
+}

@@ -198,3 +198,9 @@ checks explicit source 0.12/core 0.9 selection and bounded distinct native discl
 using the existing grammar. Four Rust and six independent Python groups cover SDK /
 native composition, aliases/format/UTF-8 spans, inherited barriers, shared catalogues,
 old omissions and valid combined report refusal. All genuine external gates stay open.
+
+[Owned entry/command critique](../evaluation/0059-owned-entry-command-audit.md)
+adds eight genuine SDK/frontend probe groups without production changes. They
+distinguish original/new command classes, terminal versus unknown facts, current
+entry and request rules, representation versus permission, P4/P6 roles and real
+earlier metadata refusals. No runtime event, value, grant or accepted gate is supplied.

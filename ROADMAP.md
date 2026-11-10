@@ -320,6 +320,13 @@ validated, and round-tripped.
   distinct native scope/gate disclosure. General command/compensation and richer
   ownership/fault judgments remain next, with all actual authority/cutoff/handoff /
   transitive settlement and general near-English editing/usability gates still open.
+  [ADR-0059](docs/decisions/0059-owned-entry-command-direction.md) audits a concrete
+  remaining dependency: terminal capturing entry does not enable inquiry while the
+  original source remains unknown. Next freeze an explicit finite read-only owned
+  entry-before-capture contract on existing relations, preserving actual accepted
+  P6 handoff/cutoff and all-transitive accountability. General commands/compensation,
+  request construction and richer P4/ownership contexts remain later; no production
+  permission or scenario promotion is made by the audit.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

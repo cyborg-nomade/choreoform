@@ -657,3 +657,6 @@ mod continuation_audit;
 
 #[path = "capture/readonly_continuation.rs"]
 mod readonly_continuation;
+
+#[path = "capture/owned_entry_audit.rs"]
+mod owned_entry_audit;

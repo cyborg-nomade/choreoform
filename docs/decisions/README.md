@@ -83,6 +83,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0056](0056-owned-continuation-direction.md) | Accepted under delegation; pending parent/main integration | Extend owned work through explicit finite surviving ownership |
 | [0057](0057-owned-readonly-continuations.md) | Accepted under delegation; pending parent/main integration | Check finite read-only surviving continuations separately |
 | [0058](0058-readonly-continuation-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose finite continuations explicitly in readable source |
+| [0059](0059-owned-entry-command-direction.md) | Accepted under delegation; pending parent/main integration | Enable useful owned read-only entry before broad command work |
 
 ## When an ADR is required
 

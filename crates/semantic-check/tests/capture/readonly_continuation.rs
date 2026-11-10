@@ -3,7 +3,7 @@
 //! Finite conditional scopes, never actual source values or accepted host gates.
 use super::*;
 use choreoform_semantic_check::{CORE_V9, FAULT_SOURCE_PROFILE, check_concurrency};
-fn fixture() -> Fixture {
+pub(super) fn fixture() -> Fixture {
     let mut f = super::continuation_audit::flat_query();
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     for p in [CORE_V9, FAULT_SOURCE_PROFILE] {
