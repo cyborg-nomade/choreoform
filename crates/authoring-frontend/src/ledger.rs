@@ -160,6 +160,7 @@ impl Ledger {
             (Some("0.11.0"), Some("0.10.0")) => choreoform_semantic_check::CORE_V8,
             (Some("0.12.0"), Some("0.11.0")) => choreoform_semantic_check::CORE_V9,
             (Some("0.13.0"), Some("0.12.0")) => choreoform_semantic_check::CORE_V10,
+            (Some("0.14.0"), Some("0.13.0")) => choreoform_semantic_check::CORE_V11,
             _ => return Err(error("ledger-profile", 0..0)),
         };
         let mut used = BTreeSet::from([id(&document["definition"])?]);
@@ -349,15 +350,24 @@ impl Ledger {
             if !["provider", "named-type", "clock", "calendar"].contains(&resource_kind)
                 && !(matches!(
                     document["profile"].as_str(),
-                    Some("0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0")
+                    Some(
+                        "0.7.0"
+                            | "0.8.0"
+                            | "0.9.0"
+                            | "0.10.0"
+                            | "0.11.0"
+                            | "0.12.0"
+                            | "0.13.0"
+                            | "0.14.0"
+                    )
                 ) && resource_kind == "provider-fault-source")
                 && !(matches!(
                     document["profile"].as_str(),
-                    Some("0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0")
+                    Some("0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0")
                 ) && resource_kind == "provider-terminal-observation-source")
                 && !(matches!(
                     document["profile"].as_str(),
-                    Some("0.10.0" | "0.11.0" | "0.12.0" | "0.13.0")
+                    Some("0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0")
                 ) && resource_kind == "provider-fault-history")
             {
                 return Err(error("resource-kind", 0..0));
@@ -455,13 +465,22 @@ impl Ledger {
         {
             verify(string(&pin["contract"])?, string(&pin["digest"])?)?;
         }
-        if self.document["profile"] == "0.13.0" {
+        if self.document["profile"] == "0.14.0" {
+            verify(
+                choreoform_semantic_check::CORE_V10.0,
+                choreoform_semantic_check::CORE_V10.1,
+            )?;
+        }
+        if matches!(self.document["profile"].as_str(), Some("0.13.0" | "0.14.0")) {
             verify(
                 choreoform_semantic_check::CORE_V9.0,
                 choreoform_semantic_check::CORE_V9.1,
             )?;
         }
-        if matches!(self.document["profile"].as_str(), Some("0.12.0" | "0.13.0")) {
+        if matches!(
+            self.document["profile"].as_str(),
+            Some("0.12.0" | "0.13.0" | "0.14.0")
+        ) {
             verify(
                 choreoform_semantic_check::CORE_V8.0,
                 choreoform_semantic_check::CORE_V8.1,
@@ -469,7 +488,7 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.11.0" | "0.12.0" | "0.13.0")
+            Some("0.11.0" | "0.12.0" | "0.13.0" | "0.14.0")
         ) {
             verify(
                 choreoform_semantic_check::CORE_V7.0,
@@ -478,7 +497,7 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.10.0" | "0.11.0" | "0.12.0" | "0.13.0")
+            Some("0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0")
         ) {
             verify(
                 choreoform_semantic_check::CORE_V6.0,
@@ -487,7 +506,7 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0")
+            Some("0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0")
         ) {
             verify(
                 choreoform_semantic_check::CORE_V5.0,
@@ -496,7 +515,7 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0")
+            Some("0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0")
         ) {
             verify(
                 choreoform_semantic_check::CORE_V4.0,
@@ -505,7 +524,9 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0")
+            Some(
+                "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0"
+            )
         ) {
             verify(
                 choreoform_semantic_check::CORE_V3.0,
@@ -514,7 +535,17 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.6.0" | "0.7.0" | "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0")
+            Some(
+                "0.6.0"
+                    | "0.7.0"
+                    | "0.8.0"
+                    | "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+            )
         ) {
             verify(
                 choreoform_semantic_check::CORE_V2.0,

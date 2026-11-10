@@ -346,6 +346,10 @@ validated, and round-tripped.
   core 0.11 finite work/pure-input proof, distinct from old query reports. Next
   explicit readable/native selection; broader preterminal/possibly-completed
   compensation, richer P4/ownership and all genuine host/phase evidence stay open.
+  [ADR-0064](docs/decisions/0064-finite-work-authoring.md) selects that proof with
+  source 0.14/companion 0.13 and bounded distinct work/class/input/compensation /
+  host-premise reports. Broader preterminal/possibly-completed compensation, P4 /
+  ownership and complete benchmark judgments remain next; no phase gate closes.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

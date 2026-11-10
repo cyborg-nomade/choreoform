@@ -1287,6 +1287,42 @@ possibly-completed compensation/P4/ownership and every actual new-key/eligible-p
 authority/conflict/P6 cutoff/accepted handoff/transitive settlement gate remain open.
 Parent #46 stays draft, forty scenarios Partial, G1–G4 conditional; no Phase 2.
 
+[PR #78](https://github.com/cyborg-nomade/choreoform/pull/78) merged into draft
+#46 as `c3ce9d2081735675670cfb48e7a4bd4ef8cd90ae` after required exact-head CI
+`42866921148` at `83fd5a8d95f3d363ae869670bc5de2762f14635a` and delegated
+completed-diff review `5846518411`. Refreshed audit found no threads or actionable
+summaries; CodeRabbit skipped and supplies no review evidence. Expected-head merge
+explicitly carries sign-off; ADR-0063 remains pending parent/main integration.
+Local 538 Rust + six doctests/native/Wasm/58 Python workflow checks pass. Active
+dependency `codex/finite-work-authoring` follows the
+[frozen integration plan](0064-finite-work-authoring-plan.md): source 0.14/companion
+0.13 explicitly selects core 0.11, with bounded optional work/class/input/compensation /
+host-requirement disclosure and old query meanings intact. Broader preterminal /
+possibly-completed compensation/richer P4/ownership follow separately. Parent #46
+remains draft, all scenarios Partial and all genuine live host/phase/external gates
+open; no actual new-key/value/grant/accepted activation/handoff/settlement is inferred.
+
+ADR-0064 readable finite work is implemented under signed plan `bf65a8d`:
+source 0.14/companion 0.13 explicitly selects existing core 0.11/IR 0.4 and all ten
+inherited bases, with unchanged grammar productions and old reports/quotas/artifacts /
+benchmarks. The six later native views add optional complete work/class/input /
+compensation/hostRequirements rows; query stays null for commands/compensators,
+actual read-only inquiries may have query+work, and old-core/passive leaves omit work.
+A command-captioned typed capture-derived input/different child-seed fixture uses
+fresh exact synthetic metadata. Four frontend/one native unit groups plus six limited
+Python groups cover all eleven views, independent class/link combinations, exact
+resources/pins/pairs/identities/UTF-8 clauses, inherited real refusals/shared rows /
+whole-report budget. The valid 646,587-byte combined lowered stress package refuses
+all reports with empty stdout; small form passes with real new-core work. Local
+543 Rust + six doctests/native/Wasm/59 Python workflow checks pass; separate delegated
+completed-diff agent review found no actionable issue. See
+[evidence](0064-finite-work-authoring.md). Final-head CI/comment audit/signed merge
+remain required. Broader preterminal/possibly-completed compensation/P4 ownership /
+complete benchmark judgments and all actual new-key/provider/eligible-prior/conflict /
+current-authority/P6 cutoff/accepted handoff/immutable storage/transitive settlement
+requirements remain open. Parent #46 stays draft, scenarios Partial and phase gates
+conditional; no actual provider/host/user evidence or Phase 2 is inferred.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

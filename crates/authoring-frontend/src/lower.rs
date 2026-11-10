@@ -256,7 +256,10 @@ impl<'a> Package<'a> {
         body.insert("semantics".into(), json!({"id": contracts["semantics"]["contract"], "revision": contracts["semantics"]["digest"]}));
         body.insert("dialects".into(), json!({ self.ledger.dialect(): {"id": contracts["core"]["contract"], "revision": contracts["core"]["digest"]} }));
         let envelope = DefinitionEnvelope::from_parts_versioned(
-            if matches!(self.syntax.profile(), "0.11.0" | "0.12.0" | "0.13.0") {
+            if matches!(
+                self.syntax.profile(),
+                "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0"
+            ) {
                 "0.4.0"
             } else if self.syntax.profile() == "0.10.0" {
                 "0.3.0"

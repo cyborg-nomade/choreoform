@@ -29,6 +29,9 @@ pub(super) fn append(report: &OwnedContinuationReport, value: &mut Value) -> Res
             if let Some(entry) = scope.pre_capture_entry() {
                 row["preCaptureEntry"] = json!({"entry":entry.entry(),"captureWait":entry.capture_wait(),"hostRequirements":entry.host_requirements()});
             }
+            if let Some(work) = scope.work() {
+                row["work"] = json!({"site":work.site(),"capability":work.capability(),"input":work.input(),"effectClass":work.effect_class().as_str(),"compensates":work.compensates(),"hostRequirements":work.host_requirements()});
+            }
             push(&mut scopes, row, &mut remaining)?;
             seen.insert(scope.scope().to_owned());
         }
@@ -81,11 +84,25 @@ pub(super) fn append(report: &OwnedContinuationReport, value: &mut Value) -> Res
 mod tests {
     use super::*;
     use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
-    fn assert_bounded_catalogue(pre_capture: bool) {
-        let raw: Value = serde_json::from_slice(include_bytes!(
-            "../../semantic-check/tests/conformance/owned-readonly-definition.json"
-        ))
-        .unwrap();
+    #[derive(Clone, Copy, PartialEq, Eq)]
+    enum Mode {
+        Capturing,
+        PreCapture,
+        Work,
+    }
+    fn assert_bounded_catalogue(mode: Mode) {
+        let pre_capture = mode == Mode::PreCapture;
+        let raw: Value = if mode == Mode::Work {
+            serde_json::from_slice(include_bytes!(
+                "../tests/capture/finite-work.resources.json"
+            ))
+            .unwrap()
+        } else {
+            serde_json::from_slice(include_bytes!(
+                "../../semantic-check/tests/conformance/owned-readonly-definition.json"
+            ))
+            .unwrap()
+        };
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
         let mut artifacts: Vec<_> = raw["normative"]
             .as_array()
@@ -126,7 +143,19 @@ mod tests {
                 bytes,
             })
             .collect();
-        let mut b = raw["definition"]["body"].clone();
+        let mut b = if mode == Mode::Work {
+            choreoform_authoring_frontend::Package::parse(
+                include_bytes!("../tests/capture/finite-work.choreo"),
+                include_bytes!("../tests/capture/finite-work.bindings.json"),
+            )
+            .unwrap()
+            .lower(&supplied)
+            .unwrap()
+            .document()["body"]
+                .clone()
+        } else {
+            raw["definition"]["body"].clone()
+        };
         if pre_capture {
             use choreoform_semantic_check::CORE_V10;
             b["dialects"]["core"] = json!({"id":CORE_V10.0,"revision":CORE_V10.1});
@@ -156,6 +185,20 @@ mod tests {
             7
         );
         for row in value["ownedContinuationScopes"].as_array().unwrap() {
+            if mode == Mode::Work && row["scope"] == "recovery" {
+                assert!(row["query"].is_null());
+                assert_eq!(row["work"]["site"], "lookup");
+                assert_eq!(row["work"]["effectClass"], "irreversible");
+                assert_eq!(row["work"]["compensates"], "origin");
+                assert!(
+                    !row["work"]["hostRequirements"]
+                        .as_array()
+                        .unwrap()
+                        .is_empty()
+                );
+            } else {
+                assert!(row.get("work").is_none());
+            }
             if pre_capture && row["scope"] == "recovery" {
                 assert_eq!(row["preCaptureEntry"]["entry"], "lookup");
                 assert_eq!(row["preCaptureEntry"]["captureWait"], "capture_wait");
@@ -178,10 +221,14 @@ mod tests {
     }
     #[test]
     fn inherited_output_and_shared_scope_catalogue_are_bounded_without_partial_mutation() {
-        assert_bounded_catalogue(false);
+        assert_bounded_catalogue(Mode::Capturing);
     }
     #[test]
     fn pre_capture_relations_require_host_acceptance_and_share_bounded_immutable_rows() {
-        assert_bounded_catalogue(true);
+        assert_bounded_catalogue(Mode::PreCapture);
+    }
+    #[test]
+    fn new_work_relations_share_bounded_rows_without_accepted_host_authority() {
+        assert_bounded_catalogue(Mode::Work);
     }
 }

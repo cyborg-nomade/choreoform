@@ -3,6 +3,11 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.14 / companion 0.13 profile](profile-v0.14.md) explicitly selects
+existing core 0.11/IR 0.4 for finite capture-first commands/compensators and pure
+local inputs. Existing sentences/quotas remain; bounded native work/class/input /
+compensation/premise disclosure preserves old query meanings and actual host gates.
+
 The [source 0.13 / companion 0.12 profile](profile-v0.13.md) explicitly selects
 existing core 0.10/IR 0.4 for finite read-only intermediate owned entry before
 original capture. Existing sentences express the layout; bounded native reports
