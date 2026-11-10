@@ -9,16 +9,17 @@
 
 ## Current focus
 
-PR #81 merged the controlled full RP-01 capture checkpoint into draft parent #46
-as `fc5a80dd3ead724806811adc20b86af820fd6f41`. Current source is 0.14/core 0.11 /
-IR 0.4 with eleven passing checking/advisory views; exact historical source-0.7
-fixtures and original guard meanings are preserved. Active branch
-`codex/rp03-benchmark-package` follows the [frozen whole two-line plan](0067-rp03-package-plan.md).
-Build original RP-03-A/B/C/D and alternatives using existing profiles and record
-actual results/refusals. All forty scenarios remain Partial, G1–G4 conditional,
-parent #46 draft/incomplete. RP-01 live host/conflict/settlement evidence, RP-08,
-complete validator/general near-English/protected accessible text-visual/actual
-user/browser/independent/phase gates remain open. No Phase 2 is authorized.
+PR #82 merged the whole declared two-line RP-03 source draft into draft parent #46
+as `3c190c9cf7ae08c792c3b18034a67ec4f0b16006`. Actual unchanged source 0.14
+refuses its 77,135-token / 505,980-byte proposal at 108626..108627 with no IR or
+semantic-stage reports. Independent resource/pure checks are separate evidence.
+Active `codex/source-capacity-profile` follows the [frozen measured plan](0068-source-capacity-plan.md):
+explicit source 0.15/companion 0.14, same core 0.11/IR 0.4, 131,072 full-program
+tokens only, all old profiles/other budgets unchanged. Preserve every RP-01 and
+RP-03 byte and experimentally retain the next actual admission refusal. All forty
+scenarios Partial, G1–G4 conditional, #46 incomplete. Full validator/benchmarks /
+near-English factoring/identity-managed/protected accessible text-visual/actual
+user/host/browser/independent/phase gates remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1453,6 +1454,23 @@ reallocation and full case evidence stay open; source verbosity/reusable near-En
 formulations/identity-managed editing/protected accessible summaries remain explicit
 Phase 1 work. Parent #46 draft, all forty scenarios Partial, G1–G4 conditional; no
 external blocker, phase report boundary or Phase 2 is claimed.
+
+[PR #82](https://github.com/cyborg-nomade/choreoform/pull/82) merged into draft
+#46 as `3c190c9cf7ae08c792c3b18034a67ec4f0b16006` after required exact-head CI
+`42920531065` at `5db4f06f27ad07ba1c583e982c32c6e328e4fd00` and delegated
+completed-diff review `5850895760`. Refreshed threads/summary audit found no threads
+or actionable findings; CodeRabbit skipped and supplies no review evidence. Expected-
+head merge explicitly carries sign-off; ADR-0067 remains pending parent/main
+integration. Local 553 Rust + six doctests/native/Wasm/all 63 Python commands pass.
+Active `codex/source-capacity-profile` follows the [frozen plan](0068-source-capacity-plan.md):
+new explicit source 0.15/companion 0.14, same core 0.11/IR 0.4, 131,072-token
+program allowance with every old quota and all other budgets/accepted semantics
+fixed. Preserve every RP-01/RP-03 source/resource/manifest/pure-case byte; actual
+experimental full-case lowering and next parser/qualification/semantic/report
+refusal drive subsequent scope. Larger capacity is not near-English authoring.
+Parent #46 draft, all scenarios Partial, G1–G4 conditional; original optional /
+full-case/RP-08/validator/editing/visual/actual user/host/browser/independent/phase
+gates remain open. No external blocker or Phase 2 is claimed.
 
 ## Honest exit accounting
 

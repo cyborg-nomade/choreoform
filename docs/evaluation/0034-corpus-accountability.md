@@ -100,3 +100,12 @@ cross-form/user/host/browser/independent evidence still remain. Current dependen
 is the [whole declared two-line order package](0067-rp03-package-plan.md), followed
 by actual demonstrated validator/RP-08/text-visual gaps. Totals remain 0 Supported /
 40 Partial, not forty complete executable processes. See [progress](phase-1-progress.md).
+
+The [RP-03 whole declared two-line draft](0067-rp03-package-draft.md) now supplies
+actual source/resources and finite type/receipt/recovery-guard checks for the order
+case, while unchanged source 0.14 genuinely refuses its token count. There is no
+candidate IR or semantic-stage result. This advances implementation evidence for
+the order rows without changing their Partial status or original full/optional
+requirements. Next [measured capacity](0068-source-capacity-plan.md) preserves old
+quotas and every published byte before the next actual admission judgment. No
+participant, real event/deduplication or host execution evidence is inferred.
