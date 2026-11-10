@@ -350,6 +350,11 @@ validated, and round-tripped.
   source 0.14/companion 0.13 and bounded distinct work/class/input/compensation /
   host-premise reports. Broader preterminal/possibly-completed compensation, P4 /
   ownership and complete benchmark judgments remain next; no phase gate closes.
+  [ADR-0065](docs/decisions/0065-rp01-current-contract-direction.md) tests the actual
+  full RP-01 graph and demonstrates current-profile typed capture/retention and
+  receipt-matched local late records without new permission or changed benchmark
+  bytes. Next explicitly freeze/adopt that checkpoint using existing contracts;
+  preserve original scenario/guard/resource scope and all host/visual/user/phase gates.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

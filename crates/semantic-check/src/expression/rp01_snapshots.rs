@@ -6,6 +6,7 @@ use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest, transport};
 
 mod bindings;
 mod boundaries;
+mod current_contract;
 
 const CANDIDATE: &[u8] = include_bytes!("../../../../docs/benchmarks/rp01/candidate.ir.json");
 const CATALOGUE: &[u8] = include_bytes!("../../tests/conformance/rp01-guard-snapshots.json");

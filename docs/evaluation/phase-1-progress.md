@@ -1323,6 +1323,41 @@ current-authority/P6 cutoff/accepted handoff/immutable storage/transitive settle
 requirements remain open. Parent #46 stays draft, scenarios Partial and phase gates
 conditional; no actual provider/host/user evidence or Phase 2 is inferred.
 
+[PR #79](https://github.com/cyborg-nomade/choreoform/pull/79) merged into draft
+#46 as `d747ead7416d4bd885c1f586bafcc4b3501af9cf` after required exact-head CI
+`42869834391` at `48a7a8ffa19a2183d2b4aaf0346c598876c13614` and delegated
+completed-diff review `5846787748`. Refreshed thread/summary audit found no threads
+or actionable findings; CodeRabbit skipped and supplies no review evidence. The
+expected-head merge explicitly carries sign-off; ADR-0064 remains pending parent /
+main integration. Local 543 Rust + six doctests/native/Wasm/59 Python checks pass.
+Active dependency `codex/rp01-current-contract-audit` follows the
+[frozen full-case audit](0065-rp01-current-contract-audit-plan.md): test the actual
+RP-01 package against current explicit profiles/capture/request/owned-work contracts
+before choosing another generalization. Keep its committed source-0.7 checkpoint
+unchanged; experimental promotions are not adoption. Real access/provenance/P4 /
+P6/late outcome versus parent-resumption gaps drive the next dependency. Parent #46
+stays draft, all scenarios Partial and all live host/phase/external gates open.
+
+ADR-0065 full-case current-contract audit is implemented under signed plan
+`8728265`: tests/docs only, with every production rule, benchmark byte and original
+44 guard cases/46 values/expectations fixed. Explicit source 0.14/core 0.11 promotion
+requires the general fault-source retry syntax; full-body delta checks pass. Actual
+full RP-01 capture/exact original request/receipt-matched local category pass all
+eleven native views under unchanged provider/type/protection metadata. Separate
+flat owned proof retains ancestor protection labels rather than live values. Review
+caught and replaced a tag-only classifier that accepted a typed wrong-amount paid
+receipt; the final form rebinds the original completion predicate to capture + exact
+retained request. Four SDK groups/one production pure-evaluator group/thirteen
+synthetic cases/six limited Python groups preserve partial/host boundaries. Local
+548 Rust + six doctests/native/Wasm/all sixty Python workflow checks pass; separate
+completed-diff delegated self-review found no remaining actionable issue. See
+[audit](0065-rp01-current-contract-audit.md). Exact-head CI/full comment audit/signed
+merge remain required. Next separately freeze controlled adoption using existing
+profiles, preserving an exact historical source-0.7 counterpart and original guards /
+resource bytes. Broader active root/compensation/P4 follow only actual scenario need.
+Parent #46 draft, all forty scenarios Partial, G1–G4 conditional and all live host /
+text-visual/user/independent/phase gates open; no new permission or Phase 2.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable

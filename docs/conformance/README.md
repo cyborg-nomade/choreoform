@@ -235,3 +235,9 @@ frontend/one native unit group and six limited Python groups for explicit source
 0.14/core 0.11, typed constructed inputs/different child seeds, independent class /
 compensation relations, exact metadata/identities/spans/old omissions and valid
 combined whole-report exhaustion. No actual provider/host/user event is supplied.
+
+[Full RP-01 current-contract audit](../evaluation/0065-rp01-current-contract-audit.md)
+adds four SDK groups/one production pure-evaluator group and thirteen synthetic
+receipt cases/six bounded Python groups. Whole experimental current-profile /
+capture/request/matched-local-record graphs pass; old benchmark/44 guard cases/46
+values remain byte-identical. No actual provider/host/user evidence or adoption.

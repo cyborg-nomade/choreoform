@@ -100,4 +100,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_pre_capture_authoring.py
           .tools/ir-check/bin/python tools/check_finite_owned_work.py
           .tools/ir-check/bin/python tools/check_finite_work_authoring.py
+          .tools/ir-check/bin/python tools/check_rp01_current_contract.py
       # Browser execution is a separate manual evidence step, not implied by CI.

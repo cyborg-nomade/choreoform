@@ -89,6 +89,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0062](0062-owned-command-direction.md) | Accepted under delegation; pending parent/main integration | Separate finite owned work from read-only query semantics |
 | [0063](0063-finite-owned-work.md) | Accepted under delegation; pending parent/main integration | Check finite owned work and pure local input construction |
 | [0064](0064-finite-work-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose finite owned work in readable source |
+| [0065](0065-rp01-current-contract-direction.md) | Accepted under delegation; pending parent/main integration | Adopt demonstrated RP-01 capture before further generalization |
 
 ## When an ADR is required
 

@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Full RP-01 current-contract critique](0065-rp01-current-contract-audit.md)
+  demonstrates experimental profile promotion/capture/request/matched late records
+  without modifying benchmark bytes; adoption and all full scenario gates stay open.
+
 - [Readable finite work](0064-finite-work-authoring.md) records explicit source
   selection/typed command-input integration and bounded distinct native work
   disclosure; all actual host acceptance and phase exit gates remain open.
