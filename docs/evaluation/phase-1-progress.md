@@ -1138,6 +1138,22 @@ terminal facts; unknown/acknowledged observations have no terminal declaration.
 No event, value, storage, grant, handoff or settlement evidence is inferred. All
 scenario/phase/external gates remain open, parent #46 draft/incomplete.
 
+ADR-0059 owned entry/command critique and eight genuine SDK/frontend probe groups
+are implemented under signed plan `d49a96f`, with no production or accepted artifact
+changes. Original irreversible work plus read-only continuation passes conditionally;
+matched new command/compensation is refused independently of metadata mismatch.
+Unknown observations stay nonterminal. A query-before-original-capture layout fits
+existing IR/source but current retained-request entry rules refuse it. P4/P6 reuse,
+counterfeit seeds/projections and wrong metadata retain their real first refusals.
+Next explicit finite read-only preterminal owned entry, after actual accepted P6
+handoff and with the original reachable capture/source/transitive accountability
+preserved; general commands/compensation and richer handler/ownership contexts stay
+later. Freeze a separate signed implementation plan first. Local 490 Rust plus six
+doctests and all native/Wasm/55 Python checks pass; see
+[critique](0059-owned-entry-command-audit.md). Final-head CI/comment audit/signed
+merge remain before integration. Parent #46 draft/incomplete, every scenario Partial,
+G1–G4 conditional and all genuine host/user/independent/phase gates remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
