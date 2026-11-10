@@ -3,6 +3,11 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.12.0 / companion 0.11.0 profile](profile-v0.12.md) selects existing
+core 0.9/IR 0.4 for finite read-only surviving continuations. Existing sentences
+and quotas remain; bounded native conditional scope/gate disclosure stays separate
+from ordinary/legacy coverage and actual host acceptance. Earlier profiles stay fixed.
+
 The [source 0.11.0 / companion 0.10.0 profile](profile-v0.11.md) adds readable
 original-request retention on existing core 0.8/IR 0.4 with bounded declarations
 and separate owned proof. Actual storage/current authority and permitted new work /

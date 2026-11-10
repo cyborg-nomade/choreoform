@@ -1108,6 +1108,21 @@ conditional scope/gate disclosure. Then command/compensation and richer ownershi
 fault contexts. Actual values/storage/grants/cutoff/accepted handoff/all-settlement
 and every scenario/phase/external gate remain open.
 
+ADR-0058 readable continuation integration is implemented under signed plan
+`7e7dfb3`. Explicit source 0.12/companion 0.11 selects existing core 0.9/IR 0.4
+without changing grammar productions or older meanings. All eleven views preserve
+static declarations; six disclose separate bounded conditional owner/scope/gate /
+access/provenance/invalidation evidence, and final reconciliation names separate
+continuationScopes. Immutable proof reuse and shared scope catalogues preserve
+ordinary/legacy/old-flat sets. Four Rust and six independent Python groups cover
+identity/qualified Unicode spans, all stages, inherited refusals/omissions, reused
+creators and valid 14,069-token combined report exhaustion without stdout. Local
+482 Rust plus six doctests and all native/Wasm/55 Python checks pass. See
+[evidence](0058-readonly-continuation-authoring.md). Final-head CI/comment audit /
+signed merge remain before integration. Next command/compensation and richer
+ownership/fault judgments; actual grants/storage/cutoff/accepted handoff/all-activated
+transitive settlement and every scenario/phase/external gate remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
