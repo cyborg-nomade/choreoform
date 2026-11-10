@@ -1094,6 +1094,20 @@ Next explicit readable/native selection, then command/compensation and richer
 ownership/fault contexts. Parent #46 stays draft; all forty scenarios Partial,
 G1–G4 conditional and every genuine external/phase gate remains open.
 
+[PR #72](https://github.com/cyborg-nomade/choreoform/pull/72) merged into draft
+#46 as `e38f7caf674416a00a718f4ca77940883e086b58` after required final-head CI
+`42832683510` and delegated review/comment audit `6769727969`. Refreshed audit found
+no threads/actionable summaries; CodeRabbit skipped and supplies no review evidence.
+The expected-head merge explicitly carries the sign-off. ADR-0057 remains pending
+parent/main integration. Local 478 Rust plus six doctests and all native/Wasm/54
+Python checks passed; committed benchmark/report bytes stayed fixed. Active dependency
+`codex/readonly-continuation-authoring` follows the
+[frozen integration plan](0058-readonly-continuation-authoring-plan.md): explicit
+source 0.12/companion 0.11 selecting existing core 0.9/IR 0.4 and bounded native
+conditional scope/gate disclosure. Then command/compensation and richer ownership /
+fault contexts. Actual values/storage/grants/cutoff/accepted handoff/all-settlement
+and every scenario/phase/external gate remain open.
+
 ## Honest exit accounting
 
 The near-English authoring, complete validator, text/visual round trips, executable
