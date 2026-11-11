@@ -1,0 +1,774 @@
+{
+  "format": "choreoform-authoring-bindings",
+  "version": "0.15.0",
+  "profile": "0.16.0",
+  "definition": "effectful_instance_proof",
+  "root": "main",
+  "contracts": {
+    "semantics": {
+      "contract": "urn:choreoform:semantics:adr-0008",
+      "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "core": {
+      "contract": "urn:choreoform:contracts:core-profile:0.12.0",
+      "digest": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007",
+      "dialect": "core"
+    }
+  },
+  "declarations": [
+    {
+      "id": "provider_binding",
+      "kind": "resource",
+      "scope": "main",
+      "name": "Provider"
+    },
+    {
+      "id": "terminal_binding",
+      "kind": "resource",
+      "scope": "main",
+      "name": "Terminal facts"
+    },
+    {
+      "id": "fault_binding",
+      "kind": "resource",
+      "scope": "main",
+      "name": "Fault facts"
+    },
+    {
+      "id": "main",
+      "kind": "scope",
+      "scope": null,
+      "name": "Main"
+    },
+    {
+      "id": "operator",
+      "kind": "actor",
+      "scope": "main",
+      "name": "Operator"
+    },
+    {
+      "id": "authority",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Authority"
+    },
+    {
+      "id": "protection",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Protection"
+    },
+    {
+      "id": "cancel",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Cancel"
+    },
+    {
+      "id": "settlement",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Settlement"
+    },
+    {
+      "id": "close",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Close"
+    },
+    {
+      "id": "faults",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Unhandled faults"
+    },
+    {
+      "id": "race",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Race"
+    },
+    {
+      "id": "launch",
+      "kind": "data",
+      "scope": "main",
+      "name": "Launch request"
+    },
+    {
+      "id": "first_result",
+      "kind": "data",
+      "scope": "main",
+      "name": "First result"
+    },
+    {
+      "id": "second_result",
+      "kind": "data",
+      "scope": "main",
+      "name": "Second result"
+    },
+    {
+      "id": "launch_input",
+      "kind": "expression",
+      "scope": "main",
+      "name": "Launch input"
+    },
+    {
+      "id": "a_caller",
+      "kind": "scope",
+      "scope": "main",
+      "name": "A caller"
+    },
+    {
+      "id": "a_caller_request",
+      "kind": "data",
+      "scope": "a_caller",
+      "name": "Caller request"
+    },
+    {
+      "id": "a_caller_result",
+      "kind": "data",
+      "scope": "a_caller",
+      "name": "Caller result"
+    },
+    {
+      "id": "a_caller_input",
+      "kind": "expression",
+      "scope": "a_caller",
+      "name": "Caller input"
+    },
+    {
+      "id": "a_service",
+      "kind": "scope",
+      "scope": "a_caller",
+      "name": "A service"
+    },
+    {
+      "id": "a_request",
+      "kind": "data",
+      "scope": "a_service",
+      "name": "Service request"
+    },
+    {
+      "id": "a_result",
+      "kind": "data",
+      "scope": "a_service",
+      "name": "Service result"
+    },
+    {
+      "id": "a_input",
+      "kind": "expression",
+      "scope": "a_service",
+      "name": "Service input"
+    },
+    {
+      "id": "a_close",
+      "kind": "policy",
+      "scope": "a_service",
+      "name": "Service close"
+    },
+    {
+      "id": "a_work",
+      "kind": "policy",
+      "scope": "a_service",
+      "name": "Work"
+    },
+    {
+      "id": "a_activity",
+      "kind": "node",
+      "scope": "a_service",
+      "name": "Request work"
+    },
+    {
+      "id": "a_done",
+      "kind": "node",
+      "scope": "a_service",
+      "name": "Service done"
+    },
+    {
+      "id": "a_recovery",
+      "kind": "scope",
+      "scope": "a_service",
+      "name": "Recovery"
+    },
+    {
+      "id": "a_retained",
+      "kind": "data",
+      "scope": "a_recovery",
+      "name": "Original request"
+    },
+    {
+      "id": "a_captured",
+      "kind": "data",
+      "scope": "a_recovery",
+      "name": "Captured"
+    },
+    {
+      "id": "a_observe",
+      "kind": "node",
+      "scope": "a_recovery",
+      "name": "Observe work"
+    },
+    {
+      "id": "a_recovered",
+      "kind": "node",
+      "scope": "a_recovery",
+      "name": "Recovery done"
+    },
+    {
+      "id": "a_run",
+      "kind": "node",
+      "scope": "a_caller",
+      "name": "Run service"
+    },
+    {
+      "id": "a_caller_done",
+      "kind": "node",
+      "scope": "a_caller",
+      "name": "Caller done"
+    },
+    {
+      "id": "a_adapter",
+      "kind": "capability",
+      "scope": "main",
+      "name": "A capability"
+    },
+    {
+      "id": "a_effects",
+      "kind": "policy",
+      "scope": "main",
+      "name": "A effects"
+    },
+    {
+      "id": "a_wait",
+      "kind": "policy",
+      "scope": "main",
+      "name": "A observations"
+    },
+    {
+      "id": "use_a",
+      "kind": "node",
+      "scope": "main",
+      "name": "Use A"
+    },
+    {
+      "id": "b_caller",
+      "kind": "scope",
+      "scope": "main",
+      "name": "B caller"
+    },
+    {
+      "id": "b_caller_request",
+      "kind": "data",
+      "scope": "b_caller",
+      "name": "Caller request"
+    },
+    {
+      "id": "b_caller_result",
+      "kind": "data",
+      "scope": "b_caller",
+      "name": "Caller result"
+    },
+    {
+      "id": "b_caller_input",
+      "kind": "expression",
+      "scope": "b_caller",
+      "name": "Caller input"
+    },
+    {
+      "id": "b_service",
+      "kind": "scope",
+      "scope": "b_caller",
+      "name": "B service"
+    },
+    {
+      "id": "b_request",
+      "kind": "data",
+      "scope": "b_service",
+      "name": "Service request"
+    },
+    {
+      "id": "b_result",
+      "kind": "data",
+      "scope": "b_service",
+      "name": "Service result"
+    },
+    {
+      "id": "b_input",
+      "kind": "expression",
+      "scope": "b_service",
+      "name": "Service input"
+    },
+    {
+      "id": "b_close",
+      "kind": "policy",
+      "scope": "b_service",
+      "name": "Service close"
+    },
+    {
+      "id": "b_work",
+      "kind": "policy",
+      "scope": "b_service",
+      "name": "Work"
+    },
+    {
+      "id": "b_activity",
+      "kind": "node",
+      "scope": "b_service",
+      "name": "Request work"
+    },
+    {
+      "id": "b_done",
+      "kind": "node",
+      "scope": "b_service",
+      "name": "Service done"
+    },
+    {
+      "id": "b_recovery",
+      "kind": "scope",
+      "scope": "b_service",
+      "name": "Recovery"
+    },
+    {
+      "id": "b_retained",
+      "kind": "data",
+      "scope": "b_recovery",
+      "name": "Original request"
+    },
+    {
+      "id": "b_captured",
+      "kind": "data",
+      "scope": "b_recovery",
+      "name": "Captured"
+    },
+    {
+      "id": "b_observe",
+      "kind": "node",
+      "scope": "b_recovery",
+      "name": "Observe work"
+    },
+    {
+      "id": "b_recovered",
+      "kind": "node",
+      "scope": "b_recovery",
+      "name": "Recovery done"
+    },
+    {
+      "id": "b_run",
+      "kind": "node",
+      "scope": "b_caller",
+      "name": "Run service"
+    },
+    {
+      "id": "b_caller_done",
+      "kind": "node",
+      "scope": "b_caller",
+      "name": "Caller done"
+    },
+    {
+      "id": "b_adapter",
+      "kind": "capability",
+      "scope": "main",
+      "name": "B capability"
+    },
+    {
+      "id": "b_effects",
+      "kind": "policy",
+      "scope": "main",
+      "name": "B effects"
+    },
+    {
+      "id": "b_wait",
+      "kind": "policy",
+      "scope": "main",
+      "name": "B observations"
+    },
+    {
+      "id": "use_b",
+      "kind": "node",
+      "scope": "main",
+      "name": "Use B"
+    },
+    {
+      "id": "main_done",
+      "kind": "node",
+      "scope": "main",
+      "name": "Main done"
+    }
+  ],
+  "generated": [
+    {
+      "id": "a_activity_flow_done",
+      "owner": "a_activity",
+      "role": "flow",
+      "key": "a_activity_outcome_done"
+    },
+    {
+      "id": "a_observe_flow_observed",
+      "owner": "a_observe",
+      "role": "flow",
+      "key": "a_observe_outcome_observed"
+    },
+    {
+      "id": "a_run_flow_complete",
+      "owner": "a_run",
+      "role": "flow",
+      "key": "a_run_outcome_complete"
+    },
+    {
+      "id": "a_adapter_provider",
+      "owner": "a_adapter",
+      "role": "provider-policy",
+      "key": null
+    },
+    {
+      "id": "use_a_flow_complete",
+      "owner": "use_a",
+      "role": "flow",
+      "key": "use_a_outcome_complete"
+    },
+    {
+      "id": "b_activity_flow_done",
+      "owner": "b_activity",
+      "role": "flow",
+      "key": "b_activity_outcome_done"
+    },
+    {
+      "id": "b_observe_flow_observed",
+      "owner": "b_observe",
+      "role": "flow",
+      "key": "b_observe_outcome_observed"
+    },
+    {
+      "id": "b_run_flow_complete",
+      "owner": "b_run",
+      "role": "flow",
+      "key": "b_run_outcome_complete"
+    },
+    {
+      "id": "b_adapter_provider",
+      "owner": "b_adapter",
+      "role": "provider-policy",
+      "key": null
+    },
+    {
+      "id": "use_b_flow_complete",
+      "owner": "use_b",
+      "role": "flow",
+      "key": "use_b_outcome_complete"
+    }
+  ],
+  "symbols": [
+    {
+      "id": "main_input_request",
+      "owner": "main",
+      "role": "input",
+      "name": "Request",
+      "wire": "request"
+    },
+    {
+      "id": "main_output_first",
+      "owner": "main",
+      "role": "output",
+      "name": "First",
+      "wire": "first"
+    },
+    {
+      "id": "main_output_second",
+      "owner": "main",
+      "role": "output",
+      "name": "Second",
+      "wire": "second"
+    },
+    {
+      "id": "main_outcome_complete",
+      "owner": "main",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "launch_purpose_test",
+      "owner": "launch",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "first_result_purpose_test",
+      "owner": "first_result",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "second_result_purpose_test",
+      "owner": "second_result",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "a_caller_input_request",
+      "owner": "a_caller",
+      "role": "input",
+      "name": "Request",
+      "wire": "request"
+    },
+    {
+      "id": "a_caller_output_result",
+      "owner": "a_caller",
+      "role": "output",
+      "name": "Result",
+      "wire": "result"
+    },
+    {
+      "id": "a_caller_outcome_complete",
+      "owner": "a_caller",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "a_caller_request_purpose_test",
+      "owner": "a_caller_request",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "a_caller_result_purpose_test",
+      "owner": "a_caller_result",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "a_service_input_request",
+      "owner": "a_service",
+      "role": "input",
+      "name": "Request",
+      "wire": "request"
+    },
+    {
+      "id": "a_service_output_result",
+      "owner": "a_service",
+      "role": "output",
+      "name": "Result",
+      "wire": "result"
+    },
+    {
+      "id": "a_service_outcome_complete",
+      "owner": "a_service",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "a_request_purpose_test",
+      "owner": "a_request",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "a_result_purpose_test",
+      "owner": "a_result",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "a_activity_outcome_done",
+      "owner": "a_activity",
+      "role": "outcome",
+      "name": "done",
+      "wire": "done"
+    },
+    {
+      "id": "a_recovery_outcome_complete",
+      "owner": "a_recovery",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "a_retained_purpose_test",
+      "owner": "a_retained",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "a_captured_purpose_test",
+      "owner": "a_captured",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "a_observe_outcome_observed",
+      "owner": "a_observe",
+      "role": "outcome",
+      "name": "observed",
+      "wire": "observed"
+    },
+    {
+      "id": "a_run_outcome_complete",
+      "owner": "a_run",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "use_a_outcome_complete",
+      "owner": "use_a",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "b_caller_input_request",
+      "owner": "b_caller",
+      "role": "input",
+      "name": "Request",
+      "wire": "request"
+    },
+    {
+      "id": "b_caller_output_result",
+      "owner": "b_caller",
+      "role": "output",
+      "name": "Result",
+      "wire": "result"
+    },
+    {
+      "id": "b_caller_outcome_complete",
+      "owner": "b_caller",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "b_caller_request_purpose_test",
+      "owner": "b_caller_request",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "b_caller_result_purpose_test",
+      "owner": "b_caller_result",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "b_service_input_request",
+      "owner": "b_service",
+      "role": "input",
+      "name": "Request",
+      "wire": "request"
+    },
+    {
+      "id": "b_service_output_result",
+      "owner": "b_service",
+      "role": "output",
+      "name": "Result",
+      "wire": "result"
+    },
+    {
+      "id": "b_service_outcome_complete",
+      "owner": "b_service",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "b_request_purpose_test",
+      "owner": "b_request",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "b_result_purpose_test",
+      "owner": "b_result",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "b_activity_outcome_done",
+      "owner": "b_activity",
+      "role": "outcome",
+      "name": "done",
+      "wire": "done"
+    },
+    {
+      "id": "b_recovery_outcome_complete",
+      "owner": "b_recovery",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "b_retained_purpose_test",
+      "owner": "b_retained",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "b_captured_purpose_test",
+      "owner": "b_captured",
+      "role": "purpose",
+      "name": "Test",
+      "wire": "test"
+    },
+    {
+      "id": "b_observe_outcome_observed",
+      "owner": "b_observe",
+      "role": "outcome",
+      "name": "observed",
+      "wire": "observed"
+    },
+    {
+      "id": "b_run_outcome_complete",
+      "owner": "b_run",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "use_b_outcome_complete",
+      "owner": "use_b",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    }
+  ],
+  "retired": [],
+  "resources": [
+    {
+      "binding": "provider_binding",
+      "kind": "provider",
+      "contract": "urn:test:instance-proof:compensatable",
+      "digest": "sha256:18b294698def362c7f73257f8e12fc96229c8d643dfce41ef2481f9168269661"
+    },
+    {
+      "binding": "terminal_binding",
+      "kind": "provider-terminal-observation-source",
+      "contract": "urn:test:instance-proof-terminal:compensatable",
+      "digest": "sha256:03a17d0e26bea2fe9193e5aa4ca042f21871219d31f3a71faadde33a7cfdcab6"
+    },
+    {
+      "binding": "fault_binding",
+      "kind": "provider-fault-source",
+      "contract": "urn:test:instance-proof-faults:compensatable",
+      "digest": "sha256:5ca4ffe9476b3d84a90e5327091e3bc1e6d660337b0f96d7e9d53ccb05ec1f03"
+    }
+  ],
+  "annotations": {
+    "synthetic": true,
+    "meaning": "bounded static/conditional declarations; no accepted effects or authority"
+  }
+}
