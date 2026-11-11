@@ -9,18 +9,20 @@
 
 ## Current focus
 
-Raw core 0.12 is implemented on `codex/compensation-identity-contract` under
-signed plan `f18c783` / ADR-0070, after audit #84 merged as
-`b31818a2e01bae81b0ab555eb48d55186d385a0a`. Only P1 `compensates` activity
-identity may cross lexical scope in the same definition. All old artifacts /
-ordinary privacy/C11 immediate-source owned proof/live authority/eligible effect /
-new-key/ownership/settlement gates and benchmark bytes stay fixed. Local 571 Rust +
-six doctests/native/Wasm/all 66 Python commands pass; separate completed-diff review
-finds no remaining actionable scope issue. Required final-head CI/comment audit /
-signed parent merge remain. Next separately freeze explicit readable profile/binding;
-source0.15 keeps its refusal. Forty scenarios Partial, G1–G4 and parent #46 incomplete;
-full validator/benchmarks/near-English/identity-managed protected accessible text-
-visual/actual user/host/browser/independent/phase exits open. No Phase 2.
+[PR #85](https://github.com/cyborg-nomade/choreoform/pull/85) merged exact
+core 0.12 into draft #46 as `94024f3c5fba3e56c19a9108f8f7b5e6aa354158`,
+after final-head CI `42989857709` and delegated review `5856100061`. Only P1
+same-definition prior-activity identity crosses lexical scope; ordinary privacy,
+C11 immediate-source owned proof, old profiles/benchmarks and all live gates stay
+fixed. Local 571 Rust + six doctests/native/Wasm/all 66 Python commands pass.
+Active `codex/compensation-identity-authoring` follows signed plan `30ac848`,
+[readable scope](0071-compensation-identity-authoring-plan.md), frozen before code.
+Explicit source0.16/companion0.15 will select C12/IR0.4 with exact qualified nonlexical
+prior identity only; every old source refusal stays. Whole temporary RP-03 must use
+the actual frontend and record genuine first failures. Forty Partial, G1–G4 and
+parent #46 incomplete; full validator/benchmarks/near-English/managed identities /
+protected accessible text-visual/actual user/host/browser/independent/phase gates open.
+No Phase 2.
 
 ## Verified baseline
 
@@ -1556,6 +1558,20 @@ binding/profile selection, retaining source0.15/refusals and every benchmark byt
 no full-case IR bypass/adoption or implicit aggregate ownership/live eligible effect.
 Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
 protected accessible identity-managed text-visual/external/phase exits remain open.
+
+[PR #85](https://github.com/cyborg-nomade/choreoform/pull/85) merged into draft
+#46 as `94024f3c5fba3e56c19a9108f8f7b5e6aa354158` after required CI
+`42989857709` at `b40d42454d55d0165a7e3a788b31f96756b324a3`, delegated
+completed-diff review `5856100061`, refreshed empty thread/actionable-summary audit
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0070 remains pending parent/main integration; local 571 Rust + six doctests /
+native/Wasm/all 66 Python checks pass. Signed next plan `30ac848` freezes
+[explicit readable compensation identity](0071-compensation-identity-authoring-plan.md)
+before production work, with this checked raw merge as dependency. Preserve all
+old versions/refusals/benchmarks, ordinary privacy, C11 owned-source proof and actual
+eligible effect/current authority/new-key/handoff/settlement gates. Parent #46 draft,
+forty Partial, G1–G4/full/optional/RP-08/validator/near-English/identity-managed protected
+accessible text-visual/external/phase exits stay open. No Phase 2.
 
 ## Honest exit accounting
 
