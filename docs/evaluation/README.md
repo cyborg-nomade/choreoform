@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Template parent/caller critique](0074-rp03-template-binding-audit.md) identifies
+  23 cross-parent invocations and the equivalent raw barrier; bounded effectful
+  instantiation must be proved before full source restructuring.
+
 - [Corrected RP-03 checkpoint and next template refusal](0073-rp03-corrected-checkpoint.md)
   publishes the exact caption repair/current pair with full original history;
   real lowering still refuses, with no candidate or semantic admission.
