@@ -155,7 +155,7 @@ class FiniteWorkAuthoringEvidence(unittest.TestCase):
         for change in ['pair', 'unknown', 'pin']:
             s, l, r = deepcopy(package())
             if change == 'pair': l['version'] = '0.12.0'
-            elif change == 'unknown': s = s.replace('authoring "0.14.0"', 'authoring "0.15.0"')
+            elif change == 'unknown': s = s.replace('authoring "0.14.0"', 'authoring "0.16.0"')
             else: l['contracts']['core']['digest'] = 'sha256:'+'0'*64
             result = invoke((s, l, r)); self.assertEqual(result.returncode, 1); self.assertEqual(result.stdout, b'')
         notice = 'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n'

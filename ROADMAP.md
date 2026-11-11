@@ -369,6 +369,10 @@ validated, and round-tripped.
   two-line RP-03 source/resources and an actual unchanged-profile token refusal.
   No candidate IR/semantic-stage success is claimed; next separately freeze
   capacity evidence, preserve old quotas, then retain the next real admission gap.
+  [ADR-0068](docs/decisions/0068-source-capacity.md) adds explicit source 0.15
+  capacity with the same core/wire/meaning. Full grammar recognizes under unchanged
+  parser work; compensation sibling-private identity binding genuinely refuses.
+  Next separately review that purpose-only reference gap; no privacy/phase gate closes.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current

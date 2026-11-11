@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Measured source capacity and binding gap](0068-source-capacity.md) records
+  explicit source 0.15, unchanged old/other limits, real full grammar recognition
+  and the preserved compensation reference refusal; no benchmark admission.
+
 - [RP-03 whole-source draft and capacity refusal](0067-rp03-package-draft.md) records
   the full declared two-line source, exact resources and actual token refusal;
   pure resource/receipt evidence does not admit the order or close a phase gate.
