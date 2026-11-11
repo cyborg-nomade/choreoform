@@ -388,6 +388,10 @@ validated, and round-tripped.
   caption/current-profile checkpoint with original history preserved. Full native
   recognition now reaches `child-template`; audit that actual relationship next,
   preserving contract/privacy/ownership boundaries and all remaining phase gates.
+  [ADR-0074](docs/decisions/0074-rp03-template-instantiation-direction.md) confirms
+  the caller/body parent rule in both layers. Next prove bounded effectful call-site
+  instantiation with exact ports/policies/protection/ownership before full generator
+  restructuring; same-parent reuse is supported, cross-parent reuse is not inferred.
   [ADR-0068](docs/decisions/0068-source-capacity.md) adds explicit source 0.15
   capacity with the same core/wire/meaning. Full grammar recognizes under unchanged
   parser work; compensation sibling-private identity binding genuinely refuses.

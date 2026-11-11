@@ -9,22 +9,22 @@
 
 ## Current focus
 
-[PR #88](https://github.com/cyborg-nomade/choreoform/pull/88) merged the
-corrected RP-03 checkpoint into draft #46 as
-`94adbe95c9770090153d86e9489566b105ff2352`, after final-head CI `43009055263`
-and delegated review `5857759476`. Only the exact finish caption and existing
-profile/core selection change; original resources/guards/scenarios/wires and all
-RP-01 bytes stay fixed. History/source-0.14 preserves all 113 original generated
-files exactly; old regressions select it explicitly. Local 582 Rust + six doctests /
-native/Wasm/all 69 Python checks pass. Whole current source recognizes 77,135 tokens
-in 832,138 visits then refuses `child-template at 0..0`, no candidate/semantic report.
-Active `codex/rp03-template-binding-audit` follows signed `9bca249`,
-[test/docs scope](0074-rp03-template-binding-audit-plan.md): locate exact creator /
-body/scope/parent and compare raw/readable/normative requirements before choosing a
-restructuring or versioned dependency. No production or benchmark mutation. Forty
-Partial, G1–G4/parent #46/full validator/benchmarks/near-English/managed protected
-accessible text-visual/actual user/host/browser/independent/phase exits open.
-No Phase 2.
+The frozen `9bca249` template-parent audit is implemented on
+`codex/rp03-template-binding-audit`, after #88 merged as
+`94adbe95c9770090153d86e9489566b105ff2352`. Actual first failure is invoke
+`authorize_call`, caller `accept_payment`, body `authorize_service`, declared parent
+`order`. There are 23 mismatches among 26 direct invocations; two release bodies
+have two caller contexts. Seven split-child declaration parents match; no broader
+validation is inferred. Five SDK/four Python groups prove same-parent reuse versus
+cross-parent rejection in both raw C11/C12 and source, with old privacy/structure
+failures intact. Local 587 Rust + six doctests/native/Wasm/all 70 Python checks pass;
+completed-diff delegated review finds no scope issue. Required exact-head CI/comments /
+signed parent merge remain. Next separately freeze bounded effectful instantiation
+with exact ports/capability-effect-wait ownership/protection/compensation/storage
+before full source restructuring. Current/history benchmarks and production semantics
+stay fixed; full RP-03 still has no candidate. Forty Partial, G1–G4/full/optional /
+RP-08/validator/near-English/managed protected accessible text-visual/external/phase
+exits remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1678,6 +1678,26 @@ creator/body/current scope/declared parent and raw SDK requirements independentl
 choose a later correction from evidence, not an assumed frontend-only gap. Parent
 #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English/managed
 protected accessible text-visual/external/phase exits stay open. No Phase 2.
+
+ADR-0074's [template parent/caller-context audit](0074-rp03-template-binding-audit.md)
+is implemented under frozen `9bca249`, after checked #88 integration. Actual first
+failure is `(authorize_call,invoke,accept_payment,authorize_service,order)`; raw C11 /
+C12 also refuse equivalent cross-parent bodies with `child-scope`. Same-parent
+multiple creators pass bounded later checks. The exact current generator inventory
+has 26 invocations/23 parent mismatches, including two release bodies used from two
+parents, plus seven matching split-child declaration parents and no repeat/fanout
+in this finite package. Five SDK/four Python groups retain full-source refusal,
+privacy/earlier structural errors and all eleven bounded native views. Current /
+historical benchmark, generator, resource and guard bytes and runtime/profile/core /
+quota behavior stay fixed; capture is private cfg(test)-only one-tuple/count/thread.
+Local 587 Rust + six doctests/native/Wasm/all 70 Python workflow checks pass;
+completed-diff delegated review finds no remaining scope issue. Required final-head
+CI/full comments/signed parent merge follow. Next separately freeze bounded effectful
+call-site instantiation with matching ports/policies/endpoints/protection/compensation /
+per-occurrence storage before a whole generator rewrite; no hierarchy move is presumed
+semantics-neutral. Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator /
+near-English/managed protected accessible text-visual/external/phase exits open.
+No Phase 2.
 
 ## Honest exit accounting
 

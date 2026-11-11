@@ -3,6 +3,9 @@
 
 use super::*;
 
+#[cfg(test)]
+mod template_audit;
+
 impl<'a, 's> Lower<'a, 's> {
     pub(super) fn dependencies(&mut self) -> Result<()> {
         let mut dependency_work = 0;
@@ -684,6 +687,8 @@ impl<'a, 's> Lower<'a, 's> {
             if let Some(child) = node["body"].as_str()
                 && self.body["scopes"][child]["parent"] != node["scope"]
             {
+                #[cfg(test)]
+                template_audit::record(id, node, child, &self.body["scopes"][child]["parent"]);
                 return Err(error("child-template", 0..0));
             }
             if node["kind"] == "split" {
@@ -694,6 +699,13 @@ impl<'a, 's> Lower<'a, 's> {
                     .filter_map(Value::as_str)
                 {
                     if self.body["scopes"][child]["parent"] != node["scope"] {
+                        #[cfg(test)]
+                        template_audit::record(
+                            id,
+                            node,
+                            child,
+                            &self.body["scopes"][child]["parent"],
+                        );
                         return Err(error("child-template", 0..0));
                     }
                     if !self.body["scopes"][child]["inputs"]
