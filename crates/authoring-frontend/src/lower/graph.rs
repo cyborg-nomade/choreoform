@@ -18,6 +18,7 @@ impl<'a, 's> Lower<'a, 's> {
                 | "0.13.0"
                 | "0.14.0"
                 | "0.15.0"
+                | "0.16.0"
         );
         let mut metadata = BTreeMap::new();
         let mut local = BTreeMap::new();
@@ -27,6 +28,19 @@ impl<'a, 's> Lower<'a, 's> {
         for (id, policy) in self.body["policies"].as_object().expect("map") {
             creation::charge(&mut dependency_work, 1)?;
             let p = &policy["body"];
+            if self.syntax.profile() == "0.16.0"
+                && p["kind"] == "work"
+                && let Some(target) = p["compensates"].as_str()
+            {
+                creation::charge(&mut dependency_work, 1)?;
+                let node = &self.body["nodes"][target];
+                if node["kind"] != "activity" || node["mode"] != "capability" {
+                    return Err(error(
+                        "compensation-target",
+                        self.compensation_spans[id].clone(),
+                    ));
+                }
+            }
             let mut reads = BTreeSet::new();
             let mut refs = BTreeSet::new();
             let mut provider_refs = BTreeSet::new();
@@ -116,7 +130,14 @@ impl<'a, 's> Lower<'a, 's> {
             }
             let fault_source = if matches!(
                 self.syntax.profile(),
-                "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0"
+                "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
             ) {
                 &p["faultSource"]
             } else {

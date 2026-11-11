@@ -113,7 +113,7 @@ fn new_pair_does_not_guess_an_old_pair_core_or_missing_inherited_contract() {
         p.lower(&supplied).unwrap_err().code,
         "resource-missing-or-ambiguous"
     );
-    let future = f.source.replacen("0.15.0", "0.16.0", 1);
+    let future = f.source.replacen("0.15.0", "0.17.0", 1);
     assert_eq!(parse(future.as_bytes()).unwrap_err().code, "profile");
 }
 
@@ -155,3 +155,6 @@ fn actual_full_order_recognizes_with_old_work_limit_and_keeps_private_compensati
     assert_eq!(e.span, 60937..61023);
     assert_eq!(&source.as_bytes()[e.span],b"\"Request Reserve first line\" in \"Reserve first line occurrence\" in \"Order fulfillment\"");
 }
+
+#[path = "capture/compensation-identity.rs"]
+mod compensation_identity;
