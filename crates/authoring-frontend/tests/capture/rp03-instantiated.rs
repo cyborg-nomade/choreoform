@@ -27,10 +27,10 @@ fn fixture() -> Fixture {
 }
 
 #[test]
-fn full_current_source_emits_exact_ir_and_passes_real_source_and_raw_first_three_checks() {
+fn full_current_source_emits_exact_ir_and_passes_real_source_and_raw_first_four_checks() {
     let f = fixture();
     let syntax = parse(f.source.as_bytes()).unwrap();
-    assert_eq!(syntax.token_count(), 82373);
+    assert_eq!(syntax.token_count(), 84051);
     assert!(syntax.parser_work() <= 1_000_000);
     println!("instantiated whole parser visits {}", syntax.parser_work());
     let bytes = serde_json::to_vec(&f.ledger).unwrap();
@@ -49,12 +49,16 @@ fn full_current_source_emits_exact_ir_and_passes_real_source_and_raw_first_three
     choreoform_semantic_check::check(&raw, &f.supplied()).unwrap();
     choreoform_semantic_check::check_control(&raw, &f.supplied()).unwrap();
     choreoform_semantic_check::check_protection(&raw, &f.supplied()).unwrap();
-    let e = c.check_invalidation(&f.supplied()).unwrap_err();
-    assert_eq!(e.code, "invalidation-context-unproved");
-    assert_eq!(e.path, "/body/nodes/capture_activity");
-    let e = choreoform_semantic_check::check_invalidation(&raw, &f.supplied()).unwrap_err();
-    assert_eq!(e.code, "invalidation-context-unproved");
-    assert_eq!(e.path, "/body/nodes/capture_activity");
+    let report = c.check_invalidation(&f.supplied()).unwrap();
+    assert_eq!(report.obligations().len(), 312);
+    assert_eq!(report.historical_origins().len(), 849);
+    choreoform_semantic_check::check_invalidation(&raw, &f.supplied()).unwrap();
+    let e = c.check_concurrency(&f.supplied()).unwrap_err();
+    assert_eq!(e.code, "parallel-effects-unproved");
+    assert_eq!(e.path, "/body/nodes/start_acceptance");
+    let e = choreoform_semantic_check::check_concurrency(&raw, &f.supplied()).unwrap_err();
+    assert_eq!(e.code, "parallel-effects-unproved");
+    assert_eq!(e.path, "/body/nodes/start_acceptance");
 }
 
 #[test]

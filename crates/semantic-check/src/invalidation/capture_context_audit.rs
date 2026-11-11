@@ -28,7 +28,7 @@ pub(super) fn record(b: &Value, site: &str, cell: &str, ancestors: &BTreeSet<&st
 }
 
 #[test]
-fn actual_whole_current_strict_and_advisory_capture_context_tuple() {
+fn whole_current_history_and_partial_join_capture_context_tuple() {
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     let base = root.join("docs/benchmarks/rp03");
     let envelope =
@@ -66,6 +66,23 @@ fn actual_whole_current_strict_and_advisory_capture_context_tuple() {
             bytes,
         })
         .collect();
+    let (_, dependencies) = crate::protection::analyze(&envelope, &supplied, true).unwrap();
+    assert!(!dependencies.nodes["capture_activity"].contains("authorize_call_value"));
+    assert!(
+        dependencies
+            .historical
+            .iter()
+            .any(|h| h.site() == "capture_activity"
+                && h.cell() == "authorize_call_value"
+                && h.scope() == "accept_payment"
+                && h.boundary() == "start_acceptance_gather")
+    );
+    // The signed baseline audit captured the original full all-join refusal.
+    // This isolated one-field raw variant retains the genuine partial-join negative.
+    let mut body = envelope.document()["body"].clone();
+    body["nodes"]["start_acceptance_gather"]["predicate"]["op"] = "any".into();
+    let envelope =
+        DefinitionEnvelope::from_parts_versioned("0.4.0", body, serde_json::json!({})).unwrap();
     for coverage in [Coverage::Required, Coverage::Advisory] {
         LAST.with_borrow_mut(|last| *last = None);
         let e = analyze(&envelope, &supplied, coverage).unwrap_err();

@@ -34,12 +34,12 @@ class OrderInstanceEvidence(unittest.TestCase):
             self.assertEqual(b['nodes'][row['creator']]['body'],row['body'])
             self.assertEqual(b['nodes'][row['instance']+'_activity']['target'],row['capability'])
             self.assertEqual(b['policies'][row['instance']+'_effects']['body']['reconciliation'],row['instance']+'_wait')
-        for stage in STAGES[:3]:
+        for stage in STAGES[:5]:
             r=self.checked(p,stage);self.assertIs(r['executable'],False);self.assertTrue(r['remaining'])
             self.assertEqual(r,load(BASE/'reports'/f'{stage}.json'))
-        for stage in STAGES[3:]:
+        for stage in STAGES[5:]:
             r=invoke(p,stage);self.assertEqual(r.returncode,1);self.assertEqual(r.stdout,b'')
-            self.assertTrue(r.stderr.startswith(b'invalidation-context-unproved at /body/nodes/capture_activity;'),r.stderr)
+            self.assertTrue(r.stderr.startswith(b'parallel-effects-unproved at /body/nodes/start_acceptance;'),r.stderr)
 
     def test_original_and_pre_instance_archives_reproduce_exact_old_bytes_and_pins(self):
         for historical,folder,expected_digest in [(True,'source-0.14','797d01f0b1a42db5c71de9bc7a054d58e24333798b23e6cde22225dc4cc707ee'),(False,'source-0.16-pre-instances','895ff7e48499bef7cdccb070b6d072c1d8ffb21833b9232407cf25caf3492ae0')]:
@@ -74,7 +74,7 @@ class OrderInstanceEvidence(unittest.TestCase):
         self.assertEqual(self.checked(p),self.checked(q))
         self.assertEqual(self.checked(p,'check-protection'),self.checked(q,'check-protection'))
         self.assertEqual(self.checked(p,'integrity'),grammar.package_digests(p[0].encode(),json.dumps(p[1]).encode()))
-        r=invoke(q,'check-invalidation');self.assertEqual(r.returncode,1);self.assertIn(b'invalidation-context-unproved',r.stderr)
+        r=invoke(q,'check-concurrency');self.assertEqual(r.returncode,1);self.assertIn(b'parallel-effects-unproved',r.stderr)
 
     def test_exact_generation_inventory_no_stale_reports_or_supported_scenario_claims(self):
         generated=artifacts()
@@ -82,7 +82,7 @@ class OrderInstanceEvidence(unittest.TestCase):
         for name,raw in generated.items():self.assertEqual((BASE/name).read_bytes(),raw,name)
         m=load(BASE/'manifest.json');self.assertIs(m['executable'],False)
         self.assertTrue(all(s['status']=='Partial' for s in m['scenarios']));self.assertEqual(len(m['scenarios']),4)
-        self.assertEqual(len(list((BASE/'reports').glob('*.json'))),3)
+        self.assertEqual(len(list((BASE/'reports').glob('*.json'))),5)
         self.assertEqual(len(load(BASE/'receipt-cases.json')['cases']),22)
         self.assertEqual(len(load(BASE/'guard-cases.json')['cases']),8)
         self.assertIn('tools/check_rp03_instances.py',(BASE.parents[2]/'.github/workflows/rust-portability.yml').read_text())

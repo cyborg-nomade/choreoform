@@ -57,3 +57,9 @@ result; do not relabel forty/all four scenarios Supported or close Phase 1 from
 this refinement. Parent #46 stays draft. Required tests/final-head CI, separate
 automated review/full comment audit and signed expected-head merge precede durable
 progress. No Phase 2.
+
+[Implementation evidence](../evaluation/0077-fixed-all-join-history.md) records
+indexed membership, retained counterexamples/work bounds, immutable #91 evidence
+and precise actual invalidation adoption. Four full checking views and one distinct
+advisory pass; later views retain the actual parallel-effects refusal. No source /
+IR-version/core/policy/authority extension or host acceptance is supplied.

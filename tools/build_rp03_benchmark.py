@@ -13,6 +13,8 @@ from benchmarks.rp01_resources import encoded,pin
 from benchmarks.rp03_resources import types,providers,clock_resources,inputs,SPECS
 from benchmarks.rp03_source import TERMINAL_PROFILE, matched_completion, read
 from benchmarks.rp03_graph import build
+from benchmarks.rp03_invalidation import apply_missing
+from benchmarks.rp03_instance_checkpoint import artifacts as instance_checkpoint
 from build_rp03_checkpoint import package_artifacts as checkpoint_artifacts, artifacts as checkpoint_files, PRE_INSTANCE_README
 from check_metadata_authoring import invoke
 from build_rp01_benchmark import STAGES
@@ -51,6 +53,14 @@ def package_artifacts(*,historical=False,pre_instances=False):
     files['guard-rules.json']=encoded({'premise':'Pure emitted guard ASTs, not parsed full source or a process trace.', 'types':package.guard_types, 'rules':package.guard_rules})
     files['guard-cases.json']=encoded(guard_cases())
     supplied=[(r['id'],r['revision'],files[r['path'].removeprefix('docs/benchmarks/rp03/')] if r['path'].startswith('docs/benchmarks/rp03/') else (ROOT/r['path']).read_bytes()) for r in registry]
+    initial=invoke((source,package.ledger,supplied))
+    if initial.returncode!=0:raise ValueError('instance source must lower before invalidation adoption')
+    initial_candidate=json.loads(initial.stdout)
+    advisory=invoke((source,package.ledger,supplied),'invalidation-requirements')
+    if advisory.returncode!=0:raise ValueError('no actual advisory for invalidation adoption: '+advisory.stderr.decode())
+    advice=json.loads(advisory.stdout)
+    source=apply_missing(source,package.ledger,initial_candidate['body'],advice['missingInvalidationObligations'])
+    files['source.choreo']=source.encode()
     result=invoke((source,package.ledger,supplied))
     manifest={'format':'choreoform-rp03-benchmark-draft','version':'0.1.0','status':'source-draft-with-actual-lowering-result','executable':False,
         'sourceProfile':package.ledger['profile'],'companionVersion':package.ledger['version'],'coreProfile':'0.11.0' if historical else '0.12.0','intendedWireVersion':'0.4.0',
@@ -59,6 +69,10 @@ def package_artifacts(*,historical=False,pre_instances=False):
         **{k+'Digest':v for k,v in package_digests(files['source.choreo'],files['bindings.json']).items()},
         'contracts':package.ledger['contracts'],'resources':registry,
         'inputArtifacts':[{'path':name,'digest':'sha256:'+sha256(files[name]).hexdigest(),'meaning':'synthetic input or pure declaration evidence, never an accepted event'} for name in ['launch-values.json','receipt-rules.json','receipt-cases.json','guard-rules.json','guard-cases.json']],
+        'invalidationAdoption':{'basisRevision':initial_candidate['revision'],
+            'requiredCount':len(advice['requiredInvalidationObligations']),
+            'added':advice['missingInvalidationObligations'],
+            'meaning':'actual advisory-derived declarations only; no host authority or unvisited-context proof'},
         'instanceMap':package.instances,
         'protectionClaimDelta':{'addedCapabilities':['cancel_release_a_capability','cancel_release_b_capability'],
             'meaning':'fresh fictional provider/clock recipient claims, not actual consent or authority'},
@@ -119,6 +133,21 @@ def artifacts():
             files[name]=raw
         else:
             files['history/source-0.16-pre-instances/'+name]=raw
+    for name,raw in instance_checkpoint().items():files['history/source-0.16-instances/'+name]=raw
+    files['history/source-0.16-instances/README.md']=b'''<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
+# Full instance checkpoint before all-join history
+
+Exact generated artifacts and previous README from signed PR #91 head
+8e5d1382a0d6964b77a3696046df637544756901, verified as immutable inputs against
+recorded SHA-256 pins. Its three passing reports and capture inherited-context
+refusal are then-current observations; reproduce that checker at the signed commit.
+The current checker can prove a narrower closed all-join subset, so it is not
+claimed to reproduce the old semantic refusal. This archive is preserved evidence,
+not executable admission, a new provider claim or a re-created process trace.
+Historical benchmark-local resources resolve inside this archive.
+'''
     files['history/source-0.16-pre-instances/README.previous.md']=PRE_INSTANCE_README
     files['history/source-0.16-pre-instances/README.md']=b'''<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
@@ -197,14 +226,25 @@ def guard_cases():
     return {'premise':'Synthetic pure values only; None means no confirmed local record, never proof that an effect is absent. No accepted event, dispatch, handoff or process execution.', 'cases':cases}
 
 
+def write_artifacts(files,base=BASE):
+    # Only closed generated output names are cleanup candidates. Preserve unknown
+    # files so exact-inventory verification can report them without deleting work.
+    stale=[base/'candidate.ir.json',base/'candidate.ir.json.license']
+    for stage in STAGES:
+        stale.extend([base/'reports'/(stage+'.json'),base/'reports'/(stage+'.json.license')])
+    for path in stale:
+        if path.exists() and path.relative_to(base).as_posix() not in files:path.unlink()
+    for name,raw in files.items():
+        target=base/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check',action='store_true');args=parser.parse_args()
     files=artifacts()
     if args.check:
         changed=[n for n,b in files.items() if not (BASE/n).is_file() or (BASE/n).read_bytes()!=b]
         if changed:raise SystemExit('generated RP-03 files differ: '+', '.join(changed))
-    else:
-        for name,raw in files.items():(BASE/name).parent.mkdir(parents=True,exist_ok=True);(BASE/name).write_bytes(raw)
+    else:write_artifacts(files)
     m=json.loads(files['manifest.json'])
     print(f'RP-03: {m["sourceBytes"]} bytes / {m["measuredTokens"]} complete-line tokens; actual lowering {m["lowering"]}; no admission or execution.')
 

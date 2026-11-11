@@ -1,0 +1,1068 @@
+{
+  "declaredRetainedRequests": [
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "authorize_activity",
+      "result": "authorize_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "authorize_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "cancel_release_a_activity",
+      "result": "cancel_release_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "cancel_release_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "cancel_release_b_activity",
+      "result": "cancel_release_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "cancel_release_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "capture_activity",
+      "result": "capture_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "capture_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "deliver_a_activity",
+      "result": "deliver_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "deliver_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "deliver_b_activity",
+      "result": "deliver_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "deliver_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "handover_a_activity",
+      "result": "handover_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "handover_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "handover_b_activity",
+      "result": "handover_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "handover_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "intercept_a_activity",
+      "result": "intercept_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "intercept_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "intercept_b_activity",
+      "result": "intercept_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "intercept_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "label_a_activity",
+      "result": "label_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "label_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "label_b_activity",
+      "result": "label_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "label_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "notify_activity",
+      "result": "notify_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "notify_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "pack_a_activity",
+      "result": "pack_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "pack_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "pack_b_activity",
+      "result": "pack_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "pack_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "refund_activity",
+      "result": "refund_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "refund_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "release_a_activity",
+      "result": "release_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "release_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "release_b_activity",
+      "result": "release_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "release_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "reserve_a_activity",
+      "result": "reserve_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "reserve_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "reserve_b_activity",
+      "result": "reserve_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "reserve_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "stop_a_activity",
+      "result": "stop_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "stop_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "stop_b_activity",
+      "result": "stop_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "stop_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "void_label_a_activity",
+      "result": "void_label_a_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "void_label_a_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "void_label_b_activity",
+      "result": "void_label_b_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "void_label_b_recovery"
+    },
+    {
+      "hostRequirements": [
+        "actual-original-accepted-typed-request-not-current-expression-reevaluation",
+        "exact-definition-instance-owner-source-occurrence-input-value-revision-digest-key-effect-attempt-correlation",
+        "fresh-occurrence-owned-readonly-storage-before-owner-disposal-and-no-sharing",
+        "complete-original-input-policy-source-control-provider-provenance-retained",
+        "current-source-target-data-management-authority-and-atomic-accepted-single-owner-handoff",
+        "unchanged-logical-request-across-retries-changed-business-input-is-new-work",
+        "live-cancellation-closure-cutoffs-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "void_activity",
+      "result": "void_retained",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "scope": "void_recovery"
+    }
+  ],
+  "declaredWaitCaptures": [
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "authorize_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:authorize:0.1.0",
+        "revision": "sha256:d356bacd16dcd46904c653e1465d6b73930d1cbdb23e323bd0bf41f0db95b91c"
+      },
+      "result": "authorize_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "authorize_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:authorize-terminal:0.1.0",
+        "revision": "sha256:77dbff12325468d322b3df6c03c8007474bf971ede203ba595a5f960486323ca"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "cancel_release_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:release-a:0.1.0",
+        "revision": "sha256:56cc518b1896af528287551784597f09ea416779c8e1a434a35c15aaf4b76304"
+      },
+      "result": "cancel_release_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "cancel_release_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:release-a-terminal:0.1.0",
+        "revision": "sha256:d56ed78ff94ce59682771077a9de1fa07c559a80c822fb5613fb027fc9e8bfa9"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "cancel_release_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:release-b:0.1.0",
+        "revision": "sha256:385765c98808730f4fa9f19d1b779c5315f39263d38e0d7467448b3c06098b97"
+      },
+      "result": "cancel_release_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "cancel_release_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:release-b-terminal:0.1.0",
+        "revision": "sha256:0ce78dabba74fa81428dc5295686f7f01d8aaa15f38a84b72495d48e6403d1fd"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "capture_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:capture:0.1.0",
+        "revision": "sha256:fbf457f7c1e8ea29f12249fdd5c00f019596fa8e8c53670a6b76d6f978ab18f6"
+      },
+      "result": "capture_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "capture_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:capture-terminal:0.1.0",
+        "revision": "sha256:9b40b20d0d83176c0e4349125f1626e8b51642000132ad9ceed36d5f1f0e3da4"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "deliver_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:deliver-a:0.1.0",
+        "revision": "sha256:b1763a5297c14970d7c5d63d90c794e646df0df62184c4caab83bb2188d686ab"
+      },
+      "result": "deliver_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "deliver_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:deliver-a-terminal:0.1.0",
+        "revision": "sha256:3c82dd803c8397b8ac4f19d1f53d868ecc230b95b181f137befdb112749d2eba"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "deliver_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:deliver-b:0.1.0",
+        "revision": "sha256:0ec9d38b922c429f2c6ceeeb4f781f2d0f7762dfd639c081e92da00b9d15c02e"
+      },
+      "result": "deliver_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "deliver_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:deliver-b-terminal:0.1.0",
+        "revision": "sha256:1606aee2101e400580cefddc57ce90de752e303c9573407add8029fab72b4dc0"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "handover_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:handover-a:0.1.0",
+        "revision": "sha256:83865c2bc0a2b7964ec8952ed2cf93c83cf81b18cc7b157d5bf257c36360f309"
+      },
+      "result": "handover_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "handover_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:handover-a-terminal:0.1.0",
+        "revision": "sha256:b5d63516f41fd83aea57a24676f4df7bb8ae2f19289e4bf2fc871975d0d7657b"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "handover_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:handover-b:0.1.0",
+        "revision": "sha256:4fef8648c9bd395e0f8a69a095e1884a59c51cfb4744805fcc25e6eb261dd19e"
+      },
+      "result": "handover_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "handover_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:handover-b-terminal:0.1.0",
+        "revision": "sha256:fccdd8f8bbec6bdcaf503a7c3e7ed5537f86bb18047ba3299d549ec4a8f681c7"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "intercept_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:intercept-a:0.1.0",
+        "revision": "sha256:020e8c367a8b58c79d2518ced318db5bb16c24fe9a5f486bb318cff03a19360d"
+      },
+      "result": "intercept_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "intercept_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:intercept-a-terminal:0.1.0",
+        "revision": "sha256:51edf525601439ad586cbba63f5c89a750135425d040537d17c52662de8d920c"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "intercept_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:intercept-b:0.1.0",
+        "revision": "sha256:917c5201c5328aabcdc478ba72761e644ec5746185ab654a473eec01b9431c52"
+      },
+      "result": "intercept_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "intercept_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:intercept-b-terminal:0.1.0",
+        "revision": "sha256:b249591886eba7c9a96c22e07554944f3ac2b660e5c060d1da8ac462ae156c06"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "label_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:label-a:0.1.0",
+        "revision": "sha256:6cda5b3876bfa4d4de5051721736f2b721abed53174a3abf16770d5e533bea74"
+      },
+      "result": "label_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "label_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:label-a-terminal:0.1.0",
+        "revision": "sha256:87eb21d96d6e6a8f2b0d61c7a5eecee6c4ea8f3fbd575b08332d3c60214bf127"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "label_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:label-b:0.1.0",
+        "revision": "sha256:0847be28db2381d34fe6bac275292c0dafcf96bac77be8a14cb5c2045a9a79a2"
+      },
+      "result": "label_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "label_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:label-b-terminal:0.1.0",
+        "revision": "sha256:3c17e23f01372a3c141881ed835f0a17e361f4a4b42386add7441324547ac781"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "notify_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:notify:0.1.0",
+        "revision": "sha256:2552937d247d596e1c4855b452d137bf8c5b773fffed7217a377bec3daf17855"
+      },
+      "result": "notify_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "notify_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:notify-terminal:0.1.0",
+        "revision": "sha256:1d566a326434c9bb0effa408560e4dcacbac36798709f2d251a683d8c5b397ee"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "pack_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:pack-a:0.1.0",
+        "revision": "sha256:19630b87f877d1a93370351e5b7d728d33cc1f838a203a4027748447eff1dceb"
+      },
+      "result": "pack_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "pack_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:pack-a-terminal:0.1.0",
+        "revision": "sha256:3f3fff9077c0b05e8101047401ced0bbd5b7e0e817ca6b9a4571030abcc8004b"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "pack_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:pack-b:0.1.0",
+        "revision": "sha256:b3cb3399eac5d6a85870301d6854add374d3968d8a306ae3c5b13b20a47d9a65"
+      },
+      "result": "pack_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "pack_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:pack-b-terminal:0.1.0",
+        "revision": "sha256:37da434f05011eb1020b43b33fd0863cefe0db890c7f0dc1dc3e4f4fce72f2f1"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "refund_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:refund:0.1.0",
+        "revision": "sha256:f868c5eef3f80b7a6a7496804cbe928cc4ec16853e71d02ca004973b730ab014"
+      },
+      "result": "refund_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "refund_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:refund-terminal:0.1.0",
+        "revision": "sha256:b7857cb9433f346ffa426b1d0ed97aa26fd2d8c36e22b7fff817442e6fd8c6e2"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "release_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:release-a:0.1.0",
+        "revision": "sha256:56cc518b1896af528287551784597f09ea416779c8e1a434a35c15aaf4b76304"
+      },
+      "result": "release_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "release_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:release-a-terminal:0.1.0",
+        "revision": "sha256:d56ed78ff94ce59682771077a9de1fa07c559a80c822fb5613fb027fc9e8bfa9"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "release_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:release-b:0.1.0",
+        "revision": "sha256:385765c98808730f4fa9f19d1b779c5315f39263d38e0d7467448b3c06098b97"
+      },
+      "result": "release_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "release_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:release-b-terminal:0.1.0",
+        "revision": "sha256:0ce78dabba74fa81428dc5295686f7f01d8aaa15f38a84b72495d48e6403d1fd"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "reserve_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:reserve-a:0.1.0",
+        "revision": "sha256:8effe6fc4b4e0ac1623247b036fdc22d3f4b721ca1c678ddc803c5b58456c341"
+      },
+      "result": "reserve_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "reserve_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:reserve-a-terminal:0.1.0",
+        "revision": "sha256:056ad0db59267468cf17fca4a564ffaea04f7595e8780a6c873db97d707a68da"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "reserve_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:reserve-b:0.1.0",
+        "revision": "sha256:84bab33605719abf91779efa33ffd63c16a43f0ac1631c8ee5b8487331704a57"
+      },
+      "result": "reserve_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "reserve_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:reserve-b-terminal:0.1.0",
+        "revision": "sha256:17b7cb1df8c81418da320a2b6d6b70e553157a2ed3c798404185ea9dd1c3bca3"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "stop_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:stop-a:0.1.0",
+        "revision": "sha256:3c9869e718f8817b4e4695ba495337452c1dd4e608f1c8193d88cdc5391c5f1e"
+      },
+      "result": "stop_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "stop_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:stop-a-terminal:0.1.0",
+        "revision": "sha256:dcfefa2a487ee0805a874c29bb08da74389cefbe17ea631252fc2f9394237632"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "stop_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:stop-b:0.1.0",
+        "revision": "sha256:1726f8af17be380ba65fe10ff2c6e23cbb72d08793af31e5234dde5d95ad5780"
+      },
+      "result": "stop_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "stop_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:stop-b-terminal:0.1.0",
+        "revision": "sha256:45d724274c18c3159d2485a702aca628a29bc8b5f7516ca80c8a10aec3e880d6"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "void_label_a_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:void-label-a:0.1.0",
+        "revision": "sha256:d922ec12452852cb0f2636552b0c6657b3dae7d3bcf3b360966321a1d91d8653"
+      },
+      "result": "void_label_a_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "void_label_a_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:void-label-a-terminal:0.1.0",
+        "revision": "sha256:d5bcb0a4ce760bcc0251b8062b00189fbe96b91a4512fca41b92e74cd78c0da7"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "void_label_b_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:void-label-b:0.1.0",
+        "revision": "sha256:4acefbcd5ef20c49bbef5b991f92c36cb4128a85e14dfcc6919bffb84db45a8c"
+      },
+      "result": "void_label_b_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "void_label_b_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:void-label-b-terminal:0.1.0",
+        "revision": "sha256:376c047564c3a5388f71b017e8ed133369252fa45de50f7ca49c3a2e64154cb5"
+      }
+    },
+    {
+      "hostRequirements": [
+        "truthful-authenticated-provider-and-implemented-normalizer",
+        "exact-live-origin-occurrence-attempt-request-key-input-and-observation-correlation",
+        "current-match-authority-source-and-destination-access",
+        "atomic-single-accepted-observation-capture-and-on-observation-completion",
+        "no-write-on-unmatched-duplicate-stale-nonterminal-or-ordinary-cancelled-input",
+        "retained-contradiction-history-and-success-cancellation-closure-cutoffs",
+        "live-owned-storage-subscriptions-and-all-obligation-settlement"
+      ],
+      "origin": "void_activity",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp03:void:0.1.0",
+        "revision": "sha256:10400b8e4d675e72bc296b8edfc9890ffe838a40ffbf2985ced5414842b00f8f"
+      },
+      "result": "void_capture",
+      "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+      "site": "void_observe",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp03:void-terminal:0.1.0",
+        "revision": "sha256:d34ff6837016e62187dfd8778087ab4bee40dcebc35420f2ace4f112dc8cd2da"
+      }
+    }
+  ],
+  "executable": false,
+  "expressions": 133,
+  "policies": 144,
+  "remaining": [
+    "complete-control-flow-and-definite-output-analysis",
+    "complete-information-flow-and-access-authorization",
+    "race-and-invalidation-proofs",
+    "host-trust-and-atomic-runtime-enforcement",
+    "full-benchmark-and-conformance-evidence"
+  ],
+  "revision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+  "status": "static-checks-passed"
+}
