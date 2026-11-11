@@ -9,18 +9,20 @@
 
 ## Current focus
 
-The frozen `e86e2fc` compensation-reference audit is implemented on
-`codex/compensation-reference-audit`: both source 0.15 and raw C11 enforce lexical
-prior-activity identity, independently of actual eligible occurrence. Five SDK /
-five Python groups and a critique/ADR-0069 preserve production/benchmark bytes and
-ordinary privacy. Local 562 Rust + six doctests/native/Wasm/all 65 Python commands
-pass; separate completed-diff delegated review finds no remaining actionable issue.
-Final-head CI/comment audit/signed merge into draft #46 remain required. Next freeze
-a purpose-only raw same-definition activity identity contract, then separately
-version its readable binding; preserve C11 immediate-source owned proof and all live
-gates. All forty scenarios Partial, G1–G4 conditional, parent #46 incomplete. Full
-validator/benchmarks/near-English factoring/identity-managed protected accessible
-text-visual/actual users/host/browser/independent/phase exits stay open. No Phase 2.
+[PR #84](https://github.com/cyborg-nomade/choreoform/pull/84) merged the
+compensation identity audit into draft #46 as
+`b31818a2e01bae81b0ab555eb48d55186d385a0a`, after final-head CI `42987717386`
+and delegated review `5855905766`. Both raw C11 and readable source 0.15 enforce
+lexical prior identity; static acceptance proves no eligible dynamic prior effect.
+No production or benchmark byte changed. Local 562 Rust + six doctests/native/Wasm /
+all 65 Python commands pass. Active `codex/compensation-identity-contract` follows
+signed plan `f18c783`, [raw-only scope](0070-compensation-identity-plan.md): exact
+new core on existing IR, purpose-only same-definition activity identity; preserve
+ordinary privacy, C11 immediate-source owned proof and all live gates. Readable
+binding needs its own next plan/profile. All forty scenarios Partial, G1–G4 and
+parent #46 incomplete; full validator/benchmarks/near-English/protected accessible
+identity-managed text-visual/actual users/host/browser/independent/phase exits open.
+No Phase 2.
 
 ## Verified baseline
 
@@ -1528,6 +1530,19 @@ and then exact readable binding, preserving old artifacts/refusals, ordinary pri
 C11 ownership and actual correlation/authority/new-key/handoff/settlement gates. Parent
 #46 draft, forty Partial, G1–G4 and all full/optional/RP-08/validator/near-English /
 protected accessible identity-managed text-visual/external/phase exits stay open.
+
+[PR #84](https://github.com/cyborg-nomade/choreoform/pull/84) merged into draft
+#46 as `b31818a2e01bae81b0ab555eb48d55186d385a0a` after required CI
+`42987717386` at `404478268fb6278c0eef1a4ab56edfbb61460079`, completed-diff
+delegated review `5855905766`, refreshed empty review threads/actionable summaries
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0069 remains pending parent/main integration; local 562 Rust + six doctests /
+native/Wasm/all 65 Python commands pass. Signed next plan `f18c783` freezes
+[raw purpose-only compensation identity](0070-compensation-identity-plan.md), with
+production work gated on this completed audit merge. No ordinary lexical/privacy /
+owned-source/live permission expands implicitly, and all benchmark bytes stay fixed.
+Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
+protected accessible identity-managed text-visual/external/phase gates remain open.
 
 ## Honest exit accounting
 
