@@ -9,22 +9,20 @@
 
 ## Current focus
 
-The frozen `9bca249` template-parent audit is implemented on
-`codex/rp03-template-binding-audit`, after #88 merged as
-`94adbe95c9770090153d86e9489566b105ff2352`. Actual first failure is invoke
-`authorize_call`, caller `accept_payment`, body `authorize_service`, declared parent
-`order`. There are 23 mismatches among 26 direct invocations; two release bodies
-have two caller contexts. Seven split-child declaration parents match; no broader
-validation is inferred. Five SDK/four Python groups prove same-parent reuse versus
-cross-parent rejection in both raw C11/C12 and source, with old privacy/structure
-failures intact. Local 587 Rust + six doctests/native/Wasm/all 70 Python checks pass;
-completed-diff delegated review finds no scope issue. Required exact-head CI/comments /
-signed parent merge remain. Next separately freeze bounded effectful instantiation
-with exact ports/capability-effect-wait ownership/protection/compensation/storage
-before full source restructuring. Current/history benchmarks and production semantics
-stay fixed; full RP-03 still has no candidate. Forty Partial, G1–G4/full/optional /
-RP-08/validator/near-English/managed protected accessible text-visual/external/phase
-exits remain open. No Phase 2.
+[PR #89](https://github.com/cyborg-nomade/choreoform/pull/89) merged the
+caller/template audit into draft #46 as `28b925b9b1919f029b9231b35aacdead7c399b96`,
+after final-head CI `43031601041` and delegated review `5859708359`. The real first
+failure is authorize_call / accept_payment / authorize_service / declared parent
+order; 23 of 26 invocations have that parent mismatch. Raw C11/C12 enforce the same
+rule, while bounded direct/same-parent reuse passes. Local 587 Rust + six doctests /
+native/Wasm/all 70 Python checks pass. Active
+`codex/effectful-template-instantiation-proof` follows signed `9149340`,
+[bounded proof scope](0075-effectful-template-instantiation-plan.md): two caller
+contexts with exact typed ports/capability-effect-wait ownership/protection/compensation /
+storage, fresh synthetic resources and existing contracts. No benchmark/production
+mutation or full-case rewrite/admission. Forty Partial, G1–G4/parent #46/full /
+optional/RP-08/validator/near-English/managed protected accessible text-visual /
+actual user/host/browser/independent/phase exits remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1698,6 +1696,23 @@ per-occurrence storage before a whole generator rewrite; no hierarchy move is pr
 semantics-neutral. Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator /
 near-English/managed protected accessible text-visual/external/phase exits open.
 No Phase 2.
+
+[PR #89](https://github.com/cyborg-nomade/choreoform/pull/89) merged into draft
+#46 as `28b925b9b1919f029b9231b35aacdead7c399b96` after required CI
+`43031601041` at `290743ef21116653b4d70461f7234ee940d9550f`, delegated
+completed-diff review `5859708359`, refreshed empty thread/actionable-summary audit
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0074 remains pending parent/main integration; local 587 Rust + six doctests /
+native/Wasm/all 70 Python checks pass. Signed `9149340` freezes the next
+[bounded effectful instantiation proof](0075-effectful-template-instantiation-plan.md)
+before probes, gated on this completed audit. Preserve all benchmark/generator /
+resource/guard bytes and production/profile/core/schema/IR/budget behavior. Prove
+matching typed ports/policies/endpoints/protection/compensation/immutable storage
+in two caller contexts using fresh synthetic resources; never infer actual owner /
+prior eligibility/authority/execution from a static relation. No full generator
+rewrite/adoption until a later plan. Parent #46 draft, forty Partial, G1–G4/full /
+optional/RP-08/validator/near-English/managed protected accessible text-visual /
+external/phase exits stay open. No Phase 2.
 
 ## Honest exit accounting
 
