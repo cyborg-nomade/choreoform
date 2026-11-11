@@ -9,21 +9,22 @@
 
 ## Current focus
 
-The corrected RP-03 current-profile checkpoint is implemented on
-`codex/rp03-corrected-checkpoint` under signed `2b8cbdf` / ADR-0073, after
-#87 merged as `946a7e682a9e7784362f1554b0f5798e6996a9cc`. Only the declared
-authorization finish caption and existing source0.16/companion0.15/C12 selection
-change; all resources/guards/scenarios/wires/RP-01 and old contracts stay fixed.
-All 113 original generated files are exact in history/source-0.14, verified against
-#87 head and the saved original copy; old regressions select history explicitly.
-Full current source recognizes 77,135 tokens in 832,138 native visits, then refuses
-`child-template at 0..0`, no candidate or semantic report. Local 582 Rust + six
-doctests/native/Wasm/all 69 Python checks pass; completed-diff review finds no
-remaining scope issue. Required final-head CI/comments/signed parent merge remain.
-Next separately freeze the actual creator/body/scope/parent template-contract audit
-before choosing a restructuring or semantic dependency. Forty Partial, G1–G4 /
-parent #46/full validator/benchmarks/near-English/managed protected accessible
-text-visual/actual user/host/browser/independent/phase exits open. No Phase 2.
+[PR #88](https://github.com/cyborg-nomade/choreoform/pull/88) merged the
+corrected RP-03 checkpoint into draft #46 as
+`94adbe95c9770090153d86e9489566b105ff2352`, after final-head CI `43009055263`
+and delegated review `5857759476`. Only the exact finish caption and existing
+profile/core selection change; original resources/guards/scenarios/wires and all
+RP-01 bytes stay fixed. History/source-0.14 preserves all 113 original generated
+files exactly; old regressions select it explicitly. Local 582 Rust + six doctests /
+native/Wasm/all 69 Python checks pass. Whole current source recognizes 77,135 tokens
+in 832,138 visits then refuses `child-template at 0..0`, no candidate/semantic report.
+Active `codex/rp03-template-binding-audit` follows signed `9bca249`,
+[test/docs scope](0074-rp03-template-binding-audit-plan.md): locate exact creator /
+body/scope/parent and compare raw/readable/normative requirements before choosing a
+restructuring or versioned dependency. No production or benchmark mutation. Forty
+Partial, G1–G4/parent #46/full validator/benchmarks/near-English/managed protected
+accessible text-visual/actual user/host/browser/independent/phase exits open.
+No Phase 2.
 
 ## Verified baseline
 
@@ -1661,6 +1662,22 @@ actual creator/body/current scope/declared parent audit before choosing a correc
 no later template/semantic issue is repaired here. Parent #46 draft, forty Partial,
 G1–G4/full/optional/RP-08/validator/near-English/managed protected accessible text-
 visual/external/phase exits stay open. No Phase 2.
+
+[PR #88](https://github.com/cyborg-nomade/choreoform/pull/88) merged into draft
+#46 as `94adbe95c9770090153d86e9489566b105ff2352` after required CI
+`43009055263` at `66884dc27e04de67634839bf3f9fd42ebb1b3632`, delegated
+completed-diff review `5857759476`, refreshed empty thread/actionable-summary audit
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0073 remains pending parent/main integration; local 582 Rust + six doctests /
+native/Wasm/all 69 Python checks pass. Signed `9bca249` freezes the next
+[actual template relationship audit](0074-rp03-template-binding-audit-plan.md)
+before probes, gated on this checked integration. Current and archived source /
+companion/resources/guards/scenarios/manifest/generator bytes and all old/new
+contracts/budgets/privacy/ownership/runtime diagnostics stay fixed. Compare actual
+creator/body/current scope/declared parent and raw SDK requirements independently;
+choose a later correction from evidence, not an assumed frontend-only gap. Parent
+#46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English/managed
+protected accessible text-visual/external/phase exits stay open. No Phase 2.
 
 ## Honest exit accounting
 
