@@ -93,6 +93,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0066](0066-rp01-capture-adoption.md) | Accepted under delegation; pending parent/main integration | Publish the full RP-01 typed late-capture checkpoint |
 | [0067](0067-rp03-package-draft.md) | Accepted under delegation; pending parent/main integration | Preserve the whole RP-03 draft and its actual capacity refusal |
 | [0068](0068-source-capacity.md) | Accepted under delegation; pending parent/main integration | Version measured source capacity without wider semantics |
+| [0069](0069-compensation-reference-direction.md) | Accepted under delegation; pending parent/main integration | Version compensation identity separately from lexical access |
 
 ## When an ADR is required
 

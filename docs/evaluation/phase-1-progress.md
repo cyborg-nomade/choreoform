@@ -9,17 +9,18 @@
 
 ## Current focus
 
-PR #82 merged the whole declared two-line RP-03 source draft into draft parent #46
-as `3c190c9cf7ae08c792c3b18034a67ec4f0b16006`. Actual unchanged source 0.14
-refuses its 77,135-token / 505,980-byte proposal at 108626..108627 with no IR or
-semantic-stage reports. Independent resource/pure checks are separate evidence.
-Active `codex/source-capacity-profile` follows the [frozen measured plan](0068-source-capacity-plan.md):
-explicit source 0.15/companion 0.14, same core 0.11/IR 0.4, 131,072 full-program
-tokens only, all old profiles/other budgets unchanged. Preserve every RP-01 and
-RP-03 byte and experimentally retain the next actual admission refusal. All forty
-scenarios Partial, G1–G4 conditional, #46 incomplete. Full validator/benchmarks /
-near-English factoring/identity-managed/protected accessible text-visual/actual
-user/host/browser/independent/phase gates remain open. No Phase 2.
+The frozen `e86e2fc` compensation-reference audit is implemented on
+`codex/compensation-reference-audit`: both source 0.15 and raw C11 enforce lexical
+prior-activity identity, independently of actual eligible occurrence. Five SDK /
+five Python groups and a critique/ADR-0069 preserve production/benchmark bytes and
+ordinary privacy. Local 562 Rust + six doctests/native/Wasm/all 65 Python commands
+pass; separate completed-diff delegated review finds no remaining actionable issue.
+Final-head CI/comment audit/signed merge into draft #46 remain required. Next freeze
+a purpose-only raw same-definition activity identity contract, then separately
+version its readable binding; preserve C11 immediate-source owned proof and all live
+gates. All forty scenarios Partial, G1–G4 conditional, parent #46 incomplete. Full
+validator/benchmarks/near-English factoring/identity-managed protected accessible
+text-visual/actual users/host/browser/independent/phase exits stay open. No Phase 2.
 
 ## Verified baseline
 
@@ -1495,6 +1496,38 @@ No privacy/semantic contract is widened here. Parent #46 draft, all forty scenar
 Partial, G1–G4 conditional; full validator/benchmarks/RP-08/optional cases/near-English
 factoring/identity-managed protected accessible text-visual/actual users/host /
 browser/independent/phase exits remain open. No Phase 2 or external blocker.
+
+[PR #83](https://github.com/cyborg-nomade/choreoform/pull/83) merged into draft
+#46 as `f628d0eb50dd490be35288145f82c58278da068a` after corrected final-head CI
+`42923644460` at `a50ee8eb74b0a64ecf639b413daf3a619b0e57c0` and delegated
+completed-diff review `5851132277`. The initial commit omitted the already-tested
+schema/sidecar; the signed follow-up includes them and only its final-head CI is
+merge evidence. Refreshed threads/summary audit found no threads/actionable findings;
+CodeRabbit skipped and supplies no review evidence. Expected-head merge explicitly
+carries sign-off; ADR-0068 remains pending parent/main integration. Local 557 Rust +
+six doctests/native/Wasm/all 64 Python commands pass. Active
+`codex/compensation-reference-audit` follows [the frozen plan](0069-compensation-reference-audit-plan.md):
+raw static checks also use lexical visibility, so assess accepted semantics/current
+context and both layers independently before choosing a purpose-only dependency.
+No private binding/semantic permission changes in this test/docs slice. Every
+benchmark byte stays fixed. Parent #46 draft, all scenarios Partial, G1–G4 conditional;
+all full/optional/RP-08/validator/near-English/editor/visual/external/phase gates open.
+
+ADR-0069's [compensation identity audit](0069-compensation-reference-audit.md)
+is implemented under frozen plan `e86e2fc` with five raw SDK/five native-Python groups.
+Same/ancestor targets pass; sibling/child prior identity refuses in both raw C11 and
+readable source 0.15. Missing/kind/qualification/duplicate/private value/outcome
+failures are recorded independently, including genuine earlier structural failures.
+Static same-site identity does not prove an eligible prior dynamic effect; C11 owned
+work separately refuses any target other than its incoming source. No production
+behavior, completion predicate, resource or committed benchmark byte changes. Local
+562 Rust + six doctests/native/Wasm/all 65 Python workflow commands pass, with separate
+completed-diff delegated review. Required final-head CI/full comment audit/expected-
+head signed merge follow. Next separately freeze a purpose-only raw identity contract
+and then exact readable binding, preserving old artifacts/refusals, ordinary privacy,
+C11 ownership and actual correlation/authority/new-key/handoff/settlement gates. Parent
+#46 draft, forty Partial, G1–G4 and all full/optional/RP-08/validator/near-English /
+protected accessible identity-managed text-visual/external/phase exits stay open.
 
 ## Honest exit accounting
 
