@@ -373,6 +373,9 @@ validated, and round-tripped.
   raw/readable compensation identity barriers. Next separately version the narrow
   same-definition prior-activity identity contract and then exact readable binding;
   preserve ordinary privacy, immediate-source owned proof and all live gates.
+  [ADR-0070](docs/decisions/0070-compensation-identity-contract.md) supplies the raw
+  purpose-only identity contract. Next separately version exact readable binding;
+  this does not broaden aggregate ownership or grant eligible live prior effects.
   [ADR-0068](docs/decisions/0068-source-capacity.md) adds explicit source 0.15
   capacity with the same core/wire/meaning. Full grammar recognizes under unchanged
   parser work; compensation sibling-private identity binding genuinely refuses.

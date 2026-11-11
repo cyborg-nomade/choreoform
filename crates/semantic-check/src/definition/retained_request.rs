@@ -243,6 +243,7 @@ mod tests {
     fn publication_is_cumulative_and_never_drains_a_partial_proof() {
         let b = serde_json::json!({});
         let mut c = Check {
+            compensation_identity: false,
             b: &b,
             resources: Resources::new(&[]).unwrap(),
             cells: BTreeMap::new(),

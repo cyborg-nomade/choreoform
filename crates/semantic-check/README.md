@@ -411,3 +411,10 @@ source/control protection and strict invalidation remain mandatory. Later legacy
 reconciliation retains that prior proof separately; ordinary coverage is unchanged.
 Readable selection, permitted new work and all actual host/storage/authority /
 handoff/cutoff/settlement obligations remain open.
+
+[Core 0.12 / ADR-0070](../../docs/decisions/0070-compensation-identity-contract.md)
+allows only the `compensates` exact activity identity to cross lexical scope within
+one definition. Ordinary private references and the finite owned-work immediate-
+source restriction remain checked; actual eligible prior effects/new command keys /
+authority/ownership are not supplied. All eleven bases and IR 0.4 are required;
+no readable/native selection or benchmark adoption occurs implicitly.

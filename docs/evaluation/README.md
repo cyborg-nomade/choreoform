@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Raw purpose-only compensation identity](0070-compensation-identity.md) versions
+  the narrow same-definition activity link while preserving lexical access and
+  immediate-source owned-work proof; readable selection remains a separate step.
+
 - [Compensation reference critique](0069-compensation-reference-audit.md) separates
   raw and readable lexical identity restrictions from live prior-effect eligibility;
   the next purpose-only contract/binding changes require separate plans.

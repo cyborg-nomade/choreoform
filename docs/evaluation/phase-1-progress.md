@@ -9,20 +9,18 @@
 
 ## Current focus
 
-[PR #84](https://github.com/cyborg-nomade/choreoform/pull/84) merged the
-compensation identity audit into draft #46 as
-`b31818a2e01bae81b0ab555eb48d55186d385a0a`, after final-head CI `42987717386`
-and delegated review `5855905766`. Both raw C11 and readable source 0.15 enforce
-lexical prior identity; static acceptance proves no eligible dynamic prior effect.
-No production or benchmark byte changed. Local 562 Rust + six doctests/native/Wasm /
-all 65 Python commands pass. Active `codex/compensation-identity-contract` follows
-signed plan `f18c783`, [raw-only scope](0070-compensation-identity-plan.md): exact
-new core on existing IR, purpose-only same-definition activity identity; preserve
-ordinary privacy, C11 immediate-source owned proof and all live gates. Readable
-binding needs its own next plan/profile. All forty scenarios Partial, G1–G4 and
-parent #46 incomplete; full validator/benchmarks/near-English/protected accessible
-identity-managed text-visual/actual users/host/browser/independent/phase exits open.
-No Phase 2.
+Raw core 0.12 is implemented on `codex/compensation-identity-contract` under
+signed plan `f18c783` / ADR-0070, after audit #84 merged as
+`b31818a2e01bae81b0ab555eb48d55186d385a0a`. Only P1 `compensates` activity
+identity may cross lexical scope in the same definition. All old artifacts /
+ordinary privacy/C11 immediate-source owned proof/live authority/eligible effect /
+new-key/ownership/settlement gates and benchmark bytes stay fixed. Local 571 Rust +
+six doctests/native/Wasm/all 66 Python commands pass; separate completed-diff review
+finds no remaining actionable scope issue. Required final-head CI/comment audit /
+signed parent merge remain. Next separately freeze explicit readable profile/binding;
+source0.15 keeps its refusal. Forty scenarios Partial, G1–G4 and parent #46 incomplete;
+full validator/benchmarks/near-English/identity-managed protected accessible text-
+visual/actual user/host/browser/independent/phase exits open. No Phase 2.
 
 ## Verified baseline
 
@@ -1543,6 +1541,21 @@ production work gated on this completed audit merge. No ordinary lexical/privacy
 owned-source/live permission expands implicitly, and all benchmark bytes stay fixed.
 Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
 protected accessible identity-managed text-visual/external/phase gates remain open.
+
+ADR-0070's [raw compensation identity contract](0070-compensation-identity.md)
+is implemented under signed plan `f18c783`, after audit #84's checked signed merge.
+Exact core 0.12/IR 0.4 requires all eleven bases/uniform aliases and changes only
+P1 prior-activity identity lookup; no generic private access or C11 owned-source
+relaxation. Eight public SDK/one actual-static-work budget/three Python groups cover
+old/new scope/kind/missing/human/foreign/actual-use/class/purpose/private access,
+exact pins/bases/wire/aliases and preserved inherited/readable refusals. Local
+571 Rust + six doctests/native/Wasm/all 66 Python commands pass; completed-diff
+delegated review finds no remaining actionable scope issue. Required exact-head CI /
+full thread/summary audit/signed parent merge follow. Next separately freeze readable
+binding/profile selection, retaining source0.15/refusals and every benchmark byte;
+no full-case IR bypass/adoption or implicit aggregate ownership/live eligible effect.
+Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
+protected accessible identity-managed text-visual/external/phase exits remain open.
 
 ## Honest exit accounting
 

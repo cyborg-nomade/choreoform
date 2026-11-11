@@ -7,7 +7,7 @@ use choreoform_semantic_check::check_concurrency;
 fn env(f: &Fixture) -> DefinitionEnvelope {
     DefinitionEnvelope::from_parts_versioned("0.4.0", f.b.clone(), json!({})).unwrap()
 }
-fn fixture(scope: &str) -> Fixture {
+pub(super) fn fixture(scope: &str) -> Fixture {
     let mut f = super::finite_work::fixture("irreversible", true, true);
     let mut sibling = f.b["scopes"]["main"].clone();
     sibling["parent"] = "main".into();
