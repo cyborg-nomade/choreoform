@@ -162,6 +162,7 @@ impl Ledger {
             (Some("0.13.0"), Some("0.12.0")) => choreoform_semantic_check::CORE_V10,
             (Some("0.14.0"), Some("0.13.0")) => choreoform_semantic_check::CORE_V11,
             (Some("0.15.0"), Some("0.14.0")) => choreoform_semantic_check::CORE_V11,
+            (Some("0.16.0"), Some("0.15.0")) => choreoform_semantic_check::CORE_V12,
             _ => return Err(error("ledger-profile", 0..0)),
         };
         let mut used = BTreeSet::from([id(&document["definition"])?]);
@@ -361,6 +362,7 @@ impl Ledger {
                             | "0.13.0"
                             | "0.14.0"
                             | "0.15.0"
+                            | "0.16.0"
                     )
                 ) && resource_kind == "provider-fault-source")
                 && !(matches!(
@@ -374,11 +376,14 @@ impl Ledger {
                             | "0.13.0"
                             | "0.14.0"
                             | "0.15.0"
+                            | "0.16.0"
                     )
                 ) && resource_kind == "provider-terminal-observation-source")
                 && !(matches!(
                     document["profile"].as_str(),
-                    Some("0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0")
+                    Some(
+                        "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0"
+                    )
                 ) && resource_kind == "provider-fault-history")
             {
                 return Err(error("resource-kind", 0..0));
@@ -476,7 +481,16 @@ impl Ledger {
         {
             verify(string(&pin["contract"])?, string(&pin["digest"])?)?;
         }
-        if matches!(self.document["profile"].as_str(), Some("0.14.0" | "0.15.0")) {
+        if self.document["profile"] == "0.16.0" {
+            verify(
+                choreoform_semantic_check::CORE_V11.0,
+                choreoform_semantic_check::CORE_V11.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some("0.14.0" | "0.15.0" | "0.16.0")
+        ) {
             verify(
                 choreoform_semantic_check::CORE_V10.0,
                 choreoform_semantic_check::CORE_V10.1,
@@ -484,7 +498,7 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.13.0" | "0.14.0" | "0.15.0")
+            Some("0.13.0" | "0.14.0" | "0.15.0" | "0.16.0")
         ) {
             verify(
                 choreoform_semantic_check::CORE_V9.0,
@@ -493,7 +507,7 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.12.0" | "0.13.0" | "0.14.0" | "0.15.0")
+            Some("0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0")
         ) {
             verify(
                 choreoform_semantic_check::CORE_V8.0,
@@ -502,7 +516,7 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0")
+            Some("0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0")
         ) {
             verify(
                 choreoform_semantic_check::CORE_V7.0,
@@ -511,7 +525,7 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0")
+            Some("0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0")
         ) {
             verify(
                 choreoform_semantic_check::CORE_V6.0,
@@ -520,7 +534,16 @@ impl Ledger {
         }
         if matches!(
             self.document["profile"].as_str(),
-            Some("0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0")
+            Some(
+                "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+            )
         ) {
             verify(
                 choreoform_semantic_check::CORE_V5.0,
@@ -530,7 +553,15 @@ impl Ledger {
         if matches!(
             self.document["profile"].as_str(),
             Some(
-                "0.8.0" | "0.9.0" | "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0"
+                "0.8.0"
+                    | "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
             )
         ) {
             verify(
@@ -550,6 +581,7 @@ impl Ledger {
                     | "0.13.0"
                     | "0.14.0"
                     | "0.15.0"
+                    | "0.16.0"
             )
         ) {
             verify(
@@ -570,6 +602,7 @@ impl Ledger {
                     | "0.13.0"
                     | "0.14.0"
                     | "0.15.0"
+                    | "0.16.0"
             )
         ) {
             verify(
@@ -636,6 +669,40 @@ impl Ledger {
             scope = parent;
         }
         Err(error("reference-missing", 0..0))
+    }
+    /// Exact path lookup ONLY for source 0.16's compensation identity slot.
+    /// This names a declaration, never private values or a dynamic occurrence.
+    pub(crate) fn compensation_identity(&self, parts: &[&str]) -> Result<&Declaration> {
+        let root = &self.declarations[self.root()];
+        if parts.len() < 2
+            || parts.len() > MAX_DEPTH + 1
+            || parts.last().copied() != Some(root.name.as_str())
+        {
+            return Err(error("reference-qualification", 0..0));
+        }
+        let mut scope = root;
+        for name in parts[1..].iter().rev().skip(1) {
+            scope = self
+                .names
+                .get(&(Some(scope.id.clone()), (*name).into()))
+                .and_then(|id| self.declarations.get(id))
+                .ok_or_else(|| error("reference-missing", 0..0))?;
+            if scope.kind != "scope" {
+                return Err(error("reference-kind", 0..0));
+            }
+        }
+        // Direct membership is deliberate: no ancestor fallback or caption scan.
+        self.names
+            .get(&(Some(scope.id.clone()), parts[0].into()))
+            .and_then(|id| self.declarations.get(id))
+            .ok_or_else(|| error("reference-missing", 0..0))
+            .and_then(|row| {
+                if row.kind == "node" {
+                    Ok(row)
+                } else {
+                    Err(error("reference-kind", 0..0))
+                }
+            })
     }
     /// Tentative scope lookup ONLY for the versioned wait-endpoint exception.
     /// The lowering pass must validate the actual wait/policy/activity use before

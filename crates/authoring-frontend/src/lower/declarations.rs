@@ -78,7 +78,7 @@ impl<'a, 's> Lower<'a, 's> {
         let mut record = json!({"parent":parent, "entry":self.r(interface, &id, "node", 0)?, "inputs":inputs, "outputs":outputs, "outcomes":set(outcomes), "cancellation":self.r(interface, &id, "policy", 1)?, "faults":self.r(interface, &id, "policy", 2)?, "closure":self.r(interface, &id, "policy", 3)?, "race":self.r(interface, &id, "policy", 4)?});
         if matches!(
             self.syntax.profile(),
-            "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0"
+            "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0"
         ) {
             record["faultInput"] = if let Some(binding) = tree.all("fault_entry").first() {
                 let history = self.r(binding, &id, "resource", 0)?;
@@ -95,7 +95,7 @@ impl<'a, 's> Lower<'a, 's> {
         }
         if matches!(
             self.syntax.profile(),
-            "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0"
+            "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0"
         ) {
             let mut requests = Map::new();
             if let Some(binding) = tree.all("retained_request").first() {

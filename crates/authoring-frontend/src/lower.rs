@@ -258,7 +258,7 @@ impl<'a> Package<'a> {
         let envelope = DefinitionEnvelope::from_parts_versioned(
             if matches!(
                 self.syntax.profile(),
-                "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0"
+                "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0"
             ) {
                 "0.4.0"
             } else if self.syntax.profile() == "0.10.0" {
@@ -306,6 +306,7 @@ struct Lower<'a, 's> {
     entry_spans: BTreeMap<String, std::ops::Range<usize>>,
     request_spans: BTreeMap<String, std::ops::Range<usize>>,
     pending_steps: Vec<(&'a Tree, String)>,
+    compensation_spans: BTreeMap<String, std::ops::Range<usize>>,
     join_selections: BTreeMap<String, Vec<BTreeSet<String>>>,
     wait_owners: BTreeMap<String, String>,
     pending_waits: Vec<(&'a Tree, String, String)>,
@@ -439,6 +440,7 @@ impl<'a, 's> Lower<'a, 's> {
             entry_spans: BTreeMap::new(),
             request_spans: BTreeMap::new(),
             pending_steps: Vec::new(),
+            compensation_spans: BTreeMap::new(),
             join_selections: BTreeMap::new(),
             wait_owners: BTreeMap::new(),
             pending_waits: Vec::new(),

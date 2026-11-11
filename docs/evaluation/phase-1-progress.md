@@ -9,18 +9,21 @@
 
 ## Current focus
 
-Raw core 0.12 is implemented on `codex/compensation-identity-contract` under
-signed plan `f18c783` / ADR-0070, after audit #84 merged as
-`b31818a2e01bae81b0ab555eb48d55186d385a0a`. Only P1 `compensates` activity
-identity may cross lexical scope in the same definition. All old artifacts /
-ordinary privacy/C11 immediate-source owned proof/live authority/eligible effect /
-new-key/ownership/settlement gates and benchmark bytes stay fixed. Local 571 Rust +
-six doctests/native/Wasm/all 66 Python commands pass; separate completed-diff review
-finds no remaining actionable scope issue. Required final-head CI/comment audit /
-signed parent merge remain. Next separately freeze explicit readable profile/binding;
-source0.15 keeps its refusal. Forty scenarios Partial, G1–G4 and parent #46 incomplete;
-full validator/benchmarks/near-English/identity-managed protected accessible text-
-visual/actual user/host/browser/independent/phase exits open. No Phase 2.
+Explicit source 0.16 / companion 0.15 is implemented on
+`codex/compensation-identity-authoring` under signed plan `30ac848` / ADR-0071,
+after raw #85 merged as `94024f3c5fba3e56c19a9108f8f7b5e6aa354158`.
+Purpose-only exact complete scope paths select C12 prior activity identity, with
+ordinary privacy/C11 owned-source/live gates and every old profile/benchmark byte
+fixed. Four SDK/seven Python groups cover binding/format/reparse/all eleven small
+views and real whole-case refusal. Full RP-03 recognizes 77,135 tokens in 832,138
+visits, then refuses `symbol-mismatch at 0..0`, no candidate or semantic reports.
+Local 575 Rust + six doctests/native/Wasm/all 67 Python commands pass; completed-
+diff delegated review finds no remaining actionable scope issue. Final-head CI /
+comment audit/signed parent merge remain. Next freeze whole-case symbol/companion
+binding audit to identify the actual requested owner/role/name and correction.
+Forty Partial, G1–G4 and parent #46 incomplete; full validator/benchmarks/near-English /
+identity-managed protected accessible text-visual/actual user/host/browser /
+independent/phase exits open. No Phase 2.
 
 ## Verified baseline
 
@@ -1556,6 +1559,39 @@ binding/profile selection, retaining source0.15/refusals and every benchmark byt
 no full-case IR bypass/adoption or implicit aggregate ownership/live eligible effect.
 Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
 protected accessible identity-managed text-visual/external/phase exits remain open.
+
+[PR #85](https://github.com/cyborg-nomade/choreoform/pull/85) merged into draft
+#46 as `94024f3c5fba3e56c19a9108f8f7b5e6aa354158` after required CI
+`42989857709` at `b40d42454d55d0165a7e3a788b31f96756b324a3`, delegated
+completed-diff review `5856100061`, refreshed empty thread/actionable-summary audit
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0070 remains pending parent/main integration; local 571 Rust + six doctests /
+native/Wasm/all 66 Python checks pass. Signed next plan `30ac848` freezes
+[explicit readable compensation identity](0071-compensation-identity-authoring-plan.md)
+before production work, with this checked raw merge as dependency. Preserve all
+old versions/refusals/benchmarks, ordinary privacy, C11 owned-source proof and actual
+eligible effect/current authority/new-key/handoff/settlement gates. Parent #46 draft,
+forty Partial, G1–G4/full/optional/RP-08/validator/near-English/identity-managed protected
+accessible text-visual/external/phase exits stay open. No Phase 2.
+
+ADR-0071's [readable compensation identity](0071-compensation-authoring.md)
+is implemented under signed plan `30ac848`, after #85's required checked merge.
+Explicit source 0.16/companion 0.15 selects C12/IR0.4 and all eleven bases; only
+Compensates gets exact full scope-path identity resolution, with direct membership,
+shadow/Unicode/kind checks and exact source spans. Generic private references and
+C11 immediate-source owned proof stay unchanged. Four SDK/seven Python groups cover
+paths/old-new refusal/human/format-reparse/all eleven inherited views, exact pair /
+core/bases/future/bounds and real full-case failure. Whole RP-03 recognizes all
+505,980 bytes/77,135 tokens in 832,138 native visits, then genuinely refuses
+`symbol-mismatch at 0..0`, empty stdout; no candidate/revision/full semantic report.
+Independent Python integrity agrees; its full recognizer still reaches the unchanged
+state bound. Every committed benchmark byte stays fixed. Local 575 Rust + six
+doctests/native/Wasm/all 67 Python commands pass; separate completed-diff review
+finds no remaining actionable scope issue. Final-head CI/full comments/signed merge
+follow. Next separately freeze the whole-case symbol/companion binding audit before
+choosing any generator/frontend correction or adoption. Parent #46 draft, forty
+Partial, G1–G4/full/optional/RP-08/validator/near-English/protected accessible managed
+identity/text-visual/external/phase exits remain open. No Phase 2.
 
 ## Honest exit accounting
 

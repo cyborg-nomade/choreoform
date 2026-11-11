@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Readable compensation identity and next binding gap](0071-compensation-authoring.md)
+  records source0.16's purpose-only paths and genuine later whole-order refusal;
+  no full candidate or semantic admission exists.
+
 - [Raw purpose-only compensation identity](0070-compensation-identity.md) versions
   the narrow same-definition activity link while preserving lexical access and
   immediate-source owned-work proof; readable selection remains a separate step.

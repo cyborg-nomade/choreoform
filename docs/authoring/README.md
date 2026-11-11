@@ -3,6 +3,12 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source0.16 / companion0.15 profile](profile-v0.16.md) selects core0.12/IR0.4
+for purpose-only, exactly qualified prior-activity identity. Ordinary private values /
+outcomes/policies/control remain lexical and owned-source/live host gates stay fixed.
+Whole RP-03 moves to a later symbol-binding refusal; near-English factoring and
+managed protected accessible text/visual editing remain explicit Phase1 work.
+
 The [source 0.14 / companion 0.13 profile](profile-v0.14.md) explicitly selects
 existing core 0.11/IR 0.4 for finite capture-first commands/compensators and pure
 local inputs. Existing sentences/quotas remain; bounded native work/class/input /

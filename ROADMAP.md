@@ -376,6 +376,10 @@ validated, and round-tripped.
   [ADR-0070](docs/decisions/0070-compensation-identity-contract.md) supplies the raw
   purpose-only identity contract. Next separately version exact readable binding;
   this does not broaden aggregate ownership or grant eligible live prior effects.
+  [ADR-0071](docs/decisions/0071-compensation-identity-authoring.md) supplies explicit
+  source0.16 purpose-only exact paths. Whole RP-03 reaches a later symbol/companion
+  binding refusal; audit that cause next before correcting the case or language.
+  Full candidate/semantic admission and near-English/editor/visual goals remain open.
   [ADR-0068](docs/decisions/0068-source-capacity.md) adds explicit source 0.15
   capacity with the same core/wire/meaning. Full grammar recognizes under unchanged
   parser work; compensation sibling-private identity binding genuinely refuses.
