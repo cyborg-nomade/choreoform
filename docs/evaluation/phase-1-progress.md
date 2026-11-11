@@ -9,21 +9,21 @@
 
 ## Current focus
 
-Explicit source 0.16 / companion 0.15 is implemented on
-`codex/compensation-identity-authoring` under signed plan `30ac848` / ADR-0071,
-after raw #85 merged as `94024f3c5fba3e56c19a9108f8f7b5e6aa354158`.
-Purpose-only exact complete scope paths select C12 prior activity identity, with
-ordinary privacy/C11 owned-source/live gates and every old profile/benchmark byte
-fixed. Four SDK/seven Python groups cover binding/format/reparse/all eleven small
-views and real whole-case refusal. Full RP-03 recognizes 77,135 tokens in 832,138
-visits, then refuses `symbol-mismatch at 0..0`, no candidate or semantic reports.
-Local 575 Rust + six doctests/native/Wasm/all 67 Python commands pass; completed-
-diff delegated review finds no remaining actionable scope issue. Final-head CI /
-comment audit/signed parent merge remain. Next freeze whole-case symbol/companion
-binding audit to identify the actual requested owner/role/name and correction.
-Forty Partial, G1–G4 and parent #46 incomplete; full validator/benchmarks/near-English /
-identity-managed protected accessible text-visual/actual user/host/browser /
-independent/phase exits open. No Phase 2.
+[PR #86](https://github.com/cyborg-nomade/choreoform/pull/86) merged explicit
+source 0.16/companion 0.15/C12/IR0.4 into draft #46 as
+`bb0b280971519cfe67dc3f9a791e2e33d731a9dc`, after final-head CI `43002239019`
+and completed-diff delegated review `5857164364`. Exact purpose-only compensation
+paths preserve ordinary privacy, C11 owned-source proof, old profiles/benchmarks and
+all live gates. Local 575 Rust + six doctests/native/Wasm/all 67 Python checks pass.
+Whole RP-03 recognizes 77,135 tokens in 832,138 native visits then genuinely refuses
+`symbol-mismatch at 0..0`, empty stdout; no full candidate or semantic report exists.
+Active `codex/rp03-symbol-binding-audit` follows signed plan `b2874c5`,
+[test/docs-only scope](0072-rp03-symbol-binding-audit-plan.md), before probes: locate
+the exact requested symbol owner/role/name and choose the next narrow correction
+from source/ledger evidence. No production permission/diagnostic or benchmark byte
+change. Forty Partial, G1–G4 and parent #46 incomplete; full validator/benchmarks /
+near-English/managed identities/protected accessible text-visual/actual user/host /
+browser/independent/phase exits remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1592,6 +1592,21 @@ follow. Next separately freeze the whole-case symbol/companion binding audit bef
 choosing any generator/frontend correction or adoption. Parent #46 draft, forty
 Partial, G1–G4/full/optional/RP-08/validator/near-English/protected accessible managed
 identity/text-visual/external/phase exits remain open. No Phase 2.
+
+[PR #86](https://github.com/cyborg-nomade/choreoform/pull/86) merged into draft
+#46 as `bb0b280971519cfe67dc3f9a791e2e33d731a9dc` after required CI
+`43002239019` at `f85d8b884216fd99df54809dfc695bd3fb1c3bbb`, delegated
+completed-diff review `5857164364`, refreshed empty threads/actionable summaries
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0071 remains pending parent/main integration; local 575 Rust + six doctests /
+native/Wasm/all 67 Python checks pass. Signed next plan `b2874c5` freezes the
+[whole-order symbol-binding audit](0072-rp03-symbol-binding-audit-plan.md) before
+probes, with this checked merge as dependency. Keep source/resources/guards/benchmark
+bytes and production/profile/core/privacy/budget behavior fixed; identify the actual
+symbol request before choosing a repair. No full candidate/semantic/eligible effect /
+host authority or broader ownership claim. Parent #46 draft, forty Partial, G1–G4 /
+full/optional/RP-08/validator/near-English/managed protected accessible text-visual /
+external/phase exits stay open. No Phase 2.
 
 ## Honest exit accounting
 
