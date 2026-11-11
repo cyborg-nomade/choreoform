@@ -109,7 +109,7 @@ fn actual_order_nominal_invariants_reject_wrong_totals_duplicate_lines_and_inval
         );
     }
     assert_eq!(f.manifest["canonicalIR"], Value::Null);
-    assert_eq!(f.manifest["lowering"]["code"], "tokens");
+    assert_eq!(f.manifest["lowering"]["code"], "child-template");
     assert!(
         f.manifest["semanticStageResults"]
             .as_array()

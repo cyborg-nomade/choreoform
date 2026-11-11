@@ -26,7 +26,7 @@ struct Fixture {
 impl Fixture {
     fn new() -> Self {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
-        let base = root.join("docs/benchmarks/rp03");
+        let base = root.join("docs/benchmarks/rp03/history/source-0.14");
         let source = std::fs::read_to_string(base.join("source.choreo"))
             .unwrap()
             .replacen("authoring \"0.14.0\"", "authoring \"0.16.0\"", 1);

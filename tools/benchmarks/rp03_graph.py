@@ -10,8 +10,8 @@ from .rp03_source import (
 from .rp03_resources import SPECS, PEOPLE, CAPABILITIES
 
 
-def build(type_pin,providers,pins):
-    p=new_package();p.guard_rules={}
+def build(type_pin,providers,pins,*,historical=False):
+    p=new_package(historical=historical);p.guard_rules={}
     root=Scope(p,'order','Order fulfillment',None,'Start acceptance',
         inputs=[('order','Order','Original order')],outputs=[('first','First line','First line disposition'),('second','Second line','Second line disposition')],
         outcomes=['recorded'],closure='Preserve order obligations',race='Order commitments',cancellation='Customer cancellation')
@@ -91,7 +91,7 @@ def build(type_pin,providers,pins):
         root.child(scope);acceptance.append((which,scope,which+'-recorded'))
     auth=Scope(p,'accept_payment','Authorize branch',root,'authorize call',outcomes=['authorization-recorded'])
     call(auth,'authorize_call','authorize','Finish authorization')
-    auth.step('accept_payment_done','Finish authorization','Finish as "authorization recorded".')
+    auth.step('accept_payment_done','Finish authorization','Finish as "authorization recorded".' if historical else 'Finish as "authorization-recorded".')
     root.child(auth);acceptance.append(('payment',auth,'authorization-recorded'))
     parallel(root,'start_acceptance','Start acceptance',acceptance,'Check authorization')
     authorized=success('authorize','authorized');a_reserved=success('reserve_a','reserved');b_reserved=success('reserve_b','reserved')
@@ -214,5 +214,5 @@ def build(type_pin,providers,pins):
     root.child(settlement)
     call(root,'notify_call','notify','Finish order record',basis=field(R,'order ID'))
     root.step('order_done','Finish order record','Finish as "recorded".')
-    source='# SPDX-FileCopyrightText: 2026 Choreoform contributors\n# SPDX-License-Identifier: MPL-2.0\n# Synthetic full two-line draft; not admitted or executable.\nChoreoform authoring "0.14.0".\n'+root.render()+'\n'
+    source='# SPDX-FileCopyrightText: 2026 Choreoform contributors\n# SPDX-License-Identifier: MPL-2.0\n# Synthetic full two-line draft; not admitted or executable.\n'+f'Choreoform authoring "{p.ledger["profile"]}".\n'+root.render()+'\n'
     return source,p

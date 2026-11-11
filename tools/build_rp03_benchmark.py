@@ -21,7 +21,7 @@ BASE=ROOT/'docs/benchmarks/rp03'
 LICENSE=b'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n'
 
 
-def artifacts():
+def package_artifacts(*,historical=False):
     _,raw,tp=types();files={'types.json':raw,'launch-values.json':encoded(inputs())}
     docs=providers(tp);clocks=clock_resources();pins={k:v[2] for k,v in docs.items()}
     registry=[]
@@ -39,7 +39,7 @@ def artifacts():
         resource(key+'.json',raw,p);pins[key]=p
     for profile in [TERMINAL_PROFILE,clocks['clock'][0]['profile']]:
         registry.append({'id':profile['id'],'revision':profile['revision'],'path':'docs/ir/contracts/'+profile['revision'].replace(':','-')+'.txt'})
-    source,package=build(tp,{k:v[0] for k,v in docs.items()},pins)
+    source,package=build(tp,{k:v[0] for k,v in docs.items()},pins,historical=historical)
     validate_ledger(package.ledger)
     files['source.choreo']=source.encode();files['bindings.json']=package.companion()
     files['receipt-rules.json']=encoded({'premise':'Emitted pure declaration ASTs, not compiled full source, accepted observations or process traces.', 'rules':{key:matched_completion(key,read('Instruction'),tags) for key,_,_,tags,_ in SPECS}})
@@ -49,9 +49,9 @@ def artifacts():
     supplied=[(r['id'],r['revision'],files[r['path'].removeprefix('docs/benchmarks/rp03/')] if r['path'].startswith('docs/benchmarks/rp03/') else (ROOT/r['path']).read_bytes()) for r in registry]
     result=invoke((source,package.ledger,supplied))
     manifest={'format':'choreoform-rp03-benchmark-draft','version':'0.1.0','status':'source-draft-with-actual-lowering-result','executable':False,
-        'sourceProfile':'0.14.0','companionVersion':'0.13.0','coreProfile':'0.11.0','intendedWireVersion':'0.4.0',
+        'sourceProfile':package.ledger['profile'],'companionVersion':package.ledger['version'],'coreProfile':'0.11.0' if historical else '0.12.0','intendedWireVersion':'0.4.0',
         'sourceBytes':len(files['source.choreo']),'measuredTokens':sum(len(lex(line)) for line in source.splitlines()),
-        'tokenMeasurement':'sum of complete-line lexing; not whole-program recognition',
+        'tokenMeasurement':'sum of complete-line lexing; not whole-program recognition' if historical else 'sum of complete-line lexing; whole-program native recognition verified separately',
         **{k+'Digest':v for k,v in package_digests(files['source.choreo'],files['bindings.json']).items()},
         'contracts':package.ledger['contracts'],'resources':registry,
         'inputArtifacts':[{'path':name,'digest':'sha256:'+sha256(files[name]).hexdigest(),'meaning':'synthetic input or pure declaration evidence, never an accepted event'} for name in ['launch-values.json','receipt-rules.json','receipt-cases.json','guard-rules.json','guard-cases.json']],
@@ -97,6 +97,33 @@ def artifacts():
     files['manifest.json']=encoded(manifest)
     for name in list(files):
         if name.endswith(('.json','.txt')):files[name+'.license']=LICENSE
+    return files
+
+
+def historical_artifacts():
+    return package_artifacts(historical=True)
+
+
+def artifacts():
+    files=package_artifacts();original=historical_artifacts()
+    for name,raw in original.items():
+        if name not in ['source.choreo','bindings.json','manifest.json']:
+            assert files[name]==raw,name
+        files['history/source-0.14/'+name]=raw
+    files['history/source-0.14/README.md']=b'''<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
+# Original source-0.14 RP-03 draft
+
+Every generated file here is exact original draft evidence from PR #87 head
+13df5101bd8ba5dc94cdb0ec3ec2fbc84dcd6ee0, before ADR-0073's caption correction
+and existing-profile adoption. This contextual README is new, not an old artifact.
+Original manifest resource paths intentionally name unchanged current resource bytes.
+Source0.14 refuses its token quota; temporary source0.15 reaches private compensation
+identity and source0.16/C12 reaches the inconsistent authorization finish caption.
+No original candidate/semantic report or live authority exists. See the current
+checkpoint and docs/evaluation/0072-rp03-symbol-binding-audit.md for the exact cause.
+'''
     return files
 
 

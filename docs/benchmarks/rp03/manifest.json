@@ -3,24 +3,24 @@
   "version": "0.1.0",
   "status": "source-draft-with-actual-lowering-result",
   "executable": false,
-  "sourceProfile": "0.14.0",
-  "companionVersion": "0.13.0",
-  "coreProfile": "0.11.0",
+  "sourceProfile": "0.16.0",
+  "companionVersion": "0.15.0",
+  "coreProfile": "0.12.0",
   "intendedWireVersion": "0.4.0",
   "sourceBytes": 505980,
   "measuredTokens": 77135,
-  "tokenMeasurement": "sum of complete-line lexing; not whole-program recognition",
-  "sourceDigest": "sha256:0b6a4c2b18367f47707003cf93358106c8fe20950a677ed7444e182ead938797",
-  "bindingsDigest": "sha256:4b06fbbe97c90b6a63e465ec1eb4c9f7824126b28ea5584227537a702d21a1a4",
-  "packageDigest": "sha256:b3af3f83a0bac615b4d5fb77d361617e50e43c51d1538d9b0cad34c23249cc2e",
+  "tokenMeasurement": "sum of complete-line lexing; whole-program native recognition verified separately",
+  "sourceDigest": "sha256:43b89e4f755c9a22bd548210fc21a388c5b8b9a7cf49d63579474fdc0eee2b68",
+  "bindingsDigest": "sha256:1e29afd35bc79a0ea32a377887b31b8ebef2b1b8f7ba204c845a3c1c06b7b3da",
+  "packageDigest": "sha256:f14598c4e75e1d134a65b9ef85f6a21dd9edd1cca38c7fcb75e4ee0a87a927f5",
   "contracts": {
     "semantics": {
       "contract": "urn:choreoform:semantics:adr-0008",
       "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
     },
     "core": {
-      "contract": "urn:choreoform:contracts:core-profile:0.11.0",
-      "digest": "sha256:246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e",
+      "contract": "urn:choreoform:contracts:core-profile:0.12.0",
+      "digest": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007",
       "dialect": "core"
     }
   },
@@ -310,12 +310,12 @@
   ],
   "lowering": {
     "result": "refused",
-    "code": "tokens",
+    "code": "child-template",
     "sourceBytes": [
-      108626,
-      108627
+      0,
+      0
     ],
-    "diagnostic": "tokens at 108626..108627"
+    "diagnostic": "child-template at 0..0"
   },
   "canonicalIR": null,
   "semanticStageResults": [],

@@ -9,19 +9,21 @@
 
 ## Current focus
 
-[PR #87](https://github.com/cyborg-nomade/choreoform/pull/87) merged the
-exact symbol audit into draft #46 as `946a7e682a9e7784362f1554b0f5798e6996a9cc`,
-after final-head CI `43005127866` and delegated review `5857420379`. The sole
-mismatch among 56 generated direct finishes is `authorization recorded` versus
-its declared name/wire `authorization-recorded`. Runtime semantics/diagnostics and
-every generator/benchmark byte stayed fixed. Local 580 Rust + six doctests/native /
-Wasm/all 68 Python checks pass. Active `codex/rp03-corrected-checkpoint` follows
-signed plan `2b8cbdf`, [controlled repair/history scope](0073-rp03-corrected-checkpoint-plan.md):
-correct only that finish caption, preserve the original full draft bytes, explicitly
-select existing source0.16/C12 and measure the next actual frontend result. No full
-candidate/admission is presumed. Forty Partial, G1–G4 and parent #46 incomplete;
-full validator/benchmarks/near-English/managed protected accessible text-visual /
-actual user/host/browser/independent/phase exits remain open. No Phase 2.
+The corrected RP-03 current-profile checkpoint is implemented on
+`codex/rp03-corrected-checkpoint` under signed `2b8cbdf` / ADR-0073, after
+#87 merged as `946a7e682a9e7784362f1554b0f5798e6996a9cc`. Only the declared
+authorization finish caption and existing source0.16/companion0.15/C12 selection
+change; all resources/guards/scenarios/wires/RP-01 and old contracts stay fixed.
+All 113 original generated files are exact in history/source-0.14, verified against
+#87 head and the saved original copy; old regressions select history explicitly.
+Full current source recognizes 77,135 tokens in 832,138 native visits, then refuses
+`child-template at 0..0`, no candidate or semantic report. Local 582 Rust + six
+doctests/native/Wasm/all 69 Python checks pass; completed-diff review finds no
+remaining scope issue. Required final-head CI/comments/signed parent merge remain.
+Next separately freeze the actual creator/body/scope/parent template-contract audit
+before choosing a restructuring or semantic dependency. Forty Partial, G1–G4 /
+parent #46/full validator/benchmarks/near-English/managed protected accessible
+text-visual/actual user/host/browser/independent/phase exits open. No Phase 2.
 
 ## Verified baseline
 
@@ -1639,6 +1641,26 @@ privacy/owned/live gates. Measure subsequent actual failures; no full IR/admissi
 or supported scenario is presumed. Parent #46 draft, forty Partial, G1–G4/full /
 optional/RP-08/validator/near-English/managed protected accessible text-visual /
 external/phase exits remain open. No Phase 2.
+
+ADR-0073's [corrected current-profile RP-03 checkpoint](0073-rp03-corrected-checkpoint.md)
+is implemented under signed `2b8cbdf`, after checked #87 integration. The one finish
+caption now matches its declared outcome; explicit existing source0.16/companion0.15 /
+C12/IR0.4 selection changes no contract/quota/privacy/ownership or other source /
+resource/guard/scenario/wire meaning. All 113 original generated files are preserved
+exactly under history/source-0.14, independently checked against #87 head and the
+saved original bytes; digest `797d01f0b1a42db5c71de9bc7a054d58e24333798b23e6cde22225dc4cc707ee`.
+Old capacity/private-reference/symbol regressions route to history explicitly.
+Current full SDK/native source recognizes all 77,135 tokens in 832,138 visits, then
+refuses `child-template at 0..0`, empty stdout; no candidate/semantic reports. Two
+SDK/four Python groups cover allowed deltas/history/current integrity/failure/zero
+current mismatches among 56 finishes. Local 582 Rust + six doctests/native/Wasm /
+all 69 Python checks pass, including the full rerun after updating one stale current-
+manifest refusal assertion; completed-diff delegated review finds no remaining scope
+issue. Required exact-head CI/comments/signed parent merge follow. Next freeze the
+actual creator/body/current scope/declared parent audit before choosing a correction;
+no later template/semantic issue is repaired here. Parent #46 draft, forty Partial,
+G1–G4/full/optional/RP-08/validator/near-English/managed protected accessible text-
+visual/external/phase exits stay open. No Phase 2.
 
 ## Honest exit accounting
 

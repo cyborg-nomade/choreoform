@@ -5,7 +5,7 @@ use super::*;
 use choreoform_semantic_check::{CORE_V11, CORE_V12};
 use serde_json::json;
 
-fn current() -> Fixture {
+pub(super) fn current() -> Fixture {
     let mut f = Fixture::small();
     f.promote();
     f.source = f
@@ -127,7 +127,7 @@ fn explicit_pair_core_every_base_and_future_header_are_required() {
 #[test]
 fn complete_order_uses_the_real_new_frontend_then_refuses_a_later_binding() {
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
-    let base = root.join("docs/benchmarks/rp03");
+    let base = root.join("docs/benchmarks/rp03/history/source-0.14");
     let mut f = current();
     f.source = std::fs::read_to_string(base.join("source.choreo"))
         .unwrap()

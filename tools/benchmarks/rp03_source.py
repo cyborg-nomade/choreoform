@@ -23,8 +23,9 @@ def expr(value): return expression_source(value,'Order types')
 def ty(value): return type_source(value,'Order types')
 
 
-def new_package():
-    p=Package(definition='rp03_benchmark',root='order',profile='0.14.0',version='0.13.0',core=CORE11,
+def new_package(*, historical=False):
+    core=CORE11 if historical else {'contract':'urn:choreoform:contracts:core-profile:0.12.0','digest':'sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007','dialect':'core'}
+    p=Package(definition='rp03_benchmark',root='order',profile='0.14.0' if historical else '0.16.0',version='0.13.0' if historical else '0.15.0',core=core,
         type_name='Order types',purpose=('fulfillment','Order fulfillment'),protection_policy='Order access',sensitivity='order')
     p.ledger['annotations']={'benchmark':'RP-03','synthetic':True,'variant':'two explicit identified lines and warehouses; no general fan-out output aggregation'}
     return p

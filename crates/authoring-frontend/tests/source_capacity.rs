@@ -120,7 +120,7 @@ fn new_pair_does_not_guess_an_old_pair_core_or_missing_inherited_contract() {
 #[test]
 fn actual_full_order_recognizes_with_old_work_limit_and_keeps_private_compensation_refusal() {
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
-    let base = root.join("docs/benchmarks/rp03");
+    let base = root.join("docs/benchmarks/rp03/history/source-0.14");
     let old = std::fs::read_to_string(base.join("source.choreo")).unwrap();
     let error = parse(old.as_bytes()).unwrap_err();
     assert_eq!(error.code, "tokens");
@@ -158,3 +158,6 @@ fn actual_full_order_recognizes_with_old_work_limit_and_keeps_private_compensati
 
 #[path = "capture/compensation-identity.rs"]
 mod compensation_identity;
+
+#[path = "capture/rp03-current-checkpoint.rs"]
+mod rp03_current_checkpoint;

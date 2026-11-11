@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Choreoform contributors
 # SPDX-License-Identifier: MPL-2.0
 # Synthetic full two-line draft; not admitted or executable.
-Choreoform authoring "0.14.0".
+Choreoform authoring "0.16.0".
 Process "Order fulfillment".
 Start at "Start acceptance".
 Inputs ["Order" uses "Original order"]. Outputs ["First line" uses "First line disposition", "Second line" uses "Second line disposition"]. Outcomes ["recorded"].
@@ -898,7 +898,7 @@ Capabilities ["Reserve first line", "Reserve second line", "Authorize order paym
 Let "authorize call instruction" mean (record with ["order" is (the value of "Original order"), "scope key" is (field "order ID" of (the representation of (the value of "Original order"))), "scope revision" is (field "revision" of (the representation of (the value of "Original order"))), "request revision" is ("authorize_call-instruction-v1"), "amount" is (field "amount" of (the representation of (the value of "Original order"))), "currency" is (field "currency" of (the representation of (the value of "Original order"))), "basis reference" is (field "payment reference" of (the representation of (the value of "Original order"))), "address revision" is (field "revision" of (field "address reference" of (the representation of (the value of "Original order")))), "target quantity" is (no value of whole number), "target warehouse" is (no value of text)]) as record with ["order" as type "Order" from "Order types", "scope key" as text, "scope revision" as text, "request revision" as text, "amount" as decimal with 2 places, "currency" as text, "basis reference" as text, "address revision" as text, "target quantity" as optional whole number, "target warehouse" as optional text] with parameters empty.
 Step "authorize call". Run "Authorize order payment occurrence" with inputs ["Request" uses "authorize call instruction"] and outputs ["Result" uses "authorize call result"]. On "complete", continue with "Record authorize call". End step.
 Step "Record authorize call". Set together ["Authorize order payment record" to (some (the value of "authorize call result"))]. On "next", continue with "Finish authorization". End step.
-Step "Finish authorization". Finish as "authorization recorded".  End step.
+Step "Finish authorization". Finish as "authorization-recorded".  End step.
 End scope.
 Step "Start acceptance". Start together ["a" runs "Reserve a branch", "b" runs "Reserve b branch", "payment" runs "Authorize branch"] and gather at "Start acceptance gathered".  End step.
 Step "Start acceptance gathered". Gather from "Start acceptance" when all report [outcome "a-recorded" of "Reserve a branch", outcome "b-recorded" of "Reserve b branch", outcome "authorization-recorded" of "Authorize branch"]; for unfinished work use "Settle children". On "gathered", continue with "Check authorization". End step.

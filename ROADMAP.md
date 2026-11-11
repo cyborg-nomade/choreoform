@@ -384,6 +384,10 @@ validated, and round-tripped.
   inconsistent authorization finish caption among 56 generated direct finishes.
   Next separately correct the generator/source literal, retain original evidence
   and measure subsequent actual failures; no new symbol permission is required.
+  [ADR-0073](docs/decisions/0073-rp03-corrected-checkpoint.md) publishes that exact
+  caption/current-profile checkpoint with original history preserved. Full native
+  recognition now reaches `child-template`; audit that actual relationship next,
+  preserving contract/privacy/ownership boundaries and all remaining phase gates.
   [ADR-0068](docs/decisions/0068-source-capacity.md) adds explicit source 0.15
   capacity with the same core/wire/meaning. Full grammar recognizes under unchanged
   parser work; compensation sibling-private identity binding genuinely refuses.

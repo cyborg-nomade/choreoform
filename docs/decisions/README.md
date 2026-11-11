@@ -97,6 +97,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0070](0070-compensation-identity-contract.md) | Accepted under delegation; pending parent/main integration | Publish purpose-only compensation activity identity |
 | [0071](0071-compensation-identity-authoring.md) | Accepted under delegation; pending parent/main integration | Bind exact readable compensation activity identities |
 | [0072](0072-rp03-symbol-binding-direction.md) | Accepted under delegation; pending parent/main integration | Correct the RP-03 finish caption, preserving exact symbol semantics |
+| [0073](0073-rp03-corrected-checkpoint.md) | Accepted under delegation; pending parent/main integration | Publish a corrected current-profile RP-03 draft with exact history |
 
 ## When an ADR is required
 
