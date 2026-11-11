@@ -9,22 +9,19 @@
 
 ## Current focus
 
-The frozen `b2874c5` whole-order symbol audit is implemented on
-`codex/rp03-symbol-binding-audit`, after #86 merged as
-`bb0b280971519cfe67dc3f9a791e2e33d731a9dc`. Actual failed lookup is owner
-`accept_payment`, role `outcome`, name `authorization recorded`; its declared
-interface/companion/join use `authorization-recorded`. This is one mismatch among
-56 generated direct finishes. Five SDK/four Python groups reject metadata-only
-renames/aliases and show consistent friendly captions can keep stable wires. No
-production behavior/diagnostic, generator or benchmark byte changes; full RP-03
-still has no candidate/semantic report. Local 580 Rust + six doctests/native/Wasm /
-all 68 Python checks pass; separate completed-diff delegated review finds no
-remaining scope issue. Final-head CI/comments/signed parent merge remain. Next
-separately freeze exact generator/source caption correction, preserve original
-evidence and measure the next genuine full-source result. Forty Partial, G1–G4 /
-parent #46/full validator/benchmarks/near-English/protected accessible managed
-identity/text-visual/actual user/host/browser/independent/phase gates remain open.
-No Phase 2.
+[PR #87](https://github.com/cyborg-nomade/choreoform/pull/87) merged the
+exact symbol audit into draft #46 as `946a7e682a9e7784362f1554b0f5798e6996a9cc`,
+after final-head CI `43005127866` and delegated review `5857420379`. The sole
+mismatch among 56 generated direct finishes is `authorization recorded` versus
+its declared name/wire `authorization-recorded`. Runtime semantics/diagnostics and
+every generator/benchmark byte stayed fixed. Local 580 Rust + six doctests/native /
+Wasm/all 68 Python checks pass. Active `codex/rp03-corrected-checkpoint` follows
+signed plan `2b8cbdf`, [controlled repair/history scope](0073-rp03-corrected-checkpoint-plan.md):
+correct only that finish caption, preserve the original full draft bytes, explicitly
+select existing source0.16/C12 and measure the next actual frontend result. No full
+candidate/admission is presumed. Forty Partial, G1–G4 and parent #46 incomplete;
+full validator/benchmarks/near-English/managed protected accessible text-visual /
+actual user/host/browser/independent/phase exits remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1627,6 +1624,21 @@ original evidence and measuring actual subsequent failures before further repair
 adoption. No full candidate/revision/semantic or live event/authority/ownership claim.
 Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
 managed protected accessible text-visual/external/phase exits stay open. No Phase 2.
+
+[PR #87](https://github.com/cyborg-nomade/choreoform/pull/87) merged into draft
+#46 as `946a7e682a9e7784362f1554b0f5798e6996a9cc` after required CI
+`43005127866` at `13df5101bd8ba5dc94cdb0ec3ec2fbc84dcd6ee0`, delegated
+completed-diff review `5857420379`, refreshed empty thread/actionable-summary audit
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0072 remains pending parent/main integration; local 580 Rust + six doctests /
+native/Wasm/all 68 Python checks pass. Signed next plan `2b8cbdf` freezes the
+[one-caption repair/current-profile checkpoint](0073-rp03-corrected-checkpoint-plan.md)
+before production/probes, gated on this completed audit integration. Preserve exact
+original draft history, resources/guards/scenarios/wires and all prior contracts /
+privacy/owned/live gates. Measure subsequent actual failures; no full IR/admission
+or supported scenario is presumed. Parent #46 draft, forty Partial, G1–G4/full /
+optional/RP-08/validator/near-English/managed protected accessible text-visual /
+external/phase exits remain open. No Phase 2.
 
 ## Honest exit accounting
 
