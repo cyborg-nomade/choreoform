@@ -15,11 +15,11 @@ from check_source_capacity import fixed
 from check_static_contracts import ROOT
 
 
-def finish_audit():
+def finish_audit(*,historical=True):
     captured=[];original=builder.build
     def capture(*args,**kwargs):
         source,package=original(*args,**kwargs);captured.append(package);return source,package
-    with patch.object(builder,'build',side_effect=capture):files=builder.artifacts()
+    with patch.object(builder,'build',side_effect=capture):files=builder.historical_artifacts() if historical else builder.package_artifacts()
     assert len(captured)==1
     p=captured[0];names={(r['owner'],r['role'],r['name']) for r in p.ledger['symbols']}
     total=0;failures=[]
@@ -56,7 +56,7 @@ End process.
 class OrderSymbolBindingEvidence(unittest.TestCase):
     def test_all_56_generated_finishes_have_one_exact_original_name_mismatch(self):
         before=fixed();files,total,failures=finish_audit()
-        for path,raw in files.items():self.assertEqual(raw,(builder.BASE/path).read_bytes(),path)
+        for path,raw in files.items():self.assertEqual(raw,(builder.BASE/'history/source-0.14'/path).read_bytes(),path)
         self.assertEqual(total,56)
         self.assertEqual(failures,[dict(node='accept_payment_done',scope='accept_payment',name='authorization recorded',declared=[('authorization-recorded','authorization-recorded')])])
         self.assertEqual(fixed(),before)

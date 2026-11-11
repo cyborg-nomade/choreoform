@@ -109,4 +109,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_compensation_identity.py
           .tools/ir-check/bin/python tools/check_compensation_authoring.py
           .tools/ir-check/bin/python tools/check_rp03_symbol_binding.py
+          .tools/ir-check/bin/python tools/check_rp03_current_checkpoint.py
       # Browser execution is a separate manual evidence step, not implied by CI.

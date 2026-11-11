@@ -21,24 +21,30 @@ def package():
         [(r['id'],r['revision'],(ROOT/r['path']).read_bytes()) for r in m['resources']])
 
 
+def historical_package():
+    base=BASE/'history/source-0.14';m=load(base/'manifest.json')
+    return ((base/'source.choreo').read_text(),load(base/'bindings.json'),
+        [(r['id'],r['revision'],(ROOT/r['path']).read_bytes()) for r in m['resources']])
+
+
 class OrderPackageEvidence(unittest.TestCase):
-    def test_actual_generation_and_exact_lexical_refusal_repeat_without_fake_ir_or_reports(self):
+    def test_actual_generation_and_exact_current_refusal_repeat_without_fake_ir_or_reports(self):
         generated=artifacts()
         for name,raw in generated.items():self.assertEqual((BASE/name).read_bytes(),raw,name)
         m=load(BASE/'manifest.json');p=package();r=invoke(p)
         self.assertEqual(r.returncode,1);self.assertEqual(r.stdout,b'')
         self.assertEqual(r.stderr.decode().strip(),m['lowering']['diagnostic'])
-        self.assertEqual(m['lowering']['code'],'tokens');self.assertIs(m['canonicalIR'],None)
+        self.assertEqual(m['lowering']['code'],'child-template');self.assertEqual(m['lowering']['sourceBytes'],[0,0]);self.assertIs(m['canonicalIR'],None)
         self.assertEqual(m['semanticStageResults'],[]);self.assertFalse((BASE/'candidate.ir.json').exists())
         self.assertIs(m['executable'],False)
 
-    def test_measured_full_files_and_valid_companion_do_not_claim_whole_program_recognition(self):
+    def test_measured_current_files_and_companion_keep_candidate_admission_separate(self):
         s,l,_=package();m=load(BASE/'manifest.json');validate_ledger(l)
         self.assertEqual((len(s.encode()),sum(len(lex(line)) for line in s.splitlines())),(505980,77135))
         self.assertEqual(m['sourceBytes'],len(s.encode()));self.assertEqual(m['measuredTokens'],77135)
-        self.assertEqual((l['profile'],l['version'],m['coreProfile'],m['intendedWireVersion']),('0.14.0','0.13.0','0.11.0','0.4.0'))
+        self.assertEqual((l['profile'],l['version'],m['coreProfile'],m['intendedWireVersion']),('0.16.0','0.15.0','0.12.0','0.4.0'))
         for key,value in package_digests(s.encode(),(BASE/'bindings.json').read_bytes()).items():self.assertEqual(m[key+'Digest'],value)
-        start,end=m['lowering']['sourceBytes'];self.assertTrue(0<=start<end<=len(s.encode()))
+        start,end=m['lowering']['sourceBytes'];self.assertTrue(0<=start<=end<=len(s.encode()))
         self.assertGreater(m['measuredTokens'],16384);self.assertLess(m['sourceBytes'],1024*1024)
 
     def test_exact_resources_preserve_separate_effects_and_exclude_unknown_from_terminals(self):
@@ -98,7 +104,7 @@ class OrderPackageEvidence(unittest.TestCase):
         # Pure source-encoding witness, not a truncated order or an admission.
         from benchmarks.rp03_source import new_package, Scope, literal, AMOUNT, record, variant, read
         from benchmarks.rp01_resources import nominal
-        p=new_package();root=Scope(p,'order','Formatter witness',None,'Done')
+        p=new_package(historical=True);root=Scope(p,'order','Formatter witness',None,'Done')
         tp=next({'id':r['id'],'revision':r['revision']} for r in load(BASE/'manifest.json')['resources'] if r['path'].endswith('/types.json'))
         p.resource('types_binding','Order types','named-type',tp)
         root.actor('author','Author','No operational authority')

@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Corrected RP-03 checkpoint and next template refusal](0073-rp03-corrected-checkpoint.md)
+  publishes the exact caption repair/current pair with full original history;
+  real lowering still refuses, with no candidate or semantic admission.
+
 - [Whole-order symbol-binding critique](0072-rp03-symbol-binding-audit.md) identifies
   the original finish-caption mismatch and rejects companion aliases/normalization;
   generator/source correction needs the next separate plan.

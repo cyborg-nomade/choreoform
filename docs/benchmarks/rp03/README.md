@@ -5,11 +5,22 @@
 
 This is fictional language-design material, **not an admitted or executable order**.
 The complete declared two-line proposal is 505,980 UTF-8 bytes / 77,135 tokens
-measured by complete-line lexing. Existing source 0.14/companion 0.13/core 0.11 /
-intended IR 0.4 are selected explicitly. Actual native lowering refuses `tokens at
-108626..108627`, with empty stdout. No candidate IR or semantic-stage report exists;
-syntax/references beyond that cutoff and full process judgments remain unproved.
-A valid companion and exact resource digests do not change that result.
+measured by complete-line lexing. Existing source 0.16/companion 0.15/core 0.12 /
+intended IR 0.4 are selected explicitly. The real full native frontend recognizes
+77,135 tokens in 832,138 visits, then lowering refuses `child-template at 0..0`,
+with empty stdout. No candidate IR or semantic-stage report exists; complete
+binding and process judgments remain unproved. A valid companion and exact
+resource digests do not change that result.
+
+The only source correction is the authorization finish caption: it now names
+the already declared `authorization-recorded` outcome. All other clauses,
+resources, receipt/guard cases, scenario meaning and stable wire IDs stay fixed.
+[ADR-0073](../../decisions/0073-rp03-corrected-checkpoint.md) records this controlled
+checkpoint. The [original source-0.14 history](history/source-0.14/README.md)
+retains all 113 original generated files exactly, including the original token
+refusal and inconsistent caption; old capacity/identity/symbol tests select it
+explicitly. Current profile/pair/core selection is deliberate, with no new quota
+or semantic permission. No full admission or supported scenario is inferred.
 
 The [frozen plan](../../evaluation/0067-rp03-package-plan.md),
 [ADR-0067](../../decisions/0067-rp03-package-draft.md) and
@@ -65,7 +76,8 @@ editing and real users/hosts/browsers/independent review/Phase 1 exits remain op
 Regenerate with `.tools/ir-check/bin/python tools/build_rp03_benchmark.py`; `--check`
 compares exact bytes. The controlled assembler uses explicit IDs and is not a general
 editor/exporter/runtime. Independent resource/value and pure E1 receipt/recovery-guard checks do not
-admit this full source. Next separately freeze a measured bounded source-profile
-capacity decision, preserve old quotas, then run the entire package through actual
-lowering and retain its next genuine refusal. Larger limits alone will not solve
-the source's verbosity or the near-plain-English authoring requirement.
+admit this full source. Next separately audit the actual `child-template` refusal:
+locate its creator/body/scope relationship and the accepted contract requirement
+before choosing a source restructuring or semantic dependency. Do not bypass it.
+Near-English factoring/managed identity/protected accessible text/visual editing
+and real representative users remain explicit Phase 1 deliverables.

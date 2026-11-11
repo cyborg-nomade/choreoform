@@ -8,7 +8,7 @@ import unittest
 import authoring_probe as grammar
 from check_static_contracts import ROOT
 from check_finite_work_authoring import package as small
-from check_rp03_package import package as order
+from check_rp03_package import historical_package as order
 from check_metadata_authoring import invoke
 from check_readonly_continuation_authoring import STAGES
 
