@@ -6,7 +6,7 @@ use super::*;
 fn fixture() -> Fixture {
     let mut f = super::compensation_identity::current();
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
-    let base = root.join("docs/benchmarks/rp03");
+    let base = root.join("docs/benchmarks/rp03/history/source-0.16-pre-instances");
     f.source = std::fs::read_to_string(base.join("source.choreo")).unwrap();
     f.ledger = serde_json::from_slice(&std::fs::read(base.join("bindings.json")).unwrap()).unwrap();
     let m: Value =
@@ -18,7 +18,12 @@ fn fixture() -> Fixture {
             f.artifacts.push((
                 id.into(),
                 revision.into(),
-                std::fs::read(root.join(r["path"].as_str().unwrap())).unwrap(),
+                std::fs::read({
+                    let path = r["path"].as_str().unwrap();
+                    path.strip_prefix("docs/benchmarks/rp03/")
+                        .map_or_else(|| root.join(path), |suffix| base.join(suffix))
+                })
+                .unwrap(),
             ));
         }
     }
@@ -39,7 +44,10 @@ fn corrected_whole_current_source_recognizes_then_refuses_child_template() {
     assert_eq!(e.span, 0..0);
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     let m: Value = serde_json::from_slice(
-        &std::fs::read(root.join("docs/benchmarks/rp03/manifest.json")).unwrap(),
+        &std::fs::read(
+            root.join("docs/benchmarks/rp03/history/source-0.16-pre-instances/manifest.json"),
+        )
+        .unwrap(),
     )
     .unwrap();
     let integrity = p.integrity();

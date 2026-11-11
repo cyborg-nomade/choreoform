@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import patch
 
 import authoring_probe as grammar
-import build_rp03_benchmark as builder
+import build_rp03_checkpoint as builder
 from check_compensation_authoring import CORE,current,order,checked
 from check_metadata_authoring import invoke
 from check_readonly_continuation_authoring import STAGES

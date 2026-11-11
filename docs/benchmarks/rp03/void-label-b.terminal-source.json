@@ -8,6 +8,6 @@
   },
   "provider": {
     "id": "urn:choreoform:benchmarks:rp03:void-label-b:0.1.0",
-    "revision": "sha256:335bc21bcd32e8c8573136dd05e0b370b0c9682159f78734a15acbe0eff3a3c5"
+    "revision": "sha256:4acefbcd5ef20c49bbef5b991f92c36cb4128a85e14dfcc6919bffb84db45a8c"
   }
 }

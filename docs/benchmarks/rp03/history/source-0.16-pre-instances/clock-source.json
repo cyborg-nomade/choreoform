@@ -1,0 +1,70 @@
+{
+  "kind": "provider-contract",
+  "version": "0.1.0",
+  "id": "urn:choreoform:benchmarks:rp03:clock-source:0.1.0",
+  "input": {
+    "kind": "record",
+    "fields": {}
+  },
+  "output": {
+    "kind": "integer"
+  },
+  "outcomes": {
+    "tick": true
+  },
+  "resultProtection": {
+    "policy": "order_access",
+    "sensitivity": "order",
+    "purposes": {
+      "fulfillment": true
+    },
+    "participants": {
+      "customer_actor": true,
+      "commerce_actor": true,
+      "warehouse_actor": true,
+      "support_actor": true,
+      "clock_actor": true
+    },
+    "capabilities": {
+      "reserve_a_capability": true,
+      "reserve_b_capability": true,
+      "authorize_capability": true,
+      "release_a_capability": true,
+      "release_b_capability": true,
+      "void_capability": true,
+      "pack_a_capability": true,
+      "pack_b_capability": true,
+      "label_a_capability": true,
+      "label_b_capability": true,
+      "handover_a_capability": true,
+      "handover_b_capability": true,
+      "deliver_a_capability": true,
+      "deliver_b_capability": true,
+      "stop_a_capability": true,
+      "stop_b_capability": true,
+      "void_label_a_capability": true,
+      "void_label_b_capability": true,
+      "capture_capability": true,
+      "refund_capability": true,
+      "intercept_a_capability": true,
+      "intercept_b_capability": true,
+      "notify_capability": true
+    }
+  },
+  "observations": {
+    "tick": {
+      "state": "succeeded",
+      "result": {
+        "kind": "integer"
+      },
+      "outcome": "tick"
+    },
+    "unknown": {
+      "state": "unknown",
+      "result": null,
+      "outcome": null
+    }
+  },
+  "idempotency": "none",
+  "effectClass": "read-only"
+}

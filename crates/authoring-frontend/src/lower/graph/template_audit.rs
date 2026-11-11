@@ -31,7 +31,7 @@ struct Fixture {
 impl Fixture {
     fn full() -> Self {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
-        let base = root.join("docs/benchmarks/rp03");
+        let base = root.join("docs/benchmarks/rp03/history/source-0.16-pre-instances");
         let source = std::fs::read_to_string(base.join("source.choreo")).unwrap();
         let ledger =
             serde_json::from_slice(&std::fs::read(base.join("bindings.json")).unwrap()).unwrap();
@@ -61,7 +61,12 @@ impl Fixture {
                 artifacts.push((
                     id.into(),
                     revision.into(),
-                    std::fs::read(root.join(r["path"].as_str().unwrap())).unwrap(),
+                    std::fs::read({
+                        let path = r["path"].as_str().unwrap();
+                        path.strip_prefix("docs/benchmarks/rp03/")
+                            .map_or_else(|| root.join(path), |suffix| base.join(suffix))
+                    })
+                    .unwrap(),
                 ));
             }
         }

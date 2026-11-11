@@ -9,20 +9,24 @@
 
 ## Current focus
 
-[PR #89](https://github.com/cyborg-nomade/choreoform/pull/89) merged the
-caller/template audit into draft #46 as `28b925b9b1919f029b9231b35aacdead7c399b96`,
-after final-head CI `43031601041` and delegated review `5859708359`. The real first
-failure is authorize_call / accept_payment / authorize_service / declared parent
-order; 23 of 26 invocations have that parent mismatch. Raw C11/C12 enforce the same
-rule, while bounded direct/same-parent reuse passes. Local 587 Rust + six doctests /
-native/Wasm/all 70 Python checks pass. Active
-`codex/effectful-template-instantiation-proof` follows signed `9149340`,
-[bounded proof scope](0075-effectful-template-instantiation-plan.md): two caller
-contexts with exact typed ports/capability-effect-wait ownership/protection/compensation /
-storage, fresh synthetic resources and existing contracts. No benchmark/production
-mutation or full-case rewrite/admission. Forty Partial, G1–G4/parent #46/full /
-optional/RP-08/validator/near-English/managed protected accessible text-visual /
-actual user/host/browser/independent/phase exits remain open. No Phase 2.
+[PR #90](https://github.com/cyborg-nomade/choreoform/pull/90) merged the bounded
+effectful instance proof into draft #46 as `3c08cd4a44cd1e68b0d7efcc4724d14dcaef2514`,
+after exact-head CI `43035381826` at `b5b1c77822d3a01d01e1a7afff881e39017809fa`
+and delegated review/comment audit `5860011132`. Three Rust/six Python groups
+establish two caller-local typed services with coherent capability/effect/wait /
+protected synthetic source/recipient/capture/readonly-request relationships. All
+six effect-class/compensation-link combinations pass eleven bounded native views;
+reports remain non-executable with uncovered reconciliation nodes/host gates.
+Local 590 Rust + six doctests/native/Wasm/all 71 Python commands pass. No benchmark /
+production changes; CodeRabbit skipped. ADR-0075 remains pending parent/main integration.
+
+Active `codex/rp03-instance-adoption` follows signed `9422492`,
+[full generator adoption scope](0076-rp03-instance-adoption-plan.md): preserve the
+exact pre-instance checkpoint, then fix all caller contexts together under existing
+contracts without weakening business predicates. Current full RP-03 still refuses
+child-template, no candidate/report. Parent #46 draft, forty Partial, G1–G4/full /
+optional/RP-08/validator/near-English factoring/managed protected accessible text-visual /
+actual users/hosts/browsers/independent/phase exits remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1713,6 +1717,17 @@ prior eligibility/authority/execution from a static relation. No full generator
 rewrite/adoption until a later plan. Parent #46 draft, forty Partial, G1–G4/full /
 optional/RP-08/validator/near-English/managed protected accessible text-visual /
 external/phase exits stay open. No Phase 2.
+
+PR #90 merged as `3c08cd4a44cd1e68b0d7efcc4724d14dcaef2514` after final-head CI
+`43035381826` and delegated automated COMMENT review/full comment audit `5860011132`.
+The bounded effectful instance proof passes local 590 Rust + six compile-fail /
+native/Wasm/all 71 Python checks. Source/raw tests preserve real ownership/port /
+recipient/invalidation refusals and uncovered host boundaries; no current/history
+benchmark or production changes. ADR-0075 accepts the later caller-local generator
+direction under delegation, pending integration. Next signed plan `9422492` is
+[full RP-03 instance adoption](0076-rp03-instance-adoption-plan.md), preserving the
+pre-instance package and all business guards before coherent context-specific
+instantiation. Full/optional/executable/phase exits remain open; CodeRabbit skipped.
 
 ## Honest exit accounting
 

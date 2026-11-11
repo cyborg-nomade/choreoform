@@ -4,23 +4,34 @@
 # RP-03 whole two-line source draft
 
 This is fictional language-design material, **not an admitted or executable order**.
-The complete declared two-line proposal is 505,980 UTF-8 bytes / 77,135 tokens
-measured by complete-line lexing. Existing source 0.16/companion 0.15/core 0.12 /
-intended IR 0.4 are selected explicitly. The real full native frontend recognizes
-77,135 tokens in 832,138 visits, then lowering refuses `child-template at 0..0`,
-with empty stdout. No candidate IR or semantic-stage report exists; complete
-binding and process judgments remain unproved. A valid companion and exact
-resource digests do not change that result.
+The complete caller-local proposal is 554,331 UTF-8 bytes / 82,373 tokens.
+Existing source0.16/companion0.15/core0.12/IR0.4 are selected explicitly. The real
+full source now emits canonical IR and passes static, control and protection
+checks. Its revision is `sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372`;
+the canonical wire digest is `sha256:ec4a0513967d7c2c85d1b069c9d888868144c7810061cabd191a5fc2ba1b5095`.
+All eight remaining checking/advisory views refuse `invalidation-context-unproved`
+at capture_activity (source bytes223416..223754). No later passed judgment or
+executable admission follows. See the manifest and three actual partial reports.
 
-The only source correction is the authorization finish caption: it now names
-the already declared `authorization-recorded` outcome. All other clauses,
-resources, receipt/guard cases, scenario meaning and stable wire IDs stay fixed.
-[ADR-0073](../../decisions/0073-rp03-corrected-checkpoint.md) records this controlled
-checkpoint. The [original source-0.14 history](history/source-0.14/README.md)
-retains all 113 original generated files exactly, including the original token
-refusal and inconsistent caption; old capacity/identity/symbol tests select it
-explicitly. Current profile/pair/core selection is deliberate, with no new quota
-or semantic permission. No full admission or supported scenario is inferred.
+All 26 invoke and seven split-child relationships have matching direct parents.
+There are 25 local service/capability/effect/wait instances for 23 operations;
+normal/settlement release A/B have distinct bodies and logical capabilities.
+Typed request/result ports, per-instance capture/readonly request storage and exact
+qualified compensation/endpoint references are retained. The explicit fictional
+provider/clock recipient circle adds only the two settlement release capabilities;
+matching source descriptor revisions change accordingly. This is neither actual
+provider consent nor runtime occurrence/compensation eligibility. Local requests
+invalidate their activities; Original order invalidates all 29 constructed
+request-dependent capability/human decisions. Private inherited-context evidence
+is still unproved; invalidation declarations do not bypass that check.
+
+The [pre-instance source0.16 archive](history/source-0.16-pre-instances/README.md)
+retains all 113 prior generated files, their exact child-template refusal and the
+previous explanatory README. The [original source0.14 archive](history/source-0.14/README.md)
+also remains exact, including its quota refusal and inconsistent caption. Historical
+loaders resolve benchmark-local resources within the selected archive, preserving
+old byte pins after current fictional claims change. No production/profile/contract /
+quota change or raw-IR bypass is included. ADR-0076 records this adoption.
 
 The [frozen plan](../../evaluation/0067-rp03-package-plan.md),
 [ADR-0067](../../decisions/0067-rp03-package-draft.md) and
@@ -76,8 +87,8 @@ editing and real users/hosts/browsers/independent review/Phase 1 exits remain op
 Regenerate with `.tools/ir-check/bin/python tools/build_rp03_benchmark.py`; `--check`
 compares exact bytes. The controlled assembler uses explicit IDs and is not a general
 editor/exporter/runtime. Independent resource/value and pure E1 receipt/recovery-guard checks do not
-admit this full source. Next separately audit the actual `child-template` refusal:
-locate its creator/body/scope relationship and the accepted contract requirement
-before choosing a source restructuring or semantic dependency. Do not bypass it.
+admit this full source. Next audit the actual capture inherited-context refusal
+against the existing provenance/visibility contracts before choosing a generator
+or checker/contract dependency. No private-read or invalidation bypass is implied.
 Near-English factoring/managed identity/protected accessible text/visual editing
 and real representative users remain explicit Phase 1 deliverables.

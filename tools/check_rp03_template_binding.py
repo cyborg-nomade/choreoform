@@ -5,12 +5,12 @@ from collections import Counter
 import unittest
 from unittest.mock import patch
 import authoring_probe as grammar
-import build_rp03_benchmark as builder
+import build_rp03_checkpoint as builder
 from benchmarks.rp01_source import Package,Scope
 from check_compensation_authoring import CORE,checked
 from check_metadata_authoring import invoke
 from check_readonly_continuation_authoring import STAGES
-from check_rp03_package import package
+from check_rp03_package import pre_instance_package as package
 from check_source_capacity import fixed
 from check_static_contracts import ROOT
 
@@ -67,7 +67,7 @@ def bounded(body='C',again=False):
 class OrderTemplateBindingEvidence(unittest.TestCase):
     def test_all_26_direct_invocations_and_seven_split_children_have_explicit_parent_evidence(self):
         before=fixed();files,calls,splits,other=relationships()
-        for path,raw in files.items():self.assertEqual(raw,(builder.BASE/path).read_bytes(),path)
+        for path,raw in files.items():self.assertEqual(raw,(builder.BASE/'history/source-0.16-pre-instances'/path).read_bytes(),path)
         self.assertEqual(len(calls),26);self.assertEqual(len(splits),7);self.assertEqual(other,[])
         wrong=[r for r in calls if r[1]!=r[3]];self.assertEqual(len(wrong),23)
         self.assertIn(('authorize_call','accept_payment','authorize_service','order'),wrong)
