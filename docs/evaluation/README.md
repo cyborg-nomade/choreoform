@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Compensation reference critique](0069-compensation-reference-audit.md) separates
+  raw and readable lexical identity restrictions from live prior-effect eligibility;
+  the next purpose-only contract/binding changes require separate plans.
+
 - [Measured source capacity and binding gap](0068-source-capacity.md) records
   explicit source 0.15, unchanged old/other limits, real full grammar recognition
   and the preserved compensation reference refusal; no benchmark admission.

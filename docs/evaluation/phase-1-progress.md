@@ -9,17 +9,18 @@
 
 ## Current focus
 
-PR #83 merged explicit source 0.15 capacity into draft parent #46 as
-`f628d0eb50dd490be35288145f82c58278da068a`. The temporary RP-03 promotion
-recognizes 77,135 tokens in 832,138 native visits, then refuses private sibling
-compensation identity at 60937..61023 with no candidate/semantic reports. Source
-0.14's original refusal and every benchmark byte stay fixed. Active
-`codex/compensation-reference-audit` follows the [frozen test/docs plan](0069-compensation-reference-audit-plan.md):
-independently assess raw P3 visibility/context and readable prior identity, without
-production changes or ordinary privacy expansion. All forty scenarios Partial,
-G1–G4 conditional, parent #46 incomplete. Full validator/benchmarks/optional cases /
-near-English factoring/identity-managed protected accessible text-visual/actual
-users/host/browser/independent/phase gates remain open. No Phase 2.
+The frozen `e86e2fc` compensation-reference audit is implemented on
+`codex/compensation-reference-audit`: both source 0.15 and raw C11 enforce lexical
+prior-activity identity, independently of actual eligible occurrence. Five SDK /
+five Python groups and a critique/ADR-0069 preserve production/benchmark bytes and
+ordinary privacy. Local 562 Rust + six doctests/native/Wasm/all 65 Python commands
+pass; separate completed-diff delegated review finds no remaining actionable issue.
+Final-head CI/comment audit/signed merge into draft #46 remain required. Next freeze
+a purpose-only raw same-definition activity identity contract, then separately
+version its readable binding; preserve C11 immediate-source owned proof and all live
+gates. All forty scenarios Partial, G1–G4 conditional, parent #46 incomplete. Full
+validator/benchmarks/near-English factoring/identity-managed protected accessible
+text-visual/actual users/host/browser/independent/phase exits stay open. No Phase 2.
 
 ## Verified baseline
 
@@ -1511,6 +1512,22 @@ context and both layers independently before choosing a purpose-only dependency.
 No private binding/semantic permission changes in this test/docs slice. Every
 benchmark byte stays fixed. Parent #46 draft, all scenarios Partial, G1–G4 conditional;
 all full/optional/RP-08/validator/near-English/editor/visual/external/phase gates open.
+
+ADR-0069's [compensation identity audit](0069-compensation-reference-audit.md)
+is implemented under frozen plan `e86e2fc` with five raw SDK/five native-Python groups.
+Same/ancestor targets pass; sibling/child prior identity refuses in both raw C11 and
+readable source 0.15. Missing/kind/qualification/duplicate/private value/outcome
+failures are recorded independently, including genuine earlier structural failures.
+Static same-site identity does not prove an eligible prior dynamic effect; C11 owned
+work separately refuses any target other than its incoming source. No production
+behavior, completion predicate, resource or committed benchmark byte changes. Local
+562 Rust + six doctests/native/Wasm/all 65 Python workflow commands pass, with separate
+completed-diff delegated review. Required final-head CI/full comment audit/expected-
+head signed merge follow. Next separately freeze a purpose-only raw identity contract
+and then exact readable binding, preserving old artifacts/refusals, ordinary privacy,
+C11 ownership and actual correlation/authority/new-key/handoff/settlement gates. Parent
+#46 draft, forty Partial, G1–G4 and all full/optional/RP-08/validator/near-English /
+protected accessible identity-managed text-visual/external/phase exits stay open.
 
 ## Honest exit accounting
 

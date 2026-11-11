@@ -369,6 +369,10 @@ validated, and round-tripped.
   two-line RP-03 source/resources and an actual unchanged-profile token refusal.
   No candidate IR/semantic-stage success is claimed; next separately freeze
   capacity evidence, preserve old quotas, then retain the next real admission gap.
+  [ADR-0069](docs/decisions/0069-compensation-reference-direction.md) audits the
+  raw/readable compensation identity barriers. Next separately version the narrow
+  same-definition prior-activity identity contract and then exact readable binding;
+  preserve ordinary privacy, immediate-source owned proof and all live gates.
   [ADR-0068](docs/decisions/0068-source-capacity.md) adds explicit source 0.15
   capacity with the same core/wire/meaning. Full grammar recognizes under unchanged
   parser work; compensation sibling-private identity binding genuinely refuses.

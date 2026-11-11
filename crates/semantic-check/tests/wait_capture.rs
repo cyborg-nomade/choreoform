@@ -672,3 +672,6 @@ mod finite_work;
 
 #[path = "capture/rp01_audit.rs"]
 mod rp01_audit;
+
+#[path = "capture/compensation_reference_audit.rs"]
+mod compensation_reference_audit;
