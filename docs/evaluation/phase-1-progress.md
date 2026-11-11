@@ -9,18 +9,18 @@
 
 ## Current focus
 
-The frozen `e86e2fc` compensation-reference audit is implemented on
-`codex/compensation-reference-audit`: both source 0.15 and raw C11 enforce lexical
-prior-activity identity, independently of actual eligible occurrence. Five SDK /
-five Python groups and a critique/ADR-0069 preserve production/benchmark bytes and
-ordinary privacy. Local 562 Rust + six doctests/native/Wasm/all 65 Python commands
-pass; separate completed-diff delegated review finds no remaining actionable issue.
-Final-head CI/comment audit/signed merge into draft #46 remain required. Next freeze
-a purpose-only raw same-definition activity identity contract, then separately
-version its readable binding; preserve C11 immediate-source owned proof and all live
-gates. All forty scenarios Partial, G1–G4 conditional, parent #46 incomplete. Full
-validator/benchmarks/near-English factoring/identity-managed protected accessible
-text-visual/actual users/host/browser/independent/phase exits stay open. No Phase 2.
+Raw core 0.12 is implemented on `codex/compensation-identity-contract` under
+signed plan `f18c783` / ADR-0070, after audit #84 merged as
+`b31818a2e01bae81b0ab555eb48d55186d385a0a`. Only P1 `compensates` activity
+identity may cross lexical scope in the same definition. All old artifacts /
+ordinary privacy/C11 immediate-source owned proof/live authority/eligible effect /
+new-key/ownership/settlement gates and benchmark bytes stay fixed. Local 571 Rust +
+six doctests/native/Wasm/all 66 Python commands pass; separate completed-diff review
+finds no remaining actionable scope issue. Required final-head CI/comment audit /
+signed parent merge remain. Next separately freeze explicit readable profile/binding;
+source0.15 keeps its refusal. Forty scenarios Partial, G1–G4 and parent #46 incomplete;
+full validator/benchmarks/near-English/identity-managed protected accessible text-
+visual/actual user/host/browser/independent/phase exits open. No Phase 2.
 
 ## Verified baseline
 
@@ -1528,6 +1528,34 @@ and then exact readable binding, preserving old artifacts/refusals, ordinary pri
 C11 ownership and actual correlation/authority/new-key/handoff/settlement gates. Parent
 #46 draft, forty Partial, G1–G4 and all full/optional/RP-08/validator/near-English /
 protected accessible identity-managed text-visual/external/phase exits stay open.
+
+[PR #84](https://github.com/cyborg-nomade/choreoform/pull/84) merged into draft
+#46 as `b31818a2e01bae81b0ab555eb48d55186d385a0a` after required CI
+`42987717386` at `404478268fb6278c0eef1a4ab56edfbb61460079`, completed-diff
+delegated review `5855905766`, refreshed empty review threads/actionable summaries
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0069 remains pending parent/main integration; local 562 Rust + six doctests /
+native/Wasm/all 65 Python commands pass. Signed next plan `f18c783` freezes
+[raw purpose-only compensation identity](0070-compensation-identity-plan.md), with
+production work gated on this completed audit merge. No ordinary lexical/privacy /
+owned-source/live permission expands implicitly, and all benchmark bytes stay fixed.
+Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
+protected accessible identity-managed text-visual/external/phase gates remain open.
+
+ADR-0070's [raw compensation identity contract](0070-compensation-identity.md)
+is implemented under signed plan `f18c783`, after audit #84's checked signed merge.
+Exact core 0.12/IR 0.4 requires all eleven bases/uniform aliases and changes only
+P1 prior-activity identity lookup; no generic private access or C11 owned-source
+relaxation. Eight public SDK/one actual-static-work budget/three Python groups cover
+old/new scope/kind/missing/human/foreign/actual-use/class/purpose/private access,
+exact pins/bases/wire/aliases and preserved inherited/readable refusals. Local
+571 Rust + six doctests/native/Wasm/all 66 Python commands pass; completed-diff
+delegated review finds no remaining actionable scope issue. Required exact-head CI /
+full thread/summary audit/signed parent merge follow. Next separately freeze readable
+binding/profile selection, retaining source0.15/refusals and every benchmark byte;
+no full-case IR bypass/adoption or implicit aggregate ownership/live eligible effect.
+Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
+protected accessible identity-managed text-visual/external/phase exits remain open.
 
 ## Honest exit accounting
 

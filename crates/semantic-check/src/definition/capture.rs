@@ -203,6 +203,7 @@ mod tests {
             })
             .unwrap();
         let mut c = Check {
+            compensation_identity: false,
             b: &corpus["definition"]["body"],
             resources,
             cells: BTreeMap::new(),

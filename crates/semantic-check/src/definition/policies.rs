@@ -306,10 +306,19 @@ impl Check<'_, '_> {
                 refs.extend(timer.1);
                 metadata.extend(timer.2);
                 if !p["compensates"].is_null() {
-                    let prior = self.visible(scope, "nodes", &p["compensates"])?;
+                    if self.compensation_identity {
+                        self.resources.budget.charge(1)?;
+                    } else {
+                        self.visible(scope, "nodes", &p["compensates"])?;
+                    }
+                    // Only this identity slot may cross lexical scope in C12.
+                    // Borrow the exact same-definition declaration; never read
+                    // its values or select an actually eligible occurrence.
+                    let prior = object(&self.b["nodes"])?
+                        .get(text(&p["compensates"])?)
+                        .ok_or_else(|| err("reference"))?;
                     require(
-                        self.b["nodes"][&prior]["kind"] == "activity"
-                            && self.b["nodes"][&prior]["mode"] == "capability",
+                        prior["kind"] == "activity" && prior["mode"] == "capability",
                         "compensation-target",
                     )?;
                 }
@@ -470,5 +479,60 @@ impl Check<'_, '_> {
         } else {
             Ok(Type::empty())
         }
+    }
+}
+
+#[cfg(test)]
+mod identity_budget_tests {
+    use super::*;
+    fn measured(linked: bool, prefix: usize) -> Result<usize> {
+        let (e, mut artifacts) = crate::owned_continuation::tests::finite_work_fixture();
+        let mut b = e.document()["body"].clone();
+        b["dialects"]["core"] = serde_json::json!({"id":CORE_V12.0,"revision":CORE_V12.1});
+        b["policies"]["identity_work"] = b["policies"]["work"].clone();
+        if linked {
+            b["policies"]["identity_work"]["body"]["compensates"] = "origin".into();
+        }
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+        artifacts.push((
+            CORE_V12.0.into(),
+            CORE_V12.1.into(),
+            std::fs::read(root.join(format!(
+                "docs/ir/contracts/{}.txt",
+                CORE_V12.1.replace(':', "-")
+            )))
+            .unwrap(),
+        ));
+        let supplied = crate::owned_continuation::tests::resources(&artifacts);
+        let mut c = Check {
+            b: &b,
+            compensation_identity: true,
+            resources: Resources::new(&supplied)?,
+            cells: BTreeMap::new(),
+            expressions: BTreeMap::new(),
+            policy_reads: BTreeMap::new(),
+            protection_refs: BTreeMap::new(),
+            creation_reads: BTreeMap::new(),
+            provider_refs: BTreeMap::new(),
+            captures: Vec::new(),
+            capture_types: BTreeSet::new(),
+            fault_sources: Vec::new(),
+            fault_entries: Vec::new(),
+            retained_requests: Vec::new(),
+        };
+        c.resources.budget.charge(prefix)?;
+        c.run()?;
+        Ok(c.resources.budget.work)
+    }
+    #[test]
+    fn cross_scope_identity_shares_actual_static_work_and_never_resets_remaining_budget() {
+        let unlinked = measured(false, 0).unwrap();
+        let linked = measured(true, 0).unwrap();
+        assert_eq!(linked, unlinked + 1);
+        assert!(measured(true, 1_000_000 - linked).is_ok());
+        assert_eq!(
+            measured(true, 1_000_000 - linked + 1).unwrap_err().code,
+            "budget"
+        );
     }
 }

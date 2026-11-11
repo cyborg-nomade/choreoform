@@ -14,6 +14,7 @@ support to the Rust probe, fixture checker or a runtime.
 
 | Contract ID | Artifact (SHA-256 is the filename suffix) | Source and provenance |
 | --- | --- | --- |
+| `urn:choreoform:contracts:core-profile:0.12.0` | [Purpose-only compensation identity](sha256-73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007.txt) | Exact `docs/dialects/core-compensation-identity-v0.12.md` bytes; IR 0.4 and all eleven prior cores; ADR-0070 pending parent/main integration; raw SDK only, no private data access or wider owned-work proof |
 | `urn:choreoform:fault-history-profile:provider-observations:0.1.0` | [Provider fault-history metadata](sha256-2f580f46eb6ef9b7fff42906f6b0b5cafc6c5fa71ae14365828935bfe2da070c.txt) | Exact `docs/dialects/provider-fault-history.md` bytes; ADR-0050 metadata/claim shape only, pending parent/main integration; no authenticated fault/handler entry |
 | `urn:choreoform:types:provider-fault-history:0.1.0` | [Fixed history nominal type](sha256-a2e177ce1dd4bad5b9cd68b74e6da7749ec2b04b68a39dae1bd72729e2aae7a7.txt) | Exact `docs/dialects/provider-fault-history.types.json` bytes; shape only, invariant true; no event attestation |
 | `urn:choreoform:contracts:core-profile:0.7.0` | [Conditional handler-local history entry](sha256-e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b.txt) | Exact `docs/dialects/core-fault-entry-v0.7.md` bytes; IR 0.3 and all six prior cores required; ADR-0052 raw SDK declaration/conditional proof only, pending parent/main integration; no actual event or native/source entry support |

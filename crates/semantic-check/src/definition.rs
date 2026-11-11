@@ -83,13 +83,16 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
     let advanced_continuation = continuation_core(b);
     let pre_capture = pre_capture_core(b);
     let finite_work = work_core(b);
+    let compensation_identity = compensation_identity_core(b);
     for pin in object(&b["dialects"])?.values() {
         let p = Pin::decode(pin)?;
         // Wire 0.3 entry fields must never be ignored by an older dialect.
         // The new core is admitted only once its exact contract is implemented.
         if envelope.document()["version"] == "0.4.0" {
             require(
-                p.id == if finite_work {
+                p.id == if compensation_identity {
+                    CORE_V12.0
+                } else if finite_work {
                     CORE_V11.0
                 } else if pre_capture {
                     CORE_V10.0
@@ -110,7 +113,12 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
             .position(|known| *known == contract)
             .ok_or_else(|| err("dialect-contract"))?;
         resources.verify(&p)?;
-        if p.id == CORE_V8.0 || p.id == CORE_V9.0 || p.id == CORE_V10.0 || p.id == CORE_V11.0 {
+        if p.id == CORE_V8.0
+            || p.id == CORE_V9.0
+            || p.id == CORE_V10.0
+            || p.id == CORE_V11.0
+            || p.id == CORE_V12.0
+        {
             require(
                 envelope.document()["version"] == "0.4.0",
                 "retained-request-wire-version",
@@ -136,6 +144,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
     }
     let mut c = Check {
         b,
+        compensation_identity,
         resources,
         cells: BTreeMap::new(),
         expressions: BTreeMap::new(),
@@ -171,6 +180,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
 }
 struct Check<'a, 'r> {
     b: &'a Value,
+    compensation_identity: bool,
     resources: Resources<'r>,
     cells: BTreeMap<String, Type>,
     expressions: BTreeMap<String, Judgment>,

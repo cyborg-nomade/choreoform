@@ -202,6 +202,7 @@ mod tests {
         let metadata = resources.provider_fault_history(&pin).unwrap();
         let b = serde_json::json!({});
         let mut c = Check {
+            compensation_identity: false,
             b: &b,
             resources,
             cells: BTreeMap::new(),

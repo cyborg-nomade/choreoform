@@ -141,6 +141,7 @@ mod tests {
             .unwrap();
         let b = serde_json::json!({});
         let mut c = Check {
+            compensation_identity: false,
             b: &b,
             resources,
             cells: BTreeMap::new(),

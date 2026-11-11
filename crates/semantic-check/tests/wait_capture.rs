@@ -675,3 +675,6 @@ mod rp01_audit;
 
 #[path = "capture/compensation_reference_audit.rs"]
 mod compensation_reference_audit;
+
+#[path = "capture/compensation_identity.rs"]
+mod compensation_identity;
