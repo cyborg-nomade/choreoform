@@ -9,21 +9,22 @@
 
 ## Current focus
 
-[PR #86](https://github.com/cyborg-nomade/choreoform/pull/86) merged explicit
-source 0.16/companion 0.15/C12/IR0.4 into draft #46 as
-`bb0b280971519cfe67dc3f9a791e2e33d731a9dc`, after final-head CI `43002239019`
-and completed-diff delegated review `5857164364`. Exact purpose-only compensation
-paths preserve ordinary privacy, C11 owned-source proof, old profiles/benchmarks and
-all live gates. Local 575 Rust + six doctests/native/Wasm/all 67 Python checks pass.
-Whole RP-03 recognizes 77,135 tokens in 832,138 native visits then genuinely refuses
-`symbol-mismatch at 0..0`, empty stdout; no full candidate or semantic report exists.
-Active `codex/rp03-symbol-binding-audit` follows signed plan `b2874c5`,
-[test/docs-only scope](0072-rp03-symbol-binding-audit-plan.md), before probes: locate
-the exact requested symbol owner/role/name and choose the next narrow correction
-from source/ledger evidence. No production permission/diagnostic or benchmark byte
-change. Forty Partial, G1–G4 and parent #46 incomplete; full validator/benchmarks /
-near-English/managed identities/protected accessible text-visual/actual user/host /
-browser/independent/phase exits remain open. No Phase 2.
+The frozen `b2874c5` whole-order symbol audit is implemented on
+`codex/rp03-symbol-binding-audit`, after #86 merged as
+`bb0b280971519cfe67dc3f9a791e2e33d731a9dc`. Actual failed lookup is owner
+`accept_payment`, role `outcome`, name `authorization recorded`; its declared
+interface/companion/join use `authorization-recorded`. This is one mismatch among
+56 generated direct finishes. Five SDK/four Python groups reject metadata-only
+renames/aliases and show consistent friendly captions can keep stable wires. No
+production behavior/diagnostic, generator or benchmark byte changes; full RP-03
+still has no candidate/semantic report. Local 580 Rust + six doctests/native/Wasm /
+all 68 Python checks pass; separate completed-diff delegated review finds no
+remaining scope issue. Final-head CI/comments/signed parent merge remain. Next
+separately freeze exact generator/source caption correction, preserve original
+evidence and measure the next genuine full-source result. Forty Partial, G1–G4 /
+parent #46/full validator/benchmarks/near-English/protected accessible managed
+identity/text-visual/actual user/host/browser/independent/phase gates remain open.
+No Phase 2.
 
 ## Verified baseline
 
@@ -1607,6 +1608,25 @@ symbol request before choosing a repair. No full candidate/semantic/eligible eff
 host authority or broader ownership claim. Parent #46 draft, forty Partial, G1–G4 /
 full/optional/RP-08/validator/near-English/managed protected accessible text-visual /
 external/phase exits stay open. No Phase 2.
+
+ADR-0072's [whole-order symbol critique](0072-rp03-symbol-binding-audit.md)
+is implemented under frozen plan `b2874c5`, after checked #86 integration. Test-only
+thread-local capture identifies `(accept_payment,outcome,authorization recorded)`
+from the finish step; original scope/interface/companion/join use the hyphenated
+name/wire `authorization-recorded`. The unchanged generator/action audit finds only
+this mismatch among 56 direct finishes; other bindings/semantics stay unproved.
+Five SDK/four Python groups reproduce full original and companion-only rename
+failures, reject same-wire aliases/undeclared extra wires/wrong roles, and prove
+matching friendly captions keep stable wires and all eleven native views. Runtime
+lookup/error/span, all old/new profiles/contracts/budgets and committed benchmark /
+generator/resource/guard/manifest bytes stay fixed. Local 580 Rust + six doctests /
+native/Wasm/all 68 Python checks pass; completed-diff delegated review finds no
+remaining audit-scope issue. Required final-head CI/full comments/signed merge follow.
+Next separately freeze the exact generator/source finish-literal correction, retaining
+original evidence and measuring actual subsequent failures before further repairs /
+adoption. No full candidate/revision/semantic or live event/authority/ownership claim.
+Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
+managed protected accessible text-visual/external/phase exits stay open. No Phase 2.
 
 ## Honest exit accounting
 

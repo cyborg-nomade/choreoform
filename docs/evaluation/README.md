@@ -16,6 +16,10 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Whole-order symbol-binding critique](0072-rp03-symbol-binding-audit.md) identifies
+  the original finish-caption mismatch and rejects companion aliases/normalization;
+  generator/source correction needs the next separate plan.
+
 - [Readable compensation identity and next binding gap](0071-compensation-authoring.md)
   records source0.16's purpose-only paths and genuine later whole-order refusal;
   no full candidate or semantic admission exists.
