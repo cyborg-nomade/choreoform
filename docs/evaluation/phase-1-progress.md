@@ -9,24 +9,28 @@
 
 ## Current focus
 
-[PR #90](https://github.com/cyborg-nomade/choreoform/pull/90) merged the bounded
-effectful instance proof into draft #46 as `3c08cd4a44cd1e68b0d7efcc4724d14dcaef2514`,
-after exact-head CI `43035381826` at `b5b1c77822d3a01d01e1a7afff881e39017809fa`
-and delegated review/comment audit `5860011132`. Three Rust/six Python groups
-establish two caller-local typed services with coherent capability/effect/wait /
-protected synthetic source/recipient/capture/readonly-request relationships. All
-six effect-class/compensation-link combinations pass eleven bounded native views;
-reports remain non-executable with uncovered reconciliation nodes/host gates.
-Local 590 Rust + six doctests/native/Wasm/all 71 Python commands pass. No benchmark /
-production changes; CodeRabbit skipped. ADR-0075 remains pending parent/main integration.
+[PR #91](https://github.com/cyborg-nomade/choreoform/pull/91) merged full RP-03
+caller-local instantiation into draft #46 as `23d37155215614f020e9a65e1defc6ba87dded6c`, after
+exact-head CI `43038900965` at `8e5d1382a0d6964b77a3696046df637544756901` and delegated
+automated COMMENT review/full comment audit `5860323505`. The complete source is
+554,331 bytes/82,373 tokens, with 25 service instances for 23 operations. All 26
+invoke/seven split-child relationships match. Canonical IR revision
+`sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372`, wire digest
+`sha256:ec4a0513967d7c2c85d1b069c9d888868144c7810061cabd191a5fc2ba1b5095`.
+Real source/raw SDK static/control/protection pass; all eight later checking/advisory
+views refuse `invalidation-context-unproved` at capture_activity, source223416..223754.
+Reports remain non-executable. Exact source0.14 and pre-instance source0.16 archives
+and all RP-01 bytes are preserved; only two explicit new fictional logical recipients
+and exact source pins change resource claims. Local 592 Rust + six doctests/native /
+Wasm/all 72 Python commands pass. CodeRabbit skipped; ADR-0076 pending parent/main integration.
 
-Active `codex/rp03-instance-adoption` follows signed `9422492`,
-[full generator adoption scope](0076-rp03-instance-adoption-plan.md): preserve the
-exact pre-instance checkpoint, then fix all caller contexts together under existing
-contracts without weakening business predicates. Current full RP-03 still refuses
-child-template, no candidate/report. Parent #46 draft, forty Partial, G1–G4/full /
-optional/RP-08/validator/near-English factoring/managed protected accessible text-visual /
-actual users/hosts/browsers/independent/phase exits remain open. No Phase 2.
+Active `codex/capture-inherited-context` follows signed `0a04032`,
+[capture provenance scope](0077-capture-inherited-context-plan.md): locate the real
+cell/scope/creator/history relationship before choosing a compatible correction or
+separately justified semantic dependency. Do not assume a checker bug or drop private
+influences. Parent #46 draft, forty/all four Partial, G1–G4/full/optional/RP-08 /
+validator/near-English factoring/managed protected accessible text-visual/actual
+users/hosts/browsers/independent/phase exits remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1728,6 +1732,19 @@ direction under delegation, pending integration. Next signed plan `9422492` is
 [full RP-03 instance adoption](0076-rp03-instance-adoption-plan.md), preserving the
 pre-instance package and all business guards before coherent context-specific
 instantiation. Full/optional/executable/phase exits remain open; CodeRabbit skipped.
+
+PR #91 merged as `23d37155215614f020e9a65e1defc6ba87dded6c` after final-head CI `43038900965`
+at `8e5d1382a0d6964b77a3696046df637544756901` and separate automated review/full comment
+audit `5860323505`. Caller-local instantiation fixes all known template relationships
+and emits actual full canonical IR plus static/control/protection reports. Local
+592 Rust + six compile-fail/native/Wasm/all 72 Python commands pass. Two whole-source
+SDK/five Python groups preserve exact previous archives, source/raw judgments,
+protected recipient deltas, original receipt/guard/input meanings and actual later
+capture invalidation-context refusal. ADR-0076 accepted under delegation, pending
+parent/main integration. CodeRabbit skipped; no independent review or supported
+scenario/host execution claim. Next signed plan `0a04032` is the
+[exact inherited-context audit](0077-capture-inherited-context-plan.md); preserve the
+existing conservative fork/history boundary until actual evidence justifies a change.
 
 ## Honest exit accounting
 
