@@ -4,14 +4,16 @@
 # RP-03 whole two-line source draft
 
 This is fictional language-design material, **not an admitted or executable order**.
-The complete caller-local proposal is 554,331 UTF-8 bytes / 82,373 tokens.
+The complete caller-local proposal is 576,759 UTF-8 bytes / 84,051 tokens.
 Existing source0.16/companion0.15/core0.12/IR0.4 are selected explicitly. The real
-full source now emits canonical IR and passes static, control and protection
-checks. Its revision is `sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372`;
-the canonical wire digest is `sha256:ec4a0513967d7c2c85d1b069c9d888868144c7810061cabd191a5fc2ba1b5095`.
-All eight remaining checking/advisory views refuse `invalidation-context-unproved`
-at capture_activity (source bytes223416..223754). No later passed judgment or
-executable admission follows. See the manifest and three actual partial reports.
+full source now emits canonical IR and passes static, control, protection and strict invalidation
+checks, plus a separate non-authorizing invalidation advisory. Its revision is `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`;
+the canonical wire digest is `sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4`.
+The six remaining checking views refuse `parallel-effects-unproved` at
+start_acceptance, source bytes109844..110031. Five actual partial/advisory reports
+are emitted; they remain non-executable. The exact fixed all-join proof preserves
+original historical protection labels and live ancestor dependencies. It does not
+settle effects, authorize capture or prove arbitrary concurrent/owned work.
 
 All 26 invoke and seven split-child relationships have matching direct parents.
 There are 25 local service/capability/effect/wait instances for 23 operations;
@@ -22,16 +24,26 @@ provider/clock recipient circle adds only the two settlement release capabilitie
 matching source descriptor revisions change accordingly. This is neither actual
 provider consent nor runtime occurrence/compensation eligibility. Local requests
 invalidate their activities; Original order invalidates all 29 constructed
-request-dependent capability/human decisions. Private inherited-context evidence
-is still unproved; invalidation declarations do not bypass that check.
+request-dependent capability/human decisions. The actual current advisory identifies 312 ordinary obligations and 849
+historical-origin rows; 278 precise missing links were added while preserving every
+old link. Forty-five invalidation nodes remain uncovered. Only exact closed fixed
+all-join branches with no nonlocal writer and no inherited live instance are refined;
+partial/dynamic/composite contexts remain conservative. See ADR-0077.
+
+The [full instance checkpoint](history/source-0.16-instances/README.md) preserves
+all 121 generated #91 artifacts and its then-current inherited-context refusal.
+Those signed observations are verified immutable inputs; the refined current
+checker is not claimed to reproduce the old semantic refusal. The original source /
+IR/resources/three reports remain there with their exact old hashes.
 
 The [pre-instance source0.16 archive](history/source-0.16-pre-instances/README.md)
 retains all 113 prior generated files, their exact child-template refusal and the
 previous explanatory README. The [original source0.14 archive](history/source-0.14/README.md)
 also remains exact, including its quota refusal and inconsistent caption. Historical
 loaders resolve benchmark-local resources within the selected archive, preserving
-old byte pins after current fictional claims change. No production/profile/contract /
-quota change or raw-IR bypass is included. ADR-0076 records this adoption.
+old byte pins after current fictional claims change. Profiles/contracts/quotas stay
+fixed. ADR-0076 records caller-local adoption; ADR-0077 records the bounded production
+all-join proof refinement. The real source pipeline produces the current candidate.
 
 The [frozen plan](../../evaluation/0067-rp03-package-plan.md),
 [ADR-0067](../../decisions/0067-rp03-package-draft.md) and
@@ -87,8 +99,8 @@ editing and real users/hosts/browsers/independent review/Phase 1 exits remain op
 Regenerate with `.tools/ir-check/bin/python tools/build_rp03_benchmark.py`; `--check`
 compares exact bytes. The controlled assembler uses explicit IDs and is not a general
 editor/exporter/runtime. Independent resource/value and pure E1 receipt/recovery-guard checks do not
-admit this full source. Next audit the actual capture inherited-context refusal
-against the existing provenance/visibility contracts before choosing a generator
-or checker/contract dependency. No private-read or invalidation bypass is implied.
+admit this full source. Next audit actual parallel-effects-unproved at the acceptance split against
+its real concurrent effects/guard/closure contract before selecting a compatible
+proof or a separate semantic dependency. No conflict/lifetime/permission bypass.
 Near-English factoring/managed identity/protected accessible text/visual editing
 and real representative users remain explicit Phase 1 deliverables.

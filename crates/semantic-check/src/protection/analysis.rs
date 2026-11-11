@@ -116,6 +116,17 @@ impl<'a> Flow<'a> {
         boundary: &str,
         inherited: &Origins,
     ) -> Result<Origins> {
+        self.completed_where(origins, boundary, inherited, |owner| {
+            owner.as_str() == Some(scope)
+        })
+    }
+    fn completed_where(
+        &mut self,
+        origins: Origins,
+        boundary: &str,
+        inherited: &Origins,
+        owns: impl Fn(&Value) -> bool,
+    ) -> Result<Origins> {
         if self.dependencies.is_none() {
             return Ok(origins);
         }
@@ -124,7 +135,7 @@ impl<'a> Flow<'a> {
         for origin in origins {
             let origin = match origin {
                 Origin::Cell(cell)
-                    if self.b["data"][&cell]["scope"] == scope
+                    if owns(&self.b["data"][&cell]["scope"])
                         && !self.nonlocal_writes.contains(&cell)
                         && !inherited.contains(&Origin::Cell(cell.clone())) =>
                 {
@@ -298,6 +309,7 @@ impl<'a> Flow<'a> {
             provenance.extend(entry.iter().cloned());
         }
         let mut after: BTreeMap<String, Origins> = BTreeMap::new();
+        let mut split_entries: BTreeMap<String, Origins> = BTreeMap::new();
         let mut completed = Origins::new();
         let order = self.graph.order[scope].clone();
         self.budget.charge(order.len())?;
@@ -428,9 +440,37 @@ impl<'a> Flow<'a> {
                 }
                 "split" => {
                     let snapshot = pc.clone();
+                    let join = &self.b["nodes"][text(&n["join"])?];
+                    if self.dependencies.is_some()
+                        && join["predicate"]["op"] == "all"
+                        && !object(&join["predicate"]["outcomes"])?.is_empty()
+                    {
+                        self.budget.charge(snapshot.len() + 1)?;
+                        split_entries.insert(id.clone(), snapshot.clone());
+                    }
                     for child in object(&n["children"])?.values() {
                         pc.extend(self.scope(text(child)?, &snapshot, depth + 1, Some(&id))?);
                         self.child_provenance(text(child)?, &mut provenance)?;
+                    }
+                }
+                "join" if self.dependencies.is_some() => {
+                    self.budget.charge(1)?;
+                    // Only the reciprocal fixed direct all-join has an entry.
+                    // Partial/composite/dynamic summaries remain live. The control
+                    // graph forbids entry or ordinary flows into a join.
+                    if let Some(inherited) = split_entries.remove(text(&n["source"])?) {
+                        let fork = &self.b["nodes"][text(&n["source"])?];
+                        let children = object(&fork["children"])?;
+                        self.budget.charge(children.len() + 1)?;
+                        let members = children
+                            .values()
+                            .map(text)
+                            .collect::<Result<BTreeSet<_>>>()?;
+                        // Index fixed owners once; visit each origin once, rather
+                        // than rescanning the whole context for every member.
+                        pc = self.completed_where(pc, &id, &inherited, |owner| {
+                            owner.as_str().is_some_and(|scope| members.contains(scope))
+                        })?;
                     }
                 }
                 "finish" => {

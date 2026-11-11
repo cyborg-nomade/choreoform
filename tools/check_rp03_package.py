@@ -27,23 +27,24 @@ def load_package(base):
 def package():return load_package(BASE)
 def historical_package():return load_package(BASE/'history/source-0.14')
 def pre_instance_package():return load_package(BASE/'history/source-0.16-pre-instances')
+def instance_checkpoint_package():return load_package(BASE/'history/source-0.16-instances')
 
 
 class OrderPackageEvidence(unittest.TestCase):
-    def test_actual_generation_keeps_exact_candidate_and_only_three_passed_partial_reports(self):
+    def test_actual_generation_keeps_exact_candidate_and_only_actual_passed_partial_reports(self):
         generated=artifacts()
         for name,raw in generated.items():self.assertEqual((BASE/name).read_bytes(),raw,name)
         m=load(BASE/'manifest.json');p=package();r=invoke(p)
         self.assertEqual(r.returncode,0,r.stderr)
         self.assertEqual(json.loads(r.stdout),load(BASE/'candidate.ir.json'))
         self.assertEqual(m['lowering'],{'result':'passed'})
-        self.assertEqual([row['result'] for row in m['semanticStageResults'][:3]],['passed']*3)
-        self.assertTrue(all(row['result']=='refused' for row in m['semanticStageResults'][3:]))
+        self.assertEqual([row['result'] for row in m['semanticStageResults'][:5]],['passed']*5)
+        self.assertTrue(all(row['result']=='refused' for row in m['semanticStageResults'][5:]))
         self.assertIs(m['executable'],False)
 
     def test_measured_current_files_and_companion_keep_candidate_admission_separate(self):
         s,l,_=package();m=load(BASE/'manifest.json');validate_ledger(l)
-        self.assertEqual((len(s.encode()),sum(len(lex(line)) for line in s.splitlines())),(554331,82373))
+        self.assertEqual((len(s.encode()),sum(len(lex(line)) for line in s.splitlines())),(576759,84051))
         self.assertEqual(m['sourceBytes'],len(s.encode()));self.assertEqual(m['measuredTokens'],sum(len(lex(line)) for line in s.splitlines()))
         self.assertEqual((l['profile'],l['version'],m['coreProfile'],m['intendedWireVersion']),('0.16.0','0.15.0','0.12.0','0.4.0'))
         for key,value in package_digests(s.encode(),(BASE/'bindings.json').read_bytes()).items():self.assertEqual(m[key+'Digest'],value)
