@@ -7,6 +7,8 @@ use choreoform_semantic_check::{
 };
 use serde_json::{Value, json};
 
+#[path = "control/capture_context.rs"]
+mod capture_context;
 #[path = "control/exceptional.rs"]
 mod exceptional;
 #[path = "control/faults.rs"]

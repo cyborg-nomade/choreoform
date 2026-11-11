@@ -270,6 +270,8 @@ fn requirements(
         for cell in cells {
             budget.tick(0)?;
             if !ancestors.contains(text(&b["data"][cell]["scope"])?) {
+                #[cfg(test)]
+                capture_context_audit::record(b, site, cell, &ancestors);
                 return Err(Diagnostic {
                     code: "invalidation-context-unproved",
                     path: format!("/body/nodes/{site}"),
@@ -294,3 +296,6 @@ fn requirements(
     }
     Ok((obligations, missing))
 }
+
+#[cfg(test)]
+mod capture_context_audit;
