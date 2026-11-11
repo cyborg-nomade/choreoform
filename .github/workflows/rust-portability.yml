@@ -112,4 +112,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_rp03_current_checkpoint.py
           .tools/ir-check/bin/python tools/check_rp03_template_binding.py
           .tools/ir-check/bin/python tools/check_effectful_instances.py
+          .tools/ir-check/bin/python tools/check_rp03_instances.py
       # Browser execution is a separate manual evidence step, not implied by CI.

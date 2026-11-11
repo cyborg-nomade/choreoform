@@ -6,13 +6,14 @@ import json
 import unittest
 import authoring_probe as grammar
 from benchmarks.rp01_resources import encoded
-from build_rp03_benchmark import BASE,artifacts,historical_artifacts
-from check_rp03_package import package,historical_package
+from build_rp03_checkpoint import BASE as ROOTBASE,package_artifacts,historical_artifacts
+BASE=ROOTBASE/'history/source-0.16-pre-instances'
+from check_rp03_package import pre_instance_package as package,historical_package
 from check_rp03_symbol_binding import finish_audit
 from check_metadata_authoring import invoke
 from check_static_contracts import ROOT
 
-HISTORY=BASE/'history/source-0.14'
+HISTORY=ROOTBASE/'history/source-0.14'
 ORIGINAL='797d01f0b1a42db5c71de9bc7a054d58e24333798b23e6cde22225dc4cc707ee'
 
 
@@ -27,9 +28,9 @@ class OrderCurrentCheckpointEvidence(unittest.TestCase):
         self.assertEqual({p.relative_to(HISTORY).as_posix() for p in HISTORY.rglob('*') if p.is_file()},expected)
 
     def test_only_pair_core_source_caption_manifest_and_context_change(self):
-        old=historical_artifacts();new=artifacts()
+        old=historical_artifacts();new=package_artifacts()
         for name,raw in new.items():self.assertEqual((BASE/name).read_bytes(),raw,name)
-        self.assertEqual({p.relative_to(BASE).as_posix() for p in BASE.rglob('*') if p.is_file()},set(new)|{'README.md'})
+        self.assertEqual({p.relative_to(BASE).as_posix() for p in BASE.rglob('*') if p.is_file()},set(new)|{'README.md','README.previous.md'})
         for name,raw in old.items():
             if name not in ['source.choreo','bindings.json','manifest.json']:self.assertEqual(new[name],raw,name)
         source=old['source.choreo'].decode().replace('authoring "0.14.0"','authoring "0.16.0"',1).replace('Step "Finish authorization". Finish as "authorization recorded".','Step "Finish authorization". Finish as "authorization-recorded".',1)

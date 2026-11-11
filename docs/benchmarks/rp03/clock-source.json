@@ -48,7 +48,9 @@
       "refund_capability": true,
       "intercept_a_capability": true,
       "intercept_b_capability": true,
-      "notify_capability": true
+      "notify_capability": true,
+      "cancel_release_a_capability": true,
+      "cancel_release_b_capability": true
     }
   },
   "observations": {

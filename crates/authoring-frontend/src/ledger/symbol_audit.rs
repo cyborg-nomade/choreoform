@@ -62,7 +62,12 @@ impl Fixture {
                 artifacts.push((
                     id.into(),
                     revision.into(),
-                    std::fs::read(root.join(r["path"].as_str().unwrap())).unwrap(),
+                    std::fs::read({
+                        let path = r["path"].as_str().unwrap();
+                        path.strip_prefix("docs/benchmarks/rp03/")
+                            .map_or_else(|| root.join(path), |suffix| base.join(suffix))
+                    })
+                    .unwrap(),
                 ));
             }
         }

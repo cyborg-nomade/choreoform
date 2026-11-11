@@ -1,0 +1,13 @@
+{
+  "kind": "provider-terminal-observation-source",
+  "version": "0.1.0",
+  "id": "urn:choreoform:benchmarks:rp03:deliver-a-terminal:0.1.0",
+  "profile": {
+    "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+    "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+  },
+  "provider": {
+    "id": "urn:choreoform:benchmarks:rp03:deliver-a:0.1.0",
+    "revision": "sha256:17b0139ca3acdc35a780a84c77d9fa52c5f3d06a89f3c31b2f82dc35e6e8bcbe"
+  }
+}

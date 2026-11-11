@@ -15,36 +15,38 @@ from check_static_contracts import ROOT
 def load(path):return json.loads(path.read_bytes())
 
 
-def package():
-    m=load(BASE/'manifest.json')
-    return ((BASE/'source.choreo').read_text(),load(BASE/'bindings.json'),
-        [(r['id'],r['revision'],(ROOT/r['path']).read_bytes()) for r in m['resources']])
-
-
-def historical_package():
-    base=BASE/'history/source-0.14';m=load(base/'manifest.json')
+def load_package(base):
+    m=load(base/'manifest.json')
+    def resource(path):
+        prefix='docs/benchmarks/rp03/'
+        return (base/path.removeprefix(prefix)).read_bytes() if path.startswith(prefix) else (ROOT/path).read_bytes()
     return ((base/'source.choreo').read_text(),load(base/'bindings.json'),
-        [(r['id'],r['revision'],(ROOT/r['path']).read_bytes()) for r in m['resources']])
+        [(r['id'],r['revision'],resource(r['path'])) for r in m['resources']])
+
+
+def package():return load_package(BASE)
+def historical_package():return load_package(BASE/'history/source-0.14')
+def pre_instance_package():return load_package(BASE/'history/source-0.16-pre-instances')
 
 
 class OrderPackageEvidence(unittest.TestCase):
-    def test_actual_generation_and_exact_current_refusal_repeat_without_fake_ir_or_reports(self):
+    def test_actual_generation_keeps_exact_candidate_and_only_three_passed_partial_reports(self):
         generated=artifacts()
         for name,raw in generated.items():self.assertEqual((BASE/name).read_bytes(),raw,name)
         m=load(BASE/'manifest.json');p=package();r=invoke(p)
-        self.assertEqual(r.returncode,1);self.assertEqual(r.stdout,b'')
-        self.assertEqual(r.stderr.decode().strip(),m['lowering']['diagnostic'])
-        self.assertEqual(m['lowering']['code'],'child-template');self.assertEqual(m['lowering']['sourceBytes'],[0,0]);self.assertIs(m['canonicalIR'],None)
-        self.assertEqual(m['semanticStageResults'],[]);self.assertFalse((BASE/'candidate.ir.json').exists())
+        self.assertEqual(r.returncode,0,r.stderr)
+        self.assertEqual(json.loads(r.stdout),load(BASE/'candidate.ir.json'))
+        self.assertEqual(m['lowering'],{'result':'passed'})
+        self.assertEqual([row['result'] for row in m['semanticStageResults'][:3]],['passed']*3)
+        self.assertTrue(all(row['result']=='refused' for row in m['semanticStageResults'][3:]))
         self.assertIs(m['executable'],False)
 
     def test_measured_current_files_and_companion_keep_candidate_admission_separate(self):
         s,l,_=package();m=load(BASE/'manifest.json');validate_ledger(l)
-        self.assertEqual((len(s.encode()),sum(len(lex(line)) for line in s.splitlines())),(505980,77135))
-        self.assertEqual(m['sourceBytes'],len(s.encode()));self.assertEqual(m['measuredTokens'],77135)
+        self.assertEqual((len(s.encode()),sum(len(lex(line)) for line in s.splitlines())),(554331,82373))
+        self.assertEqual(m['sourceBytes'],len(s.encode()));self.assertEqual(m['measuredTokens'],sum(len(lex(line)) for line in s.splitlines()))
         self.assertEqual((l['profile'],l['version'],m['coreProfile'],m['intendedWireVersion']),('0.16.0','0.15.0','0.12.0','0.4.0'))
         for key,value in package_digests(s.encode(),(BASE/'bindings.json').read_bytes()).items():self.assertEqual(m[key+'Digest'],value)
-        start,end=m['lowering']['sourceBytes'];self.assertTrue(0<=start<=end<=len(s.encode()))
         self.assertGreater(m['measuredTokens'],16384);self.assertLess(m['sourceBytes'],1024*1024)
 
     def test_exact_resources_preserve_separate_effects_and_exclude_unknown_from_terminals(self):

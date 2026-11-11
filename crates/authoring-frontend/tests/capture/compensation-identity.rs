@@ -147,7 +147,12 @@ fn complete_order_uses_the_real_new_frontend_then_refuses_a_later_binding() {
             f.artifacts.push((
                 id.into(),
                 revision.into(),
-                std::fs::read(root.join(r["path"].as_str().unwrap())).unwrap(),
+                std::fs::read({
+                    let path = r["path"].as_str().unwrap();
+                    path.strip_prefix("docs/benchmarks/rp03/")
+                        .map_or_else(|| root.join(path), |suffix| base.join(suffix))
+                })
+                .unwrap(),
             ));
         }
     }

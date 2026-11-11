@@ -13,6 +13,7 @@ from benchmarks.rp01_resources import encoded,pin
 from benchmarks.rp03_resources import types,providers,clock_resources,inputs,SPECS
 from benchmarks.rp03_source import TERMINAL_PROFILE, matched_completion, read
 from benchmarks.rp03_graph import build
+from build_rp03_checkpoint import package_artifacts as checkpoint_artifacts, artifacts as checkpoint_files, PRE_INSTANCE_README
 from check_metadata_authoring import invoke
 from build_rp01_benchmark import STAGES
 
@@ -21,9 +22,12 @@ BASE=ROOT/'docs/benchmarks/rp03'
 LICENSE=b'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n'
 
 
-def package_artifacts(*,historical=False):
+def package_artifacts(*,historical=False,pre_instances=False):
+    if historical or pre_instances:
+        return checkpoint_artifacts(historical=historical)
+    recipients=[key+'_capability' for key,*_ in SPECS]+['cancel_release_a_capability','cancel_release_b_capability']
     _,raw,tp=types();files={'types.json':raw,'launch-values.json':encoded(inputs())}
-    docs=providers(tp);clocks=clock_resources();pins={k:v[2] for k,v in docs.items()}
+    docs=providers(tp,capabilities=recipients);clocks=clock_resources(capabilities=recipients);pins={k:v[2] for k,v in docs.items()}
     registry=[]
     def resource(name,raw,p):
         files[name]=raw
@@ -55,6 +59,9 @@ def package_artifacts(*,historical=False):
         **{k+'Digest':v for k,v in package_digests(files['source.choreo'],files['bindings.json']).items()},
         'contracts':package.ledger['contracts'],'resources':registry,
         'inputArtifacts':[{'path':name,'digest':'sha256:'+sha256(files[name]).hexdigest(),'meaning':'synthetic input or pure declaration evidence, never an accepted event'} for name in ['launch-values.json','receipt-rules.json','receipt-cases.json','guard-rules.json','guard-cases.json']],
+        'instanceMap':package.instances,
+        'protectionClaimDelta':{'addedCapabilities':['cancel_release_a_capability','cancel_release_b_capability'],
+            'meaning':'fresh fictional provider/clock recipient claims, not actual consent or authority'},
         'lowering':None,'canonicalIR':None,'semanticStageResults':[],
         'declarationCounts':{k:len(package.ledger[k]) for k in ['declarations','symbols','generated','resources']},
         'scenarios':[
@@ -105,24 +112,26 @@ def historical_artifacts():
 
 
 def artifacts():
-    files=package_artifacts();original=historical_artifacts()
-    for name,raw in original.items():
-        if name not in ['source.choreo','bindings.json','manifest.json']:
-            assert files[name]==raw,name
-        files['history/source-0.14/'+name]=raw
-    files['history/source-0.14/README.md']=b'''<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+    files=package_artifacts()
+    # Both historical packages reproduce independently with their exact old pins.
+    for name,raw in checkpoint_files().items():
+        if name.startswith('history/'):
+            files[name]=raw
+        else:
+            files['history/source-0.16-pre-instances/'+name]=raw
+    files['history/source-0.16-pre-instances/README.previous.md']=PRE_INSTANCE_README
+    files['history/source-0.16-pre-instances/README.md']=b'''<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# Original source-0.14 RP-03 draft
+# Source-0.16 pre-instance checkpoint
 
-Every generated file here is exact original draft evidence from PR #87 head
-13df5101bd8ba5dc94cdb0ec3ec2fbc84dcd6ee0, before ADR-0073's caption correction
-and existing-profile adoption. This contextual README is new, not an old artifact.
-Original manifest resource paths intentionally name unchanged current resource bytes.
-Source0.14 refuses its token quota; temporary source0.15 reaches private compensation
-identity and source0.16/C12 reaches the inconsistent authorization finish caption.
-No original candidate/semantic report or live authority exists. See the current
-checkpoint and docs/evaluation/0072-rp03-symbol-binding-audit.md for the exact cause.
+All generated artifacts here preserve the exact PR #90 checkpoint before ADR-0076
+caller-local instantiation and explicit synthetic recipient revisions. The source
+recognizes then refuses child-template; no candidate or semantic-stage report.
+Original manifest paths name the then-current resources. Historical loaders resolve
+benchmark-local paths inside their own archive so old pins still select old bytes.
+The older source-0.14 archive is also unchanged; its README describes the historical
+moment before current recipient revisions. No live effect or authorization follows.
 '''
     return files
 

@@ -12,6 +12,7 @@ from .rp03_resources import SPECS, PEOPLE, CAPABILITIES
 
 def build(type_pin,providers,pins,*,historical=False):
     p=new_package(historical=historical);p.guard_rules={}
+    capabilities=CAPABILITIES+['Release first reservation during settlement','Release second reservation during settlement']
     root=Scope(p,'order','Order fulfillment',None,'Start acceptance',
         inputs=[('order','Order','Original order')],outputs=[('first','First line','First line disposition'),('second','Second line','Second line disposition')],
         outcomes=['recorded'],closure='Preserve order obligations',race='Order commitments',cancellation='Customer cancellation')
@@ -22,17 +23,19 @@ def build(type_pin,providers,pins,*,historical=False):
     p.resource('order_clock_binding','Order clock','clock',pins['clock'])
     foundations(root)
     order_type=nominal(type_pin,'Order')
-    root.data('original_order','Original order',order_type,participants=PEOPLE,capabilities=CAPABILITIES)
+    root.data('original_order','Original order',order_type,participants=PEOPLE,capabilities=capabilities)
     # All results are optional because a non-dispatched operation has no evidence.
     # None is not no-effect, rejection or a settled obligation.
     names_by_key={key:name for key,name,*_ in SPECS}
     for key,name,*_ in SPECS:
         out=providers[key]['output']
-        root.data(key+'_record',name+' record',option(out),{'op':'none','element':out},participants=PEOPLE,capabilities=CAPABILITIES)
+        root.data(key+'_record',name+' record',option(out),{'op':'none','element':out},participants=PEOPLE,capabilities=capabilities)
+    instantiated={};p.instances=[]
+    def instantiate(scope,identity,key):
         prior={'release_a':'reserve_a','release_b':'reserve_b','void':'authorize','refund':'capture',
             'void_label_a':'label_a','void_label_b':'label_b'}.get(key)
         previous=next(row[1] for row in SPECS if row[0]==prior) if prior else None
-        compensation=(quote('Request '+previous)+' in '+quote(previous+' occurrence')+' in "Order fulfillment"') if previous else None
+        compensation=None
         deadline=None
         if key in ['pack_a','pack_b','label_a','label_b','handover_a','handover_b','capture']:
             auth_expiry=field(raw(payload(present(read('Authorize order payment record')),'authorized')),'expiry')
@@ -41,12 +44,26 @@ def build(type_pin,providers,pins,*,historical=False):
                 reserve_name='Reserve first line' if key.endswith('_a') else 'Reserve second line'
                 stock_expiry=field(raw(payload(present(read(reserve_name+' record')),'reserved')),'expiry')
                 deadline=conditional(binary('lt',stock_expiry,auth_expiry),stock_expiry,auth_expiry)
-        service(root,root,key,providers[key],compensates=compensation,deadline=deadline)
+        instance=key if key not in instantiated else identity.removesuffix('_call')
+        capability=names_by_key[key] if instance==key else names_by_key[key]+' during settlement'
+        if previous:
+            # This finite graph has exactly one declaration for each prior effect.
+            # Refuse an ambiguous future expansion rather than selecting by order.
+            assert len(instantiated[prior])==1, prior
+            prior_owner=instantiated[prior][0]
+            chain=[];cursor=prior_owner
+            while cursor:chain.append(cursor.name);cursor=cursor.parent
+            compensation=quote('Request '+previous)+''.join(' in '+quote(part) for part in chain)
+        owner=service(root,scope,key,providers[key],compensates=compensation,deadline=deadline,
+            instance=instance,capability=capability,capabilities=capabilities)
+        instantiated.setdefault(key,[]).append(owner)
+        p.instances.append({'creator':identity,'operation':key,'instance':instance,'body':owner.id,
+            'parent':scope.id,'capability':instance+'_capability'})
     dispositions=variant({'pending':record(), 'fulfilled':record(reference=TEXT),
         'cancelled':record(reason=TEXT), 'exception':record(reason=TEXT)})
     for key,name in [('first','First line'),('second','Second line')]:
         root.data(key+'_disposition',name+' disposition',dispositions,
-            {'op':'variant','type':dispositions,'tag':'pending','value':rec()},participants=PEOPLE,capabilities=CAPABILITIES)
+            {'op':'variant','type':dispositions,'tag':'pending','value':rec()},participants=PEOPLE,capabilities=capabilities)
     O=read('Original order'); R=raw(O)
     def result(key): return read(names_by_key[key]+' record')
     def success(key,case): return every([exists(result(key)),eq(tag(present(result(key))),text(case))])
@@ -65,8 +82,9 @@ def build(type_pin,providers,pins,*,historical=False):
         scope.expression(identity+'_condition',name+' condition',BOOLEAN,condition)
         scope.step(identity,name,f'Choose by ["yes" when {quote(name+" condition")}]; otherwise "no".',[('yes',yes),('no',no)])
     def call(scope,identity,key,next_step,*,which=None,basis=None,amount_value=None):
+        instantiate(scope,identity,key)
         name=names_by_key[key];local=identity+'_value';local_name=identity.replace('_',' ')+' result'
-        scope.data(local,local_name,providers[key]['output'],participants=PEOPLE,capabilities=CAPABILITIES)
+        scope.data(local,local_name,providers[key]['output'],participants=PEOPLE,capabilities=capabilities)
         instruction_value=instruction_expression(O,scope_key(which),scope_revision(which),amount_value if amount_value is not None else amount(which),
             basis if basis is not None else field(R,'payment reference'),identity+'-instruction-v1',
             {'op':'some','value':field(line(which),'quantity')} if which else {'op':'none','element':INTEGER},
@@ -102,7 +120,7 @@ def build(type_pin,providers,pins,*,historical=False):
     # separate customer decision; it does not mutate its priced lines/revisions.
     offer_type=record(order=order_type,first=BOOLEAN,second=BOOLEAN)
     decision_type=variant({case:nominal(type_pin,'Partial stock decision') for case in ['ship','cancel']})
-    root.data('partial_decision','Partial stock decision',decision_type,participants=PEOPLE,capabilities=CAPABILITIES)
+    root.data('partial_decision','Partial stock decision',decision_type,participants=PEOPLE,capabilities=capabilities)
     root.expression('partial_offer','Partial stock offer',offer_type,rec(order=O,first=a_reserved,second=b_reserved))
     matching=literal(BOOLEAN,False)
     for case,choice in [('cancel','cancel all'),('ship','ship available')]:
@@ -172,7 +190,7 @@ def build(type_pin,providers,pins,*,historical=False):
     # surviving settlement body, not an ordinary continuation of the cancelled root.
     settlement=Scope(p,'order_settlement','Order settlement',root,'Ask settlement direction')
     direction_type=variant({case:nominal(type_pin,'Settlement direction') for case in ['stop','retain']})
-    settlement.data('settlement_direction','Settlement direction',direction_type,participants=PEOPLE,capabilities=CAPABILITIES)
+    settlement.data('settlement_direction','Settlement direction',direction_type,participants=PEOPLE,capabilities=capabilities)
     settlement.expression('settlement_direction_input','Settlement direction input',record(order=order_type,known=known_type),rec(order=O,known=known_values))
     direction=literal(BOOLEAN,False)
     for case,action in [('stop','request stop'),('retain','retain')]:
@@ -205,7 +223,7 @@ def build(type_pin,providers,pins,*,historical=False):
     for scope,identity,caption,next_name in [(root,'exception','Ask exception owner','notify call'),(settlement,'surviving_exception','Ask surviving exception owner','Finish surviving settlement')]:
         summary_type=record(order=order_type,first=dispositions,second=dispositions,known=known_type)
         name=caption+' input';scope.expression(identity+'_input',name,summary_type,rec(order=O,first=read('First line disposition'),second=read('Second line disposition'),known=known_values))
-        scope.data(identity+'_claim',caption+' evidence',ownership_type,participants=PEOPLE,capabilities=CAPABILITIES)
+        scope.data(identity+'_claim',caption+' evidence',ownership_type,participants=PEOPLE,capabilities=capabilities)
         claim=raw(payload(fact('result'),'owned'))
         predicate=every([eq(field(claim,'order ID'),field(R,'order ID')),eq(field(claim,'order revision'),field(R,'revision')),eq(field(claim,'principal'),fact('principal'))])
         scope.policy(identity+'_work','work',caption+' rules',f'Instructions "Record current accountable support ownership and all outstanding obligations; a claim alone does not settle or transfer them.". Authority "Support agent". Attempts 1. Delays empty. Retry faults empty. Timeout none. Complete when ({expr(predicate)}). Compensates none.')
@@ -214,5 +232,20 @@ def build(type_pin,providers,pins,*,historical=False):
     root.child(settlement)
     call(root,'notify_call','notify','Finish order record',basis=field(R,'order ID'))
     root.step('order_done','Finish order record','Finish as "recorded".')
+    # Every constructed capability request contains O; each human request/completion
+    # also depends on O. A revised original order withdraws those decisions/work.
+    # This explicit recipe dependency does not prove any private inherited context.
+    declarations={r['id']:r for r in p.ledger['declarations']}
+    original_dependents=[]
+    for _,(scope,name,action) in p.actions.items():
+        if not action.startswith(('Request ','Ask ')):continue
+        chain=[]
+        while scope is not None:
+            row=declarations[scope];chain.append(row['name']);scope=row['scope']
+        original_dependents.append(quote(name)+''.join(' in '+quote(part) for part in chain))
+    assert len(original_dependents)==29
+    index=next(i for i,line in enumerate(root.declarations) if line.startswith('Keep "Original order"'))
+    root.declarations[index]=root.declarations[index].replace('Invalidate empty.',
+        'Invalidate ['+', '.join(original_dependents)+'].')
     source='# SPDX-FileCopyrightText: 2026 Choreoform contributors\n# SPDX-License-Identifier: MPL-2.0\n# Synthetic full two-line draft; not admitted or executable.\n'+f'Choreoform authoring "{p.ledger["profile"]}".\n'+root.render()+'\n'
     return source,p

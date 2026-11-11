@@ -82,40 +82,45 @@ def matched_completion(key,request,tags):
     return result
 
 
-def service(root,parent,key,provider,*,compensates=None,deadline=None):
+def service(root,parent,key,provider,*,compensates=None,deadline=None,instance=None,capability=None,capabilities=CAPABILITIES):
     """One request/effect per occurrence, explicit typed local follow-up capture.
 
     The graph caller supplies original request construction and explicit result
     publication. Unknown is never an ordinary successful port value.
     """
     _,name,_,tags,_=next(row for row in SPECS if row[0]==key)
+    operation=key
+    instantiated=instance is not None
+    key=instance or key
+    capability=capability or name
     package=root.package
     owner=Scope(package,key+'_service',name+' occurrence',parent,'Request '+name,
         inputs=[('request','Request',name+' request')],outputs=[('result','Result',name+' result')],
         closure=name+' close',race='Order commitments')
     owner.policy(key+'_close','closure',name+' close',f'Reconcile in {quote(name+" recovery")}.')
-    owner.data(key+'_request',name+' request',provider['input'],participants=PEOPLE,capabilities=CAPABILITIES)
-    owner.data(key+'_result',name+' result',provider['output'],participants=PEOPLE,capabilities=CAPABILITIES)
+    owner.data(key+'_request',name+' request',provider['input'],participants=PEOPLE,capabilities=capabilities,
+        invalidates=[quote('Request '+name)] if instantiated else [])
+    owner.data(key+'_result',name+' result',provider['output'],participants=PEOPLE,capabilities=capabilities)
     owner.expression(key+'_input',name+' input',provider['input'],read(name+' request'))
-    work(owner,key,name,matched_completion(key,read(name+' request'),tags),compensates,deadline)
-    owner.step(key+'_activity','Request '+name,f'Request {quote(name)} using {quote(name+" input")} under {quote(name+" work")} and record in {quote(name+" result")}.',[(tag,'Finish '+name) for tag in tags])
+    work(owner,key,name,matched_completion(operation,read(name+' request'),tags),compensates,deadline)
+    owner.step(key+'_activity','Request '+name,f'Request {quote(capability)} using {quote(name+" input")} under {quote(name+" work")} and record in {quote(name+" result")}.',[(tag,'Finish '+name) for tag in tags])
     owner.step(key+'_done','Finish '+name,'Finish as "complete".')
     recovery=Scope(package,key+'_recovery',name+' recovery',owner,'Observe '+name)
     correlation=record(**{'logical effect':TEXT,'request digest':TEXT,'observation':TEXT})
     observation=variant({'confirmed':provider['output'],'noeffect':correlation,'rejected':correlation,'cancelled':correlation})
-    recovery.data(key+'_capture',name+' late evidence',observation,participants=PEOPLE,capabilities=CAPABILITIES,
+    recovery.data(key+'_capture',name+' late evidence',observation,participants=PEOPLE,capabilities=capabilities,
         invalidates=[quote('Observe '+name),quote('Finish '+name+' recovery')])
     recovery.declarations.insert(0,f'Retain the original request from {quote("Request "+name)} and record in {quote(name+" original request")}.')
-    recovery.data(key+'_retained',name+' original request',provider['input'],participants=PEOPLE,capabilities=CAPABILITIES,
+    recovery.data(key+'_retained',name+' original request',provider['input'],participants=PEOPLE,capabilities=capabilities,
         invalidates=[quote('Observe '+name),quote('Finish '+name+' recovery')])
-    recovery.step(key+'_observe','Observe '+name,f'Wait under {quote(name+" reconciliation")} for observations from {quote(name+" terminal facts")} about {quote("Request "+name)} and record in {quote(name+" late evidence")}.',[('observed','Finish '+name+' recovery')])
+    recovery.step(key+'_observe','Observe '+name,f'Wait under {quote(capability+" reconciliation")} for observations from {quote(name+" terminal facts")} about {quote("Request "+name)} and record in {quote(name+" late evidence")}.',[('observed','Finish '+name+' recovery')])
     recovery.step(key+'_recovered','Finish '+name+' recovery','Finish as "complete".')
     owner.child(recovery)
-    root.capability(key+'_capability',name,name+' provider',provider['input'],provider['output'],'Commerce operator',name+' effects')
-    root.policy(key+'_effects','effect',name+' effects',f'Effect is {provider["effectClass"]}. Idempotency is {provider["idempotency"]}. Reconcile under {quote(name+" reconciliation")}.')
+    root.capability(key+'_capability',capability,name+' provider',provider['input'],provider['output'],'Commerce operator',capability+' effects')
+    root.policy(key+'_effects','effect',capability+' effects',f'Effect is {provider["effectClass"]}. Idempotency is {provider["idempotency"]}. Reconcile under {quote(capability+" reconciliation")}.')
     chain=[];cursor=recovery
     while cursor:chain.append(cursor.name);cursor=cursor.parent
     endpoint=quote('Observe '+name)+''.join(' in '+quote(part) for part in chain)
-    root.policy(key+'_wait','wait',name+' reconciliation',f'Observe {ty(observation)}. Match when (true). Authority "Commerce operator". Timer none. On observation outcome "observed" of {endpoint}. On timer none.')
+    root.policy(key+'_wait','wait',capability+' reconciliation',f'Observe {ty(observation)}. Match when (true). Authority "Commerce operator". Timer none. On observation outcome "observed" of {endpoint}. On timer none.')
     parent.child(owner)
     return owner

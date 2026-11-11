@@ -38,10 +38,10 @@ SPECS = [
 CAPABILITIES = [name for _,name,*_ in SPECS]
 
 
-def protection():
+def protection(capabilities=None):
     return {'policy':'order_access', 'sensitivity':'order', 'purposes':{'fulfillment':True},
             'participants':{r+'_actor':True for r in ROLES},
-            'capabilities':{key+'_capability':True for key,*_ in SPECS}}
+            'capabilities':{identity:True for identity in (capabilities if capabilities is not None else [key+'_capability' for key,*_ in SPECS])}}
 
 
 def types():
@@ -117,7 +117,7 @@ def instruction(type_pin):
         'target quantity':option(INTEGER),'target warehouse':option(TEXT)})
 
 
-def providers(type_pin):
+def providers(type_pin, *, capabilities=None):
     result={}
     for key,_,name,tags,effect in SPECS:
         identity=f'urn:choreoform:benchmarks:rp03:{key.replace("_","-")}:0.1.0'
@@ -125,7 +125,7 @@ def providers(type_pin):
         observations={'result-'+tag:{'state':'succeeded','result':output,'outcome':tag} for tag in tags}
         observations.update({state:{'state':state,'result':None,'outcome':None} for state in ['acknowledged','rejected','cancelled','unknown','no-effect']})
         doc={'kind':'provider-contract','version':'0.1.0','id':identity,'input':instruction(type_pin),'output':output,
-            'outcomes':{tag:True for tag in tags},'resultProtection':protection(),'observations':observations,
+            'outcomes':{tag:True for tag in tags},'resultProtection':protection(capabilities),'observations':observations,
             'idempotency':'none' if effect=='read-only' else 'stable-key','effectClass':effect}
         raw=encoded(doc);result[key]=(doc,raw,pin(identity,raw))
     return result
@@ -143,10 +143,10 @@ def inputs():
     return {'order':order}
 
 
-def clock_resources():
+def clock_resources(*, capabilities=None):
     source_id='urn:choreoform:benchmarks:rp03:clock-source:0.1.0'
     source={'kind':'provider-contract','version':'0.1.0','id':source_id,'input':record(),'output':INTEGER,
-        'outcomes':{'tick':True},'resultProtection':protection(),
+        'outcomes':{'tick':True},'resultProtection':protection(capabilities),
         'observations':{'tick':{'state':'succeeded','result':INTEGER,'outcome':'tick'},'unknown':{'state':'unknown','result':None,'outcome':None}},
         'idempotency':'none','effectClass':'read-only'}
     raw=encoded(source);source_pin=pin(source_id,raw)

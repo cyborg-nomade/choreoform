@@ -144,7 +144,12 @@ fn actual_full_order_recognizes_with_old_work_limit_and_keeps_private_compensati
             f.artifacts.push((
                 id.into(),
                 revision.into(),
-                std::fs::read(root.join(r["path"].as_str().unwrap())).unwrap(),
+                std::fs::read({
+                    let path = r["path"].as_str().unwrap();
+                    path.strip_prefix("docs/benchmarks/rp03/")
+                        .map_or_else(|| root.join(path), |suffix| base.join(suffix))
+                })
+                .unwrap(),
             ));
         }
     }
@@ -161,3 +166,6 @@ mod compensation_identity;
 
 #[path = "capture/rp03-current-checkpoint.rs"]
 mod rp03_current_checkpoint;
+
+#[path = "capture/rp03-instantiated.rs"]
+mod rp03_instantiated;
