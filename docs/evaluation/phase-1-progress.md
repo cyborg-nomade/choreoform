@@ -9,17 +9,17 @@
 
 ## Current focus
 
-PR #82 merged the whole declared two-line RP-03 source draft into draft parent #46
-as `3c190c9cf7ae08c792c3b18034a67ec4f0b16006`. Actual unchanged source 0.14
-refuses its 77,135-token / 505,980-byte proposal at 108626..108627 with no IR or
-semantic-stage reports. Independent resource/pure checks are separate evidence.
-Active `codex/source-capacity-profile` follows the [frozen measured plan](0068-source-capacity-plan.md):
-explicit source 0.15/companion 0.14, same core 0.11/IR 0.4, 131,072 full-program
-tokens only, all old profiles/other budgets unchanged. Preserve every RP-01 and
-RP-03 byte and experimentally retain the next actual admission refusal. All forty
-scenarios Partial, G1–G4 conditional, #46 incomplete. Full validator/benchmarks /
-near-English factoring/identity-managed/protected accessible text-visual/actual
-user/host/browser/independent/phase gates remain open. No Phase 2.
+PR #83 merged explicit source 0.15 capacity into draft parent #46 as
+`f628d0eb50dd490be35288145f82c58278da068a`. The temporary RP-03 promotion
+recognizes 77,135 tokens in 832,138 native visits, then refuses private sibling
+compensation identity at 60937..61023 with no candidate/semantic reports. Source
+0.14's original refusal and every benchmark byte stay fixed. Active
+`codex/compensation-reference-audit` follows the [frozen test/docs plan](0069-compensation-reference-audit-plan.md):
+independently assess raw P3 visibility/context and readable prior identity, without
+production changes or ordinary privacy expansion. All forty scenarios Partial,
+G1–G4 conditional, parent #46 incomplete. Full validator/benchmarks/optional cases /
+near-English factoring/identity-managed protected accessible text-visual/actual
+users/host/browser/independent/phase gates remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1495,6 +1495,22 @@ No privacy/semantic contract is widened here. Parent #46 draft, all forty scenar
 Partial, G1–G4 conditional; full validator/benchmarks/RP-08/optional cases/near-English
 factoring/identity-managed protected accessible text-visual/actual users/host /
 browser/independent/phase exits remain open. No Phase 2 or external blocker.
+
+[PR #83](https://github.com/cyborg-nomade/choreoform/pull/83) merged into draft
+#46 as `f628d0eb50dd490be35288145f82c58278da068a` after corrected final-head CI
+`42923644460` at `a50ee8eb74b0a64ecf639b413daf3a619b0e57c0` and delegated
+completed-diff review `5851132277`. The initial commit omitted the already-tested
+schema/sidecar; the signed follow-up includes them and only its final-head CI is
+merge evidence. Refreshed threads/summary audit found no threads/actionable findings;
+CodeRabbit skipped and supplies no review evidence. Expected-head merge explicitly
+carries sign-off; ADR-0068 remains pending parent/main integration. Local 557 Rust +
+six doctests/native/Wasm/all 64 Python commands pass. Active
+`codex/compensation-reference-audit` follows [the frozen plan](0069-compensation-reference-audit-plan.md):
+raw static checks also use lexical visibility, so assess accepted semantics/current
+context and both layers independently before choosing a purpose-only dependency.
+No private binding/semantic permission changes in this test/docs slice. Every
+benchmark byte stays fixed. Parent #46 draft, all scenarios Partial, G1–G4 conditional;
+all full/optional/RP-08/validator/near-English/editor/visual/external/phase gates open.
 
 ## Honest exit accounting
 
