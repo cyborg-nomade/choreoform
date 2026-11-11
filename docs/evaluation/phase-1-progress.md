@@ -9,21 +9,22 @@
 
 ## Current focus
 
-Explicit source 0.16 / companion 0.15 is implemented on
-`codex/compensation-identity-authoring` under signed plan `30ac848` / ADR-0071,
-after raw #85 merged as `94024f3c5fba3e56c19a9108f8f7b5e6aa354158`.
-Purpose-only exact complete scope paths select C12 prior activity identity, with
-ordinary privacy/C11 owned-source/live gates and every old profile/benchmark byte
-fixed. Four SDK/seven Python groups cover binding/format/reparse/all eleven small
-views and real whole-case refusal. Full RP-03 recognizes 77,135 tokens in 832,138
-visits, then refuses `symbol-mismatch at 0..0`, no candidate or semantic reports.
-Local 575 Rust + six doctests/native/Wasm/all 67 Python commands pass; completed-
-diff delegated review finds no remaining actionable scope issue. Final-head CI /
-comment audit/signed parent merge remain. Next freeze whole-case symbol/companion
-binding audit to identify the actual requested owner/role/name and correction.
-Forty Partial, G1–G4 and parent #46 incomplete; full validator/benchmarks/near-English /
-identity-managed protected accessible text-visual/actual user/host/browser /
-independent/phase exits open. No Phase 2.
+The frozen `b2874c5` whole-order symbol audit is implemented on
+`codex/rp03-symbol-binding-audit`, after #86 merged as
+`bb0b280971519cfe67dc3f9a791e2e33d731a9dc`. Actual failed lookup is owner
+`accept_payment`, role `outcome`, name `authorization recorded`; its declared
+interface/companion/join use `authorization-recorded`. This is one mismatch among
+56 generated direct finishes. Five SDK/four Python groups reject metadata-only
+renames/aliases and show consistent friendly captions can keep stable wires. No
+production behavior/diagnostic, generator or benchmark byte changes; full RP-03
+still has no candidate/semantic report. Local 580 Rust + six doctests/native/Wasm /
+all 68 Python checks pass; separate completed-diff delegated review finds no
+remaining scope issue. Final-head CI/comments/signed parent merge remain. Next
+separately freeze exact generator/source caption correction, preserve original
+evidence and measure the next genuine full-source result. Forty Partial, G1–G4 /
+parent #46/full validator/benchmarks/near-English/protected accessible managed
+identity/text-visual/actual user/host/browser/independent/phase gates remain open.
+No Phase 2.
 
 ## Verified baseline
 
@@ -1592,6 +1593,40 @@ follow. Next separately freeze the whole-case symbol/companion binding audit bef
 choosing any generator/frontend correction or adoption. Parent #46 draft, forty
 Partial, G1–G4/full/optional/RP-08/validator/near-English/protected accessible managed
 identity/text-visual/external/phase exits remain open. No Phase 2.
+
+[PR #86](https://github.com/cyborg-nomade/choreoform/pull/86) merged into draft
+#46 as `bb0b280971519cfe67dc3f9a791e2e33d731a9dc` after required CI
+`43002239019` at `f85d8b884216fd99df54809dfc695bd3fb1c3bbb`, delegated
+completed-diff review `5857164364`, refreshed empty threads/actionable summaries
+and signed expected-head merge. CodeRabbit skipped and supplies no evidence.
+ADR-0071 remains pending parent/main integration; local 575 Rust + six doctests /
+native/Wasm/all 67 Python checks pass. Signed next plan `b2874c5` freezes the
+[whole-order symbol-binding audit](0072-rp03-symbol-binding-audit-plan.md) before
+probes, with this checked merge as dependency. Keep source/resources/guards/benchmark
+bytes and production/profile/core/privacy/budget behavior fixed; identify the actual
+symbol request before choosing a repair. No full candidate/semantic/eligible effect /
+host authority or broader ownership claim. Parent #46 draft, forty Partial, G1–G4 /
+full/optional/RP-08/validator/near-English/managed protected accessible text-visual /
+external/phase exits stay open. No Phase 2.
+
+ADR-0072's [whole-order symbol critique](0072-rp03-symbol-binding-audit.md)
+is implemented under frozen plan `b2874c5`, after checked #86 integration. Test-only
+thread-local capture identifies `(accept_payment,outcome,authorization recorded)`
+from the finish step; original scope/interface/companion/join use the hyphenated
+name/wire `authorization-recorded`. The unchanged generator/action audit finds only
+this mismatch among 56 direct finishes; other bindings/semantics stay unproved.
+Five SDK/four Python groups reproduce full original and companion-only rename
+failures, reject same-wire aliases/undeclared extra wires/wrong roles, and prove
+matching friendly captions keep stable wires and all eleven native views. Runtime
+lookup/error/span, all old/new profiles/contracts/budgets and committed benchmark /
+generator/resource/guard/manifest bytes stay fixed. Local 580 Rust + six doctests /
+native/Wasm/all 68 Python checks pass; completed-diff delegated review finds no
+remaining audit-scope issue. Required final-head CI/full comments/signed merge follow.
+Next separately freeze the exact generator/source finish-literal correction, retaining
+original evidence and measuring actual subsequent failures before further repairs /
+adoption. No full candidate/revision/semantic or live event/authority/ownership claim.
+Parent #46 draft, forty Partial, G1–G4/full/optional/RP-08/validator/near-English /
+managed protected accessible text-visual/external/phase exits stay open. No Phase 2.
 
 ## Honest exit accounting
 

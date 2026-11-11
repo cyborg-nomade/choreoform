@@ -380,6 +380,10 @@ validated, and round-tripped.
   source0.16 purpose-only exact paths. Whole RP-03 reaches a later symbol/companion
   binding refusal; audit that cause next before correcting the case or language.
   Full candidate/semantic admission and near-English/editor/visual goals remain open.
+  [ADR-0072](docs/decisions/0072-rp03-symbol-binding-direction.md) identifies the
+  inconsistent authorization finish caption among 56 generated direct finishes.
+  Next separately correct the generator/source literal, retain original evidence
+  and measure subsequent actual failures; no new symbol permission is required.
   [ADR-0068](docs/decisions/0068-source-capacity.md) adds explicit source 0.15
   capacity with the same core/wire/meaning. Full grammar recognizes under unchanged
   parser work; compensation sibling-private identity binding genuinely refuses.

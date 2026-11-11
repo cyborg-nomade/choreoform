@@ -6,6 +6,9 @@ use choreoform_ir_probe_core::{Resource, digest, transport};
 use serde_json::{Map, Value};
 use std::collections::{BTreeMap, BTreeSet};
 
+#[cfg(test)]
+mod symbol_audit;
+
 pub(crate) const SEMANTICS: (&str, &str) = choreoform_ir_probe_core::SUPPORTED_CONTRACTS[0];
 pub(crate) const CORE: (&str, &str) = (
     "urn:choreoform:contracts:core-profile:0.1.0",
@@ -733,10 +736,15 @@ impl Ledger {
         Err(error("wait-endpoint-boundary", 0..0))
     }
     pub(crate) fn symbol(&self, owner: &str, role: &str, name: &str) -> Result<&Symbol> {
-        self.symbol_names
+        let symbol = self
+            .symbol_names
             .get(&(owner.into(), role.into(), name.into()))
-            .and_then(|id| self.symbols.get(id))
-            .ok_or_else(|| error("symbol-mismatch", 0..0))
+            .and_then(|id| self.symbols.get(id));
+        #[cfg(test)]
+        if symbol.is_none() {
+            symbol_audit::record(owner, role, name);
+        }
+        symbol.ok_or_else(|| error("symbol-mismatch", 0..0))
     }
     pub(crate) fn slot(&self, owner: &str, role: &str, key: Option<&str>) -> Result<&Slot> {
         self.slot_keys
