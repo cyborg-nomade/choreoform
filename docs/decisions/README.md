@@ -104,7 +104,6 @@ while specifications, guides, and code describe the system as it exists now.
 | [0077](0077-fixed-all-join-history.md) | Accepted under delegation; pending parent/main integration | Prove direct fixed all-join history and exact invalidation coverage |
 | [0078](0078-external-interference-contract-direction.md) | Accepted under delegation; pending parent/main integration | Require an explicit external-interference contract before extending acceptance |
 | [0079](0079-external-interference-draft.md) | Accepted under delegation; inactive draft design only | Model finite exact-provider external regions without execution admission |
-
 | [0080](0080-external-interference-resources.md) | Accepted under delegation; pending parent/main integration | Validate standalone provider-region metadata without selecting it |
 
 ## When an ADR is required

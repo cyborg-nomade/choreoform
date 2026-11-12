@@ -116,4 +116,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_all_join_history.py
           .tools/ir-check/bin/python tools/check_parallel_effects_audit.py
           .tools/ir-check/bin/python tools/check_external_interference_draft.py
+          .tools/ir-check/bin/python tools/check_external_interference_resources.py
       # Browser execution is a separate manual evidence step, not implied by CI.

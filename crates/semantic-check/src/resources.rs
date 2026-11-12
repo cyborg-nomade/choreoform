@@ -15,6 +15,11 @@ mod fault_source;
 pub use fault_source::{FAULT_SOURCE_PROFILE, FaultEmission, FaultEvidence, ProviderFaultSource};
 mod fault_history;
 pub use fault_history::{FAULT_HISTORY_PROFILE, FAULT_HISTORY_TYPES, ProviderFaultHistory};
+mod interference;
+pub use interference::{
+    ExternalFootprint, ExternalRegion, ExternalRegionNamespace, INTERFERENCE_PROFILE,
+    ProviderInterference, RegionKeyType, RequestSelector, RequestSelectorStep,
+};
 
 /// Declared provider classification, never an authenticated observation.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -175,6 +180,8 @@ pub struct Resources<'a> {
     fault_history_type: Option<Arc<Type>>,
     terminal_sources: BTreeMap<Pin, Arc<ProviderTerminalSource>>,
     terminal_schemas: BTreeMap<(Pin, Pin), Arc<terminal_source::TerminalSchema>>,
+    external_namespaces: BTreeMap<Pin, Arc<ExternalRegionNamespace>>,
+    interference: BTreeMap<Pin, Arc<ProviderInterference>>,
     pub(crate) budget: Budget,
 }
 impl<'a> Resources<'a> {
@@ -211,6 +218,8 @@ impl<'a> Resources<'a> {
             fault_history_type: None,
             terminal_sources: BTreeMap::new(),
             terminal_schemas: BTreeMap::new(),
+            external_namespaces: BTreeMap::new(),
+            interference: BTreeMap::new(),
             budget: Budget::default(),
         })
     }
