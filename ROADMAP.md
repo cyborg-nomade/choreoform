@@ -117,6 +117,9 @@ validated, and round-tripped.
   summaries on full RP-01/03/08 before user evaluation. The measured RP-03 source
   verbosity in [ADR-0067](docs/decisions/0067-rp03-package-draft.md) is a concrete
   bottleneck; a larger parser quota will not satisfy or defer this work to Phase 2.
+  [ADR-0082](docs/decisions/0082-request-region-proof-direction.md) prioritizes an
+  independent factoring critique/evaluation while the explicit external-region
+  proof prerequisites remain open; metadata plumbing does not complete authoring.
   In progress: [ADR-0014](docs/decisions/0014-near-english-authoring.md) accepts
   Candidate A as a provisional working direction, with the
   [authoring comparison](docs/authoring/README.md); Project Owner approved
@@ -430,6 +433,11 @@ validated, and round-tripped.
   structural approval does not close the conditional gates or Phase 1 exit.
 
 This is an aggregate completion gate, not a finished or silently skipped task.
+Core0.13 binds provider-region metadata only. The
+[actual request proof audit](docs/evaluation/0082-request-region-proof-audit.md)
+keeps canonical physical aliases, original-snapshot correlation and all admissible
+revised/surviving work as explicit unproved prerequisites before any concurrency
+extension. Independent near-English work does not close this gate.
 It was separated from structural approval in PR #11. Its prerequisites are the
 binding/type foundations, accepted executable dialects, complete validator,
 full benchmark examples, and conformance/round-trip evidence listed above.

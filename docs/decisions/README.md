@@ -106,6 +106,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0079](0079-external-interference-draft.md) | Accepted under delegation; inactive draft design only | Model finite exact-provider external regions without execution admission |
 | [0080](0080-external-interference-resources.md) | Accepted under delegation; pending parent/main integration | Validate standalone provider-region metadata without selecting it |
 | [0081](0081-interference-definition-binding.md) | Accepted under delegation; pending parent/main integration | Select exact provider descriptors explicitly without proving concurrency |
+| [0082](0082-request-region-proof-direction.md) | Accepted under delegation; pending parent/main integration | Preserve unproved region safety and progress independent near-English factoring |
 
 ## When an ADR is required
 

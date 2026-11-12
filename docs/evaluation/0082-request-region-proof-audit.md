@@ -126,8 +126,23 @@ No actual external blocker is reported while independent work remains. No Phase 
 
 ## Verification checkpoint
 
-The five SDK groups pass. Required full pinned workspace/compile-fail/native/Wasm /
-release/native-portability/Python checks and separate completed-diff automated
-review are pending. Fresh full unresolved review/thread/CodeRabbit audit and
-final-head CI precede signed expected-head merge; no skipped bot or personal
-owner/independent/human approval is claimed.
+All 633 Rust tests plus six compile-fail doctests pass, with format, native/all-five-
+library Wasm lint, release portability/frontend Wasm, fresh native portability and
+all 78 Python commands. Logs: `/private/tmp/request-region-audit-workspace.log`
+and `/private/tmp/request-region-audit-verify.log`. Five new SDK/four Python groups
+supply actual mathematical/declaration/pin/refusal evidence; no host/user trace.
+
+A separate completed-diff automated review checked correctness, privacy/security,
+bounded evidence, scope/licensing, source/type/pin relationships and every claim.
+It confirmed the cross-revision example refutes an input-type proposition only;
+hypothetical case folding is not an implemented physical normalizer; P6 cancellation
+and terminal/ownership constraints remain mandatory; and original/changed requests
+are not equated by type correctness. No remaining actionable findings. The
+stale authoring README refusal description was corrected to the actual current
+concurrency boundary. No production/source/core/schema/accepted artifact or
+benchmark/history/generator/report bytes changed. The aggregate completion gate
+remains unchecked, and independent near-English work remains in Phase 1.
+
+Fresh full unresolved review/thread/CodeRabbit audit and final-head CI precede
+signed expected-head merge. This is automated self-review; no skipped bot or
+personal owner/independent/human/GitHub approval is claimed.
