@@ -144,6 +144,8 @@ pub fn check_concurrency(
             return Err(at("parallel-lifetime-unproved", join));
         }
         let mut previous = Summary::default();
+        #[cfg(test)]
+        let mut audit_peers = (Vec::new(), 0);
         for child in children {
             terminal(b, child, id)?;
             let shared = summaries[child].shared(b, child, &mut budget)?;
@@ -152,7 +154,19 @@ pub fn check_concurrency(
             } else {
                 // Comparing against accumulated sets detects exactly the same
                 // pair hazards without quadratic scans of empty/read-only peers.
-                independent(&shared, &previous, id, &mut budget)?;
+                let independence = independent(&shared, &previous, id, &mut budget);
+                #[cfg(test)]
+                if let Err(error) = &independence {
+                    effects_audit::record(id, child, &audit_peers, &shared, &previous, error);
+                }
+                independence?;
+                #[cfg(test)]
+                {
+                    if audit_peers.0.len() < 64 {
+                        audit_peers.0.push(child);
+                    }
+                    audit_peers.1 += 1;
+                }
                 previous.reads.extend(shared.reads);
                 previous.writes.extend(shared.writes);
                 previous.observations |= shared.observations;
@@ -237,3 +251,6 @@ fn at(code: &'static str, site: &str) -> Diagnostic {
         path: format!("/body/nodes/{site}"),
     }
 }
+
+#[cfg(test)]
+mod effects_audit;

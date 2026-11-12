@@ -9,28 +9,35 @@
 
 ## Current focus
 
-[PR #91](https://github.com/cyborg-nomade/choreoform/pull/91) merged full RP-03
-caller-local instantiation into draft #46 as `23d37155215614f020e9a65e1defc6ba87dded6c`, after
-exact-head CI `43038900965` at `8e5d1382a0d6964b77a3696046df637544756901` and delegated
-automated COMMENT review/full comment audit `5860323505`. The complete source is
-554,331 bytes/82,373 tokens, with 25 service instances for 23 operations. All 26
-invoke/seven split-child relationships match. Canonical IR revision
-`sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372`, wire digest
-`sha256:ec4a0513967d7c2c85d1b069c9d888868144c7810061cabd191a5fc2ba1b5095`.
-Real source/raw SDK static/control/protection pass; all eight later checking/advisory
-views refuse `invalidation-context-unproved` at capture_activity, source223416..223754.
-Reports remain non-executable. Exact source0.14 and pre-instance source0.16 archives
-and all RP-01 bytes are preserved; only two explicit new fictional logical recipients
-and exact source pins change resource claims. Local 592 Rust + six doctests/native /
-Wasm/all 72 Python commands pass. CodeRabbit skipped; ADR-0076 pending parent/main integration.
+[PR #92](https://github.com/cyborg-nomade/choreoform/pull/92) merged fixed direct
+all-join historical provenance and exact RP-03 invalidation as
+`a9b5d11acdc2e7ff7a6b7e9209895ae27ba34262`, after final-head CI `43048189364` at
+`14736dccfa17673e2fd2976e8947d1ac7fa361fc` and delegated automated COMMENT review /
+full comment audit `5861133254`. Signed pre-correction critique `21a3e76` records
+the actual authorize_call_value / accept_payment / capture_activity tuple. Exact
+members/no-nonlocal-writer/inherited-live-snapshot proof keeps original labels and
+bounds, with indexed origin visits and retained counterexamples. Local 600 Rust +
+six doctests/native/Wasm/all 73 Python commands pass; CodeRabbit skipped.
 
-Active `codex/capture-inherited-context` follows signed `0a04032`,
-[capture provenance scope](0077-capture-inherited-context-plan.md): locate the real
-cell/scope/creator/history relationship before choosing a compatible correction or
-separately justified semantic dependency. Do not assume a checker bug or drop private
-influences. Parent #46 draft, forty/all four Partial, G1–G4/full/optional/RP-08 /
-validator/near-English factoring/managed protected accessible text-visual/actual
-users/hosts/browsers/independent/phase exits remain open. No Phase 2.
+Actual advisory yields 312 ordinary obligations; adding only 278 missing links
+preserves every other compiled field/claim. Current full source576759 bytes /
+84051 tokens emits revision
+`sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
+`sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4`.
+Static/control/protection/strict invalidation plus a distinct advisory pass (849
+history rows, 45 uncovered invalidation nodes). Six later views refuse
+`parallel-effects-unproved` at start_acceptance, source109844..110031. All 121 #91
+artifacts and prior README remain immutable historical evidence; both earlier
+RP-03 archives/all RP-01 bytes and source/core/IR-version/quotas remain fixed.
+
+Active `codex/parallel-effects-contract-audit` follows signed `84dd75d`,
+[exact external effects scope](0078-parallel-effects-contract-audit-plan.md):
+locate the actual compared summaries/work/guard/closure premises and select the
+compatible proof or missing explicit contract prerequisite. No safe Boolean,
+read-only relabeling, hidden provider partition or serialization bypass. ADR-0077
+pending parent/main integration. Parent #46 draft, forty/all four Partial,
+G1–G4/full/optional/RP-08/validator/near-English factoring/managed protected accessible
+text-visual/actual users/hosts/browsers/independent/phase exits remain open. No Phase 2.
 
 ## Verified baseline
 
@@ -1745,6 +1752,20 @@ parent/main integration. CodeRabbit skipped; no independent review or supported
 scenario/host execution claim. Next signed plan `0a04032` is the
 [exact inherited-context audit](0077-capture-inherited-context-plan.md); preserve the
 existing conservative fork/history boundary until actual evidence justifies a change.
+
+PR #92 merged as `a9b5d11acdc2e7ff7a6b7e9209895ae27ba34262` after exact-head CI
+`43048189364` and delegated automated COMMENT review/full comment audit `5861133254`.
+Pre-correction critique/baseline `21a3e76` precedes the bounded fixed all-join proof.
+Indexed member/origin visits preserve original labels, inherited-live and writer /
+partial/dynamic/descendant negatives under existing budgets. Real full advisory
+312 requirements/278 missing links supports an exact invalidation-only compiled
+candidate delta; four checking views plus a distinct advisory actually pass.
+Current later barrier is parallel-effects-unproved at acceptance, not certified
+concurrency. All #91 evidence is pinned immutable input; earlier archives/RP-01
+unchanged. Local 600 Rust + six compile-fail/native/Wasm/all 73 Python checks pass.
+CodeRabbit skipped; no independent review or host/scenario/phase acceptance. ADR-0077
+under delegation, pending integration. Next signed plan `84dd75d` is the
+[parallel external effects contract audit](0078-parallel-effects-contract-audit-plan.md).
 
 ## Honest exit accounting
 
