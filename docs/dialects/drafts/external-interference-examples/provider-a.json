@@ -1,0 +1,43 @@
+{
+  "kind": "provider-contract",
+  "version": "0.1.0",
+  "id": "urn:test:parallel-effects:a:compensatable",
+  "input": {
+    "kind": "integer"
+  },
+  "output": {
+    "kind": "integer"
+  },
+  "outcomes": {
+    "done": true
+  },
+  "resultProtection": {
+    "policy": "protection",
+    "sensitivity": "test",
+    "purposes": {
+      "test": true
+    },
+    "participants": {
+      "operator": true
+    },
+    "capabilities": {
+      "a_cap": true
+    }
+  },
+  "observations": {
+    "done": {
+      "state": "succeeded",
+      "result": {
+        "kind": "integer"
+      },
+      "outcome": "done"
+    },
+    "unknown": {
+      "state": "unknown",
+      "result": null,
+      "outcome": null
+    }
+  },
+  "idempotency": "stable-key",
+  "effectClass": "compensatable"
+}
