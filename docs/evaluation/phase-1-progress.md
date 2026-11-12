@@ -9,29 +9,31 @@
 
 ## Current focus
 
-[PR #94](https://github.com/cyborg-nomade/choreoform/pull/94) merged the inactive
-external-interference design/model as `c6ad39959387f08273921f7ba87dc43516a3f385`, after exact-head
-CI `43229278276` at `85f551576f25e3ef9265aa9a798a7649d3e38756` and delegated automated
-COMMENT review/full audit `5875403282`. A signed critique precedes ADR-0079's exact-
-provider supplement, closed descriptor/namespace schemas, bounded original-request
-selectors and common-authority alias rules. Thirteen pure model groups cover
-conflict/unknown/alias/type/pin/revision/terminal/retry/nominal-assumption/privacy /
-shared-budget behavior. Self-review fixed conflicting descriptor selection and
-renamed-effect bypass on one actual occurrence. Required local/final-head CI passes
-602 Rust plus six compile-fail/native/Wasm/all 75 Python commands; CodeRabbit skipped.
-No production checking/source/core/IR meaning, accepted normative bytes or current /
-historical benchmark/generator/report files change. Model results remain explicitly
-assumed and executable:false, not generic static proof or actual provider/host truth.
+[PR #95](https://github.com/cyborg-nomade/choreoform/pull/95) merged the standalone
+provider interference metadata profile/readers as `78f5d706756642932c57c33672903a7b9ccdcacc`, after exact-head
+CI `43233888435` at `f4a448ccace2f9754344fec8003193ff13f5f50c` and delegated automated
+COMMENT review/fresh full audit `5875818566`. Profile pin
+`sha256:0b10eb4dbb19caace45b93f35dec44aa5f26458d631393932caddb5589210250`
+was signed/published in `a286083` before implementation. Fourteen Rust/four Python
+groups validate complete exact provider/type/nominal/static-invariant/namespace /
+authority/selector/class/pin/bound/cache/failure graphs, including unchanged real
+RP-03 resource bytes. Selectors borrow type paths; both finite channels and unused
+nominal declarations validate; cached reads retain the cumulative budget. Authority
+bytes establish integrity only. Required local/CI 616 Rust + six compile-fail /
+native/Wasm/all 76 Python commands pass; CodeRabbit skipped, no independent review.
+No definition selection, live request evaluator, canonicalizer, independence Boolean,
+current-core/source/IR meaning, existing checking/report/diagnostic behavior or old
+accepted artifact/benchmark/history/generator/report bytes change. Draft79 stays
+inactive model evidence. Actual RP-03 retains its prior concurrency refusal.
 
-Active `codex/external-interference-resources` follows signed `cba5e61`,
-[standalone metadata scope](0080-external-interference-resources-plan.md). Publish a
-new exact standalone profile/artifact before its bounded Rust resource readers;
-validate closed shapes/types/all selectors/provider/class/namespace/authority pins
-without adding definition binding, concurrency acceptance or live value APIs.
-New semantic selection/core version, generic symbolic separation and managed
-near-English source/raw evidence remain separately signed dependencies. Runtime
-locking is not selected as an admission route; real registration/truth/enforcement
-and all protection/ownership/uncertainty/settlement evidence remain required.
+Active `codex/interference-definition-binding` follows signed `aa4d58f`,
+[raw selection scope](0081-interference-definition-binding-plan.md). Compare wrapper
+and manifest binding, then publish an explicit new core contract before raw SDK
+semantic selection and exact transitive resource closure. Preserve all old-profile
+fields/reports, enforce consistent unique exact-provider selection, and keep even
+new-core effectful controls unproved at concurrency. Source adoption and generic
+original-request separation remain separate signed scopes; no sample/alias/guard /
+compensation/idempotency or runtime-lock shortcut supplies actual independence.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
@@ -1798,6 +1800,21 @@ production/accepted artifact/benchmark/history/generator/report bytes stay exact
 full RP-03 still refuses parallel-effects-unproved. Signed `cba5e61` freezes
 standalone resource publication/reader scope80 before new definition binding,
 generic proof or source adoption. Parent #46 and every unproved phase gate remain.
+
+PR #95 merged ADR-0080 standalone provider-region metadata as `78f5d706756642932c57c33672903a7b9ccdcacc` after
+final-head CI `43233888435` and automated COMMENT review/fresh full comment audit
+`5875818566`. Signed publication `a286083` freezes exact profile
+`sha256:0b10eb4dbb19caace45b93f35dec44aa5f26458d631393932caddb5589210250`
+before Rust code. Fourteen SDK/four independent Python groups validate full
+provider/type/nominal/namespace/authority/selector/pin/class/unknown/bound/failure /
+cache behavior and old source refusal. 616 Rust + six compile-fail/native/Wasm /
+76 Python commands pass. No remaining actionable automated review findings; bot
+skipped, no independent/human approval or actual host observations. Decoding
+metadata is neither semantic selection nor a generic independence/host-truth proof.
+Old artifacts/profiles/current/historical benchmarks/generators/reports stay exact.
+Signed `aa4d58f` freezes explicit raw definition/core selection scope81, followed
+by separately justified generic proof and managed readable source integration.
+All unproved Phase 1 gates remain open; parent #46 remains draft, no Phase 2.
 
 ## Honest exit accounting
 

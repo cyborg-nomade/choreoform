@@ -182,7 +182,7 @@ fn exact_new_artifact_all_eleven_bases_uniform_aliases_and_wire_are_required() {
     let wrong = DefinitionEnvelope::from_parts_versioned("0.3.0", f.b.clone(), json!({})).unwrap();
     assert_eq!(check(&wrong, &f.supplied()).unwrap_err().code, "structure");
     let mut f = fixture("audit");
-    f.b["dialects"]["core"]["id"] = "urn:choreoform:contracts:core-profile:0.13.0".into();
+    f.b["dialects"]["core"]["id"] = "urn:choreoform:contracts:core-profile:0.14.0".into();
     refuse(&f, "retained-request-wire-version");
     let mut f = fixture("audit");
     f.b["dialects"]["also"] = json!({"id":CORE_V12.0,"revision":CORE_V12.1});

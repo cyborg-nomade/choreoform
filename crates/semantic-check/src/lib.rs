@@ -32,8 +32,8 @@ pub use concurrency::{
 };
 pub use control::{ControlReport, check_control};
 pub use definition::{
-    DeclaredFaultEntry, DeclaredFaultSourceUse, DeclaredRetainedRequest, DeclaredWaitCapture,
-    Report, check,
+    DeclaredFaultEntry, DeclaredFaultSourceUse, DeclaredInterferenceUse, DeclaredRetainedRequest,
+    DeclaredWaitCapture, Report, check,
 };
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};
 pub use expression::{Context, Judgment};
@@ -122,22 +122,26 @@ pub const CORE_V12: (&str, &str) = (
     "urn:choreoform:contracts:core-profile:0.12.0",
     "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007",
 );
+pub const CORE_V13: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.13.0",
+    "sha256:dd8667135d1c801683d48d8410867b37d5d6f71c7016b8b716016bce92e77428",
+);
 const CORE_PROFILES: &[(&str, &str)] = &[
     CORE, CORE_V2, CORE_V3, CORE_V4, CORE_V5, CORE_V6, CORE_V7, CORE_V8, CORE_V9, CORE_V10,
-    CORE_V11, CORE_V12,
+    CORE_V11, CORE_V12, CORE_V13,
 ];
 fn general_source_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0)
+    matches!(id.as_str(), Some(id) if id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0 || id==CORE_V13.0)
 }
 fn retry_source_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id==CORE_V4.0 || id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0)
+    matches!(id.as_str(), Some(id) if id==CORE_V4.0 || id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0 || id==CORE_V13.0)
 }
 fn capture_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0)
+    matches!(id.as_str(), Some(id) if id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0 || id==CORE_V13.0)
 }
 
 fn metadata_core(id: &Value) -> bool {
-    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0 || id == CORE_V5.0 || id == CORE_V6.0 || id == CORE_V7.0 || id == CORE_V8.0 || id == CORE_V9.0 || id == CORE_V10.0 || id == CORE_V11.0 || id == CORE_V12.0)
+    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0 || id == CORE_V5.0 || id == CORE_V6.0 || id == CORE_V7.0 || id == CORE_V8.0 || id == CORE_V9.0 || id == CORE_V10.0 || id == CORE_V11.0 || id == CORE_V12.0 || id == CORE_V13.0)
 }
 
 fn continuation_core(b: &Value) -> bool {
@@ -147,26 +151,38 @@ fn continuation_core(b: &Value) -> bool {
                 || p["id"] == CORE_V10.0
                 || p["id"] == CORE_V11.0
                 || p["id"] == CORE_V12.0
+                || p["id"] == CORE_V13.0
         })
     })
 }
 fn pre_capture_core(b: &Value) -> bool {
     b["dialects"].as_object().is_some_and(|m| {
-        m.values()
-            .any(|p| p["id"] == CORE_V10.0 || p["id"] == CORE_V11.0 || p["id"] == CORE_V12.0)
+        m.values().any(|p| {
+            p["id"] == CORE_V10.0
+                || p["id"] == CORE_V11.0
+                || p["id"] == CORE_V12.0
+                || p["id"] == CORE_V13.0
+        })
     })
 }
 fn work_core(b: &Value) -> bool {
     b["dialects"].as_object().is_some_and(|m| {
         m.values()
-            .any(|p| p["id"] == CORE_V11.0 || p["id"] == CORE_V12.0)
+            .any(|p| p["id"] == CORE_V11.0 || p["id"] == CORE_V12.0 || p["id"] == CORE_V13.0)
     })
 }
 
 fn compensation_identity_core(b: &Value) -> bool {
+    b["dialects"].as_object().is_some_and(|m| {
+        m.values()
+            .any(|p| p["id"] == CORE_V12.0 || p["id"] == CORE_V13.0)
+    })
+}
+
+fn interference_binding_core(b: &Value) -> bool {
     b["dialects"]
         .as_object()
-        .is_some_and(|m| m.values().any(|p| p["id"] == CORE_V12.0))
+        .is_some_and(|m| m.values().any(|p| p["id"] == CORE_V13.0))
 }
 
 const MAX_DEPTH: usize = 64;

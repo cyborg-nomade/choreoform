@@ -141,6 +141,9 @@ mod tests {
             .unwrap();
         let b = serde_json::json!({});
         let mut c = Check {
+            interference_selection: false,
+            interference_choices: BTreeMap::new(),
+            pending_interference: Vec::new(),
             compensation_identity: false,
             b: &b,
             resources,

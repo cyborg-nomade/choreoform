@@ -11,6 +11,8 @@ pub use capture::DeclaredWaitCapture;
 pub use fault_entry::DeclaredFaultEntry;
 pub use fault_source::DeclaredFaultSourceUse;
 pub use retained_request::DeclaredRetainedRequest;
+mod interference;
+pub use interference::DeclaredInterferenceUse;
 mod lifecycle;
 mod nodes;
 mod policies;
@@ -25,6 +27,7 @@ pub struct Report {
     fault_sources: Vec<DeclaredFaultSourceUse>,
     fault_entries: Vec<DeclaredFaultEntry>,
     retained_requests: Vec<DeclaredRetainedRequest>,
+    interference: Vec<DeclaredInterferenceUse>,
 }
 impl Report {
     pub fn revision(&self) -> &str {
@@ -51,6 +54,10 @@ impl Report {
     /// Immutable original-input declarations, not actual retained values.
     pub fn retained_requests(&self) -> &[DeclaredRetainedRequest] {
         &self.retained_requests
+    }
+    /// Exact declared wrapper selections, including unused ones; no actual calls.
+    pub fn interference_bindings(&self) -> &[DeclaredInterferenceUse] {
+        &self.interference
     }
     /// Explicit residual obligations: a static-stage report cannot close these.
     pub fn remaining(&self) -> &'static [&'static str] {
@@ -84,13 +91,16 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
     let pre_capture = pre_capture_core(b);
     let finite_work = work_core(b);
     let compensation_identity = compensation_identity_core(b);
+    let interference_selection = interference_binding_core(b);
     for pin in object(&b["dialects"])?.values() {
         let p = Pin::decode(pin)?;
         // Wire 0.3 entry fields must never be ignored by an older dialect.
         // The new core is admitted only once its exact contract is implemented.
         if envelope.document()["version"] == "0.4.0" {
             require(
-                p.id == if compensation_identity {
+                p.id == if interference_selection {
+                    CORE_V13.0
+                } else if compensation_identity {
                     CORE_V12.0
                 } else if finite_work {
                     CORE_V11.0
@@ -118,6 +128,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
             || p.id == CORE_V10.0
             || p.id == CORE_V11.0
             || p.id == CORE_V12.0
+            || p.id == CORE_V13.0
         {
             require(
                 envelope.document()["version"] == "0.4.0",
@@ -142,9 +153,18 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
             })?;
         }
     }
+    if interference_selection {
+        resources.verify(&Pin {
+            id: INTERFERENCE_PROFILE.0.into(),
+            revision: INTERFERENCE_PROFILE.1.into(),
+        })?;
+    }
     let mut c = Check {
         b,
         compensation_identity,
+        interference_selection,
+        interference_choices: BTreeMap::new(),
+        pending_interference: Vec::new(),
         resources,
         cells: BTreeMap::new(),
         expressions: BTreeMap::new(),
@@ -176,11 +196,15 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         fault_sources: c.fault_source_bindings(text(&envelope.document()["revision"])?)?,
         fault_entries: c.fault_entry_bindings(text(&envelope.document()["revision"])?)?,
         retained_requests: c.retained_request_bindings(text(&envelope.document()["revision"])?)?,
+        interference: c.interference_bindings(text(&envelope.document()["revision"])?)?,
     })
 }
 struct Check<'a, 'r> {
     b: &'a Value,
     compensation_identity: bool,
+    interference_selection: bool,
+    interference_choices: BTreeMap<Pin, Option<Pin>>,
+    pending_interference: Vec<interference::PendingInterference>,
     resources: Resources<'r>,
     cells: BTreeMap<String, Type>,
     expressions: BTreeMap<String, Judgment>,
