@@ -9,31 +9,33 @@
 
 ## Current focus
 
-[PR #95](https://github.com/cyborg-nomade/choreoform/pull/95) merged the standalone
-provider interference metadata profile/readers as `78f5d706756642932c57c33672903a7b9ccdcacc`, after exact-head
-CI `43233888435` at `f4a448ccace2f9754344fec8003193ff13f5f50c` and delegated automated
-COMMENT review/fresh full audit `5875818566`. Profile pin
-`sha256:0b10eb4dbb19caace45b93f35dec44aa5f26458d631393932caddb5589210250`
-was signed/published in `a286083` before implementation. Fourteen Rust/four Python
-groups validate complete exact provider/type/nominal/static-invariant/namespace /
-authority/selector/class/pin/bound/cache/failure graphs, including unchanged real
-RP-03 resource bytes. Selectors borrow type paths; both finite channels and unused
-nominal declarations validate; cached reads retain the cumulative budget. Authority
-bytes establish integrity only. Required local/CI 616 Rust + six compile-fail /
-native/Wasm/all 76 Python commands pass; CodeRabbit skipped, no independent review.
-No definition selection, live request evaluator, canonicalizer, independence Boolean,
-current-core/source/IR meaning, existing checking/report/diagnostic behavior or old
-accepted artifact/benchmark/history/generator/report bytes change. Draft79 stays
-inactive model evidence. Actual RP-03 retains its prior concurrency refusal.
+[PR #96](https://github.com/cyborg-nomade/choreoform/pull/96) merged core0.13 raw
+interference selection as `c0ab0c0b66874490f932780ad1ccbab7b85975ec`, after exact-head CI `43242066147` at
+`bdbe6c72a02a70a8c6a39bda70fff8465d4fc774` and automated COMMENT review/fresh full audit
+`5876581681`. Signed critique `e7899c6` precedes publication `7d40c79` of exact core
+`sha256:dd8667135d1c801683d48d8410867b37d5d6f71c7016b8b716016bce92e77428`.
+IR0.4 capability-contract wrappers under C13 require interference:null|Ref; all
+wrappers of one exact provider must agree. Selected descriptor/provider and typed
+transitive resources validate; raw static metadata ties each selected wrapper to
+the definition revision. Existing scoped protection remains mandatory before shared
+metadata use. Twelve SDK/four Python groups validate closure/revision/unknown /
+conflicting/null/foreign/unused/inherited/private/cache controls and a derived
+whole RP-03 variant: earlier checks pass, actual start_acceptance concurrency still
+refuses. Current source0.16/companion0.15 remain C12 and reject C13 at contract-pin.
+All local/CI 628 Rust + six compile-fail/native/Wasm/77 Python commands pass; bot
+skipped, no independent/human approval. No generic proof, live evaluator, canonical
+mapping, source/wire upgrade or current artifact/benchmark/history/generator/report
+byte change. Parent #46 remains draft.
 
-Active `codex/interference-definition-binding` follows signed `aa4d58f`,
-[raw selection scope](0081-interference-definition-binding-plan.md). Compare wrapper
-and manifest binding, then publish an explicit new core contract before raw SDK
-semantic selection and exact transitive resource closure. Preserve all old-profile
-fields/reports, enforce consistent unique exact-provider selection, and keep even
-new-core effectful controls unproved at concurrency. Source adoption and generic
-original-request separation remain separate signed scopes; no sample/alias/guard /
-compensation/idempotency or runtime-lock shortcut supplies actual independence.
+Active `codex/request-region-proof-audit` follows signed `2026bd7`,
+[original-request prerequisite scope](0082-request-region-proof-audit-plan.md).
+Trace actual request construction/retention/typed selectors and provider/recovery
+footprints, inspect exact P3/P4/P6/invalidation/replacement/lifetime rules, and separate
+within-snapshot raw inequality from physical aliases and cross-revision/surviving
+work. Use bounded actual V1/V2 mathematical checks without inventing accepted
+requests/events/overlap/registered authority/host enforcement. Record critique /
+ADR direction before any new contract/proof/source acceptance. Preserve legitimate
+refusal and progress independent Phase 1 work where premises remain unavailable.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
@@ -1815,6 +1817,22 @@ Old artifacts/profiles/current/historical benchmarks/generators/reports stay exa
 Signed `aa4d58f` freezes explicit raw definition/core selection scope81, followed
 by separately justified generic proof and managed readable source integration.
 All unproved Phase 1 gates remain open; parent #46 remains draft, no Phase 2.
+
+PR #96 merged core0.13 raw provider-interference selection as `c0ab0c0b66874490f932780ad1ccbab7b85975ec` after
+final-head CI `43242066147` and automated COMMENT review/fresh full audit
+`5876581681`. Signed critique `e7899c6` precedes publication `7d40c79` of
+`sha256:dd8667135d1c801683d48d8410867b37d5d6f71c7016b8b716016bce92e77428`.
+New wrappers require consistent explicit nullable descriptor selection per exact
+provider; transitive pins and semantic revision are checked, preserving scope-keyed
+protection and old source report/diagnostic bytes. Twelve SDK/four Python groups
+cover real complete metadata graphs and actual derived whole RP-03 refusal. All
+628 Rust + six compile-fail/native/Wasm/77 Python commands pass; no remaining
+actionable automated findings, bot skipped, no independent/human approval. Current
+source0.16 still rejects C13; there is no new canonicalizer, live evaluator or
+generic concurrency proof. Old artifacts/current/historical benchmarks/generators /
+reports remain exact. Signed `2026bd7` freezes actual request-region proof premise
+audit82, with no new acceptance or manufactured external evidence. All unproved
+Phase 1 gates remain open; draft #46 stays unmerged to main, no Phase 2.
 
 ## Honest exit accounting
 
