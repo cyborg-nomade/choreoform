@@ -121,6 +121,7 @@ impl Check<'_, '_> {
         let kind = text(&p["kind"])?;
         let extra: &[&str] = match kind {
             "actor" | "protection" => &["permit"],
+            "capability" if self.interference_selection => &["provider", "interference"],
             "capability" => &["provider"],
             "effect" => &["class", "idempotency", "reconciliation"],
             "work" if general_source_core(&self.b["dialects"][text(&r["dialect"])?]["id"]) => &[
@@ -195,7 +196,11 @@ impl Check<'_, '_> {
                 predicates.push((&p["permit"], context));
             }
             "capability" => {
-                metadata.extend(self.provider_protection(scope, &Pin::decode(&p["provider"])?)?);
+                let provider = Pin::decode(&p["provider"])?;
+                metadata.extend(self.provider_protection(scope, &provider)?);
+                if self.interference_selection {
+                    self.interference_use(id, scope, &provider, &p["interference"])?;
+                }
             }
             "effect" => {
                 require(
@@ -505,6 +510,9 @@ mod identity_budget_tests {
         ));
         let supplied = crate::owned_continuation::tests::resources(&artifacts);
         let mut c = Check {
+            interference_selection: false,
+            interference_choices: BTreeMap::new(),
+            pending_interference: Vec::new(),
             b: &b,
             compensation_identity: true,
             resources: Resources::new(&supplied)?,

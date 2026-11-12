@@ -243,6 +243,9 @@ mod tests {
     fn publication_is_cumulative_and_never_drains_a_partial_proof() {
         let b = serde_json::json!({});
         let mut c = Check {
+            interference_selection: false,
+            interference_choices: BTreeMap::new(),
+            pending_interference: Vec::new(),
             compensation_identity: false,
             b: &b,
             resources: Resources::new(&[]).unwrap(),
