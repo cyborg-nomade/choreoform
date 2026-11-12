@@ -55,10 +55,12 @@ pub use reconciliation_entry::{
     ReconciliationEntry, ReconciliationEntryReport, check_reconciliation_availability,
 };
 pub use resources::{
-    CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, FAULT_HISTORY_PROFILE, FAULT_HISTORY_TYPES,
-    FAULT_SOURCE_PROFILE, FaultEmission, FaultEvidence, InstanceCalendar, Provider,
-    ProviderFaultHistory, ProviderFaultSource, ProviderObservationState, ProviderTerminalSource,
-    Resources, TERMINAL_OBSERVATION_PROFILE, TerminalFactTag, TerminalObservation,
+    CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, ExternalFootprint, ExternalRegion,
+    ExternalRegionNamespace, FAULT_HISTORY_PROFILE, FAULT_HISTORY_TYPES, FAULT_SOURCE_PROFILE,
+    FaultEmission, FaultEvidence, INTERFERENCE_PROFILE, InstanceCalendar, Provider,
+    ProviderFaultHistory, ProviderFaultSource, ProviderInterference, ProviderObservationState,
+    ProviderTerminalSource, RegionKeyType, RequestSelector, RequestSelectorStep, Resources,
+    TERMINAL_OBSERVATION_PROFILE, TerminalFactTag, TerminalObservation,
 };
 pub use timing::{
     CalendarUse, RetryFaultBinding, RetryFaultDeclaration, RetryUse, TimerUse, TimingReport,

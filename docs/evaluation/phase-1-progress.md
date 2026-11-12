@@ -9,25 +9,29 @@
 
 ## Current focus
 
-[PR #93](https://github.com/cyborg-nomade/choreoform/pull/93) merged the exact
-parallel-effects contract audit as `30ed6f75ec91954d2a807625a486603318f94bdf`, after exact-head
-CI `43055059855` at `58048caf5e668eb2b038c59d4ec4cf8c2ea89776` and delegated automated
-COMMENT review/full comment audit `5861732179`. Actual start_acceptance compares
-accept_b against accept_a: shared original_order read/distinct reservation record
-writes, both effects/observations true. Storage independence passes before the
-deliberate external boundary. Guarded true keeps that tuple; real read-only delivery
-summaries pass only their isolated predicate. Two SDK/four Python groups validate
-complete fresh typed source/resource controls and evidence boundaries. Local
-602 Rust + six doctests/native/Wasm/all 74 Python commands pass; CodeRabbit skipped.
-No production checking/diagnostic behavior or benchmark/contract bytes changed.
+[PR #94](https://github.com/cyborg-nomade/choreoform/pull/94) merged the inactive
+external-interference design/model as `c6ad39959387f08273921f7ba87dc43516a3f385`, after exact-head
+CI `43229278276` at `85f551576f25e3ef9265aa9a798a7649d3e38756` and delegated automated
+COMMENT review/full audit `5875403282`. A signed critique precedes ADR-0079's exact-
+provider supplement, closed descriptor/namespace schemas, bounded original-request
+selectors and common-authority alias rules. Thirteen pure model groups cover
+conflict/unknown/alias/type/pin/revision/terminal/retry/nominal-assumption/privacy /
+shared-budget behavior. Self-review fixed conflicting descriptor selection and
+renamed-effect bypass on one actual occurrence. Required local/final-head CI passes
+602 Rust plus six compile-fail/native/Wasm/all 75 Python commands; CodeRabbit skipped.
+No production checking/source/core/IR meaning, accepted normative bytes or current /
+historical benchmark/generator/report files change. Model results remain explicitly
+assumed and executable:false, not generic static proof or actual provider/host truth.
 
-ADR-0078 selects concrete explicit versioned external-interference design/prototype
-before any acceptance extension. Active `codex/external-interference-contract-design`
-follows signed `023cd58`, [inactive design scope](0079-external-interference-design-plan.md).
-Current closed P3 has no exhaustive physical interference premise; no provider-ID /
-warehouse/guarded Boolean shortcut. Settle canonical namespaces/aliases, accepted
-request/revision/cohort selectors, exact conflict/proof/host boundary and uncertainty /
-ownership/privacy/version limits without activating a new core or source grammar.
+Active `codex/external-interference-resources` follows signed `cba5e61`,
+[standalone metadata scope](0080-external-interference-resources-plan.md). Publish a
+new exact standalone profile/artifact before its bounded Rust resource readers;
+validate closed shapes/types/all selectors/provider/class/namespace/authority pins
+without adding definition binding, concurrency acceptance or live value APIs.
+New semantic selection/core version, generic symbolic separation and managed
+near-English source/raw evidence remain separately signed dependencies. Runtime
+locking is not selected as an admission route; real registration/truth/enforcement
+and all protection/ownership/uncertainty/settlement evidence remain required.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
@@ -1779,6 +1783,21 @@ contract prerequisite. Next signed `023cd58` is
 [inactive contract design/prototype](0079-external-interference-design-plan.md),
 not silent current-core acceptance. Five non-executable reports, six later external
 refusals and every applicable scenario/host/independent/phase gate remain open.
+
+PR #94 merged inactive ADR-0079 draft design and pure model as `c6ad39959387f08273921f7ba87dc43516a3f385` after
+final-head CI `43229278276` and automated COMMENT review/fresh full comment audit
+`5875403282`. Critique `3f4b91a` precedes selection; draft profile pin
+`sha256:4e37d47a5c61f520dba3db704cbe19b7ad0e92b00a56c46edcf91a1e30cb0dfc`
+is explicitly inactive. Thirteen groups validate finite conditional conflict,
+canonical alias/unknown/type/closed pin/original request/revision/terminal/retry /
+nominal-assumption/budget/private report boundaries. Review fixed conflicting
+provider-descriptor selection and same-occurrence renamed-effect bypass. All
+602 Rust + six compile-fail/native/Wasm/75 Python commands pass. Bot skipped;
+no independent/human approval or host/provider/user observation claimed. Existing
+production/accepted artifact/benchmark/history/generator/report bytes stay exact;
+full RP-03 still refuses parallel-effects-unproved. Signed `cba5e61` freezes
+standalone resource publication/reader scope80 before new definition binding,
+generic proof or source adoption. Parent #46 and every unproved phase gate remain.
 
 ## Honest exit accounting
 
