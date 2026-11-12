@@ -1,0 +1,522 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:schema:external-interference:0.1.0",
+  "title": "Standalone declared metadata; no definition or execution admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "version",
+    "id",
+    "profile",
+    "providerProfile",
+    "provider",
+    "coverage",
+    "activity",
+    "terminal"
+  ],
+  "properties": {
+    "kind": {
+      "const": "external-interference"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "profile": {
+      "$ref": "#/$defs/ref"
+    },
+    "providerProfile": {
+      "$ref": "#/$defs/ref"
+    },
+    "provider": {
+      "$ref": "#/$defs/ref"
+    },
+    "coverage": {
+      "const": "exhaustive"
+    },
+    "activity": {
+      "oneOf": [
+        {
+          "const": "opaque"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reads",
+            "writes"
+          ],
+          "properties": {
+            "reads": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 16,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "namespace",
+                  "key"
+                ],
+                "properties": {
+                  "namespace": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "revision"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "revision": {
+                        "type": "string",
+                        "pattern": "^sha256:[0-9a-f]{64}$"
+                      }
+                    }
+                  },
+                  "key": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "path",
+                        "type"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "array",
+                          "minItems": 0,
+                          "maxItems": 8,
+                          "items": {
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op",
+                                  "name"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "field"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 256
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "present"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "representation"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "type": {
+                          "enum": [
+                            "text",
+                            "integer"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "writes": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 16,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "namespace",
+                  "key"
+                ],
+                "properties": {
+                  "namespace": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "revision"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "revision": {
+                        "type": "string",
+                        "pattern": "^sha256:[0-9a-f]{64}$"
+                      }
+                    }
+                  },
+                  "key": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "path",
+                        "type"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "array",
+                          "minItems": 0,
+                          "maxItems": 8,
+                          "items": {
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op",
+                                  "name"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "field"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 256
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "present"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "representation"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "type": {
+                          "enum": [
+                            "text",
+                            "integer"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "terminal": {
+      "oneOf": [
+        {
+          "const": "opaque"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reads",
+            "writes"
+          ],
+          "properties": {
+            "reads": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 16,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "namespace",
+                  "key"
+                ],
+                "properties": {
+                  "namespace": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "revision"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "revision": {
+                        "type": "string",
+                        "pattern": "^sha256:[0-9a-f]{64}$"
+                      }
+                    }
+                  },
+                  "key": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "path",
+                        "type"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "array",
+                          "minItems": 0,
+                          "maxItems": 8,
+                          "items": {
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op",
+                                  "name"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "field"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 256
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "present"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "representation"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "type": {
+                          "enum": [
+                            "text",
+                            "integer"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "writes": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 16,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "namespace",
+                  "key"
+                ],
+                "properties": {
+                  "namespace": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "revision"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "revision": {
+                        "type": "string",
+                        "pattern": "^sha256:[0-9a-f]{64}$"
+                      }
+                    }
+                  },
+                  "key": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "path",
+                        "type"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "array",
+                          "minItems": 0,
+                          "maxItems": 8,
+                          "items": {
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op",
+                                  "name"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "field"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 256
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "present"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "op"
+                                ],
+                                "properties": {
+                                  "op": {
+                                    "const": "representation"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "type": {
+                          "enum": [
+                            "text",
+                            "integer"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "revision"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}
