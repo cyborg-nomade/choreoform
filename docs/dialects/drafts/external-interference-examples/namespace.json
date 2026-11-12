@@ -1,0 +1,16 @@
+{
+  "kind": "external-region-namespace",
+  "version": "0.1.0-draft.1",
+  "id": "urn:test:namespace",
+  "profile": {
+    "id": "urn:choreoform:drafts:external-interference:0.1.0-draft.1",
+    "revision": "sha256:4e37d47a5c61f520dba3db704cbe19b7ad0e92b00a56c46edcf91a1e30cb0dfc"
+  },
+  "authority": {
+    "id": "urn:test:assumed-canonical-authority",
+    "revision": "sha256:9e79ad398f534cbc4bc6c789cfb346e44f57c1b6a5a4a474bca85dd2fbb7de4d"
+  },
+  "keyTypes": [
+    "integer"
+  ]
+}

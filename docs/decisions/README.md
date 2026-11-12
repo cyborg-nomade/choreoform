@@ -99,6 +99,11 @@ while specifications, guides, and code describe the system as it exists now.
 | [0072](0072-rp03-symbol-binding-direction.md) | Accepted under delegation; pending parent/main integration | Correct the RP-03 finish caption, preserving exact symbol semantics |
 | [0073](0073-rp03-corrected-checkpoint.md) | Accepted under delegation; pending parent/main integration | Publish a corrected current-profile RP-03 draft with exact history |
 | [0074](0074-rp03-template-instantiation-direction.md) | Accepted under delegation; pending parent/main integration | Instantiate service bodies in their actual caller context |
+| [0075](0075-effectful-template-instantiation.md) | Accepted under delegation; pending parent/main integration | Keep effectful instances and their identities in their actual context |
+| [0076](0076-rp03-instance-adoption.md) | Accepted under delegation; pending parent/main integration | Instantiate every RP-03 service at its actual caller |
+| [0077](0077-fixed-all-join-history.md) | Accepted under delegation; pending parent/main integration | Prove direct fixed all-join history and exact invalidation coverage |
+| [0078](0078-external-interference-contract-direction.md) | Accepted under delegation; pending parent/main integration | Require an explicit external-interference contract before extending acceptance |
+| [0079](0079-external-interference-draft.md) | Accepted under delegation; inactive draft design only | Model finite exact-provider external regions without execution admission |
 
 ## When an ADR is required
 

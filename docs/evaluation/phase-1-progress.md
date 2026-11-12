@@ -3,39 +3,38 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-11<br>
+**Updated:** 2026-11-12<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
 ## Current focus
 
-[PR #92](https://github.com/cyborg-nomade/choreoform/pull/92) merged fixed direct
-all-join historical provenance and exact RP-03 invalidation as
-`a9b5d11acdc2e7ff7a6b7e9209895ae27ba34262`, after final-head CI `43048189364` at
-`14736dccfa17673e2fd2976e8947d1ac7fa361fc` and delegated automated COMMENT review /
-full comment audit `5861133254`. Signed pre-correction critique `21a3e76` records
-the actual authorize_call_value / accept_payment / capture_activity tuple. Exact
-members/no-nonlocal-writer/inherited-live-snapshot proof keeps original labels and
-bounds, with indexed origin visits and retained counterexamples. Local 600 Rust +
-six doctests/native/Wasm/all 73 Python commands pass; CodeRabbit skipped.
+[PR #93](https://github.com/cyborg-nomade/choreoform/pull/93) merged the exact
+parallel-effects contract audit as `30ed6f75ec91954d2a807625a486603318f94bdf`, after exact-head
+CI `43055059855` at `58048caf5e668eb2b038c59d4ec4cf8c2ea89776` and delegated automated
+COMMENT review/full comment audit `5861732179`. Actual start_acceptance compares
+accept_b against accept_a: shared original_order read/distinct reservation record
+writes, both effects/observations true. Storage independence passes before the
+deliberate external boundary. Guarded true keeps that tuple; real read-only delivery
+summaries pass only their isolated predicate. Two SDK/four Python groups validate
+complete fresh typed source/resource controls and evidence boundaries. Local
+602 Rust + six doctests/native/Wasm/all 74 Python commands pass; CodeRabbit skipped.
+No production checking/diagnostic behavior or benchmark/contract bytes changed.
 
-Actual advisory yields 312 ordinary obligations; adding only 278 missing links
-preserves every other compiled field/claim. Current full source576759 bytes /
-84051 tokens emits revision
+ADR-0078 selects concrete explicit versioned external-interference design/prototype
+before any acceptance extension. Active `codex/external-interference-contract-design`
+follows signed `023cd58`, [inactive design scope](0079-external-interference-design-plan.md).
+Current closed P3 has no exhaustive physical interference premise; no provider-ID /
+warehouse/guarded Boolean shortcut. Settle canonical namespaces/aliases, accepted
+request/revision/cohort selectors, exact conflict/proof/host boundary and uncertainty /
+ownership/privacy/version limits without activating a new core or source grammar.
+
+Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
 `sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4`.
-Static/control/protection/strict invalidation plus a distinct advisory pass (849
-history rows, 45 uncovered invalidation nodes). Six later views refuse
-`parallel-effects-unproved` at start_acceptance, source109844..110031. All 121 #91
-artifacts and prior README remain immutable historical evidence; both earlier
-RP-03 archives/all RP-01 bytes and source/core/IR-version/quotas remain fixed.
-
-Active `codex/parallel-effects-contract-audit` follows signed `84dd75d`,
-[exact external effects scope](0078-parallel-effects-contract-audit-plan.md):
-locate the actual compared summaries/work/guard/closure premises and select the
-compatible proof or missing explicit contract prerequisite. No safe Boolean,
-read-only relabeling, hidden provider partition or serialization bypass. ADR-0077
-pending parent/main integration. Parent #46 draft, forty/all four Partial,
+Four checking plus distinct advisory views pass; six later views refuse
+parallel-effects-unproved at start_acceptance, source109844..110031. All current /
+historical artifacts remain exact. Parent #46 draft, forty/all four Partial,
 G1–G4/full/optional/RP-08/validator/near-English factoring/managed protected accessible
 text-visual/actual users/hosts/browsers/independent/phase exits remain open. No Phase 2.
 
@@ -1766,6 +1765,20 @@ unchanged. Local 600 Rust + six compile-fail/native/Wasm/all 73 Python checks pa
 CodeRabbit skipped; no independent review or host/scenario/phase acceptance. ADR-0077
 under delegation, pending integration. Next signed plan `84dd75d` is the
 [parallel external effects contract audit](0078-parallel-effects-contract-audit-plan.md).
+
+PR #93 merged as `30ed6f75ec91954d2a807625a486603318f94bdf` after exact-head CI `43055059855`
+at `58048caf5e668eb2b038c59d4ec4cf8c2ea89776` and separate automated review/full comment
+audit `5861732179`. Actual reservation B/A summaries pass storage independence then
+hit the intended external-effect refusal; guarded true changes no proof. Two SDK /
+four Python groups distinguish real summary, full source, fresh class/observation /
+opaque controls and actual host evidence. All benchmark/generator/resource/guard /
+report/contract bytes and production checking/diagnostic meanings fixed. Local
+602 Rust + six compile-fail/native/Wasm/all 74 Python checks pass. CodeRabbit skipped.
+ADR-0078 under delegation selects the concrete explicit external-interference
+contract prerequisite. Next signed `023cd58` is
+[inactive contract design/prototype](0079-external-interference-design-plan.md),
+not silent current-core acceptance. Five non-executable reports, six later external
+refusals and every applicable scenario/host/independent/phase gate remain open.
 
 ## Honest exit accounting
 

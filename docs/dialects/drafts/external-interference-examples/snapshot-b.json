@@ -1,0 +1,18 @@
+{
+  "definition": {
+    "id": "urn:test:definition",
+    "revision": "sha256:e80457c50cdbb9854f915a1ccdf1dd58f418ce82ad21dc82c90c21aa8e8488d2"
+  },
+  "scopeOccurrence": "scope-b",
+  "activityOccurrence": "activity-b",
+  "logicalEffect": "effect-b",
+  "cohort": "cohort-v1",
+  "inputRevisions": {
+    "request": {
+      "id": "urn:test:request:b",
+      "revision": "sha256:31c3ffb47faa9d2a058d6ec92d0cf295fa0f2dc1ec52890b51d538d6d30f0815"
+    }
+  },
+  "attempt": "attempt-1",
+  "request": "2"
+}

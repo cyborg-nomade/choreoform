@@ -1,0 +1,65 @@
+{
+  "kind": "external-interference",
+  "version": "0.1.0-draft.1",
+  "id": "urn:test:parallel-effects:b:compensatable:interference-draft",
+  "profile": {
+    "id": "urn:choreoform:drafts:external-interference:0.1.0-draft.1",
+    "revision": "sha256:4e37d47a5c61f520dba3db704cbe19b7ad0e92b00a56c46edcf91a1e30cb0dfc"
+  },
+  "providerProfile": {
+    "id": "urn:choreoform:contracts:core-profile:0.12.0",
+    "revision": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007"
+  },
+  "provider": {
+    "id": "urn:test:parallel-effects:b:compensatable",
+    "revision": "sha256:b4cb33e6f8600972250c4137764e416cca2a7560070a17497f3e58f01c30947e"
+  },
+  "coverage": "exhaustive",
+  "activity": {
+    "reads": [
+      {
+        "namespace": {
+          "id": "urn:test:namespace",
+          "revision": "sha256:0d3b1679276ae030b4a9a1744b90cdbd3812d2d241779e3469ec53f12d7d2035"
+        },
+        "key": [
+          {
+            "path": [],
+            "type": "integer"
+          }
+        ]
+      }
+    ],
+    "writes": [
+      {
+        "namespace": {
+          "id": "urn:test:namespace",
+          "revision": "sha256:0d3b1679276ae030b4a9a1744b90cdbd3812d2d241779e3469ec53f12d7d2035"
+        },
+        "key": [
+          {
+            "path": [],
+            "type": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  "terminal": {
+    "reads": [
+      {
+        "namespace": {
+          "id": "urn:test:namespace",
+          "revision": "sha256:0d3b1679276ae030b4a9a1744b90cdbd3812d2d241779e3469ec53f12d7d2035"
+        },
+        "key": [
+          {
+            "path": [],
+            "type": "integer"
+          }
+        ]
+      }
+    ],
+    "writes": []
+  }
+}

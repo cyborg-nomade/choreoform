@@ -1,0 +1,50 @@
+{
+  "authority": {
+    "id": "urn:test:assumed-canonical-authority",
+    "revision": "sha256:9e79ad398f534cbc4bc6c789cfb346e44f57c1b6a5a4a474bca85dd2fbb7de4d"
+  },
+  "entries": [
+    {
+      "namespace": {
+        "id": "urn:test:namespace",
+        "revision": "sha256:0d3b1679276ae030b4a9a1744b90cdbd3812d2d241779e3469ec53f12d7d2035"
+      },
+      "key": [
+        {
+          "type": "integer",
+          "value": "1"
+        }
+      ],
+      "canonical": {
+        "domain": "synthetic-physical-domain",
+        "key": [
+          {
+            "type": "integer",
+            "value": "1"
+          }
+        ]
+      }
+    },
+    {
+      "namespace": {
+        "id": "urn:test:namespace",
+        "revision": "sha256:0d3b1679276ae030b4a9a1744b90cdbd3812d2d241779e3469ec53f12d7d2035"
+      },
+      "key": [
+        {
+          "type": "integer",
+          "value": "2"
+        }
+      ],
+      "canonical": {
+        "domain": "synthetic-physical-domain",
+        "key": [
+          {
+            "type": "integer",
+            "value": "2"
+          }
+        ]
+      }
+    }
+  ]
+}
