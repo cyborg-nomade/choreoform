@@ -13,14 +13,14 @@ review `5889074244` / fresh full audit
 
 The goal is broad plain-English accessibility with explicit meaning. Candidate A
 is provisional; no actual user study is available. Named protection now removes
-real repeated wording without changing RP-03's IR: its new test variant is448421
-versus576759 source bytes, 22.25% smaller. This does not make a 448k-byte process
+real repeated wording without changing RP-03's IR: its new test variant is 448421
+versus 576759 source bytes, 22.25% smaller. This does not make a 448k-byte process
 accessible or supply a full editing/visual representation. Current benchmark files
 remain fixed, and the RP-03 concurrency refusal is legitimate.
 
 [ADR-0083's native measurements](0083-near-english-factoring-critique.md) already
-establish outer type bytes6390 / exact redundant upper bound2491 in RP-01 and
-98058 /70621 in RP-03. Outermost type spans exclude nested double counting within
+establish outer type bytes 6390 / exact redundant upper bound 2491 in RP-01 and
+98058 / 70621 in RP-03. Outermost type spans exclude nested double counting within
 the category. Type occurrences inside expressions can overlap expression metrics;
 never add these categories. Equal spelling alone does not prove the same lexical
 binding, and the 70621 bytes are an upper bound before definition/use costs, not a
@@ -28,6 +28,38 @@ measured future reduction or comprehension gain. ADR-0084's span transformation
 leaves type clauses intact; no additional savings claim follows from that fact.
 RP-08 still has a complete intent brief but no full lowerable source. New paper
 examples cannot replace that missing benchmark.
+
+## Inspection of actual resolved families
+
+After signed critique checkpoint `7263cf9`, read-only inspection of current complete
+IR compares exact serialized type values at the following explicit field positions.
+These counts are not a complete source-type inventory, do not count nested types
+separately and must not be summed with the source-byte/overlapping categories:
+
+| Actual IR position | RP-01 positions / distinct values | RP-03 positions / distinct values |
+| --- | ---: | ---: |
+| data.type | 26 / 16 | 155 / 75 |
+| expressions.resultType | 49 / 11 | 133 / 29 |
+| capabilities.input and output | 6 / 6 | 50 / 24 |
+| wait policies.body.observationType | 3 / 3 | 25 / 23 |
+
+RP-03's common complete request record occurs 50 times among data types and 50 times
+among expression result types; all 25 capability inputs have one exact shape. It
+contains address/basis/request/scope revisions, amount/currency, the nominal Order,
+quantity and warehouse. Naming this record must retain every field and nested
+nominal pin; it does not merge the 25 effectful service/work occurrences. Output /
+observation families include distinct nominal Release A versus Release B evidence;
+a shared readable category cannot erase those member identities. RP-01 also has
+repeated Claim/list and expression-result families, but its smaller type-byte
+upper bound implies less likely source reduction, not less semantic importance.
+
+The [RP-08 brief](../representative-processes/08-cybersecurity-incident-response.md)
+requires observations separate from hypotheses/decisions, protected evidence and
+custody references, changing asset/scope revisions and accountable dynamic work.
+Readable type names may express those concepts, but cannot establish trust, custody,
+current access or a complete lowerable process. Dynamic playbook fragments need
+separate work identity/hygiene and instance semantics. This is inspection of the
+fictional benchmark brief, not incident-response advice or actual user findings.
 
 ## Options
 
@@ -107,7 +139,7 @@ exponential structure, so checking source size, each alias separately or depth
 alone is insufficient. Reusing an immutable description saves resolution, not the
 cost of an expanded wire value or live-access evaluation.
 
-Keep input/output1MiB, depth64, tokens131072, parser1M, lowering100k and semantic
+Keep input/output 1 MiB, depth 64, tokens 131072, parser 1M, lowering 100k and semantic
 shared bounds. A deep alias chain cannot evade the expanded type-depth limit, and
 a wide shared graph cannot evade node/work/output limits. Refusal emits no partial
 candidate. Preserve useful definition/use spans without echoing confidential

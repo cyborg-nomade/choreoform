@@ -30,13 +30,20 @@ fixed; adoption/archive remains separate. Full RP-08/general editing/protected
 accessible inspection/visual/real-user and semantic/region evidence remains open.
 
 Active `codex/named-type-critique` follows signed `ff0752339788099bb99abed486ff8209ee091fe0`,
-[scope85](0085-type-naming-critique-plan.md). Critique local transparent type names /
-readable spellings versus existing nominal resources, layout, parameterization and
-work/predicate reuse before any new probe. Preserve exact nested type/outcome /
-resource/lexical/managed identity and pre-allocation DAG/depth/work/output criteria.
-Do not implement new syntax, nominal types or type erasure in the critique. A
-separate signed production contract/implementation would follow the selected
-direction. Source0.17/C12 and all concurrency/semantic gates remain fixed.
+[scope85](0085-type-naming-critique-plan.md). Separately signed critique `7263cf9`
+precedes read-only resolved-IR inspection; no new utility/production code is needed.
+[ADR-0085](../decisions/0085-transparent-type-naming-direction.md) selects explicit
+local transparent type names as the next separately contracted direction. Existing
+native type-byte upper bounds and actual resolved families justify the scope,
+not measured future savings: RP-03 has 50 identical complete request data types,
+50 identical expression results and 25 equal capability inputs, while nominal
+output/evidence members remain distinct. All source/type/nominal/tag/lexical /
+managed identities and pre-allocation DAG/depth/work/byte criteria must hold.
+Paper spellings are unimplemented; no type erasure or new nominal identity. Required
+final-head CI/full audit/automated review/signed merge precede a separately signed
+production contract. Source0.17/C12 and all semantic/concurrency gates stay fixed.
+The roadmap explicitly retains receipt/work reuse, full RP-08, protected accessible
+inspection/editing/export/visual parity and actual user evaluation in Phase 1.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
