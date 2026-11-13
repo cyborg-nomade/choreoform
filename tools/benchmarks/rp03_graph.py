@@ -7,11 +7,11 @@ from .rp03_source import (
     read, raw, field, fact, text, eq, tag, payload, present, exists,
     every, negate, binary, conditional, rec, zero, quote, expr,
 )
-from .rp03_resources import SPECS, PEOPLE, CAPABILITIES
+from .rp03_resources import SPECS, PEOPLE, CAPABILITIES, instruction
 
 
-def build(type_pin,providers,pins,*,historical=False):
-    p=new_package(historical=historical);p.guard_rules={}
+def build(type_pin,providers,pins,*,historical=False,factored=False):
+    p=new_package(historical=historical,factored=factored);p.guard_rules={}
     capabilities=CAPABILITIES+['Release first reservation during settlement','Release second reservation during settlement']
     root=Scope(p,'order','Order fulfillment',None,'Start acceptance',
         inputs=[('order','Order','Original order')],outputs=[('first','First line','First line disposition'),('second','Second line','Second line disposition')],
@@ -22,6 +22,9 @@ def build(type_pin,providers,pins,*,historical=False):
         p.resource(key+'_terminal_binding',name+' terminal facts','provider-terminal-observation-source',pins[key+'_terminal'])
     p.resource('order_clock_binding','Order clock','clock',pins['clock'])
     foundations(root)
+    if factored:
+        root.protection_definition('order_data_protection','Order information',PEOPLE,capabilities)
+        root.instruction_definition('order_instruction_type','Order instruction',instruction(type_pin))
     order_type=nominal(type_pin,'Order')
     root.data('original_order','Original order',order_type,participants=PEOPLE,capabilities=capabilities)
     # All results are optional because a non-dispatched operation has no evidence.

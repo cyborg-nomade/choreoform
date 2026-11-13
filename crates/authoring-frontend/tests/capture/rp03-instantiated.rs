@@ -30,7 +30,9 @@ fn fixture() -> Fixture {
 fn full_current_source_emits_exact_ir_and_passes_real_source_and_raw_first_four_checks() {
     let f = fixture();
     let syntax = parse(f.source.as_bytes()).unwrap();
-    assert_eq!(syntax.token_count(), 84051);
+    assert_eq!(syntax.token_count(), 66783);
+    assert_eq!(syntax.profile(), "0.18.0");
+    assert_eq!(f.source.len(), 410752);
     assert!(syntax.parser_work() <= 1_000_000);
     println!("instantiated whole parser visits {}", syntax.parser_work());
     let bytes = serde_json::to_vec(&f.ledger).unwrap();
@@ -42,6 +44,32 @@ fn full_current_source_emits_exact_ir_and_passes_real_source_and_raw_first_four_
     )
     .unwrap();
     assert_eq!(c.document(), &golden);
+    assert_eq!(
+        std::fs::read(root.join("docs/benchmarks/rp03/candidate.ir.json")).unwrap(),
+        std::fs::read(
+            root.join(
+                "docs/benchmarks/rp03/history/source-0.16-before-factoring/candidate.ir.json"
+            )
+        )
+        .unwrap()
+    );
+    let manifest: Value = serde_json::from_slice(
+        &std::fs::read(root.join("docs/benchmarks/rp03/manifest.json")).unwrap(),
+    )
+    .unwrap();
+    let integrity = p.integrity();
+    assert_eq!(integrity.source, manifest["sourceDigest"]);
+    assert_eq!(integrity.bindings, manifest["bindingsDigest"]);
+    assert_eq!(integrity.package, manifest["packageDigest"]);
+    let (formatted, companion) = p.formatted().unwrap();
+    assert_eq!(
+        Package::parse(formatted.as_bytes(), companion.as_bytes())
+            .unwrap()
+            .lower(&f.supplied())
+            .unwrap()
+            .document(),
+        c.document()
+    );
     c.check_static(&f.supplied()).unwrap();
     c.check_control(&f.supplied()).unwrap();
     c.check_protection(&f.supplied()).unwrap();

@@ -33,26 +33,35 @@ observation-type alias comparisons pass. Unbound parameter contexts still refuse
 [Evidence](0086-local-type-names.md) makes all limits explicit. No current or
 historical benchmark/provider/guard/receipt/generator/report bytes change.
 
-Active `codex/rp03-factored-authoring` follows signed
-`d2e301f33262ca91a98cc35b86ea83a9b59d6891`, [scope87](0087-rp03-factored-authoring-plan.md).
-Archive/sign the exact current RP-03 finite package before adoption code, preserving
-all old history/other packages. Adopt actual source0.18/companion0.17 named
-protection/type descriptions through its finite fixture producer, not a general
-editor/compiler. Require byte-identical C12 IR/revision/wire, exact existing
-resource/guard/receipt meaning, actual measured source/hash/report/span deltas,
-negative mutations that genuinely alter source, full tests/CI/review/audit and
-signed merge. RP-01 adoption, C13 selection, parameterized receipt/work/predicate
-reuse, full RP-08/protected accessible editing/export/text-visual/users and all
-semantic/region/phase gates stay separate/open. No Phase 2.
+Active `codex/rp03-factored-authoring` follows signed `d2e301f`,
+[scope87](0087-rp03-factored-authoring-plan.md). Exact archive checkpoint `b8d73a7`
+copies all 126 former current RP-03 files before adoption code; all 465 other
+benchmark files stay unchanged. [ADR-0087](../decisions/0087-rp03-factored-authoring.md)
+and [evidence](0087-rp03-factored-authoring.md) record actual fixture-producer
+source0.18/companion0.17 adoption: 410752 bytes / 66783 tokens / 840430 native parser
+visits, 28.78% below 576759 before factoring. Only current source/companion/manifest /
+README change; all 122 other originals including canonical IR, five reports and
+resources/guards/receipts remain byte-identical. Working adoption is not integrated
+yet. Whole native format/reparse/source/raw checks retain exact C12 IR/revision /
+wire and the same concurrency refusal, now source 72263..72450. Old spans/packages
+and original metric/equivalence/invalidation proofs remain tied to exact archives.
+659 Rust + six compile-fail/native/Wasm/all 82 Python commands pass, with the
+historical companion comparison correctly repinned to its epoch.
+Four new Python groups require real current mutations and exact archive preservation.
+Final-head CI/separate review/full comment audit/signed merge precede integration.
 
-Whole RP-03 remains source576759 bytes/84051 tokens, revision
+Whole RP-03 working source is 410752 bytes/66783 tokens; revision stays
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
 `sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4`.
 Four checking plus distinct advisory views pass; six later views refuse
-parallel-effects-unproved at start_acceptance, source109844..110031. All current /
-historical artifacts remain exact. Parent #46 draft, forty/all four Partial,
-G1–G4/full/optional/RP-08/validator/near-English factoring/managed protected accessible
-text-visual/actual users/hosts/browsers/independent/phase exits remain open. No Phase 2.
+parallel-effects-unproved at start_acceptance. Source digest 2e2be815, canonical
+bindings 6e0274d9, joint package 21d5c4c8 are documented in full in ADR-0087/evidence.
+Former 576759/84051 source0.16 package is frozen under source-0.16-before-factoring;
+all existing older archives and other packages remain exact. Parent #46 stays draft,
+all 40 scenarios Partial and G1–G4 conditional. RP-01 adoption/C13 selection/reusable
+receipt/work/predicate language/full RP-08/protected accessible editing/export /
+text-visual/real users/hosts/browsers/independent/semantic/region/phase exits remain
+open. No Phase 2.
 
 ## Verified baseline
 

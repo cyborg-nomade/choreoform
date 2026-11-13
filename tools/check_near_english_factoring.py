@@ -13,7 +13,7 @@ from check_authoring_evidence import check_links
 from check_source_capacity import fixed
 
 ROOT=Path(__file__).resolve().parents[1]
-FIXTURES=['docs/benchmarks/rp01/source.choreo','docs/benchmarks/rp03/source.choreo']
+FIXTURES=['docs/benchmarks/rp01/source.choreo','docs/benchmarks/rp03/history/source-0.16-before-factoring/source.choreo']
 CAPTURE=ROOT/'docs/evaluation/0083-factoring-metrics.json'
 BINARY=ROOT/'target/debug/examples/factoring_metrics'
 
@@ -32,7 +32,12 @@ class FactoringMeasurements(unittest.TestCase):
         cls.raw=r.stdout;cls.reports=json.loads(r.stdout)
 
     def test_captured_native_measurements_reproduce_without_benchmark_writes(self):
-        self.assertEqual(self.raw,CAPTURE.read_bytes())
+        # The exact old capture stays immutable; only its then-current RP-03
+        # fixture label is remapped to the byte-identical signed archive.
+        current_label=json.dumps(FIXTURES[1]).encode()
+        self.assertEqual(self.raw.count(current_label),1)
+        historical=self.raw.replace(current_label,b'"docs/benchmarks/rp03/source.choreo"',1)
+        self.assertEqual(historical,CAPTURE.read_bytes())
         self.assertEqual([(r['sourceBytes'],r['tokens']) for r in self.reports],[(61211,10223),(576759,84051)])
         self.assertEqual(fixed(),self.before)
         for report in self.reports:
@@ -46,7 +51,7 @@ class FactoringMeasurements(unittest.TestCase):
 
     def test_resolved_ir_protection_identity_is_checked_independently_of_spelling(self):
         for name,report,expected in zip(['rp01','rp03'],self.reports,[26,155]):
-            body=json.loads((ROOT/f'docs/benchmarks/{name}/candidate.ir.json').read_bytes())['body']
+            body=json.loads((ROOT/FIXTURES[['rp01','rp03'].index(name)]).with_name('candidate.ir.json').read_bytes())['body']
             groups=Counter(json.dumps(d['protection'],sort_keys=True,separators=(',',':')) for d in body['data'].values())
             self.assertEqual(len(body['data']),expected)
             self.assertEqual(len(groups),1)

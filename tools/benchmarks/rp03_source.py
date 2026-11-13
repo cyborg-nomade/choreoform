@@ -1,10 +1,56 @@
 # SPDX-FileCopyrightText: 2026 Choreoform contributors
 # SPDX-License-Identifier: MPL-2.0
 """Explicit bounded order fixture helpers; not an editor, exporter or runtime."""
-from .rp01_source import Package, Scope, quote, names, type_source, expression_source
+from copy import deepcopy
+from .rp01_source import Package, Scope as InlineScope, quote, names, type_source, expression_source
 from .rp01_capture import CORE11, PROFILE as TERMINAL_PROFILE
 from .rp01_resources import TEXT, INTEGER, BOOLEAN, AMOUNT, record, variant, option, nominal, literal, field, binary, every, negate
 from .rp03_resources import PEOPLE, ROLES, SPECS, CAPABILITIES, instruction
+
+
+class Scope(InlineScope):
+    """Finite RP-03 fixture spelling; native Rust still binds/lowers every result."""
+    def type_text(self, ty):
+        p=self.package
+        return 'type '+quote(p.instruction_caption) if ty==p.instruction_description else type_source(ty,p.type_name)
+
+    def protection_definition(self, identity, name, participants, capabilities):
+        p=self.package;assert p.factored and self.parent is None
+        p.protection_caption=name
+        p.protection_envelope=(p.protection_policy,p.sensitivity,tuple(p.purpose),tuple(participants),tuple(capabilities))
+        p.declaration(identity,'data-protection',self.id,name);p.symbol(identity,'purpose',*p.purpose)
+        self.declarations.append(f'Protect data as {quote(name)}. Under {quote(p.protection_policy)}. Sensitivity {quote(p.sensitivity)}. Purposes [{quote(p.purpose[1])}]. Participants {names(participants)}. Capabilities {names(capabilities)}. End protection.')
+
+    def instruction_definition(self, identity, name, ty):
+        p=self.package;assert p.factored and self.parent is None
+        p.instruction_caption=name;p.instruction_description=deepcopy(ty)
+        p.declaration(identity,'type-alias',self.id,name)
+        # Definition is the complete inline description, never a self-reference.
+        self.declarations.append(f'Describe type {quote(name)} as {type_source(ty,p.type_name)}.')
+
+    def data(self, identity, name, ty, initial=None, invalidates=(), participants=(), capabilities=(), policy=None):
+        p=self.package
+        if not getattr(p,'factored',False):
+            return super().data(identity,name,ty,initial,invalidates,participants,capabilities,policy)
+        requested=(policy if policy is not None else p.protection_policy,p.sensitivity,tuple(p.purpose),tuple(participants),tuple(capabilities))
+        assert requested==p.protection_envelope, 'fixture protection differs from its explicit definition'
+        p.declaration(identity,'data',self.id,name);p.symbol(identity,'purpose',*p.purpose)
+        if initial is not None:p.generated(f'{identity}_initial',identity,'initial')
+        value='('+expression_source(initial,p.type_name)+')' if initial is not None else 'unavailable'
+        invalidation='['+', '.join(invalidates)+']' if invalidates else 'empty'
+        self.declarations.append(f'Keep {quote(name)} as {self.type_text(ty)}, protected as {quote(p.protection_caption)}. Invalidate {invalidation}. Initially {value}. End data.')
+
+    def expression(self, identity, name, ty, expr):
+        p=self.package
+        if not getattr(p,'factored',False):return super().expression(identity,name,ty,expr)
+        p.declaration(identity,'expression',self.id,name)
+        self.declarations.append(f'Let {quote(name)} mean ({expression_source(expr,p.type_name)}) as {self.type_text(ty)} with parameters empty.')
+
+    def capability(self, identity, name, provider, input_type, output_type, authority, effects):
+        p=self.package
+        if not getattr(p,'factored',False):return super().capability(identity,name,provider,input_type,output_type,authority,effects)
+        p.declaration(identity,'capability',self.id,name);p.generated(f'{identity}_provider',identity,'provider-policy')
+        self.declarations.append(f'Use capability {quote(name)} from {quote(provider)} with input {self.type_text(input_type)} and output {self.type_text(output_type)}, authority {quote(authority)} and effects {quote(effects)}.')
 
 
 def read(name): return {'op':'read','cell':name}
@@ -23,10 +69,12 @@ def expr(value): return expression_source(value,'Order types')
 def ty(value): return type_source(value,'Order types')
 
 
-def new_package(*, historical=False):
+def new_package(*, historical=False, factored=False):
+    assert not (historical and factored)
     core=CORE11 if historical else {'contract':'urn:choreoform:contracts:core-profile:0.12.0','digest':'sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007','dialect':'core'}
-    p=Package(definition='rp03_benchmark',root='order',profile='0.14.0' if historical else '0.16.0',version='0.13.0' if historical else '0.15.0',core=core,
+    p=Package(definition='rp03_benchmark',root='order',profile='0.14.0' if historical else '0.18.0' if factored else '0.16.0',version='0.13.0' if historical else '0.17.0' if factored else '0.15.0',core=core,
         type_name='Order types',purpose=('fulfillment','Order fulfillment'),protection_policy='Order access',sensitivity='order')
+    p.factored=factored
     p.ledger['annotations']={'benchmark':'RP-03','synthetic':True,'variant':'two explicit identified lines and warehouses; no general fan-out output aggregation'}
     return p
 

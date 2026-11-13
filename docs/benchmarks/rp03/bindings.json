@@ -1,7 +1,7 @@
 {
   "format": "choreoform-authoring-bindings",
-  "version": "0.15.0",
-  "profile": "0.16.0",
+  "version": "0.17.0",
+  "profile": "0.18.0",
   "definition": "rp03_benchmark",
   "root": "order",
   "contracts": {
@@ -435,6 +435,18 @@
       "kind": "policy",
       "scope": "order",
       "name": "Order commitments"
+    },
+    {
+      "id": "order_data_protection",
+      "kind": "data-protection",
+      "scope": "order",
+      "name": "Order information"
+    },
+    {
+      "id": "order_instruction_type",
+      "kind": "type-alias",
+      "scope": "order",
+      "name": "Order instruction"
     },
     {
       "id": "original_order",
@@ -5813,6 +5825,13 @@
       "role": "outcome",
       "name": "recorded",
       "wire": "recorded"
+    },
+    {
+      "id": "order_data_protection_purpose_fulfillment",
+      "owner": "order_data_protection",
+      "role": "purpose",
+      "name": "Order fulfillment",
+      "wire": "fulfillment"
     },
     {
       "id": "original_order_purpose_fulfillment",
