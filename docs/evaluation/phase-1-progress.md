@@ -9,58 +9,45 @@
 
 ## Current focus
 
-[PR #103](https://github.com/cyborg-nomade/choreoform/pull/103) merged actual RP-01
-factored authoring as `46e6566e1f0c90f2d027911b40af466fad97d1e5`, after successful final-head CI
-`43448852892` at `1778130181f4ff99b78d7632946b901991164ccf`, automated COMMENT
-review `5893351354` and fresh full comments/threads/CodeRabbit audit. Signed scope
-`7604997` and exact archive `2fd3cd2` precede adoption. Inventory correction is
-explicit before code:59 current plus54 older history,113 total. All59 current
-files are preserved exactly; the54 stay in place. All702 other existing benchmark
-files, including the complete adopted RP-03, remain byte-identical.
+[PR #104](https://github.com/cyborg-nomade/choreoform/pull/104) merged the measured
+receipt reuse critique as `48c4968323fdbf0ed5275e089d0c31b12678507f`, after successful final-head CI
+`43452609800` at `78ae1c84ee6bc313ba348a96b19b902774882fbc`, automated COMMENT
+review `5893724397` and fresh full comments/threads/CodeRabbit audit. Signed scope
+`0e4c706` / critique `d683bf7` precede read-only tooling. The complete778-file current /
+historical benchmark tree and every accepted contract/production compiler/SDK /
+quota remain unchanged. Native current RP-01/03 expression spans22971/204788 and
+exact redundancy upper bounds128/16268 are observations, not future savings.
 
-RP-01 now explicitly selects source0.18/companion0.17/C12/IR0.4:55453 bytes/9455
-tokens,9.41% below61211. Native parser work114301 rises407 visits; no speedup or
-actual user-comprehension claim. Actual old/new lowering changes only core pin
-and recomputed revision, now
-`sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829`, wire
-`sha256:d96b6398e6856a1e34916046a6ca61ee0e09339f59c5c3664c524a5b43a801de`.
-All eleven source/raw checking/advisory views pass; report differences are limited
-to explicit revision-attribution pointers. All data/generated/resource/per-data
-purpose identities and every other expanded field remain exact. Guard44cases /
-46values changes only its two candidate pins. Legacy/default proofs and native
-metrics explicitly replay their exact epoch; no source-only identities are hidden
-from current assertions. [ADR-0088](../decisions/0088-rp01-factored-authoring.md)
-and [evidence](0088-rp01-factored-authoring.md) record the complete limits.
+The finite actual RP-03 experiment reconstructs all55 case predicates with two
+complete four-input shapes:26 thirteen-comparison /29 fourteen-comparison cases.
+All23 nominal results retain distinct invariants with one complete representation;
+all25 request/activity/policy/capability identities stay distinct. Balanced13/14
+shapes are preserved separately, not combined by an algebraic shortcut. Existing
+parameter/fanout semantics still refuse unbound ordinary parameters; no new call
+or helper language is implemented. [ADR-0089](../decisions/0089-reusable-receipt-direction.md)
+and [critique](0089-reusable-receipt-critique.md) select typed source-only pure
+Boolean recipes as the next separately published contract. New IR calls/scoped
+work templates remain separate. No native helper-typing/user/host claim follows.
 
-Local/CI660 Rust + six compile-fail/native/Wasm/all83 Python commands pass. Review
-fixed duplicate-recipient refusal and the current guard fixture's missing C12
-input. Bot skipped, no independent/human approval. Current RP-03 remains410752
-bytes/66783tokens on C12 with exact prior IR/reports and legitimate external-region
-concurrency refusal; all scenarios remain Partial, G1–G4 conditional and parent46
-draft. No Phase2.
+Four new oracle groups, six documentation groups and links pass locally;
+final CI660 Rust+six compile-fail/native/Wasm/all84 Python commands passes. The
+initial measurement setup used system Python without dependencies; pinned Python
+corrected it before the passing local evidence. Bot skipped, no independent/human
+approval. All40 scenarios remain Partial, G1–G4 conditional and parent46 draft.
+Actual RP-01 remains55453bytes/9455tokens on C12, eleven non-executable views pass;
+RP-03 remains410752/66783 with its legitimate external-region concurrency refusal.
 
-Active `codex/reusable-receipt-critique` follows signed
-`0e4c706d3d865ad45cfa159b9e3123c7cd5d346f`,
-[scope89](0089-reusable-receipt-critique-plan.md). Next inspect complete actual
-receipt/work ASTs, typed parameters and use-site barriers, compare pure source-only
-predicate recipes/new IR calls/scoped work templates/protected inspection, then
-record measured critique and ADR direction before any further production syntax.
-Preserve all accepted contracts/current/historical artifacts and conservative
-external-region refusal. Reusable receipt/work language, full RP-08, protected
-accessible managed editing/export/text-visual, actual users/hosts/browsers /
-independent evidence and every semantic/region/phase exit remain open.
-
-Working critique89 is not integrated yet. Signed `d683bf7` records options before
-measurement tooling. Native current expression spans are22971/204788 bytes; exact
-spelling upper bounds128/16268 are not future savings. The finite actual RP-03
-experiment reconstructs55 complete receipt cases with two four-input shapes:
-26 thirteen-comparison /29 fourteen-comparison cases. All23 nominal results retain
-distinct invariants and one shared representation; all25 work/capability/request
-identities stay distinct. [ADR-0089](../decisions/0089-reusable-receipt-direction.md)
-selects typed source-only pure recipes next, with new IR calls/work templates
-separate. Four Python/native-evidence groups pass; production language and every
-current/historical benchmark byte remain unchanged. Final-head CI/separate review /
-full audit/signed merge remain mandatory. No user/host/phase claim.
+Active `codex/pure-predicate-recipes` follows signed
+`76edc820cc7c002a6e6f913f153efed78d3e99de`,
+[scope90](0090-pure-predicate-recipes-plan.md). Compare complete controlled-English
+wording, publish/sign exact source0.19/companion0.18/ADR-0090 on unchanged C12/IR0.4
+before code, then implement bounded typed source-only pure Boolean recipes with
+exact full current IR/revision/wire variants, real native unused/per-use typing,
+managed identities, literal opacity and cumulative depth/work/byte quotas. No
+current benchmark adoption, IR calls, work/storage/endpoint sharing or quota growth.
+Protected accessible managed inspection/editing/export/text-visual, full RP-08,
+actual representative users/hosts/browsers/independent evidence and every complete
+semantic/region/G1–G4/scenario/phase criterion remain open; no Phase2.
 
 ## Verified baseline
 
@@ -1944,6 +1931,18 @@ bot skipped, no independent approval. Review fixes incomplete duplicate-recipien
 handling and missing C12 in the guard fixture. Signed0e4c706 freezes receipt/work
 reuse critique89 next, with no new language or manufactured user/host evidence.
 All phase gates stay open; no Phase2.
+
+PR #104 merged measured receipt reuse critique as `48c4968323fdbf0ed5275e089d0c31b12678507f` after
+final-head CI `43452609800` at `78ae1c84ee6bc313ba348a96b19b902774882fbc`, automated
+COMMENT review `5893724397` and fresh full audit. Signed critique d683bf7 precedes
+read-only AST tooling. All55 actual cases reconstruct exactly with two complete
+four-input shapes, preserving23 nominal results and25 work identities. No future
+savings/compiler/user evidence is claimed; all778 benchmark files/contracts /
+production code remain exact. Local four new/six documentation groups and final
+CI660 Rust+six compile-fail/native/Wasm/all84 Python commands pass; bot skipped,
+no independent approval. Signed76edc82 freezes separate source19/companion18 pure
+Boolean recipe publication-before-code scope90, retaining C12/IR0.4 and all phase
+gates. No Phase2.
 
 ## Honest exit accounting
 
