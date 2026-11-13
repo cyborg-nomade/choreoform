@@ -3,7 +3,7 @@
 
 # ADR-0090: Typed source-only pure Boolean tests on unchanged C12 IR
 
-**Status:** Accepted under Project Owner delegation; implementation locally verified; effective on integration<br>
+**Status:** Accepted under Project Owner delegation; implemented and integrated in PR #105<br>
 **Date:** 2026-11-13<br>
 **Decider:** Codex under ADR-0018; no personal owner or independent review
 
@@ -120,3 +120,9 @@ remains a separate archive-first scope. Initial quota failures led to bounded
 declaration collection and compact cached-cost lookup; every actual descriptor
 copy remains fully reserved and all published quotas remain unchanged. Final-head
 CI, separate automated review, full comment audit and signed merge remain required.
+
+PR #105 integrated as `63988a63dc826dff6776251dbe747d947e17b2aa` after successful
+CI43476905305 atb7057abda1a472a3a80df413f7557ec4ddcf1760, separate automated
+COMMENT review5895660433 and a fresh full-body/thread/head audit. CodeRabbit
+skipped the non-default target and supplies no review evidence. All local/CI
+checks pass; this closes only the contracted implementation slice.

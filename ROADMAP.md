@@ -138,7 +138,7 @@ validated, and round-tripped.
   [ADR-0090](docs/decisions/0090-pure-predicate-recipes.md) contracts source0.19 /
   companion0.18 pure tests on unchanged C12. [Experimental complete variants](docs/evaluation/0090-pure-predicates.md)
   preserve current IR at54172bytes (RP-01) /291309bytes (RP-03); native implementation
-  and final integration checks/review are in progress. Current package adoption and
+  passed required CI/review and integrated in PR #105. Current package adoption and
   reusable work remain separate scopes; no user-comprehension evidence exists yet.
   Neither closes this item: reusable receipt/work formulations, full RP-08,
   managed protected accessible inspection/editing/export and text/visual parity

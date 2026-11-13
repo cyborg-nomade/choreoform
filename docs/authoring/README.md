@@ -8,7 +8,7 @@ companion0.18 typed pure Boolean tests on unchanged C12/IR0.4. The native protot
 expands explicit named inputs and checks their complete types in actual caller
 contexts before emitting a candidate. [Finite complete variants](../evaluation/0090-pure-predicates.md)
 reduce RP-03 from410752 to291309bytes and RP-01 from55453 to54172bytes while
-preserving exact current IR. Integration checks/review remain pending. These are
+preserving exact current IR. PR #105 passed required CI and delegated automated review before integration. These are
 experimental alternatives; current benchmark adoption remains a separate scope.
 This supplies no representative-user evidence or complete language/phase gate.
 

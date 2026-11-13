@@ -9,64 +9,47 @@
 
 ## Current focus
 
-[PR #104](https://github.com/cyborg-nomade/choreoform/pull/104) merged the measured
-receipt reuse critique as `48c4968323fdbf0ed5275e089d0c31b12678507f`, after successful final-head CI
-`43452609800` at `78ae1c84ee6bc313ba348a96b19b902774882fbc`, automated COMMENT
-review `5893724397` and fresh full comments/threads/CodeRabbit audit. Signed scope
-`0e4c706` / critique `d683bf7` precede read-only tooling. The complete778-file current /
-historical benchmark tree and every accepted contract/production compiler/SDK /
-quota remain unchanged. Native current RP-01/03 expression spans22971/204788 and
-exact redundancy upper bounds128/16268 are observations, not future savings.
+[PR #105](https://github.com/cyborg-nomade/choreoform/pull/105) integrated typed
+source0.19 / companion0.18 pure Boolean tests on unchanged C12/IR0.4 as
+`63988a63dc826dff6776251dbe747d947e17b2aa`. Successful final-head CI
+`43476905305` at `b7057abda1a472a3a80df413f7557ec4ddcf1760`, separate automated
+COMMENT review `5895660433` and a fresh full-body/thread/head audit precede the
+expected-head signed merge. All6 constituent commits and the merge are signed off.
+CodeRabbit's complete non-default-target skip contains no findings and supplies
+no review evidence; no personal owner, independent or human approval is claimed.
 
-The finite actual RP-03 experiment reconstructs all55 case predicates with two
-complete four-input shapes:26 thirteen-comparison /29 fourteen-comparison cases.
-All23 nominal results retain distinct invariants with one complete representation;
-all25 request/activity/policy/capability identities stay distinct. Balanced13/14
-shapes are preserved separately, not combined by an algebraic shortcut. Existing
-parameter/fanout semantics still refuse unbound ordinary parameters; no new call
-or helper language is implemented. [ADR-0089](../decisions/0089-reusable-receipt-direction.md)
-and [critique](0089-reusable-receipt-critique.md) select typed source-only pure
-Boolean recipes as the next separately published contract. New IR calls/scoped
-work templates remain separate. No native helper-typing/user/host claim follows.
+Signed [scope90](0090-pure-predicate-recipes-plan.md) `76edc82` and exact contract
+publication `5b1a8c5` precede production changes. [ADR-0090](../decisions/0090-pure-predicate-recipes.md)
+and [implementation evidence](0090-pure-predicates.md) record pure unused/forward/
+nested/cyclic preflight, exact native argument/result types in actual contexts,
+managed identities, literal opacity, lexical pin visibility and cumulative bounds.
+No runtime calls, shared work/storage/authority or quota increase. Earlier profiles
+and ordinary no-assertion checks keep their existing behavior.
 
-Four new oracle groups, six documentation groups and links pass locally;
-final CI660 Rust+six compile-fail/native/Wasm/all84 Python commands passes. The
-initial measurement setup used system Python without dependencies; pinned Python
-corrected it before the passing local evidence. Bot skipped, no independent/human
-approval. All40 scenarios remain Partial, G1–G4 conditional and parent46 draft.
-Actual RP-01 remains55453bytes/9455tokens on C12, eleven non-executable views pass;
-RP-03 remains410752/66783 with its legitimate external-region concurrency refusal.
+Full688 Rust tests plus6 compile-fail tests, native lint/five Wasm lints/two release
+Wasm builds/native portability/all85 Python commands pass locally and in CI.
+Complete experimental variants retain exact current IR/revision/wire and all11
+view outcomes: RP-01 54172bytes/9145tokens/113796parser work (2.31% smaller), RP-03
+291309/41306/386333 (29.08% smaller). Failed initial work-quota attempts led to
+bounded declaration collection and compact cost-summary lookup, with every actual
+descriptor copy still fully reserved. The final native CLI oracle checks retained
+measurements/package digests and the exact778-file prior benchmark inventory.
 
-Active `codex/pure-predicate-recipes` follows signed
-`76edc820cc7c002a6e6f913f153efed78d3e99de`,
-[scope90](0090-pure-predicate-recipes-plan.md). Compare complete controlled-English
-wording, publish/sign exact source0.19/companion0.18/ADR-0090 on unchanged C12/IR0.4
-before code, then implement bounded typed source-only pure Boolean recipes with
-exact full current IR/revision/wire variants, real native unused/per-use typing,
-managed identities, literal opacity and cumulative depth/work/byte quotas. No
-current benchmark adoption, IR calls, work/storage/endpoint sharing or quota growth.
-Protected accessible managed inspection/editing/export/text-visual, full RP-08,
-actual representative users/hosts/browsers/independent evidence and every complete
-semantic/region/G1–G4/scenario/phase criterion remain open; no Phase2.
+Active `codex/rp03-predicate-adoption` follows signed `373f5b1`,
+[scope91](0091-rp03-predicate-adoption-plan.md), after verified #105 integration.
+Archive/sign all126 exact current non-history RP-03 files before producer/consumer
+or package changes, preserving the original README separately from the new archive
+note. Adopt source19 explicitly with a finite reproducible producer; preserve the
+complete C12 IR, resources/reports/guards/receipts and all semantic identities.
+Re-pin historical proofs to complete archived epochs rather than weaken them.
+Next dependency: separate RP-01 archive-first adoption, then remaining readability/
+reuse/protected managed inspection/editing/export/text-visual and full RP-08 work.
 
-Working scope90: exact source19 grammar/profile/companion18/ADR-0090 publication
-`5b1a8c57ccfa22cac9951830ecf443986db096a1` is signed before production code.
-[Design](0090-pure-predicate-design.md) records wording alternatives and the typed-
-argument trap: otherwise-valid expanded equality can erase a declared input type.
-The native extra-type proof layer now passes11 focused groups, including actual
-full RP-03 reports, derived reused-policy contexts and rejection of unused-work
-placeholder proofs. Source-only assertions only add rejection, with scoped private
-site indices and cumulative bounds; ordinary no-assertion checks preserve meaning.
-The working native compiler now passes15 focused frontend groups, including managed
-identity/privacy/nominal/purity/cumulative-bound cases and both complete finite
-source19 variants. Exact current C12 IR/revision/wire and format/reparse are preserved:
-RP-01 54172bytes/9145tokens/113796parser work; RP-03 291309/41306/386333.
-[Implementation evidence](0090-pure-predicates.md) records the failed initial quota
-attempts, bounded collector/cache improvements and unchanged limits. Experimental
-files live outside the benchmarks; all current/historical artifacts stay untouched.
-Full local688 Rust +6 compile-fail tests, native lint/five Wasm lints/two release
-builds/native portability/all85 Python commands pass. Final-head CI, separate
-review, all comments and signed merge remain pending. Nothing is integrated yet; no phase criterion closes.
+Current RP-01 remains source18 at55453bytes/9455tokens with all11 non-executable
+views passing; RP-03 remains source18 at410752/66783 with its legitimate external-
+region concurrency refusal. Actual representative users/hosts/browsers/independent
+review and every complete semantic/region/G1–G4/scenario/Phase1 gate remain open.
+All40 scenarios remain Partial, parent46 draft; no Phase2 or phase completion.
 
 ## Verified baseline
 

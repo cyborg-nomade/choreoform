@@ -1,0 +1,1787 @@
+{
+  "format": "choreoform-rp03-benchmark-draft",
+  "version": "0.1.0",
+  "status": "source-draft-with-actual-lowering-result",
+  "executable": false,
+  "sourceProfile": "0.18.0",
+  "companionVersion": "0.17.0",
+  "coreProfile": "0.12.0",
+  "intendedWireVersion": "0.4.0",
+  "sourceBytes": 410752,
+  "measuredTokens": 66783,
+  "tokenMeasurement": "sum of complete-line lexing; whole-program native recognition verified separately",
+  "sourceDigest": "sha256:2e2be8154b94791d5af9e5e77c87895d205e2455af37063e66b98efbcb645695",
+  "bindingsDigest": "sha256:6e0274d9c2fff47cbf1fecdda9fd8920dd5ada6e647a457d34b6e2c0af52cfbe",
+  "packageDigest": "sha256:21d5c4c815ea3139e10f35e47cd6509f5a1c0761800881a96810738188ad24a0",
+  "contracts": {
+    "semantics": {
+      "contract": "urn:choreoform:semantics:adr-0008",
+      "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "core": {
+      "contract": "urn:choreoform:contracts:core-profile:0.12.0",
+      "digest": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007",
+      "dialect": "core"
+    }
+  },
+  "resources": [
+    {
+      "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+      "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac",
+      "path": "docs/benchmarks/rp03/types.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:reserve-a:0.1.0",
+      "revision": "sha256:8effe6fc4b4e0ac1623247b036fdc22d3f4b721ca1c678ddc803c5b58456c341",
+      "path": "docs/benchmarks/rp03/reserve-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:reserve-a-terminal:0.1.0",
+      "revision": "sha256:056ad0db59267468cf17fca4a564ffaea04f7595e8780a6c873db97d707a68da",
+      "path": "docs/benchmarks/rp03/reserve-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:reserve-b:0.1.0",
+      "revision": "sha256:84bab33605719abf91779efa33ffd63c16a43f0ac1631c8ee5b8487331704a57",
+      "path": "docs/benchmarks/rp03/reserve-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:reserve-b-terminal:0.1.0",
+      "revision": "sha256:17b7cb1df8c81418da320a2b6d6b70e553157a2ed3c798404185ea9dd1c3bca3",
+      "path": "docs/benchmarks/rp03/reserve-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:authorize:0.1.0",
+      "revision": "sha256:d356bacd16dcd46904c653e1465d6b73930d1cbdb23e323bd0bf41f0db95b91c",
+      "path": "docs/benchmarks/rp03/authorize.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:authorize-terminal:0.1.0",
+      "revision": "sha256:77dbff12325468d322b3df6c03c8007474bf971ede203ba595a5f960486323ca",
+      "path": "docs/benchmarks/rp03/authorize.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:release-a:0.1.0",
+      "revision": "sha256:56cc518b1896af528287551784597f09ea416779c8e1a434a35c15aaf4b76304",
+      "path": "docs/benchmarks/rp03/release-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:release-a-terminal:0.1.0",
+      "revision": "sha256:d56ed78ff94ce59682771077a9de1fa07c559a80c822fb5613fb027fc9e8bfa9",
+      "path": "docs/benchmarks/rp03/release-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:release-b:0.1.0",
+      "revision": "sha256:385765c98808730f4fa9f19d1b779c5315f39263d38e0d7467448b3c06098b97",
+      "path": "docs/benchmarks/rp03/release-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:release-b-terminal:0.1.0",
+      "revision": "sha256:0ce78dabba74fa81428dc5295686f7f01d8aaa15f38a84b72495d48e6403d1fd",
+      "path": "docs/benchmarks/rp03/release-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:void:0.1.0",
+      "revision": "sha256:10400b8e4d675e72bc296b8edfc9890ffe838a40ffbf2985ced5414842b00f8f",
+      "path": "docs/benchmarks/rp03/void.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:void-terminal:0.1.0",
+      "revision": "sha256:d34ff6837016e62187dfd8778087ab4bee40dcebc35420f2ace4f112dc8cd2da",
+      "path": "docs/benchmarks/rp03/void.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:pack-a:0.1.0",
+      "revision": "sha256:19630b87f877d1a93370351e5b7d728d33cc1f838a203a4027748447eff1dceb",
+      "path": "docs/benchmarks/rp03/pack-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:pack-a-terminal:0.1.0",
+      "revision": "sha256:3f3fff9077c0b05e8101047401ced0bbd5b7e0e817ca6b9a4571030abcc8004b",
+      "path": "docs/benchmarks/rp03/pack-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:pack-b:0.1.0",
+      "revision": "sha256:b3cb3399eac5d6a85870301d6854add374d3968d8a306ae3c5b13b20a47d9a65",
+      "path": "docs/benchmarks/rp03/pack-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:pack-b-terminal:0.1.0",
+      "revision": "sha256:37da434f05011eb1020b43b33fd0863cefe0db890c7f0dc1dc3e4f4fce72f2f1",
+      "path": "docs/benchmarks/rp03/pack-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:label-a:0.1.0",
+      "revision": "sha256:6cda5b3876bfa4d4de5051721736f2b721abed53174a3abf16770d5e533bea74",
+      "path": "docs/benchmarks/rp03/label-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:label-a-terminal:0.1.0",
+      "revision": "sha256:87eb21d96d6e6a8f2b0d61c7a5eecee6c4ea8f3fbd575b08332d3c60214bf127",
+      "path": "docs/benchmarks/rp03/label-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:label-b:0.1.0",
+      "revision": "sha256:0847be28db2381d34fe6bac275292c0dafcf96bac77be8a14cb5c2045a9a79a2",
+      "path": "docs/benchmarks/rp03/label-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:label-b-terminal:0.1.0",
+      "revision": "sha256:3c17e23f01372a3c141881ed835f0a17e361f4a4b42386add7441324547ac781",
+      "path": "docs/benchmarks/rp03/label-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:handover-a:0.1.0",
+      "revision": "sha256:83865c2bc0a2b7964ec8952ed2cf93c83cf81b18cc7b157d5bf257c36360f309",
+      "path": "docs/benchmarks/rp03/handover-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:handover-a-terminal:0.1.0",
+      "revision": "sha256:b5d63516f41fd83aea57a24676f4df7bb8ae2f19289e4bf2fc871975d0d7657b",
+      "path": "docs/benchmarks/rp03/handover-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:handover-b:0.1.0",
+      "revision": "sha256:4fef8648c9bd395e0f8a69a095e1884a59c51cfb4744805fcc25e6eb261dd19e",
+      "path": "docs/benchmarks/rp03/handover-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:handover-b-terminal:0.1.0",
+      "revision": "sha256:fccdd8f8bbec6bdcaf503a7c3e7ed5537f86bb18047ba3299d549ec4a8f681c7",
+      "path": "docs/benchmarks/rp03/handover-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:deliver-a:0.1.0",
+      "revision": "sha256:b1763a5297c14970d7c5d63d90c794e646df0df62184c4caab83bb2188d686ab",
+      "path": "docs/benchmarks/rp03/deliver-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:deliver-a-terminal:0.1.0",
+      "revision": "sha256:3c82dd803c8397b8ac4f19d1f53d868ecc230b95b181f137befdb112749d2eba",
+      "path": "docs/benchmarks/rp03/deliver-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:deliver-b:0.1.0",
+      "revision": "sha256:0ec9d38b922c429f2c6ceeeb4f781f2d0f7762dfd639c081e92da00b9d15c02e",
+      "path": "docs/benchmarks/rp03/deliver-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:deliver-b-terminal:0.1.0",
+      "revision": "sha256:1606aee2101e400580cefddc57ce90de752e303c9573407add8029fab72b4dc0",
+      "path": "docs/benchmarks/rp03/deliver-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:stop-a:0.1.0",
+      "revision": "sha256:3c9869e718f8817b4e4695ba495337452c1dd4e608f1c8193d88cdc5391c5f1e",
+      "path": "docs/benchmarks/rp03/stop-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:stop-a-terminal:0.1.0",
+      "revision": "sha256:dcfefa2a487ee0805a874c29bb08da74389cefbe17ea631252fc2f9394237632",
+      "path": "docs/benchmarks/rp03/stop-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:stop-b:0.1.0",
+      "revision": "sha256:1726f8af17be380ba65fe10ff2c6e23cbb72d08793af31e5234dde5d95ad5780",
+      "path": "docs/benchmarks/rp03/stop-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:stop-b-terminal:0.1.0",
+      "revision": "sha256:45d724274c18c3159d2485a702aca628a29bc8b5f7516ca80c8a10aec3e880d6",
+      "path": "docs/benchmarks/rp03/stop-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:void-label-a:0.1.0",
+      "revision": "sha256:d922ec12452852cb0f2636552b0c6657b3dae7d3bcf3b360966321a1d91d8653",
+      "path": "docs/benchmarks/rp03/void-label-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:void-label-a-terminal:0.1.0",
+      "revision": "sha256:d5bcb0a4ce760bcc0251b8062b00189fbe96b91a4512fca41b92e74cd78c0da7",
+      "path": "docs/benchmarks/rp03/void-label-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:void-label-b:0.1.0",
+      "revision": "sha256:4acefbcd5ef20c49bbef5b991f92c36cb4128a85e14dfcc6919bffb84db45a8c",
+      "path": "docs/benchmarks/rp03/void-label-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:void-label-b-terminal:0.1.0",
+      "revision": "sha256:376c047564c3a5388f71b017e8ed133369252fa45de50f7ca49c3a2e64154cb5",
+      "path": "docs/benchmarks/rp03/void-label-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:capture:0.1.0",
+      "revision": "sha256:fbf457f7c1e8ea29f12249fdd5c00f019596fa8e8c53670a6b76d6f978ab18f6",
+      "path": "docs/benchmarks/rp03/capture.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:capture-terminal:0.1.0",
+      "revision": "sha256:9b40b20d0d83176c0e4349125f1626e8b51642000132ad9ceed36d5f1f0e3da4",
+      "path": "docs/benchmarks/rp03/capture.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:refund:0.1.0",
+      "revision": "sha256:f868c5eef3f80b7a6a7496804cbe928cc4ec16853e71d02ca004973b730ab014",
+      "path": "docs/benchmarks/rp03/refund.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:refund-terminal:0.1.0",
+      "revision": "sha256:b7857cb9433f346ffa426b1d0ed97aa26fd2d8c36e22b7fff817442e6fd8c6e2",
+      "path": "docs/benchmarks/rp03/refund.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:intercept-a:0.1.0",
+      "revision": "sha256:020e8c367a8b58c79d2518ced318db5bb16c24fe9a5f486bb318cff03a19360d",
+      "path": "docs/benchmarks/rp03/intercept-a.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:intercept-a-terminal:0.1.0",
+      "revision": "sha256:51edf525601439ad586cbba63f5c89a750135425d040537d17c52662de8d920c",
+      "path": "docs/benchmarks/rp03/intercept-a.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:intercept-b:0.1.0",
+      "revision": "sha256:917c5201c5328aabcdc478ba72761e644ec5746185ab654a473eec01b9431c52",
+      "path": "docs/benchmarks/rp03/intercept-b.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:intercept-b-terminal:0.1.0",
+      "revision": "sha256:b249591886eba7c9a96c22e07554944f3ac2b660e5c060d1da8ac462ae156c06",
+      "path": "docs/benchmarks/rp03/intercept-b.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:notify:0.1.0",
+      "revision": "sha256:2552937d247d596e1c4855b452d137bf8c5b773fffed7217a377bec3daf17855",
+      "path": "docs/benchmarks/rp03/notify.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:notify-terminal:0.1.0",
+      "revision": "sha256:1d566a326434c9bb0effa408560e4dcacbac36798709f2d251a683d8c5b397ee",
+      "path": "docs/benchmarks/rp03/notify.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:clock-source:0.1.0",
+      "revision": "sha256:4c3938cdf3fac63b29df61e83514bd3bcba0664f0f6a8f196154338511053b33",
+      "path": "docs/benchmarks/rp03/clock-source.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp03:clock:0.1.0",
+      "revision": "sha256:4ed4de9d9934756546ca015dbc56da4b611f8d94951ba860393e687a1d1fe590",
+      "path": "docs/benchmarks/rp03/clock.json"
+    },
+    {
+      "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+      "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead",
+      "path": "docs/ir/contracts/sha256-a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead.txt"
+    },
+    {
+      "id": "urn:choreoform:clock-profile:instance-microseconds:0.1.0",
+      "revision": "sha256:8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9",
+      "path": "docs/ir/contracts/sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt"
+    }
+  ],
+  "inputArtifacts": [
+    {
+      "path": "launch-values.json",
+      "digest": "sha256:c4fcd5d3a72300fe3e33d93ee3671991297a08a29ec5b93a34456a74d2305b0d",
+      "meaning": "synthetic input or pure declaration evidence, never an accepted event"
+    },
+    {
+      "path": "receipt-rules.json",
+      "digest": "sha256:45e11cb5614d7fdd99940b9df4186c2943ff3bcb1f79dcf4b46615aea5ff03c4",
+      "meaning": "synthetic input or pure declaration evidence, never an accepted event"
+    },
+    {
+      "path": "receipt-cases.json",
+      "digest": "sha256:42944fddcf05aa1001db67b42d45aeee713352cddba41b0a071b29f89689a546",
+      "meaning": "synthetic input or pure declaration evidence, never an accepted event"
+    },
+    {
+      "path": "guard-rules.json",
+      "digest": "sha256:d03d89220b4c16715bda226e78e62c99176d2eb4ada004b010ceaed5d1db193e",
+      "meaning": "synthetic input or pure declaration evidence, never an accepted event"
+    },
+    {
+      "path": "guard-cases.json",
+      "digest": "sha256:17d3df71b75de1cf524c048518c27e30ce171a7f5b0a69f3c3ab4396fafe55a1",
+      "meaning": "synthetic input or pure declaration evidence, never an accepted event"
+    }
+  ],
+  "invalidationAdoption": {
+    "basisRevision": "sha256:4007a7858d916a621ca4e53cb08c4bdfc5753e50736f3eb3ecaffa7f88ee9372",
+    "requiredCount": 312,
+    "added": [
+      {
+        "cell": "authorize_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "capture_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "capture_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "check_authorization"
+      },
+      {
+        "cell": "original_order",
+        "site": "check_authorization"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "check_authorization"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "check_authorization"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "capture_call_value",
+        "site": "check_exception"
+      },
+      {
+        "cell": "capture_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "deliver_a_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "deliver_b_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "first_disposition",
+        "site": "check_exception"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "original_order",
+        "site": "check_exception"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "check_exception"
+      },
+      {
+        "cell": "release_a_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "release_b_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "second_disposition",
+        "site": "check_exception"
+      },
+      {
+        "cell": "void_record",
+        "site": "check_exception"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "check_partial"
+      },
+      {
+        "cell": "original_order",
+        "site": "check_partial"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "check_partial"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "check_partial"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "check_stock"
+      },
+      {
+        "cell": "original_order",
+        "site": "check_stock"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "check_stock"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "check_stock"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "capture_call_value",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "capture_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "deliver_a_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "capture_call_value",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "capture_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "deliver_a_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "capture_call_value",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "capture_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "deliver_b_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "capture_call_value",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "capture_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "deliver_b_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "capture_call_value",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "capture_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "deliver_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "deliver_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "first_disposition",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "intercept_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "intercept_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "notify_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "refund_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "release_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "release_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "second_disposition",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "stop_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "stop_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "void_label_a_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "void_label_b_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "void_record",
+        "site": "exception_ask"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "handover_a_activity"
+      },
+      {
+        "cell": "label_a_call_value",
+        "site": "handover_a_activity"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "handover_a_activity"
+      },
+      {
+        "cell": "pack_a_call_value",
+        "site": "handover_a_activity"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "handover_a_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "handover_a_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "handover_a_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "handover_a_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "handover_b_activity"
+      },
+      {
+        "cell": "label_b_call_value",
+        "site": "handover_b_activity"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "handover_b_activity"
+      },
+      {
+        "cell": "pack_b_call_value",
+        "site": "handover_b_activity"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "handover_b_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "handover_b_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "handover_b_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "handover_b_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "label_a_activity"
+      },
+      {
+        "cell": "pack_a_call_value",
+        "site": "label_a_activity"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "label_a_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "label_a_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "label_a_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "label_a_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "label_a_call_value",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "pack_a_call_value",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "label_a_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "label_b_activity"
+      },
+      {
+        "cell": "pack_b_call_value",
+        "site": "label_b_activity"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "label_b_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "label_b_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "label_b_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "label_b_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "label_b_call_value",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "pack_b_call_value",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "label_b_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "normal_release_a_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "normal_release_a_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "normal_release_a_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "normal_release_a_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "normal_release_a_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "normal_release_b_guard"
+      },
+      {
+        "cell": "normal_release_a_call_value",
+        "site": "normal_release_b_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "normal_release_b_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "normal_release_b_guard"
+      },
+      {
+        "cell": "release_a_record",
+        "site": "normal_release_b_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "normal_release_b_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "normal_release_b_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "normal_release_a_call_value",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "normal_release_b_call_value",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "release_a_record",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "release_b_record",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "normal_void_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "capture_call_value",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "capture_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "deliver_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "deliver_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "exception_claim",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "first_disposition",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "handover_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "handover_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "intercept_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "intercept_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "label_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "label_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "notify_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "refund_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "release_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "release_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "second_disposition",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "stop_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "stop_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "void_label_a_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "void_label_b_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "void_record",
+        "site": "notify_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "pack_a_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "pack_a_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "pack_a_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "pack_a_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "pack_a_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "pack_a_guard"
+      },
+      {
+        "cell": "pack_a_call_value",
+        "site": "pack_a_guard"
+      },
+      {
+        "cell": "pack_a_record",
+        "site": "pack_a_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "pack_a_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "pack_a_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "pack_a_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "pack_b_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "pack_b_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "pack_b_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "pack_b_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "pack_b_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "pack_b_guard"
+      },
+      {
+        "cell": "pack_b_call_value",
+        "site": "pack_b_guard"
+      },
+      {
+        "cell": "pack_b_record",
+        "site": "pack_b_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "pack_b_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "pack_b_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "pack_b_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "partial_choice"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "partial_choice"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "partial_choice"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "prepare_a_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "prepare_a_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "prepare_a_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "prepare_a_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "prepare_a_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "prepare_b_guard"
+      },
+      {
+        "cell": "original_order",
+        "site": "prepare_b_guard"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "prepare_b_guard"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "prepare_b_guard"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "prepare_b_guard"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "release_a_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "release_a_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "release_a_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "release_a_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "release_b_activity"
+      },
+      {
+        "cell": "normal_release_a_call_value",
+        "site": "release_b_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "release_b_activity"
+      },
+      {
+        "cell": "release_a_record",
+        "site": "release_b_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "release_b_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "release_b_activity"
+      },
+      {
+        "cell": "authorize_record",
+        "site": "void_activity"
+      },
+      {
+        "cell": "normal_release_a_call_value",
+        "site": "void_activity"
+      },
+      {
+        "cell": "normal_release_b_call_value",
+        "site": "void_activity"
+      },
+      {
+        "cell": "partial_decision",
+        "site": "void_activity"
+      },
+      {
+        "cell": "release_a_record",
+        "site": "void_activity"
+      },
+      {
+        "cell": "release_b_record",
+        "site": "void_activity"
+      },
+      {
+        "cell": "reserve_a_record",
+        "site": "void_activity"
+      },
+      {
+        "cell": "reserve_b_record",
+        "site": "void_activity"
+      }
+    ],
+    "meaning": "actual advisory-derived declarations only; no host authority or unvisited-context proof"
+  },
+  "instanceMap": [
+    {
+      "creator": "reserve_a_call",
+      "operation": "reserve_a",
+      "instance": "reserve_a",
+      "body": "reserve_a_service",
+      "parent": "accept_a",
+      "capability": "reserve_a_capability"
+    },
+    {
+      "creator": "reserve_b_call",
+      "operation": "reserve_b",
+      "instance": "reserve_b",
+      "body": "reserve_b_service",
+      "parent": "accept_b",
+      "capability": "reserve_b_capability"
+    },
+    {
+      "creator": "authorize_call",
+      "operation": "authorize",
+      "instance": "authorize",
+      "body": "authorize_service",
+      "parent": "accept_payment",
+      "capability": "authorize_capability"
+    },
+    {
+      "creator": "pack_a_call",
+      "operation": "pack_a",
+      "instance": "pack_a",
+      "body": "pack_a_service",
+      "parent": "prepare_a",
+      "capability": "pack_a_capability"
+    },
+    {
+      "creator": "label_a_call",
+      "operation": "label_a",
+      "instance": "label_a",
+      "body": "label_a_service",
+      "parent": "prepare_a",
+      "capability": "label_a_capability"
+    },
+    {
+      "creator": "handover_a_call",
+      "operation": "handover_a",
+      "instance": "handover_a",
+      "body": "handover_a_service",
+      "parent": "prepare_a",
+      "capability": "handover_a_capability"
+    },
+    {
+      "creator": "pack_b_call",
+      "operation": "pack_b",
+      "instance": "pack_b",
+      "body": "pack_b_service",
+      "parent": "prepare_b",
+      "capability": "pack_b_capability"
+    },
+    {
+      "creator": "label_b_call",
+      "operation": "label_b",
+      "instance": "label_b",
+      "body": "label_b_service",
+      "parent": "prepare_b",
+      "capability": "label_b_capability"
+    },
+    {
+      "creator": "handover_b_call",
+      "operation": "handover_b",
+      "instance": "handover_b",
+      "body": "handover_b_service",
+      "parent": "prepare_b",
+      "capability": "handover_b_capability"
+    },
+    {
+      "creator": "capture_call",
+      "operation": "capture",
+      "instance": "capture",
+      "body": "capture_service",
+      "parent": "order",
+      "capability": "capture_capability"
+    },
+    {
+      "creator": "deliver_a_call",
+      "operation": "deliver_a",
+      "instance": "deliver_a",
+      "body": "deliver_a_service",
+      "parent": "delivery_a",
+      "capability": "deliver_a_capability"
+    },
+    {
+      "creator": "deliver_b_call",
+      "operation": "deliver_b",
+      "instance": "deliver_b",
+      "body": "deliver_b_service",
+      "parent": "delivery_b",
+      "capability": "deliver_b_capability"
+    },
+    {
+      "creator": "normal_release_a_call",
+      "operation": "release_a",
+      "instance": "release_a",
+      "body": "release_a_service",
+      "parent": "release_normal",
+      "capability": "release_a_capability"
+    },
+    {
+      "creator": "normal_release_b_call",
+      "operation": "release_b",
+      "instance": "release_b",
+      "body": "release_b_service",
+      "parent": "release_normal",
+      "capability": "release_b_capability"
+    },
+    {
+      "creator": "normal_void_call",
+      "operation": "void",
+      "instance": "void",
+      "body": "void_service",
+      "parent": "release_normal",
+      "capability": "void_capability"
+    },
+    {
+      "creator": "stop_a_call",
+      "operation": "stop_a",
+      "instance": "stop_a",
+      "body": "stop_a_service",
+      "parent": "order_settlement",
+      "capability": "stop_a_capability"
+    },
+    {
+      "creator": "intercept_a_call",
+      "operation": "intercept_a",
+      "instance": "intercept_a",
+      "body": "intercept_a_service",
+      "parent": "order_settlement",
+      "capability": "intercept_a_capability"
+    },
+    {
+      "creator": "cancel_label_a_call",
+      "operation": "void_label_a",
+      "instance": "void_label_a",
+      "body": "void_label_a_service",
+      "parent": "order_settlement",
+      "capability": "void_label_a_capability"
+    },
+    {
+      "creator": "cancel_release_a_call",
+      "operation": "release_a",
+      "instance": "cancel_release_a",
+      "body": "cancel_release_a_service",
+      "parent": "order_settlement",
+      "capability": "cancel_release_a_capability"
+    },
+    {
+      "creator": "stop_b_call",
+      "operation": "stop_b",
+      "instance": "stop_b",
+      "body": "stop_b_service",
+      "parent": "order_settlement",
+      "capability": "stop_b_capability"
+    },
+    {
+      "creator": "intercept_b_call",
+      "operation": "intercept_b",
+      "instance": "intercept_b",
+      "body": "intercept_b_service",
+      "parent": "order_settlement",
+      "capability": "intercept_b_capability"
+    },
+    {
+      "creator": "cancel_label_b_call",
+      "operation": "void_label_b",
+      "instance": "void_label_b",
+      "body": "void_label_b_service",
+      "parent": "order_settlement",
+      "capability": "void_label_b_capability"
+    },
+    {
+      "creator": "cancel_release_b_call",
+      "operation": "release_b",
+      "instance": "cancel_release_b",
+      "body": "cancel_release_b_service",
+      "parent": "order_settlement",
+      "capability": "cancel_release_b_capability"
+    },
+    {
+      "creator": "refund_call",
+      "operation": "refund",
+      "instance": "refund",
+      "body": "refund_service",
+      "parent": "order_settlement",
+      "capability": "refund_capability"
+    },
+    {
+      "creator": "notify_call",
+      "operation": "notify",
+      "instance": "notify",
+      "body": "notify_service",
+      "parent": "order",
+      "capability": "notify_capability"
+    }
+  ],
+  "protectionClaimDelta": {
+    "addedCapabilities": [
+      "cancel_release_a_capability",
+      "cancel_release_b_capability"
+    ],
+    "meaning": "fresh fictional provider/clock recipient claims, not actual consent or authority"
+  },
+  "lowering": {
+    "result": "passed"
+  },
+  "canonicalIR": {
+    "path": "candidate.ir.json",
+    "revision": "sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa",
+    "digest": "sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4"
+  },
+  "semanticStageResults": [
+    {
+      "stage": "check",
+      "result": "passed",
+      "report": "reports/check.json",
+      "reportDigest": "sha256:e1831f36834e30c90e08996d10383c66e2a34a9594485f5286b9e0864b4c9037"
+    },
+    {
+      "stage": "check-control",
+      "result": "passed",
+      "report": "reports/check-control.json",
+      "reportDigest": "sha256:6e36b8f2c4a5163c2411c06622ccbe5060ed19330db69e74edabae967e893afd"
+    },
+    {
+      "stage": "check-protection",
+      "result": "passed",
+      "report": "reports/check-protection.json",
+      "reportDigest": "sha256:478548efa35133606ad1f3df6f82655e9fc97a418c01e52a90399b31f09e4c34"
+    },
+    {
+      "stage": "check-invalidation",
+      "result": "passed",
+      "report": "reports/check-invalidation.json",
+      "reportDigest": "sha256:5d2a4559ca7eef397c0baf9868a6ff4ff628f232ba9e9616c345615ac85ac62a"
+    },
+    {
+      "stage": "invalidation-requirements",
+      "result": "passed",
+      "report": "reports/invalidation-requirements.json",
+      "reportDigest": "sha256:dbae85d5c97cc46b5cfd8435c8b043979a642c599996c59300a6a9df8fbc0897"
+    },
+    {
+      "stage": "check-concurrency",
+      "result": "refused",
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+    },
+    {
+      "stage": "check-timing",
+      "result": "refused",
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+    },
+    {
+      "stage": "check-fault-routes",
+      "result": "refused",
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+    },
+    {
+      "stage": "check-exceptional-availability",
+      "result": "refused",
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+    },
+    {
+      "stage": "check-reconciliation-links",
+      "result": "refused",
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+    },
+    {
+      "stage": "check-reconciliation-availability",
+      "result": "refused",
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+    }
+  ],
+  "declarationCounts": {
+    "declarations": 692,
+    "symbols": 468,
+    "generated": 271,
+    "resources": 48
+  },
+  "scenarios": [
+    {
+      "id": "RP-03-A",
+      "status": "Partial",
+      "declarations": [
+        "start_acceptance",
+        "start_acceptance_gather",
+        "start_fulfillment",
+        "capture_guard",
+        "capture_call",
+        "start_delivery",
+        "record_dispositions",
+        "check_exception"
+      ]
+    },
+    {
+      "id": "RP-03-B",
+      "status": "Partial",
+      "declarations": [
+        "check_stock",
+        "check_partial",
+        "partial_choice",
+        "run_release",
+        "normal_void_call",
+        "normal_release_a_call",
+        "normal_release_b_call",
+        "record_releases"
+      ]
+    },
+    {
+      "id": "RP-03-C",
+      "status": "Partial",
+      "declarations": [
+        "customer_cancel",
+        "order_commits",
+        "order_settlement",
+        "settlement_direction_ask",
+        "stop_a_call",
+        "stop_b_call",
+        "intercept_a_call",
+        "intercept_b_call",
+        "refund_guard",
+        "refund_call",
+        "surviving_exception_ask"
+      ]
+    },
+    {
+      "id": "RP-03-D",
+      "status": "Partial",
+      "declarations": [
+        "capture_activity",
+        "capture_wait",
+        "capture_observe",
+        "capture_retained",
+        "capture_capture"
+      ],
+      "boundary": "Stable provider/effect/event/request identity and monotonicity remain real host obligations; no live deduplication ledger or suppressed transition is claimed."
+    }
+  ],
+  "hostRequirements": [
+    "authenticated-current-role-assignment-input-and-business-revisions",
+    "exact-stable-instance-occurrence-effect-request-and-provider-event-identities",
+    "truthful-reservation-authorization-capture-void-refund-warehouse-carrier-notice-contracts",
+    "registered-instance-clock-domain-expiry-evidence-current-dispatch-authority-and-atomic-timers",
+    "no-overselling-and-atomic-stock-ownership-outside-the-local-definition",
+    "physical-provider-cutoff-and-positive-stop-interception-evidence",
+    "capture-ceiling-receipt-and-accountable-refund-business-eligibility",
+    "actual-duplicate-terminal-monotonicity-and-contradictory-evidence-ledger",
+    "accepted-immutable-original-input-evidence-and-provenance-storage",
+    "authorized-receiver-acceptance-atomic-handoff-and-all-transitive-settlement",
+    "explicit-accountable-unresolved-and-partial-authorization-balance-ownership"
+  ]
+}

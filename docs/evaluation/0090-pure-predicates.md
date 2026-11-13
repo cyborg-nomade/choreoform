@@ -3,7 +3,7 @@
 
 # Source0.19 typed pure Boolean tests: implementation evidence
 
-**Status:** native implementation and local checks complete; separate review and final-head CI pending.<br>
+**Status:** integrated by PR #105 after successful final-head CI, automated review and fresh full audit.<br>
 **Authority:** [ADR-0018](../decisions/0018-phase-review-delegation.md),
 [scope90](0090-pure-predicate-recipes-plan.md) and
 [ADR-0090](../decisions/0090-pure-predicate-recipes.md); no personal owner or independent review.
@@ -86,3 +86,14 @@ managed editor, protected inspection, shared work/service template, benchmark
 adoption, complete RP-08 or actual user/host/browser/independent evidence is claimed.
 All40 scenarios remain Partial, G1–G4 conditional and parent46 draft; Phase1 remains
 open. Current package adoption must archive its exact previous epoch before code.
+
+## Verified integration
+
+PR #105 merged as `63988a63dc826dff6776251dbe747d947e17b2aa` after CI43476905305
+atb7057abda1a472a3a80df413f7557ec4ddcf1760 (all required steps successful),
+a separate completed-diff automated COMMENT review5895660433 and fresh full
+comment-body/thread/head audit. All six commits and merge carry sign-off. The
+CodeRabbit skip was read in full; it contains no substantive finding and is no
+review evidence. No independent/human approval is claimed. Historical pending
+statements above describe the pre-integration checkpoint; this section records
+the completed integration. Current benchmark adoption remains separate.
