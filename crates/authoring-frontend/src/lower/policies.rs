@@ -5,7 +5,7 @@ use super::*;
 
 impl<'a, 's> Lower<'a, 's> {
     fn compensation_reference(&mut self, tree: &Tree, scope: &str, policy: &str) -> Result<Value> {
-        if self.syntax.profile() != "0.16.0" {
+        if !matches!(self.syntax.profile(), "0.16.0" | "0.17.0") {
             return self.optional_reference(tree, scope, "node");
         }
         let Some(reference) = tree.all("reference").first().copied() else {
@@ -82,6 +82,7 @@ impl<'a, 's> Lower<'a, 's> {
                         | "0.14.0"
                         | "0.15.0"
                         | "0.16.0"
+                        | "0.17.0"
                 ) {
                     body["faultSource"] = if let Some(binding) = tree.all("fault_binding").first() {
                         let source = self.r(binding, scope, "resource", 0)?;
@@ -135,6 +136,7 @@ impl<'a, 's> Lower<'a, 's> {
                             | "0.14.0"
                             | "0.15.0"
                             | "0.16.0"
+                            | "0.17.0"
                     ) {
                         body["retry"]["faultSource"] = if matches!(
                             self.syntax.profile(),
@@ -146,6 +148,7 @@ impl<'a, 's> Lower<'a, 's> {
                                 | "0.14.0"
                                 | "0.15.0"
                                 | "0.16.0"
+                                | "0.17.0"
                         ) {
                             if attempts > 1 {
                                 if body["faultSource"].is_null() {
@@ -203,6 +206,7 @@ impl<'a, 's> Lower<'a, 's> {
                         | "0.14.0"
                         | "0.15.0"
                         | "0.16.0"
+                        | "0.17.0"
                 ) {
                     self.pending_waits.push((tree, scope.into(), id.clone()));
                 } else {

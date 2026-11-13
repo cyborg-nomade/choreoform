@@ -42,6 +42,15 @@ ordinary coverage. Actual host events, storage and continuation remain open.
 retention on existing core 0.8/IR 0.4. Static declarations and the prior owned
 conditional proof remain separate from actual values, storage and authority.
 
+[Source 0.17](../../docs/authoring/profile-v0.17.md) adds complete named data
+protection definitions and explicit data uses on unchanged core 0.12 / IR 0.4.
+Definitions resolve once in their lexical scope, including unused definitions;
+each use preserves visibility and exact per-data purpose symbols. Source-only IDs
+are managed in the companion, and cumulative work/bytes bound expansion before
+copy. Old profiles stay closed. Whole RP-01/RP-03 test variants preserve expanded
+meaning; current benchmarks and the external-effects refusal stay fixed. General
+editing/export and real accessibility/user evidence remain open.
+
 ## API boundaries
 
 `Candidate::source_span` maps semantic diagnostic record paths to original

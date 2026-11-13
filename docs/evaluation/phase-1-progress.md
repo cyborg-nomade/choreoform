@@ -23,16 +23,22 @@ findings, bot skipped, no independent/human approval. No production syntax/libra
 core/source/schema/quota or old artifact/benchmark/history/generator/report bytes
 changed; full RP-08/general editing/export/visual/user evidence remains open.
 
-ADR-0083 selects explicit named data protection definitions first, without ambient
-defaults, permission widening or work/storage/endpoint sharing. Active
-`codex/named-data-protection` follows signed `c76073f`,
-[contract/implementation scope](0084-named-data-protection-plan.md). Publish/sign
-actual source0.17/companion0.16 grammar/profile/schema before compiler work; retain
-C12/IR0.4 for exact whole-case body/revision equivalence. Preserve explicit managed
-source-only identity, lexical references/use checks, old versions and cumulative
-expansion/output bounds. Prove genuine >=15% RP-03 byte reduction in new test variants
-without overwriting benchmarks. C13 source selection/type/service/predicate reuse
-remain separate. Current source0.16 and all semantic/concurrency gates remain fixed.
+Active `codex/named-data-protection` follows signed `c76073f` and
+[ADR-0084](../decisions/0084-named-data-protection.md), with exact grammar/profile /
+companion publication signed `f6dfe7e` before production implementation. Source 0.17 /
+companion 0.16 targets unchanged C12 / IR 0.4. Actual native test variants reduce
+RP-03 from 576759 to 448421 bytes (22.25%) with its exact current candidate/revision
+and legitimate concurrency refusal. RP-01 becomes 56059 bytes with exact expanded
+meaning after an explicit C12 baseline promotion of its current C11 profile.
+[Implementation evidence](0084-named-data-protection.md) records ten Rust/four
+independent Python groups for identity/purpose/visibility/unused definitions /
+formatting and cumulative expansion bounds. Final workspace 647 Rust + six
+compile-fail passes; full native/Wasm/Python verification, separate automated review,
+full comment audit and final-head CI/expected-head signed merge are required before
+integration. Current benchmark/history bytes stay fixed; adoption/archive has its
+own later signed scope. Type/service/predicate reuse, C13 source selection, general
+editing/export, protected accessible inspection/visual parity and actual user
+evidence remain open Phase 1 work. No full language or phase completion is claimed.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire

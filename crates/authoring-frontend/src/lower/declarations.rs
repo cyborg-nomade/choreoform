@@ -78,7 +78,7 @@ impl<'a, 's> Lower<'a, 's> {
         let mut record = json!({"parent":parent, "entry":self.r(interface, &id, "node", 0)?, "inputs":inputs, "outputs":outputs, "outcomes":set(outcomes), "cancellation":self.r(interface, &id, "policy", 1)?, "faults":self.r(interface, &id, "policy", 2)?, "closure":self.r(interface, &id, "policy", 3)?, "race":self.r(interface, &id, "policy", 4)?});
         if matches!(
             self.syntax.profile(),
-            "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0"
+            "0.10.0" | "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0"
         ) {
             record["faultInput"] = if let Some(binding) = tree.all("fault_entry").first() {
                 let history = self.r(binding, &id, "resource", 0)?;
@@ -95,7 +95,7 @@ impl<'a, 's> Lower<'a, 's> {
         }
         if matches!(
             self.syntax.profile(),
-            "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0"
+            "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0"
         ) {
             let mut requests = Map::new();
             if let Some(binding) = tree.all("retained_request").first() {
@@ -115,7 +115,8 @@ impl<'a, 's> Lower<'a, 's> {
             let node = declaration.first()?;
             match node.rule {
                 "scope" => self.scope(node, Some(&id), depth + 1)?,
-                "data" => self.data(node, &id)?,
+                "data" | "named_data" => self.data(node, &id)?,
+                "data_protection" => {}
                 "expression_declaration" => {
                     let expr = self.declare(node, Some(&id), "expression")?;
                     let ty = self.wrapped_type(node.one("type")?, &id)?;
@@ -152,15 +153,24 @@ impl<'a, 's> Lower<'a, 's> {
         let id = self.declare(tree, Some(scope), "data")?;
         let ty = self.wrapped_type(tree.one("type")?, scope)?;
         let reference_lists = tree.all("references");
-        let mut purposes = Vec::new();
-        for name in self.names(tree.one("names")?)? {
-            purposes.push(self.declared_symbol(&id, "purpose", &name)?.1);
-        }
-        if purposes.is_empty() {
-            return Err(error("data-purposes", self.syntax.span(tree)));
-        }
+        let named = tree.rule == "named_data";
+        // Preserve existing inline diagnostic order: purposes, invalidation,
+        // then protection references. The new form has no inline purpose list.
+        let purposes = if named {
+            None
+        } else {
+            Some(
+                self.protection_purposes(tree.one("names")?, &id)
+                    .map_err(|mut e| {
+                        if e.code == "data-purposes" {
+                            e.span = self.syntax.span(tree);
+                        }
+                        e
+                    })?,
+            )
+        };
         let invalidates = unique_set(
-            reference_lists[2]
+            reference_lists[if named { 0 } else { 2 }]
                 .all("reference")
                 .into_iter()
                 .map(|r| {
@@ -173,7 +183,14 @@ impl<'a, 's> Lower<'a, 's> {
                 })
                 .collect::<Result<Vec<_>>>()?,
         )?;
-        let mut record = json!({"scope":scope, "type":ty, "protection":{"policy":self.r(tree, scope, "policy", 0)?, "sensitivity":self.syntax.text(tree.all("NAME")[1])?, "purposes":set(purposes), "participants":self.references(reference_lists[0], scope, "actor")?, "capabilities":self.references(reference_lists[1], scope, "capability")?}, "invalidates":invalidates});
+        let protection = if named {
+            self.named_protection(tree, scope, &id)?
+        } else {
+            let purposes = purposes.expect("inline purposes");
+            json!({"policy":self.r(tree, scope, "policy", 0)?, "sensitivity":self.syntax.text(tree.all("NAME")[1])?, "purposes":purposes, "participants":self.references(reference_lists[0], scope, "actor")?, "capabilities":self.references(reference_lists[1], scope, "capability")?})
+        };
+        let mut record = json!({"scope":scope, "type":ty, "invalidates":invalidates});
+        record["protection"] = protection;
         if let Some(expr) = tree.all("expression").first() {
             let initial = self.slot(expr, &id, "initial", None)?;
             let ast = self.expression(expr, scope, false, 0)?;

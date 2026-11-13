@@ -8,7 +8,7 @@ mod template_audit;
 
 impl<'a, 's> Lower<'a, 's> {
     pub(super) fn dependencies(&mut self) -> Result<()> {
-        let mut dependency_work = 0;
+        let mut dependency_work = self.protection_work;
         let metadata_core = matches!(
             self.syntax.profile(),
             "0.6.0"
@@ -22,6 +22,7 @@ impl<'a, 's> Lower<'a, 's> {
                 | "0.14.0"
                 | "0.15.0"
                 | "0.16.0"
+                | "0.17.0"
         );
         let mut metadata = BTreeMap::new();
         let mut local = BTreeMap::new();
@@ -31,7 +32,7 @@ impl<'a, 's> Lower<'a, 's> {
         for (id, policy) in self.body["policies"].as_object().expect("map") {
             creation::charge(&mut dependency_work, 1)?;
             let p = &policy["body"];
-            if self.syntax.profile() == "0.16.0"
+            if matches!(self.syntax.profile(), "0.16.0" | "0.17.0")
                 && p["kind"] == "work"
                 && let Some(target) = p["compensates"].as_str()
             {
@@ -141,6 +142,7 @@ impl<'a, 's> Lower<'a, 's> {
                     | "0.14.0"
                     | "0.15.0"
                     | "0.16.0"
+                    | "0.17.0"
             ) {
                 &p["faultSource"]
             } else {

@@ -52,6 +52,10 @@ Selected examples, rather than a complete catalogue:
 | `reconciliation-context-unproved` | The unique reconciliation wait is outside the designated direct child. Inspect actual scope ownership rather than the effect policy's declaration location. |
 | `fault-routing-cycle-unproved` | The conservative active-handler graph cannot establish acyclicity. Inspect repeated selections and lexical propagation; retry eligibility does not bound emission. |
 | `reference-missing` | A name is unavailable in the relevant binding context. Check spelling, lexical visibility and explicit qualifiers; do not make child data public to satisfy an endpoint reference. |
+| `protection-purpose-bindings` | A data declaration's managed purpose set differs from its named protection definition. Reconcile the explicit purpose identities; do not invent a purpose from a caption. |
+| `protection-policy-kind` | A named protection definition must use a rule for protection. Inspect the definition's `Under` clause, including unused definitions. |
+| `protection-member-visibility` | A referenced protection member is unavailable where the data is declared. Inspect scope ownership; a definition cannot expose a private sibling actor, capability or policy. |
+| `size` / `work-limit` | Source, expansion, output or analysis exceeds its finite bound. Named wording may be short while its expanded data declarations are large. Failure supplies no partial candidate. |
 | `ledger-profile` / `package-profile` | The source and companion do not form a supported version pair. Check the selected profile, not just the JSON shape. |
 | `resource-missing-or-ambiguous` / `resource-digest` | Explicit matching resource bytes are absent/duplicated or have the wrong digest. A matching digest still supplies integrity rather than live authority. |
 | `budget` / `report-budget` | Analysis or report size exceeds its fixed quota. Isolate the definition/diagnostic; do not treat truncated or partial output as evidence. |

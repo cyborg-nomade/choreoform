@@ -3,6 +3,18 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.17 / companion 0.16 profile](profile-v0.17.md) adds explicit named
+complete data protection on unchanged C12 / IR 0.4. Each `Keep ... protected as ...`
+use expands to the same policy, sensitivity, purposes, participants and capabilities;
+there is no ambient default or permission grant. Source-only managed identities,
+per-data purpose identities and cumulative expansion/work/output bounds are checked.
+New test variants reduce RP-03 from 576759 to 448421 bytes (22.25%) with its exact
+current IR/revision and concurrency refusal. RP-01 becomes 56059 bytes; comparison
+uses an explicit C12 baseline promotion of its current C11 source. Current benchmark
+files stay fixed. See [the implementation evidence](../evaluation/0084-named-data-protection.md).
+Protected accessible inspection/editing, visual parity and actual user studies are
+still required before the near-English Phase 1 gate can close.
+
 The [source0.16 / companion0.15 profile](profile-v0.16.md) selects core0.12/IR0.4
 for purpose-only, exactly qualified prior-activity identity. Ordinary private values /
 outcomes/policies/control remain lexical and owned-source/live host gates stay fixed.
