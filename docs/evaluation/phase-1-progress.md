@@ -9,33 +9,33 @@
 
 ## Current focus
 
-[PR #96](https://github.com/cyborg-nomade/choreoform/pull/96) merged core0.13 raw
-interference selection as `c0ab0c0b66874490f932780ad1ccbab7b85975ec`, after exact-head CI `43242066147` at
-`bdbe6c72a02a70a8c6a39bda70fff8465d4fc774` and automated COMMENT review/fresh full audit
-`5876581681`. Signed critique `e7899c6` precedes publication `7d40c79` of exact core
-`sha256:dd8667135d1c801683d48d8410867b37d5d6f71c7016b8b716016bce92e77428`.
-IR0.4 capability-contract wrappers under C13 require interference:null|Ref; all
-wrappers of one exact provider must agree. Selected descriptor/provider and typed
-transitive resources validate; raw static metadata ties each selected wrapper to
-the definition revision. Existing scoped protection remains mandatory before shared
-metadata use. Twelve SDK/four Python groups validate closure/revision/unknown /
-conflicting/null/foreign/unused/inherited/private/cache controls and a derived
-whole RP-03 variant: earlier checks pass, actual start_acceptance concurrency still
-refuses. Current source0.16/companion0.15 remain C12 and reject C13 at contract-pin.
-All local/CI 628 Rust + six compile-fail/native/Wasm/77 Python commands pass; bot
-skipped, no independent/human approval. No generic proof, live evaluator, canonical
-mapping, source/wire upgrade or current artifact/benchmark/history/generator/report
-byte change. Parent #46 remains draft.
+[PR #97](https://github.com/cyborg-nomade/choreoform/pull/97) merged the actual
+request-region premise audit as `7f26305021e28b8598582ac1a02a0888891d65c0`, after exact-head CI `43247994354` at
+`c00f708e37336055cc62711f89a25e67260833fe` and automated COMMENT review/fresh full audit
+`5877161955`. Signed evidence/critique `d3ce784` precedes ADR-0082 direction.
+Five SDK/four Python groups trace actual request/invoke/retention/capture identities
+and validate mathematical type counterexamples using unchanged real resources:
+raw inequality does not establish physical non-aliasing; a warehouse permutation
+across two type-valid revisions refutes cross-revision input-type disequality;
+both original and changed complete requests may type-check while remaining different.
+These are NOT accepted edits/requests, actual authority/host mappings or a witness
+of admissibly overlapping execution. Exact P3/P4/P6/invalidation/ownership/terminal
+rules remain mandatory. The roadmap keeps canonicalization/original snapshot /
+all admissible revised/surviving work and aggregate executable-IR gates open.
+All local/CI 633 Rust + six compile-fail/native/Wasm/78 Python commands pass; no
+remaining actionable automated findings, bot skipped, no independent/human approval.
+No production/profile/source/schema/contract/benchmark/history/generator/report
+bytes change; current effectful refusal stays exact. Parent #46 remains draft.
 
-Active `codex/request-region-proof-audit` follows signed `2026bd7`,
-[original-request prerequisite scope](0082-request-region-proof-audit-plan.md).
-Trace actual request construction/retention/typed selectors and provider/recovery
-footprints, inspect exact P3/P4/P6/invalidation/replacement/lifetime rules, and separate
-within-snapshot raw inequality from physical aliases and cross-revision/surviving
-work. Use bounded actual V1/V2 mathematical checks without inventing accepted
-requests/events/overlap/registered authority/host enforcement. Record critique /
-ADR direction before any new contract/proof/source acceptance. Preserve legitimate
-refusal and progress independent Phase 1 work where premises remain unavailable.
+Active `codex/near-english-factoring-critique` follows signed `b81edda`,
+[Phase 1 authoring scope](0083-near-english-factoring-critique-plan.md). Measure actual
+whole-process repetition; compare controlled-English names/blocks/library/layout
+options before changing syntax. Preserve exact identities, lexical privacy, unique
+work/endpoints/retention/compensation and pinned provider recipient claims. Any
+inactive probe must distinguish paper examples from actual expanded/lowered evidence;
+no generated user feedback. Source/core/companion changes need a separately signed
+implementation scope. Keep near-English, protected accessible editing, visual parity
+and actual representative-user evidence in Phase 1; no parser quota substitute.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
@@ -1833,6 +1833,19 @@ generic concurrency proof. Old artifacts/current/historical benchmarks/generator
 reports remain exact. Signed `2026bd7` freezes actual request-region proof premise
 audit82, with no new acceptance or manufactured external evidence. All unproved
 Phase 1 gates remain open; draft #46 stays unmerged to main, no Phase 2.
+
+PR #97 merged the actual request-region proof critique as `7f26305021e28b8598582ac1a02a0888891d65c0` after
+final-head CI `43247994354` and automated COMMENT review/fresh full audit
+`5877161955`. Signed evidence `d3ce784` precedes ADR-0082: preserve legitimate
+refusal and canonicalization/provenance/admissibility prerequisites, then progress
+independent near-English factoring critique. Five SDK/four Python groups inspect
+real declarations and mathematical V1/V2 values, not accepted requests, host
+registrations or a permitted overlap trace. All 633 Rust + six compile-fail /
+native/Wasm/78 Python commands pass; bot skipped, no independent/human approval.
+No production/old accepted artifact/current/historical benchmark/generator/report
+bytes change; aggregate gate stays unchecked. Signed `b81edda` freezes actual
+factoring measurements/options/inactive evaluation before any syntax change.
+No external blocker or Phase 2 while independent Phase 1 work remains.
 
 ## Honest exit accounting
 

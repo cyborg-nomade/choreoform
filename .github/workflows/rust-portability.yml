@@ -119,4 +119,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_external_interference_resources.py
           .tools/ir-check/bin/python tools/check_interference_definition_binding.py
           .tools/ir-check/bin/python tools/check_request_region_audit.py
+          .tools/ir-check/bin/python tools/check_near_english_factoring.py
       # Browser execution is a separate manual evidence step, not implied by CI.
