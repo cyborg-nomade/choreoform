@@ -8,6 +8,7 @@ const GRAMMAR: &str = include_str!("../../../docs/authoring/candidate-a.ebnf");
 const GRAMMAR_V3: &str = include_str!("../../../docs/authoring/candidate-a-v0.3.ebnf");
 const GRAMMAR_V7: &str = include_str!("../../../docs/authoring/candidate-a-v0.7.ebnf");
 const GRAMMAR_V8: &str = include_str!("../../../docs/authoring/candidate-a-v0.8.ebnf");
+const GRAMMAR_V17: &str = include_str!("../../../docs/authoring/candidate-a-v0.17.ebnf");
 const GRAMMAR_V16: &str = include_str!("../../../docs/authoring/candidate-a-v0.16.ebnf");
 const GRAMMAR_V15: &str = include_str!("../../../docs/authoring/candidate-a-v0.15.ebnf");
 const GRAMMAR_V14: &str = include_str!("../../../docs/authoring/candidate-a-v0.14.ebnf");
@@ -284,9 +285,10 @@ fn lex(source: &str, program: bool) -> Result<Vec<Token>> {
                     | "0.14.0"
                     | "0.15.0"
                     | "0.16.0"
+                    | "0.17.0"
             )
         {
-            token_limit = if matches!(tokens[2].value.as_str(), "0.15.0" | "0.16.0") {
+            token_limit = if matches!(tokens[2].value.as_str(), "0.15.0" | "0.16.0" | "0.17.0") {
                 V15_TOKENS
             } else {
                 V5_TOKENS
@@ -403,8 +405,11 @@ fn grammar(profile: &str) -> &'static Grammar {
     static COMPILED_V13: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V14: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V15: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V17: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V16: OnceLock<Grammar> = OnceLock::new();
-    let (cache, source) = if profile == "0.16.0" {
+    let (cache, source) = if profile == "0.17.0" {
+        (&COMPILED_V17, GRAMMAR_V17)
+    } else if profile == "0.16.0" {
         (&COMPILED_V16, GRAMMAR_V16)
     } else if profile == "0.15.0" {
         (&COMPILED_V15, GRAMMAR_V15)
@@ -607,6 +612,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
             Some("0.14.0") => "0.14.0",
             Some("0.15.0") => "0.15.0",
             Some("0.16.0") => "0.16.0",
+            Some("0.17.0") => "0.17.0",
             _ => return Err(error("profile", 0..source.len())),
         }
     } else {
@@ -636,6 +642,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
                 | "0.14.0"
                 | "0.15.0"
                 | "0.16.0"
+                | "0.17.0"
         ) {
             V5_WORK
         } else {
@@ -673,6 +680,7 @@ mod capacity_tests {
             ("0.14.0", V5_TOKENS),
             ("0.15.0", V15_TOKENS),
             ("0.16.0", V15_TOKENS),
+            ("0.17.0", V15_TOKENS),
         ] {
             let source = format!(
                 "Choreoform authoring \"{profile}\". {}",

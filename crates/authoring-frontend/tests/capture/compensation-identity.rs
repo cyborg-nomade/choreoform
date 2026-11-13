@@ -117,7 +117,7 @@ fn explicit_pair_core_every_base_and_future_header_are_required() {
         );
     }
     assert_eq!(
-        parse(f.source.replacen("0.16.0", "0.17.0", 1).as_bytes())
+        parse(f.source.replacen("0.16.0", "0.18.0", 1).as_bytes())
             .unwrap_err()
             .code,
         "profile"

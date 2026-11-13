@@ -108,6 +108,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0081](0081-interference-definition-binding.md) | Accepted under delegation; pending parent/main integration | Select exact provider descriptors explicitly without proving concurrency |
 | [0082](0082-request-region-proof-direction.md) | Accepted under delegation; pending parent/main integration | Preserve unproved region safety and progress independent near-English factoring |
 | [0083](0083-near-english-factoring-direction.md) | Accepted under delegation; direction only, pending parent/main integration | Factor explicit data protection before scoped work reuse |
+| [0084](0084-named-data-protection.md) | Accepted under delegation; pending parent/main integration | Explicit named data protection with unchanged expanded semantics |
 
 ## When an ADR is required
 

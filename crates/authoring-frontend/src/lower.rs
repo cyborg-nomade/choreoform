@@ -241,7 +241,11 @@ impl<'a> Package<'a> {
         self.ledger.verify_resources(resources)?;
         let mut lowering = Lower::new(&self.syntax, &self.ledger, resources)?;
         let root = self.syntax.tree().one("process")?;
+        if self.syntax.profile() == "0.17.0" {
+            lowering.collect_protections(root, None, 0)?;
+        }
         lowering.scope(root, None, 0)?;
+        lowering.validate_protections()?;
         lowering.resolve_waits()?;
         for (tree, scope) in std::mem::take(&mut lowering.pending_steps) {
             lowering.step(tree, &scope)?;
@@ -258,7 +262,7 @@ impl<'a> Package<'a> {
         let envelope = DefinitionEnvelope::from_parts_versioned(
             if matches!(
                 self.syntax.profile(),
-                "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0"
+                "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0"
             ) {
                 "0.4.0"
             } else if self.syntax.profile() == "0.10.0" {
@@ -291,6 +295,7 @@ mod expressions;
 mod graph;
 mod nodes;
 mod policies;
+mod protection;
 mod wait_endpoints;
 use expressions::ast_reads;
 
@@ -311,6 +316,10 @@ struct Lower<'a, 's> {
     wait_owners: BTreeMap<String, String>,
     pending_waits: Vec<(&'a Tree, String, String)>,
     exported_endpoints: Vec<(String, String, String, std::ops::Range<usize>)>,
+    protections: BTreeMap<String, protection::ResolvedProtection>,
+    protection_work: usize,
+    expansion_bytes: usize,
+    record_bytes: usize,
 }
 
 fn set(items: impl IntoIterator<Item = String>) -> Value {
@@ -445,9 +454,21 @@ impl<'a, 's> Lower<'a, 's> {
             wait_owners: BTreeMap::new(),
             pending_waits: Vec::new(),
             exported_endpoints: Vec::new(),
+            protections: BTreeMap::new(),
+            protection_work: 0,
+            expansion_bytes: 0,
+            record_bytes: 0,
         })
     }
     fn put(&mut self, section: &str, id: String, record: Value) -> Result<()> {
+        if self.syntax.profile() == "0.17.0" {
+            let bytes = protection::encoded_size(&record)?;
+            self.record_bytes = self
+                .record_bytes
+                .checked_add(bytes)
+                .filter(|n| *n <= crate::MAX_BYTES)
+                .ok_or_else(|| error("size", self.spans.get(&id).cloned().unwrap_or(0..0)))?;
+        }
         insert(
             self.body
                 .get_mut(section)
