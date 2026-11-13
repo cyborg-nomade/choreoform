@@ -47,14 +47,17 @@ class AllJoinHistoryEvidence(unittest.TestCase):
 
 
     def test_complete_adoption_adds_only_the_real_advised_links_and_preserves_old_claims(self):
-        from check_rp03_package import package as current,instance_checkpoint_package,load,BASE
+        from check_rp03_package import pre_factoring_package as current,instance_checkpoint_package,load,BASE
         from benchmarks.rp03_instance_checkpoint import artifacts
+        # This is the original invalidation adoption, before source-only type /
+        # protection rows were introduced. Keep its companion/resource equality
+        # assertion exact; current factoring has separate byte-identical IR tests.
         old=instance_checkpoint_package();new=current()
         before=self.checked(old);after=self.checked(new)
         advice=self.checked(old,'invalidation-requirements')
         self.assertEqual(len(advice['requiredInvalidationObligations']),312)
         self.assertEqual(len(advice['missingInvalidationObligations']),278)
-        manifest=load(BASE/'manifest.json')
+        manifest=load(BASE/'history/source-0.16-before-factoring/manifest.json')
         self.assertEqual(manifest['invalidationAdoption']['basisRevision'],before['revision'])
         self.assertEqual(manifest['invalidationAdoption']['added'],advice['missingInvalidationObligations'])
         expected=deepcopy(before)

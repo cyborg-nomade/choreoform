@@ -111,6 +111,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0084](0084-named-data-protection.md) | Accepted under delegation; pending parent/main integration | Explicit named data protection with unchanged expanded semantics |
 | [0085](0085-transparent-type-naming-direction.md) | Accepted under delegation; direction only, pending integration | Prefer explicit transparent type names before parameterized reuse |
 | [0086](0086-local-type-names.md) | Accepted under delegation; pending integration | Explicit local type descriptions with bounded transparent expansion |
+| [0087](0087-rp03-factored-authoring.md) | Accepted under delegation; pending integration | Adopt factored RP-03 source with an exact pre-adoption archive |
 
 ## When an ADR is required
 

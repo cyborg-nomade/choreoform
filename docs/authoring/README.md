@@ -3,6 +3,15 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The actual current [RP-03 package](../benchmarks/rp03/README.md) adopts source 0.18 /
+companion 0.17 on unchanged C12/IR0.4 with domain-named protection and instruction
+types: 410752 UTF-8 bytes / 66783 native tokens / 840430 parser visits, 28.78% below
+its original 576759 bytes. Complete canonical IR, reports, resources, receipts and
+guards remain byte-identical; only source/package metadata and source spans change.
+The exact old package is archived before code under [ADR-0087](../decisions/0087-rp03-factored-authoring.md).
+This is actual native adoption, not user evidence or semantic/concurrency admission.
+RP-01's current files still use their earlier profile; adoption remains separate.
+
 The [source 0.18 / companion 0.17 profile](profile-v0.18.md) adds explicit local
 transparent type descriptions on unchanged C12 / IR 0.4. `Describe type ... as ...`
 and `type ...` uses preserve the complete existing type, including nested nominal

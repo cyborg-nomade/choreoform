@@ -1,106 +1,53 @@
 <!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# RP-03 whole two-line source draft
+# RP-03: factored two-line order draft
 
-This is fictional language-design material, **not an admitted or executable order**.
-The complete caller-local proposal is 576,759 UTF-8 bytes / 84,051 tokens.
-Existing source0.16/companion0.15/core0.12/IR0.4 are selected explicitly. The real
-full source now emits canonical IR and passes static, control, protection and strict invalidation
-checks, plus a separate non-authorizing invalidation advisory. Its revision is `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`;
-the canonical wire digest is `sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4`.
-The six remaining checking views refuse `parallel-effects-unproved` at
-start_acceptance, source bytes109844..110031. Five actual partial/advisory reports
-are emitted; they remain non-executable. The exact fixed all-join proof preserves
-original historical protection labels and live ancestor dependencies. It does not
-settle effects, authorize capture or prove arbitrary concurrent/owned work.
+This fictional bounded package uses source **0.18** / companion **0.17** on unchanged
+core **0.12** / IR **0.4**. Explicit **Order information** protection and **Order
+instruction** type descriptions replace repeated complete clauses without changing
+any semantic ID, type/protection value, provider pin, guard or receipt meaning.
+The finite fixture producer is not a general editor, exporter or runtime.
 
-All 26 invoke and seven split-child relationships have matching direct parents.
-There are 25 local service/capability/effect/wait instances for 23 operations;
-normal/settlement release A/B have distinct bodies and logical capabilities.
-Typed request/result ports, per-instance capture/readonly request storage and exact
-qualified compensation/endpoint references are retained. The explicit fictional
-provider/clock recipient circle adds only the two settlement release capabilities;
-matching source descriptor revisions change accordingly. This is neither actual
-provider consent nor runtime occurrence/compensation eligibility. Local requests
-invalidate their activities; Original order invalidates all 29 constructed
-request-dependent capability/human decisions. The actual current advisory identifies 312 ordinary obligations and 849
-historical-origin rows; 278 precise missing links were added while preserving every
-old link. Forty-five invalidation nodes remain uncovered. Only exact closed fixed
-all-join branches with no nonlocal writer and no inherited live instance are refined;
-partial/dynamic/composite contexts remain conservative. See ADR-0077.
+Actual native parsing/lowering verifies **410752 UTF-8 bytes / 66783 tokens /
+840430 parser visits**, versus 576759 / 84051 before factoring: **28.78% fewer source
+bytes**. Whole-program native recognition remains within the unchanged 1M parser
+work / 131072 tokens / 1 MiB limits. Real native formatting/reparse preserves the exact
+complete canonical candidate, byte-identical to the pre-factoring C12 package:
 
-The [full instance checkpoint](history/source-0.16-instances/README.md) preserves
-all 121 generated #91 artifacts and its then-current inherited-context refusal.
-Those signed observations are verified immutable inputs; the refined current
-checker is not claimed to reproduce the old semantic refusal. The original source /
-IR/resources/three reports remain there with their exact old hashes.
+- Revision: `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`.
+- Wire digest: `sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4`.
+- Source: `sha256:2e2be8154b94791d5af9e5e77c87895d205e2455af37063e66b98efbcb645695`.
+- Canonical companion: `sha256:6e0274d9c2fff47cbf1fecdda9fd8920dd5ada6e647a457d34b6e2c0af52cfbe`.
+- Joint package: `sha256:21d5c4c815ea3139e10f35e47cd6509f5a1c0761800881a96810738188ad24a0`.
 
-The [pre-instance source0.16 archive](history/source-0.16-pre-instances/README.md)
-retains all 113 prior generated files, their exact child-template refusal and the
-previous explanatory README. The [original source0.14 archive](history/source-0.14/README.md)
-also remains exact, including its quota refusal and inconsistent caption. Historical
-loaders resolve benchmark-local resources within the selected archive, preserving
-old byte pins after current fictional claims change. Profiles/contracts/quotas stay
-fixed. ADR-0076 records caller-local adoption; ADR-0077 records the bounded production
-all-join proof refinement. The real source pipeline produces the current candidate.
+Static, control, protection and strict invalidation checks plus advisory pass;
+all five emitted report files are byte-identical. Strict invalidation has 312
+required obligations, 0 missing, 849 historical origins, 45 uncovered and 34 analyzed
+nodes. These are separate declared coverage sets. Six later views still refuse
+`parallel-effects-unproved` at `/body/nodes/start_acceptance`, now measured source
+bytes 72263..72450. Opaque external effectfulness is not made independent by readable
+names, guarded true, provider descriptors or a smaller source.
 
-The [frozen plan](../../evaluation/0067-rp03-package-plan.md),
-[ADR-0067](../../decisions/0067-rp03-package-draft.md) and
-[evidence](../../evaluation/0067-rp03-package-draft.md) preserve the
-[original A–D brief](../../representative-processes/03-ecommerce-order-fulfillment.md).
-This is a fixed two-line/different-warehouse variant, not arbitrary fan-out output
-aggregation. Source contains parallel reservation/authorization and explicit joins,
-explicitly opted-in partial-stock customer choice, pack/label/handover and separate delivery branches,
-allowed capture, stock-failure release/void and surviving stop/intercept/refund /
-accountable exception handling. Each line has its own typed pending/fulfilled /
-cancelled/exception disposition. Requested effects, confirmed business results,
-unknown provider states and physical handover/delivery remain different.
+All 25 logical service/capability/effect/wait instances remain distinct, with 26
+invocations and 7 split children. Immutable resource payloads, 23 provider contracts and 23
+terminal sources, exact contextual request/retention/capture/compensation links,
+22 pure receipt cases and 8 pure guard cases remain unchanged. Three receipt cases
+are true / 19 false; they are synthetic declaration inputs, not accepted provider
+observations, actual duplicate suppression or a process trace. None is not no-effect.
 
-The 23 provider contracts and terminal-source descriptors have separate exact
-identities. Reservation/authorization/capture/void/refund, warehouse, carrier and
-notification work are distinct effects. Stable technical keys stay per logical
-effect; compensation links prior activity declarations and is new separately
-authorized work, never erasure. The fictional order contains line revisions,
-quantities, amount/currency and warehouse identities plus contact/address/payment /
-terms/pricing references. The default separate-shipment variant releases/voids after stock failure; partial
-fulfillment requires an explicit original opt-in and a new customer decision.
-No real contact, address, payment or operational data.
-Reference digest strings are synthetic claims, not verified external artifacts.
+The exact old current 126-file source 0.16 package was signed as `b8d73a7` **before**
+adoption code in [this archive](history/source-0.16-before-factoring/ARCHIVE.md).
+Every old file, including its original README, is preserved byte-for-byte; earlier
+source 0.14, pre-instance and instance checkpoints remain untouched. Historical
+loaders resolve local resources inside their own archive and distinguish then-
+current observations from present rechecking. Source profile promotion does not
+rewrite those observations or their links/pins.
 
-Receipts distinguish command receipt from optional operation subject reference and
-bind operation/phase, order/target/input revisions, amount/currency, quantity /
-warehouse, basis and address revision to the exact instruction. Typed pure negatives
-reject mismatches. Clock metadata and explicit packing/handover/authorization
-windows use the pinned instance clock; actual domain registration, valid expiry
-facts, current authority and atomic timing remain host obligations. A shipment request
-is not handover or delivery. Unknown never becomes a successful ordinary port value.
-
-Surviving entry first asks for an attributable recovery direction; entry alone is
-not a cancellation request or dispatch grant. Positive stop evidence is needed for
-reservation release. Refund requires matched positive capture amount and positive
-interception of its confirmed committed lines. Missing records do not prove absence. Known operation receipts are explicit recovery /
-exception inputs; that partial view is not an accepted live obligation ledger.
-A possible capture with no confirmed result does not authorize a fresh void. Any
-unresolved void, residual authorization, physical or financial obligation remains
-for accountable review. An ownership claim or local finish is not accepted receiver
-handoff or all-obligation settlement. Ordinary cancellation is never cleared and a
-failed parent is never resumed.
-
-The broad fictional fulfillment recipient circle is explicit, not least-privilege
-or protected-editor evidence. Root-settlement ancestor retention, actual exceptional
-contexts, physical races, capture/refund eligibility, complete invalidation/flow /
-protection/lifetime judgments, duplicate ledger behavior and all-transitive settlement
-are still unproved. In particular, no live duplicate event or suppressed second
-transition is demonstrated. All four scenarios/all forty corpus scenarios remain
-Partial. Full validation, RP-08, general near-English/protected accessible text/visual
-editing and real users/hosts/browsers/independent review/Phase 1 exits remain open.
-
-Regenerate with `.tools/ir-check/bin/python tools/build_rp03_benchmark.py`; `--check`
-compares exact bytes. The controlled assembler uses explicit IDs and is not a general
-editor/exporter/runtime. Independent resource/value and pure E1 receipt/recovery-guard checks do not
-admit this full source. Next audit actual parallel-effects-unproved at the acceptance split against
-its real concurrent effects/guard/closure contract before selecting a compatible
-proof or a separate semantic dependency. No conflict/lifetime/permission bypass.
-Near-English factoring/managed identity/protected accessible text/visual editing
-and real representative users remain explicit Phase 1 deliverables.
+All RP-03 scenarios remain **Partial**. Reports are non-executable declarations,
+not real permission, physical warehouse independence, authenticated current values,
+accepted original snapshots, surviving-work provenance, host execution or completed
+Phase 1. Canonicalization/physical aliases and admissible revised-surviving overlap,
+full validator/near-English/reusable receipt/work/managed protected accessible
+text-visual/RP-08/actual user and independent evidence remain open. No Phase 2.
+See [ADR-0087](../../decisions/0087-rp03-factored-authoring.md) for adoption authority.

@@ -54,7 +54,7 @@ class ParallelEffectsAuditEvidence(unittest.TestCase):
         for stage in STAGES[:5]:self.assertIs(self.checked(p,stage)['executable'],False)
         for stage in STAGES[5:]:
             r=invoke(p,stage);self.assertEqual(r.returncode,1);self.assertEqual(r.stdout,b'')
-            self.assertEqual(r.stderr.strip(),b'parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 109844..110031')
+            self.assertEqual(r.stderr.strip(),b'parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450')
         provider_fields={'kind','version','id','input','output','outcomes','resultProtection','observations','idempotency','effectClass'}
         providers=[doc for identity,_,raw in p[2] if identity.startswith('urn:choreoform:benchmarks:rp03:') for doc in [json.loads(raw)] if doc.get('kind')=='provider-contract']
         self.assertEqual(len(providers),24)
