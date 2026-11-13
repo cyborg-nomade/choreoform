@@ -33,12 +33,21 @@ and [evidence](0087-rp03-factored-authoring.md) record the complete limits.
 
 Active `codex/rp01-factored-authoring` follows signed
 `7604997c7cd2e566ec252070748118a475e8ebc9`,
-[scope88](0088-rp01-factored-authoring-plan.md). Archive/sign the exact 113 current
-RP-01 files before adoption code. Then explicitly adopt source0.18/companion0.17
+[scope88](0088-rp01-factored-authoring-plan.md). Archive/sign the exact current RP-01 files before adoption code (59 current
+plus54 prior history,113 total; corrected in scope88 before code). Then explicitly adopt source0.18/companion0.17
 and C12/IR0.4 through its finite producer, preserving all existing archives and
 adopted RP-03. Unlike RP-03, this includes C11-to-C12 core promotion: old/new full
 candidate revisions and reports must change honestly, while all other semantic
 body fields and immutable provider/guard/receipt/launch payloads stay exact.
+
+Working adoption is not integrated yet: signed archive `2fd3cd2` preserves all59
+current files before code and leaves54 older files exact. [ADR-0088](../decisions/0088-rp01-factored-authoring.md)
+and [evidence](0088-rp01-factored-authoring.md) record 55453 bytes/9455 tokens,
+9.41% below61211, with only explicit core pin/revision deltas. All eleven actual
+source views pass; focused current/archive/legacy/identity/protection/type and
+negative mutations pass. Local660 Rust+six compile-fail/native/Wasm/all83 Python commands pass; missing
+C12 guard-fixture input and duplicate-recipient refusal are fixed and checked.
+Required final-head CI/separate review/full comment audit/signed merge remain necessary. The full adopted RP-03 tree stays exact.
 
 Parent #46 stays draft, all 40 scenarios Partial and G1–G4 conditional. C13 source
 selection, reusable receipt/work/predicate language, full RP-08, protected

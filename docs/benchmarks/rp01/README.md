@@ -1,55 +1,51 @@
 <!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# RP-01 typed late-capture checkpoint
+# RP-01 factored authoring and typed late capture
 
-This synthetic whole-source package is **candidate IR**, **not semantically admitted
-or executable**. Source 0.14/companion 0.13 explicitly selects existing core 0.11 /
-IR 0.4 under [ADR-0066](../../decisions/0066-rp01-capture-adoption.md) and its
-[frozen plan](../../evaluation/0066-rp01-capture-adoption-plan.md). The manifest
-records eleven actual checking/advisory views and their report digests. All four
-[original scenarios](../../representative-processes/01-expense-reimbursement.md)
-remain Partial. No provider, host/browser/user or independent execution evidence.
+This synthetic whole-case package is **candidate IR, non-executable**, with all
+four [original scenarios](../../representative-processes/01-expense-reimbursement.md)
+Partial. [ADR-0088](../../decisions/0088-rp01-factored-authoring.md) adopts source0.18 /
+companion0.17/core0.12/IR0.4 after preserving all59 previous current files exactly
+in [the source0.14 archive](history/source-0.14-before-factoring/ARCHIVE.md). All54
+older [source0.7 history files](history/source-0.7/README.md) remain unchanged.
 
-Source is 61211 UTF-8 bytes / 10223 measured
-tokens. Revision: `sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285`. The exact generated
-[historical checkpoint](history/source-0.7/README.md) retains source 0.7/core 0.4 /
-IR 0.1 and its original ten-view evidence. Original provider/type/clock/policy/input /
-fault-source bytes and ordinary guards are unchanged; current candidate identity
-and report/package digests are explicitly regenerated. All 44 guard cases / 46
-values / expectations are preserved with only their candidate binding repinned.
+**Expense information** names the complete shared protection; **Payable instruction**
+names the exact payment input record. Data/purpose/work IDs, expanded types,
+protection sets and immutable resources remain exact. Current source is55453 UTF-8
+bytes/9455 tokens, 9.41% smaller than61211 bytes. This is measured file reduction,
+not actual user comprehension or accessibility evidence. Native format/reparse
+and all eleven checking/advisory views pass within unchanged limits.
 
-The payment wait now captures an exact typed terminal envelope in its local recovery
-body. The new terminal-source descriptor pins the unchanged payment provider and
-accepted normalization profile. The exact accepted original request is a separate
-readonly seed. The local classifier reuses the original payment completion predicate,
-substituting only captured confirmed payload and retained original request; it checks
-claim identity, revision, amount and currency. A paid tag alone is insufficient.
-Mismatches record mismatched-evidence and preserve the capture for accountable
-conflict review. Definitive noeffect/rejected/cancelled remain distinct; unknown /
-acknowledged stay pending. Neither matched receipt nor no-effect text grants retry
-or a new dispatch; new business work is not a technical retry.
+The previous checkpoint selected C11. This one **explicitly promotes to C12**,
+so the semantic revision is now
+`sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829`,
+canonical wire
+`sha256:d96b6398e6856a1e34916046a6ca61ee0e09339f59c5c3664c524a5b43a801de`.
+Only the core dialect and revision differ in expanded IR. Reports change only
+at explicit revision-attribution pointers; see [evidence](../../evaluation/0088-rp01-factored-authoring.md).
+The44-case/46-value guard catalogue changes only its two candidate pins.
 
-The new capture/request/category keep the same Expense access/purpose/participant /
-capability envelope. Ordinary ports and ancestor current_claim dependencies remain.
-Reports disclose separate conditional flat owned proof and retained-request scope;
-legacy reconciliation coverage leaves the retained-seed body uncovered. The other
-two surviving declarations remain isolated. No value is copied from a live ancestor
-into recovery, no ordinary parent result is written/resumed, and cancellation is
-never cleared. Local finish/mismatch text does not settle a conflict. Required
-protection provenance contains labels, not live storage or authority.
+Payment recovery retains the exact original request readonly and captures typed
+terminal evidence locally. Its receipt classifier checks claim identity/revision,
+amount and currency; mismatches remain evidence for accountable review. Unknown /
+acknowledged remain pending. Ordinary approval/current-policy/withdrawal guards,
+original fault binding and stable-key no-effect technical retry remain exact.
+Two other follow-ups stay isolated. Conditional flat proof supplies protection
+labels, not live ancestor values; legacy coverage leaves the retained-seed body
+uncovered. Capture/local finish text supplies no retry, accepted effect or settlement.
 
-All actual provider truth/normalization/correlation/current authority/immutable
-request and capture storage/P6 cutoff/receiver acceptance/atomic handoff/transitive
-settlement requirements in the [host contract](host-contract.md) remain open.
-The stable-key confirmed-no-effect fault-source retry and ordinary approval/policy /
-withdrawal guards are preserved. Fictional input ports are not accepted observations;
-broadly shared fictional recipients do not demonstrate least privilege or protected
-accessible editing. Sequential checks and omitted optional business-calendar reminders
-remain the same first variant. General tool-managed near-English/text-visual editing,
-complete validator/RP-01/03/08 and all Phase 1 exit gates remain open.
+All [host contract](host-contract.md) obligations remain: actual provider truth,
+normalization/correlation, current authority, immutable request/capture lifetime,
+P6 cutoff/receiver acceptance/atomic handoff/transitive settlement and contradictory
+evidence handling. No live host/browser/independent/user evidence is claimed.
+Fictional shared recipients do not demonstrate least privilege. Sequential checks
+and omitted optional calendar reminders remain the same first variant. General
+protected accessible editing/export/text-visual, complete validator/RP-01/03/08,
+representative users, G1–G4 and all Phase1 exit gates remain open.
 
-Build the pinned native frontend, then regenerate with
-`.tools/ir-check/bin/python tools/build_rp01_benchmark.py`; `--check` compares exact
-bytes including the historical checkpoint. The controlled assembler has explicit
-stable IDs and is not a general IR exporter, editor or automatic migration.
+Build the pinned native frontend, then use
+`.tools/ir-check/bin/python tools/build_rp01_benchmark.py --check` to reproduce
+current and all historical bytes. `--probe-profile` also replays old profile
+refusals. The finite fixture producer uses explicit stable IDs and retains its old
+inline/default mode; it is not an arbitrary IR exporter or authoring editor.

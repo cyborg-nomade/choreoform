@@ -16,7 +16,6 @@ from check_metadata_authoring import invoke
 from check_static_contracts import ROOT
 from check_rp01_guard_snapshots import leaves
 
-# Explicit historical fixture; current adoption is checked by check_rp01_capture_checkpoint.
 BASE = ROOT/'docs/benchmarks/rp01'
 HISTORY = BASE/'history/source-0.7'
 
@@ -139,18 +138,23 @@ class Rp01CaptureCheckpoint(unittest.TestCase):
                 raw = encoded(d); revision='sha256:'+sha256(raw).hexdigest(); r[index]=(d['id'],revision,raw)
                 next(row for row in l['resources'] if row['binding']=='payment_terminal_binding')['digest']=revision
             elif change=='request':
+                self.assertEqual(s.count('Retain the original request from "Request Payment" and record in "Original payment request".'),1)
+                before=s
                 s=s.replace('Retain the original request from "Request Payment" and record in "Original payment request".', 'Retain the original request from "Request Payment" and record in "Late payment evidence".')
             else:
                 start=s.index('Keep "Original payment request"'); end=s.index('End data.',start)
+                before=s
+                self.assertEqual(s[start:end].count('Invalidate ["Observe Payment", "Classify late payment", "Finish Payment recovery"].'),1)
                 s=s[:start]+s[start:end].replace('Invalidate ["Observe Payment", "Classify late payment", "Finish Payment recovery"].','Invalidate empty.')+s[end:]
+            if change!='provider':self.assertNotEqual(s,before)
             result=invoke((s,l,r),stage)
             self.assertEqual(result.returncode,1,(change,result.stderr));self.assertEqual(result.stdout,b'');self.assertIn(code,result.stderr)
 
     def test_current_wire_profile_integrity_format_cycle_and_budgets_are_explicit(self):
         p=package(); m=load(BASE/'manifest.json'); candidate=load(BASE/'candidate.ir.json')
-        self.assertEqual((p[1]['profile'],p[1]['version'],m['coreProfile'],candidate['version']), ('0.14.0','0.13.0','0.11.0','0.4.0'))
+        self.assertEqual((p[1]['profile'],p[1]['version'],m['coreProfile'],candidate['version']), ('0.18.0','0.17.0','0.12.0','0.4.0'))
         jsonschema.Draft202012Validator(load(ROOT/'schemas/ir/definition-0.4.schema.json')).validate(candidate)
-        self.assertEqual((len(p[0].encode()),len(grammar.lex(p[0]))), (61211,10223))
+        self.assertEqual((len(p[0].encode()),len(grammar.lex(p[0]))), (55453,9455))
         self.assertLess(len(grammar.lex(p[0])),16384)
         for key,value in grammar.package_digests(p[0].encode(), (BASE/'bindings.json').read_bytes()).items(): self.assertEqual(value,m[key+'Digest'])
         result=invoke(p,'format');self.assertEqual(result.returncode,0,result.stderr)

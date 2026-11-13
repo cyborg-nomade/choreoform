@@ -74,6 +74,7 @@ impl Fixture {
             (crate::CORE_V9,include_bytes!("../../../../docs/ir/contracts/sha256-5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f.txt").as_slice()),
             (crate::CORE_V10,include_bytes!("../../../../docs/ir/contracts/sha256-74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f.txt").as_slice()),
             (crate::CORE_V11,include_bytes!("../../../../docs/ir/contracts/sha256-246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e.txt").as_slice()),
+            (crate::CORE_V12,include_bytes!("../../../../docs/ir/contracts/sha256-73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007.txt").as_slice()),
             (crate::TERMINAL_OBSERVATION_PROFILE,include_bytes!("../../../../docs/ir/contracts/sha256-a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead.txt").as_slice()),
         ] { resources.push((pin.0.into(),pin.1.into(),raw)); }
         let f = Self {

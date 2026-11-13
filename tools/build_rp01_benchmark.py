@@ -252,7 +252,7 @@ independent review or Phase 1 closure is claimed.
     return files
 
 
-def artifacts():
+def capture_artifacts(*, factored=False):
     historical = historical_artifacts()
     assert len(historical['source.choreo']) == 56874
     assert json.loads(historical['candidate.ir.json'])['revision'] == 'sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4'
@@ -262,7 +262,24 @@ def artifacts():
     manifest = json.loads(historical['manifest.json'])
     body = json.loads(historical['candidate.ir.json'])['body']
     provider = next({'id': r['id'], 'revision': r['revision']} for r in manifest['resources'] if r['path'].endswith('/payment.provider.json'))
-    source, ledger, raw, source_pin = adopt_capture(historical['source.choreo'].decode(), json.loads(historical['bindings.json']), body, provider)
+    source=historical['source.choreo'].decode();ledger=json.loads(historical['bindings.json']);factoring=None
+    if factored:
+        # Re-render the finite typed fixture, retaining the old producer by default.
+        type_pin=next({'id':r['id'],'revision':r['revision']} for r in manifest['resources'] if r['path'].endswith('/types.json'))
+        keys={'checks':'checks.provider.json','payment':'payment.provider.json','notice':'notice.provider.json','clock-source':'clock.provider.json','clock':'clock.json'}
+        pins={k:next({'id':r['id'],'revision':r['revision']} for r in manifest['resources'] if r['path'].endswith('/'+name)) for k,name in keys.items()}
+        docs={k:json.loads(files[keys[k]]) for k in ['checks','payment','notice']}
+        source,package=build(type_pin,docs,pins,profile='0.6.0',payment_policy_revisions=True,factored=True)
+        source=declare_links(source,package.ledger)
+        source,ledger,fault_raw,fault_pin=adopt(source,package.ledger,pins['payment'])
+        assert fault_raw==files['payment.fault-source.json']
+        factoring=package.factoring
+    source, ledger, raw, source_pin = adopt_capture(source,ledger,body,provider,factoring=factoring)
+    if factored:
+        from benchmarks.rp01_factored_source import CORE12
+        assert source.count('authoring "0.14.0"')==1
+        source=source.replace('authoring "0.14.0"','authoring "0.18.0"',1)
+        ledger.update(profile='0.18.0',version='0.17.0');ledger['contracts']['core']=CORE12.copy()
     files.update({'source.choreo': source.encode(), 'bindings.json': encoded(ledger), 'payment.terminal-source.json': raw, 'payment.terminal-source.json.license': LICENSE})
     registry = manifest['resources']
     registry += [{'id': source_pin['id'], 'revision': source_pin['revision'], 'path': 'docs/benchmarks/rp01/payment.terminal-source.json'},
@@ -270,8 +287,8 @@ def artifacts():
     candidate, results = derive(files, registry)
     canonical_bindings = rfc8785.dumps(ledger)
     source_raw = files['source.choreo']
-    frame = b'choreoform-authoring-package:0.14.0\0' + len(source_raw).to_bytes(8, 'big') + source_raw + len(canonical_bindings).to_bytes(8, 'big') + canonical_bindings
-    manifest.update(sourceProfile='0.14.0', companionVersion='0.13.0', coreProfile='0.11.0',
+    frame = ('choreoform-authoring-package:'+ledger['profile']+'\0').encode() + len(source_raw).to_bytes(8, 'big') + source_raw + len(canonical_bindings).to_bytes(8, 'big') + canonical_bindings
+    manifest.update(sourceProfile=ledger['profile'], companionVersion=ledger['version'], coreProfile='0.12.0' if factored else '0.11.0',
         sourceBytes=len(source_raw), measuredTokens=len(lex(source)),
         tokenMeasurement='whole-source bounded lexing; not semantic admission',
         sourceDigest='sha256:'+sha256(source_raw).hexdigest(), bindingsDigest='sha256:'+sha256(canonical_bindings).hexdigest(),
@@ -282,7 +299,7 @@ def artifacts():
     manifest['scenarios'][2]['declarations'] += ['retained_payment_request', 'late_payment_capture', 'classify_late_payment', 'late_payment_category']
     files['manifest.json'] = encoded(manifest)
     files['reports/invalidation-requirements.json.license'] = LICENSE
-    files['README.md'] = current_readme(manifest).encode()
+    files['README.md'] = (DESTINATION/'README.md').read_bytes() if factored else current_readme(manifest).encode()
     for name, raw in historical.items():
         if name == 'README.md': continue
         files['history/source-0.7/'+name] = raw
@@ -299,6 +316,13 @@ artifacts at the package root. Tests explicitly select this history for old prof
 semantics. See [current package](../../README.md) for current evidence and open gates.
 No accepted event, host execution, scenario or phase closure is claimed.
 """
+    return files
+
+
+def artifacts():
+    from benchmarks.rp01_factoring_checkpoint import artifacts as archive
+    files=capture_artifacts(factored=True)
+    files.update({'history/source-0.14-before-factoring/'+name:raw for name,raw in archive().items()})
     return files
 
 

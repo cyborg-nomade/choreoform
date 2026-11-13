@@ -40,7 +40,7 @@ def classification(completion):
             'else': {'op': 'tag', 'value': captured}}
 
 
-def adopt(source, ledger, body, provider):
+def adopt(source, ledger, body, provider, *, factoring=None):
     assert (ledger['profile'], ledger['version'], ledger['root']) == ('0.7.0', '0.6.0', 'expense')
     assert body['dialects']['core']['id'] == 'urn:choreoform:contracts:core-profile:0.4.0'
     assert not {BINDING, CAPTURE, REQUEST, CATEGORY, CLASSIFY} & {d['id'] for d in ledger['declarations']}
@@ -70,6 +70,11 @@ def adopt(source, ledger, body, provider):
         ledger['declarations'].append({'id': identity, 'kind': 'data', 'scope': 'payment_recovery', 'name': caption})
         ledger['symbols'].append({'id': identity+'_purpose', 'owner': identity, 'role': 'purpose', 'name': 'Reimbursement', 'wire': 'reimbursement'})
         captions[identity] = caption
+        if factoring is not None:
+            assert envelope['purposes']=={'reimbursement':True} and envelope['sensitivity']==factoring.package.sensitivity
+            return factoring.data_text(caption,ty,invalidates=['"Observe Payment"','"Classify late payment"','"Finish Payment recovery"'],
+                participants=[captions[a] for a in envelope['participants']],capabilities=[captions[a] for a in envelope['capabilities']],
+                policy=captions[envelope['policy']])+'\n'
         return f'Keep {quote(caption)} as {type_source(ty)} under {quote(captions[envelope["policy"]])}. Sensitivity {quote(envelope["sensitivity"])}. Purposes ["Reimbursement"]. Participants {names(captions[a] for a in envelope["participants"])}. Capabilities {names(captions[a] for a in envelope["capabilities"])}. Invalidate ["Observe Payment", "Classify late payment", "Finish Payment recovery"]. Initially unavailable. End data.\n'
     declarations = 'Retain the original request from "Request Payment" and record in "Original payment request".\n'
     declarations += local(REQUEST, 'Original payment request', body['capabilities']['payment_capability']['input']['body'])

@@ -1,0 +1,66 @@
+{
+  "README.md": {
+    "old": "be633d8193038cfa71d409485bffc6f74204e81f96646efb823946bddd13debb",
+    "new": "3495b6dfef7761fee6f890c7e3902f9b0ebb2ea9749d40ee75ea851e155935db"
+  },
+  "bindings.json": {
+    "old": "8d51630aea97d32a8ff3e37d0cc33a727f127c29888ae4d2550f459196b12579",
+    "new": "f1e61cdbe0535b283ded9015aaae5a8d538f29ec2767bd841579c815d78d72b1"
+  },
+  "candidate.ir.json": {
+    "old": "90c5ee32e45c97adf746355ac0337111fd408071ac622317874e8f0efe942fd6",
+    "new": "d96b6398e6856a1e34916046a6ca61ee0e09339f59c5c3664c524a5b43a801de"
+  },
+  "manifest.json": {
+    "old": "dc6b5e9125c9f0fcbcfaadab3e80035c5577a2e2151c34cfc4608fc9f3d92e66",
+    "new": "972b45c8da4f02ce71689de8fbc807026844b2d046a430bd82dd6ccd5258a33a"
+  },
+  "reports/check-concurrency.json": {
+    "old": "55f2054da74661775cf973eb7cadfd2632345dae903ea164aa24034ced4a903b",
+    "new": "ee8c60490aa2124ae01bd305b46d7dd23e96996f72853d0f58b98eaa0f7920b7"
+  },
+  "reports/check-control.json": {
+    "old": "8c00317b4e7f84ea3678a5cc170c74dbd1e3f6a4329324c452ae15b9f61b0b34",
+    "new": "38cde161d28f359b32eeab88686fb09a952269ac5ac2afe6af381f6e56fc139c"
+  },
+  "reports/check-exceptional-availability.json": {
+    "old": "90bc75ccaac6f4dcd4bebc6acf2527eb48431c5d9ff0844538f241d077772ee4",
+    "new": "90401fbceb10146c9bad8f23727856130868bd0227b0bd8efb0726ca02fab281"
+  },
+  "reports/check-fault-routes.json": {
+    "old": "a24bfe9141c5095099df258bf9f8238bd16655f6a754729f39df8649c15180a1",
+    "new": "8980debafcdd7cd17d740dba12287c03e4875028810848346ab07f285a7f59f9"
+  },
+  "reports/check-invalidation.json": {
+    "old": "4e8819572f274419312691624a62cfe3e0dd7f3e4e4bcf74c66a64fd2b738887",
+    "new": "acaab87529b16985155a4e6c0026c0905931e25474f086aa8db3d21f476f3304"
+  },
+  "reports/check-protection.json": {
+    "old": "3f5884c4fe8e10ca452d214653277a2f0076f4e16abff55af178916985febb1b",
+    "new": "7c16cff09dc51ec404ef5884a0282fa3208666a7ad2604227e3e9d1e7df0a76a"
+  },
+  "reports/check-reconciliation-availability.json": {
+    "old": "712fc3abc08e023942edd26494dd54681675667c5b0a80fef00b4ceb9bcc0369",
+    "new": "049c3cb7b75f254db3bdd881e4b4521674e8334c3b0ba34d861a1824c80d3d68"
+  },
+  "reports/check-reconciliation-links.json": {
+    "old": "5d0cff8e993d75bc6c92d093347f86ee2ed79357847c0f3ff5b24e496d0e1bc2",
+    "new": "fa073de7e2dadacc688baf140e72d68d6cf9bf6f0f0e81ae7cca493ac8f62794"
+  },
+  "reports/check-timing.json": {
+    "old": "afe5a5a85c3799270a47ffe383d4d877042fda527c1ad7f6458ca791cc862958",
+    "new": "06a17806210472a96f04c161784d87e4e3588fa574d859cd1b38bc4696d036b0"
+  },
+  "reports/check.json": {
+    "old": "948e9c51077c4deccbb9a12bcce15ed6daf11edcbbbee1a133ba102b79816651",
+    "new": "0fbfb53cb626cca5c2dcb2f51a9ae10ad5957f5079964583182a52ee7c6135a1"
+  },
+  "reports/invalidation-requirements.json": {
+    "old": "5983b8fa7d430bc0bf0c84584e2708f1c15bca31cc09970bc035baff44466cba",
+    "new": "87301dfc8e51c45338541e1bcfa44e8b414a09c4c024f6d2ac1dcc0c5859e996"
+  },
+  "source.choreo": {
+    "old": "ee938aa652624f5b430fa49400b9c7f8fd1a1d7613bda05116c3fa3636cf82e8",
+    "new": "95d223f9bef902cc93edbf830642e8af499e2e77071a80d40f01377c4ece6735"
+  }
+}
