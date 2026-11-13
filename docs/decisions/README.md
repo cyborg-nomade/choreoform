@@ -240,3 +240,5 @@ house style established by Choreoform’s first records.
 
 - [Michael Nygard, “Documenting Architecture Decisions”](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions)
 - [Markdown Architectural Decision Records](https://adr.github.io/madr/)
+
+- [ADR-0088: RP-01 factored authoring and explicit C12 promotion](0088-rp01-factored-authoring.md) — accepted under owner delegation; effective on integration.

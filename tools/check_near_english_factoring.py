@@ -13,7 +13,7 @@ from check_authoring_evidence import check_links
 from check_source_capacity import fixed
 
 ROOT=Path(__file__).resolve().parents[1]
-FIXTURES=['docs/benchmarks/rp01/source.choreo','docs/benchmarks/rp03/history/source-0.16-before-factoring/source.choreo']
+FIXTURES=['docs/benchmarks/rp01/history/source-0.14-before-factoring/source.choreo','docs/benchmarks/rp03/history/source-0.16-before-factoring/source.choreo']
 CAPTURE=ROOT/'docs/evaluation/0083-factoring-metrics.json'
 BINARY=ROOT/'target/debug/examples/factoring_metrics'
 
@@ -32,11 +32,11 @@ class FactoringMeasurements(unittest.TestCase):
         cls.raw=r.stdout;cls.reports=json.loads(r.stdout)
 
     def test_captured_native_measurements_reproduce_without_benchmark_writes(self):
-        # The exact old capture stays immutable; only its then-current RP-03
-        # fixture label is remapped to the byte-identical signed archive.
-        current_label=json.dumps(FIXTURES[1]).encode()
-        self.assertEqual(self.raw.count(current_label),1)
-        historical=self.raw.replace(current_label,b'"docs/benchmarks/rp03/source.choreo"',1)
+        # Only exact quoted fixture-path labels change; every measured byte stays fixed.
+        historical=self.raw
+        for name,fixture in zip(['rp01','rp03'],FIXTURES):
+            label=json.dumps(fixture).encode();self.assertEqual(historical.count(label),1)
+            historical=historical.replace(label,json.dumps('docs/benchmarks/'+name+'/source.choreo').encode(),1)
         self.assertEqual(historical,CAPTURE.read_bytes())
         self.assertEqual([(r['sourceBytes'],r['tokens']) for r in self.reports],[(61211,10223),(576759,84051)])
         self.assertEqual(fixed(),self.before)

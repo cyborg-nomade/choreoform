@@ -49,6 +49,8 @@ def declare_links(source, ledger):
             assert declarations[cell]['scope'] in chain
             references.append(quote(node['name']) + ''.join(' in ' + quote(declarations[s]['name']) for s in chain))
         pattern = r'(^Keep ' + re.escape(quote(declarations[cell]['name'])) + r' as [^\n]*\nSensitivity [^\n]*\nCapabilities [^\n]*\. Invalidate )empty(\. Initially [^\n]* End data\.)'
+        if any(d['kind']=='data-protection' for d in ledger['declarations']):
+            pattern = r'(^Keep '+re.escape(quote(declarations[cell]['name']))+r' as [^\n]*, protected as "Expense information"\. Invalidate )empty(\. Initially [^\n]* End data\.)'
         source, count = re.subn(pattern, lambda m: m[1] + '[' + ', '.join(references) + ']' + m[2], source, flags=re.MULTILINE)
         assert count == 1, ('fixture invalidation baseline changed', cell, count)
     return source

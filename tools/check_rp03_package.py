@@ -96,13 +96,13 @@ class OrderPackageEvidence(unittest.TestCase):
             self.assertIs(next(c for c in cases['cases'] if c['id']==id)['expected'],False)
 
     def test_rp01_current_history_and_guard_bytes_stay_frozen(self):
-        base=ROOT/'docs/benchmarks/rp01';paths=sorted(p for p in base.rglob('*') if p.is_file());h=sha256()
-        for p in paths:
-            raw=p.read_bytes();h.update(p.relative_to(base).as_posix().encode()+b'\0'+len(raw).to_bytes(8,'big')+raw)
-        self.assertEqual(len(paths),113);self.assertEqual(h.hexdigest(),'d3aad696ec8ec3bc325a42b7467c8725c73bb15f1c8620b58fc76531d2f1e592')
+        from benchmarks.rp01_factoring_checkpoint import original_tree
+        files=original_tree();h=sha256()
+        for name,raw in files.items():h.update(name.encode()+b'\0'+len(raw).to_bytes(8,'big')+raw)
+        self.assertEqual(len(files),113);self.assertEqual(h.hexdigest(),'d3aad696ec8ec3bc325a42b7467c8725c73bb15f1c8620b58fc76531d2f1e592')
         guard=load(ROOT/'crates/semantic-check/tests/conformance/rp01-guard-snapshots.json')
         self.assertEqual((len(guard['cases']),len(guard['values'])),(44,46))
-        self.assertEqual(guard['candidateRevision'],'sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285')
+        self.assertEqual(guard['candidateRevision'],'sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829')
 
     def test_new_shared_surface_encodings_lower_in_a_bounded_native_witness(self):
         # Pure source-encoding witness, not a truncated order or an admission.

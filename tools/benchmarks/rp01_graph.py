@@ -102,7 +102,7 @@ def foundations(root):
     root.policy('ordinary_close', 'closure', 'Ordinary close', 'Fully terminal.')
     root.policy('acceptance_order', 'race', 'Acceptance order', 'Accept in acceptance order.')
     root.policy('preserve_remaining', 'closure', 'Preserve remaining work', 'Reconcile in "Remaining work".')
-    remaining = Scope(root.package, 'remaining', 'Remaining work', root, 'Release remaining owner')
+    remaining = type(root)(root.package, 'remaining', 'Remaining work', root, 'Release remaining owner')
     remaining.step('remaining_done', 'Release remaining owner', 'Finish as "complete".')
     root.child(remaining)
 
@@ -120,7 +120,7 @@ def service(root, parent, provider, key, name, capability_name, input_name, outp
     inputs = [('request', 'Request', input_name)]
     if key == 'payment':
         inputs.append(('deadline', 'Deadline', 'Payment deadline'))
-    owner = Scope(package, key + '_service', name, parent, 'Request ' + name,
+    owner = type(root)(package, key + '_service', name, parent, 'Request ' + name,
         inputs=inputs, outputs=[('result', 'Result', output_name)], closure=name + ' close',
         race=name + ' commits' if key == 'payment' else 'Acceptance order')
     owner.policy(key + '_close', 'closure', name + ' close', f'Reconcile in {quote(name + " recovery")}.')
@@ -159,7 +159,7 @@ def service(root, parent, provider, key, name, capability_name, input_name, outp
         f'Request {quote(capability_name)} using {quote(name + " input")} under {quote(name + " work")} and record in {quote(output_name)}.',
         [(tag, 'Finish ' + name) for tag in output_type['cases']])
     owner.step(key + '_done', 'Finish ' + name, 'Finish as "complete".')
-    recovery = Scope(package, key + '_recovery', name + ' recovery', owner, 'Observe ' + name)
+    recovery = type(root)(package, key + '_recovery', name + ' recovery', owner, 'Observe ' + name)
     recovery.step(key + '_observe', 'Observe ' + name, f'Wait under {quote(name + " reconciliation")}.', [('observed', 'Finish ' + name + ' recovery')])
     recovery.step(key + '_recovered', 'Finish ' + name + ' recovery', 'Finish as "complete".')
     owner.child(recovery)
@@ -204,16 +204,21 @@ def endpoint_probe(type_pin, provider, provider_pin):
     return 'Choreoform authoring "0.4.0".\n' + root.render(), package
 
 
-def build(type_pin, provider_documents, resource_pins, profile="0.5.0", payment_policy_revisions=False):
+def build(type_pin, provider_documents, resource_pins, profile="0.5.0", payment_policy_revisions=False, *, factored=False):
     assert profile in ["0.5.0", "0.6.0"]
+    if factored:
+        from .rp01_factored_source import Scope as GraphScope
+    else:
+        GraphScope=Scope
     package = Package()
     package.ledger.update(profile=profile, version="0.5.0" if profile == "0.6.0" else "0.4.0")
     if profile == "0.6.0":
         package.ledger['contracts']['core'] = CORE3.copy()
-    root = Scope(package, 'expense', 'Expense reimbursement', None, 'Review again',
+    root = GraphScope(package, 'expense', 'Expense reimbursement', None, 'Review again',
         inputs=[('claim', 'Claim', 'Current claim'), ('deadline', 'Payment due', 'Payment due')],
         outputs=[('disposition', 'Disposition', 'Disposition'), ('payable', 'Payable', 'Payable reference')],
         outcomes=['paid', 'rejected', 'problem'], closure='Preserve remaining work', cancellation='Withdraw request')
+    if factored:root.define(PEOPLE,CAPABILITIES,provider_documents['payment']['input'])
     package.resource('expense_types', 'Expense types', 'named-type', type_pin)
     for key, name in [('checks', 'Claim checks'), ('payment', 'Payment'), ('notice', 'Notice')]:
         package.resource(key + '_provider_binding', name + ' provider', 'provider', resource_pins[key])
@@ -224,7 +229,7 @@ def build(type_pin, provider_documents, resource_pins, profile="0.5.0", payment_
     approval_type = variant({tag: review_type for tag in ['approved', 'correction', 'rejected']})
     correction_type = variant({'resubmitted': claim_type})
     duplicate_type = variant({tag: review_type for tag in ['clear', 'correction', 'rejected']})
-    cycle = Scope(package, 'review_cycle', 'Review cycle', root, 'Run checks')
+    cycle = GraphScope(package, 'review_cycle', 'Review cycle', root, 'Run checks')
     _, checks_type = service(root, cycle, provider_documents['checks'], 'checks', 'Claim checks', 'Check the claim', 'Check request', 'Check outcome')
     service(root, root, provider_documents['payment'], 'payment', 'Payment', 'Create the payable', 'Payable request', 'Payment outcome', payment_policy_revisions=payment_policy_revisions)
     service(root, root, provider_documents['notice'], 'notice', 'Notice', 'Notify the employee', 'Notice request', 'Notice outcome')

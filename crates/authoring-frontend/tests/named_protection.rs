@@ -314,7 +314,7 @@ fn actual_whole_process_variants_reparse_with_exact_expanded_body_and_refusal() 
         let base = root().join(if name == "rp03" {
             "docs/benchmarks/rp03/history/source-0.16-before-factoring".to_owned()
         } else {
-            format!("docs/benchmarks/{name}")
+            "docs/benchmarks/rp01/history/source-0.14-before-factoring".to_owned()
         });
         let original = std::fs::read_to_string(base.join("source.choreo")).unwrap();
         let mut l: Value =
@@ -336,18 +336,16 @@ fn actual_whole_process_variants_reparse_with_exact_expanded_body_and_refusal() 
                 resources.push((
                     id.into(),
                     rev.into(),
-                    std::fs::read(if name == "rp03" {
+                    std::fs::read(
                         r["path"]
                             .as_str()
                             .unwrap()
-                            .strip_prefix("docs/benchmarks/rp03/")
+                            .strip_prefix(&format!("docs/benchmarks/{name}/"))
                             .map_or_else(
                                 || root().join(r["path"].as_str().unwrap()),
                                 |relative| base.join(relative),
-                            )
-                    } else {
-                        root().join(r["path"].as_str().unwrap())
-                    })
+                            ),
+                    )
                     .unwrap(),
                 ));
             }

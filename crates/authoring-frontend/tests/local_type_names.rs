@@ -223,7 +223,7 @@ fn actual_whole_variants_preserve_exact_ir_and_reduce_source_beyond_protection_n
         let base = root().join(if name == "rp03" {
             "docs/benchmarks/rp03/history/source-0.16-before-factoring".to_owned()
         } else {
-            format!("docs/benchmarks/{name}")
+            "docs/benchmarks/rp01/history/source-0.14-before-factoring".to_owned()
         });
         let raw = std::fs::read_to_string(base.join("source.choreo")).unwrap();
         let mut l: Value =
@@ -245,18 +245,16 @@ fn actual_whole_variants_preserve_exact_ir_and_reduce_source_beyond_protection_n
                 resources.push((
                     id.into(),
                     rev.into(),
-                    std::fs::read(if name == "rp03" {
+                    std::fs::read(
                         r["path"]
                             .as_str()
                             .unwrap()
-                            .strip_prefix("docs/benchmarks/rp03/")
+                            .strip_prefix(&format!("docs/benchmarks/{name}/"))
                             .map_or_else(
                                 || root().join(r["path"].as_str().unwrap()),
                                 |relative| base.join(relative),
-                            )
-                    } else {
-                        root().join(r["path"].as_str().unwrap())
-                    })
+                            ),
+                    )
                     .unwrap(),
                 ));
             }
@@ -588,4 +586,65 @@ fn nested_structure_and_forward_aliases_share_one_preflight_stack_depth() {
     let e = lower(&s, &l).unwrap_err();
     assert_eq!(e.code, "depth");
     assert!(e.span.start > 0);
+}
+
+#[test]
+fn adopted_expense_source_has_measured_work_and_actual_current_core12_ir() {
+    use choreoform_authoring_frontend::parse;
+    use choreoform_ir_probe_core::DefinitionEnvelope;
+    let base = root().join("docs/benchmarks/rp01");
+    let source = std::fs::read_to_string(base.join("source.choreo")).unwrap();
+    let bytes = std::fs::read(base.join("bindings.json")).unwrap();
+    let manifest: Value =
+        serde_json::from_slice(&std::fs::read(base.join("manifest.json")).unwrap()).unwrap();
+    let mut resources = contracts();
+    for r in manifest["resources"].as_array().unwrap() {
+        let id = r["id"].as_str().unwrap();
+        let rev = r["revision"].as_str().unwrap();
+        if !resources.iter().any(|(i, v, _)| i == id && v == rev) {
+            resources.push((
+                id.into(),
+                rev.into(),
+                std::fs::read(root().join(r["path"].as_str().unwrap())).unwrap(),
+            ));
+        }
+    }
+    let syntax = parse(source.as_bytes()).unwrap();
+    assert_eq!(
+        (source.len(), syntax.token_count(), syntax.parser_work()),
+        (55453, 9455, 114301)
+    );
+    let package = Package::parse(source.as_bytes(), &bytes).unwrap();
+    let candidate = package.lower(&supplied(&resources)).unwrap();
+    let golden = std::fs::read(base.join("candidate.ir.json")).unwrap();
+    assert_eq!(
+        candidate.document(),
+        &serde_json::from_slice::<Value>(&golden).unwrap()
+    );
+    assert_eq!(
+        candidate.document()["body"]["dialects"]["core"]["id"],
+        CORE_V12.0
+    );
+    assert_eq!(
+        candidate.document()["revision"],
+        "sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829"
+    );
+    let integrity = package.integrity();
+    assert_eq!(integrity.source, manifest["sourceDigest"]);
+    assert_eq!(integrity.bindings, manifest["bindingsDigest"]);
+    assert_eq!(integrity.package, manifest["packageDigest"]);
+    let raw = DefinitionEnvelope::decode(&golden).unwrap();
+    choreoform_semantic_check::check(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::check_control(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::check_protection(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::check_invalidation(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::derive_invalidation_requirements(&raw, &supplied(&resources))
+        .unwrap();
+    choreoform_semantic_check::check_concurrency(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::check_timing(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::check_fault_routes(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::check_exceptional_availability(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::check_reconciliation_links(&raw, &supplied(&resources)).unwrap();
+    choreoform_semantic_check::check_reconciliation_availability(&raw, &supplied(&resources))
+        .unwrap();
 }

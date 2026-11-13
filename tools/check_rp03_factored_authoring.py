@@ -29,9 +29,10 @@ class FactoredOrderAuthoring(unittest.TestCase):
         self.assertEqual((BASE/'candidate.ir.json').read_bytes(),old['candidate.ir.json'])
         self.assertEqual(sha256(old['candidate.ir.json']).hexdigest(),'6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4')
         self.assertEqual(json.loads(old['manifest.json'])['sourceBytes'],576759)
-        paths=sorted(p for p in (ROOT/'docs/benchmarks/rp01').rglob('*') if p.is_file())
-        rows=''.join(p.relative_to(ROOT/'docs/benchmarks/rp01').as_posix()+'\0'+sha256(p.read_bytes()).hexdigest()+'\n' for p in paths)
-        self.assertEqual(len(paths),113)
+        from benchmarks.rp01_factoring_checkpoint import original_tree
+        files=original_tree()
+        rows=''.join(name+'\0'+sha256(raw).hexdigest()+'\n' for name,raw in files.items())
+        self.assertEqual(len(files),113)
         self.assertEqual(sha256(rows.encode()).hexdigest(),'62ebf5abf58d73a682a3f69271ba00521065539451195f0324d357c16f677c9b')
         for path in ['docs/decisions/0087-rp03-factored-authoring.md','docs/evaluation/0087-rp03-factored-authoring-plan.md','docs/benchmarks/rp03/README.md']:
             check_links(ROOT/path)

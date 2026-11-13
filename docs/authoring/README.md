@@ -3,6 +3,14 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The actual [RP-01 package](../benchmarks/rp01/README.md) also adopts source0.18 /
+companion0.17 with **Expense information** and **Payable instruction** under
+[ADR-0088](../decisions/0088-rp01-factored-authoring.md): 55453 bytes/9455 tokens,
+9.41% smaller. Its explicit C11-to-C12 promotion changes the semantic revision;
+all other expanded fields and immutable resources remain exact. The old package
+is archived before code. All eleven partial views pass; no user/phase gate closes.
+
+
 The actual current [RP-03 package](../benchmarks/rp03/README.md) adopts source 0.18 /
 companion 0.17 on unchanged C12/IR0.4 with domain-named protection and instruction
 types: 410752 UTF-8 bytes / 66783 native tokens / 840430 parser visits, 28.78% below
