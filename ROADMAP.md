@@ -120,6 +120,15 @@ validated, and round-tripped.
   [ADR-0082](docs/decisions/0082-request-region-proof-direction.md) prioritizes an
   independent factoring critique/evaluation while the explicit external-region
   proof prerequisites remain open; metadata plumbing does not complete authoring.
+  [ADR-0084](docs/decisions/0084-named-data-protection.md) implements explicit
+  complete named protection with unchanged expanded meaning; its real RP-03
+  test variant is 22.25% smaller, with current benchmark adoption still separate.
+  [ADR-0085](docs/decisions/0085-transparent-type-naming-direction.md) selects
+  transparent local type naming as the next separately contracted direction;
+  type/nominal/lexical identity and cumulative expanded-depth/work/bytes must hold.
+  Neither closes this item: reusable receipt/work formulations, full RP-08,
+  managed protected accessible inspection/editing/export and text/visual parity
+  must be delivered within Phase 1 before actual representative-user evaluation.
   In progress: [ADR-0014](docs/decisions/0014-near-english-authoring.md) accepts
   Candidate A as a provisional working direction, with the
   [authoring comparison](docs/authoring/README.md); Project Owner approved
