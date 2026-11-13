@@ -28,15 +28,26 @@ is paper-only. The roadmap explicitly retains receipt/work reuse, full RP-08,
 protected accessible inspection/editing/export/visual parity and actual users
 within Phase 1. Current source0.17/C12 and concurrency/semantic gates stay fixed.
 
-Active `codex/local-type-names` follows signed `96d021ec218cd3ec5c0a0c97a7293aac2464f915`,
-[scope86](0086-local-type-names-plan.md). Publish/sign ADR-0086 and exact source0.18 /
-companion0.17 grammar/profile/schema before compiler work; retain C12/IR0.4 and
-all old behavior. Managed source-only names expand to exact existing types at all
-positions, with definition/use visibility and finite cached/expanded cost checks.
-Compare actual native full RP-01/RP-03 named-protection variants for unchanged
-IR/revision and genuine further byte reduction; do not overwrite benchmarks or
-invent RP-08/user evidence. C13 source selection and parameterized work reuse stay
-separate. All unproved phase gates remain open; no Phase 2.
+Active `codex/local-type-names` follows signed `96d021e`,
+[scope86](0086-local-type-names-plan.md), with exact [ADR-0086](../decisions/0086-local-type-names.md) /
+grammar/profile/schema publication signed `7d90b73` before compiler implementation.
+Source0.18/companion0.17 remains C12/IR0.4. Actual native combined variants preserve
+exact C12 IR/revisions: RP-01 56059 -> 55702 bytes; RP-03 448421 -> 412288 bytes
+(additional 8.06%, total 28.52% below current original), with unchanged legitimate
+concurrency refusal. Separate observation-type aliases also preserve whole-case IR.
+[Implementation evidence](0086-local-type-names.md) records twelve Rust/four Python
+groups. Full workspace 659 Rust + six compile-fail passes; final native/Wasm/all 81
+Python verification, separate automated review, all comments/final-head CI and
+expected-head signed merge remain required before integration. Review tightened
+a shared structural/alias traversal-depth guard and removed repeated field-label
+scans. Preflight validates all unused/forward/cyclic graphs and complete expanded
+costs before caches/copies, sharing cumulative budgets with protection/dependencies.
+Exact nominal/tag/field/literal/parameter meaning and private resource/outcome
+provenance remain fixed. A standalone unbound parameter context still refuses.
+All old pairs retain behavior; current/historical benchmarks/resources/guards /
+receipts/generators/reports remain untouched. Adoption/archive, C13 source selection,
+parameterized work/predicate reuse, full RP-08/general protected accessible editing /
+export/text-visual/user and all semantic/region/phase gates remain open. No Phase 2.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire

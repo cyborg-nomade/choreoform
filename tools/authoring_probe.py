@@ -85,8 +85,8 @@ def lex(source, program=True):
             if value[0] in '-0123456789' and i < len(source) and (source[i].isalnum() or source[i] in '_-'):
                 reject("numeric token requires a boundary")
             tokens.append(('NUMBER' if value[0] in '-0123456789' else 'WORD', value))
-        if program and len(tokens) == 3 and tokens[:2] == [('WORD', 'Choreoform'), ('WORD', 'authoring')] and tokens[2] in [('TEXT', '0.5.0'), ('TEXT', '0.6.0'), ('TEXT', '0.7.0'), ('TEXT', '0.8.0'), ('TEXT', '0.9.0'), ('TEXT', '0.10.0'), ('TEXT', '0.11.0'), ('TEXT', '0.12.0'), ('TEXT', '0.13.0'), ('TEXT', '0.14.0'), ('TEXT', '0.15.0'), ('TEXT', '0.16.0'), ('TEXT', '0.17.0')]:
-            token_limit = 131072 if tokens[2] in [('TEXT','0.15.0'),('TEXT','0.16.0'),('TEXT','0.17.0')] else 16384
+        if program and len(tokens) == 3 and tokens[:2] == [('WORD', 'Choreoform'), ('WORD', 'authoring')] and tokens[2] in [('TEXT', '0.5.0'), ('TEXT', '0.6.0'), ('TEXT', '0.7.0'), ('TEXT', '0.8.0'), ('TEXT', '0.9.0'), ('TEXT', '0.10.0'), ('TEXT', '0.11.0'), ('TEXT', '0.12.0'), ('TEXT', '0.13.0'), ('TEXT', '0.14.0'), ('TEXT', '0.15.0'), ('TEXT', '0.16.0'), ('TEXT', '0.17.0'), ('TEXT', '0.18.0')]:
+            token_limit = 131072 if tokens[2] in [('TEXT','0.15.0'),('TEXT','0.16.0'),('TEXT','0.17.0'),('TEXT','0.18.0')] else 16384
         if len(tokens) > token_limit:
             reject("oracle token limit")
     if depth:
@@ -169,16 +169,16 @@ def recognize(source, start='program', rules=None):
     tokens = lex(source, program=start == 'program')
     profile = '0.2.0'
     if start == 'program':
-        if len(tokens) < 3 or tokens[2] not in [('TEXT', '0.2.0'), ('TEXT', '0.3.0'), ('TEXT', '0.4.0'), ('TEXT', '0.5.0'), ('TEXT', '0.6.0'), ('TEXT', '0.7.0'), ('TEXT', '0.8.0'), ('TEXT', '0.9.0'), ('TEXT', '0.10.0'), ('TEXT', '0.11.0'), ('TEXT', '0.12.0'), ('TEXT', '0.13.0'), ('TEXT', '0.14.0'), ('TEXT', '0.15.0'), ('TEXT', '0.16.0'), ('TEXT', '0.17.0')]:
+        if len(tokens) < 3 or tokens[2] not in [('TEXT', '0.2.0'), ('TEXT', '0.3.0'), ('TEXT', '0.4.0'), ('TEXT', '0.5.0'), ('TEXT', '0.6.0'), ('TEXT', '0.7.0'), ('TEXT', '0.8.0'), ('TEXT', '0.9.0'), ('TEXT', '0.10.0'), ('TEXT', '0.11.0'), ('TEXT', '0.12.0'), ('TEXT', '0.13.0'), ('TEXT', '0.14.0'), ('TEXT', '0.15.0'), ('TEXT', '0.16.0'), ('TEXT', '0.17.0'), ('TEXT', '0.18.0')]:
             reject("unsupported source profile")
         profile = tokens[2][1]
     if rules is None:
-        path = 'candidate-a.ebnf' if profile == '0.2.0' else 'candidate-a-v0.17.ebnf' if profile == '0.17.0' else 'candidate-a-v0.16.ebnf' if profile == '0.16.0' else 'candidate-a-v0.15.ebnf' if profile == '0.15.0' else 'candidate-a-v0.14.ebnf' if profile == '0.14.0' else 'candidate-a-v0.13.ebnf' if profile == '0.13.0' else 'candidate-a-v0.12.ebnf' if profile == '0.12.0' else 'candidate-a-v0.11.ebnf' if profile == '0.11.0' else 'candidate-a-v0.10.ebnf' if profile == '0.10.0' else 'candidate-a-v0.9.ebnf' if profile == '0.9.0' else 'candidate-a-v0.8.ebnf' if profile == '0.8.0' else 'candidate-a-v0.7.ebnf' if profile == '0.7.0' else 'candidate-a-v0.3.ebnf'
+        path = 'candidate-a.ebnf' if profile == '0.2.0' else 'candidate-a-v0.18.ebnf' if profile == '0.18.0' else 'candidate-a-v0.17.ebnf' if profile == '0.17.0' else 'candidate-a-v0.16.ebnf' if profile == '0.16.0' else 'candidate-a-v0.15.ebnf' if profile == '0.15.0' else 'candidate-a-v0.14.ebnf' if profile == '0.14.0' else 'candidate-a-v0.13.ebnf' if profile == '0.13.0' else 'candidate-a-v0.12.ebnf' if profile == '0.12.0' else 'candidate-a-v0.11.ebnf' if profile == '0.11.0' else 'candidate-a-v0.10.ebnf' if profile == '0.10.0' else 'candidate-a-v0.9.ebnf' if profile == '0.9.0' else 'candidate-a-v0.8.ebnf' if profile == '0.8.0' else 'candidate-a-v0.7.ebnf' if profile == '0.7.0' else 'candidate-a-v0.3.ebnf'
         rules = load_grammar(ROOT / 'docs/authoring' / path)
     if start not in rules:
         reject("unknown grammar start rule")
     states = 0
-    state_limit = 1000000 if profile in ['0.5.0', '0.6.0', '0.7.0', '0.8.0', '0.9.0', '0.10.0', '0.11.0', '0.12.0', '0.13.0', '0.14.0', '0.15.0', '0.16.0', '0.17.0'] else MAX_STATES
+    state_limit = 1000000 if profile in ['0.5.0', '0.6.0', '0.7.0', '0.8.0', '0.9.0', '0.10.0', '0.11.0', '0.12.0', '0.13.0', '0.14.0', '0.15.0', '0.16.0', '0.17.0', '0.18.0'] else MAX_STATES
 
     @lru_cache(maxsize=None)
     def walk(node, position):
@@ -291,7 +291,7 @@ def strict_json(raw):
 
 
 def validate_ledger(ledger):
-    version = {'0.2.0': '0.1', '0.3.0': '0.2', '0.4.0': '0.3', '0.5.0': '0.4', '0.6.0': '0.5', '0.7.0': '0.6', '0.8.0': '0.7', '0.9.0': '0.8', '0.10.0': '0.9', '0.11.0':'0.10', '0.12.0':'0.11', '0.13.0':'0.12', '0.14.0':'0.13', '0.15.0':'0.14', '0.16.0':'0.15', '0.17.0':'0.16'}.get(ledger.get('profile'))
+    version = {'0.2.0': '0.1', '0.3.0': '0.2', '0.4.0': '0.3', '0.5.0': '0.4', '0.6.0': '0.5', '0.7.0': '0.6', '0.8.0': '0.7', '0.9.0': '0.8', '0.10.0': '0.9', '0.11.0':'0.10', '0.12.0':'0.11', '0.13.0':'0.12', '0.14.0':'0.13', '0.15.0':'0.14', '0.16.0':'0.15', '0.17.0':'0.16', '0.18.0':'0.17'}.get(ledger.get('profile'))
     if version is None:
         reject("unsupported companion profile")
     schema = json.loads((ROOT / f'schemas/authoring/bindings-{version}.schema.json').read_text())
@@ -337,7 +337,7 @@ def validate_ledger(ledger):
     for row in symbol_ids.values():
         owner = declarations.get(row['owner'])
         allowed = {'outcome': {'scope', 'node'}, 'branch': {'node'}, 'input': {'scope'}, 'output': {'scope'}, 'purpose': {'data'}}
-        if ledger['profile'] == '0.17.0':
+        if ledger['profile'] in ['0.17.0','0.18.0']:
             allowed['purpose'].add('data-protection')
         if owner is None or owner['kind'] not in allowed[row['role']]:
             reject("invalid symbol owner")

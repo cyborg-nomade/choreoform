@@ -121,4 +121,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_request_region_audit.py
           .tools/ir-check/bin/python tools/check_near_english_factoring.py
           .tools/ir-check/bin/python tools/check_named_data_protection.py
+          .tools/ir-check/bin/python tools/check_local_type_names.py
       # Browser execution is a separate manual evidence step, not implied by CI.

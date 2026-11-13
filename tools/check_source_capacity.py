@@ -66,7 +66,7 @@ class SourceCapacityEvidence(unittest.TestCase):
             s,l,r=promote(small())
             if change=='pair':l['version']='0.13.0'
             elif change=='core':l['contracts']['core']['digest']='sha256:'+'0'*64
-            elif change=='future':s=s.replace('authoring "0.15.0"','authoring "0.18.0"')
+            elif change=='future':s=s.replace('authoring "0.15.0"','authoring "0.19.0"')
             else:l['resources'][0]['digest']='sha256:'+'0'*64
             result=invoke((s,l,r));self.assertEqual(result.returncode,1,(change,result.stderr));self.assertEqual(result.stdout,b'')
 

@@ -40,13 +40,13 @@ fn envelope_work(value: &Value) -> usize {
 }
 
 impl<'a, 's> Lower<'a, 's> {
-    fn protection_charge(
+    pub(super) fn expansion_charge(
         &mut self,
         work: usize,
         bytes: usize,
         span: std::ops::Range<usize>,
     ) -> Result<()> {
-        creation::charge(&mut self.protection_work, work).map_err(|mut e| {
+        creation::charge(&mut self.expansion_work, work).map_err(|mut e| {
             e.span = span.clone();
             e
         })?;
@@ -66,11 +66,11 @@ impl<'a, 's> Lower<'a, 's> {
         if depth > MAX_DEPTH {
             return Err(error("depth", self.syntax.span(tree)));
         }
-        self.protection_charge(1, 0, self.syntax.span(tree))?;
+        self.expansion_charge(1, 0, self.syntax.span(tree))?;
         let name = self.syntax.text(tree.all("NAME")[0])?;
         let scope = self.ledger.declaration(parent, name, "scope")?.id.clone();
         for declaration in tree.all("declaration") {
-            self.protection_charge(1, 0, self.syntax.span(declaration))?;
+            self.expansion_charge(1, 0, self.syntax.span(declaration))?;
             let node = declaration.first()?;
             match node.rule {
                 "scope" => self.collect_protections(node, Some(&scope), depth + 1)?,
@@ -82,7 +82,7 @@ impl<'a, 's> Lower<'a, 's> {
                         .map(|t| t.all("reference").len())
                         .sum::<usize>()
                         + node.one("names")?.all("NAME").len();
-                    self.protection_charge(count + 1, 0, self.syntax.span(node))?;
+                    self.expansion_charge(count + 1, 0, self.syntax.span(node))?;
                     let purposes =
                         self.protection_purposes(node.one("names")?, &id)
                             .map_err(|mut e| {
@@ -98,7 +98,7 @@ impl<'a, 's> Lower<'a, 's> {
                         e
                     })?;
                     let work = envelope_work(&value);
-                    self.protection_charge(work, bytes, self.syntax.span(node))?;
+                    self.expansion_charge(work, bytes, self.syntax.span(node))?;
                     self.protections
                         .insert(id, ResolvedProtection { value, bytes, work });
                 }
@@ -131,10 +131,10 @@ impl<'a, 's> Lower<'a, 's> {
             .get(&id)
             .ok_or_else(|| error("protection-definition", span.clone()))?;
         let (bytes, work) = (resolved.bytes, resolved.work);
-        self.protection_charge(work, bytes, span.clone())?;
+        self.expansion_charge(work, bytes, span.clone())?;
         // Keep local purpose identities and captions, including purpose literals.
         let count = self.ledger.purpose_symbols(data).count();
-        self.protection_charge(count, 0, span.clone())?;
+        self.expansion_charge(count, 0, span.clone())?;
         let purposes: Vec<_> = self
             .ledger
             .purpose_symbols(data)

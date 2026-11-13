@@ -78,7 +78,7 @@ class NamedDataProtection(unittest.TestCase):
             elif change=='retired':l['retired'].append('shared')
             elif change=='unknown':l['implicitDefault']='shared'
             elif change=='reference':s=s.replace('protected as "Shared protection"','protected as "SECRET-MUST-NOT-LEAK"')
-            elif change=='future':s=s.replace('"0.17.0"','"0.18.0"')
+            elif change=='future':s=s.replace('"0.17.0"','"0.19.0"')
             result=invoke((s,l,r));self.assertNotEqual(result.returncode,0,change);self.assertEqual(result.stdout,b'')
             # Old syntax refuses during parse before its ledger can be inspected.
             if change!='old':self.assertIn(code.encode(),result.stderr)
