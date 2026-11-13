@@ -86,6 +86,11 @@ class NamedDataProtection(unittest.TestCase):
         s,l,r=pair();l['profile']='0.16.0';l['version']='0.15.0'
         with self.assertRaises(jsonschema.ValidationError):grammar.validate_ledger(l)
 
+        # Source 0.17 also validates the inherited sensitivity-name bound in
+        # unused definitions, which have no wire record for later validation.
+        s,l,r=pair();s=s.replace(NAMED,INLINE).replace(GROUP,GROUP.replace('Sensitivity "test"','Sensitivity "'+'x'*4097+'"'))
+        result=invoke((s,l,r));self.assertNotEqual(result.returncode,0);self.assertEqual(result.stdout,b'');self.assertIn(b'protection-sensitivity',result.stderr);self.assertNotIn(b'x'*100,result.stderr)
+
     def test_short_alias_source_hits_output_bound_without_partial_stdout_or_literal_echo(self):
         s,l,r=pair();s=s.replace('Sensitivity "test"','Sensitivity "'+'x'*4000+'"')
         additions=[]

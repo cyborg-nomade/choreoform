@@ -33,7 +33,9 @@ impl<'a, 's> Lower<'a, 's> {
                 for (name, ty) in self.names(fields)?.into_iter().zip(fields.all("type")) {
                     insert(&mut map, name, self.type_value_inner(ty, scope, depth + 1)?)?;
                 }
-                json!({"kind":"record", "fields": map})
+                let mut descriptor = json!({"kind":"record"});
+                descriptor["fields"] = Value::Object(map);
+                descriptor
             }
             "choice" => {
                 let mut cases = Map::new();
@@ -42,10 +44,15 @@ impl<'a, 's> Lower<'a, 's> {
                     let ty = self.type_value_inner(ty, scope, depth + 1)?;
                     insert(&mut cases, name, ty)?;
                 }
-                json!({"kind":"variant", "cases": cases})
+                let mut descriptor = json!({"kind":"variant"});
+                descriptor["cases"] = Value::Object(cases);
+                descriptor
             }
             "list" | "optional" => {
-                json!({"kind": if self.syntax.word(tree, 0)? == "list" {"list"} else {"option"}, "element": self.type_value_inner(tree.one("type")?, scope, depth + 1)?})
+                let mut descriptor = json!({"kind": if self.syntax.word(tree, 0)? == "list" {"list"} else {"option"}});
+                descriptor["element"] =
+                    self.type_value_inner(tree.one("type")?, scope, depth + 1)?;
+                descriptor
             }
             "type" if !tree.all("local_type").is_empty() => {
                 let reference = tree.one("local_type")?.one("reference")?;
@@ -67,7 +74,9 @@ impl<'a, 's> Lower<'a, 's> {
         })
     }
     pub(super) fn wrapped_type(&mut self, tree: &Tree, scope: &str) -> Result<Value> {
-        Ok(json!({"dialect": self.ledger.dialect(), "body": self.type_value(tree, scope, 0)?}))
+        let mut wrapped = json!({"dialect": self.ledger.dialect()});
+        wrapped["body"] = self.type_value(tree, scope, 0)?;
+        Ok(wrapped)
     }
     pub(super) fn tag(&mut self, tree: &Tree, scope: &str) -> Result<String> {
         if let Some(outcome) = tree.all("outcome_reference").first() {

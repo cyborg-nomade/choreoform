@@ -52,13 +52,17 @@ or actual user accessibility. Current benchmark adoption/archive remains separat
 ## Tests and finite boundaries
 
 Twelve Rust groups cover scalar/nested structural/outcome descriptions, forward
-use, unused invalid/cyclic/duplicate/scale/missing definitions, exact whole nominal
+use, unused invalid/cyclic/duplicate/scale/name/member-bound/missing definitions, exact whole nominal
 body/resource preservation, purpose/protection coexistence, parameter/result /
 literal/initializer/observation/capability type positions, no manufactured nominal
 membership, lexical ancestor/private/sibling/wrong-kind use, explicit rename /
 reorder/fresh-copy/tombstone/stale/surplus IDs, annotations/format/integrity, every
 old pair and genuinely future refusal, and tiny DAG/deep/wide/cumulative expansion.
-A standalone parameterized expression retains its existing `parameter-binding`
+Review also closes the already-required Source0.17 unused protection sensitivity
+name bound (4096 characters), with a real CLI regression and no literal echo.
+These definitions have no wire record for a later checker to validate. Valid
+Source0.17 meanings and all earlier profiles remain unchanged; oversize unused
+sensitivity now refuses explicitly. A standalone parameterized expression retains its existing `parameter-binding`
 refusal; local type spelling does not invent a call context. Four independent
 Python groups verify frozen hashes/closed schema/actual grammar, real CLI/all 11
 small non-executable views and integrity cycles, cycle/kind/stale/future/private
@@ -71,7 +75,9 @@ Expanded type/container depth and traversal use 64, tokens 131072, parser 1M and
 semantic/shared limits stay fixed. Cached values are built only after all graph /
 cache reservations succeed, in dependency order. A tiny acyclic graph cannot
 allocate exponential output; <100000-byte sources separately hit repeated-use work
-and byte ceilings without candidates. Immutable types cache no live access truth.
+and byte ceilings without candidates. Expanded maps/elements/wrappers move into their parent descriptors, avoiding
+serialization-macro clones at every nesting level. Immutable types cache no live
+access truth.
 
 Full required final-head workspace/compile-fail/native/Wasm/release/native-
 portability/Python validation, separate completed-diff automated review, complete

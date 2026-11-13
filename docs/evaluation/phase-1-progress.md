@@ -40,7 +40,10 @@ groups. Full workspace 659 Rust + six compile-fail passes; final native/Wasm/all
 Python verification, separate automated review, all comments/final-head CI and
 expected-head signed merge remain required before integration. Review tightened
 a shared structural/alias traversal-depth guard and removed repeated field-label
-scans. Preflight validates all unused/forward/cyclic graphs and complete expanded
+scans, moved nested type maps/elements/wrappers without repeated serialization
+clones, and enforced unused field/tag/member bounds plus Source0.17
+protection sensitivity conformance. Valid old meanings stay fixed; oversize unused
+Source0.17 sensitivity now refuses explicitly. Preflight validates all unused/forward/cyclic graphs and complete expanded
 costs before caches/copies, sharing cumulative budgets with protection/dependencies.
 Exact nominal/tag/field/literal/parameter meaning and private resource/outcome
 provenance remain fixed. A standalone unbound parameter context still refuses.

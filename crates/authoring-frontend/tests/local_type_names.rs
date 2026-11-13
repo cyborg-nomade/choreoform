@@ -159,6 +159,30 @@ fn unused_cycles_bad_fields_and_decimal_scales_refuse_before_candidates() {
         assert_eq!(e.code, code);
         assert!(e.span.start > 0);
     }
+    for (ty, code) in [
+        (
+            format!("record with [\"{}\" as text]", "x".repeat(4097)),
+            "type-name",
+        ),
+        (
+            format!("choice with [\"{}\" as text]", "x".repeat(4097)),
+            "type-name",
+        ),
+        (
+            format!(
+                "record with [{}]",
+                (0..10001)
+                    .map(|i| format!("\"f{i}\" as text"))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            ),
+            "type-members",
+        ),
+    ] {
+        let (mut s, mut l) = pair("text");
+        add(&mut s, &mut l, "invalid_unused", "Invalid unused", &ty);
+        assert_eq!(lower(&s, &l).unwrap_err().code, code);
+    }
 }
 #[test]
 fn tiny_acyclic_dags_cannot_expand_exponentially_or_evade_expanded_depth() {

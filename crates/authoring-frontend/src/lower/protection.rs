@@ -83,6 +83,13 @@ impl<'a, 's> Lower<'a, 's> {
                         .sum::<usize>()
                         + node.one("names")?.all("NAME").len();
                     self.expansion_charge(count + 1, 0, self.syntax.span(node))?;
+                    let sensitivity = node.all("NAME")[1];
+                    if self.syntax.text(sensitivity)?.chars().count() > 4096 {
+                        return Err(error(
+                            "protection-sensitivity",
+                            self.syntax.span(sensitivity),
+                        ));
+                    }
                     let purposes =
                         self.protection_purposes(node.one("names")?, &id)
                             .map_err(|mut e| {

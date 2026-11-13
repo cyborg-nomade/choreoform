@@ -217,6 +217,9 @@ impl<'a, 's> Lower<'a, 's> {
                     let mut type_depth = 1;
                     let mut containers = 2;
                     let labels = owner.all(if record { "NAME" } else { "tag" });
+                    if labels.len() > 10_000 {
+                        return Err(error("type-members", self.syntax.span(owner)));
+                    }
                     for (i, (label, ty)) in labels.into_iter().zip(owner.all("type")).enumerate() {
                         let name = if record {
                             self.syntax.text(label)?.to_owned()
@@ -232,6 +235,9 @@ impl<'a, 's> Lower<'a, 's> {
                             }
                             self.tag(tag, scope)?
                         };
+                        if name.chars().count() > 4096 {
+                            return Err(error("type-name", self.syntax.span(label)));
+                        }
                         if !names.insert(name.clone()) {
                             return Err(error("duplicate-map-key", self.syntax.span(owner)));
                         }
