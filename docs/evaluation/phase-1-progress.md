@@ -3,39 +3,36 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-12<br>
+**Updated:** 2026-11-13<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
 ## Current focus
 
-[PR #97](https://github.com/cyborg-nomade/choreoform/pull/97) merged the actual
-request-region premise audit as `7f26305021e28b8598582ac1a02a0888891d65c0`, after exact-head CI `43247994354` at
-`c00f708e37336055cc62711f89a25e67260833fe` and automated COMMENT review/fresh full audit
-`5877161955`. Signed evidence/critique `d3ce784` precedes ADR-0082 direction.
-Five SDK/four Python groups trace actual request/invoke/retention/capture identities
-and validate mathematical type counterexamples using unchanged real resources:
-raw inequality does not establish physical non-aliasing; a warehouse permutation
-across two type-valid revisions refutes cross-revision input-type disequality;
-both original and changed complete requests may type-check while remaining different.
-These are NOT accepted edits/requests, actual authority/host mappings or a witness
-of admissibly overlapping execution. Exact P3/P4/P6/invalidation/ownership/terminal
-rules remain mandatory. The roadmap keeps canonicalization/original snapshot /
-all admissible revised/surviving work and aggregate executable-IR gates open.
-All local/CI 633 Rust + six compile-fail/native/Wasm/78 Python commands pass; no
-remaining actionable automated findings, bot skipped, no independent/human approval.
-No production/profile/source/schema/contract/benchmark/history/generator/report
-bytes change; current effectful refusal stays exact. Parent #46 remains draft.
+[PR #98](https://github.com/cyborg-nomade/choreoform/pull/98) merged the measured
+near-English factoring critique as `c06480f51fc0a3f993e7bf67ceae951b053aca86`, after exact-head CI `43401288608`
+at `634520845124ec6f406572e3c7979d05921ea362` and automated COMMENT review/fresh full audit
+`5888768916`. Signed critique `e995b48` precedes native measurements. Actual RP-03
+has 155 copies of an 866-byte data protection clause, all resolving to one exact
+IR value; repeated-byte upper bound 133364 (23.1%) excludes reuse costs, not measured
+compression/user evidence. RP-01 has one resolved envelope across 26 declarations
+despite two spellings. Four metric/four Python groups verify native spans/hashes /
+counts/qualification/bounds and independent resolved identity. All local/CI 637 Rust
++six compile-fail/native/Wasm/79 Python commands pass; no remaining actionable
+findings, bot skipped, no independent/human approval. No production syntax/library /
+core/source/schema/quota or old artifact/benchmark/history/generator/report bytes
+changed; full RP-08/general editing/export/visual/user evidence remains open.
 
-Active `codex/near-english-factoring-critique` follows signed `b81edda`,
-[Phase 1 authoring scope](0083-near-english-factoring-critique-plan.md). Measure actual
-whole-process repetition; compare controlled-English names/blocks/library/layout
-options before changing syntax. Preserve exact identities, lexical privacy, unique
-work/endpoints/retention/compensation and pinned provider recipient claims. Any
-inactive probe must distinguish paper examples from actual expanded/lowered evidence;
-no generated user feedback. Source/core/companion changes need a separately signed
-implementation scope. Keep near-English, protected accessible editing, visual parity
-and actual representative-user evidence in Phase 1; no parser quota substitute.
+ADR-0083 selects explicit named data protection definitions first, without ambient
+defaults, permission widening or work/storage/endpoint sharing. Active
+`codex/named-data-protection` follows signed `c76073f`,
+[contract/implementation scope](0084-named-data-protection-plan.md). Publish/sign
+actual source0.17/companion0.16 grammar/profile/schema before compiler work; retain
+C12/IR0.4 for exact whole-case body/revision equivalence. Preserve explicit managed
+source-only identity, lexical references/use checks, old versions and cumulative
+expansion/output bounds. Prove genuine >=15% RP-03 byte reduction in new test variants
+without overwriting benchmarks. C13 source selection/type/service/predicate reuse
+remain separate. Current source0.16 and all semantic/concurrency gates remain fixed.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
@@ -1846,6 +1843,19 @@ No production/old accepted artifact/current/historical benchmark/generator/repor
 bytes change; aggregate gate stays unchecked. Signed `b81edda` freezes actual
 factoring measurements/options/inactive evaluation before any syntax change.
 No external blocker or Phase 2 while independent Phase 1 work remains.
+
+PR #98 merged the measured near-English critique as `c06480f51fc0a3f993e7bf67ceae951b053aca86` after final-head
+CI `43401288608` and automated COMMENT review/fresh full audit `5888768916`.
+Signed critique `e995b48` precedes actual native parser measurements. RP-03 repeats
+one 866-byte protection clause 155 times; all resolved values match. The 133364-byte
+upper bound is not measured reduction/comprehension. Four Rust measurement/four
+Python groups validate extents/hash/reproduction/protection identity/bounds and
+paper evidence limits. All 637 Rust+six compile-fail/native/Wasm/79 Python commands
+pass; bot skipped, no independent/human approval. ADR-0083 selects explicit named
+protection first with no permission/work sharing. Signed `c76073f` freezes source17 /
+companion16 on C12, exact IR equivalence, managed identity and measured reduction
+before benchmark adoption. No production/old artifact/benchmark/report bytes change.
+All full language/visual/user/semantic/phase gates remain open; no Phase 2.
 
 ## Honest exit accounting
 
