@@ -66,3 +66,13 @@ next work. A skipped bot is not evidence. Keep all scenarios Partial and G1–G4
 aggregate executable-IR/protected accessible editing/export/text-visual/reusable
 receipt/work/full RP-08/real users/host/browser/independent/semantic/region/phase
 criteria open. Stop only at the honest phase report for owner approval; no Phase 2.
+
+## Pre-adoption inventory correction
+
+Actual tree inspection after #102 merge finds **59 current non-history files**
+and **54 existing source-0.7 history files**, **113 total**. The original scope
+incorrectly called all113 non-history files. Archive the exact59 at the stated
+new path, preserve all54 older history files in place and prove all113 originals
+unchanged. Inventory `198e5c971a01299c441c0740b0dbab140467642e91725691a89026a3b184b0ac` covers the59; the archive provenance
+records framing and exact source epoch. No recursive history duplication or
+implementation work preceded this correction/checkpoint.
