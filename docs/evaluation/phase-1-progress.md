@@ -9,41 +9,34 @@
 
 ## Current focus
 
-[PR #99](https://github.com/cyborg-nomade/choreoform/pull/99) merged explicit named
-data protection as `1bd547425c126500fb8d83d6c0e267a5471982ea`, after exact-head CI
-`43404656137` at `b2b00438c8379c56c954a17071c150abfed2d24b`, automated COMMENT
-review `5889074244` and fresh full audit. Signed scope `c76073f` and publication
-`f6dfe7e` precede production code. Source0.17/companion0.16 selects unchanged C12 /
-IR0.4, with explicit source-only identity, complete immutable envelopes, per-data
-purpose identities and cumulative work/expansion/record/final wire bounds. Unused
-definitions, lexical visibility, old-version closure and diagnostic order are tested.
-Local/CI 647 Rust + six compile-fail/native/Wasm/all 80 Python commands pass; no
-remaining actionable finding, bot skipped, no independent/human approval.
+[PR #100](https://github.com/cyborg-nomade/choreoform/pull/100) merged the transparent
+type naming critique/direction as `e2ead2ae309730bee9729f08dc67ea39037dd176`, after final-head CI `43406305606`
+at `17a83ed6840e38a350c5edfcc755f55c04e48b37`, automated COMMENT review
+`5889193632` and fresh full audit. Signed scope `ff075233` and critique `7263cf9`
+precede further read-only resolved-IR inspection. No production/utility/source /
+schema/core/resource/benchmark/quota bytes change. Existing native metrics and
+actual type-position counts support transparent names, not future savings or
+user evidence. Final-head CI passes 647 Rust + six compile-fail/native/Wasm/all
+80 Python commands; relevant local links/native metrics pass. No remaining
+findings; bot skipped, no independent/human approval.
 
-Actual native whole-case test variants: RP-03 576759 -> 448421 bytes (22.25%),
-exact current complete IR/revision and the same concurrency refusal; RP-01
-61211 -> 56059 bytes after explicit C12 baseline promotion of its current C11
-source. Both format/reparse and pass static/control/protection/strict invalidation.
-[Evidence](0084-named-data-protection.md) records ten Rust/four Python groups.
-Current/historical benchmark/provider/guard/receipt/generator/report bytes stay
-fixed; adoption/archive remains separate. Full RP-08/general editing/protected
-accessible inspection/visual/real-user and semantic/region evidence remains open.
+ADR-0085 selects explicit local transparent type names, preserving exact nested
+nominal pins, fields/tags/scales/optional/list semantics and lexical/managed
+identities. Require unused/forward/cycle validation and cumulative pre-allocation
+DAG/depth/node/work/bytes; acyclic short source alone is insufficient. All wording
+is paper-only. The roadmap explicitly retains receipt/work reuse, full RP-08,
+protected accessible inspection/editing/export/visual parity and actual users
+within Phase 1. Current source0.17/C12 and concurrency/semantic gates stay fixed.
 
-Active `codex/named-type-critique` follows signed `ff0752339788099bb99abed486ff8209ee091fe0`,
-[scope85](0085-type-naming-critique-plan.md). Separately signed critique `7263cf9`
-precedes read-only resolved-IR inspection; no new utility/production code is needed.
-[ADR-0085](../decisions/0085-transparent-type-naming-direction.md) selects explicit
-local transparent type names as the next separately contracted direction. Existing
-native type-byte upper bounds and actual resolved families justify the scope,
-not measured future savings: RP-03 has 50 identical complete request data types,
-50 identical expression results and 25 equal capability inputs, while nominal
-output/evidence members remain distinct. All source/type/nominal/tag/lexical /
-managed identities and pre-allocation DAG/depth/work/byte criteria must hold.
-Paper spellings are unimplemented; no type erasure or new nominal identity. Required
-final-head CI/full audit/automated review/signed merge precede a separately signed
-production contract. Source0.17/C12 and all semantic/concurrency gates stay fixed.
-The roadmap explicitly retains receipt/work reuse, full RP-08, protected accessible
-inspection/editing/export/visual parity and actual user evaluation in Phase 1.
+Active `codex/local-type-names` follows signed `96d021ec218cd3ec5c0a0c97a7293aac2464f915`,
+[scope86](0086-local-type-names-plan.md). Publish/sign ADR-0086 and exact source0.18 /
+companion0.17 grammar/profile/schema before compiler work; retain C12/IR0.4 and
+all old behavior. Managed source-only names expand to exact existing types at all
+positions, with definition/use visibility and finite cached/expanded cost checks.
+Compare actual native full RP-01/RP-03 named-protection variants for unchanged
+IR/revision and genuine further byte reduction; do not overwrite benchmarks or
+invent RP-08/user evidence. C13 source selection and parameterized work reuse stay
+separate. All unproved phase gates remain open; no Phase 2.
 
 Whole RP-03 remains source576759 bytes/84051 tokens, revision
 `sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
@@ -1884,6 +1877,20 @@ historical benchmark/resource/guard/receipt/generator/report bytes change. Signe
 new production grammar requires a separate scope. Benchmark adoption/general
 editing/protected accessible text-visual/RP-08/real-user and all phase gates remain
 open. No Phase 2.
+
+PR #100 merged the transparent type-naming critique/direction as `e2ead2ae309730bee9729f08dc67ea39037dd176`
+after final-head CI `43406305606` at `17a83ed6840e38a350c5edfcc755f55c04e48b37`,
+automated COMMENT review `5889193632` and fresh full audit. Signed scope `ff075233`
+and critique `7263cf9` precede further read-only IR inspection. Existing metrics /
+exact resolved families support explicit local names without erasing nominal
+identity; no future savings or real users are fabricated. Final CI 647 Rust + six
+compile-fail/native/Wasm/all80 Python commands passes; local links/native metrics
+pass, bot skipped, no independent review. No production/utility/accepted artifact /
+benchmark/quota bytes change. Roadmap retains receipt/work/full RP-08/managed
+protected accessible text-visual/user work within Phase 1. Signed `96d021e` freezes
+separate production source18/companion17 on C12, exact type/IR/identity/visibility
+and bounded DAG/cumulative-depth/work/byte criteria before implementation. All
+semantic/region/phase gates stay open; no Phase 2.
 
 ## Honest exit accounting
 
