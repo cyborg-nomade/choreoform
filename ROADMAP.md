@@ -126,6 +126,16 @@ validated, and round-tripped.
   [ADR-0085](docs/decisions/0085-transparent-type-naming-direction.md) selects
   transparent local type naming as the next separately contracted direction;
   type/nominal/lexical identity and cumulative expanded-depth/work/bytes must hold.
+  [ADR-0086](docs/decisions/0086-local-type-names.md) implements transparent local
+  types; [ADR-0087](docs/decisions/0087-rp03-factored-authoring.md) adopts actual
+  RP-03 source at410752 bytes (28.78% smaller), preserving exact C12 IR/reports.
+  [ADR-0088](docs/decisions/0088-rp01-factored-authoring.md) adopts RP-01 at55453
+  bytes (9.41% smaller), with explicit C11-to-C12 pin/revision/report attribution
+  changes and exact other expanded meaning. Both preserve their full old epochs.
+  The [receipt/work reuse critique](docs/evaluation/0089-reusable-receipt-critique-plan.md)
+  records the actual55-case/two-shape experiment; [ADR-0089](docs/decisions/0089-reusable-receipt-direction.md)
+  selects typed source-only pure predicate recipes as the next separate contract.
+  No new production predicate/work syntax or user-comprehension result exists yet.
   Neither closes this item: reusable receipt/work formulations, full RP-08,
   managed protected accessible inspection/editing/export and text/visual parity
   must be delivered within Phase 1 before actual representative-user evaluation.
