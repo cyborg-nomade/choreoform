@@ -9,50 +9,46 @@
 
 ## Current focus
 
-[PR #102](https://github.com/cyborg-nomade/choreoform/pull/102) merged actual RP-03
-factored authoring as `6e7bb9c57fcde127eae5f763f5ec92f023dab4fc`, after successful
-final-head CI `43444154169` at `da859b77afdce62850c128ecb54882934ecde135`, automated
-COMMENT review `5892888321` and fresh full comments/threads/CodeRabbit audit.
-Signed scope `d2e301f` and exact archive checkpoint `b8d73a7` precede adoption code.
-All 126 former current files remain exact under source-0.16-before-factoring;
-all 465 other benchmark files stay exact. Only current source, companion, manifest
-and README change. All 122 other originals, including canonical IR, five reports,
-resource/guard/receipt/launch bytes, remain byte-identical.
+[PR #103](https://github.com/cyborg-nomade/choreoform/pull/103) merged actual RP-01
+factored authoring as `46e6566e1f0c90f2d027911b40af466fad97d1e5`, after successful final-head CI
+`43448852892` at `1778130181f4ff99b78d7632946b901991164ccf`, automated COMMENT
+review `5893351354` and fresh full comments/threads/CodeRabbit audit. Signed scope
+`7604997` and exact archive `2fd3cd2` precede adoption. Inventory correction is
+explicit before code:59 current plus54 older history,113 total. All59 current
+files are preserved exactly; the54 stay in place. All702 other existing benchmark
+files, including the complete adopted RP-03, remain byte-identical.
 
-Current whole RP-03 source0.18/companion0.17 on unchanged C12/IR0.4 is 410752 UTF-8
-bytes, 66783 tokens and 840430 native parser visits, 28.78% below 576759 before
-factoring. Canonical revision remains
-`sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa`, wire
-`sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4`.
-Four checking views and advisory pass; six later views retain the legitimate
-parallel-effects-unproved refusal at start_acceptance, now source 72263..72450.
-Original feature/metric/invalidation evidence selects its exact archived epoch.
-Local/final CI 659 Rust + six compile-fail/native/Wasm/all 82 Python commands pass;
-bot skipped, no independent/human approval. [ADR-0087](../decisions/0087-rp03-factored-authoring.md)
-and [evidence](0087-rp03-factored-authoring.md) record the complete limits.
+RP-01 now explicitly selects source0.18/companion0.17/C12/IR0.4:55453 bytes/9455
+tokens,9.41% below61211. Native parser work114301 rises407 visits; no speedup or
+actual user-comprehension claim. Actual old/new lowering changes only core pin
+and recomputed revision, now
+`sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829`, wire
+`sha256:d96b6398e6856a1e34916046a6ca61ee0e09339f59c5c3664c524a5b43a801de`.
+All eleven source/raw checking/advisory views pass; report differences are limited
+to explicit revision-attribution pointers. All data/generated/resource/per-data
+purpose identities and every other expanded field remain exact. Guard44cases /
+46values changes only its two candidate pins. Legacy/default proofs and native
+metrics explicitly replay their exact epoch; no source-only identities are hidden
+from current assertions. [ADR-0088](../decisions/0088-rp01-factored-authoring.md)
+and [evidence](0088-rp01-factored-authoring.md) record the complete limits.
 
-Active `codex/rp01-factored-authoring` follows signed
-`7604997c7cd2e566ec252070748118a475e8ebc9`,
-[scope88](0088-rp01-factored-authoring-plan.md). Archive/sign the exact current RP-01 files before adoption code (59 current
-plus54 prior history,113 total; corrected in scope88 before code). Then explicitly adopt source0.18/companion0.17
-and C12/IR0.4 through its finite producer, preserving all existing archives and
-adopted RP-03. Unlike RP-03, this includes C11-to-C12 core promotion: old/new full
-candidate revisions and reports must change honestly, while all other semantic
-body fields and immutable provider/guard/receipt/launch payloads stay exact.
+Local/CI660 Rust + six compile-fail/native/Wasm/all83 Python commands pass. Review
+fixed duplicate-recipient refusal and the current guard fixture's missing C12
+input. Bot skipped, no independent/human approval. Current RP-03 remains410752
+bytes/66783tokens on C12 with exact prior IR/reports and legitimate external-region
+concurrency refusal; all scenarios remain Partial, G1–G4 conditional and parent46
+draft. No Phase2.
 
-Working adoption is not integrated yet: signed archive `2fd3cd2` preserves all59
-current files before code and leaves54 older files exact. [ADR-0088](../decisions/0088-rp01-factored-authoring.md)
-and [evidence](0088-rp01-factored-authoring.md) record 55453 bytes/9455 tokens,
-9.41% below61211, with only explicit core pin/revision deltas. All eleven actual
-source views pass; focused current/archive/legacy/identity/protection/type and
-negative mutations pass. Local660 Rust+six compile-fail/native/Wasm/all83 Python commands pass; missing
-C12 guard-fixture input and duplicate-recipient refusal are fixed and checked.
-Required final-head CI/separate review/full comment audit/signed merge remain necessary. The full adopted RP-03 tree stays exact.
-
-Parent #46 stays draft, all 40 scenarios Partial and G1–G4 conditional. C13 source
-selection, reusable receipt/work/predicate language, full RP-08, protected
-accessible editing/export/text-visual, real users/hosts/browsers/independent evidence
-and all semantic/region/phase exits remain open. No Phase 2.
+Active `codex/reusable-receipt-critique` follows signed
+`0e4c706d3d865ad45cfa159b9e3123c7cd5d346f`,
+[scope89](0089-reusable-receipt-critique-plan.md). Next inspect complete actual
+receipt/work ASTs, typed parameters and use-site barriers, compare pure source-only
+predicate recipes/new IR calls/scoped work templates/protected inspection, then
+record measured critique and ADR direction before any further production syntax.
+Preserve all accepted contracts/current/historical artifacts and conservative
+external-region refusal. Reusable receipt/work language, full RP-08, protected
+accessible managed editing/export/text-visual, actual users/hosts/browsers /
+independent evidence and every semantic/region/phase exit remain open.
 
 ## Verified baseline
 
@@ -1924,6 +1920,18 @@ remain exact. All 659 Rust + six compile-fail/native/Wasm/82 Python commands pas
 bot skipped, no independent review. Historical proofs remain tied to their epochs,
 with real current mutations separately checked. Signed `7604997` freezes RP-01
 archive-before-code and explicit C11-to-C12 adoption next. All phase gates stay open.
+
+PR #103 merged RP-01 factored source and explicit C12 promotion as `46e6566e1f0c90f2d027911b40af466fad97d1e5`
+after final-head CI `43448852892` at `1778130181f4ff99b78d7632946b901991164ccf`,
+automated COMMENT review `5893351354` and fresh full audit. Archive2fd3cd2 preserves
+all59 original current files, with54 older files unchanged; prior113-file checks
+replay exact old bytes. Actual55453-byte source is9.41% smaller. Only core pin /
+revision changes in expanded IR; all eleven reports change solely at documented
+revision pointers. All660 Rust+six compile-fail/native/Wasm/83 Python commands pass;
+bot skipped, no independent approval. Review fixes incomplete duplicate-recipient
+handling and missing C12 in the guard fixture. Signed0e4c706 freezes receipt/work
+reuse critique89 next, with no new language or manufactured user/host evidence.
+All phase gates stay open; no Phase2.
 
 ## Honest exit accounting
 
