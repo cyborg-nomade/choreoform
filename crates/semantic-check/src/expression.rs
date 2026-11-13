@@ -75,7 +75,7 @@ impl Resources<'_> {
         fields(v, &keys)?;
         let mut child =
             |this: &mut Self, key: &str| this.infer(&v[key], c, reads, depth + 1, nodes);
-        Ok(match op {
+        let ty = match op {
             "literal" => {
                 let t = self.type_descriptor(&v["type"])?;
                 self.value(&t, &v["value"], 0)?;
@@ -228,7 +228,9 @@ impl Resources<'_> {
                 self.nominal(&key, depth + 1)?.representation.clone()
             }
             _ => unreachable!("closed operation"),
-        })
+        };
+        self.assert_expression_type(v, &ty)?;
+        Ok(ty)
     }
 
     // Only called for statically checked nominal invariants. There is no general

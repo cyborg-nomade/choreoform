@@ -90,3 +90,33 @@ declared pure parameter contexts. Every call also carries a result-type assertio
 including zero-input calls, so unvisited calls cannot silently pass. Source-only
 assertion storage/type caches and visited-site coverage must be cumulatively
 bounded, immutable and private; no missing assertion may become success.
+
+## Working native proof layer after publication
+
+Exact language publication `5b1a8c57ccfa22cac9951830ecf443986db096a1` precedes
+production changes. The new native extra-type API can only reject more: it checks
+immutable expression sites against exact native types, charges shared metadata /
+comparison budgets and requires all assertions visited. Addresses are scoped
+internal node lookups, never dereferenced/persisted/exposed as identity. Expected
+types may cache; actual types are checked again in every caller context. Literal
+data cannot become a visited expression site. Errors use private assertion indices
+instead of echoing caller-provided paths or values. Failed pure checks clear only
+the scoped assertion state while retaining the cumulative registry budget.
+
+Eleven native groups pass (`/private/tmp/predicate-native-assertions.log`): the
+otherwise-valid text/integer equality counterexample, complete record and distinct
+nominal mismatches, actual-context reuse, opaque/missing/overlapping/result sites,
+metadata/depth/work bounds, complete current RP-03 with identical ordinary reports,
+a genuine derived full RP-03 shared-policy context mismatch, ordinary expression
+source diagnostics and unused-work placeholder rejection. The complete SDK suite
+also passed before the last two context/diagnostic refinements
+(`/private/tmp/predicate-native-suite.log`); final full checks remain necessary.
+
+Inspection found the old raw checker deliberately uses an empty result type for
+unused work policies. That placeholder must not supply a source-call proof. The
+additional API rejects source assertions there while ordinary raw checking keeps
+its previous behavior. Policy/expression/node diagnostic wrappers preserve the
+new private assertion index and retain their exact old record paths otherwise.
+The full raw benchmark files remain unchanged. Source19 compiler/parser/binding
+registration, recipe expansion/cost/provenance/managed identity, complete variants,
+format/oracles/full CI/review/audit/merge are **not complete** yet.

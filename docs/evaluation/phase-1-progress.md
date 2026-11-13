@@ -49,6 +49,18 @@ Protected accessible managed inspection/editing/export/text-visual, full RP-08,
 actual representative users/hosts/browsers/independent evidence and every complete
 semantic/region/G1–G4/scenario/phase criterion remain open; no Phase2.
 
+Working scope90: exact source19 grammar/profile/companion18/ADR-0090 publication
+`5b1a8c57ccfa22cac9951830ecf443986db096a1` is signed before production code.
+[Design](0090-pure-predicate-design.md) records wording alternatives and the typed-
+argument trap: otherwise-valid expanded equality can erase a declared input type.
+The native extra-type proof layer now passes11 focused groups, including actual
+full RP-03 reports, derived reused-policy contexts and rejection of unused-work
+placeholder proofs. Source-only assertions only add rejection, with scoped private
+site indices and cumulative bounds; ordinary no-assertion checks preserve meaning.
+Source19 compiler support/expansion/managed bindings/complete variants/full final
+checks/CI/separate review/all comments/signed merge remain pending. Nothing is
+integrated yet and no phase criterion closes.
+
 ## Verified baseline
 
 PR #21 supplies exact resource readers and the static type/expression/policy
