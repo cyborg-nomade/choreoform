@@ -110,6 +110,7 @@ while specifications, guides, and code describe the system as it exists now.
 | [0083](0083-near-english-factoring-direction.md) | Accepted under delegation; direction only, pending parent/main integration | Factor explicit data protection before scoped work reuse |
 | [0084](0084-named-data-protection.md) | Accepted under delegation; pending parent/main integration | Explicit named data protection with unchanged expanded semantics |
 | [0085](0085-transparent-type-naming-direction.md) | Accepted under delegation; direction only, pending integration | Prefer explicit transparent type names before parameterized reuse |
+| [0086](0086-local-type-names.md) | Accepted under delegation; pending integration | Explicit local type descriptions with bounded transparent expansion |
 
 ## When an ADR is required
 
