@@ -51,6 +51,15 @@ copy. Old profiles stay closed. Whole RP-01/RP-03 test variants preserve expande
 meaning; current benchmarks and the external-effects refusal stay fixed. General
 editing/export and real accessibility/user evidence remain open.
 
+[Source 0.18](../../docs/authoring/profile-v0.18.md) adds transparent local type
+names without new nominal identity. Preflight resolves the complete type DAG,
+including unused definitions and cycles, with cumulative expanded depth/node/work /
+byte accounting before allocation/copy. Resource/outcome provenance remains scoped;
+all type positions preserve exact AST meanings and old profiles stay closed.
+Actual full RP-01/RP-03 combined variants reparse/check with unchanged IR and a
+further source reduction. The legitimate concurrency refusal, current benchmarks
+and all full accessibility/user/phase obligations remain unchanged.
+
 ## API boundaries
 
 `Candidate::source_span` maps semantic diagnostic record paths to original

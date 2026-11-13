@@ -52,6 +52,11 @@ Selected examples, rather than a complete catalogue:
 | `reconciliation-context-unproved` | The unique reconciliation wait is outside the designated direct child. Inspect actual scope ownership rather than the effect policy's declaration location. |
 | `fault-routing-cycle-unproved` | The conservative active-handler graph cannot establish acyclicity. Inspect repeated selections and lexical propagation; retry eligibility does not bound emission. |
 | `reference-missing` | A name is unavailable in the relevant binding context. Check spelling, lexical visibility and explicit qualifiers; do not make child data public to satisfy an endpoint reference. |
+| `type-name` / `type-members` | A local type description exceeds the existing field/tag name or member bound, including an unused description. |
+| `protection-sensitivity` | A named protection definition's sensitivity name exceeds 4096 characters, including when unused. |
+| `type-alias-cycle` | Type descriptions refer back to themselves, including through unused definitions. Replace the cycle with a finite complete description. |
+| `type-expansion` | The expanded type exceeds a finite node or byte bound, even if its source is short. Inspect repeated nested type descriptions. |
+| `type-member-visibility` | A type description's resource or outcome owner is private at its use. Keep the description within the owning scope; naming cannot expose a private sibling. |
 | `protection-purpose-bindings` | A data declaration's managed purpose set differs from its named protection definition. Reconcile the explicit purpose identities; do not invent a purpose from a caption. |
 | `protection-policy-kind` | A named protection definition must use a rule for protection. Inspect the definition's `Under` clause, including unused definitions. |
 | `protection-member-visibility` | A referenced protection member is unavailable where the data is declared. Inspect scope ownership; a definition cannot expose a private sibling actor, capability or policy. |

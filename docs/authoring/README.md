@@ -3,6 +3,17 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [source 0.18 / companion 0.17 profile](profile-v0.18.md) adds explicit local
+transparent type descriptions on unchanged C12 / IR 0.4. `Describe type ... as ...`
+and `type ...` uses preserve the complete existing type, including nested nominal
+pins, tags and lexical visibility. A graph preflight checks unused/forward/cyclic
+references and cumulative expanded depth/work/bytes before building cached types.
+Actual combined test variants are 55702 bytes for RP-01 and 412288 for RP-03, with
+unchanged expanded meanings and the legitimate external-effects refusal. These are
+additional reductions of 0.64% and 8.06% over protection-only variants, not user
+comprehension evidence or current benchmark adoption. See
+[the implementation evidence](../evaluation/0086-local-type-names.md).
+
 The [source 0.17 / companion 0.16 profile](profile-v0.17.md) adds explicit named
 complete data protection on unchanged C12 / IR 0.4. Each `Keep ... protected as ...`
 use expands to the same policy, sensitivity, purposes, participants and capabilities;

@@ -302,7 +302,7 @@ fn old_syntax_pair_and_kind_stay_closed_and_future_remains_unsupported() {
         );
     }
     assert_eq!(
-        parse(s.replace("0.17.0", "0.18.0").as_bytes())
+        parse(s.replace("0.17.0", "0.19.0").as_bytes())
             .unwrap_err()
             .code,
         "profile"

@@ -78,13 +78,18 @@ class NamedDataProtection(unittest.TestCase):
             elif change=='retired':l['retired'].append('shared')
             elif change=='unknown':l['implicitDefault']='shared'
             elif change=='reference':s=s.replace('protected as "Shared protection"','protected as "SECRET-MUST-NOT-LEAK"')
-            elif change=='future':s=s.replace('"0.17.0"','"0.18.0"')
+            elif change=='future':s=s.replace('"0.17.0"','"0.19.0"')
             result=invoke((s,l,r));self.assertNotEqual(result.returncode,0,change);self.assertEqual(result.stdout,b'')
             # Old syntax refuses during parse before its ledger can be inspected.
             if change!='old':self.assertIn(code.encode(),result.stderr)
             self.assertNotIn(b'SECRET-MUST-NOT-LEAK',result.stderr)
         s,l,r=pair();l['profile']='0.16.0';l['version']='0.15.0'
         with self.assertRaises(jsonschema.ValidationError):grammar.validate_ledger(l)
+
+        # Source 0.17 also validates the inherited sensitivity-name bound in
+        # unused definitions, which have no wire record for later validation.
+        s,l,r=pair();s=s.replace(NAMED,INLINE).replace(GROUP,GROUP.replace('Sensitivity "test"','Sensitivity "'+'x'*4097+'"'))
+        result=invoke((s,l,r));self.assertNotEqual(result.returncode,0);self.assertEqual(result.stdout,b'');self.assertIn(b'protection-sensitivity',result.stderr);self.assertNotIn(b'x'*100,result.stderr)
 
     def test_short_alias_source_hits_output_bound_without_partial_stdout_or_literal_echo(self):
         s,l,r=pair();s=s.replace('Sensitivity "test"','Sensitivity "'+'x'*4000+'"')

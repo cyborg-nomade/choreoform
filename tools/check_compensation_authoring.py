@@ -121,7 +121,7 @@ class CompensationAuthoringEvidence(unittest.TestCase):
             s,l,r=current(small())
             if change=='pair':l['version']='0.14.0'
             elif change=='core':l['contracts']['core']['digest']='sha256:'+'0'*64
-            elif change=='future':s=s.replace('authoring "0.16.0"','authoring "0.18.0"')
+            elif change=='future':s=s.replace('authoring "0.16.0"','authoring "0.19.0"')
             else:l['resources'][0]['digest']='sha256:'+'0'*64
             x=invoke((s,l,r));self.assertEqual(x.returncode,1,(change,x.stderr));self.assertEqual(x.stdout,b'')
         source='Choreoform authoring "0.16.0". '+'x '*(131072-4)
