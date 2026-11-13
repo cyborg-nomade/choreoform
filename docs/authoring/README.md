@@ -3,12 +3,14 @@
 
 # Near-English authoring: a working design, not final syntax
 
-[ADR-0089](../decisions/0089-reusable-receipt-direction.md) selects typed source-only
-pure receipt recipes as the next separately contracted direction. A finite read-only
-experiment reconstructs55 actual RP-03 cases using two complete shapes while
-preserving23 nominal results and25 distinct work identities. No new syntax,
-compiler/evaluator, prospective savings or actual user study is claimed.
-
+[ADR-0090](../decisions/0090-pure-predicate-recipes.md) contracts source0.19 /
+companion0.18 typed pure Boolean tests on unchanged C12/IR0.4. The native prototype
+expands explicit named inputs and checks their complete types in actual caller
+contexts before emitting a candidate. [Finite complete variants](../evaluation/0090-pure-predicates.md)
+reduce RP-03 from410752 to291309bytes and RP-01 from55453 to54172bytes while
+preserving exact current IR. Integration checks/review remain pending. These are
+experimental alternatives; current benchmark adoption remains a separate scope.
+This supplies no representative-user evidence or complete language/phase gate.
 
 The actual [RP-01 package](../benchmarks/rp01/README.md) also adopts source0.18 /
 companion0.17 with **Expense information** and **Payable instruction** under
@@ -25,7 +27,7 @@ its original 576759 bytes. Complete canonical IR, reports, resources, receipts a
 guards remain byte-identical; only source/package metadata and source spans change.
 The exact old package is archived before code under [ADR-0087](../decisions/0087-rp03-factored-authoring.md).
 This is actual native adoption, not user evidence or semantic/concurrency admission.
-RP-01's current files still use their earlier profile; adoption remains separate.
+Both current packages use source0.18; source0.19 adoption remains separate.
 
 The [source 0.18 / companion 0.17 profile](profile-v0.18.md) adds explicit local
 transparent type descriptions on unchanged C12 / IR 0.4. `Describe type ... as ...`

@@ -183,6 +183,8 @@ pub struct Resources<'a> {
     external_namespaces: BTreeMap<Pin, Arc<ExternalRegionNamespace>>,
     interference: BTreeMap<Pin, Arc<ProviderInterference>>,
     pub(crate) budget: Budget,
+    pub(crate) expression_source_context: bool,
+    pub(crate) expression_assertions: Option<crate::expression_assertions::ExpressionAssertions>,
 }
 impl<'a> Resources<'a> {
     /// Bound registry size before hashing/decoding; duplicate pins always refuse.
@@ -221,6 +223,8 @@ impl<'a> Resources<'a> {
             external_namespaces: BTreeMap::new(),
             interference: BTreeMap::new(),
             budget: Budget::default(),
+            expression_assertions: None,
+            expression_source_context: true,
         })
     }
     /// Verify exact stored bytes, without claiming their format or host meaning.

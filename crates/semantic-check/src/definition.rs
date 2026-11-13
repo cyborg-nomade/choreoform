@@ -74,6 +74,15 @@ impl Report {
 /// Check closed suite payloads and selected links/types/dependencies. Never return
 /// an executable/admitted definition; see Report::remaining for residual gates.
 pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result<Report> {
+    check_with_expression_type_assertions(envelope, supplied, &[])
+}
+/// Ordinary partial static checks plus source-only exact expression types in all
+/// actual contexts. Additional assertions can only reject. No execution grant.
+pub fn check_with_expression_type_assertions(
+    envelope: &DefinitionEnvelope,
+    supplied: &[Resource<'_>],
+    assertions: &[ExpressionTypeAssertion<'_>],
+) -> Result<Report> {
     envelope.check_structure().map_err(|_| err("structure"))?;
     require(
         envelope.document()["revision"] == digest(envelope.canonical().as_bytes()),
@@ -178,6 +187,8 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         fault_entries: Vec::new(),
         retained_requests: Vec::new(),
     };
+    c.resources
+        .install_expression_assertions(envelope.document(), assertions)?;
     c.run()?;
     if matches!(
         envelope.document()["version"].as_str(),
@@ -188,7 +199,7 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
     if envelope.document()["version"] == "0.4.0" {
         c.retained_request_declarations()?;
     }
-    Ok(Report {
+    let report = Report {
         revision: text(&envelope.document()["revision"])?.into(),
         expressions: c.expressions.len(),
         policies: c.policy_reads.len(),
@@ -197,7 +208,9 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         fault_entries: c.fault_entry_bindings(text(&envelope.document()["revision"])?)?,
         retained_requests: c.retained_request_bindings(text(&envelope.document()["revision"])?)?,
         interference: c.interference_bindings(text(&envelope.document()["revision"])?)?,
-    })
+    };
+    c.resources.finish_expression_assertions()?;
+    Ok(report)
 }
 struct Check<'a, 'r> {
     b: &'a Value,
@@ -222,10 +235,9 @@ impl Check<'_, '_> {
     fn run(&mut self) -> Result<()> {
         // Structural inspection guarantees all fixed record fields/maps exist.
         for (id, record) in object(&self.b["data"])? {
-            let ty = self.wrapped(&record["type"]).map_err(|mut e| {
-                e.path = format!("/body/data/{id}/type");
-                e
-            })?;
+            let ty = self
+                .wrapped(&record["type"])
+                .map_err(|e| e.at_record(format!("/body/data/{id}/type")))?;
             self.cells.insert(id.clone(), ty);
         }
         for scope in object(&self.b["scopes"])?.keys() {
@@ -273,10 +285,7 @@ impl Check<'_, '_> {
             })();
             self.expressions.insert(
                 id.clone(),
-                result.map_err(|mut e: Diagnostic| {
-                    e.path = format!("/body/expressions/{id}");
-                    e
-                })?,
+                result.map_err(|e: Diagnostic| e.at_record(format!("/body/expressions/{id}")))?,
             );
         }
         self.policies()?;

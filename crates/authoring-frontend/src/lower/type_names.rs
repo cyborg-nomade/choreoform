@@ -13,7 +13,7 @@ pub(super) struct Cost {
     pub bytes: usize,
     depth: usize,
     containers: usize,
-    refs: BTreeSet<(String, String)>,
+    pub(super) refs: BTreeSet<(String, String)>,
 }
 fn sum(a: usize, b: usize, limit: usize) -> Result<usize> {
     a.checked_add(b)
@@ -108,7 +108,15 @@ impl<'a, 's> Lower<'a, 's> {
             return Err(error("depth", span));
         }
         if let Some(c) = self.type_costs.get(id) {
-            let charge = c.work + c.refs.len();
+            // Source19 copies only this compact cost/provenance summary here.
+            // Expanded descriptor allocations are reserved separately by
+            // type_value (and by cache construction), before every actual copy.
+            // Keep source18's published conservative accounting unchanged.
+            let charge = if self.syntax.profile() == "0.19.0" {
+                1 + c.refs.len()
+            } else {
+                c.work + c.refs.len()
+            };
             self.expansion_charge(charge, 0, span)?;
             return Ok(self.type_costs[id].clone());
         }

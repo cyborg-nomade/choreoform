@@ -244,3 +244,5 @@ house style established by Choreoform’s first records.
 - [ADR-0088: RP-01 factored authoring and explicit C12 promotion](0088-rp01-factored-authoring.md) — accepted under owner delegation; effective on integration.
 
 - [ADR-0089: Typed pure receipt recipe direction](0089-reusable-receipt-direction.md) — accepted under owner delegation; no production syntax yet.
+
+- [ADR-0090: Typed source-only pure Boolean tests](0090-pure-predicate-recipes.md) — contract accepted under owner delegation; native prototype and experimental whole variants; integration pending.

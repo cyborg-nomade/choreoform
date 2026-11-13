@@ -113,7 +113,7 @@ fn new_pair_does_not_guess_an_old_pair_core_or_missing_inherited_contract() {
         p.lower(&supplied).unwrap_err().code,
         "resource-missing-or-ambiguous"
     );
-    let future = f.source.replacen("0.15.0", "0.19.0", 1);
+    let future = f.source.replacen("0.15.0", "0.20.0", 1);
     assert_eq!(parse(future.as_bytes()).unwrap_err().code, "profile");
 }
 

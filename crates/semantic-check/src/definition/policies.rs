@@ -8,10 +8,9 @@ impl Check<'_, '_> {
         let mut edges = BTreeMap::new();
         let mut metadata = BTreeMap::new();
         for (id, record) in object(&self.b["policies"])? {
-            let result = self.policy(id, record).map_err(|mut e| {
-                e.path = format!("/body/policies/{id}");
-                e
-            })?;
+            let result = self
+                .policy(id, record)
+                .map_err(|e| e.at_record(format!("/body/policies/{id}")))?;
             local.insert(id.clone(), result.0);
             edges.insert(id.clone(), result.1);
             metadata.insert(id.clone(), result.2);
@@ -93,10 +92,7 @@ impl Check<'_, '_> {
                     "policy-reads",
                 )
             })()
-            .map_err(|mut e| {
-                e.path = format!("/body/policies/{id}/body/reads");
-                e
-            })?;
+            .map_err(|e| e.at_record(format!("/body/policies/{id}/body/reads")))?;
             self.policy_reads.insert(id.clone(), reads);
             for user in dependents.get(&id).into_iter().flatten() {
                 let degree = degrees
@@ -170,6 +166,7 @@ impl Check<'_, '_> {
             }
         };
         let mut predicates: Vec<(&Value, Context)> = Vec::new();
+        let mut source_context = true;
         match kind {
             "actor" => {
                 text_facts(&mut context, &["principal", "inputRevision"]);
@@ -336,6 +333,7 @@ impl Check<'_, '_> {
                     .filter(|n| n["kind"] == "activity" && n["policy"] == id)
                     .collect();
                 if users.is_empty() {
+                    source_context = false;
                     context.facts.insert("result".into(), Type::empty());
                     predicates.push((&p["completion"], context));
                 } else {
@@ -434,7 +432,12 @@ impl Check<'_, '_> {
             _ => unreachable!("closed policy"),
         }
         for (predicate, context) in predicates {
-            let j = self.resources.expression(predicate, &context)?;
+            let j = if source_context {
+                self.resources.expression(predicate, &context)?
+            } else {
+                self.resources
+                    .expression_without_source_context(predicate, &context)?
+            };
             require(j.ty == Type::Boolean, "predicate-type")?;
             reads.extend(j.reads);
         }

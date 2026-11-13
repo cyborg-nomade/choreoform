@@ -209,6 +209,7 @@ fn run() -> Result<String, String> {
             | "0.16.0"
             | "0.17.0"
             | "0.18.0"
+            | "0.19.0"
     ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V3.0,
@@ -230,6 +231,7 @@ fn run() -> Result<String, String> {
             | "0.16.0"
             | "0.17.0"
             | "0.18.0"
+            | "0.19.0"
     ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V4.0,
@@ -250,6 +252,7 @@ fn run() -> Result<String, String> {
             | "0.16.0"
             | "0.17.0"
             | "0.18.0"
+            | "0.19.0"
     ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V5.0,
@@ -269,6 +272,7 @@ fn run() -> Result<String, String> {
             | "0.16.0"
             | "0.17.0"
             | "0.18.0"
+            | "0.19.0"
     ) {
         resources.push(Resource {
             id: choreoform_semantic_check::CORE_V6.0,
@@ -287,33 +291,45 @@ fn run() -> Result<String, String> {
             | "0.16.0"
             | "0.17.0"
             | "0.18.0"
+            | "0.19.0"
     ) {
         resources.push(Resource{id:choreoform_semantic_check::CORE_V7.0,revision:choreoform_semantic_check::CORE_V7.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b.txt")});
     }
-    if matches!(package.syntax().profile(), "0.16.0" | "0.17.0" | "0.18.0") {
+    if matches!(
+        package.syntax().profile(),
+        "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
+    ) {
         resources.push(Resource{id:choreoform_semantic_check::CORE_V12.0,revision:choreoform_semantic_check::CORE_V12.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007.txt")});
     }
     if matches!(
         package.syntax().profile(),
-        "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0"
+        "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
     ) {
         resources.push(Resource{id:choreoform_semantic_check::CORE_V11.0,revision:choreoform_semantic_check::CORE_V11.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e.txt")});
     }
     if matches!(
         package.syntax().profile(),
-        "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0"
+        "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
     ) {
         resources.push(Resource{id:choreoform_semantic_check::CORE_V10.0,revision:choreoform_semantic_check::CORE_V10.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f.txt")});
     }
     if matches!(
         package.syntax().profile(),
-        "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0"
+        "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
     ) {
         resources.push(Resource{id:choreoform_semantic_check::CORE_V9.0,revision:choreoform_semantic_check::CORE_V9.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f.txt")});
     }
     if matches!(
         package.syntax().profile(),
-        "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0"
+        "0.11.0"
+            | "0.12.0"
+            | "0.13.0"
+            | "0.14.0"
+            | "0.15.0"
+            | "0.16.0"
+            | "0.17.0"
+            | "0.18.0"
+            | "0.19.0"
     ) {
         resources.push(Resource{id:choreoform_semantic_check::CORE_V8.0,revision:choreoform_semantic_check::CORE_V8.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-edc8195ba0c31536ab2cdc95089e8aecc3ff402489639b4435277f0a38e7b603.txt")});
     }

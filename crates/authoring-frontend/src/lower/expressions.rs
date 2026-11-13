@@ -5,7 +5,7 @@ use super::*;
 
 impl<'a, 's> Lower<'a, 's> {
     pub(super) fn type_value(&mut self, tree: &Tree, scope: &str, depth: usize) -> Result<Value> {
-        if self.syntax.profile() == "0.18.0" {
+        if matches!(self.syntax.profile(), "0.18.0" | "0.19.0") {
             let cost = self.type_cost(tree, scope, 0)?;
             self.expansion_charge(cost.work, cost.bytes, self.syntax.span(tree))?;
         }
@@ -155,6 +155,17 @@ impl<'a, 's> Lower<'a, 's> {
         facts: bool,
         depth: usize,
     ) -> Result<Value> {
+        if self.syntax.profile() == "0.19.0" {
+            return self
+                .predicate_expression(tree, scope, facts, depth)
+                .map(|e| e.value)
+                .map_err(|mut e| {
+                    if e.span == (0..0) {
+                        e.span = self.syntax.span(tree);
+                    }
+                    e
+                });
+        }
         if depth > MAX_DEPTH {
             return Err(error("depth", self.syntax.span(tree)));
         }
@@ -283,7 +294,7 @@ impl<'a, 's> Lower<'a, 's> {
 
     // Removing value markers must not silently reinterpret a decimal coefficient.
     // This checks that representational boundary, not general expression typing.
-    fn literal_markers(
+    pub(super) fn literal_markers(
         &mut self,
         tree: &Tree,
         ty: &Value,

@@ -9,6 +9,8 @@ mod control;
 mod definition;
 mod exceptional;
 mod expression;
+mod expression_assertions;
+pub use expression_assertions::ExpressionTypeAssertion;
 mod fault_entry;
 mod faults;
 mod initialization;
@@ -33,7 +35,7 @@ pub use concurrency::{
 pub use control::{ControlReport, check_control};
 pub use definition::{
     DeclaredFaultEntry, DeclaredFaultSourceUse, DeclaredInterferenceUse, DeclaredRetainedRequest,
-    DeclaredWaitCapture, Report, check,
+    DeclaredWaitCapture, Report, check, check_with_expression_type_assertions,
 };
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};
 pub use expression::{Context, Judgment};
@@ -195,6 +197,12 @@ pub struct Diagnostic {
     pub path: String,
 }
 impl Diagnostic {
+    fn at_record(mut self, path: String) -> Self {
+        if !self.path.starts_with("/sourceTypes/") {
+            self.path = path;
+        }
+        self
+    }
     fn at_path(mut self, path: String) -> Self {
         if self.path.is_empty() {
             self.path = path;

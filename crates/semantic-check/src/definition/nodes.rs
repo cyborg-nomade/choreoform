@@ -102,10 +102,8 @@ impl Check<'_, '_> {
         }
         self.creation_dependencies()?;
         for (id, node) in object(&self.b["nodes"])? {
-            self.node(id, node).map_err(|mut e| {
-                e.path = format!("/body/nodes/{id}");
-                e
-            })?;
+            self.node(id, node)
+                .map_err(|e| e.at_record(format!("/body/nodes/{id}")))?;
         }
         Ok(())
     }

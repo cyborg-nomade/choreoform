@@ -557,7 +557,7 @@ fn old_source_pairs_do_not_accept_local_type_syntax_or_kind_and_future_stays_unk
         );
     }
     assert_eq!(
-        parse(s.replace("0.18.0", "0.19.0").as_bytes())
+        parse(s.replace("0.18.0", "0.20.0").as_bytes())
             .unwrap_err()
             .code,
         "profile"
