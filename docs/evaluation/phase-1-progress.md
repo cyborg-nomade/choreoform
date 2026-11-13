@@ -50,6 +50,18 @@ external-region refusal. Reusable receipt/work language, full RP-08, protected
 accessible managed editing/export/text-visual, actual users/hosts/browsers /
 independent evidence and every semantic/region/phase exit remain open.
 
+Working critique89 is not integrated yet. Signed `d683bf7` records options before
+measurement tooling. Native current expression spans are22971/204788 bytes; exact
+spelling upper bounds128/16268 are not future savings. The finite actual RP-03
+experiment reconstructs55 complete receipt cases with two four-input shapes:
+26 thirteen-comparison /29 fourteen-comparison cases. All23 nominal results retain
+distinct invariants and one shared representation; all25 work/capability/request
+identities stay distinct. [ADR-0089](../decisions/0089-reusable-receipt-direction.md)
+selects typed source-only pure recipes next, with new IR calls/work templates
+separate. Four Python/native-evidence groups pass; production language and every
+current/historical benchmark byte remain unchanged. Final-head CI/separate review /
+full audit/signed merge remain mandatory. No user/host/phase claim.
+
 ## Verified baseline
 
 PR #21 supplies exact resource readers and the static type/expression/policy

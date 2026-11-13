@@ -242,3 +242,5 @@ house style established by Choreoform’s first records.
 - [Markdown Architectural Decision Records](https://adr.github.io/madr/)
 
 - [ADR-0088: RP-01 factored authoring and explicit C12 promotion](0088-rp01-factored-authoring.md) — accepted under owner delegation; effective on integration.
+
+- [ADR-0089: Typed pure receipt recipe direction](0089-reusable-receipt-direction.md) — accepted under owner delegation; no production syntax yet.

@@ -3,6 +3,13 @@
 
 # Near-English authoring: a working design, not final syntax
 
+[ADR-0089](../decisions/0089-reusable-receipt-direction.md) selects typed source-only
+pure receipt recipes as the next separately contracted direction. A finite read-only
+experiment reconstructs55 actual RP-03 cases using two complete shapes while
+preserving23 nominal results and25 distinct work identities. No new syntax,
+compiler/evaluator, prospective savings or actual user study is claimed.
+
+
 The actual [RP-01 package](../benchmarks/rp01/README.md) also adopts source0.18 /
 companion0.17 with **Expense information** and **Payable instruction** under
 [ADR-0088](../decisions/0088-rp01-factored-authoring.md): 55453 bytes/9455 tokens,

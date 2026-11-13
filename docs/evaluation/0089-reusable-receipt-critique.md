@@ -76,3 +76,42 @@ General safe managed editing/export/visual round trips/actual representative use
 full RP-01/03/08 and semantic/external-region/G1–G4/phase criteria stay open. All
 scenarios remain Partial, no Phase2. Durable direction and measured finite findings
 follow before any production language implementation.
+
+## Finite measured findings after the signed critique
+
+[Native current metrics](0089-current-native-metrics.json) reproduce exact source
+bytes/tokens/parser spans and digests from the existing native utility. The new
+[finite AST inventory](0089-receipt-reuse-ast.json) reads the actual883289-byte
+RP-03 candidate and418692-byte type resource, verifies candidate/type provenance,
+and reconstructs all55 complete predicates:26 thirteen-leaf cases and29 fourteen-
+leaf cases, exactly two template hashes. Twenty-five activity/policy/capability /
+request identities stay distinct. Twenty-three nominal outputs share one complete
+representation, and all input descriptors match. The two template ASTs are2770 /
+2968 canonical JSON bytes; these are structural observations, **not source-size
+savings**. Dispatch/tag guards and false fallback remain outside these predicates.
+
+The actual candidate revision remains a3b8c0f0, wire6550ac45; no benchmark bytes
+change. The read-only tool bounds inputs at1MiB each, traversal at100000 visits /
+64 levels and emitted report at65536 bytes. Substitution stops at explicit whole
+AST terms and does not enter literal data/types or labels. The complete two shapes
+reconstruct every original case; no runtime evaluation, fact authentication, new
+membership or compiler implementation follows. Unknown operators and quota excess
+refuse. Parent ASTs use shallow shells plus recursively rebuilt children, avoiding
+repeated deep parent clones; literal payloads/explicit replacement terms are copied.
+
+Four oracle groups reproduce native metrics and finite inventory, pin every current /
+historical benchmark byte, check nominal/request/shape/identity counts, exercise
+literal opacity/depth/work/unknown-op boundaries, rerun both actual native static
+checks and preserve the genuine RP-03 concurrency refusal. A real current RP-01
+nonempty unused parameter declaration lowers but refuses parameter-binding during
+static checking; general call semantics have not been silently enabled.
+[ADR-0089](../decisions/0089-reusable-receipt-direction.md) selects A as the separate
+next production-contract direction, not accepted syntax or a user study.
+
+Local validation: all four new oracle groups pass, together with the six existing
+authoring-evidence groups and all changed-document links. No Rust or production
+frontend/SDK file changes; baseline660 Rust+six compile-fail/native/Wasm/83 Python
+commands remain recorded at PR #103. Required final-head CI adds the84th Python
+command and reruns the full suite before integration. Automated review/full
+comments/CodeRabbit audit/expected-head signed merge remain required; no independent
+review or scenario/phase closure follows.

@@ -133,7 +133,9 @@ validated, and round-tripped.
   bytes (9.41% smaller), with explicit C11-to-C12 pin/revision/report attribution
   changes and exact other expanded meaning. Both preserve their full old epochs.
   The [receipt/work reuse critique](docs/evaluation/0089-reusable-receipt-critique-plan.md)
-  is next; no production predicate/work syntax is yet selected.
+  records the actual55-case/two-shape experiment; [ADR-0089](docs/decisions/0089-reusable-receipt-direction.md)
+  selects typed source-only pure predicate recipes as the next separate contract.
+  No new production predicate/work syntax or user-comprehension result exists yet.
   Neither closes this item: reusable receipt/work formulations, full RP-08,
   managed protected accessible inspection/editing/export and text/visual parity
   must be delivered within Phase 1 before actual representative-user evaluation.
