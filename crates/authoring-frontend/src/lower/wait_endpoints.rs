@@ -43,6 +43,7 @@ impl<'a, 's> Lower<'a, 's> {
                         | "0.16.0"
                         | "0.17.0"
                         | "0.18.0"
+                        | "0.19.0"
                 ) && e.code == "reference-missing" =>
             {
                 self.ledger.endpoint_scope(scope, &parts[1..])
@@ -73,6 +74,7 @@ impl<'a, 's> Lower<'a, 's> {
                 | "0.16.0"
                 | "0.17.0"
                 | "0.18.0"
+                | "0.19.0"
         ) && (target.scope.as_deref() != Some(scope)
             || close["mode"] != "reconcile"
             || close["followup"] != target.id)
@@ -166,6 +168,7 @@ impl<'a, 's> Lower<'a, 's> {
                 | "0.16.0"
                 | "0.17.0"
                 | "0.18.0"
+                | "0.19.0"
         ) {
             for node in self.body["nodes"].as_object().expect("nodes").values() {
                 if node["kind"] != "activity" || node["mode"] != "capability" {
@@ -206,6 +209,7 @@ impl<'a, 's> Lower<'a, 's> {
                     | "0.16.0"
                     | "0.17.0"
                     | "0.18.0"
+                    | "0.19.0"
             ) {
                 let declaring_scope = self.body["policies"][policy]["scope"]
                     .as_str()

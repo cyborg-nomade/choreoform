@@ -1,0 +1,2217 @@
+{
+  "annotations": {
+    "benchmark": "RP-01",
+    "synthetic": true
+  },
+  "contracts": {
+    "core": {
+      "contract": "urn:choreoform:contracts:core-profile:0.12.0",
+      "dialect": "core",
+      "digest": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007"
+    },
+    "semantics": {
+      "contract": "urn:choreoform:semantics:adr-0008",
+      "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    }
+  },
+  "declarations": [
+    {
+      "id": "expense",
+      "kind": "scope",
+      "name": "Expense reimbursement",
+      "scope": null
+    },
+    {
+      "id": "expense_data_protection",
+      "kind": "data-protection",
+      "name": "Expense information",
+      "scope": "expense"
+    },
+    {
+      "id": "payable_instruction_type",
+      "kind": "type-alias",
+      "name": "Payable instruction",
+      "scope": "expense"
+    },
+    {
+      "id": "expense_types",
+      "kind": "resource",
+      "name": "Expense types",
+      "scope": "expense"
+    },
+    {
+      "id": "checks_provider_binding",
+      "kind": "resource",
+      "name": "Claim checks provider",
+      "scope": "expense"
+    },
+    {
+      "id": "payment_provider_binding",
+      "kind": "resource",
+      "name": "Payment provider",
+      "scope": "expense"
+    },
+    {
+      "id": "notice_provider_binding",
+      "kind": "resource",
+      "name": "Notice provider",
+      "scope": "expense"
+    },
+    {
+      "id": "expense_clock",
+      "kind": "resource",
+      "name": "Expense clock",
+      "scope": "expense"
+    },
+    {
+      "id": "employee_actor",
+      "kind": "actor",
+      "name": "Employee",
+      "scope": "expense"
+    },
+    {
+      "id": "employee_authority",
+      "kind": "policy",
+      "name": "Employee authority",
+      "scope": "expense"
+    },
+    {
+      "id": "manager_actor",
+      "kind": "actor",
+      "name": "Manager",
+      "scope": "expense"
+    },
+    {
+      "id": "manager_authority",
+      "kind": "policy",
+      "name": "Manager authority",
+      "scope": "expense"
+    },
+    {
+      "id": "finance_actor",
+      "kind": "actor",
+      "name": "Finance reviewer",
+      "scope": "expense"
+    },
+    {
+      "id": "finance_authority",
+      "kind": "policy",
+      "name": "Finance reviewer authority",
+      "scope": "expense"
+    },
+    {
+      "id": "operator_actor",
+      "kind": "actor",
+      "name": "Payment operator",
+      "scope": "expense"
+    },
+    {
+      "id": "operator_authority",
+      "kind": "policy",
+      "name": "Payment operator authority",
+      "scope": "expense"
+    },
+    {
+      "id": "clock_actor",
+      "kind": "actor",
+      "name": "Clock observer",
+      "scope": "expense"
+    },
+    {
+      "id": "clock_authority",
+      "kind": "policy",
+      "name": "Clock observer authority",
+      "scope": "expense"
+    },
+    {
+      "id": "fixed_deadline_actor",
+      "kind": "actor",
+      "name": "Keep the deadline fixed",
+      "scope": "expense"
+    },
+    {
+      "id": "fixed_deadline_authority",
+      "kind": "policy",
+      "name": "No deadline extension",
+      "scope": "expense"
+    },
+    {
+      "id": "expense_access",
+      "kind": "policy",
+      "name": "Expense access",
+      "scope": "expense"
+    },
+    {
+      "id": "settle_children",
+      "kind": "policy",
+      "name": "Settle children",
+      "scope": "expense"
+    },
+    {
+      "id": "stop_work",
+      "kind": "policy",
+      "name": "Stop work",
+      "scope": "expense"
+    },
+    {
+      "id": "withdraw_request",
+      "kind": "policy",
+      "name": "Withdraw request",
+      "scope": "expense"
+    },
+    {
+      "id": "no_handlers",
+      "kind": "policy",
+      "name": "Unhandled faults",
+      "scope": "expense"
+    },
+    {
+      "id": "ordinary_close",
+      "kind": "policy",
+      "name": "Ordinary close",
+      "scope": "expense"
+    },
+    {
+      "id": "acceptance_order",
+      "kind": "policy",
+      "name": "Acceptance order",
+      "scope": "expense"
+    },
+    {
+      "id": "preserve_remaining",
+      "kind": "policy",
+      "name": "Preserve remaining work",
+      "scope": "expense"
+    },
+    {
+      "id": "remaining",
+      "kind": "scope",
+      "name": "Remaining work",
+      "scope": "expense"
+    },
+    {
+      "id": "remaining_done",
+      "kind": "node",
+      "name": "Release remaining owner",
+      "scope": "remaining"
+    },
+    {
+      "id": "review_cycle",
+      "kind": "scope",
+      "name": "Review cycle",
+      "scope": "expense"
+    },
+    {
+      "id": "checks_service",
+      "kind": "scope",
+      "name": "Claim checks",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "checks_close",
+      "kind": "policy",
+      "name": "Claim checks close",
+      "scope": "checks_service"
+    },
+    {
+      "id": "checks_request",
+      "kind": "data",
+      "name": "Check request",
+      "scope": "checks_service"
+    },
+    {
+      "id": "checks_result",
+      "kind": "data",
+      "name": "Check outcome",
+      "scope": "checks_service"
+    },
+    {
+      "id": "checks_input",
+      "kind": "expression",
+      "name": "Claim checks input",
+      "scope": "checks_service"
+    },
+    {
+      "id": "checks_work",
+      "kind": "policy",
+      "name": "Claim checks work",
+      "scope": "checks_service"
+    },
+    {
+      "id": "checks_request_step",
+      "kind": "node",
+      "name": "Request Claim checks",
+      "scope": "checks_service"
+    },
+    {
+      "id": "checks_done",
+      "kind": "node",
+      "name": "Finish Claim checks",
+      "scope": "checks_service"
+    },
+    {
+      "id": "checks_recovery",
+      "kind": "scope",
+      "name": "Claim checks recovery",
+      "scope": "checks_service"
+    },
+    {
+      "id": "checks_observe",
+      "kind": "node",
+      "name": "Observe Claim checks",
+      "scope": "checks_recovery"
+    },
+    {
+      "id": "checks_recovered",
+      "kind": "node",
+      "name": "Finish Claim checks recovery",
+      "scope": "checks_recovery"
+    },
+    {
+      "id": "checks_capability",
+      "kind": "capability",
+      "name": "Check the claim",
+      "scope": "expense"
+    },
+    {
+      "id": "checks_effects",
+      "kind": "policy",
+      "name": "Claim checks effects",
+      "scope": "expense"
+    },
+    {
+      "id": "checks_wait",
+      "kind": "policy",
+      "name": "Claim checks reconciliation",
+      "scope": "expense"
+    },
+    {
+      "id": "payment_service",
+      "kind": "scope",
+      "name": "Payment",
+      "scope": "expense"
+    },
+    {
+      "id": "payment_close",
+      "kind": "policy",
+      "name": "Payment close",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_request",
+      "kind": "data",
+      "name": "Payable request",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_result",
+      "kind": "data",
+      "name": "Payment outcome",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_input",
+      "kind": "expression",
+      "name": "Payment input",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_deadline",
+      "kind": "data",
+      "name": "Payment deadline",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_commits",
+      "kind": "policy",
+      "name": "Payment commits",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_work",
+      "kind": "policy",
+      "name": "Payment work",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_request_step",
+      "kind": "node",
+      "name": "Request Payment",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_done",
+      "kind": "node",
+      "name": "Finish Payment",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_recovery",
+      "kind": "scope",
+      "name": "Payment recovery",
+      "scope": "payment_service"
+    },
+    {
+      "id": "payment_observe",
+      "kind": "node",
+      "name": "Observe Payment",
+      "scope": "payment_recovery"
+    },
+    {
+      "id": "payment_recovered",
+      "kind": "node",
+      "name": "Finish Payment recovery",
+      "scope": "payment_recovery"
+    },
+    {
+      "id": "payment_capability",
+      "kind": "capability",
+      "name": "Create the payable",
+      "scope": "expense"
+    },
+    {
+      "id": "payment_effects",
+      "kind": "policy",
+      "name": "Payment effects",
+      "scope": "expense"
+    },
+    {
+      "id": "payment_wait",
+      "kind": "policy",
+      "name": "Payment reconciliation",
+      "scope": "expense"
+    },
+    {
+      "id": "notice_service",
+      "kind": "scope",
+      "name": "Notice",
+      "scope": "expense"
+    },
+    {
+      "id": "notice_close",
+      "kind": "policy",
+      "name": "Notice close",
+      "scope": "notice_service"
+    },
+    {
+      "id": "notice_request",
+      "kind": "data",
+      "name": "Notice request",
+      "scope": "notice_service"
+    },
+    {
+      "id": "notice_result",
+      "kind": "data",
+      "name": "Notice outcome",
+      "scope": "notice_service"
+    },
+    {
+      "id": "notice_input",
+      "kind": "expression",
+      "name": "Notice input",
+      "scope": "notice_service"
+    },
+    {
+      "id": "notice_work",
+      "kind": "policy",
+      "name": "Notice work",
+      "scope": "notice_service"
+    },
+    {
+      "id": "notice_request_step",
+      "kind": "node",
+      "name": "Request Notice",
+      "scope": "notice_service"
+    },
+    {
+      "id": "notice_done",
+      "kind": "node",
+      "name": "Finish Notice",
+      "scope": "notice_service"
+    },
+    {
+      "id": "notice_recovery",
+      "kind": "scope",
+      "name": "Notice recovery",
+      "scope": "notice_service"
+    },
+    {
+      "id": "notice_observe",
+      "kind": "node",
+      "name": "Observe Notice",
+      "scope": "notice_recovery"
+    },
+    {
+      "id": "notice_recovered",
+      "kind": "node",
+      "name": "Finish Notice recovery",
+      "scope": "notice_recovery"
+    },
+    {
+      "id": "notice_capability",
+      "kind": "capability",
+      "name": "Notify the employee",
+      "scope": "expense"
+    },
+    {
+      "id": "notice_effects",
+      "kind": "policy",
+      "name": "Notice effects",
+      "scope": "expense"
+    },
+    {
+      "id": "notice_wait",
+      "kind": "policy",
+      "name": "Notice reconciliation",
+      "scope": "expense"
+    },
+    {
+      "id": "cycle_checks",
+      "kind": "data",
+      "name": "Check finding",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "manager_result",
+      "kind": "data",
+      "name": "Manager result",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "finance_result",
+      "kind": "data",
+      "name": "Finance result",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "duplicate_result",
+      "kind": "data",
+      "name": "Duplicate result",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "corrected_result",
+      "kind": "data",
+      "name": "Corrected result",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "correction_reasons",
+      "kind": "data",
+      "name": "Correction reasons",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "claim_for_checks",
+      "kind": "expression",
+      "name": "Claim for checks",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "review_material",
+      "kind": "expression",
+      "name": "Review material",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "claim_for_correction",
+      "kind": "expression",
+      "name": "Claim for correction",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "check_is_clear",
+      "kind": "expression",
+      "name": "Check is clear",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "check_is_correction",
+      "kind": "expression",
+      "name": "Check is correction",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "check_is_duplicate",
+      "kind": "expression",
+      "name": "Check is duplicate",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "manager_review_work",
+      "kind": "policy",
+      "name": "Manager review rules",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "manager_review",
+      "kind": "node",
+      "name": "Manager review",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "finance_review_work",
+      "kind": "policy",
+      "name": "Finance review rules",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "finance_review",
+      "kind": "node",
+      "name": "Finance review",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "duplicate_review_work",
+      "kind": "policy",
+      "name": "Duplicate resolution rules",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "duplicate_review",
+      "kind": "node",
+      "name": "Duplicate resolution",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "correction_work",
+      "kind": "policy",
+      "name": "Correction rules",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "correct_claim",
+      "kind": "node",
+      "name": "Correct the claim",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "publish_correction",
+      "kind": "node",
+      "name": "Publish corrected claim",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "record_manager",
+      "kind": "node",
+      "name": "Record manager approval",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "record_finance",
+      "kind": "node",
+      "name": "Record finance approval",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "reject_claim",
+      "kind": "node",
+      "name": "Reject the claim",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "manager_correction_reason",
+      "kind": "node",
+      "name": "Record manager correction",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "manager_rejection_reason",
+      "kind": "node",
+      "name": "Record manager rejection",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "finance_correction_reason",
+      "kind": "node",
+      "name": "Record finance correction",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "finance_rejection_reason",
+      "kind": "node",
+      "name": "Record finance rejection",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "duplicate_correction_reason",
+      "kind": "node",
+      "name": "Record duplicate correction",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "duplicate_rejection_reason",
+      "kind": "node",
+      "name": "Record duplicate rejection",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "checks_correction_reason",
+      "kind": "node",
+      "name": "Record check correction",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "checks_rejection_reason",
+      "kind": "node",
+      "name": "Record check rejection",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "run_checks",
+      "kind": "node",
+      "name": "Run checks",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "choose_check",
+      "kind": "node",
+      "name": "Choose check result",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "cycle_done",
+      "kind": "node",
+      "name": "Finish review cycle",
+      "scope": "review_cycle"
+    },
+    {
+      "id": "needs_review",
+      "kind": "expression",
+      "name": "Another review is needed",
+      "scope": "expense"
+    },
+    {
+      "id": "may_pay",
+      "kind": "expression",
+      "name": "Current approvals permit payment",
+      "scope": "expense"
+    },
+    {
+      "id": "pay_input",
+      "kind": "expression",
+      "name": "Approved payable instruction",
+      "scope": "expense"
+    },
+    {
+      "id": "pay_due",
+      "kind": "expression",
+      "name": "Due for payment",
+      "scope": "expense"
+    },
+    {
+      "id": "was_paid",
+      "kind": "expression",
+      "name": "Payment is confirmed",
+      "scope": "expense"
+    },
+    {
+      "id": "status_notice_input",
+      "kind": "expression",
+      "name": "Status notice",
+      "scope": "expense"
+    },
+    {
+      "id": "is_paid",
+      "kind": "expression",
+      "name": "Disposition is paid",
+      "scope": "expense"
+    },
+    {
+      "id": "is_rejected",
+      "kind": "expression",
+      "name": "Disposition is rejected",
+      "scope": "expense"
+    },
+    {
+      "id": "review_again",
+      "kind": "node",
+      "name": "Review again",
+      "scope": "expense"
+    },
+    {
+      "id": "choose_payment",
+      "kind": "node",
+      "name": "Choose payment",
+      "scope": "expense"
+    },
+    {
+      "id": "check_rejection",
+      "kind": "node",
+      "name": "Check rejection",
+      "scope": "expense"
+    },
+    {
+      "id": "stale_payment",
+      "kind": "node",
+      "name": "Record stale payment evidence",
+      "scope": "expense"
+    },
+    {
+      "id": "run_payment",
+      "kind": "node",
+      "name": "Run payment",
+      "scope": "expense"
+    },
+    {
+      "id": "choose_paid",
+      "kind": "node",
+      "name": "Choose payment result",
+      "scope": "expense"
+    },
+    {
+      "id": "record_paid",
+      "kind": "node",
+      "name": "Record paid status",
+      "scope": "expense"
+    },
+    {
+      "id": "record_problem",
+      "kind": "node",
+      "name": "Record payment problem",
+      "scope": "expense"
+    },
+    {
+      "id": "run_notice",
+      "kind": "node",
+      "name": "Run notice",
+      "scope": "expense"
+    },
+    {
+      "id": "publish_outcome",
+      "kind": "node",
+      "name": "Choose published outcome",
+      "scope": "expense"
+    },
+    {
+      "id": "finish_paid",
+      "kind": "node",
+      "name": "Finish paid",
+      "scope": "expense"
+    },
+    {
+      "id": "finish_rejected",
+      "kind": "node",
+      "name": "Finish rejected",
+      "scope": "expense"
+    },
+    {
+      "id": "finish_problem",
+      "kind": "node",
+      "name": "Finish payment problem",
+      "scope": "expense"
+    },
+    {
+      "id": "current_claim",
+      "kind": "data",
+      "name": "Current claim",
+      "scope": "expense"
+    },
+    {
+      "id": "payment_due",
+      "kind": "data",
+      "name": "Payment due",
+      "scope": "expense"
+    },
+    {
+      "id": "review_needed",
+      "kind": "data",
+      "name": "Review needed",
+      "scope": "expense"
+    },
+    {
+      "id": "disposition",
+      "kind": "data",
+      "name": "Disposition",
+      "scope": "expense"
+    },
+    {
+      "id": "disposition_reasons",
+      "kind": "data",
+      "name": "Disposition reasons",
+      "scope": "expense"
+    },
+    {
+      "id": "manager_evidence",
+      "kind": "data",
+      "name": "Manager evidence",
+      "scope": "expense"
+    },
+    {
+      "id": "finance_evidence",
+      "kind": "data",
+      "name": "Finance evidence",
+      "scope": "expense"
+    },
+    {
+      "id": "payable_reference",
+      "kind": "data",
+      "name": "Payable reference",
+      "scope": "expense"
+    },
+    {
+      "id": "recorded_payment",
+      "kind": "data",
+      "name": "Recorded payment result",
+      "scope": "expense"
+    },
+    {
+      "id": "recorded_notice",
+      "kind": "data",
+      "name": "Recorded notice result",
+      "scope": "expense"
+    },
+    {
+      "id": "payment_faults_binding",
+      "kind": "resource",
+      "name": "Payment faults",
+      "scope": "expense"
+    },
+    {
+      "id": "payment_terminal_binding",
+      "kind": "resource",
+      "name": "Payment terminal facts",
+      "scope": "expense"
+    },
+    {
+      "id": "retained_payment_request",
+      "kind": "data",
+      "name": "Original payment request",
+      "scope": "payment_recovery"
+    },
+    {
+      "id": "late_payment_capture",
+      "kind": "data",
+      "name": "Late payment evidence",
+      "scope": "payment_recovery"
+    },
+    {
+      "id": "late_payment_category",
+      "kind": "data",
+      "name": "Late payment category",
+      "scope": "payment_recovery"
+    },
+    {
+      "id": "classify_late_payment",
+      "kind": "node",
+      "name": "Classify late payment",
+      "scope": "payment_recovery"
+    },
+    {
+      "id": "payment_receipt_test",
+      "kind": "predicate",
+      "name": "Payment receipt agrees",
+      "scope": "expense"
+    }
+  ],
+  "definition": "rp01_benchmark",
+  "format": "choreoform-authoring-bindings",
+  "generated": [
+    {
+      "id": "checks_request_step_flow_clear",
+      "key": "checks_request_step_outcome_clear",
+      "owner": "checks_request_step",
+      "role": "flow"
+    },
+    {
+      "id": "checks_request_step_flow_correction",
+      "key": "checks_request_step_outcome_correction",
+      "owner": "checks_request_step",
+      "role": "flow"
+    },
+    {
+      "id": "checks_request_step_flow_duplicate",
+      "key": "checks_request_step_outcome_duplicate",
+      "owner": "checks_request_step",
+      "role": "flow"
+    },
+    {
+      "id": "checks_request_step_flow_rejected",
+      "key": "checks_request_step_outcome_rejected",
+      "owner": "checks_request_step",
+      "role": "flow"
+    },
+    {
+      "id": "checks_observe_flow_observed",
+      "key": "checks_observe_outcome_observed",
+      "owner": "checks_observe",
+      "role": "flow"
+    },
+    {
+      "id": "checks_capability_provider",
+      "key": null,
+      "owner": "checks_capability",
+      "role": "provider-policy"
+    },
+    {
+      "id": "payment_request_step_flow_paid",
+      "key": "payment_request_step_outcome_paid",
+      "owner": "payment_request_step",
+      "role": "flow"
+    },
+    {
+      "id": "payment_request_step_flow_problem",
+      "key": "payment_request_step_outcome_problem",
+      "owner": "payment_request_step",
+      "role": "flow"
+    },
+    {
+      "id": "payment_observe_flow_observed",
+      "key": "payment_observe_outcome_observed",
+      "owner": "payment_observe",
+      "role": "flow"
+    },
+    {
+      "id": "payment_capability_provider",
+      "key": null,
+      "owner": "payment_capability",
+      "role": "provider-policy"
+    },
+    {
+      "id": "notice_request_step_flow_notified",
+      "key": "notice_request_step_outcome_notified",
+      "owner": "notice_request_step",
+      "role": "flow"
+    },
+    {
+      "id": "notice_observe_flow_observed",
+      "key": "notice_observe_outcome_observed",
+      "owner": "notice_observe",
+      "role": "flow"
+    },
+    {
+      "id": "notice_capability_provider",
+      "key": null,
+      "owner": "notice_capability",
+      "role": "provider-policy"
+    },
+    {
+      "id": "correction_reasons_initial",
+      "key": null,
+      "owner": "correction_reasons",
+      "role": "initial"
+    },
+    {
+      "id": "manager_review_flow_approved",
+      "key": "manager_review_outcome_approved",
+      "owner": "manager_review",
+      "role": "flow"
+    },
+    {
+      "id": "manager_review_flow_correction",
+      "key": "manager_review_outcome_correction",
+      "owner": "manager_review",
+      "role": "flow"
+    },
+    {
+      "id": "manager_review_flow_rejected",
+      "key": "manager_review_outcome_rejected",
+      "owner": "manager_review",
+      "role": "flow"
+    },
+    {
+      "id": "finance_review_flow_approved",
+      "key": "finance_review_outcome_approved",
+      "owner": "finance_review",
+      "role": "flow"
+    },
+    {
+      "id": "finance_review_flow_correction",
+      "key": "finance_review_outcome_correction",
+      "owner": "finance_review",
+      "role": "flow"
+    },
+    {
+      "id": "finance_review_flow_rejected",
+      "key": "finance_review_outcome_rejected",
+      "owner": "finance_review",
+      "role": "flow"
+    },
+    {
+      "id": "duplicate_review_flow_clear",
+      "key": "duplicate_review_outcome_clear",
+      "owner": "duplicate_review",
+      "role": "flow"
+    },
+    {
+      "id": "duplicate_review_flow_correction",
+      "key": "duplicate_review_outcome_correction",
+      "owner": "duplicate_review",
+      "role": "flow"
+    },
+    {
+      "id": "duplicate_review_flow_rejected",
+      "key": "duplicate_review_outcome_rejected",
+      "owner": "duplicate_review",
+      "role": "flow"
+    },
+    {
+      "id": "correct_claim_flow_resubmitted",
+      "key": "correct_claim_outcome_resubmitted",
+      "owner": "correct_claim",
+      "role": "flow"
+    },
+    {
+      "id": "publish_correction_set_current_claim",
+      "key": "current_claim",
+      "owner": "publish_correction",
+      "role": "assignment"
+    },
+    {
+      "id": "publish_correction_set_review_needed",
+      "key": "review_needed",
+      "owner": "publish_correction",
+      "role": "assignment"
+    },
+    {
+      "id": "publish_correction_set_disposition",
+      "key": "disposition",
+      "owner": "publish_correction",
+      "role": "assignment"
+    },
+    {
+      "id": "publish_correction_flow_next",
+      "key": "publish_correction_outcome_next",
+      "owner": "publish_correction",
+      "role": "flow"
+    },
+    {
+      "id": "record_manager_set_manager_evidence",
+      "key": "manager_evidence",
+      "owner": "record_manager",
+      "role": "assignment"
+    },
+    {
+      "id": "record_manager_flow_next",
+      "key": "record_manager_outcome_next",
+      "owner": "record_manager",
+      "role": "flow"
+    },
+    {
+      "id": "record_finance_set_finance_evidence",
+      "key": "finance_evidence",
+      "owner": "record_finance",
+      "role": "assignment"
+    },
+    {
+      "id": "record_finance_set_review_needed",
+      "key": "review_needed",
+      "owner": "record_finance",
+      "role": "assignment"
+    },
+    {
+      "id": "record_finance_set_disposition",
+      "key": "disposition",
+      "owner": "record_finance",
+      "role": "assignment"
+    },
+    {
+      "id": "record_finance_flow_next",
+      "key": "record_finance_outcome_next",
+      "owner": "record_finance",
+      "role": "flow"
+    },
+    {
+      "id": "reject_claim_set_review_needed",
+      "key": "review_needed",
+      "owner": "reject_claim",
+      "role": "assignment"
+    },
+    {
+      "id": "reject_claim_set_disposition",
+      "key": "disposition",
+      "owner": "reject_claim",
+      "role": "assignment"
+    },
+    {
+      "id": "reject_claim_set_disposition_reasons",
+      "key": "disposition_reasons",
+      "owner": "reject_claim",
+      "role": "assignment"
+    },
+    {
+      "id": "reject_claim_flow_next",
+      "key": "reject_claim_outcome_next",
+      "owner": "reject_claim",
+      "role": "flow"
+    },
+    {
+      "id": "manager_correction_reason_set_correction_reasons",
+      "key": "correction_reasons",
+      "owner": "manager_correction_reason",
+      "role": "assignment"
+    },
+    {
+      "id": "manager_correction_reason_flow_next",
+      "key": "manager_correction_reason_outcome_next",
+      "owner": "manager_correction_reason",
+      "role": "flow"
+    },
+    {
+      "id": "manager_rejection_reason_set_correction_reasons",
+      "key": "correction_reasons",
+      "owner": "manager_rejection_reason",
+      "role": "assignment"
+    },
+    {
+      "id": "manager_rejection_reason_flow_next",
+      "key": "manager_rejection_reason_outcome_next",
+      "owner": "manager_rejection_reason",
+      "role": "flow"
+    },
+    {
+      "id": "finance_correction_reason_set_correction_reasons",
+      "key": "correction_reasons",
+      "owner": "finance_correction_reason",
+      "role": "assignment"
+    },
+    {
+      "id": "finance_correction_reason_flow_next",
+      "key": "finance_correction_reason_outcome_next",
+      "owner": "finance_correction_reason",
+      "role": "flow"
+    },
+    {
+      "id": "finance_rejection_reason_set_correction_reasons",
+      "key": "correction_reasons",
+      "owner": "finance_rejection_reason",
+      "role": "assignment"
+    },
+    {
+      "id": "finance_rejection_reason_flow_next",
+      "key": "finance_rejection_reason_outcome_next",
+      "owner": "finance_rejection_reason",
+      "role": "flow"
+    },
+    {
+      "id": "duplicate_correction_reason_set_correction_reasons",
+      "key": "correction_reasons",
+      "owner": "duplicate_correction_reason",
+      "role": "assignment"
+    },
+    {
+      "id": "duplicate_correction_reason_flow_next",
+      "key": "duplicate_correction_reason_outcome_next",
+      "owner": "duplicate_correction_reason",
+      "role": "flow"
+    },
+    {
+      "id": "duplicate_rejection_reason_set_correction_reasons",
+      "key": "correction_reasons",
+      "owner": "duplicate_rejection_reason",
+      "role": "assignment"
+    },
+    {
+      "id": "duplicate_rejection_reason_flow_next",
+      "key": "duplicate_rejection_reason_outcome_next",
+      "owner": "duplicate_rejection_reason",
+      "role": "flow"
+    },
+    {
+      "id": "checks_correction_reason_set_correction_reasons",
+      "key": "correction_reasons",
+      "owner": "checks_correction_reason",
+      "role": "assignment"
+    },
+    {
+      "id": "checks_correction_reason_flow_next",
+      "key": "checks_correction_reason_outcome_next",
+      "owner": "checks_correction_reason",
+      "role": "flow"
+    },
+    {
+      "id": "checks_rejection_reason_set_correction_reasons",
+      "key": "correction_reasons",
+      "owner": "checks_rejection_reason",
+      "role": "assignment"
+    },
+    {
+      "id": "checks_rejection_reason_flow_next",
+      "key": "checks_rejection_reason_outcome_next",
+      "owner": "checks_rejection_reason",
+      "role": "flow"
+    },
+    {
+      "id": "run_checks_flow_complete",
+      "key": "run_checks_outcome_complete",
+      "owner": "run_checks",
+      "role": "flow"
+    },
+    {
+      "id": "choose_check_flow_clear",
+      "key": "choose_check_outcome_clear",
+      "owner": "choose_check",
+      "role": "flow"
+    },
+    {
+      "id": "choose_check_flow_correction",
+      "key": "choose_check_outcome_correction",
+      "owner": "choose_check",
+      "role": "flow"
+    },
+    {
+      "id": "choose_check_flow_duplicate",
+      "key": "choose_check_outcome_duplicate",
+      "owner": "choose_check",
+      "role": "flow"
+    },
+    {
+      "id": "choose_check_flow_rejected",
+      "key": "choose_check_outcome_rejected",
+      "owner": "choose_check",
+      "role": "flow"
+    },
+    {
+      "id": "review_again_flow_next",
+      "key": "review_again_outcome_next",
+      "owner": "review_again",
+      "role": "flow"
+    },
+    {
+      "id": "choose_payment_flow_pay",
+      "key": "choose_payment_outcome_pay",
+      "owner": "choose_payment",
+      "role": "flow"
+    },
+    {
+      "id": "choose_payment_flow_check",
+      "key": "choose_payment_outcome_check",
+      "owner": "choose_payment",
+      "role": "flow"
+    },
+    {
+      "id": "check_rejection_flow_rejected",
+      "key": "check_rejection_outcome_rejected",
+      "owner": "check_rejection",
+      "role": "flow"
+    },
+    {
+      "id": "check_rejection_flow_stale",
+      "key": "check_rejection_outcome_stale",
+      "owner": "check_rejection",
+      "role": "flow"
+    },
+    {
+      "id": "stale_payment_set_disposition",
+      "key": "disposition",
+      "owner": "stale_payment",
+      "role": "assignment"
+    },
+    {
+      "id": "stale_payment_set_disposition_reasons",
+      "key": "disposition_reasons",
+      "owner": "stale_payment",
+      "role": "assignment"
+    },
+    {
+      "id": "stale_payment_flow_next",
+      "key": "stale_payment_outcome_next",
+      "owner": "stale_payment",
+      "role": "flow"
+    },
+    {
+      "id": "run_payment_flow_complete",
+      "key": "run_payment_outcome_complete",
+      "owner": "run_payment",
+      "role": "flow"
+    },
+    {
+      "id": "choose_paid_flow_paid",
+      "key": "choose_paid_outcome_paid",
+      "owner": "choose_paid",
+      "role": "flow"
+    },
+    {
+      "id": "choose_paid_flow_problem",
+      "key": "choose_paid_outcome_problem",
+      "owner": "choose_paid",
+      "role": "flow"
+    },
+    {
+      "id": "record_paid_set_disposition",
+      "key": "disposition",
+      "owner": "record_paid",
+      "role": "assignment"
+    },
+    {
+      "id": "record_paid_set_payable_reference",
+      "key": "payable_reference",
+      "owner": "record_paid",
+      "role": "assignment"
+    },
+    {
+      "id": "record_paid_flow_next",
+      "key": "record_paid_outcome_next",
+      "owner": "record_paid",
+      "role": "flow"
+    },
+    {
+      "id": "record_problem_set_disposition",
+      "key": "disposition",
+      "owner": "record_problem",
+      "role": "assignment"
+    },
+    {
+      "id": "record_problem_set_disposition_reasons",
+      "key": "disposition_reasons",
+      "owner": "record_problem",
+      "role": "assignment"
+    },
+    {
+      "id": "record_problem_flow_next",
+      "key": "record_problem_outcome_next",
+      "owner": "record_problem",
+      "role": "flow"
+    },
+    {
+      "id": "run_notice_flow_complete",
+      "key": "run_notice_outcome_complete",
+      "owner": "run_notice",
+      "role": "flow"
+    },
+    {
+      "id": "publish_outcome_flow_paid",
+      "key": "publish_outcome_outcome_paid",
+      "owner": "publish_outcome",
+      "role": "flow"
+    },
+    {
+      "id": "publish_outcome_flow_rejected",
+      "key": "publish_outcome_outcome_rejected",
+      "owner": "publish_outcome",
+      "role": "flow"
+    },
+    {
+      "id": "publish_outcome_flow_problem",
+      "key": "publish_outcome_outcome_problem",
+      "owner": "publish_outcome",
+      "role": "flow"
+    },
+    {
+      "id": "review_needed_initial",
+      "key": null,
+      "owner": "review_needed",
+      "role": "initial"
+    },
+    {
+      "id": "disposition_initial",
+      "key": null,
+      "owner": "disposition",
+      "role": "initial"
+    },
+    {
+      "id": "disposition_reasons_initial",
+      "key": null,
+      "owner": "disposition_reasons",
+      "role": "initial"
+    },
+    {
+      "id": "manager_evidence_initial",
+      "key": null,
+      "owner": "manager_evidence",
+      "role": "initial"
+    },
+    {
+      "id": "finance_evidence_initial",
+      "key": null,
+      "owner": "finance_evidence",
+      "role": "initial"
+    },
+    {
+      "id": "payable_reference_initial",
+      "key": null,
+      "owner": "payable_reference",
+      "role": "initial"
+    },
+    {
+      "id": "classify_late_payment_assignment",
+      "key": "late_payment_category",
+      "owner": "classify_late_payment",
+      "role": "assignment"
+    },
+    {
+      "id": "classify_late_payment_flow",
+      "key": "classify_late_payment_next",
+      "owner": "classify_late_payment",
+      "role": "flow"
+    }
+  ],
+  "profile": "0.19.0",
+  "resources": [
+    {
+      "binding": "expense_types",
+      "contract": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+      "digest": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd",
+      "kind": "named-type"
+    },
+    {
+      "binding": "checks_provider_binding",
+      "contract": "urn:choreoform:benchmarks:rp01:checks:0.1.0",
+      "digest": "sha256:a884fd9977b676ed4b82244ec1a91e43e5f947b225be12f6abb6ad33b15e3378",
+      "kind": "provider"
+    },
+    {
+      "binding": "payment_provider_binding",
+      "contract": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+      "digest": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d",
+      "kind": "provider"
+    },
+    {
+      "binding": "notice_provider_binding",
+      "contract": "urn:choreoform:benchmarks:rp01:notice:0.1.0",
+      "digest": "sha256:7ae8bce8e4b6881ff9b0472658e49376f392156acb467c261e1877b4df9b5f82",
+      "kind": "provider"
+    },
+    {
+      "binding": "expense_clock",
+      "contract": "urn:choreoform:benchmarks:rp01:clock:0.1.0",
+      "digest": "sha256:32f46c291fe06f4248c44fc0aa802905ad4501c8fbcd714110689d922f832085",
+      "kind": "clock"
+    },
+    {
+      "binding": "payment_faults_binding",
+      "contract": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+      "digest": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223",
+      "kind": "provider-fault-source"
+    },
+    {
+      "binding": "payment_terminal_binding",
+      "contract": "urn:choreoform:benchmarks:rp01:payment-terminal:0.1.0",
+      "digest": "sha256:20c093752af57f36ae4204e1a28687edcc7b66bb440aa6b4dd1fb4900ae74fe7",
+      "kind": "provider-terminal-observation-source"
+    }
+  ],
+  "retired": [],
+  "root": "expense",
+  "symbols": [
+    {
+      "id": "expense_input_claim",
+      "name": "Claim",
+      "owner": "expense",
+      "role": "input",
+      "wire": "claim"
+    },
+    {
+      "id": "expense_input_deadline",
+      "name": "Payment due",
+      "owner": "expense",
+      "role": "input",
+      "wire": "deadline"
+    },
+    {
+      "id": "expense_output_disposition",
+      "name": "Disposition",
+      "owner": "expense",
+      "role": "output",
+      "wire": "disposition"
+    },
+    {
+      "id": "expense_output_payable",
+      "name": "Payable",
+      "owner": "expense",
+      "role": "output",
+      "wire": "payable"
+    },
+    {
+      "id": "expense_outcome_paid",
+      "name": "paid",
+      "owner": "expense",
+      "role": "outcome",
+      "wire": "paid"
+    },
+    {
+      "id": "expense_outcome_rejected",
+      "name": "rejected",
+      "owner": "expense",
+      "role": "outcome",
+      "wire": "rejected"
+    },
+    {
+      "id": "expense_outcome_problem",
+      "name": "problem",
+      "owner": "expense",
+      "role": "outcome",
+      "wire": "problem"
+    },
+    {
+      "id": "expense_data_protection_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "expense_data_protection",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "remaining_outcome_complete",
+      "name": "complete",
+      "owner": "remaining",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "review_cycle_outcome_complete",
+      "name": "complete",
+      "owner": "review_cycle",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "checks_service_input_request",
+      "name": "Request",
+      "owner": "checks_service",
+      "role": "input",
+      "wire": "request"
+    },
+    {
+      "id": "checks_service_output_result",
+      "name": "Result",
+      "owner": "checks_service",
+      "role": "output",
+      "wire": "result"
+    },
+    {
+      "id": "checks_service_outcome_complete",
+      "name": "complete",
+      "owner": "checks_service",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "checks_request_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "checks_request",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "checks_result_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "checks_result",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "checks_request_step_outcome_clear",
+      "name": "clear",
+      "owner": "checks_request_step",
+      "role": "outcome",
+      "wire": "clear"
+    },
+    {
+      "id": "checks_request_step_outcome_correction",
+      "name": "correction",
+      "owner": "checks_request_step",
+      "role": "outcome",
+      "wire": "correction"
+    },
+    {
+      "id": "checks_request_step_outcome_duplicate",
+      "name": "duplicate",
+      "owner": "checks_request_step",
+      "role": "outcome",
+      "wire": "duplicate"
+    },
+    {
+      "id": "checks_request_step_outcome_rejected",
+      "name": "rejected",
+      "owner": "checks_request_step",
+      "role": "outcome",
+      "wire": "rejected"
+    },
+    {
+      "id": "checks_recovery_outcome_complete",
+      "name": "complete",
+      "owner": "checks_recovery",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "checks_observe_outcome_observed",
+      "name": "observed",
+      "owner": "checks_observe",
+      "role": "outcome",
+      "wire": "observed"
+    },
+    {
+      "id": "payment_service_input_request",
+      "name": "Request",
+      "owner": "payment_service",
+      "role": "input",
+      "wire": "request"
+    },
+    {
+      "id": "payment_service_input_deadline",
+      "name": "Deadline",
+      "owner": "payment_service",
+      "role": "input",
+      "wire": "deadline"
+    },
+    {
+      "id": "payment_service_output_result",
+      "name": "Result",
+      "owner": "payment_service",
+      "role": "output",
+      "wire": "result"
+    },
+    {
+      "id": "payment_service_outcome_complete",
+      "name": "complete",
+      "owner": "payment_service",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "payment_request_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "payment_request",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "payment_result_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "payment_result",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "payment_deadline_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "payment_deadline",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "payment_request_step_outcome_paid",
+      "name": "paid",
+      "owner": "payment_request_step",
+      "role": "outcome",
+      "wire": "paid"
+    },
+    {
+      "id": "payment_request_step_outcome_problem",
+      "name": "problem",
+      "owner": "payment_request_step",
+      "role": "outcome",
+      "wire": "problem"
+    },
+    {
+      "id": "payment_recovery_outcome_complete",
+      "name": "complete",
+      "owner": "payment_recovery",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "payment_observe_outcome_observed",
+      "name": "observed",
+      "owner": "payment_observe",
+      "role": "outcome",
+      "wire": "observed"
+    },
+    {
+      "id": "notice_service_input_request",
+      "name": "Request",
+      "owner": "notice_service",
+      "role": "input",
+      "wire": "request"
+    },
+    {
+      "id": "notice_service_output_result",
+      "name": "Result",
+      "owner": "notice_service",
+      "role": "output",
+      "wire": "result"
+    },
+    {
+      "id": "notice_service_outcome_complete",
+      "name": "complete",
+      "owner": "notice_service",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "notice_request_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "notice_request",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "notice_result_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "notice_result",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "notice_request_step_outcome_notified",
+      "name": "notified",
+      "owner": "notice_request_step",
+      "role": "outcome",
+      "wire": "notified"
+    },
+    {
+      "id": "notice_recovery_outcome_complete",
+      "name": "complete",
+      "owner": "notice_recovery",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "notice_observe_outcome_observed",
+      "name": "observed",
+      "owner": "notice_observe",
+      "role": "outcome",
+      "wire": "observed"
+    },
+    {
+      "id": "cycle_checks_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "cycle_checks",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "manager_result_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "manager_result",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "finance_result_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "finance_result",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "duplicate_result_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "duplicate_result",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "corrected_result_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "corrected_result",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "correction_reasons_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "correction_reasons",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "manager_review_outcome_approved",
+      "name": "approved",
+      "owner": "manager_review",
+      "role": "outcome",
+      "wire": "approved"
+    },
+    {
+      "id": "manager_review_outcome_correction",
+      "name": "correction",
+      "owner": "manager_review",
+      "role": "outcome",
+      "wire": "correction"
+    },
+    {
+      "id": "manager_review_outcome_rejected",
+      "name": "rejected",
+      "owner": "manager_review",
+      "role": "outcome",
+      "wire": "rejected"
+    },
+    {
+      "id": "finance_review_outcome_approved",
+      "name": "approved",
+      "owner": "finance_review",
+      "role": "outcome",
+      "wire": "approved"
+    },
+    {
+      "id": "finance_review_outcome_correction",
+      "name": "correction",
+      "owner": "finance_review",
+      "role": "outcome",
+      "wire": "correction"
+    },
+    {
+      "id": "finance_review_outcome_rejected",
+      "name": "rejected",
+      "owner": "finance_review",
+      "role": "outcome",
+      "wire": "rejected"
+    },
+    {
+      "id": "duplicate_review_outcome_clear",
+      "name": "clear",
+      "owner": "duplicate_review",
+      "role": "outcome",
+      "wire": "clear"
+    },
+    {
+      "id": "duplicate_review_outcome_correction",
+      "name": "correction",
+      "owner": "duplicate_review",
+      "role": "outcome",
+      "wire": "correction"
+    },
+    {
+      "id": "duplicate_review_outcome_rejected",
+      "name": "rejected",
+      "owner": "duplicate_review",
+      "role": "outcome",
+      "wire": "rejected"
+    },
+    {
+      "id": "correct_claim_outcome_resubmitted",
+      "name": "resubmitted",
+      "owner": "correct_claim",
+      "role": "outcome",
+      "wire": "resubmitted"
+    },
+    {
+      "id": "publish_correction_outcome_next",
+      "name": "next",
+      "owner": "publish_correction",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "record_manager_outcome_next",
+      "name": "next",
+      "owner": "record_manager",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "record_finance_outcome_next",
+      "name": "next",
+      "owner": "record_finance",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "reject_claim_outcome_next",
+      "name": "next",
+      "owner": "reject_claim",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "manager_correction_reason_outcome_next",
+      "name": "next",
+      "owner": "manager_correction_reason",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "manager_rejection_reason_outcome_next",
+      "name": "next",
+      "owner": "manager_rejection_reason",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "finance_correction_reason_outcome_next",
+      "name": "next",
+      "owner": "finance_correction_reason",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "finance_rejection_reason_outcome_next",
+      "name": "next",
+      "owner": "finance_rejection_reason",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "duplicate_correction_reason_outcome_next",
+      "name": "next",
+      "owner": "duplicate_correction_reason",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "duplicate_rejection_reason_outcome_next",
+      "name": "next",
+      "owner": "duplicate_rejection_reason",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "checks_correction_reason_outcome_next",
+      "name": "next",
+      "owner": "checks_correction_reason",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "checks_rejection_reason_outcome_next",
+      "name": "next",
+      "owner": "checks_rejection_reason",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "run_checks_outcome_complete",
+      "name": "complete",
+      "owner": "run_checks",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "choose_check_outcome_clear",
+      "name": "clear",
+      "owner": "choose_check",
+      "role": "outcome",
+      "wire": "clear"
+    },
+    {
+      "id": "choose_check_outcome_correction",
+      "name": "correction",
+      "owner": "choose_check",
+      "role": "outcome",
+      "wire": "correction"
+    },
+    {
+      "id": "choose_check_outcome_duplicate",
+      "name": "duplicate",
+      "owner": "choose_check",
+      "role": "outcome",
+      "wire": "duplicate"
+    },
+    {
+      "id": "choose_check_outcome_rejected",
+      "name": "rejected",
+      "owner": "choose_check",
+      "role": "outcome",
+      "wire": "rejected"
+    },
+    {
+      "id": "review_again_outcome_next",
+      "name": "next",
+      "owner": "review_again",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "choose_payment_outcome_pay",
+      "name": "pay",
+      "owner": "choose_payment",
+      "role": "outcome",
+      "wire": "pay"
+    },
+    {
+      "id": "choose_payment_outcome_check",
+      "name": "check",
+      "owner": "choose_payment",
+      "role": "outcome",
+      "wire": "check"
+    },
+    {
+      "id": "check_rejection_outcome_rejected",
+      "name": "rejected",
+      "owner": "check_rejection",
+      "role": "outcome",
+      "wire": "rejected"
+    },
+    {
+      "id": "check_rejection_outcome_stale",
+      "name": "stale",
+      "owner": "check_rejection",
+      "role": "outcome",
+      "wire": "stale"
+    },
+    {
+      "id": "stale_payment_outcome_next",
+      "name": "next",
+      "owner": "stale_payment",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "run_payment_outcome_complete",
+      "name": "complete",
+      "owner": "run_payment",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "choose_paid_outcome_paid",
+      "name": "paid",
+      "owner": "choose_paid",
+      "role": "outcome",
+      "wire": "paid"
+    },
+    {
+      "id": "choose_paid_outcome_problem",
+      "name": "problem",
+      "owner": "choose_paid",
+      "role": "outcome",
+      "wire": "problem"
+    },
+    {
+      "id": "record_paid_outcome_next",
+      "name": "next",
+      "owner": "record_paid",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "record_problem_outcome_next",
+      "name": "next",
+      "owner": "record_problem",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "run_notice_outcome_complete",
+      "name": "complete",
+      "owner": "run_notice",
+      "role": "outcome",
+      "wire": "complete"
+    },
+    {
+      "id": "publish_outcome_outcome_paid",
+      "name": "paid",
+      "owner": "publish_outcome",
+      "role": "outcome",
+      "wire": "paid"
+    },
+    {
+      "id": "publish_outcome_outcome_rejected",
+      "name": "rejected",
+      "owner": "publish_outcome",
+      "role": "outcome",
+      "wire": "rejected"
+    },
+    {
+      "id": "publish_outcome_outcome_problem",
+      "name": "problem",
+      "owner": "publish_outcome",
+      "role": "outcome",
+      "wire": "problem"
+    },
+    {
+      "id": "current_claim_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "current_claim",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "payment_due_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "payment_due",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "review_needed_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "review_needed",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "disposition_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "disposition",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "disposition_reasons_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "disposition_reasons",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "manager_evidence_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "manager_evidence",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "finance_evidence_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "finance_evidence",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "payable_reference_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "payable_reference",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "recorded_payment_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "recorded_payment",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "recorded_notice_purpose_reimbursement",
+      "name": "Reimbursement",
+      "owner": "recorded_notice",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "retained_payment_request_purpose",
+      "name": "Reimbursement",
+      "owner": "retained_payment_request",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "late_payment_capture_purpose",
+      "name": "Reimbursement",
+      "owner": "late_payment_capture",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "late_payment_category_purpose",
+      "name": "Reimbursement",
+      "owner": "late_payment_category",
+      "role": "purpose",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "classify_late_payment_next",
+      "name": "next",
+      "owner": "classify_late_payment",
+      "role": "outcome",
+      "wire": "next"
+    },
+    {
+      "id": "payment_receipt_test_result",
+      "name": "Result",
+      "owner": "payment_receipt_test",
+      "role": "predicate-input",
+      "wire": "result"
+    },
+    {
+      "id": "payment_receipt_test_request",
+      "name": "Instruction",
+      "owner": "payment_receipt_test",
+      "role": "predicate-input",
+      "wire": "request"
+    }
+  ],
+  "version": "0.18.0"
+}

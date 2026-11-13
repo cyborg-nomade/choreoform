@@ -87,6 +87,7 @@ impl<'a, 's> Lower<'a, 's> {
                 | "0.16.0"
                 | "0.17.0"
                 | "0.18.0"
+                | "0.19.0"
         ) {
             record["faultInput"] = if let Some(binding) = tree.all("fault_entry").first() {
                 let history = self.r(binding, &id, "resource", 0)?;
@@ -103,7 +104,15 @@ impl<'a, 's> Lower<'a, 's> {
         }
         if matches!(
             self.syntax.profile(),
-            "0.11.0" | "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0"
+            "0.11.0"
+                | "0.12.0"
+                | "0.13.0"
+                | "0.14.0"
+                | "0.15.0"
+                | "0.16.0"
+                | "0.17.0"
+                | "0.18.0"
+                | "0.19.0"
         ) {
             let mut requests = Map::new();
             if let Some(binding) = tree.all("retained_request").first() {
@@ -124,7 +133,7 @@ impl<'a, 's> Lower<'a, 's> {
             match node.rule {
                 "scope" => self.scope(node, Some(&id), depth + 1)?,
                 "data" | "named_data" => self.data(node, &id)?,
-                "data_protection" | "type_declaration" => {}
+                "data_protection" | "type_declaration" | "predicate_declaration" => {}
                 "expression_declaration" => {
                     let expr = self.declare(node, Some(&id), "expression")?;
                     let ty = self.wrapped_type(node.one("type")?, &id)?;

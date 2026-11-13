@@ -3,7 +3,7 @@
 
 # ADR-0090: Typed source-only pure Boolean tests on unchanged C12 IR
 
-**Status:** Contract accepted under Project Owner delegation; implementation pending; effective on integration<br>
+**Status:** Accepted under Project Owner delegation; implementation locally verified; effective on integration<br>
 **Date:** 2026-11-13<br>
 **Decider:** Codex under ADR-0018; no personal owner or independent review
 
@@ -109,3 +109,14 @@ merge before integration. All40 scenarios remain Partial, G1–G4 conditional an
 parent46 draft. Full RP-08, managed protected accessible inspection/editing/export /
 text-visual, actual users/hosts/browsers/independent and every complete semantic /
 region/phase criterion remain open; no Phase2.
+
+## Implemented evidence before integration
+
+The [native implementation evidence](../evaluation/0090-pure-predicates.md) records
+688 Rust tests plus6 compile-fail tests, required native/Wasm checks and85 Python
+commands. The complete experimental RP-01/03 variants retain exact current C12
+documents/revisions/wire at54172 /291309 source bytes. Current benchmark adoption
+remains a separate archive-first scope. Initial quota failures led to bounded
+declaration collection and compact cached-cost lookup; every actual descriptor
+copy remains fully reserved and all published quotas remain unchanged. Final-head
+CI, separate automated review, full comment audit and signed merge remain required.

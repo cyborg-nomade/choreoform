@@ -24,6 +24,7 @@ impl<'a, 's> Lower<'a, 's> {
                 | "0.16.0"
                 | "0.17.0"
                 | "0.18.0"
+                | "0.19.0"
         );
         let mut metadata = BTreeMap::new();
         let mut local = BTreeMap::new();
@@ -33,8 +34,10 @@ impl<'a, 's> Lower<'a, 's> {
         for (id, policy) in self.body["policies"].as_object().expect("map") {
             creation::charge(&mut dependency_work, 1)?;
             let p = &policy["body"];
-            if matches!(self.syntax.profile(), "0.16.0" | "0.17.0" | "0.18.0")
-                && p["kind"] == "work"
+            if matches!(
+                self.syntax.profile(),
+                "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
+            ) && p["kind"] == "work"
                 && let Some(target) = p["compensates"].as_str()
             {
                 creation::charge(&mut dependency_work, 1)?;
@@ -145,6 +148,7 @@ impl<'a, 's> Lower<'a, 's> {
                     | "0.16.0"
                     | "0.17.0"
                     | "0.18.0"
+                    | "0.19.0"
             ) {
                 &p["faultSource"]
             } else {
@@ -293,7 +297,11 @@ impl<'a, 's> Lower<'a, 's> {
                 }
             }
         }
-        let mut creation_work = 0;
+        let mut creation_work = if self.syntax.profile() == "0.19.0" {
+            dependency_work
+        } else {
+            0
+        };
         let creation = self.creation_dependencies(&closure, &mut creation_work)?;
         let ids: Vec<_> = self.body["nodes"]
             .as_object()
@@ -484,6 +492,9 @@ impl<'a, 's> Lower<'a, 's> {
                 }
             }
             self.body["nodes"][&id]["reads"] = set(reads);
+        }
+        if self.syntax.profile() == "0.19.0" {
+            self.expansion_work = creation_work;
         }
         self.check_shape()
     }

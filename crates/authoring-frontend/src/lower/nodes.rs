@@ -146,6 +146,7 @@ impl<'a, 's> Lower<'a, 's> {
                         | "0.16.0"
                         | "0.17.0"
                         | "0.18.0"
+                        | "0.19.0"
                 ) {
                     node["capture"] = if action.all("reference").len() > 1 {
                         let source = self.r(action, scope, "resource", 1)?;

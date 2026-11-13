@@ -120,3 +120,15 @@ new private assertion index and retain their exact old record paths otherwise.
 The full raw benchmark files remain unchanged. Source19 compiler/parser/binding
 registration, recipe expansion/cost/provenance/managed identity, complete variants,
 format/oracles/full CI/review/audit/merge are **not complete** yet.
+
+## Working compiler evidence
+
+The [implementation record](0090-pure-predicates.md) now supersedes the preceding
+implementation-pending checkpoint. Fifteen frontend groups plus two private trace
+groups and eleven native type-assertion groups pass within the full688-test suite;
+all6 compile-fail tests, native/Wasm checks and85 Python commands pass locally.
+Both complete finite variants preserve current C12 IR/revision/wire. Initial work
+quota failures were fixed by avoiding non-declaration scans and charging actual
+cached cost-summary lookup separately from fully reserved descriptor copies;
+limits remain unchanged. Final-head CI/review/audit/merge are still pending, and
+none of the current/historical benchmark artifacts was adopted or changed here.

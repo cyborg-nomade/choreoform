@@ -241,11 +241,14 @@ impl<'a> Package<'a> {
         self.ledger.verify_resources(resources)?;
         let mut lowering = Lower::new(&self.syntax, &self.ledger, resources)?;
         let root = self.syntax.tree().one("process")?;
-        if self.syntax.profile() == "0.18.0" {
+        if matches!(self.syntax.profile(), "0.18.0" | "0.19.0") {
             lowering.prepare_types(root)?;
         }
-        if matches!(self.syntax.profile(), "0.17.0" | "0.18.0") {
+        if matches!(self.syntax.profile(), "0.17.0" | "0.18.0" | "0.19.0") {
             lowering.collect_protections(root, None, 0)?;
+        }
+        if self.syntax.profile() == "0.19.0" {
+            lowering.prepare_predicates(root)?;
         }
         lowering.scope(root, None, 0)?;
         lowering.validate_protections()?;
@@ -255,6 +258,11 @@ impl<'a> Package<'a> {
         }
         lowering.validate_endpoints()?;
         lowering.finish_inventory()?;
+        let predicate_assertions = if self.syntax.profile() == "0.19.0" {
+            lowering.extract_predicate_assertions()?
+        } else {
+            Vec::new()
+        };
         lowering.dependencies()?;
         let mut body = lowering.body;
         body.insert("id".into(), self.ledger.document["definition"].clone());
@@ -273,6 +281,7 @@ impl<'a> Package<'a> {
                     | "0.16.0"
                     | "0.17.0"
                     | "0.18.0"
+                    | "0.19.0"
             ) {
                 "0.4.0"
             } else if self.syntax.profile() == "0.10.0" {
@@ -287,7 +296,7 @@ impl<'a> Package<'a> {
         )
         .map_err(|_| error("candidate-transport", 0..self.syntax.source().len()))?;
         let integrity = self.integrity();
-        Ok(Candidate {
+        let candidate = Candidate {
             envelope,
             source_digest: integrity.source,
             bindings_digest: integrity.bindings,
@@ -295,7 +304,16 @@ impl<'a> Package<'a> {
             spans: lowering.spans,
             entry_spans: lowering.entry_spans,
             request_spans: lowering.request_spans,
-        })
+        };
+        if lowering.predicates.has_uses {
+            predicates::validate_calls(
+                &candidate,
+                resources,
+                &lowering.predicates.types,
+                &predicate_assertions,
+            )?;
+        }
+        Ok(candidate)
     }
 }
 
@@ -305,6 +323,9 @@ mod expressions;
 mod graph;
 mod nodes;
 mod policies;
+mod predicate_ast;
+mod predicate_expressions;
+mod predicates;
 mod protection;
 mod type_names;
 mod wait_endpoints;
@@ -336,6 +357,7 @@ struct Lower<'a, 's> {
     type_values: BTreeMap<String, Value>,
     type_visiting: BTreeSet<String>,
     type_order: Vec<String>,
+    predicates: predicates::State<'a>,
 }
 
 fn set(items: impl IntoIterator<Item = String>) -> Value {
@@ -479,10 +501,11 @@ impl<'a, 's> Lower<'a, 's> {
             type_values: BTreeMap::new(),
             type_visiting: BTreeSet::new(),
             type_order: Vec::new(),
+            predicates: predicates::State::default(),
         })
     }
     fn put(&mut self, section: &str, id: String, record: Value) -> Result<()> {
-        if matches!(self.syntax.profile(), "0.17.0" | "0.18.0") {
+        if matches!(self.syntax.profile(), "0.17.0" | "0.18.0" | "0.19.0") {
             let bytes = protection::encoded_size(&record)?;
             self.record_bytes = self
                 .record_bytes

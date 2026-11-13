@@ -68,7 +68,7 @@ class LocalTypeNames(unittest.TestCase):
             elif change=='missing':s=s.replace('as type "Count",','as type "SECRET-MUST-NOT-LEAK",')
             elif change=='kind':s=s.replace('as type "Count",','as type "Reviewer",')
             elif change=='pair':l['version']='0.16.0'
-            elif change=='future':s=s.replace('"0.18.0"','"0.19.0"')
+            elif change=='future':s=s.replace('"0.18.0"','"0.20.0"')
             elif change=='retired':l['retired'].append('count_type')
             else:s=s.replace('Describe type "Count"','Describe type "Renamed"')
             result=invoke((s,l,r));self.assertNotEqual(result.returncode,0,change);self.assertEqual(result.stdout,b'');self.assertIn(code.encode(),result.stderr);self.assertNotIn(b'SECRET-MUST-NOT-LEAK',result.stderr)

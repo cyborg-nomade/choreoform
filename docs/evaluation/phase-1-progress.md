@@ -57,9 +57,16 @@ The native extra-type proof layer now passes11 focused groups, including actual
 full RP-03 reports, derived reused-policy contexts and rejection of unused-work
 placeholder proofs. Source-only assertions only add rejection, with scoped private
 site indices and cumulative bounds; ordinary no-assertion checks preserve meaning.
-Source19 compiler support/expansion/managed bindings/complete variants/full final
-checks/CI/separate review/all comments/signed merge remain pending. Nothing is
-integrated yet and no phase criterion closes.
+The working native compiler now passes15 focused frontend groups, including managed
+identity/privacy/nominal/purity/cumulative-bound cases and both complete finite
+source19 variants. Exact current C12 IR/revision/wire and format/reparse are preserved:
+RP-01 54172bytes/9145tokens/113796parser work; RP-03 291309/41306/386333.
+[Implementation evidence](0090-pure-predicates.md) records the failed initial quota
+attempts, bounded collector/cache improvements and unchanged limits. Experimental
+files live outside the benchmarks; all current/historical artifacts stay untouched.
+Full local688 Rust +6 compile-fail tests, native lint/five Wasm lints/two release
+builds/native portability/all85 Python commands pass. Final-head CI, separate
+review, all comments and signed merge remain pending. Nothing is integrated yet; no phase criterion closes.
 
 ## Verified baseline
 
