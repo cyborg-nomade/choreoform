@@ -22,9 +22,12 @@ class FactoringMeasurements(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.before=fixed()
-        env=os.environ.copy();env['CARGO_HOME']=str(ROOT/'.tools/cargo');env['RUSTUP_HOME']=str(ROOT/'.tools/rustup')
-        env['PATH']=str(ROOT/'.tools/cargo/bin')+os.pathsep+env['PATH']
-        r=subprocess.run([str(ROOT/'.tools/cargo/bin/cargo'),'run','--quiet','-p','choreoform-authoring-frontend','--example','factoring_metrics','--locked','--',*FIXTURES],cwd=ROOT,env=env,capture_output=True,timeout=60)
+        env=os.environ.copy()
+        # Local tools are optional: CI installs the pinned toolchain on PATH.
+        if (ROOT/'.tools/cargo/bin/cargo').is_file():
+            env['CARGO_HOME']=str(ROOT/'.tools/cargo');env['RUSTUP_HOME']=str(ROOT/'.tools/rustup')
+            env['PATH']=str(ROOT/'.tools/cargo/bin')+os.pathsep+env['PATH']
+        r=subprocess.run(['cargo','run','--quiet','-p','choreoform-authoring-frontend','--example','factoring_metrics','--locked','--',*FIXTURES],cwd=ROOT,env=env,capture_output=True,timeout=60)
         if r.returncode:raise AssertionError(r.stderr.decode())
         cls.raw=r.stdout;cls.reports=json.loads(r.stdout)
 
