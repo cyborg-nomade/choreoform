@@ -144,7 +144,8 @@ validated, and round-tripped.
   C12 IR/reports/resources, integrated after required checks/review/CI in PR #106.
   [ADR-0092](docs/decisions/0092-rp01-pure-test-adoption.md) adopts working RP-01
   source19 after its59-file source18 archive:54172bytes, exact old C12 IR and11
-  reports/resources/guard pins, final integration checks pending. RP-01 integration and
+  reports/resources/guard pins, integrated after required checks/review/CI in PR #107.
+  Remaining authoring completion is now under a separate critique;
   reusable work remain separate scopes; no user-comprehension evidence exists yet.
   Neither closes this item: reusable receipt/work formulations, full RP-08,
   managed protected accessible inspection/editing/export and text/visual parity

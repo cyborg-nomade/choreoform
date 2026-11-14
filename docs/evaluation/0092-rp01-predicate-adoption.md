@@ -4,7 +4,7 @@
 # Current RP-01 typed pure receipt-test adoption
 
 **Date:** 2026-11-14<br>
-**Status:** implementation locally verified; final-head CI, separate review and integration pending.<br>
+**Status:** integrated by PR #107 after successful final-head CI, automated review and fresh audit.<br>
 **Authority:** [ADR-0018](../decisions/0018-phase-review-delegation.md), signed
 [scope92](0092-rp01-predicate-adoption-plan.md)9fd9a6b and
 [ADR-0092](../decisions/0092-rp01-pure-test-adoption.md); no personal owner or independent review.
@@ -69,3 +69,14 @@ region refusal, stay exact. No runtime work/storage/authority is shared. Full
 RP-08/work reuse/protected accessible inspection/editing/export/text-visual, actual
 users/hosts/browsers/independent review and every full semantic/region/G1–G4/
 scenario/Phase1 criterion remain open. Parent46 stays draft; no Phase2.
+
+## Verified integration
+
+PR #107 integrated as `4042081c3b8ea990ad1d4e93357ad368889cdaf8` after final-head
+CI43581960139 atdd809f4568bd0642a5ec5376da9360a303339d66 (all required steps
+successful), separate automated COMMENT review5903518032 and fresh full comment-
+body/thread/head audit. All constituent commits/merge carry sign-off. CodeRabbit
+skipped; no substantive finding, review evidence or independent/human approval.
+Earlier pending statements describe the pre-integration checkpoint. The next
+separately signed scopec30eb10 critiques remaining Phase1 authoring completion
+and chooses a bounded next deliverable. Every full phase gate stays open.

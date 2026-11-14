@@ -20,8 +20,8 @@ inner condition, with explicit Result/Instruction inputs and every caller guard
 preserved. Full source54172bytes/9145tokens is2.31% below source18 at55453. The
 finite producer matches the verified experiment and preserves all11 reports/IR/
 resources/guard pins exactly; legacy source18 production stays byte-identical.
-Its59-file prior package was archived before code. Final checks/review/CI remain
-pending; no user, runtime, complete language or phase result is claimed.
+Its59-file prior package was archived before code. PR #107 integrated after required checks, delegated automated review, CI and
+full audit; no user, runtime, complete language or phase result is claimed.
 
 The current working [RP-03 package](../benchmarks/rp03/README.md) adopts source0.19 /
 companion0.18 on unchanged C12/IR0.4 under [ADR-0091](../decisions/0091-rp03-pure-test-adoption.md).
