@@ -3,7 +3,7 @@
 
 # ADR-0094: Versioned reversible authoring documents and atomic changes
 
-**Status:** Contract accepted under Project Owner delegation; native implementation pending<br>
+**Status:** Contract accepted under Project Owner delegation; integrated in PR #109; native implementation pending<br>
 **Date:** 2026-11-14<br>
 **Decider:** Codex under ADR-0018; no personal owner or independent review
 
@@ -57,3 +57,10 @@ representative users and external/independent evidence stay within Phase1. All40
 scenarios Partial, G1–G4 conditional, parent46 draft; no Phase2. Required final-head
 checks/CI, separate completed-diff automated COMMENT review, all review/comment
 assessment and expected-head signed merge remain prerequisites for integration.
+
+PR #109 integration23f97d66bb39dc31b4e962c857326d977f5bff96 follows successful
+CI43587788867 at e7231bd33244c552b5677a339baee8306da70b1e, automated COMMENT
+review5903963064 and fresh full audit. All eight commits/merge have sign-off;
+CodeRabbit skips, no substantive findings or independent/human evidence. Final-head
+688 Rust + six compile-fail/native/Wasm/all89 Python commands pass. Previous pending
+statements are historical; all native/visual/full Phase1 obligations remain open.
