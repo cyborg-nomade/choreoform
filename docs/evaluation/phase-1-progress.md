@@ -3,7 +3,7 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-13<br>
+**Updated:** 2026-11-14<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
@@ -37,19 +37,31 @@ measurements/package digests and the exact778-file prior benchmark inventory.
 
 Active `codex/rp03-predicate-adoption` follows signed `373f5b1`,
 [scope91](0091-rp03-predicate-adoption-plan.md), after verified #105 integration.
-Archive/sign all126 exact current non-history RP-03 files before producer/consumer
-or package changes, preserving the original README separately from the new archive
-note. Adopt source19 explicitly with a finite reproducible producer; preserve the
-complete C12 IR, resources/reports/guards/receipts and all semantic identities.
-Re-pin historical proofs to complete archived epochs rather than weaken them.
-Next dependency: separate RP-01 archive-first adoption, then remaining readability/
-reuse/protected managed inspection/editing/export/text-visual and full RP-08 work.
+Signed archive `dddceb238e8424171fd71b80b70dbd132cd97847` preserves all126 exact
+prior current RP-03 files/3887465bytes plus a separate note before adoption code.
+[ADR-0091](../decisions/0091-rp03-pure-test-adoption.md) and
+[working evidence](0091-rp03-predicate-adoption.md) record the finite producer:
+new mode reproduces the complete291309-byte experiment and companion value;
+legacy mode reproduces all125 generated source18 files raw-byte exactly.
+Only current source/bindings/manifest/README change; the other122 current files
+and all previous histories/RP-01 bytes remain exact. Historical source18 proofs
+use explicit full archives and exact prior-tree reconstruction, without weakening
+raw digests or stripping identities. New current negative/view/format tests pass; full local688 Rust+6 compile-fail
+tests, native lint/five Wasm lints/two release builds/native portability/all86
+Python commands pass. Final-head CI/separate review/audit/merge are pending.
 
-Current RP-01 remains source18 at55453bytes/9455tokens with all11 non-executable
-views passing; RP-03 remains source18 at410752/66783 with its legitimate external-
-region concurrency refusal. Actual representative users/hosts/browsers/independent
-review and every complete semantic/region/G1–G4/scenario/Phase1 gate remain open.
-All40 scenarios remain Partial, parent46 draft; no Phase2 or phase completion.
+Current working RP-03 is source19/companion18/C12 at291309bytes/41306tokens/
+386333parser visits, exact old IR/revision/wire and five reports; all six views
+from concurrency onward retain the external-region refusal atstart_acceptance,
+now source58784..58971. The signed archive adds127 files, yielding732 RP-03 and
+905 combined benchmark files. Current RP-01 remains source18 at55453/9455 with
+all11 non-executable views passing. Next dependency: separate RP-01 archive-first
+adoption, then remaining readability/reuse/protected managed inspection/editing/
+export/text-visual and full RP-08 work.
+
+Actual representative users/hosts/browsers/independent review and every complete
+semantic/region/G1–G4/scenario/Phase1 gate remain open. All40 scenarios remain
+Partial, parent46 draft; no Phase2 or phase completion.
 
 ## Verified baseline
 

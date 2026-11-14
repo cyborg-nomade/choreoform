@@ -1,13 +1,14 @@
 # SPDX-FileCopyrightText: 2026 Choreoform contributors
 # SPDX-License-Identifier: MPL-2.0
-"""Actual source adoption, exact old bytes and active negative mutations; no host proof."""
+"""Exact archived source18 adoption and its real negative mutations; no host proof."""
 from copy import deepcopy
 from hashlib import sha256
 import json
 import unittest
 from check_authoring_evidence import check_links
 from check_metadata_authoring import invoke
-from check_rp03_package import BASE,ROOT,package,pre_factoring_package
+from check_rp03_package import ROOT,pre_predicate_package as package,pre_factoring_package
+from benchmarks.rp03_predicate_checkpoint import BASE
 from benchmarks.rp03_factoring_checkpoint import artifacts as archive,PATHS
 from benchmarks.rp03_source import Scope,new_package
 from benchmarks.rp03_resources import PEOPLE,CAPABILITIES

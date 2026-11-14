@@ -246,3 +246,5 @@ house style established by Choreoform’s first records.
 - [ADR-0089: Typed pure receipt recipe direction](0089-reusable-receipt-direction.md) — accepted under owner delegation; no production syntax yet.
 
 - [ADR-0090: Typed source-only pure Boolean tests](0090-pure-predicate-recipes.md) — contract accepted under owner delegation; native implementation and experimental whole variants integrated in PR #105.
+
+- [ADR-0091: Current RP-03 pure-test adoption](0091-rp03-pure-test-adoption.md) — accepted under owner delegation; signed archive precedes implementation; final checks and integration pending.

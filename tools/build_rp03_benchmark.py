@@ -16,6 +16,7 @@ from benchmarks.rp03_graph import build
 from benchmarks.rp03_invalidation import apply_missing
 from benchmarks.rp03_instance_checkpoint import artifacts as instance_checkpoint
 from benchmarks.rp03_factoring_checkpoint import artifacts as factoring_checkpoint
+from benchmarks.rp03_predicate_checkpoint import artifacts as predicate_checkpoint
 from build_rp03_checkpoint import package_artifacts as checkpoint_artifacts, artifacts as checkpoint_files, PRE_INSTANCE_README
 from check_metadata_authoring import invoke
 from build_rp01_benchmark import STAGES
@@ -25,7 +26,8 @@ BASE=ROOT/'docs/benchmarks/rp03'
 LICENSE=b'SPDX-FileCopyrightText: 2026 Choreoform contributors\nSPDX-License-Identifier: MPL-2.0\n'
 
 
-def package_artifacts(*,historical=False,pre_instances=False):
+def package_artifacts(*,historical=False,pre_instances=False,predicates=False):
+    assert not predicates or not (historical or pre_instances)
     if historical or pre_instances:
         return checkpoint_artifacts(historical=historical)
     recipients=[key+'_capability' for key,*_ in SPECS]+['cancel_release_a_capability','cancel_release_b_capability']
@@ -46,7 +48,7 @@ def package_artifacts(*,historical=False,pre_instances=False):
         resource(key+'.json',raw,p);pins[key]=p
     for profile in [TERMINAL_PROFILE,clocks['clock'][0]['profile']]:
         registry.append({'id':profile['id'],'revision':profile['revision'],'path':'docs/ir/contracts/'+profile['revision'].replace(':','-')+'.txt'})
-    source,package=build(tp,{k:v[0] for k,v in docs.items()},pins,historical=historical,factored=not historical)
+    source,package=build(tp,{k:v[0] for k,v in docs.items()},pins,historical=historical,factored=not historical,predicates=predicates)
     validate_ledger(package.ledger)
     files['source.choreo']=source.encode();files['bindings.json']=package.companion()
     files['receipt-rules.json']=encoded({'premise':'Emitted pure declaration ASTs, not compiled full source, accepted observations or process traces.', 'rules':{key:matched_completion(key,read('Instruction'),tags) for key,_,_,tags,_ in SPECS}})
@@ -127,7 +129,8 @@ def historical_artifacts():
 
 
 def artifacts():
-    files=package_artifacts()
+    files=package_artifacts(predicates=True)
+    for name,raw in predicate_checkpoint().items():files['history/source-0.18-before-predicates/'+name]=raw
     for name,raw in factoring_checkpoint().items():files['history/source-0.16-before-factoring/'+name]=raw
     # Both historical packages reproduce independently with their exact old pins.
     for name,raw in checkpoint_files().items():

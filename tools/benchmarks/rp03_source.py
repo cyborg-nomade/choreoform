@@ -102,11 +102,12 @@ def foundations(root):
     root.policy('order_commits','race','Order commitments',f'Guard commits when ({expr(guard)}).')
 
 
-def work(scope,key,name,completion,compensates=None,deadline=None):
+def work(scope,key,name,completion,compensates=None,deadline=None,completion_text=None):
     # Compensation purpose and own effect class remain independent.
     link=compensates if compensates else 'none'
     timeout=('clock "Order clock", basis "Original order", due ('+expr(deadline)+'), calendar none, pause authority "Keep order deadlines fixed"') if deadline else 'none'
-    scope.policy(key+'_work','work',name+' work',f'Instructions "Use only the exact original instruction and current authority; retain uncertainty and every accepted effect.". Authority "Commerce operator". Attempts 1. Delays empty. Retry faults empty. Timeout {timeout}. Complete when ({expr(completion)}). Compensates {link}.')
+    completion_text=expr(completion) if completion_text is None else completion_text
+    scope.policy(key+'_work','work',name+' work',f'Instructions "Use only the exact original instruction and current authority; retain uncertainty and every accepted effect.". Authority "Commerce operator". Attempts 1. Delays empty. Retry faults empty. Timeout {timeout}. Complete when ({completion_text}). Compensates {link}.')
 
 
 def instruction_expression(order,scope_key,scope_revision,amount,basis,request_revision,quantity,warehouse):
@@ -150,7 +151,10 @@ def service(root,parent,key,provider,*,compensates=None,deadline=None,instance=N
         invalidates=[quote('Request '+name)] if instantiated else [])
     owner.data(key+'_result',name+' result',provider['output'],participants=PEOPLE,capabilities=capabilities)
     owner.expression(key+'_input',name+' input',provider['input'],read(name+' request'))
-    work(owner,key,name,matched_completion(operation,read(name+' request'),tags),compensates,deadline)
+    completion=matched_completion(operation,read(name+' request'),tags)
+    recipes=getattr(package,'predicate_source',None)
+    completion_text=recipes.completion(key,completion,operation,read(name+' request'),tags,provider) if recipes is not None else None
+    work(owner,key,name,completion,compensates,deadline,completion_text)
     owner.step(key+'_activity','Request '+name,f'Request {quote(capability)} using {quote(name+" input")} under {quote(name+" work")} and record in {quote(name+" result")}.',[(tag,'Finish '+name) for tag in tags])
     owner.step(key+'_done','Finish '+name,'Finish as "complete".')
     recovery=Scope(package,key+'_recovery',name+' recovery',owner,'Observe '+name)

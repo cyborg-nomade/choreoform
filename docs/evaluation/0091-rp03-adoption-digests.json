@@ -1,0 +1,18 @@
+{
+  "source.choreo": {
+    "old": "2e2be8154b94791d5af9e5e77c87895d205e2455af37063e66b98efbcb645695",
+    "new": "b6101a0f870a94b30e9e484a2b0571d5ab7840cf6ba5e32d24e971baa1ba0375"
+  },
+  "bindings.json": {
+    "old": "6d7ad4be8260d319d3d8fd6c18ce66429ef2b67b60ed05d2018131e52972a3f7",
+    "new": "d53e8fa279167b278d021469733173c68230fcf497bee99c30fde451d0d5a039"
+  },
+  "manifest.json": {
+    "old": "7ed9189facd454aef6bcb9ea647452682006b2063c76af883ab854e0fe2376e9",
+    "new": "9d31cd2695fd61d913b2e0664be3c8d3d8ee2dc6aec287caffeb8042e13350f2"
+  },
+  "README.md": {
+    "old": "77ebab5b22c4176319a20dfaa2c2cdbf3cbd5d28c3e3556055472ec9e801cbe1",
+    "new": "08e5e836c07e9ec6599f7de67432110ffafaf944da3faa154f0ae0ee2c5870e8"
+  }
+}

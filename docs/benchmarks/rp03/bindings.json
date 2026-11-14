@@ -1,7 +1,7 @@
 {
   "format": "choreoform-authoring-bindings",
-  "version": "0.17.0",
-  "profile": "0.18.0",
+  "version": "0.18.0",
+  "profile": "0.19.0",
   "definition": "rp03_benchmark",
   "root": "order",
   "contracts": {
@@ -4167,6 +4167,24 @@
       "kind": "node",
       "scope": "order",
       "name": "Finish order record"
+    },
+    {
+      "id": "receipt_fields_type",
+      "kind": "type-alias",
+      "scope": "order",
+      "name": "Receipt fields"
+    },
+    {
+      "id": "receipt_test",
+      "kind": "predicate",
+      "scope": "order",
+      "name": "Receipt agrees"
+    },
+    {
+      "id": "reasoned_receipt_test",
+      "kind": "predicate",
+      "scope": "order",
+      "name": "Reasoned receipt agrees"
     }
   ],
   "generated": [
@@ -9073,6 +9091,62 @@
       "role": "outcome",
       "name": "next",
       "wire": "next"
+    },
+    {
+      "id": "receipt_test_receipt",
+      "owner": "receipt_test",
+      "role": "predicate-input",
+      "name": "Evidence",
+      "wire": "receipt"
+    },
+    {
+      "id": "receipt_test_instruction",
+      "owner": "receipt_test",
+      "role": "predicate-input",
+      "name": "Instruction",
+      "wire": "instruction"
+    },
+    {
+      "id": "receipt_test_operation",
+      "owner": "receipt_test",
+      "role": "predicate-input",
+      "name": "Operation",
+      "wire": "operation"
+    },
+    {
+      "id": "receipt_test_phase",
+      "owner": "receipt_test",
+      "role": "predicate-input",
+      "name": "Phase",
+      "wire": "phase"
+    },
+    {
+      "id": "reasoned_receipt_test_receipt",
+      "owner": "reasoned_receipt_test",
+      "role": "predicate-input",
+      "name": "Evidence",
+      "wire": "receipt"
+    },
+    {
+      "id": "reasoned_receipt_test_instruction",
+      "owner": "reasoned_receipt_test",
+      "role": "predicate-input",
+      "name": "Instruction",
+      "wire": "instruction"
+    },
+    {
+      "id": "reasoned_receipt_test_operation",
+      "owner": "reasoned_receipt_test",
+      "role": "predicate-input",
+      "name": "Operation",
+      "wire": "operation"
+    },
+    {
+      "id": "reasoned_receipt_test_phase",
+      "owner": "reasoned_receipt_test",
+      "role": "predicate-input",
+      "name": "Phase",
+      "wire": "phase"
     }
   ],
   "retired": [],
