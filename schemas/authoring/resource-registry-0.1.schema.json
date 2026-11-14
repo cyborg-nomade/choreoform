@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:authoring:resource-registry:0.1.0",
+  "title": "Explicit prototype byte registry0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "resources"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-authoring-resource-registry"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "resources": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "contract",
+          "digest",
+          "start",
+          "length"
+        ],
+        "properties": {
+          "contract": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 8388608
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1048576
+          }
+        }
+      }
+    }
+  }
+}

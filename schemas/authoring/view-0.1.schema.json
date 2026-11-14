@@ -1,0 +1,365 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:authoring:view:0.1.0",
+  "title": "Experimental complete paired-authoring view0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "experimental",
+    "status",
+    "executable",
+    "binding",
+    "source",
+    "entities",
+    "flows",
+    "ir"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-authoring-view"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "experimental": {
+      "const": true
+    },
+    "status": {
+      "const": "projection-matched"
+    },
+    "executable": {
+      "const": false
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "definition",
+        "root",
+        "authoring",
+        "source",
+        "bindings",
+        "semanticRevision"
+      ],
+      "properties": {
+        "definition": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "root": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "authoring": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "source": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "bindings": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "semanticRevision": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "source": {
+      "type": "string",
+      "maxLength": 1048576
+    },
+    "entities": {
+      "type": "array",
+      "maxItems": 30000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "category",
+          "role",
+          "owner",
+          "caption",
+          "semanticMap",
+          "nodeKind",
+          "wire",
+          "location",
+          "placement",
+          "renameAllowed",
+          "pin"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+          },
+          "category": {
+            "enum": [
+              "declaration",
+              "generated",
+              "symbol"
+            ]
+          },
+          "role": {
+            "enum": [
+              "scope",
+              "data",
+              "expression",
+              "actor",
+              "capability",
+              "policy",
+              "node",
+              "resource",
+              "data-protection",
+              "type-alias",
+              "predicate",
+              "initial",
+              "assignment",
+              "flow",
+              "provider-policy",
+              "outcome",
+              "branch",
+              "input",
+              "output",
+              "purpose",
+              "predicate-input"
+            ]
+          },
+          "owner": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+              }
+            ]
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f\\ud800-\\udfff\\u2028\\u2029]+$"
+          },
+          "semanticMap": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "enum": [
+                  "scopes",
+                  "data",
+                  "expressions",
+                  "actors",
+                  "capabilities",
+                  "policies",
+                  "nodes",
+                  "flows"
+                ]
+              }
+            ]
+          },
+          "nodeKind": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "enum": [
+                  "activity",
+                  "compute",
+                  "invoke",
+                  "decision",
+                  "split",
+                  "join",
+                  "wait",
+                  "repeat",
+                  "fanout",
+                  "finish"
+                ]
+              }
+            ]
+          },
+          "wire": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+              }
+            ]
+          },
+          "location": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "basis",
+              "start",
+              "end",
+              "companion"
+            ],
+            "properties": {
+              "basis": {
+                "enum": [
+                  "declaration",
+                  "slot",
+                  "owner",
+                  "companion"
+                ]
+              },
+              "start": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 1048576
+                  }
+                ]
+              },
+              "end": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 1048576
+                  }
+                ]
+              },
+              "companion": {
+                "type": "string",
+                "pattern": "^/(declarations|generated|symbols)/[0-9]{1,5}$"
+              }
+            }
+          },
+          "placement": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "collapsed",
+              "explicit"
+            ],
+            "properties": {
+              "x": {
+                "type": "integer",
+                "minimum": -1000000,
+                "maximum": 1000000
+              },
+              "y": {
+                "type": "integer",
+                "minimum": -1000000,
+                "maximum": 1000000
+              },
+              "collapsed": {
+                "type": "boolean"
+              },
+              "explicit": {
+                "type": "boolean"
+              }
+            }
+          },
+          "renameAllowed": {
+            "type": "boolean"
+          },
+          "pin": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "contract",
+                  "digest"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "provider",
+                      "named-type",
+                      "clock",
+                      "calendar",
+                      "provider-fault-source",
+                      "provider-terminal-observation-source",
+                      "provider-fault-history"
+                    ]
+                  },
+                  "contract": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "source",
+          "outcome",
+          "target",
+          "caption"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+          },
+          "source": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+          },
+          "outcome": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+          },
+          "target": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f\\ud800-\\udfff\\u2028\\u2029]+$"
+          }
+        }
+      }
+    },
+    "ir": {
+      "$ref": "urn:choreoform:schema:definition:0.4.0"
+    }
+  }
+}

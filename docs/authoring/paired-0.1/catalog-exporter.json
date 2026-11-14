@@ -1,0 +1,23 @@
+{
+  "format": "choreoform-prototype-catalog",
+  "version": "0.1.0",
+  "permissions": {
+    "read": true,
+    "edit": false,
+    "export": true
+  },
+  "items": [
+    {
+      "key": "example",
+      "caption": "Example process"
+    },
+    {
+      "key": "rp01",
+      "caption": "Expense reimbursement"
+    },
+    {
+      "key": "rp03",
+      "caption": "Order fulfillment"
+    }
+  ]
+}
