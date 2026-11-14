@@ -15,6 +15,7 @@ from benchmarks.rp01_source import Package
 from benchmarks.rp01_graph import PEOPLE,CAPABILITIES
 from benchmarks.rp01_resources import record,TEXT
 from build_rp01_benchmark import capture_artifacts,STAGES
+from benchmarks.rp03_predicate_checkpoint import prior_rp03_tree
 
 OLD_REV='sha256:55413bc5be721c103f56bd61a30bbf829e3cc97b1f867157e554baec4470e285'
 NEW_REV='sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829'
@@ -46,10 +47,10 @@ class FactoredExpenseAuthoring(unittest.TestCase):
         self.assertEqual(set(table),allowed)
         for name,pins in table.items():self.assertEqual(pins,{'old':sha256(old[name]).hexdigest(),'new':sha256((BASE/name).read_bytes()).hexdigest()})
         for name,raw in capture_artifacts().items():self.assertEqual((OLD/name).read_bytes() if not name.startswith('history/') else (BASE/name).read_bytes(),raw,name)
-        # Whole adopted RP-03, including every prior archive, is immutable here.
-        other=ROOT/'docs/benchmarks/rp03';paths=sorted(p for p in other.rglob('*') if p.is_file())
-        rows=''.join(p.relative_to(other).as_posix()+'\0'+sha256(p.read_bytes()).hexdigest()+'\n' for p in paths)
-        self.assertEqual((len(paths),sha256(rows.encode()).hexdigest()),(605,'c68b965e389f3dc36e731b4a70448d23e4f4d580d9b9141199cdc1617d3a536c'))
+        # Reconstruct the complete RP-03 epoch present at this earlier adoption.
+        prior=prior_rp03_tree()
+        rows=''.join(name+'\0'+sha256(raw).hexdigest()+'\n' for name,raw in sorted(prior.items()))
+        self.assertEqual((len(prior),sha256(rows.encode()).hexdigest()),(605,'c68b965e389f3dc36e731b4a70448d23e4f4d580d9b9141199cdc1617d3a536c'))
         for path in ['docs/decisions/0088-rp01-factored-authoring.md','docs/evaluation/0088-rp01-factored-authoring.md','docs/benchmarks/rp01/README.md']:check_links(ROOT/path)
 
     def test_actual_old_new_lowering_changes_only_explicit_core_and_revision_and_report_attribution(self):

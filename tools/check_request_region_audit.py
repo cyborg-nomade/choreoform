@@ -44,7 +44,7 @@ class RequestRegionAudit(unittest.TestCase):
     def test_actual_source_refusal_and_benchmark_bytes_stay_fixed(self):
         before=fixed();r=invoke(package(),'check-concurrency')
         self.assertEqual(r.returncode,1);self.assertEqual(r.stdout,b'')
-        self.assertEqual(r.stderr.strip(),b'parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450')
+        self.assertEqual(r.stderr.strip(),b'parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 58784..58971')
         self.assertEqual(fixed(),before)
 
     def test_direction_links_roadmap_open_gate_and_ci_command(self):

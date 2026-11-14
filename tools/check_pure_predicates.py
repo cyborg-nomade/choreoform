@@ -15,6 +15,7 @@ from check_rp01_capture_checkpoint import package as expense
 from check_rp03_package import package as order
 from check_source_capacity import fixed
 from check_static_contracts import ROOT
+from benchmarks.rp03_predicate_checkpoint import prior_benchmark_inventory
 
 BASE = ROOT / 'docs/evaluation/0090-predicate-variants'
 DEFINITION = 'Define test "Same" with inputs ["Value" as whole number]. It holds when ((the parameter "Value") equals (the parameter "Value")). End test.'
@@ -90,8 +91,9 @@ class PurePredicates(unittest.TestCase):
         pins = json.loads((ROOT/'docs/evaluation/0090-predicate-variant-digests.json').read_bytes())
         measured = json.loads((ROOT/'docs/evaluation/0090-predicate-native-metrics.json').read_bytes())
         self.assertEqual([(r['sourceBytes'], r['tokens'], r['parserWork']) for r in measured], [(54172,9145,113796),(291309,41306,386333)])
-        inventory = ''.join(k+'\0'+v+'\n' for k,v in sorted(before.items()))
-        self.assertEqual(pins['unchangedBenchmarks'], dict(files=len(before), inventorySha256=sha256(inventory.encode()).hexdigest()))
+        prior = prior_benchmark_inventory()
+        inventory = ''.join(k+'\0'+v+'\n' for k,v in sorted(prior.items()))
+        self.assertEqual(pins['unchangedBenchmarks'], dict(files=len(prior), inventorySha256=sha256(inventory.encode()).hexdigest()))
         for name, current, size, tokens in [('rp01', expense(), 54172, 9145), ('rp03', order(), 291309, 41306)]:
             p = variant(name, current[2])
             self.assertEqual(len(p[0].encode()), size)

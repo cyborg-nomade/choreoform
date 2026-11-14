@@ -8,8 +8,9 @@ companion0.18 typed pure Boolean tests on unchanged C12/IR0.4. The native protot
 expands explicit named inputs and checks their complete types in actual caller
 contexts before emitting a candidate. [Finite complete variants](../evaluation/0090-pure-predicates.md)
 reduce RP-03 from410752 to291309bytes and RP-01 from55453 to54172bytes while
-preserving exact current IR. Integration checks/review remain pending. These are
-experimental alternatives; current benchmark adoption remains a separate scope.
+preserving exact current IR. PR #105 passed required CI and delegated automated review before integration. These are
+experimental alternatives; the separately archived working RP-03 adoption is
+described below, while RP-01 adoption remains a separate scope.
 This supplies no representative-user evidence or complete language/phase gate.
 
 The actual [RP-01 package](../benchmarks/rp01/README.md) also adopts source0.18 /
@@ -20,14 +21,14 @@ all other expanded fields and immutable resources remain exact. The old package
 is archived before code. All eleven partial views pass; no user/phase gate closes.
 
 
-The actual current [RP-03 package](../benchmarks/rp03/README.md) adopts source 0.18 /
-companion 0.17 on unchanged C12/IR0.4 with domain-named protection and instruction
-types: 410752 UTF-8 bytes / 66783 native tokens / 840430 parser visits, 28.78% below
-its original 576759 bytes. Complete canonical IR, reports, resources, receipts and
-guards remain byte-identical; only source/package metadata and source spans change.
-The exact old package is archived before code under [ADR-0087](../decisions/0087-rp03-factored-authoring.md).
-This is actual native adoption, not user evidence or semantic/concurrency admission.
-Both current packages use source0.18; source0.19 adoption remains separate.
+The current working [RP-03 package](../benchmarks/rp03/README.md) adopts source0.19 /
+companion0.18 on unchanged C12/IR0.4 under [ADR-0091](../decisions/0091-rp03-pure-test-adoption.md).
+Two complete pure tests reduce the full source from410752 to291309bytes (29.08%),
+with41306 tokens/386333 native parser visits. Full canonical IR, five reports,
+resources/receipts/guards/semantic identities remain exact. Its previous126-file
+source18 package was archived before code. Final checks/review/CI remain pending;
+this is current branch implementation, not representative-user or phase evidence.
+RP-01 remains source18; its archive-first adoption follows separately.
 
 The [source 0.18 / companion 0.17 profile](profile-v0.18.md) adds explicit local
 transparent type descriptions on unchanged C12 / IR 0.4. `Describe type ... as ...`

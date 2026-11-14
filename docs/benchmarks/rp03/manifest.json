@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "status": "source-draft-with-actual-lowering-result",
   "executable": false,
-  "sourceProfile": "0.18.0",
-  "companionVersion": "0.17.0",
+  "sourceProfile": "0.19.0",
+  "companionVersion": "0.18.0",
   "coreProfile": "0.12.0",
   "intendedWireVersion": "0.4.0",
-  "sourceBytes": 410752,
-  "measuredTokens": 66783,
+  "sourceBytes": 291309,
+  "measuredTokens": 41306,
   "tokenMeasurement": "sum of complete-line lexing; whole-program native recognition verified separately",
-  "sourceDigest": "sha256:2e2be8154b94791d5af9e5e77c87895d205e2455af37063e66b98efbcb645695",
-  "bindingsDigest": "sha256:6e0274d9c2fff47cbf1fecdda9fd8920dd5ada6e647a457d34b6e2c0af52cfbe",
-  "packageDigest": "sha256:21d5c4c815ea3139e10f35e47cd6509f5a1c0761800881a96810738188ad24a0",
+  "sourceDigest": "sha256:b6101a0f870a94b30e9e484a2b0571d5ab7840cf6ba5e32d24e971baa1ba0375",
+  "bindingsDigest": "sha256:141235570474a05d6bdf70d33d145533d0718b9b64dc89b0020b02b0092737c0",
+  "packageDigest": "sha256:7803000c6eba666edb1b5fa93a176897abd5166a8b96a7945659d54b9d31807d",
   "contracts": {
     "semantics": {
       "contract": "urn:choreoform:semantics:adr-0008",
@@ -1678,37 +1678,37 @@
     {
       "stage": "check-concurrency",
       "result": "refused",
-      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 58784..58971"
     },
     {
       "stage": "check-timing",
       "result": "refused",
-      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 58784..58971"
     },
     {
       "stage": "check-fault-routes",
       "result": "refused",
-      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 58784..58971"
     },
     {
       "stage": "check-exceptional-availability",
       "result": "refused",
-      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 58784..58971"
     },
     {
       "stage": "check-reconciliation-links",
       "result": "refused",
-      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 58784..58971"
     },
     {
       "stage": "check-reconciliation-availability",
       "result": "refused",
-      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 72263..72450"
+      "diagnostic": "parallel-effects-unproved at /body/nodes/start_acceptance; source bytes 58784..58971"
     }
   ],
   "declarationCounts": {
-    "declarations": 692,
-    "symbols": 468,
+    "declarations": 695,
+    "symbols": 476,
     "generated": 271,
     "resources": 48
   },

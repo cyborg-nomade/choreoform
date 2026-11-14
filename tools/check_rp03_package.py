@@ -29,6 +29,7 @@ def historical_package():return load_package(BASE/'history/source-0.14')
 def pre_instance_package():return load_package(BASE/'history/source-0.16-pre-instances')
 def instance_checkpoint_package():return load_package(BASE/'history/source-0.16-instances')
 def pre_factoring_package():return load_package(BASE/'history/source-0.16-before-factoring')
+def pre_predicate_package():return load_package(BASE/'history/source-0.18-before-predicates')
 
 
 class OrderPackageEvidence(unittest.TestCase):
@@ -45,9 +46,9 @@ class OrderPackageEvidence(unittest.TestCase):
 
     def test_measured_current_files_and_companion_keep_candidate_admission_separate(self):
         s,l,_=package();m=load(BASE/'manifest.json');validate_ledger(l)
-        self.assertEqual((len(s.encode()),sum(len(lex(line)) for line in s.splitlines())),(410752,66783))
+        self.assertEqual((len(s.encode()),sum(len(lex(line)) for line in s.splitlines())),(291309,41306))
         self.assertEqual(m['sourceBytes'],len(s.encode()));self.assertEqual(m['measuredTokens'],sum(len(lex(line)) for line in s.splitlines()))
-        self.assertEqual((l['profile'],l['version'],m['coreProfile'],m['intendedWireVersion']),('0.18.0','0.17.0','0.12.0','0.4.0'))
+        self.assertEqual((l['profile'],l['version'],m['coreProfile'],m['intendedWireVersion']),('0.19.0','0.18.0','0.12.0','0.4.0'))
         for key,value in package_digests(s.encode(),(BASE/'bindings.json').read_bytes()).items():self.assertEqual(m[key+'Digest'],value)
         self.assertGreater(m['measuredTokens'],16384);self.assertLess(m['sourceBytes'],1024*1024)
 

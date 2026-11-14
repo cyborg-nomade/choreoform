@@ -10,8 +10,12 @@ from .rp03_source import (
 from .rp03_resources import SPECS, PEOPLE, CAPABILITIES, instruction
 
 
-def build(type_pin,providers,pins,*,historical=False,factored=False):
+def build(type_pin,providers,pins,*,historical=False,factored=False,predicates=False):
+    assert not predicates or (factored and not historical)
     p=new_package(historical=historical,factored=factored);p.guard_rules={}
+    if predicates:
+        from .rp03_predicate_source import PureReceiptSource
+        p.predicate_source=PureReceiptSource(type_pin)
     capabilities=CAPABILITIES+['Release first reservation during settlement','Release second reservation during settlement']
     root=Scope(p,'order','Order fulfillment',None,'Start acceptance',
         inputs=[('order','Order','Original order')],outputs=[('first','First line','First line disposition'),('second','Second line','Second line disposition')],
@@ -250,5 +254,6 @@ def build(type_pin,providers,pins,*,historical=False,factored=False):
     index=next(i for i,line in enumerate(root.declarations) if line.startswith('Keep "Original order"'))
     root.declarations[index]=root.declarations[index].replace('Invalidate empty.',
         'Invalidate ['+', '.join(original_dependents)+'].')
+    if predicates:p.predicate_source.finish(root)
     source='# SPDX-FileCopyrightText: 2026 Choreoform contributors\n# SPDX-License-Identifier: MPL-2.0\n# Synthetic full two-line draft; not admitted or executable.\n'+f'Choreoform authoring "{p.ledger["profile"]}".\n'+root.render()+'\n'
     return source,p
