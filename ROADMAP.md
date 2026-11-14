@@ -144,9 +144,15 @@ validated, and round-tripped.
   C12 IR/reports/resources, integrated after required checks/review/CI in PR #106.
   [ADR-0092](docs/decisions/0092-rp01-pure-test-adoption.md) adopts working RP-01
   source19 after its59-file source18 archive:54172bytes, exact old C12 IR and11
-  reports/resources/guard pins, final integration checks pending. RP-01 integration and
-  reusable work remain separate scopes; no user-comprehension evidence exists yet.
-  Neither closes this item: reusable receipt/work formulations, full RP-08,
+  reports/resources/guard pins, integrated after required checks/review/CI in PR #107.
+  [ADR-0093](docs/decisions/0093-authoring-completion-sequence.md) prioritizes a
+  separately published reversible authoring-package/managed-change contract, then
+  native operations and a small paired text/visual prototype. Full RP-08 coverage,
+  diagnostic refinement and actual representative users remain explicit Phase1
+  dependencies; broader work blueprints require a separate later contract.
+  This is not the Phase3 production studio. Remaining reusable work requires
+  separate scopes; no user-comprehension evidence exists yet.
+  These steps do not close this item: reusable receipt/work formulations, full RP-08,
   managed protected accessible inspection/editing/export and text/visual parity
   must be delivered within Phase 1 before actual representative-user evaluation.
   In progress: [ADR-0014](docs/decisions/0014-near-english-authoring.md) accepts
@@ -443,6 +449,11 @@ validated, and round-tripped.
   locations. Exact field/token precision, full catalogue and complete validator
   coverage remain open; declaration locations do not close this item.
 - [ ] Build text → IR → text and visual → IR → visual round trips.
+  Under [ADR-0093](docs/decisions/0093-authoring-completion-sequence.md), retain
+  versioned authoring-only structure and layout alongside execution IR, with
+  checked consistency and stable managed identities. Original-package formatting
+  alone is not reverse export; untrusted editorial metadata cannot override IR.
+  Complete RP-01/03/08 cycles and actual author evaluation remain in Phase1.
 - [ ] Publish small executable examples and negative examples.
 - [x] Start a language conformance suite. The
   [value-expression corpus](docs/conformance/README.md) begins with 69 exact
@@ -453,7 +464,9 @@ validated, and round-tripped.
   The [current benchmark readiness audit](docs/evaluation/0034-benchmark-readiness.md)
   retains complete RP-01/03/08 responsibilities, explicit no-output/interface
   boundaries and [all forty scenario gaps](docs/evaluation/0034-corpus-accountability.md).
-  All forty remain Partial; the next package target is full RP-01.
+  All forty remain Partial. Maintained RP-01/03 packages are source19 candidates
+  with explicit partial reports; the missing third full package target is RP-08,
+  including its dynamic scope, dangerous-effect and outage-reconciliation cases.
 
 ### Executable IR completion gate (still open)
 

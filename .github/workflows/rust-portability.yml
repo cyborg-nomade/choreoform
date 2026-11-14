@@ -128,4 +128,5 @@ jobs:
           .tools/ir-check/bin/python tools/check_pure_predicates.py
           .tools/ir-check/bin/python tools/check_rp03_predicate_authoring.py
           .tools/ir-check/bin/python tools/check_rp01_predicate_authoring.py
+          .tools/ir-check/bin/python tools/check_authoring_completion_critique.py
       # Browser execution is a separate manual evidence step, not implied by CI.

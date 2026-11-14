@@ -3,7 +3,7 @@
 
 # ADR-0092: Adopt typed pure receipt matching in current RP-01
 
-**Status:** Accepted under Project Owner delegation; implementation locally verified; effective on integration<br>
+**Status:** Accepted under Project Owner delegation; implemented and integrated in PR #107<br>
 **Date:** 2026-11-14<br>
 **Decider:** Codex under ADR-0018; no personal owner or independent review
 
@@ -64,3 +64,13 @@ unchanged55 current semantic/resource/report files and all732 RP-03 files. Full
 688 Rust+6 compile-fail/native/Wasm/portability/all87 Python commands pass locally.
 Final-head CI, separate automated review/full comment audit and signed merge remain
 pending; no phase gate closes.
+
+## Verified integration
+
+PR #107 merged as `4042081c3b8ea990ad1d4e93357ad368889cdaf8` after successful
+CI43581960139 atdd809f4568bd0642a5ec5376da9360a303339d66, separate automated
+COMMENT review5903518032 and fresh full-body/thread/head audit. All four commits
+and merge carry sign-off; the complete CodeRabbit skip contains no findings and
+supplies no review evidence. All688 Rust+6 compile-fail/native/Wasm/all87 Python
+checks pass. Prior pending statements describe the pre-integration checkpoint;
+this closes only the package slice, not any Phase1 gate.
