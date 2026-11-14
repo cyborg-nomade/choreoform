@@ -5,7 +5,8 @@ from copy import deepcopy
 from hashlib import sha256
 import json
 import unittest
-from check_rp01_capture_checkpoint import BASE,ROOT,package
+from check_rp01_capture_checkpoint import ROOT,pre_predicate_package as package
+from benchmarks.rp01_predicate_checkpoint import BASE
 from check_metadata_authoring import invoke
 from check_authoring_evidence import check_links
 from check_rp03_factored_authoring import mutate
@@ -46,7 +47,7 @@ class FactoredExpenseAuthoring(unittest.TestCase):
         table=json.loads((ROOT/'docs/evaluation/0088-rp01-adoption-digests.json').read_bytes())
         self.assertEqual(set(table),allowed)
         for name,pins in table.items():self.assertEqual(pins,{'old':sha256(old[name]).hexdigest(),'new':sha256((BASE/name).read_bytes()).hexdigest()})
-        for name,raw in capture_artifacts().items():self.assertEqual((OLD/name).read_bytes() if not name.startswith('history/') else (BASE/name).read_bytes(),raw,name)
+        for name,raw in capture_artifacts().items():self.assertEqual((OLD/name).read_bytes() if not name.startswith('history/') else (ROOT/'docs/benchmarks/rp01'/name).read_bytes(),raw,name)
         # Reconstruct the complete RP-03 epoch present at this earlier adoption.
         prior=prior_rp03_tree()
         rows=''.join(name+'\0'+sha256(raw).hexdigest()+'\n' for name,raw in sorted(prior.items()))

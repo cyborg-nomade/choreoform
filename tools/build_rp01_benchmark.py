@@ -252,7 +252,8 @@ independent review or Phase 1 closure is claimed.
     return files
 
 
-def capture_artifacts(*, factored=False):
+def capture_artifacts(*, factored=False, predicates=False):
+    assert not predicates or factored
     historical = historical_artifacts()
     assert len(historical['source.choreo']) == 56874
     assert json.loads(historical['candidate.ir.json'])['revision'] == 'sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4'
@@ -280,6 +281,9 @@ def capture_artifacts(*, factored=False):
         assert source.count('authoring "0.14.0"')==1
         source=source.replace('authoring "0.14.0"','authoring "0.18.0"',1)
         ledger.update(profile='0.18.0',version='0.17.0');ledger['contracts']['core']=CORE12.copy()
+    if predicates:
+        from benchmarks.rp01_predicate_source import adopt as adopt_predicates
+        source,ledger=adopt_predicates(source,ledger,body,factoring=factoring)
     files.update({'source.choreo': source.encode(), 'bindings.json': encoded(ledger), 'payment.terminal-source.json': raw, 'payment.terminal-source.json.license': LICENSE})
     registry = manifest['resources']
     registry += [{'id': source_pin['id'], 'revision': source_pin['revision'], 'path': 'docs/benchmarks/rp01/payment.terminal-source.json'},
@@ -299,7 +303,11 @@ def capture_artifacts(*, factored=False):
     manifest['scenarios'][2]['declarations'] += ['retained_payment_request', 'late_payment_capture', 'classify_late_payment', 'late_payment_category']
     files['manifest.json'] = encoded(manifest)
     files['reports/invalidation-requirements.json.license'] = LICENSE
-    files['README.md'] = (DESTINATION/'README.md').read_bytes() if factored else current_readme(manifest).encode()
+    if factored:
+        readme=DESTINATION/'README.md' if predicates else DESTINATION/'history/source-0.18-before-predicates/README.md'
+        files['README.md']=readme.read_bytes()
+    else:
+        files['README.md']=current_readme(manifest).encode()
     for name, raw in historical.items():
         if name == 'README.md': continue
         files['history/source-0.7/'+name] = raw
@@ -321,8 +329,10 @@ No accepted event, host execution, scenario or phase closure is claimed.
 
 def artifacts():
     from benchmarks.rp01_factoring_checkpoint import artifacts as archive
-    files=capture_artifacts(factored=True)
+    from benchmarks.rp01_predicate_checkpoint import artifacts as predicate_archive
+    files=capture_artifacts(factored=True,predicates=True)
     files.update({'history/source-0.14-before-factoring/'+name:raw for name,raw in archive().items()})
+    files.update({'history/source-0.18-before-predicates/'+name:raw for name,raw in predicate_archive().items()})
     return files
 
 

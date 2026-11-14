@@ -37,9 +37,8 @@ def prior_rp03_tree():
 
 def prior_benchmark_inventory():
     files={'docs/benchmarks/rp03/'+name:sha256(raw).hexdigest() for name,raw in prior_rp03_tree().items()}
-    other=ROOT/'docs/benchmarks/rp01'
-    for path in sorted(other.rglob('*')):
-        if path.is_file():files[path.relative_to(ROOT).as_posix()]=sha256(path.read_bytes()).hexdigest()
+    from .rp01_predicate_checkpoint import prior_rp01_tree
+    files.update({'docs/benchmarks/rp01/'+name:sha256(raw).hexdigest() for name,raw in prior_rp01_tree().items()})
     rows=''.join(name+'\0'+pin+'\n' for name,pin in sorted(files.items()))
     if len(files)!=778 or sha256(rows.encode()).hexdigest()!='716f37ed07bdaeb0b05236dadb06e5e1eecf96025af58c3d7d843c9e28f19a42':
         raise ValueError('complete prior combined benchmark tree changed')

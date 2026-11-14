@@ -592,11 +592,9 @@ fn actual_complete_expense_and_order_variants_keep_exact_current_ir_and_measure_
     use choreoform_authoring_frontend::parse;
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     for name in ["rp01", "rp03"] {
-        let base = root.join(if name == "rp03" {
-            "docs/benchmarks/rp03/history/source-0.18-before-predicates".to_owned()
-        } else {
-            format!("docs/benchmarks/{name}")
-        });
+        let base = root.join(format!(
+            "docs/benchmarks/{name}/history/source-0.18-before-predicates"
+        ));
         let source = std::fs::read_to_string(base.join("source.choreo")).unwrap();
         let mut ledger: Value =
             serde_json::from_slice(&std::fs::read(base.join("bindings.json")).unwrap()).unwrap();

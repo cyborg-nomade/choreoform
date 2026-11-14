@@ -9,59 +9,57 @@
 
 ## Current focus
 
-[PR #105](https://github.com/cyborg-nomade/choreoform/pull/105) integrated typed
-source0.19 / companion0.18 pure Boolean tests on unchanged C12/IR0.4 as
-`63988a63dc826dff6776251dbe747d947e17b2aa`. Successful final-head CI
-`43476905305` at `b7057abda1a472a3a80df413f7557ec4ddcf1760`, separate automated
-COMMENT review `5895660433` and a fresh full-body/thread/head audit precede the
-expected-head signed merge. All6 constituent commits and the merge are signed off.
-CodeRabbit's complete non-default-target skip contains no findings and supplies
-no review evidence; no personal owner, independent or human approval is claimed.
+[PR #106](https://github.com/cyborg-nomade/choreoform/pull/106) integrated actual
+RP-03 source0.19/companion0.18 pure-test adoption as
+`c34b9403b4dab89fa050ce81603463f7b73193a8`. Final-head CI43578324862 at
+`e6bbeaff096afc93b23edb5f49b9f6ec506f861c`, separate automated COMMENT review
+5903318099 and a fresh full-body/thread/head audit precede the expected-head
+signed merge. All four commits and merge have sign-off. CodeRabbit skipped the
+non-default target; it contains no findings and supplies no review evidence.
+No personal owner, independent or human approval is claimed.
 
-Signed [scope90](0090-pure-predicate-recipes-plan.md) `76edc82` and exact contract
-publication `5b1a8c5` precede production changes. [ADR-0090](../decisions/0090-pure-predicate-recipes.md)
-and [implementation evidence](0090-pure-predicates.md) record pure unused/forward/
-nested/cyclic preflight, exact native argument/result types in actual contexts,
-managed identities, literal opacity, lexical pin visibility and cumulative bounds.
-No runtime calls, shared work/storage/authority or quota increase. Earlier profiles
-and ordinary no-assertion checks keep their existing behavior.
+[ADR-0091](../decisions/0091-rp03-pure-test-adoption.md) /
+[evidence](0091-rp03-predicate-adoption.md) follow signed scope373f5b1 and exact
+126-file/3887465-byte archive dddceb2 before adoption code. New finite production
+matches the291309-byte experiment exactly without reading it as implementation;
+legacy mode matches all125 old generated files byte-for-byte. Only current source,
+bindings, manifest and README change; the other122 current files, five reports,
+complete C12 IR/revision/wire, resources/guards/receipts/nominal invariants and all
+semantic/work/request identities stay exact. Historical epoch605/778-file digests
+and raw native measurements are retained through explicit full-archive replay.
+All688 Rust tests +6 compile-fail/native/five Wasm lints/two release Wasm builds/
+native portability/all86 Python commands pass locally and in final-head CI.
 
-Full688 Rust tests plus6 compile-fail tests, native lint/five Wasm lints/two release
-Wasm builds/native portability/all85 Python commands pass locally and in CI.
-Complete experimental variants retain exact current IR/revision/wire and all11
-view outcomes: RP-01 54172bytes/9145tokens/113796parser work (2.31% smaller), RP-03
-291309/41306/386333 (29.08% smaller). Failed initial work-quota attempts led to
-bounded declaration collection and compact cost-summary lookup, with every actual
-descriptor copy still fully reserved. The final native CLI oracle checks retained
-measurements/package digests and the exact778-file prior benchmark inventory.
+Actual RP-03 is source19/companion18/C12/IR0.4 at291309bytes/41306tokens/
+386333parser visits (29.08% fewer bytes than source18). Its55 cases retain two
+complete balanced four-input shapes,23 distinct nominal invariants and25 distinct
+work occurrences. Four checking views plus advisory invalidation pass; six views
+from concurrency onward retain parallel-effects-unproved atstart_acceptance,
+source58784..58971. No runtime work/storage/authority is shared and no quota changes.
+The source19 compiler was separately integrated by PR #105 under ADR-0090.
 
-Active `codex/rp03-predicate-adoption` follows signed `373f5b1`,
-[scope91](0091-rp03-predicate-adoption-plan.md), after verified #105 integration.
-Signed archive `dddceb238e8424171fd71b80b70dbd132cd97847` preserves all126 exact
-prior current RP-03 files/3887465bytes plus a separate note before adoption code.
-[ADR-0091](../decisions/0091-rp03-pure-test-adoption.md) and
-[working evidence](0091-rp03-predicate-adoption.md) record the finite producer:
-new mode reproduces the complete291309-byte experiment and companion value;
-legacy mode reproduces all125 generated source18 files raw-byte exactly.
-Only current source/bindings/manifest/README change; the other122 current files
-and all previous histories/RP-01 bytes remain exact. Historical source18 proofs
-use explicit full archives and exact prior-tree reconstruction, without weakening
-raw digests or stripping identities. New current negative/view/format tests pass; full local688 Rust+6 compile-fail
-tests, native lint/five Wasm lints/two release builds/native portability/all86
-Python commands pass. Final-head CI/separate review/audit/merge are pending.
+Active `codex/rp01-predicate-adoption` follows signed9fd9a6b,
+[scope92](0092-rp01-predicate-adoption-plan.md), after verified #106 integration.
+Signed archive23507904f88b148fcb8db57815547d37f464a1a2 preserves59 exact current
+RP-01 files/641730bytes plus separate note before adoption code. Every old173-file
+RP-01 /732-file RP-03 /905-file combined inventory remains exact. The archive adds60
+files (965 combined working tree). [ADR-0092](../decisions/0092-rp01-pure-test-adoption.md)
+and [working evidence](0092-rp01-predicate-adoption.md) record the finite model
+producer: it matches the complete54172-byte source19 experiment and companion
+value, while legacy mode matches all59 source18 files raw-byte exactly.
+Only four current files change; other55, full C12 IR/revision/wire, all11 reports,
+resources/inputs/receipts/guards and guard candidate pins remain exact. Current
+working source19 is54172bytes/9145tokens/113796parser visits (2.31% smaller).
+Historical proofs now select explicit full source18 epochs with original raw
+captures and113/173/605/778/905-file digests. All local688 Rust+6 compile-fail/native/five Wasm lints/two release Wasm builds/
+native portability/all87 Python commands pass. Separate review/final-head CI/full
+audit/expected-head signed merge remain pending.
 
-Current working RP-03 is source19/companion18/C12 at291309bytes/41306tokens/
-386333parser visits, exact old IR/revision/wire and five reports; all six views
-from concurrency onward retain the external-region refusal atstart_acceptance,
-now source58784..58971. The signed archive adds127 files, yielding732 RP-03 and
-905 combined benchmark files. Current RP-01 remains source18 at55453/9455 with
-all11 non-executable views passing. Next dependency: separate RP-01 archive-first
-adoption, then remaining readability/reuse/protected managed inspection/editing/
-export/text-visual and full RP-08 work.
-
-Actual representative users/hosts/browsers/independent review and every complete
-semantic/region/G1–G4/scenario/Phase1 gate remain open. All40 scenarios remain
-Partial, parent46 draft; no Phase2 or phase completion.
+Next: separately scoped remaining work/reuse/readability/protected accessible
+inspection/editing/export/text-visual critique and full RP-08 requirements, then
+required implementation/evidence. Actual users/hosts/browsers/independent review
+and every complete semantic/region/G1–G4/scenario/Phase1 criterion remain open.
+All40 scenarios Partial, parent46 draft; no Phase2 or phase completion.
 
 ## Verified baseline
 

@@ -612,8 +612,9 @@ fn adopted_expense_source_has_measured_work_and_actual_current_core12_ir() {
     let syntax = parse(source.as_bytes()).unwrap();
     assert_eq!(
         (source.len(), syntax.token_count(), syntax.parser_work()),
-        (55453, 9455, 114301)
+        (54172, 9145, 113796)
     );
+    assert_eq!(syntax.profile(), "0.19.0");
     let package = Package::parse(source.as_bytes(), &bytes).unwrap();
     let candidate = package.lower(&supplied(&resources)).unwrap();
     let golden = std::fs::read(base.join("candidate.ir.json")).unwrap();

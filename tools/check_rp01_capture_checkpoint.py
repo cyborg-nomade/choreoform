@@ -20,10 +20,16 @@ BASE = ROOT/'docs/benchmarks/rp01'
 HISTORY = BASE/'history/source-0.7'
 
 
-def package():
-    m = json.loads((BASE/'manifest.json').read_bytes())
-    return ((BASE/'source.choreo').read_text(), json.loads((BASE/'bindings.json').read_bytes()),
-            [(r['id'], r['revision'], (ROOT/r['path']).read_bytes()) for r in m['resources']])
+def load_package(base):
+    m = json.loads((base/'manifest.json').read_bytes())
+    prefix='docs/benchmarks/rp01/'
+    def resource(path):return (base/path.removeprefix(prefix)).read_bytes() if path.startswith(prefix) else (ROOT/path).read_bytes()
+    return ((base/'source.choreo').read_text(), json.loads((base/'bindings.json').read_bytes()),
+            [(r['id'], r['revision'], resource(r['path'])) for r in m['resources']])
+
+
+def package():return load_package(BASE)
+def pre_predicate_package():return load_package(BASE/'history/source-0.18-before-predicates')
 
 
 def load(path): return json.loads(path.read_bytes())
@@ -152,9 +158,9 @@ class Rp01CaptureCheckpoint(unittest.TestCase):
 
     def test_current_wire_profile_integrity_format_cycle_and_budgets_are_explicit(self):
         p=package(); m=load(BASE/'manifest.json'); candidate=load(BASE/'candidate.ir.json')
-        self.assertEqual((p[1]['profile'],p[1]['version'],m['coreProfile'],candidate['version']), ('0.18.0','0.17.0','0.12.0','0.4.0'))
+        self.assertEqual((p[1]['profile'],p[1]['version'],m['coreProfile'],candidate['version']), ('0.19.0','0.18.0','0.12.0','0.4.0'))
         jsonschema.Draft202012Validator(load(ROOT/'schemas/ir/definition-0.4.schema.json')).validate(candidate)
-        self.assertEqual((len(p[0].encode()),len(grammar.lex(p[0]))), (55453,9455))
+        self.assertEqual((len(p[0].encode()),len(grammar.lex(p[0]))), (54172,9145))
         self.assertLess(len(grammar.lex(p[0])),16384)
         for key,value in grammar.package_digests(p[0].encode(), (BASE/'bindings.json').read_bytes()).items(): self.assertEqual(value,m[key+'Digest'])
         result=invoke(p,'format');self.assertEqual(result.returncode,0,result.stderr)
