@@ -4,7 +4,7 @@
 # Current RP-03 typed pure-test adoption
 
 **Date:** 2026-11-14<br>
-**Status:** implementation locally verified; final-head CI, separate review and integration pending.<br>
+**Status:** integrated in PR #106 after successful final-head CI, automated review and fresh audit.<br>
 **Authority:** [ADR-0018](../decisions/0018-phase-review-delegation.md), signed
 [scope91](0091-rp03-predicate-adoption-plan.md) `373f5b1` and
 [ADR-0091](../decisions/0091-rp03-pure-test-adoption.md); no personal owner or independent review.
@@ -76,3 +76,14 @@ RP-01 stays source18; its separate archive-first adoption follows. Full RP-08,
 work/reuse/protected managed inspection/editing/export/text-visual, actual users/
 hosts/browsers/independent review and every full semantic/region/G1–G4/scenario/
 Phase1 exit criterion remain open. Parent46 stays draft; no Phase2.
+
+## Verified integration
+
+PR #106 integrated as `c34b9403b4dab89fa050ce81603463f7b73193a8` after final-head
+CI43578324862 ate6bbeaff096afc93b23edb5f49b9f6ec506f861c (every required step
+successful), separate automated COMMENT review5903318099 and fresh complete
+comment-body/thread/head audit. All constituent commits/merge have sign-off. The
+full CodeRabbit non-default-target skip contained no substantive finding; it is
+not review evidence. No independent/human approval. Preceding pending statements
+describe the pre-integration checkpoint. The next dependency is separate RP-01
+source19 archive-first adoption; all phase gates remain open.

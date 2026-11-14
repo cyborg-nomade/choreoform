@@ -141,7 +141,7 @@ validated, and round-tripped.
   passed required CI/review and integrated in PR #105.
   [ADR-0091](docs/decisions/0091-rp03-pure-test-adoption.md) adopts actual working
   RP-03 source19 after its exact126-file source18 archive;291309bytes, exact old
-  C12 IR/reports/resources, final integration checks pending. RP-01 adoption and
+  C12 IR/reports/resources, integrated after required checks/review/CI in PR #106. RP-01 adoption and
   reusable work remain separate scopes; no user-comprehension evidence exists yet.
   Neither closes this item: reusable receipt/work formulations, full RP-08,
   managed protected accessible inspection/editing/export and text/visual parity

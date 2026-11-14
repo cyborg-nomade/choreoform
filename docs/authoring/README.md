@@ -26,8 +26,8 @@ companion0.18 on unchanged C12/IR0.4 under [ADR-0091](../decisions/0091-rp03-pur
 Two complete pure tests reduce the full source from410752 to291309bytes (29.08%),
 with41306 tokens/386333 native parser visits. Full canonical IR, five reports,
 resources/receipts/guards/semantic identities remain exact. Its previous126-file
-source18 package was archived before code. Final checks/review/CI remain pending;
-this is current branch implementation, not representative-user or phase evidence.
+source18 package was archived before code. PR #106 integrated after required final checks, delegated automated review, CI
+and full audit; no representative-user or phase evidence follows.
 RP-01 remains source18; its archive-first adoption follows separately.
 
 The [source 0.18 / companion 0.17 profile](profile-v0.18.md) adds explicit local

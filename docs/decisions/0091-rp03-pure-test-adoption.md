@@ -3,7 +3,7 @@
 
 # ADR-0091: Adopt typed pure tests in the current RP-03 package
 
-**Status:** Accepted under Project Owner delegation; implementation locally verified; effective on integration<br>
+**Status:** Accepted under Project Owner delegation; implemented and integrated in PR #106<br>
 **Date:** 2026-11-13<br>
 **Decider:** Codex under ADR-0018; no personal owner or independent review
 
@@ -61,3 +61,12 @@ current semantic/resource/report files, complete historic605/778-file inventorie
 and current732/combined905-file trees. Local688 Rust+6 compile-fail tests, native/
 Wasm/portability and all86 Python commands pass. Final-head CI, separate automated
 review, full comment audit and signed merge remain pending.
+
+## Verified integration
+
+PR #106 merged as `c34b9403b4dab89fa050ce81603463f7b73193a8` after successful
+CI43578324862 ate6bbeaff096afc93b23edb5f49b9f6ec506f861c, separate automated
+COMMENT review5903318099 and fresh full-body/thread/head audit. All four commits
+and merge carry sign-off; CodeRabbit skipped and supplies no review evidence.
+All688 Rust+6 compile-fail/native/Wasm/86 Python checks pass. Earlier pending
+statements describe the pre-integration checkpoint; no Phase1 gate closes.
