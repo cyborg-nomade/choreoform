@@ -1,7 +1,7 @@
 {
   "format": "choreoform-authoring-bindings",
-  "version": "0.17.0",
-  "profile": "0.18.0",
+  "version": "0.18.0",
+  "profile": "0.19.0",
   "definition": "rp01_benchmark",
   "root": "expense",
   "contracts": {
@@ -897,6 +897,12 @@
       "kind": "node",
       "scope": "payment_recovery",
       "name": "Classify late payment"
+    },
+    {
+      "id": "payment_receipt_test",
+      "kind": "predicate",
+      "scope": "expense",
+      "name": "Payment receipt agrees"
     }
   ],
   "generated": [
@@ -2143,6 +2149,20 @@
       "role": "outcome",
       "name": "next",
       "wire": "next"
+    },
+    {
+      "id": "payment_receipt_test_result",
+      "owner": "payment_receipt_test",
+      "role": "predicate-input",
+      "name": "Result",
+      "wire": "result"
+    },
+    {
+      "id": "payment_receipt_test_request",
+      "owner": "payment_receipt_test",
+      "role": "predicate-input",
+      "name": "Instruction",
+      "wire": "request"
     }
   ],
   "retired": [],

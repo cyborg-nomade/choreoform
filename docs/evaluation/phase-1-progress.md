@@ -40,15 +40,20 @@ The source19 compiler was separately integrated by PR #105 under ADR-0090.
 
 Active `codex/rp01-predicate-adoption` follows signed9fd9a6b,
 [scope92](0092-rp01-predicate-adoption-plan.md), after verified #106 integration.
-Archive/sign all59 exact current RP-01 files (641730bytes) and separate note before
-producer/current-consumer or package changes. Preserve the exact existing README,
-all prior173 RP-01 files, all732 RP-03 files and their combined905-file inventory.
-The new archive adds60 files (965 combined working tree). Then adopt only source19
-pure tests with a finite reproducible producer, exact unchanged C12 IR/reports/
-resources/guard pins and explicit full historical-epoch proof reconstruction.
-Current RP-01 is still source18 at55453bytes/9455tokens/114301parser visits, with
-all11 non-executable views passing. The verified whole source19 experiment is54172
-bytes; current adoption/required checks/review/CI/merge are not yet implemented.
+Signed archive23507904f88b148fcb8db57815547d37f464a1a2 preserves59 exact current
+RP-01 files/641730bytes plus separate note before adoption code. Every old173-file
+RP-01 /732-file RP-03 /905-file combined inventory remains exact. The archive adds60
+files (965 combined working tree). [ADR-0092](../decisions/0092-rp01-pure-test-adoption.md)
+and [working evidence](0092-rp01-predicate-adoption.md) record the finite model
+producer: it matches the complete54172-byte source19 experiment and companion
+value, while legacy mode matches all59 source18 files raw-byte exactly.
+Only four current files change; other55, full C12 IR/revision/wire, all11 reports,
+resources/inputs/receipts/guards and guard candidate pins remain exact. Current
+working source19 is54172bytes/9145tokens/113796parser visits (2.31% smaller).
+Historical proofs now select explicit full source18 epochs with original raw
+captures and113/173/605/778/905-file digests. All local688 Rust+6 compile-fail/native/five Wasm lints/two release Wasm builds/
+native portability/all87 Python commands pass. Separate review/final-head CI/full
+audit/expected-head signed merge remain pending.
 
 Next: separately scoped remaining work/reuse/readability/protected accessible
 inspection/editing/export/text-visual critique and full RP-08 requirements, then

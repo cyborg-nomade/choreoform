@@ -12,11 +12,12 @@ import unittest
 from benchmarks.receipt_reuse_evidence import ROOT,report,rebind,Budget
 from check_source_capacity import fixed
 from check_metadata_authoring import invoke
-from check_rp01_capture_checkpoint import package as expense
+from check_rp01_capture_checkpoint import package as expense,pre_predicate_package as source18_expense
 from check_rp03_package import package as order
 from check_rp03_factored_authoring import mutate
 from check_authoring_evidence import check_links
 from benchmarks.rp03_predicate_checkpoint import artifacts as source18_archive,prior_benchmark_inventory
+from benchmarks.rp01_predicate_checkpoint import artifacts as source18_expense_archive
 
 BASE=ROOT/'docs/evaluation'
 
@@ -30,10 +31,8 @@ class ReceiptReuseEvidence(unittest.TestCase):
             base=Path(directory)/'docs/benchmarks'
             for name,raw in source18_archive().items():
                 path=base/'rp03'/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
-            for path in (ROOT/'docs/benchmarks/rp01').rglob('*'):
-                relative=path.relative_to(ROOT/'docs/benchmarks/rp01')
-                if path.is_file() and 'history' not in relative.parts:
-                    target=base/'rp01'/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(path.read_bytes())
+            for name,raw in source18_expense_archive().items():
+                path=base/'rp01'/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
             result=subprocess.run([str(ROOT/'target/debug/examples/factoring_metrics'),'docs/benchmarks/rp01/source.choreo','docs/benchmarks/rp03/source.choreo'],cwd=directory,capture_output=True,timeout=30)
         self.assertEqual(result.returncode,0,result.stderr)
         self.assertEqual(result.stdout,(BASE/'0089-current-native-metrics.json').read_bytes())
@@ -62,10 +61,10 @@ class ReceiptReuseEvidence(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'bound'):rebind(nested,[],Budget())
         with self.assertRaisesRegex(ValueError,'unsupported'):rebind({'op':'call','name':'unaccepted'},[],Budget())
 
-    def test_current_native_sources_and_unbound_parameter_refusal_remain_real(self):
+    def test_current_native_sources_and_source18_unbound_parameter_staging_remain_real(self):
         for p in [expense(),order()]:
             r=invoke(p,'check');self.assertEqual(r.returncode,0,r.stderr);self.assertIs(json.loads(r.stdout)['executable'],False)
-        s,l,r=expense()
+        s,l,r=source18_expense()
         old='Let "Claim for checks" mean (the value of "Current claim") as type "Claim" from "Expense types" with parameters empty.'
         bad=mutate(s,old,old.replace('parameters empty','parameters ["unused" as text]'))
         lowered=invoke((bad,l,r));self.assertEqual(lowered.returncode,0,lowered.stderr)

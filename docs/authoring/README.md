@@ -13,13 +13,15 @@ experimental alternatives; the separately archived working RP-03 adoption is
 described below, while RP-01 adoption remains a separate scope.
 This supplies no representative-user evidence or complete language/phase gate.
 
-The actual [RP-01 package](../benchmarks/rp01/README.md) also adopts source0.18 /
-companion0.17 with **Expense information** and **Payable instruction** under
-[ADR-0088](../decisions/0088-rp01-factored-authoring.md): 55453 bytes/9455 tokens,
-9.41% smaller. Its explicit C11-to-C12 promotion changes the semantic revision;
-all other expanded fields and immutable resources remain exact. The old package
-is archived before code. All eleven partial views pass; no user/phase gate closes.
-
+The current working [RP-01 package](../benchmarks/rp01/README.md) adopts source0.19 /
+companion0.18 on unchanged C12/IR0.4 under [ADR-0092](../decisions/0092-rp01-pure-test-adoption.md).
+Payment receipt agrees factors the complete work predicate and late-classifier
+inner condition, with explicit Result/Instruction inputs and every caller guard
+preserved. Full source54172bytes/9145tokens is2.31% below source18 at55453. The
+finite producer matches the verified experiment and preserves all11 reports/IR/
+resources/guard pins exactly; legacy source18 production stays byte-identical.
+Its59-file prior package was archived before code. Final checks/review/CI remain
+pending; no user, runtime, complete language or phase result is claimed.
 
 The current working [RP-03 package](../benchmarks/rp03/README.md) adopts source0.19 /
 companion0.18 on unchanged C12/IR0.4 under [ADR-0091](../decisions/0091-rp03-pure-test-adoption.md).
@@ -28,7 +30,7 @@ with41306 tokens/386333 native parser visits. Full canonical IR, five reports,
 resources/receipts/guards/semantic identities remain exact. Its previous126-file
 source18 package was archived before code. PR #106 integrated after required final checks, delegated automated review, CI
 and full audit; no representative-user or phase evidence follows.
-RP-01 remains source18; its archive-first adoption follows separately.
+RP-01 source19 adoption is a separate working scope as described above.
 
 The [source 0.18 / companion 0.17 profile](profile-v0.18.md) adds explicit local
 transparent type descriptions on unchanged C12 / IR 0.4. `Describe type ... as ...`

@@ -248,3 +248,5 @@ house style established by Choreoform’s first records.
 - [ADR-0090: Typed source-only pure Boolean tests](0090-pure-predicate-recipes.md) — contract accepted under owner delegation; native implementation and experimental whole variants integrated in PR #105.
 
 - [ADR-0091: Current RP-03 pure-test adoption](0091-rp03-pure-test-adoption.md) — accepted under owner delegation; signed archive precedes implementation; integrated with successful final checks/review/CI in PR #106.
+
+- [ADR-0092: Current RP-01 pure-test adoption](0092-rp01-pure-test-adoption.md) — accepted under owner delegation; exact archive precedes implementation; final verification/integration pending.
