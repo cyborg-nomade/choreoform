@@ -83,3 +83,15 @@ an ordinary Python attribute error. An explicit object check plus five malformed
 root cases now refuse privately as bindings-format. All six focused groups pass
 after correction; production/native code and normative publication bytes stay
 unchanged. Required final-head CI still gates integration.
+
+## Verified integration
+
+PR #109 merged as23f97d66bb39dc31b4e962c857326d977f5bff96 after successful
+CI43587788867 at e7231bd33244c552b5677a339baee8306da70b1e, separate automated
+COMMENT review5903963064 and fresh complete comment-body/thread/head audit.
+All eight commits and merge have sign-off. CodeRabbit's complete skip body has no
+substantive findings and supplies no review evidence; no independent/human approval.
+All688 Rust + six compile-fail/native/Wasm/all89 Python commands pass at final head.
+Earlier pending statements describe the pre-integration checkpoint. Next signed
+scope5bfea4b implements native operations after exact binding publication; all full
+Phase1 criteria remain open. No normative publication bytes change during integration.
