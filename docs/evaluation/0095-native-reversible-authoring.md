@@ -110,3 +110,15 @@ workspace all-target lints and all three CLI groups pass after this correction.
 The complete local700+8/native/Wasm/90-command suite passed before this narrower
 fix; required CI repeats the full suite at the final head. No normative pin, old
 API/SDK behavior, quota or benchmark bytes change.
+
+## Verified integration
+
+PR #110 merged asaebca078354c847602c937e131d6b899edf4e368 after successful
+CI43613364792 at1978088c3fd23d2c2154c8c0f2c1aa08ab7c4f58, separate automated
+COMMENT review5905656042 and fresh complete comment-body/thread/head audit. All
+eight commits and merge have sign-off. Complete CodeRabbit skip has no substantive
+finding and supplies no review evidence. All700 Rust + eight compile-fail/native/
+Wasm/all90 Python commands pass at final head. Earlier pending statements describe
+historical checkpoints. No independent/human approval. Next signed scope9174cb6
+publishes the experimental paired mapping/interfaces before code; every full Phase1
+criterion remains open. Native/compiler/publication/benchmark quotas stay unchanged.

@@ -9,69 +9,67 @@
 
 ## Current focus
 
-[PR #109](https://github.com/cyborg-nomade/choreoform/pull/109) integrated the exact
-reversible authoring document/change/layout contract as
-`23f97d66bb39dc31b4e962c857326d977f5bff96`. Final-head CI43587788867 at
-`e7231bd33244c552b5677a339baee8306da70b1e`, separate completed-diff automated COMMENT
-review5903963064 and fresh full-body/thread/head audit precede the expected-head
-signed merge. All eight commits/merge have sign-off. CodeRabbit skipped the
-non-default target and supplies no findings/review evidence; no human/independent
-or personal owner approval is claimed. All688 Rust + six compile-fail/native/Wasm /
-all89 Python commands pass in final-head CI; relevant focused regressions pass locally.
+[PR #110](https://github.com/cyborg-nomade/choreoform/pull/110) integrated native
+reversible authoring as `aebca078354c847602c937e131d6b899edf4e368`. Successful
+final-head CI43613364792 at `1978088c3fd23d2c2154c8c0f2c1aa08ab7c4f58`, separate
+completed-diff automated COMMENT review5905656042 and fresh complete body/thread/
+head audit precede the expected-head signed merge. All eight commits/merge signed.
+CodeRabbit skipped and supplies no findings/review evidence; no personal owner,
+independent or human approval. All700 Rust + eight compile-fail/native/Wasm/all90
+Python commands pass at final head. The CI job completed in14m12s within its15m cap;
+no timeout or existing component/compiler/SDK limit was increased.
 
-Signed scoped3ab333, comparison58d1104 and publication
-`c996cb4a9117ac33c7fa382fc1ce09679b38cab5` precede new oracle code.
-[ADR-0094](../decisions/0094-reversible-authoring-documents.md) selects the
-[document/change/layout0.1.0 contract](../authoring/reversible-v0.1.md), preserving
-source19/companion18 and a real native-checked C12/IR4 projection. Whole authoring
-integrity differs from semantic revision and native package integrity. First
-operations: native formatting, source-only predicate/type/protection/input caption
-renames and layout replacement. Structural/copy/retire/semantic/IR-only operations
-explicitly refuse pending complete later contracts. Access is a trusted integration
-prerequisite, never an untrusted JSON grant. Six read-only oracle groups verify
-worked states/pins/projections/private refusals/bounds/lexical privacy; they are
-not native edits or visual/user/security/host evidence. Self-review fixed a stale
-status and a private refusal-path defect for scalar/list companion roots.
+Signed scope5bfea4b, comparison358ed5b and exact binding/schema publication
+`4568b0e72e7f37b61f5ecfa6aaad62c67bbb9222` precede production code.
+[ADR-0095](../decisions/0095-native-reversible-authoring.md) /
+[native evidence](0095-native-reversible-authoring.md) supply immutable native
+admission/import/inspect/export and the entire document/change/layout0.1.0 matrix:
+format, source-only predicate/type/protection/input caption rename and layout
+replacement. Exact token splices and scope/predicate-owner binding preserve IDs /
+wires/opaque literals/type fields/annotations and complete native IR. Native result
+rebind/lower and whole-authoring stale-base checks remain atomic. Copy/retire /
+structural/semantic/IR-only/redacted operations explicitly refuse pending later
+contracts. Authoring access stays a trusted integration prerequisite, not a JSON /
+process-label/digest/host grant. Review fixed registry pin metadata bounds before
+indexed comparisons; affected native/CLI/lint controls pass, then full final-head CI.
 
-Full current RP-01/03 documents measure105505/525243 transport bytes with11/51
-supplied resource pins totaling63462/572782 bytes in the oracle's serializer.
+Ten native and two new transport groups plus three CLI groups exercise actual
+changes, all six byte-exact goldens, nested callee keys/caller parameters, qualified /
+private/type/opaque/Unicode/resource/layered limits, stale bases and real cumulative
+500-call output refusal. Old transport1MiB/depth/-0 behavior and all previous
+publication/vector/profile/API/benchmark bytes remain exact. Scope94's read-only
+oracle now correctly leaves decoded companion contents under their own native
+bounds instead of counting them inside the outer string. Native authoring is not
+visual/access enforcement/full validation/user/host/execution evidence.
+
+Whole RP-01/03 exact raw components complete native import/export/format/re-import
+and all four target kinds with exact IR/revision/all11 checking outcomes. Current
+native document JCS120223/588290 bytes, formatted105823/526719. Original authoring
+digests and observations are [captured](0095-native-authoring-observations.json).
 All965 benchmark files retain inventory
 `a25c6de850fdaa51436023fffe011c8f96695e9d8660191e7598cd4f4bf2e9f7`.
-Current source19/companion18/C12/IR4 RP-01 is54172bytes/9145tokens/113796parser visits,
-all11 partial non-executable views pass. RP-03 is291309/41306/386333; four checking
-plus advisory pass, six later views retain parallel-effects-unproved at
-start_acceptance, source58784..58971. No work/storage/authority sharing or quota rise.
+RP-01 source19/companion18/C12/IR4 remains54172bytes/9145tokens/113796parser visits,
+all11 partial non-executable views pass. RP-03 remains291309/41306/386333; four
+checking plus advisory pass, six later views retain parallel-effects-unproved at
+start_acceptance, source58784..58971. No work/storage/authority sharing or core rise.
 
-Active `codex/native-reversible-authoring` follows signed
-`5bfea4b93b8144d97b9088ea27079667b26e5576`,
-[scope95](0095-native-reversible-authoring-plan.md), and signed
-[comparison358ed5b](0095-native-reversible-authoring-design.md). PR #109 dependency
-is verified. Publish/sign exact SDK/CLI bindings/private diagnostics before code;
-then implement immutable native admission/import/inspect/export and all0.1.0
-managed operations with real native outputs/limits/whole RP-01/03 preservation.
-Existing compiler/profile/contracts/benchmarks remain fixed. Later paired accessible
-prototype, complete operation profiles and real cycles require dedicated scopes.
+Active `codex/paired-authoring-prototype` follows signed
+`9174cb6ef706eade0c1a3a023f342473e3de4796`,
+[scope96](0096-paired-authoring-prototype-plan.md), and signed
+[comparison604337c](0096-paired-authoring-prototype-design.md). PR #110 dependency
+is verified. Publish/sign exact experimental mapping/view/bridge/integration
+contracts before code, then implement a bounded paired accessible prototype using
+the same Rust semantics and native operations. Compare/observe real browser/Wasm
+parity with a separately enforced artifact/session boundary. The Manifest forbids
+standardizing notation before usability testing; this is experimental, not a visual
+standard or user-comprehension result. No second Python/JS compiler or fake browser
+proof. General editing and full Phase1 gates do not close with this bounded slice.
 
-Exact [native bindings](../authoring/native-reversible-v0.1.md) and inspection schema
-were signed in4568b0e72e7f37b61f5ecfa6aaad62c67bbb9222 before native implementation.
-[ADR-0095](../decisions/0095-native-reversible-authoring.md) /
-[native evidence](0095-native-reversible-authoring.md) record immutable admission /
-import/inspection/export and all0.1.0 operations with real native outputs. Ten new
-native integration and two transport groups pass; all six golden changes are
-byte-exact, nested/qualified/opaque/stale/UTF-8/resource/output-growth cases refuse
-or preserve their proper meaning. Three CLI groups replay whole RP01/RP03/raw
-components, actual cycles/all target categories and all11 checking outcomes. Source /
-companion1MiB and every old API/profile/core/benchmark byte remain exact. Optional
-diagnostics do not echo unknown ID-shaped tokens. Full local700 Rust + eight
-compile-fail/native/Wasm/all90 Python commands pass. Final-head CI, separate full
-diff review/all comment audit/expected-head signed merge remain pending. Next
-paired accessible prototype and full later operation mappings need separate scopes.
-
-Full RP-08 design/coverage/package, complete diagnostics/validator/conformance,
-protected accessible inspection/editing/export, three-process text/visual cycles
-and actual representative users remain Phase1 work. Actual host/browser/independent
-review and all complete semantic/region/G1–G4/scenario/phase gates stay open.
-All40 scenarios Partial, parent46 draft; no Phase2/new phase chat or phase completion.
+Full RP-08 design/coverage/lowerable package, broader managed operations, complete
+validation/actionable diagnostics/conformance/negative examples, three-process
+both-form cycles and actual representative users/host/browser/independent evidence
+remain Phase1 obligations. All40 scenarios Partial, G1–G4 conditional, parent46
+draft. No Phase2/new phase chat or phase completion; phase report needs owner approval.
 
 ## Verified baseline
 
