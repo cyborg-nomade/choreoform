@@ -10,7 +10,8 @@ prototype. Source-only definitions are intentionally absent from execution IR;
 formatting original source alone cannot establish reverse export or visual parity.
 Full RP-08, actionable diagnostics and actual representative-user evaluation remain
 explicit Phase1 work. No new API, syntax or product implementation is admitted by
-that direction alone; its final integration checks are pending.
+that direction alone; PR #108 integrated the direction after required checks,
+delegated automated review, final-head CI and fresh full audit.
 
 [ADR-0090](../decisions/0090-pure-predicate-recipes.md) contracts source0.19 /
 companion0.18 typed pure Boolean tests on unchanged C12/IR0.4. The native prototype
@@ -254,3 +255,5 @@ source-0.14 meaning while allowing 131,072 program tokens; all old/other limits
 remain. It recognizes the whole order grammar but retains an actual private
 compensation reference refusal. It supplies no benchmark adoption or readability /
 semantic/host/phase closure. See [measured evidence](../evaluation/0068-source-capacity.md).
+
+[Reversible authoring document/change/layout0.1.0](reversible-v0.1.md) preserves exact source19/companion18 and a checked C12/IR4 projection. Native admission/managed operations and paired accessible views are subsequent Phase1 work; the contract oracle is not an editor.

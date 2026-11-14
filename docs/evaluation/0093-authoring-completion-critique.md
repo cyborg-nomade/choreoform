@@ -4,7 +4,7 @@
 # Remaining authoring completion: critique before further implementation
 
 **Date:** 2026-11-14<br>
-**Status:** direction accepted under delegation; local verification complete; final-head CI/review/integration pending.<br>
+**Status:** integrated by PR #108 after successful final-head CI, automated review and fresh audit.<br>
 **Authority:** signed [scope93](0093-authoring-completion-critique-plan.md)c30eb10,
 after verified PR #107 integration4042081c3b8ea990ad1d4e93357ad368889cdaf8;
 CI43581960139 atdd809f4568bd0642a5ec5376da9360a303339d66, automated COMMENT
@@ -153,3 +153,14 @@ Wasm builds/native portability and all88 Python commands pass locally. No produc
 accepted publication, benchmark or raw prior evidence bytes change. Final-head CI,
 separate completed-diff automated review, full comment audit and signed merge are
 still required before integration. This is no independent/human/user/host proof.
+
+## Verified integration
+
+PR #108 merged as7471559493a5b97d4a3bac5377d1a7b6a94a7e47 after successful
+CI43584392413 ata43da6566804d7be51b01e5a3da493f65e8f3509, separate automated
+COMMENT review5903706053 and fresh complete comment-body/thread/head audit. All
+constituent commits and merge have sign-off; the complete CodeRabbit skip contains
+no substantive finding and is not review evidence. No independent/human approval.
+All local/CI checks pass. Earlier pending statements describe that checkpoint.
+The next signed scoped3ab333 publishes the reversible authoring contract before
+its later implementation; every full Phase1 criterion remains open.
