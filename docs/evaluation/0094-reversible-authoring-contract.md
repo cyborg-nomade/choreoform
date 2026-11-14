@@ -76,3 +76,10 @@ three-process both-form cycles and actual representative users remain Phase1 wor
 All40 scenarios Partial, G1–G4 conditional, parent46 draft; no phase gate or Phase2.
 
 Complete local required verification passes:688 Rust tests + six compile-fail checks, native portability, workspace/native and five Wasm library lints, two release Wasm builds and all89 Python commands. Final-head CI/review/audit/merge remain pending.
+
+Separate completed-diff review corrected a superseded progress statement and a
+read-only oracle refusal-path defect: a scalar/list decoded companion could raise
+an ordinary Python attribute error. An explicit object check plus five malformed
+root cases now refuse privately as bindings-format. All six focused groups pass
+after correction; production/native code and normative publication bytes stay
+unchanged. Required final-head CI still gates integration.

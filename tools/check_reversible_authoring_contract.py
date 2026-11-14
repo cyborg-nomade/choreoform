@@ -149,6 +149,8 @@ def admit(raw, resources=()):
     if len(source) > MIB or len(bindings) > MIB:
         refuse('component-limit')
     ledger = strict(bindings, MIB, 'bindings-format')
+    if not isinstance(ledger, dict):
+        refuse('bindings-format')
     if ledger.get('profile') != '0.19.0' or ledger.get('version') != '0.18.0':
         refuse('component-profile')
     if len(resources) > 128 or sum(len(row[2]) for row in resources) > 8 * MIB:
@@ -280,6 +282,10 @@ class ReversibleAuthoringContract(unittest.TestCase):
         for raw in [b'{"SECRET":0,"SECRET":1}', b'{"a":-0}', b'{"a":1.0}', b'{"a":NaN}', b'"\\ud800"', b'\xef\xbb\xbf{}', b'{} trailing']:
             with self.assertRaisesRegex(Refusal, '^document-format$'):
                 admit(raw)
+        for raw in ('[]', 'null', 'true', '3', '"SECRET"'):
+            document = deepcopy(self.base[0]); document['bindings'] = raw
+            with self.assertRaisesRegex(Refusal, '^bindings-format$'):
+                admit(encoded(document))
         for change in ('future', 'unknown', 'invalid-source', 'collision', 'retired', 'owner'):
             document = deepcopy(self.base[0]); ledger = json.loads(document['bindings'])
             if change == 'future': ledger['profile'] = '0.20.0'
