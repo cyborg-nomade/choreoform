@@ -252,3 +252,5 @@ house style established by Choreoform’s first records.
 - [ADR-0092: Current RP-01 pure-test adoption](0092-rp01-pure-test-adoption.md) — accepted under owner delegation; exact archive precedes implementation; integrated with successful required checks/review/CI in PR #107.
 
 - [ADR-0093: Authoring completion sequence](0093-authoring-completion-sequence.md) — direction accepted under owner delegation; reversible managed authoring contract before broader work syntax; integrated with required CI/review/audit in PR #108.
+
+- [ADR-0094: Reversible authoring documents](0094-reversible-authoring-documents.md) — exact document/change/layout contract accepted under delegation; native operations and visual prototype pending.

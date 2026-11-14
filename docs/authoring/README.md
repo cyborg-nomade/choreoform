@@ -255,3 +255,5 @@ source-0.14 meaning while allowing 131,072 program tokens; all old/other limits
 remain. It recognizes the whole order grammar but retains an actual private
 compensation reference refusal. It supplies no benchmark adoption or readability /
 semantic/host/phase closure. See [measured evidence](../evaluation/0068-source-capacity.md).
+
+[Reversible authoring document/change/layout0.1.0](reversible-v0.1.md) preserves exact source19/companion18 and a checked C12/IR4 projection. Native admission/managed operations and paired accessible views are subsequent Phase1 work; the contract oracle is not an editor.

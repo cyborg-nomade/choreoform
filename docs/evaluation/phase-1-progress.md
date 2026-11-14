@@ -54,6 +54,14 @@ representative users remain explicit within Phase1. Actual host/browser/independ
 review and all full semantic/region/G1–G4/scenario/phase criteria remain open.
 All40 scenarios Partial, parent46 draft; no Phase2 or phase completion.
 
+Current scope94 has signed its [exact reversible document/change/layout publication](../authoring/reversible-v0.1.md)
+in c996cb4a9117ac33c7fa382fc1ce09679b38cab5 before read-only oracle code.
+[ADR-0094](../decisions/0094-reversible-authoring-documents.md) and
+[contract evidence](0094-reversible-authoring-contract.md) distinguish preservation /
+semantic projection from later native changes and visual editing. Six focused groups
+pass; complete local688 Rust + six compile-fail/native/Wasm/all89 Python commands
+pass. Final-head CI, separate review, full comment audit and signed merge remain pending. No existing benchmark/publication bytes or phase gates change.
+
 ## Verified baseline
 
 PR #21 supplies exact resource readers and the static type/expression/policy
