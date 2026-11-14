@@ -45,8 +45,8 @@ then publish exact versioned normative artifacts/closed schemas/worked vectors w
 raw pins before any later production implementation. Define consistency/identity/
 layout/managed changes/unsupported cases/private diagnostics and authority boundaries.
 No new source20/IR calls/generic work/runtime permission or relaxed component quota.
-The contract is not chosen or published yet; native managed operations/paired
-prototype require later separate signed implementation scopes.
+The exact contract and worked vectors are now published in signed c996cb4a;
+native managed operations/paired prototype require later separate signed scopes.
 
 Full RP-08 design/coverage/package, complete diagnostics/validator/conformance,
 protected accessible inspection/editing/export, text/visual cycles and actual
