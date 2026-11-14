@@ -10,7 +10,8 @@ prototype. Source-only definitions are intentionally absent from execution IR;
 formatting original source alone cannot establish reverse export or visual parity.
 Full RP-08, actionable diagnostics and actual representative-user evaluation remain
 explicit Phase1 work. No new API, syntax or product implementation is admitted by
-that direction alone; its final integration checks are pending.
+that direction alone; PR #108 integrated the direction after required checks,
+delegated automated review, final-head CI and fresh full audit.
 
 [ADR-0090](../decisions/0090-pure-predicate-recipes.md) contracts source0.19 /
 companion0.18 typed pure Boolean tests on unchanged C12/IR0.4. The native prototype

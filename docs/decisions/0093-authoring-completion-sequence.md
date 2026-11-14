@@ -3,7 +3,7 @@
 
 # ADR-0093: Complete reversible managed authoring before broader work syntax
 
-**Status:** Accepted direction under Project Owner delegation; effective on integration<br>
+**Status:** Accepted direction under Project Owner delegation; integrated in PR #108<br>
 **Date:** 2026-11-14<br>
 **Decider:** Codex under ADR-0018; no personal owner or independent review
 
@@ -60,3 +60,10 @@ scenarios remain Partial, parent46 draft, all full Phase1 criteria open; no Phas
 Four read-only oracle groups and complete local688 Rust+6 compile-fail/native/
 Wasm/portability/all88 Python commands pass. Final-head CI, separate completed-diff
 automated review, full comment audit and signed merge remain pending.
+
+PR #108 integrated as `7471559493a5b97d4a3bac5377d1a7b6a94a7e47` after successful
+CI43584392413 ata43da6566804d7be51b01e5a3da493f65e8f3509, separate automated
+COMMENT review5903706053 and fresh full-body/thread/head audit. All five commits
+and merge have sign-off. The CodeRabbit skip supplies no findings/review evidence.
+All688 Rust+6 compile-fail/native/Wasm/88 Python commands pass. Prior pending
+statements record the pre-integration checkpoint; no production/phase gate closes.

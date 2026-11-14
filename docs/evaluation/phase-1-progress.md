@@ -9,57 +9,50 @@
 
 ## Current focus
 
-[PR #107](https://github.com/cyborg-nomade/choreoform/pull/107) integrated actual
-RP-01 source0.19/companion0.18 pure receipt matching as
-`4042081c3b8ea990ad1d4e93357ad368889cdaf8`. Final-head CI43581960139 at
-`dd809f4568bd0642a5ec5376da9360a303339d66`, separate automated COMMENT review
-5903518032 and a fresh full-body/thread/head audit precede the expected-head
-signed merge. All four commits/merge have sign-off. CodeRabbit skipped the
-non-default target and supplies no findings/review evidence; no personal owner,
-independent or human approval is claimed.
+[PR #108](https://github.com/cyborg-nomade/choreoform/pull/108) integrated the measured
+remaining-authoring critique and ADR-0093 direction as
+`7471559493a5b97d4a3bac5377d1a7b6a94a7e47`. Final-head CI43584392413 at
+`a43da6566804d7be51b01e5a3da493f65e8f3509`, separate automated COMMENT review
+5903706053 and fresh full-body/thread/head audit precede the expected-head signed
+merge. All five commits/merge carry sign-off. CodeRabbit skipped and supplies no
+findings/review evidence; no personal owner, independent or human approval.
 
-[ADR-0092](../decisions/0092-rp01-pure-test-adoption.md) /
-[evidence](0092-rp01-predicate-adoption.md) follow signed scope9fd9a6b and exact
-59-file/641730-byte archive2350790 before adoption code. New finite model production
-matches the full54172-byte experiment and companion value, while source18 legacy
-mode reproduces all59 prior current files exactly, including README. Only current
-source/bindings/manifest/README change. Other55 files, complete C12 IR/revision/wire,
-all11 reports/resources/inputs/receipts/guards and guard candidate pins stay exact;
-all732 RP-03 files stay exact. Historical113/173/605/778/905-file epoch digests and
-raw native captures are preserved through explicit complete archived epochs.
-All688 Rust tests+6 compile-fail/native/five Wasm lints/two release Wasm builds/
-native portability/all87 Python commands pass locally and in final-head CI.
-
-Both maintained packages now use source19/companion18 on unchanged C12/IR0.4.
-RP-01 is54172bytes/9145tokens/113796parser visits (2.31% below source18), with all11
-non-executable views passing. RP-03 is291309/41306/386333 (29.08% below source18),
-with four checking views plus advisory passing and six later views retaining
-parallel-effects-unproved atstart_acceptance, source58784..58971. No runtime
-work/storage/authority is shared; no core promotion/compiler/quota change in either
-adoption. Full current/historical benchmark tree is965 files, inventory SHA256
+Signed scopec30eb10 and [critiquec364bd1](0093-authoring-completion-critique.md)
+precede new read-only support-tool code. [ADR-0093](../decisions/0093-authoring-completion-sequence.md)
+selects a separately published reversible authoring-package/managed-change contract,
+then bounded native operations and paired text/visual prototype. Actual current
+source/companion/IR sizes and scope/step counts reproduce; complete source18/current
+source19 RP-01 produce byte-identical IR but distinct formatted authoring structures.
+Actual invalid Instruction is refused privately at a685-byte work-policy span.
+These motivate design priorities, not user evidence or prospective savings.
+Four new oracle groups and full688 Rust+6 compile-fail/native/five Wasm lints/two
+release Wasm builds/native portability/all88 Python commands pass locally and in CI.
+No production compiler/SDK/syntax/API/contract/quota or benchmark/corpus/report/guard/
+receipt bytes changed. Full965-file benchmark inventory remains
 `a25c6de850fdaa51436023fffe011c8f96695e9d8660191e7598cd4f4bf2e9f7`.
 
-Active `codex/authoring-completion-critique` follows signedc30eb10,
-[scope93](0093-authoring-completion-critique-plan.md), after verified #107 integration.
-Use real post-adoption native measurements and actual invalid-input diagnostics;
-map remaining near-English/managed protected inspection/editing/export/visual /
-roundtrip/validator/example/full-RP08/aggregate gates and compare bounded next
-steps. Write/sign the critique before any new support-tool implementation. No new
-production syntax/API/semantics/quota or benchmark byte change belongs to this
-scope; new contracts require separate exact publication before later code.
+Maintained RP-01/03 use source19/companion18 on C12/IR0.4. RP-01 is54172bytes /
+9145tokens /113796parser visits, all11 partial non-executable views pass. RP-03 is
+291309 /41306 /386333, with four checking views plus advisory passing and six later
+views retaining parallel-effects-unproved atstart_acceptance, source58784..58971.
+No runtime work/storage/authority sharing, core promotion or quota increase.
 
-Signed critiquec364bd168503023ef0c83e4a5429789b5fd50221 precedes new support-tool
-code. [ADR-0093](../decisions/0093-authoring-completion-sequence.md) accepts the
-working direction under delegation: separately publish a reversible authoring-
-package/managed-change contract, then bounded native operations and a paired
-text/visual prototype. Native observations show identical IR but different source
-structures, remaining291309-byte navigation scope and an actual private685-byte
-policy diagnostic. Four new read-only oracle groups and full local688 Rust+6 compile-fail/native/
-Wasm/portability/all88 Python commands pass. Final-head CI/separate review/full
-audit/signed merge remain pending; no production or benchmark bytes change. Full RP-08/diagnostic/user and
-aggregate gates stay explicit within Phase1. Actual users/hosts/browsers/independent
-review and every complete semantic/region/G1–G4/scenario/Phase1 criterion remain
-open. All40 scenarios Partial, parent46 draft; no Phase2 or phase completion.
+Active `codex/reversible-authoring-contract` follows signed
+`d3ab333ff7726f009ebe832e925af0bb9fb5dc3f`,
+[scope94](0094-reversible-authoring-contract-plan.md), after verified #108 integration.
+Compare complete representation alternatives, accept ADR-0094 under delegation,
+then publish exact versioned normative artifacts/closed schemas/worked vectors with
+raw pins before any later production implementation. Define consistency/identity/
+layout/managed changes/unsupported cases/private diagnostics and authority boundaries.
+No new source20/IR calls/generic work/runtime permission or relaxed component quota.
+The contract is not chosen or published yet; native managed operations/paired
+prototype require later separate signed implementation scopes.
+
+Full RP-08 design/coverage/package, complete diagnostics/validator/conformance,
+protected accessible inspection/editing/export, text/visual cycles and actual
+representative users remain explicit within Phase1. Actual host/browser/independent
+review and all full semantic/region/G1–G4/scenario/phase criteria remain open.
+All40 scenarios Partial, parent46 draft; no Phase2 or phase completion.
 
 ## Verified baseline
 
