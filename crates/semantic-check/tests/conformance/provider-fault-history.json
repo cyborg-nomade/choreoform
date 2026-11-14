@@ -1,0 +1,201 @@
+{
+  "format": "choreoform-provider-fault-history-claims",
+  "version": "0.1.0",
+  "premise": "Untrusted finite claim shapes over exact prevalidated source metadata; no actual fault/event/entry evidence",
+  "base": {
+    "type": "provider unknown",
+    "sourceOccurrence": {
+      "definitionRevision": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "instance": "instance-claim",
+      "scopeOccurrence": "scope-claim",
+      "site": "payment_request",
+      "occurrence": "activity-claim",
+      "attempt": "1"
+    },
+    "cause": {
+      "observation": "unknown",
+      "record": "untrusted-evidence-reference"
+    },
+    "inputRevisions": [
+      {
+        "cell": "payable_request",
+        "revision": "opaque-revision-1"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "well-formed-unresolved-claim",
+      "patch": {},
+      "remove": [],
+      "expect": "passed"
+    },
+    {
+      "id": "definitive-no-effect",
+      "patch": {
+        "/type": "confirmed no effect",
+        "/cause/observation": "no-effect"
+      },
+      "remove": [],
+      "expect": "passed"
+    },
+    {
+      "id": "attempt-ceiling",
+      "patch": {
+        "/sourceOccurrence/attempt": "1000"
+      },
+      "remove": [],
+      "expect": "passed"
+    },
+    {
+      "id": "input-free",
+      "patch": {
+        "/inputRevisions": []
+      },
+      "remove": [],
+      "expect": "passed"
+    },
+    {
+      "id": "invented-site-is-still-only-a-claim",
+      "patch": {
+        "/sourceOccurrence/site": "invented site"
+      },
+      "remove": [],
+      "expect": "passed"
+    },
+    {
+      "id": "unknown-fault",
+      "patch": {
+        "/type": "SECRET-MARKER"
+      },
+      "remove": [],
+      "expect": "fault-history-source"
+    },
+    {
+      "id": "wrong-observation",
+      "patch": {
+        "/cause/observation": "no-effect"
+      },
+      "remove": [],
+      "expect": "fault-history-source"
+    },
+    {
+      "id": "success-is-not-fault",
+      "patch": {
+        "/cause/observation": "result-paid"
+      },
+      "remove": [],
+      "expect": "fault-history-source"
+    },
+    {
+      "id": "attempt-zero",
+      "patch": {
+        "/sourceOccurrence/attempt": "0"
+      },
+      "remove": [],
+      "expect": "fault-history-attempt"
+    },
+    {
+      "id": "attempt-too-large",
+      "patch": {
+        "/sourceOccurrence/attempt": "1001"
+      },
+      "remove": [],
+      "expect": "fault-history-attempt"
+    },
+    {
+      "id": "attempt-noncanonical",
+      "patch": {
+        "/sourceOccurrence/attempt": "01"
+      },
+      "remove": [],
+      "expect": "integer-encoding"
+    },
+    {
+      "id": "attempt-number",
+      "patch": {
+        "/sourceOccurrence/attempt": 1
+      },
+      "remove": [],
+      "expect": "shape"
+    },
+    {
+      "id": "bad-definition-revision",
+      "patch": {
+        "/sourceOccurrence/definitionRevision": "sha256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      "remove": [],
+      "expect": "artifact-pin"
+    },
+    {
+      "id": "empty-occurrence",
+      "patch": {
+        "/sourceOccurrence/occurrence": ""
+      },
+      "remove": [],
+      "expect": "name"
+    },
+    {
+      "id": "empty-cause-reference",
+      "patch": {
+        "/cause/record": ""
+      },
+      "remove": [],
+      "expect": "name"
+    },
+    {
+      "id": "empty-input-revision",
+      "patch": {
+        "/inputRevisions": [
+          {
+            "cell": "payable_request",
+            "revision": ""
+          }
+        ]
+      },
+      "remove": [],
+      "expect": "name"
+    },
+    {
+      "id": "duplicate-input",
+      "patch": {
+        "/inputRevisions": [
+          {
+            "cell": "payable_request",
+            "revision": "v1"
+          },
+          {
+            "cell": "payable_request",
+            "revision": "v2"
+          }
+        ]
+      },
+      "remove": [],
+      "expect": "fault-history-inputs"
+    },
+    {
+      "id": "missing-history-field",
+      "patch": {},
+      "remove": [
+        "/cause"
+      ],
+      "expect": "record-value"
+    },
+    {
+      "id": "unreviewed-approval-field",
+      "patch": {
+        "/approved": true
+      },
+      "remove": [],
+      "expect": "record-value"
+    },
+    {
+      "id": "missing-origin-field",
+      "patch": {},
+      "remove": [
+        "/sourceOccurrence/site"
+      ],
+      "expect": "record-value"
+    }
+  ]
+}

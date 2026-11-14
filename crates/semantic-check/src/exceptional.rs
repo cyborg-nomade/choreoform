@@ -1,12 +1,14 @@
 // SPDX-FileCopyrightText: 2026 Choreoform contributors
 // SPDX-License-Identifier: MPL-2.0
-//! Handler-body availability under explicit ancestor input contracts only.
+//! Separate legacy ancestor-input and explicit conditional history-body evidence.
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
+use std::sync::Arc;
 
 #[derive(Debug)]
 pub struct ExceptionalReport {
-    faults: FaultReport,
+    faults: Arc<FaultReport>,
+    history_entries: Option<FaultEntryReport>,
     assumptions: BTreeMap<String, BTreeSet<String>>,
     nodes: BTreeSet<String>,
     scopes: BTreeSet<String>,
@@ -18,6 +20,10 @@ impl ExceptionalReport {
     }
     pub fn faults(&self) -> &FaultReport {
         &self.faults
+    }
+    /// Separate history initialization/flow proof; no legacy coverage promotion.
+    pub fn history_entries(&self) -> Option<&FaultEntryReport> {
+        self.history_entries.as_ref()
     }
     /// Required bound input cells of live owning ancestors, not observed facts.
     pub fn entry_assumptions(&self) -> &BTreeMap<String, BTreeSet<String>> {
@@ -41,6 +47,7 @@ impl ExceptionalReport {
             "exceptional-fault-control-protection-and-invalidation",
             "current-principal-purpose-capability-and-policy-enforcement",
             "concurrent-handler-occurrence-lifetime-and-owned-settlement",
+            "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "host-trust-and-atomic-runtime-enforcement",
             "full-benchmark-conformance-cross-form-and-user-evidence",
         ]
@@ -51,14 +58,33 @@ pub fn check_exceptional_availability(
     envelope: &DefinitionEnvelope,
     supplied: &[Resource<'_>],
 ) -> Result<ExceptionalReport> {
-    let faults = check_fault_routes(envelope, supplied)?;
     let b = &envelope.document()["body"];
+    let has_history = b["scopes"]
+        .as_object()
+        .is_some_and(|scopes| scopes.values().any(|s| !s["faultInput"].is_null()));
+    let history_entries = if has_history {
+        Some(check_fault_entries(envelope, supplied)?)
+    } else {
+        None
+    };
+    let faults = if let Some(entries) = &history_entries {
+        entries.origins().shared_faults()
+    } else {
+        Arc::new(check_fault_routes(envelope, supplied)?)
+    };
     let mut budget = Budget::default();
     let mut assumptions = BTreeMap::new();
+    let typed: BTreeSet<_> = faults
+        .static_report()
+        .fault_entries()
+        .iter()
+        .map(|r| r.handler())
+        .collect();
+    budget.charge(typed.len())?;
     for selection in faults.covered_handlers() {
         budget.tick(0)?;
         let handler = selection.handler();
-        if assumptions.contains_key(handler) {
+        if typed.contains(handler) || assumptions.contains_key(handler) {
             continue;
         }
         let mut inputs = BTreeSet::new();
@@ -92,6 +118,7 @@ pub fn check_exceptional_availability(
         .collect();
     Ok(ExceptionalReport {
         faults,
+        history_entries,
         assumptions,
         nodes: coverage.nodes,
         scopes: coverage.scopes,

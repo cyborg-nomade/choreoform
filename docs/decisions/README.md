@@ -50,6 +50,69 @@ while specifications, guides, and code describe the system as it exists now.
 | [0032](0032-conditional-reconciliation-availability.md) | Accepted under delegation | Check surviving follow-up bodies without inherited values |
 | [0033](0033-semantic-source-locations.md) | Accepted under delegation | Locate semantic diagnostics in original source declarations |
 
+| [0034](0034-benchmark-authoring-profile.md) | Accepted under delegation | Bound full-benchmark source and bind actual-use wait endpoints |
+
+| [0035](0035-provider-metadata-read-closure.md) | Accepted under delegation | Derive finite read closure through provider recipient metadata |
+
+| [0036](0036-metadata-core-authoring.md) | Accepted under delegation | Select finite metadata closure through an explicit source/core pair |
+
+| [0037](0037-closed-ordinary-provenance.md) | Accepted under delegation | Separate proved historical origins from live invalidation inputs |
+
+| [0038](0038-invalidation-requirements.md) | Accepted under delegation | Derive advisory ordinary requirements without bypassing strict coverage |
+
+| [0039](0039-isolated-surviving-waits.md) | Accepted under delegation | Check declared isolation of synchronous surviving waits under live P6 premises |
+
+| [0040](0040-finite-guard-snapshot-conformance.md) | Accepted under delegation | Check actual guard ASTs with finite synthetic snapshots, without execution claims |
+
+| [0041](0041-provider-fault-source-metadata.md) | Accepted under delegation | Pin declared provider observation-to-fault evidence without implicit retry authority |
+
+| [0042](0042-explicit-retry-fault-source-binding.md) | Accepted under delegation | Bind eligible provider fault sources explicitly in core 0.4 without live permission claims |
+| [0043](0043-retry-fault-source-authoring.md) | Accepted under delegation | Explicit source 0.7 retry fault-source clauses and bounded declaration disclosure |
+| [0044](0044-provider-terminal-observation-metadata.md) | Accepted under delegation | Exact declared terminal provider observations, normalized types and protection without wait binding |
+| [0045](0045-explicit-timerless-wait-capture.md) | Accepted under delegation | Versioned IR-0.2/core-0.5 timerless source/origin/result capture with complete static protection and availability boundaries |
+| [0046](0046-wait-capture-authoring.md) | Accepted under delegation | Explicit source 0.8 wait-capture authoring and bounded declaration disclosure |
+| [0047](0047-owned-local-followups.md) | Accepted under delegation | Conditional isolated fresh-local storage with retained source/control protection provenance |
+| [0048](0048-general-provider-fault-source-binding.md) | Accepted under delegation | General exact provider emission-source declarations independent of retry eligibility |
+| [0049](0049-general-fault-source-authoring.md) | Accepted under delegation | Readable source 0.9 general fault-source clauses and shared bounded native catalogues |
+| [0050](0050-provider-fault-history-metadata.md) | Accepted under delegation; pending parent/main integration | Separate provider history claims from authenticated handler entry |
+| [0051](0051-declared-fault-origin-contexts.md) | Accepted under delegation; pending parent/main integration | Retain declared emitting sites and complete handler contexts |
+| [0052](0052-typed-handler-entry.md) | Accepted under delegation; pending parent/main integration | Bind immutable history to explicit conditional handler-local entry |
+| [0053](0053-handler-entry-authoring.md) | Accepted under delegation; pending parent/main integration | Integrate readable history entry with separate conditional reports |
+| [0054](0054-owned-request-retention.md) | Accepted under delegation; pending parent/main integration | Retain exact immutable original requests in owned follow-ups |
+| [0055](0055-request-retention-authoring.md) | Accepted under delegation; pending parent/main integration | Author original-request retention with an explicit readable clause |
+| [0056](0056-owned-continuation-direction.md) | Accepted under delegation; pending parent/main integration | Extend owned work through explicit finite surviving ownership |
+| [0057](0057-owned-readonly-continuations.md) | Accepted under delegation; pending parent/main integration | Check finite read-only surviving continuations separately |
+| [0058](0058-readonly-continuation-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose finite continuations explicitly in readable source |
+| [0059](0059-owned-entry-command-direction.md) | Accepted under delegation; pending parent/main integration | Enable useful owned read-only entry before broad command work |
+| [0060](0060-owned-pre-capture-entry.md) | Accepted under delegation; pending parent/main integration | Check finite read-only owned entry before source capture |
+| [0061](0061-pre-capture-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose pre-capture entry explicitly in readable source |
+| [0062](0062-owned-command-direction.md) | Accepted under delegation; pending parent/main integration | Separate finite owned work from read-only query semantics |
+| [0063](0063-finite-owned-work.md) | Accepted under delegation; pending parent/main integration | Check finite owned work and pure local input construction |
+| [0064](0064-finite-work-authoring.md) | Accepted under delegation; pending parent/main integration | Select and disclose finite owned work in readable source |
+| [0065](0065-rp01-current-contract-direction.md) | Accepted under delegation; pending parent/main integration | Adopt demonstrated RP-01 capture before further generalization |
+| [0066](0066-rp01-capture-adoption.md) | Accepted under delegation; pending parent/main integration | Publish the full RP-01 typed late-capture checkpoint |
+| [0067](0067-rp03-package-draft.md) | Accepted under delegation; pending parent/main integration | Preserve the whole RP-03 draft and its actual capacity refusal |
+| [0068](0068-source-capacity.md) | Accepted under delegation; pending parent/main integration | Version measured source capacity without wider semantics |
+| [0069](0069-compensation-reference-direction.md) | Accepted under delegation; pending parent/main integration | Version compensation identity separately from lexical access |
+| [0070](0070-compensation-identity-contract.md) | Accepted under delegation; pending parent/main integration | Publish purpose-only compensation activity identity |
+| [0071](0071-compensation-identity-authoring.md) | Accepted under delegation; pending parent/main integration | Bind exact readable compensation activity identities |
+| [0072](0072-rp03-symbol-binding-direction.md) | Accepted under delegation; pending parent/main integration | Correct the RP-03 finish caption, preserving exact symbol semantics |
+| [0073](0073-rp03-corrected-checkpoint.md) | Accepted under delegation; pending parent/main integration | Publish a corrected current-profile RP-03 draft with exact history |
+| [0074](0074-rp03-template-instantiation-direction.md) | Accepted under delegation; pending parent/main integration | Instantiate service bodies in their actual caller context |
+| [0075](0075-effectful-template-instantiation.md) | Accepted under delegation; pending parent/main integration | Keep effectful instances and their identities in their actual context |
+| [0076](0076-rp03-instance-adoption.md) | Accepted under delegation; pending parent/main integration | Instantiate every RP-03 service at its actual caller |
+| [0077](0077-fixed-all-join-history.md) | Accepted under delegation; pending parent/main integration | Prove direct fixed all-join history and exact invalidation coverage |
+| [0078](0078-external-interference-contract-direction.md) | Accepted under delegation; pending parent/main integration | Require an explicit external-interference contract before extending acceptance |
+| [0079](0079-external-interference-draft.md) | Accepted under delegation; inactive draft design only | Model finite exact-provider external regions without execution admission |
+| [0080](0080-external-interference-resources.md) | Accepted under delegation; pending parent/main integration | Validate standalone provider-region metadata without selecting it |
+| [0081](0081-interference-definition-binding.md) | Accepted under delegation; pending parent/main integration | Select exact provider descriptors explicitly without proving concurrency |
+| [0082](0082-request-region-proof-direction.md) | Accepted under delegation; pending parent/main integration | Preserve unproved region safety and progress independent near-English factoring |
+| [0083](0083-near-english-factoring-direction.md) | Accepted under delegation; direction only, pending parent/main integration | Factor explicit data protection before scoped work reuse |
+| [0084](0084-named-data-protection.md) | Accepted under delegation; pending parent/main integration | Explicit named data protection with unchanged expanded semantics |
+| [0085](0085-transparent-type-naming-direction.md) | Accepted under delegation; direction only, pending integration | Prefer explicit transparent type names before parameterized reuse |
+| [0086](0086-local-type-names.md) | Accepted under delegation; pending integration | Explicit local type descriptions with bounded transparent expansion |
+| [0087](0087-rp03-factored-authoring.md) | Accepted under delegation; pending integration | Adopt factored RP-03 source with an exact pre-adoption archive |
+
 ## When an ADR is required
 
 Write an ADR before committing the project to a decision that is expensive to
@@ -177,3 +240,19 @@ house style established by Choreoform’s first records.
 
 - [Michael Nygard, “Documenting Architecture Decisions”](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions)
 - [Markdown Architectural Decision Records](https://adr.github.io/madr/)
+
+- [ADR-0088: RP-01 factored authoring and explicit C12 promotion](0088-rp01-factored-authoring.md) — accepted under owner delegation; effective on integration.
+
+- [ADR-0089: Typed pure receipt recipe direction](0089-reusable-receipt-direction.md) — accepted under owner delegation; no production syntax yet.
+
+- [ADR-0090: Typed source-only pure Boolean tests](0090-pure-predicate-recipes.md) — contract accepted under owner delegation; native implementation and experimental whole variants integrated in PR #105.
+
+- [ADR-0091: Current RP-03 pure-test adoption](0091-rp03-pure-test-adoption.md) — accepted under owner delegation; signed archive precedes implementation; integrated with successful final checks/review/CI in PR #106.
+
+- [ADR-0092: Current RP-01 pure-test adoption](0092-rp01-pure-test-adoption.md) — accepted under owner delegation; exact archive precedes implementation; integrated with successful required checks/review/CI in PR #107.
+
+- [ADR-0093: Authoring completion sequence](0093-authoring-completion-sequence.md) — direction accepted under owner delegation; reversible managed authoring contract before broader work syntax; integrated with required CI/review/audit in PR #108.
+
+- [ADR-0094: Reversible authoring documents](0094-reversible-authoring-documents.md) — exact document/change/layout contract accepted under delegation; native operations and visual prototype pending.
+
+- [ADR-0095: Native reversible authoring](0095-native-reversible-authoring.md) — exact SDK/CLI binding accepted under delegation before implementation; native verification/review/CI pending.

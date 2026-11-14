@@ -112,6 +112,49 @@ validated, and round-tripped.
   representative non-programmer comprehension, authoring, correction and review
   tasks. Document accessibility evidence and unresolved gaps. PR #14's low-level
   declaration prototype does **not** satisfy this item or settle final syntax.
+  Within this Phase 1 item, deliver reusable near-English formulations for repeated
+  protection/receipt clauses, identity-managed editing and protected accessible
+  summaries on full RP-01/03/08 before user evaluation. The measured RP-03 source
+  verbosity in [ADR-0067](docs/decisions/0067-rp03-package-draft.md) is a concrete
+  bottleneck; a larger parser quota will not satisfy or defer this work to Phase 2.
+  [ADR-0082](docs/decisions/0082-request-region-proof-direction.md) prioritizes an
+  independent factoring critique/evaluation while the explicit external-region
+  proof prerequisites remain open; metadata plumbing does not complete authoring.
+  [ADR-0084](docs/decisions/0084-named-data-protection.md) implements explicit
+  complete named protection with unchanged expanded meaning; its real RP-03
+  test variant is 22.25% smaller, with current benchmark adoption still separate.
+  [ADR-0085](docs/decisions/0085-transparent-type-naming-direction.md) selects
+  transparent local type naming as the next separately contracted direction;
+  type/nominal/lexical identity and cumulative expanded-depth/work/bytes must hold.
+  [ADR-0086](docs/decisions/0086-local-type-names.md) implements transparent local
+  types; [ADR-0087](docs/decisions/0087-rp03-factored-authoring.md) adopts actual
+  RP-03 source at410752 bytes (28.78% smaller), preserving exact C12 IR/reports.
+  [ADR-0088](docs/decisions/0088-rp01-factored-authoring.md) adopts RP-01 at55453
+  bytes (9.41% smaller), with explicit C11-to-C12 pin/revision/report attribution
+  changes and exact other expanded meaning. Both preserve their full old epochs.
+  The [receipt/work reuse critique](docs/evaluation/0089-reusable-receipt-critique-plan.md)
+  records the actual55-case/two-shape experiment; [ADR-0089](docs/decisions/0089-reusable-receipt-direction.md)
+  selects typed source-only pure predicate recipes as the next separate contract.
+  [ADR-0090](docs/decisions/0090-pure-predicate-recipes.md) contracts source0.19 /
+  companion0.18 pure tests on unchanged C12. [Experimental complete variants](docs/evaluation/0090-pure-predicates.md)
+  preserve current IR at54172bytes (RP-01) /291309bytes (RP-03); native implementation
+  passed required CI/review and integrated in PR #105.
+  [ADR-0091](docs/decisions/0091-rp03-pure-test-adoption.md) adopts actual working
+  RP-03 source19 after its exact126-file source18 archive;291309bytes, exact old
+  C12 IR/reports/resources, integrated after required checks/review/CI in PR #106.
+  [ADR-0092](docs/decisions/0092-rp01-pure-test-adoption.md) adopts working RP-01
+  source19 after its59-file source18 archive:54172bytes, exact old C12 IR and11
+  reports/resources/guard pins, integrated after required checks/review/CI in PR #107.
+  [ADR-0093](docs/decisions/0093-authoring-completion-sequence.md) prioritizes a
+  separately published reversible authoring-package/managed-change contract, then
+  native operations and a small paired text/visual prototype. Full RP-08 coverage,
+  diagnostic refinement and actual representative users remain explicit Phase1
+  dependencies; broader work blueprints require a separate later contract.
+  This is not the Phase3 production studio. Remaining reusable work requires
+  separate scopes; no user-comprehension evidence exists yet.
+  These steps do not close this item: reusable receipt/work formulations, full RP-08,
+  managed protected accessible inspection/editing/export and text/visual parity
+  must be delivered within Phase 1 before actual representative-user evaluation.
   In progress: [ADR-0014](docs/decisions/0014-near-english-authoring.md) accepts
   Candidate A as a provisional working direction, with the
   [authoring comparison](docs/authoring/README.md); Project Owner approved
@@ -220,6 +263,177 @@ validated, and round-tripped.
   reconciliation child, preserving old lexical/data privacy without dummy root
   nodes. This closes that source binding dependency only; actual follow-up entry,
   protection, handoff, correlation and multiple-obligation lifetime stay open.
+  [ADR-0034](docs/decisions/0034-benchmark-authoring-profile.md) adds bounded
+  source 0.5.0 whole-program recognition and actual-use follow-up endpoints;
+  it does not close live ownership/lifetime or full benchmark evidence.
+  [ADR-0035](docs/decisions/0035-provider-metadata-read-closure.md) specifies
+  versioned finite provider-metadata read closure with strong/legacy cycle refusal.
+  [ADR-0036](docs/decisions/0036-metadata-core-authoring.md) adds explicit source
+  0.6 support for that core; full source adoption/benchmark/proof gates remain open.
+  [ADR-0037](docs/decisions/0037-closed-ordinary-provenance.md) proves a bounded
+  historical-origin subset for ordinary invalidation while retaining mutable
+  ancestors, protection and independent lifetime/host obligations.
+  [ADR-0038](docs/decisions/0038-invalidation-requirements.md) derives advisory
+  required/missing links without bypassing strict coverage. [ADR-0039](docs/decisions/0039-isolated-surviving-waits.md)
+  checks a synchronous isolated wait-only follow-up subset under explicit live
+  P6 premises, preserving parallel terminal requirements. The full RP-01 draft now
+  passes ten partial static stages, but its [original-scenario audit](docs/evaluation/0040-rp01-scenario-audit.md)
+  retains guard conformance, fault-source classification, late-observation capture/
+  continuation and actual ownership/race/host evidence as open work. This does not
+  close full benchmark, near-English authoring, complete validation or phase gates.
+  [ADR-0040](docs/decisions/0040-finite-guard-snapshot-conformance.md) adds 44 finite
+  source-derived guard snapshots and corrects missing payment policy-revision
+  comparisons. These test-only predicate results are neither authenticated facts
+  nor process transitions and do not complete any A–D scenario.
+  [ADR-0041](docs/decisions/0041-provider-fault-source-metadata.md) and
+  [ADR-0042](docs/decisions/0042-explicit-retry-fault-source-binding.md) pin declared
+  provider fault evidence and exact retry-use identity. [ADR-0043](docs/decisions/0043-retry-fault-source-authoring.md)
+  adds explicit source 0.7 authoring and bounded disclosure. The
+  [RP-01 adoption checkpoint](docs/evaluation/0043-rp01-adoption.md) preserves all
+  prior guards/IDs and keeps actual fault truth, late-result capture, owned
+  continuation and all scenario/phase requirements open.
+  [ADR-0044](docs/decisions/0044-provider-terminal-observation-metadata.md) pins
+  terminal source/type/protection metadata. [ADR-0045](docs/decisions/0045-explicit-timerless-wait-capture.md)
+  adds raw IR 0.2/core 0.5 timerless capture with exact source/origin/result and
+  conditional initialization. Explicit readable source support and bounded native
+  disclosure are supplied by [ADR-0046](docs/decisions/0046-wait-capture-authoring.md)
+  for source 0.8/companion 0.7. General plain-English/tool-managed editing, owned
+  recovery storage, fault data/continuation,
+  cutoff/settlement and actual host/scenario evidence remain open.
+  [ADR-0047](docs/decisions/0047-owned-local-followups.md) separately checks an
+  isolated fresh-local surviving subset, including initialization, retained source /
+  control protection provenance and strict conditional invalidation. It does not
+  allocate host storage or provide actual P6 receipts. General retention, fault
+  data, permitted continuation/cutoff/settlement and full scenario evidence stay open.
+  The [fault-entry audit](docs/evaluation/0048-fault-entry-contract-audit.md)
+  distinguishes abstract routes/retry metadata from authenticated typed handler
+  data. General emission binding, explicit versioned entry and permitted owned
+  continuation/cutoff/settlement remain dependencies before benchmark adoption.
+  [ADR-0048](docs/decisions/0048-general-provider-fault-source-binding.md) binds
+  declared provider emissions independently of retry count/eligibility in raw core
+  0.6. Readable source/native selection and typed handler data/entry remain explicit
+  next dependencies, with no actual emitted-fault or host receipt implied.
+  [ADR-0049](docs/decisions/0049-general-fault-source-authoring.md) explicitly
+  selects that core with source 0.9/companion 0.8, one readable source sentence and
+  bounded shared native catalogues. Typed history/source-control protection and
+  handler-local entry remain next; no authenticated fault or scenario exit follows.
+  [ADR-0050](docs/decisions/0050-provider-fault-history-metadata.md) specifies
+  exact nominal history/source metadata and limited untrusted claim checks. It
+  supplies no authenticated fault or handler entry; complete source/control
+  provenance, actual incoming contexts and the reviewed entry wire remain open.
+  [ADR-0051](docs/decisions/0051-declared-fault-origin-contexts.md) retains
+  declared activity/source relations and complete handler stacks in a separate
+  bounded SDK report. Unsupported/uncovered origins stay explicit; no actual
+  event, fault-control protection snapshot or handler initializer is supplied.
+  [ADR-0052](docs/decisions/0052-typed-handler-entry.md) adds raw IR 0.3/core 0.7
+  reserved local history declarations and separate conditional source/control /
+  initialization/access/strict invalidation proof. Actual entry and readable
+  source/companion/native integration remain explicit next dependencies; older
+  exceptional coverage is unchanged and no handler resumes its parent.
+  [ADR-0053](docs/decisions/0053-handler-entry-authoring.md) adds explicit source
+  0.10/companion 0.9 and bounded native disclosure, integrating typed proof
+  separately through later checks. Legacy uncovered sets remain explicit. Actual
+  event/correlation/current authority/owned storage and permitted continuation /
+  cutoff/handoff/all-settlement remain next, alongside the open general tool-managed
+  near-English editing and representative-user gates.
+  [ADR-0054](docs/decisions/0054-owned-request-retention.md) adds raw IR 0.4/core 0.8
+  exact original-request snapshots and separate owned conditional seed/access /
+  protection/invalidation proof. Actual accepted immutable values/occurrence storage
+  and current authority/handoff remain host premises. Readable retention, permitted
+  new work and cutoff/all-settlement follow explicitly; no parent resume or exit.
+  [ADR-0055](docs/decisions/0055-request-retention-authoring.md) adds explicit source
+  0.11/companion 0.10 and bounded native disclosure of the existing retention
+  contract. Permitted separately authorized new work inside the surviving boundary
+  and cutoff/atomic handoff/all-settlement remain next. General tool-managed
+  near-English editing and real usability/host/independent evidence stay open.
+  [ADR-0056](docs/decisions/0056-owned-continuation-direction.md) records the
+  continuation audit: flat terminal retention cannot admit new work that needs
+  another reconciliation child. Next new exact core/distinct bounded conditional
+  proof for finite nested surviving ownership, read-only capability work first;
+  command/compensation generality and actual cutoff/handoff/all-settlement remain
+  explicit later/live obligations. No production permission changes in the audit.
+  [ADR-0057](docs/decisions/0057-owned-readonly-continuations.md) adds exact core 0.9
+  on existing IR 0.4 with a distinct finite read-only ownership-tree proof. Conditional
+  sources, exact request/recipient/access/control/provenance/invalidation and mandatory
+  registration/cutoff/atomic handoff/all-settlement gates remain separate from actual
+  host acceptance. Next explicit readable/native selection, then command/compensation
+  and richer ownership/fault contexts. No accepted benchmark or scenario is promoted.
+  [ADR-0058](docs/decisions/0058-readonly-continuation-authoring.md) explicitly selects
+  that proof with source 0.12/companion 0.11 and unchanged grammar, adding bounded
+  distinct native scope/gate disclosure. General command/compensation and richer
+  ownership/fault judgments remain next, with all actual authority/cutoff/handoff /
+  transitive settlement and general near-English editing/usability gates still open.
+  [ADR-0059](docs/decisions/0059-owned-entry-command-direction.md) audits a concrete
+  remaining dependency: terminal capturing entry does not enable inquiry while the
+  original source remains unknown. Next freeze an explicit finite read-only owned
+  entry-before-capture contract on existing relations, preserving actual accepted
+  P6 handoff/cutoff and all-transitive accountability. General commands/compensation,
+  request construction and richer P4/ownership contexts remain later; no production
+  permission or scenario promotion is made by the audit.
+  [ADR-0060](docs/decisions/0060-owned-pre-capture-entry.md) implements that narrow
+  raw core 0.10 proof on existing IR 0.4, including exclusive uninitialized capture
+  targets and bounded conditional entry/capture relations. Next explicit readable /
+  native selection, then commands/compensation/new inputs/richer ownership; no live
+  activation, full benchmark or phase gate closes.
+  [ADR-0061](docs/decisions/0061-pre-capture-authoring.md) explicitly selects that
+  narrow proof with source 0.13/companion 0.12 and optional bounded native entry /
+  capture/host-premise disclosure. Commands/compensation/new request/richer P4 /
+  ownership work stays next; accepted live activation and phase gates remain open.
+  [ADR-0062](docs/decisions/0062-owned-command-direction.md) audits matched command /
+  compensation/input cases without production changes. Next a separately frozen
+  raw finite work/constructed-input contract; initial commands require capture-first
+  entry, stable-key metadata and distinct work reports. Broader preterminal commands /
+  possibly-completed compensation, general P4/ownership and actual authority/conflict /
+  occurrence/atomic handoff/all-transitive settlement remain explicit later gates.
+  [ADR-0063](docs/decisions/0063-finite-owned-work.md) implements the narrow raw
+  core 0.11 finite work/pure-input proof, distinct from old query reports. Next
+  explicit readable/native selection; broader preterminal/possibly-completed
+  compensation, richer P4/ownership and all genuine host/phase evidence stay open.
+  [ADR-0064](docs/decisions/0064-finite-work-authoring.md) selects that proof with
+  source 0.14/companion 0.13 and bounded distinct work/class/input/compensation /
+  host-premise reports. Broader preterminal/possibly-completed compensation, P4 /
+  ownership and complete benchmark judgments remain next; no phase gate closes.
+  [ADR-0065](docs/decisions/0065-rp01-current-contract-direction.md) tests the actual
+  full RP-01 graph and demonstrates current-profile typed capture/retention and
+  receipt-matched local late records without new permission or changed benchmark
+  bytes. Next explicitly freeze/adopt that checkpoint using existing contracts;
+  preserve original scenario/guard/resource scope and all host/visual/user/phase gates.
+  [ADR-0066](docs/decisions/0066-rp01-capture-adoption.md) publishes that controlled
+  full-case checkpoint using existing profiles, preserving an exact source-0.7
+  history and every original guard/resource meaning. Next assess remaining original
+  scenarios/validator/RP-03/08 and near-English/protected accessible text-visual gaps;
+  local late classification is partial evidence and closes no phase/host gate.
+  [ADR-0067](docs/decisions/0067-rp03-package-draft.md) supplies the whole declared
+  two-line RP-03 source/resources and an actual unchanged-profile token refusal.
+  No candidate IR/semantic-stage success is claimed; next separately freeze
+  capacity evidence, preserve old quotas, then retain the next real admission gap.
+  [ADR-0069](docs/decisions/0069-compensation-reference-direction.md) audits the
+  raw/readable compensation identity barriers. Next separately version the narrow
+  same-definition prior-activity identity contract and then exact readable binding;
+  preserve ordinary privacy, immediate-source owned proof and all live gates.
+  [ADR-0070](docs/decisions/0070-compensation-identity-contract.md) supplies the raw
+  purpose-only identity contract. Next separately version exact readable binding;
+  this does not broaden aggregate ownership or grant eligible live prior effects.
+  [ADR-0071](docs/decisions/0071-compensation-identity-authoring.md) supplies explicit
+  source0.16 purpose-only exact paths. Whole RP-03 reaches a later symbol/companion
+  binding refusal; audit that cause next before correcting the case or language.
+  Full candidate/semantic admission and near-English/editor/visual goals remain open.
+  [ADR-0072](docs/decisions/0072-rp03-symbol-binding-direction.md) identifies the
+  inconsistent authorization finish caption among 56 generated direct finishes.
+  Next separately correct the generator/source literal, retain original evidence
+  and measure subsequent actual failures; no new symbol permission is required.
+  [ADR-0073](docs/decisions/0073-rp03-corrected-checkpoint.md) publishes that exact
+  caption/current-profile checkpoint with original history preserved. Full native
+  recognition now reaches `child-template`; audit that actual relationship next,
+  preserving contract/privacy/ownership boundaries and all remaining phase gates.
+  [ADR-0074](docs/decisions/0074-rp03-template-instantiation-direction.md) confirms
+  the caller/body parent rule in both layers. Next prove bounded effectful call-site
+  instantiation with exact ports/policies/protection/ownership before full generator
+  restructuring; same-parent reuse is supported, cross-parent reuse is not inferred.
+  [ADR-0068](docs/decisions/0068-source-capacity.md) adds explicit source 0.15
+  capacity with the same core/wire/meaning. Full grammar recognizes under unchanged
+  parser work; compensation sibling-private identity binding genuinely refuses.
+  Next separately review that purpose-only reference gap; no privacy/phase gate closes.
   [ADR-0032](docs/decisions/0032-conditional-reconciliation-availability.md) adds
   conditional follow-up body availability with zero inherited values and fresh
   locals. It does not prove ancestor retention, live activation/storage/current
@@ -235,6 +449,11 @@ validated, and round-tripped.
   locations. Exact field/token precision, full catalogue and complete validator
   coverage remain open; declaration locations do not close this item.
 - [ ] Build text → IR → text and visual → IR → visual round trips.
+  Under [ADR-0093](docs/decisions/0093-authoring-completion-sequence.md), retain
+  versioned authoring-only structure and layout alongside execution IR, with
+  checked consistency and stable managed identities. Original-package formatting
+  alone is not reverse export; untrusted editorial metadata cannot override IR.
+  Complete RP-01/03/08 cycles and actual author evaluation remain in Phase1.
 - [ ] Publish small executable examples and negative examples.
 - [x] Start a language conformance suite. The
   [value-expression corpus](docs/conformance/README.md) begins with 69 exact
@@ -245,7 +464,9 @@ validated, and round-tripped.
   The [current benchmark readiness audit](docs/evaluation/0034-benchmark-readiness.md)
   retains complete RP-01/03/08 responsibilities, explicit no-output/interface
   boundaries and [all forty scenario gaps](docs/evaluation/0034-corpus-accountability.md).
-  All forty remain Partial; the next package target is full RP-01.
+  All forty remain Partial. Maintained RP-01/03 packages are source19 candidates
+  with explicit partial reports; the missing third full package target is RP-08,
+  including its dynamic scope, dangerous-effect and outage-reconciliation cases.
 
 ### Executable IR completion gate (still open)
 
@@ -254,6 +475,11 @@ validated, and round-tripped.
   structural approval does not close the conditional gates or Phase 1 exit.
 
 This is an aggregate completion gate, not a finished or silently skipped task.
+Core0.13 binds provider-region metadata only. The
+[actual request proof audit](docs/evaluation/0082-request-region-proof-audit.md)
+keeps canonical physical aliases, original-snapshot correlation and all admissible
+revised/surviving work as explicit unproved prerequisites before any concurrency
+extension. Independent near-English work does not close this gate.
 It was separated from structural approval in PR #11. Its prerequisites are the
 binding/type foundations, accepted executable dialects, complete validator,
 full benchmark examples, and conformance/round-trip evidence listed above.

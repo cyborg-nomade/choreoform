@@ -1,0 +1,30 @@
+{
+  "rp01": {
+    "sourceBytes": 54172,
+    "bindingsBytes": 53725,
+    "sourceSha256": "5cb3e96f78c5eae478aee4861c8e548e6203ceaef4301fbb305a60977a7e791a",
+    "bindingsRawSha256": "357c7343e4c7f696740e922e117c642055feb34d4e055b8596b8a5a9cebed800",
+    "integrity": {
+      "bindings": "sha256:d4e273f65f19cb981645d62af2dafa7ed8e9da02595b06861c75efacfa7ce6c3",
+      "package": "sha256:de9a319aeab50a1d0ab703498a152862a990163cd8f99a7c389d00536d1bf829",
+      "source": "sha256:5cb3e96f78c5eae478aee4861c8e548e6203ceaef4301fbb305a60977a7e791a"
+    },
+    "revision": "sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829"
+  },
+  "rp03": {
+    "sourceBytes": 291309,
+    "bindingsBytes": 242842,
+    "sourceSha256": "b6101a0f870a94b30e9e484a2b0571d5ab7840cf6ba5e32d24e971baa1ba0375",
+    "bindingsRawSha256": "d6d146e7263f1d0eaf21136b6a90e82ff7d772cd6d54c1deaf465454516a6868",
+    "integrity": {
+      "bindings": "sha256:141235570474a05d6bdf70d33d145533d0718b9b64dc89b0020b02b0092737c0",
+      "package": "sha256:7803000c6eba666edb1b5fa93a176897abd5166a8b96a7945659d54b9d31807d",
+      "source": "sha256:b6101a0f870a94b30e9e484a2b0571d5ab7840cf6ba5e32d24e971baa1ba0375"
+    },
+    "revision": "sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa"
+  },
+  "unchangedBenchmarks": {
+    "files": 778,
+    "inventorySha256": "716f37ed07bdaeb0b05236dadb06e5e1eecf96025af58c3d7d843c9e28f19a42"
+  }
+}

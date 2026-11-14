@@ -35,6 +35,8 @@ pub struct Candidate {
     bindings_digest: String,
     package_digest: String,
     spans: BTreeMap<String, std::ops::Range<usize>>,
+    entry_spans: BTreeMap<String, std::ops::Range<usize>>,
+    request_spans: BTreeMap<String, std::ops::Range<usize>>,
 }
 /// Package integrity only; independent of binding consistency and IR admission.
 #[derive(Debug, PartialEq, Eq)]
@@ -69,7 +71,8 @@ impl Candidate {
         &self.spans
     }
     /// Locate a diagnostic from this candidate at its original declaration or
-    /// generated-record span. This is not an exact field/token location or proof
+    /// generated-record span, or explicit fault-input/retained-request clause. Other fields do not
+    /// have exact token locations. This is not proof
     /// that a diagnostic supplied by the caller belongs to this revision.
     /// Global, external-resource and missing-record paths have no guessed span.
     pub fn source_span(
@@ -93,6 +96,19 @@ impl Candidate {
         }
         let id = parts.next()?;
         self.document()["body"].get(table)?.as_object()?.get(id)?;
+        let field = parts.next();
+        if table == "scopes"
+            && field == Some("faultInput")
+            && let Some(span) = self.entry_spans.get(id)
+        {
+            return Some(span.clone());
+        }
+        if table == "scopes"
+            && field == Some("retainedRequests")
+            && let Some(span) = self.request_spans.get(id)
+        {
+            return Some(span.clone());
+        }
         self.spans.get(id).cloned()
     }
     /// Run explicit static suite checks. A report still grants no planning or
@@ -118,6 +134,14 @@ impl Candidate {
         resources: &[Resource<'_>],
     ) -> choreoform_semantic_check::Result<choreoform_semantic_check::ProtectionReport> {
         choreoform_semantic_check::check_protection(&self.envelope, resources)
+    }
+    /// Ordinary advisory requirements; missing links never produce a checked report.
+    pub fn invalidation_requirements(
+        &self,
+        supplied: &[Resource<'_>],
+    ) -> choreoform_semantic_check::Result<choreoform_semantic_check::InvalidationRequirements>
+    {
+        choreoform_semantic_check::derive_invalidation_requirements(&self.envelope, supplied)
     }
     /// Check ordinary invalidation declarations; never execute withdrawal,
     /// authorize work or establish current runtime sufficiency.
@@ -179,10 +203,17 @@ impl Candidate {
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {
-        let syntax = parse(source)?;
-        let ledger = Ledger::decode(companion)?;
+        Self::parse_located(source, companion).map_err(|(_, diagnostic)| diagnostic)
+    }
+    // The tag distinguishes companion failures without parsing either input twice.
+    pub(crate) fn parse_located(
+        source: &'a [u8],
+        companion: &[u8],
+    ) -> std::result::Result<Self, (bool, crate::Diagnostic)> {
+        let syntax = parse(source).map_err(|e| (false, e))?;
+        let ledger = Ledger::decode(companion).map_err(|e| (true, e))?;
         if ledger.document["profile"] != syntax.profile() {
-            return Err(error("package-profile", 0..0));
+            return Err((true, error("package-profile", 0..0)));
         }
         Ok(Self { syntax, ledger })
     }
@@ -217,13 +248,28 @@ impl<'a> Package<'a> {
         self.ledger.verify_resources(resources)?;
         let mut lowering = Lower::new(&self.syntax, &self.ledger, resources)?;
         let root = self.syntax.tree().one("process")?;
+        if matches!(self.syntax.profile(), "0.18.0" | "0.19.0") {
+            lowering.prepare_types(root)?;
+        }
+        if matches!(self.syntax.profile(), "0.17.0" | "0.18.0" | "0.19.0") {
+            lowering.collect_protections(root, None, 0)?;
+        }
+        if self.syntax.profile() == "0.19.0" {
+            lowering.prepare_predicates(root)?;
+        }
         lowering.scope(root, None, 0)?;
+        lowering.validate_protections()?;
         lowering.resolve_waits()?;
         for (tree, scope) in std::mem::take(&mut lowering.pending_steps) {
             lowering.step(tree, &scope)?;
         }
         lowering.validate_endpoints()?;
         lowering.finish_inventory()?;
+        let predicate_assertions = if self.syntax.profile() == "0.19.0" {
+            lowering.extract_predicate_assertions()?
+        } else {
+            Vec::new()
+        };
         lowering.dependencies()?;
         let mut body = lowering.body;
         body.insert("id".into(), self.ledger.document["definition"].clone());
@@ -231,19 +277,50 @@ impl<'a> Package<'a> {
         let contracts = &self.ledger.document["contracts"];
         body.insert("semantics".into(), json!({"id": contracts["semantics"]["contract"], "revision": contracts["semantics"]["digest"]}));
         body.insert("dialects".into(), json!({ self.ledger.dialect(): {"id": contracts["core"]["contract"], "revision": contracts["core"]["digest"]} }));
-        let envelope = DefinitionEnvelope::from_parts(
+        let envelope = DefinitionEnvelope::from_parts_versioned(
+            if matches!(
+                self.syntax.profile(),
+                "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            ) {
+                "0.4.0"
+            } else if self.syntax.profile() == "0.10.0" {
+                "0.3.0"
+            } else if matches!(self.syntax.profile(), "0.8.0" | "0.9.0") {
+                "0.2.0"
+            } else {
+                "0.1.0"
+            },
             Value::Object(body),
             self.ledger.document["annotations"].clone(),
         )
         .map_err(|_| error("candidate-transport", 0..self.syntax.source().len()))?;
         let integrity = self.integrity();
-        Ok(Candidate {
+        let candidate = Candidate {
             envelope,
             source_digest: integrity.source,
             bindings_digest: integrity.bindings,
             package_digest: integrity.package,
             spans: lowering.spans,
-        })
+            entry_spans: lowering.entry_spans,
+            request_spans: lowering.request_spans,
+        };
+        if lowering.predicates.has_uses {
+            predicates::validate_calls(
+                &candidate,
+                resources,
+                &lowering.predicates.types,
+                &predicate_assertions,
+            )?;
+        }
+        Ok(candidate)
     }
 }
 
@@ -253,6 +330,11 @@ mod expressions;
 mod graph;
 mod nodes;
 mod policies;
+mod predicate_ast;
+mod predicate_expressions;
+mod predicates;
+mod protection;
+mod type_names;
 mod wait_endpoints;
 use expressions::ast_reads;
 
@@ -265,11 +347,24 @@ struct Lower<'a, 's> {
     symbols: BTreeSet<String>,
     slots: BTreeSet<String>,
     spans: BTreeMap<String, std::ops::Range<usize>>,
+    entry_spans: BTreeMap<String, std::ops::Range<usize>>,
+    request_spans: BTreeMap<String, std::ops::Range<usize>>,
     pending_steps: Vec<(&'a Tree, String)>,
+    compensation_spans: BTreeMap<String, std::ops::Range<usize>>,
     join_selections: BTreeMap<String, Vec<BTreeSet<String>>>,
     wait_owners: BTreeMap<String, String>,
     pending_waits: Vec<(&'a Tree, String, String)>,
     exported_endpoints: Vec<(String, String, String, std::ops::Range<usize>)>,
+    protections: BTreeMap<String, protection::ResolvedProtection>,
+    expansion_work: usize,
+    expansion_bytes: usize,
+    record_bytes: usize,
+    type_plans: BTreeMap<String, type_names::TypePlan<'a>>,
+    type_costs: BTreeMap<String, type_names::Cost>,
+    type_values: BTreeMap<String, Value>,
+    type_visiting: BTreeSet<String>,
+    type_order: Vec<String>,
+    predicates: predicates::State<'a>,
 }
 
 fn set(items: impl IntoIterator<Item = String>) -> Value {
@@ -357,6 +452,21 @@ impl<'a, 's> Lower<'a, 's> {
                         .instance_calendar(&pin)
                         .map_err(|e| error(e.code, 0..0))?;
                 }
+                "provider-fault-source" => {
+                    resources
+                        .provider_fault_source(&pin)
+                        .map_err(|e| error(e.code, 0..0))?;
+                }
+                "provider-fault-history" => {
+                    resources
+                        .provider_fault_history(&pin)
+                        .map_err(|e| error(e.code, 0..0))?;
+                }
+                "provider-terminal-observation-source" => {
+                    resources
+                        .provider_terminal_source(&pin)
+                        .map_err(|e| error(e.code, 0..0))?;
+                }
                 _ => return Err(error("external-contract-lowering-unsupported", 0..0)),
             }
         }
@@ -381,14 +491,35 @@ impl<'a, 's> Lower<'a, 's> {
             symbols: BTreeSet::new(),
             slots: BTreeSet::new(),
             spans: BTreeMap::new(),
+            entry_spans: BTreeMap::new(),
+            request_spans: BTreeMap::new(),
             pending_steps: Vec::new(),
+            compensation_spans: BTreeMap::new(),
             join_selections: BTreeMap::new(),
             wait_owners: BTreeMap::new(),
             pending_waits: Vec::new(),
             exported_endpoints: Vec::new(),
+            protections: BTreeMap::new(),
+            expansion_work: 0,
+            expansion_bytes: 0,
+            record_bytes: 0,
+            type_plans: BTreeMap::new(),
+            type_costs: BTreeMap::new(),
+            type_values: BTreeMap::new(),
+            type_visiting: BTreeSet::new(),
+            type_order: Vec::new(),
+            predicates: predicates::State::default(),
         })
     }
     fn put(&mut self, section: &str, id: String, record: Value) -> Result<()> {
+        if matches!(self.syntax.profile(), "0.17.0" | "0.18.0" | "0.19.0") {
+            let bytes = protection::encoded_size(&record)?;
+            self.record_bytes = self
+                .record_bytes
+                .checked_add(bytes)
+                .filter(|n| *n <= crate::MAX_BYTES)
+                .ok_or_else(|| error("size", self.spans.get(&id).cloned().unwrap_or(0..0)))?;
+        }
         insert(
             self.body
                 .get_mut(section)

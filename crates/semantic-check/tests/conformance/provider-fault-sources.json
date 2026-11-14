@@ -1,0 +1,261 @@
+{
+  "format": "choreoform-provider-fault-source-vectors",
+  "version": "0.1.0",
+  "profile": {
+    "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
+    "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0"
+  },
+  "provider": {
+    "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+    "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d"
+  },
+  "cases": [
+    {
+      "id": "no_effect",
+      "emissions": {
+        "confirmed no effect": {
+          "observations": {
+            "no-effect": true
+          },
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "all_definitive",
+      "emissions": {
+        "confirmed no effect": {
+          "observations": {
+            "rejected": true,
+            "cancelled": true,
+            "no-effect": true
+          },
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "unknown_stays_unresolved",
+      "emissions": {
+        "uncertain": {
+          "observations": {
+            "unknown": true
+          },
+          "evidence": "unresolved"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "separate_classes",
+      "emissions": {
+        "confirmed no effect": {
+          "observations": {
+            "no-effect": true
+          },
+          "evidence": "definitive-no-effect"
+        },
+        "uncertain": {
+          "observations": {
+            "unknown": true
+          },
+          "evidence": "unresolved"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "misleading_name_stays_unresolved",
+      "emissions": {
+        "confirmed no effect": {
+          "observations": {
+            "unknown": true
+          },
+          "evidence": "unresolved"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "success_is_not_fault",
+      "emissions": {
+        "unsafe": {
+          "observations": {
+            "result-paid": true
+          },
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "fault-source-evidence"
+      }
+    },
+    {
+      "id": "acknowledgement_is_not_fault",
+      "emissions": {
+        "unsafe": {
+          "observations": {
+            "acknowledged": true
+          },
+          "evidence": "unresolved"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "fault-source-evidence"
+      }
+    },
+    {
+      "id": "unknown_is_not_no_effect",
+      "emissions": {
+        "safe-looking name": {
+          "observations": {
+            "unknown": true
+          },
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "fault-source-evidence"
+      }
+    },
+    {
+      "id": "no_effect_is_not_unknown",
+      "emissions": {
+        "uncertain": {
+          "observations": {
+            "no-effect": true
+          },
+          "evidence": "unresolved"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "fault-source-evidence"
+      }
+    },
+    {
+      "id": "missing_observation",
+      "emissions": {
+        "fault": {
+          "observations": {
+            "not declared": true
+          },
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "fault-source-observation"
+      }
+    },
+    {
+      "id": "ambiguous_emission",
+      "emissions": {
+        "a": {
+          "observations": {
+            "no-effect": true
+          },
+          "evidence": "definitive-no-effect"
+        },
+        "b": {
+          "observations": {
+            "no-effect": true
+          },
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "fault-source-ambiguous"
+      }
+    },
+    {
+      "id": "empty_emissions",
+      "emissions": {},
+      "extras": {},
+      "expect": {
+        "code": "fault-source-emissions"
+      }
+    },
+    {
+      "id": "empty_observations",
+      "emissions": {
+        "fault": {
+          "observations": {},
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "fault-source-observations"
+      }
+    },
+    {
+      "id": "bad_set_flag",
+      "emissions": {
+        "fault": {
+          "observations": {
+            "no-effect": false
+          },
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "set"
+      }
+    },
+    {
+      "id": "unknown_evidence",
+      "emissions": {
+        "fault": {
+          "observations": {
+            "no-effect": true
+          },
+          "evidence": "safe"
+        }
+      },
+      "extras": {},
+      "expect": {
+        "code": "fault-source-evidence"
+      }
+    },
+    {
+      "id": "trust_bit_is_not_proof",
+      "emissions": {
+        "fault": {
+          "observations": {
+            "no-effect": true
+          },
+          "evidence": "definitive-no-effect"
+        }
+      },
+      "extras": {
+        "trusted": true
+      },
+      "expect": {
+        "code": "fields"
+      }
+    }
+  ]
+}

@@ -3,7 +3,129 @@
 
 # Near-English authoring: a working design, not final syntax
 
-The [source 0.4.0 / companion 0.3.0 profile](profile-v0.4.md) adds narrowly
+[ADR-0093](../decisions/0093-authoring-completion-sequence.md) selects the next
+bounded direction: a separately published reversible authoring-package and managed-
+change contract, then native managed operations and a small paired text/visual
+prototype. Source-only definitions are intentionally absent from execution IR;
+formatting original source alone cannot establish reverse export or visual parity.
+Full RP-08, actionable diagnostics and actual representative-user evaluation remain
+explicit Phase1 work. No new API, syntax or product implementation is admitted by
+that direction alone; PR #108 integrated the direction after required checks,
+delegated automated review, final-head CI and fresh full audit.
+
+[ADR-0090](../decisions/0090-pure-predicate-recipes.md) contracts source0.19 /
+companion0.18 typed pure Boolean tests on unchanged C12/IR0.4. The native prototype
+expands explicit named inputs and checks their complete types in actual caller
+contexts before emitting a candidate. [Finite complete variants](../evaluation/0090-pure-predicates.md)
+reduce RP-03 from410752 to291309bytes and RP-01 from55453 to54172bytes while
+preserving exact current IR. PR #105 passed required CI and delegated automated review before integration. These are
+experimental alternatives; the separately archived working RP-03 adoption is
+described below, while RP-01 adoption remains a separate scope.
+This supplies no representative-user evidence or complete language/phase gate.
+
+The current working [RP-01 package](../benchmarks/rp01/README.md) adopts source0.19 /
+companion0.18 on unchanged C12/IR0.4 under [ADR-0092](../decisions/0092-rp01-pure-test-adoption.md).
+Payment receipt agrees factors the complete work predicate and late-classifier
+inner condition, with explicit Result/Instruction inputs and every caller guard
+preserved. Full source54172bytes/9145tokens is2.31% below source18 at55453. The
+finite producer matches the verified experiment and preserves all11 reports/IR/
+resources/guard pins exactly; legacy source18 production stays byte-identical.
+Its59-file prior package was archived before code. PR #107 integrated after required checks, delegated automated review, CI and
+full audit; no user, runtime, complete language or phase result is claimed.
+
+The current working [RP-03 package](../benchmarks/rp03/README.md) adopts source0.19 /
+companion0.18 on unchanged C12/IR0.4 under [ADR-0091](../decisions/0091-rp03-pure-test-adoption.md).
+Two complete pure tests reduce the full source from410752 to291309bytes (29.08%),
+with41306 tokens/386333 native parser visits. Full canonical IR, five reports,
+resources/receipts/guards/semantic identities remain exact. Its previous126-file
+source18 package was archived before code. PR #106 integrated after required final checks, delegated automated review, CI
+and full audit; no representative-user or phase evidence follows.
+RP-01 source19 adoption is a separate working scope as described above.
+
+The [source 0.18 / companion 0.17 profile](profile-v0.18.md) adds explicit local
+transparent type descriptions on unchanged C12 / IR 0.4. `Describe type ... as ...`
+and `type ...` uses preserve the complete existing type, including nested nominal
+pins, tags and lexical visibility. A graph preflight checks unused/forward/cyclic
+references and cumulative expanded depth/work/bytes before building cached types.
+Actual combined test variants are 55702 bytes for RP-01 and 412288 for RP-03, with
+unchanged expanded meanings and the legitimate external-effects refusal. These are
+additional reductions of 0.64% and 8.06% over protection-only variants, not user
+comprehension evidence or current benchmark adoption. See
+[the implementation evidence](../evaluation/0086-local-type-names.md).
+
+The [source 0.17 / companion 0.16 profile](profile-v0.17.md) adds explicit named
+complete data protection on unchanged C12 / IR 0.4. Each `Keep ... protected as ...`
+use expands to the same policy, sensitivity, purposes, participants and capabilities;
+there is no ambient default or permission grant. Source-only managed identities,
+per-data purpose identities and cumulative expansion/work/output bounds are checked.
+New test variants reduce RP-03 from 576759 to 448421 bytes (22.25%) with its exact
+current IR/revision and concurrency refusal. RP-01 becomes 56059 bytes; comparison
+uses an explicit C12 baseline promotion of its current C11 source. Current benchmark
+files stay fixed. See [the implementation evidence](../evaluation/0084-named-data-protection.md).
+Protected accessible inspection/editing, visual parity and actual user studies are
+still required before the near-English Phase 1 gate can close.
+
+The [source0.16 / companion0.15 profile](profile-v0.16.md) selects core0.12/IR0.4
+for purpose-only, exactly qualified prior-activity identity. Ordinary private values /
+outcomes/policies/control remain lexical and owned-source/live host gates stay fixed.
+Whole RP-03 passes static, control, protection and strict invalidation checks,
+then retains the external concurrency refusal. Core0.13 adds raw SDK descriptor
+selection only; this source profile remains C12. The
+[request-region audit](../evaluation/0082-request-region-proof-audit.md) keeps
+physical alias/revision/lifetime proof open and prioritizes independent near-English
+factoring. Managed protected accessible text/visual editing remains Phase1 work.
+
+The [source 0.14 / companion 0.13 profile](profile-v0.14.md) explicitly selects
+existing core 0.11/IR 0.4 for finite capture-first commands/compensators and pure
+local inputs. Existing sentences/quotas remain; bounded native work/class/input /
+compensation/premise disclosure preserves old query meanings and actual host gates.
+
+The [source 0.13 / companion 0.12 profile](profile-v0.13.md) explicitly selects
+existing core 0.10/IR 0.4 for finite read-only intermediate owned entry before
+original capture. Existing sentences express the layout; bounded native reports
+expose optional entry/capture relations and mandatory live host requirements.
+Older profiles and capturing-first/passive-leaf output remain fixed.
+
+The [source 0.12.0 / companion 0.11.0 profile](profile-v0.12.md) selects existing
+core 0.9/IR 0.4 for finite read-only surviving continuations. Existing sentences
+and quotas remain; bounded native conditional scope/gate disclosure stays separate
+from ordinary/legacy coverage and actual host acceptance. Earlier profiles stay fixed.
+
+The [source 0.11.0 / companion 0.10.0 profile](profile-v0.11.md) adds readable
+original-request retention on existing core 0.8/IR 0.4 with bounded declarations
+and separate owned proof. Actual storage/current authority and permitted new work /
+cutoff/handoff/all-settlement remain open.
+
+The [source 0.10.0 / companion 0.9.0 profile](profile-v0.10.md) adds readable
+handler-local fault history declarations on core 0.7/IR 0.3, with separate bounded
+conditional reports. Actual events, owned continuation and general tool-managed
+English editing remain open.
+
+The [source 0.9.0 / companion 0.8.0 profile](profile-v0.9.md) names general
+provider fault sources once with `Recognise faults from "Source".` and retains
+short clock/basis retry clauses. It selects core 0.6/IR 0.2 and shares native
+catalogues per exact pin; actual fault history/handler entry remains separate.
+
+The [source 0.8.0 / companion 0.7.0 profile](profile-v0.8.md) adds readable
+terminal-source/origin/result capture, explicitly selecting core 0.5 and IR 0.2.
+Bounded reports disclose declarations and remaining host requirements. Owned
+recovery storage and full plain-English/tool-managed editing goals remain open.
+
+The [source 0.7.0 / companion 0.6.0 profile](profile-v0.7.md) adds an explicit
+retry fault-source clause and selects core 0.4. Typed source/provider declarations
+remain separate from actual faults or retry permission.
+
+The earlier [source 0.6.0 / companion 0.5.0 profile](profile-v0.6.md) explicitly selects
+core 0.3 and derives finite provider-recipient metadata reads. Older profiles keep
+their original cores, limits and integrity domains. Full benchmark, validation,
+editing and actual user gates remain open.
+
+The earlier [source 0.5.0 / companion 0.4.0 profile](profile-v0.5.md) adds explicit
+whole-program quotas and actual-use reconciliation endpoints for larger benchmark
+drafts. It preserves private data and older profile limits; lowering remains
+separate from semantic admission.
+
+The earlier [source 0.4.0 / companion 0.3.0 profile](profile-v0.4.md) adds narrowly
 qualified wait outcomes inside a designated reconciliation follow-up. The
 [owned service example](examples/reconciliation.choreo) remains a synthetic
 declaration/body fixture, not a complete benchmark or live handoff. See the
@@ -127,3 +249,13 @@ not that study's particular visual task or its results, as relevant precedent.
 The process-specific tasks here also test authoring, correction and review, and
 provide text-only evidence alternatives.
 [How to Evaluate Controlled Natural Languages](https://arxiv.org/abs/0907.1251).
+
+[Source 0.15 capacity](profile-v0.15.md) explicitly keeps core 0.11/IR 0.4 and
+source-0.14 meaning while allowing 131,072 program tokens; all old/other limits
+remain. It recognizes the whole order grammar but retains an actual private
+compensation reference refusal. It supplies no benchmark adoption or readability /
+semantic/host/phase closure. See [measured evidence](../evaluation/0068-source-capacity.md).
+
+[Reversible authoring document/change/layout0.1.0](reversible-v0.1.md) preserves exact source19/companion18 and a checked C12/IR4 projection. Native admission/managed operations and paired accessible views are subsequent Phase1 work; the contract oracle is not an editor.
+
+[Native reversible binding0.1.0](native-reversible-v0.1.md) specifies immutable native document admission/import/export and the complete bounded managed-change matrix. It does not supply an authorizing host or visual editor.

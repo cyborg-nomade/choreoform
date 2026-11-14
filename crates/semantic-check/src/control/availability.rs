@@ -8,6 +8,8 @@ pub(super) struct Analysis<'a> {
     graph: Graph,
     budget: Budget,
     initializers: crate::initialization::Index<'a>,
+    pub seed_access_code: &'static str,
+    pub history_entries: BTreeMap<String, String>,
     pub nodes: BTreeSet<String>,
     pub scopes: BTreeSet<String>,
 }
@@ -19,9 +21,16 @@ impl<'a> Analysis<'a> {
             graph,
             budget,
             initializers,
+            history_entries: BTreeMap::new(),
+            seed_access_code: "fault-entry-access-precheck",
             nodes: BTreeSet::new(),
             scopes: BTreeSet::new(),
         })
+    }
+    pub fn budget_seed_requests(&mut self, requests: &BTreeMap<String, String>) -> Result<()> {
+        self.budget.charge(requests.len() * 2)?;
+        self.history_entries = requests.clone();
+        Ok(())
     }
     fn ancestors(&self, scope: &str) -> Result<Cells> {
         let mut set = Cells::new();
@@ -64,6 +73,12 @@ impl<'a> Analysis<'a> {
             })
             .cloned()
             .collect();
+        if let Some(history) = self.history_entries.get(scope).cloned() {
+            let reads = crate::access::cell_reads(self.b, &history, &mut self.budget)?;
+            self.available(&reads, &initial, "data", &history, self.seed_access_code)?;
+            self.budget.tick(0)?;
+            initial.insert(history);
+        }
         // Input transfer policies use the pre-creation ancestor snapshot. Fresh
         // peer inputs cannot supply one another's permission dependencies.
         for cell in object(&s["inputs"])?.values() {

@@ -6,6 +6,16 @@ use choreoform_authoring_frontend::{Candidate, MAX_BYTES, Package, parse_fragmen
 use choreoform_ir_probe_core::{Resource, SUPPORTED_CONTRACTS};
 use std::io::{Read, Write};
 
+mod static_output;
+use static_output::static_output;
+mod continuation_output;
+mod document_cli;
+mod fault_entry_output;
+mod fault_use_output;
+mod owned_output;
+mod retry_output;
+use retry_output::timing_output;
+
 const CORE_ID: &str = "urn:choreoform:contracts:core-profile:0.1.0";
 const CORE_REV: &str = "sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58";
 fn semantic_error(
@@ -20,6 +30,76 @@ fn semantic_error(
         None => format!("{} at {}", diagnostic.code, diagnostic.path),
     }
 }
+// A bounded native view of conditional declaration evidence, never values or
+// actual closure/occurrence receipts. Library callers retain the typed report.
+fn invalidation_output(
+    report: &choreoform_semantic_check::Report,
+    historical: &std::collections::BTreeSet<choreoform_semantic_check::HistoricalOrigin>,
+    value: serde_json::Value,
+) -> Result<String, String> {
+    invalidation_output_with_entries(report, historical, value, None)
+}
+fn invalidation_output_with_entries(
+    report: &choreoform_semantic_check::Report,
+    historical: &std::collections::BTreeSet<choreoform_semantic_check::HistoricalOrigin>,
+    mut value: serde_json::Value,
+    entries: Option<&choreoform_semantic_check::FaultEntryReport>,
+) -> Result<String, String> {
+    let mut remaining = MAX_BYTES;
+    let mut origins = Vec::new();
+    for h in historical {
+        let mut record = serde_json::json!({"site":h.site(),"cell":h.cell(),"boundary":h.boundary(),"scope":h.scope(),"closure":h.closure(),"condition":h.condition()});
+        if let Some(scope) = h.context_scope() {
+            record["contextScope"] = scope.into();
+        }
+        let size = serde_json::to_vec(&record)
+            .map_err(|_| "report-budget".to_owned())?
+            .len();
+        remaining = remaining
+            .checked_sub(size)
+            .ok_or_else(|| "report-budget".to_owned())?;
+        origins.push(record);
+    }
+    value["historicalOrigins"] = origins.into();
+    static_output::static_output_with_entries(report, value, entries)
+}
+fn concurrency_output(
+    report: &choreoform_semantic_check::ConcurrencyReport,
+    value: serde_json::Value,
+) -> Result<String, String> {
+    concurrency_output_with_entries(report, value, None)
+}
+fn concurrency_output_with_entries(
+    report: &choreoform_semantic_check::ConcurrencyReport,
+    mut value: serde_json::Value,
+    entries: Option<&choreoform_semantic_check::FaultEntryReport>,
+) -> Result<String, String> {
+    let mut remaining = MAX_BYTES;
+    let mut records = Vec::new();
+    for p in report.isolated_followups() {
+        let record = serde_json::json!({"creator":p.creator(),"body":p.body(),"closure":p.closure(),"followup":p.followup(),"waits":p.waits(),"hostRequirements":p.host_requirements()});
+        let size = serde_json::to_vec(&record)
+            .map_err(|_| "report-budget".to_owned())?
+            .len();
+        remaining = remaining
+            .checked_sub(size)
+            .ok_or_else(|| "report-budget".to_owned())?;
+        records.push(record);
+    }
+    value["isolatedFollowups"] = records.into();
+    if let Some(owned) = report.owned_local() {
+        owned_output::append(owned, &mut value)?;
+    }
+    if let Some(continuation) = report.owned_continuations() {
+        continuation_output::append(continuation, &mut value)?;
+    }
+    invalidation_output_with_entries(
+        report.invalidation().protection().control().static_report(),
+        report.invalidation().historical_origins(),
+        value,
+        entries,
+    )
+}
 fn read(input: impl Read) -> Result<Vec<u8>, String> {
     let mut bytes = Vec::new();
     input
@@ -33,6 +113,9 @@ fn read(input: impl Read) -> Result<Vec<u8>, String> {
 }
 fn run() -> Result<String, String> {
     let args: Vec<_> = std::env::args().skip(1).collect();
+    if args.first().is_some_and(|arg| arg.starts_with("document-")) {
+        return document_cli::run(&args);
+    }
     if args.len() == 2 && args[0] == "parse-fragment" {
         let raw = read(std::io::stdin().lock())?;
         let syntax =
@@ -52,6 +135,7 @@ fn run() -> Result<String, String> {
                 | "check-control"
                 | "check-protection"
                 | "check-invalidation"
+                | "invalidation-requirements"
                 | "check-concurrency"
                 | "check-timing"
                 | "check-fault-routes"
@@ -63,7 +147,7 @@ fn run() -> Result<String, String> {
         || !(args.len() - 3).is_multiple_of(4)
         || (args[0] == "integrity" && args.len() != 3)
     {
-        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|check-concurrency|check-timing|check-fault-routes|check-exceptional-availability|check-reconciliation-links|check-reconciliation-availability|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
+        return Err("usage: choreoform-authoring-frontend <lower|check|check-control|check-protection|check-invalidation|invalidation-requirements|check-concurrency|check-timing|check-fault-routes|check-exceptional-availability|check-reconciliation-links|check-reconciliation-availability|format|integrity> SOURCE COMPANION [--resource ID REVISION PATH]...; checking grants NO execution authority; or parse-fragment RULE < stdin".into());
     }
     let source = read(std::fs::File::open(&args[1]).map_err(|_| "source-read".to_owned())?)?;
     let bindings = read(std::fs::File::open(&args[2]).map_err(|_| "companion-read".to_owned())?)?;
@@ -114,6 +198,145 @@ fn run() -> Result<String, String> {
             bytes: include_bytes!("../../../docs/ir/contracts/sha256-5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623.txt"),
         });
     }
+    if matches!(
+        package.syntax().profile(),
+        "0.6.0"
+            | "0.7.0"
+            | "0.8.0"
+            | "0.9.0"
+            | "0.10.0"
+            | "0.11.0"
+            | "0.12.0"
+            | "0.13.0"
+            | "0.14.0"
+            | "0.15.0"
+            | "0.16.0"
+            | "0.17.0"
+            | "0.18.0"
+            | "0.19.0"
+    ) {
+        resources.push(Resource {
+            id: choreoform_semantic_check::CORE_V3.0,
+            revision: choreoform_semantic_check::CORE_V3.1,
+            bytes: include_bytes!("../../../docs/ir/contracts/sha256-30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3.txt"),
+        });
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.7.0"
+            | "0.8.0"
+            | "0.9.0"
+            | "0.10.0"
+            | "0.11.0"
+            | "0.12.0"
+            | "0.13.0"
+            | "0.14.0"
+            | "0.15.0"
+            | "0.16.0"
+            | "0.17.0"
+            | "0.18.0"
+            | "0.19.0"
+    ) {
+        resources.push(Resource {
+            id: choreoform_semantic_check::CORE_V4.0,
+            revision: choreoform_semantic_check::CORE_V4.1,
+            bytes: include_bytes!("../../../docs/ir/contracts/sha256-0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3.txt"),
+        });
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.8.0"
+            | "0.9.0"
+            | "0.10.0"
+            | "0.11.0"
+            | "0.12.0"
+            | "0.13.0"
+            | "0.14.0"
+            | "0.15.0"
+            | "0.16.0"
+            | "0.17.0"
+            | "0.18.0"
+            | "0.19.0"
+    ) {
+        resources.push(Resource {
+            id: choreoform_semantic_check::CORE_V5.0,
+            revision: choreoform_semantic_check::CORE_V5.1,
+            bytes: include_bytes!("../../../docs/ir/contracts/sha256-50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7.txt"),
+        });
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.9.0"
+            | "0.10.0"
+            | "0.11.0"
+            | "0.12.0"
+            | "0.13.0"
+            | "0.14.0"
+            | "0.15.0"
+            | "0.16.0"
+            | "0.17.0"
+            | "0.18.0"
+            | "0.19.0"
+    ) {
+        resources.push(Resource {
+            id: choreoform_semantic_check::CORE_V6.0,
+            revision: choreoform_semantic_check::CORE_V6.1,
+            bytes: include_bytes!("../../../docs/ir/contracts/sha256-27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85.txt"),
+        });
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.10.0"
+            | "0.11.0"
+            | "0.12.0"
+            | "0.13.0"
+            | "0.14.0"
+            | "0.15.0"
+            | "0.16.0"
+            | "0.17.0"
+            | "0.18.0"
+            | "0.19.0"
+    ) {
+        resources.push(Resource{id:choreoform_semantic_check::CORE_V7.0,revision:choreoform_semantic_check::CORE_V7.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b.txt")});
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
+    ) {
+        resources.push(Resource{id:choreoform_semantic_check::CORE_V12.0,revision:choreoform_semantic_check::CORE_V12.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007.txt")});
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
+    ) {
+        resources.push(Resource{id:choreoform_semantic_check::CORE_V11.0,revision:choreoform_semantic_check::CORE_V11.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e.txt")});
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
+    ) {
+        resources.push(Resource{id:choreoform_semantic_check::CORE_V10.0,revision:choreoform_semantic_check::CORE_V10.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f.txt")});
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.12.0" | "0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
+    ) {
+        resources.push(Resource{id:choreoform_semantic_check::CORE_V9.0,revision:choreoform_semantic_check::CORE_V9.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f.txt")});
+    }
+    if matches!(
+        package.syntax().profile(),
+        "0.11.0"
+            | "0.12.0"
+            | "0.13.0"
+            | "0.14.0"
+            | "0.15.0"
+            | "0.16.0"
+            | "0.17.0"
+            | "0.18.0"
+            | "0.19.0"
+    ) {
+        resources.push(Resource{id:choreoform_semantic_check::CORE_V8.0,revision:choreoform_semantic_check::CORE_V8.1,bytes:include_bytes!("../../../docs/ir/contracts/sha256-edc8195ba0c31536ab2cdc95089e8aecc3ff402489639b4435277f0a38e7b603.txt")});
+    }
     resources.extend(extra.iter().map(|(id, revision, bytes)| Resource {
         id,
         revision,
@@ -126,13 +349,19 @@ fn run() -> Result<String, String> {
         let report = candidate
             .check_static(&resources)
             .map_err(|e| semantic_error(&candidate, e))?;
-        return Ok(serde_json::json!({"status":"static-checks-passed","executable":false,"revision":report.revision(),"expressions":report.expressions(),"policies":report.policies(),"remaining":report.remaining()}).to_string());
+        return static_output(
+            &report,
+            serde_json::json!({"status":"static-checks-passed","executable":false,"revision":report.revision(),"expressions":report.expressions(),"policies":report.policies(),"remaining":report.remaining()}),
+        );
     }
     if args[0] == "check-control" {
         let report = candidate
             .check_control(&resources)
             .map_err(|e| semantic_error(&candidate, e))?;
-        return Ok(serde_json::json!({"status":"control-checks-passed","executable":false,"revision":report.revision(),"coveredNodes":report.covered_nodes(),"uncoveredNodes":report.uncovered_nodes(),"coveredScopes":report.covered_scopes(),"requiredInputs":report.required_inputs(),"remaining":report.remaining()}).to_string());
+        return static_output(
+            report.static_report(),
+            serde_json::json!({"status":"control-checks-passed","executable":false,"revision":report.revision(),"coveredNodes":report.covered_nodes(),"uncoveredNodes":report.uncovered_nodes(),"coveredScopes":report.covered_scopes(),"requiredInputs":report.required_inputs(),"remaining":report.remaining()}),
+        );
     }
     if args[0] == "check-protection" {
         let report = candidate
@@ -143,7 +372,27 @@ fn run() -> Result<String, String> {
             .iter()
             .map(|a| serde_json::json!({"site":a.site(),"cell":a.cell(),"operation":a.operation()}))
             .collect();
-        return Ok(serde_json::json!({"status":"protection-checks-passed","executable":false,"revision":report.revision(),"transfers":report.transfers(),"accessObligations":accesses,"coveredNodes":report.control().covered_nodes(),"uncoveredNodes":report.control().uncovered_nodes(),"requiredInputs":report.control().required_inputs(),"remaining":report.remaining()}).to_string());
+        return static_output(
+            report.control().static_report(),
+            serde_json::json!({"status":"protection-checks-passed","executable":false,"revision":report.revision(),"transfers":report.transfers(),"accessObligations":accesses,"coveredNodes":report.control().covered_nodes(),"uncoveredNodes":report.control().uncovered_nodes(),"requiredInputs":report.control().required_inputs(),"remaining":report.remaining()}),
+        );
+    }
+    if args[0] == "invalidation-requirements" {
+        let report = candidate
+            .invalidation_requirements(&resources)
+            .map_err(|e| semantic_error(&candidate, e))?;
+        let pairs = |set: &std::collections::BTreeSet<
+            choreoform_semantic_check::InvalidationObligation,
+        >| {
+            set.iter()
+                .map(|o| serde_json::json!({"site":o.site(),"cell":o.cell()}))
+                .collect::<Vec<_>>()
+        };
+        return invalidation_output(
+            report.protection().control().static_report(),
+            report.historical_origins(),
+            serde_json::json!({"status":"invalidation-requirements-derived","advisory":true,"executable":false,"revision":report.revision(),"analyzedInvalidationNodes":report.analyzed_nodes(),"uncoveredInvalidationNodes":report.uncovered_nodes(),"requiredInvalidationObligations":pairs(report.obligations()),"missingInvalidationObligations":pairs(report.missing()),"requiredInputs":report.protection().control().required_inputs(),"remaining":report.remaining(),"requiredNextCheck":report.required_check()}),
+        );
     }
     if args[0] == "check-invalidation" {
         let report = candidate
@@ -154,14 +403,21 @@ fn run() -> Result<String, String> {
             .iter()
             .map(|o| serde_json::json!({"site":o.site(),"cell":o.cell()}))
             .collect();
-        return Ok(serde_json::json!({"status":"invalidation-checks-passed","executable":false,"revision":report.revision(),"checkedInvalidationNodes":report.checked_nodes(),"uncoveredInvalidationNodes":report.uncovered_nodes(),"invalidationObligations":obligations,"coveredNodes":report.protection().control().covered_nodes(),"uncoveredNodes":report.protection().control().uncovered_nodes(),"requiredInputs":report.protection().control().required_inputs(),"remaining":report.remaining()}).to_string());
+        return invalidation_output(
+            report.protection().control().static_report(),
+            report.historical_origins(),
+            serde_json::json!({"status":"invalidation-checks-passed","executable":false,"revision":report.revision(),"checkedInvalidationNodes":report.checked_nodes(),"uncoveredInvalidationNodes":report.uncovered_nodes(),"invalidationObligations":obligations,"coveredNodes":report.protection().control().covered_nodes(),"uncoveredNodes":report.protection().control().uncovered_nodes(),"requiredInputs":report.protection().control().required_inputs(),"remaining":report.remaining()}),
+        );
     }
     if args[0] == "check-concurrency" {
         let report = candidate
             .check_concurrency(&resources)
             .map_err(|e| semantic_error(&candidate, e))?;
         let control = report.invalidation().protection().control();
-        return Ok(serde_json::json!({"status":"concurrency-checks-passed","executable":false,"revision":report.revision(),"checkedForks":report.checked_forks(),"uncoveredForks":report.uncovered_forks(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedInvalidationNodes":report.invalidation().checked_nodes(),"uncoveredInvalidationNodes":report.invalidation().uncovered_nodes(),"remaining":report.remaining()}).to_string());
+        return concurrency_output(
+            &report,
+            serde_json::json!({"status":"concurrency-checks-passed","executable":false,"revision":report.revision(),"checkedForks":report.checked_forks(),"uncoveredForks":report.uncovered_forks(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedInvalidationNodes":report.invalidation().checked_nodes(),"uncoveredInvalidationNodes":report.invalidation().uncovered_nodes(),"remaining":report.remaining()}),
+        );
     }
     if args[0] == "check-timing" {
         let report = candidate
@@ -173,7 +429,10 @@ fn run() -> Result<String, String> {
             serde_json::json!({"site":t.site(),"policy":t.policy(),"role":t.role(),"clock":{"id":t.clock().id,"revision":t.clock().revision},"source":{"id":t.source().id,"revision":t.source().revision},"basis":t.basis(),"pauseAuthority":t.pause_authority(),"calendar":calendar,"hostRequirements":t.host_requirements()})
         }).collect();
         let retries: Vec<_> = report.retry_uses().iter().map(|r| serde_json::json!({"site":r.site(),"policy":r.policy(),"clock":{"id":r.clock().id,"revision":r.clock().revision},"source":{"id":r.source().id,"revision":r.source().revision},"basis":r.basis(),"authority":r.authority(),"maxAttempts":r.max_attempts(),"delays":r.delays().iter().map(i64::to_string).collect::<Vec<_>>(),"hostRequirements":r.host_requirements()})).collect();
-        return Ok(serde_json::json!({"status":"timing-checks-passed","executable":false,"revision":report.revision(),"timerUses":uses,"retryUses":retries,"checkedTimingNodes":report.checked_nodes(),"uncoveredTimingNodes":report.uncovered_nodes(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining()}).to_string());
+        return timing_output(
+            &report,
+            serde_json::json!({"status":"timing-checks-passed","executable":false,"revision":report.revision(),"timerUses":uses,"retryUses":retries,"checkedTimingNodes":report.checked_nodes(),"uncoveredTimingNodes":report.uncovered_nodes(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining()}),
+        );
     }
     if args[0] == "check-fault-routes" {
         let report = candidate
@@ -207,12 +466,10 @@ fn run() -> Result<String, String> {
             .map(selection)
             .map(&mut bounded)
             .collect::<Result<_, _>>()?;
-        let output = serde_json::json!({"status":"fault-route-checks-passed","executable":false,"revision":report.revision(),"faultRoutes":routes,"checkedHandlerSelections":checked,"uncoveredHandlerSelections":uncovered,"checkedFaultScopes":report.checked_scopes(),"uncoveredFaultScopes":report.uncovered_scopes(),"analysisContexts":report.contexts(),"unhandledFaultCases":report.unhandled_cases(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining(),"priorTimingObligations":report.timing().remaining()}).to_string();
-        return if output.len() <= MAX_BYTES {
-            Ok(output)
-        } else {
-            Err("report-budget".into())
-        };
+        return timing_output(
+            report.timing(),
+            serde_json::json!({"status":"fault-route-checks-passed","executable":false,"revision":report.revision(),"faultRoutes":routes,"checkedHandlerSelections":checked,"uncoveredHandlerSelections":uncovered,"checkedFaultScopes":report.checked_scopes(),"uncoveredFaultScopes":report.uncovered_scopes(),"analysisContexts":report.contexts(),"unhandledFaultCases":report.unhandled_cases(),"coveredNodes":control.covered_nodes(),"uncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"remaining":report.remaining(),"priorTimingObligations":report.timing().remaining()}),
+        );
     }
     if args[0] == "check-exceptional-availability" {
         let report = candidate
@@ -240,12 +497,11 @@ fn run() -> Result<String, String> {
                 Ok(value)
             })
             .collect::<Result<_, String>>()?;
-        let output=serde_json::json!({"status":"exceptional-availability-checks-passed","executable":false,"revision":report.revision(),"handlerEntries":entries,"checkedExceptionalNodes":report.checked_nodes(),"checkedExceptionalScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"ordinaryUncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedFaultScopes":report.faults().checked_scopes(),"uncoveredFaultScopes":report.faults().uncovered_scopes(),"remaining":report.remaining(),"priorFaultRouteObligations":report.faults().remaining(),"priorTimingObligations":report.faults().timing().remaining()}).to_string();
-        return if output.len() <= MAX_BYTES {
-            Ok(output)
-        } else {
-            Err("report-budget".into())
-        };
+        return retry_output::timing_output_with_entries(
+            report.faults().timing(),
+            serde_json::json!({"status":"exceptional-availability-checks-passed","executable":false,"revision":report.revision(),"handlerEntries":entries,"checkedExceptionalNodes":report.checked_nodes(),"checkedExceptionalScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"ordinaryUncoveredNodes":control.uncovered_nodes(),"requiredInputs":control.required_inputs(),"checkedFaultScopes":report.faults().checked_scopes(),"uncoveredFaultScopes":report.faults().uncovered_scopes(),"remaining":report.remaining(),"priorFaultRouteObligations":report.faults().remaining(),"priorTimingObligations":report.faults().timing().remaining()}),
+            report.history_entries(),
+        );
     }
     if args[0] == "check-reconciliation-links" {
         let report = candidate
@@ -266,12 +522,11 @@ fn run() -> Result<String, String> {
             remaining=remaining.checked_sub(size).ok_or_else(||"report-budget".to_owned())?;
             Ok(value)
         }).collect::<Result<_,String>>()?;
-        let output=serde_json::json!({"status":"reconciliation-links-checked","executable":false,"revision":report.revision(),"reconciliationUses":uses,"ordinaryUnvisitedReconciliationSites":report.ordinary_unvisited_sites(),"unusedEffectContexts":report.unused_effects(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.exceptional().checked_nodes(),"uncoveredNodes":report.exceptional().uncovered_nodes(),"remaining":report.remaining(),"priorExceptionalObligations":report.exceptional().remaining(),"priorFaultRouteObligations":report.exceptional().faults().remaining(),"priorTimingObligations":report.exceptional().faults().timing().remaining()}).to_string();
-        return if output.len() <= MAX_BYTES {
-            Ok(output)
-        } else {
-            Err("report-budget".into())
-        };
+        return retry_output::timing_output_with_entries(
+            report.exceptional().faults().timing(),
+            serde_json::json!({"status":"reconciliation-links-checked","executable":false,"revision":report.revision(),"reconciliationUses":uses,"ordinaryUnvisitedReconciliationSites":report.ordinary_unvisited_sites(),"unusedEffectContexts":report.unused_effects(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.exceptional().checked_nodes(),"uncoveredNodes":report.exceptional().uncovered_nodes(),"remaining":report.remaining(),"priorExceptionalObligations":report.exceptional().remaining(),"priorFaultRouteObligations":report.exceptional().faults().remaining(),"priorTimingObligations":report.exceptional().faults().timing().remaining()}),
+            report.exceptional().history_entries(),
+        );
     }
     if args[0] == "check-reconciliation-availability" {
         let report = candidate
@@ -293,12 +548,18 @@ fn run() -> Result<String, String> {
             remaining = remaining.checked_sub(size).ok_or_else(|| "report-budget".to_owned())?;
             Ok(value)
         }).collect::<Result<_, String>>()?;
-        let output = serde_json::json!({"status":"reconciliation-availability-checks-passed","executable":false,"revision":report.revision(),"reconciliationEntries":entries,"checkedReconciliationNodes":report.checked_nodes(),"checkedReconciliationScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.links().exceptional().checked_nodes(),"priorReconciliationObligations":report.links().remaining(),"remaining":report.remaining()}).to_string();
-        return if output.len() <= MAX_BYTES {
-            Ok(output)
-        } else {
-            Err("report-budget".into())
-        };
+        let mut view = serde_json::json!({"status":"reconciliation-availability-checks-passed","executable":false,"revision":report.revision(),"reconciliationEntries":entries,"checkedReconciliationNodes":report.checked_nodes(),"checkedReconciliationScopes":report.checked_scopes(),"uncoveredNodes":report.uncovered_nodes(),"ordinaryCoveredNodes":control.covered_nodes(),"conditionalExceptionalNodes":report.links().exceptional().checked_nodes(),"priorReconciliationObligations":report.links().remaining(),"remaining":report.remaining()});
+        if !report.retained_request_scopes().is_empty() {
+            view["retainedRequestScopes"] = serde_json::json!(report.retained_request_scopes());
+        }
+        if !report.continuation_scopes().is_empty() {
+            view["continuationScopes"] = serde_json::json!(report.continuation_scopes());
+        }
+        return retry_output::timing_output_with_entries(
+            report.links().exceptional().faults().timing(),
+            view,
+            report.links().exceptional().history_entries(),
+        );
     }
     if args[0] == "format" {
         let (source, companion) = package.formatted().map_err(|e| e.code.to_owned())?;

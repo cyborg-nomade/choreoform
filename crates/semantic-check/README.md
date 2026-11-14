@@ -3,6 +3,38 @@
 
 # Static contract checks, not executable admission
 
+[Core 0.4](../../docs/dialects/core-fault-source-v0.4.md) under
+[ADR-0042](../../docs/decisions/0042-explicit-retry-fault-source-binding.md) adds
+explicit retry fault-source/name/evidence and exact actual capability-provider
+binding. Library `RetryUse::fault_source` exposes immutable revision-bound
+declarations; legacy None supplies no binding. Noneligible source emission names
+remain visible in conservative routing. Actual acceptance/correlation/authority/
+retry/ownership and all other stage gates remain outstanding. Current source 0.6
+still selects core 0.3; raw-core support does not upgrade an authoring package.
+
+[ADR-0041](../../docs/decisions/0041-provider-fault-source-metadata.md) adds the
+independently pinned [provider fault-source metadata profile](../../docs/dialects/provider-fault-sources.md).
+`Resources::provider_fault_source` verifies exact source/profile/provider/type
+bytes and returns immutable declared state mappings. `Provider::observations`
+exposes typed declared states; names never imply no-effect evidence. Existing
+core/source retry records have no binding to this metadata. No observation,
+accepted fault, retry permission or dispatch is produced; explicit versioned
+definition/use-site binding and actual host enforcement remain required.
+
+[Core 0.3.0](../../docs/dialects/core-metadata-v0.3.md) adds finite provider-result
+metadata read closure under [ADR-0035](../../docs/decisions/0035-provider-metadata-read-closure.md).
+The strong graph remains acyclic; cyclic components containing legacy policies
+refuse. The pure `policy_read_closure` helper returns sets/work, not validated
+policies or authority. Callers validate exact pins/visibility/eligibility and charge
+its work against their existing remaining budget. [Source 0.6](../../docs/authoring/profile-v0.6.md)
+selects this core explicitly; earlier profiles keep their original pins.
+
+[ADR-0037](../../docs/decisions/0037-closed-ordinary-provenance.md) adds conditional
+historical origins only at exact synchronous ordinary boundaries with no declared
+descendant writer. Invalidation retains live ancestors and original protection
+labels, with explicit site/scope-entry evidence and required host snapshot
+enforcement. It gives no retained value, access, lifetime or settlement guarantee.
+
 Static scope/input, actor, data protection/initializer/invalidation and capability
 errors include record/field paths without changing their codes. Existing deeper
 paths are retained; global resource/structure/revision and graph failures are not
@@ -331,3 +363,58 @@ construction/origin activation. Initial construction trust is separate from
 requested pause/reschedule authority. See
 [ADR-0025](../../docs/decisions/0025-instance-calendars.md) and
 [evidence](../../docs/evaluation/0025-instance-calendars.md).
+
+`Resources::provider_terminal_source` decodes exact provider terminal-observation
+metadata under [ADR-0044](../../docs/decisions/0044-provider-terminal-observation-metadata.md).
+It derives only declared terminal names/tags, exact normalized/nominal type and the
+provider result-protection envelope. Unknown/acknowledged names stay nonterminal.
+Immutable cached metadata and bounded type copies supply no wait binding, accepted
+observation, current permission, surviving value or continuation. All host gates
+remain; current source/IR/reports are unchanged.
+
+[ADR-0045](../../docs/decisions/0045-explicit-timerless-wait-capture.md) adds raw
+IR-0.2/core-0.5 timerless wait capture. `Report::capture_bindings()` exposes declared
+revision/site/source/profile/provider/origin/result metadata and live requirements,
+including unvisited declarations, never an accepted value or occurrence. The same
+static report is available through `ControlReport::static_report()` and subsequent
+composed reports. Source-provider and destination types/labels/dependencies remain
+checked at actual scopes; type-equality caches retain no permission or value truth.
+Old source/native package output stays unchanged. Authoring and owned recovery
+storage/continuation require separate explicit work.
+
+[ADR-0047](../../docs/decisions/0047-owned-local-followups.md) adds optional
+`ConcurrencyReport::owned_local()` evidence for direct, portless, flat timerless
+follow-ups starting with explicit capture and using only fresh local cells. Grouped
+zero-inherited-value availability, protected flow/access and strict invalidation
+checks retain ordinary creator/owner protection provenance as conditional label
+requirements. `RequiredProtectionProvenance` names declarations to retain, never
+actual receipts/values/permissions. Conditional coverage stays separate from
+ordinary sets and the existing data-free `IsolatedFollowup`; actual fresh storage,
+source/correlation/authority, retained provenance, cutoff and settlement remain
+mandatory host premises. Templates share immutable metadata, never occurrences.
+
+[Core 0.6 / ADR-0048](../../docs/decisions/0048-general-provider-fault-source-binding.md)
+adds required nullable outer work `faultSource`, independent of attempts/eligibility.
+N=1 retains empty eligible faults/null inner source; N>1 requires exact agreement
+with the inherited retry source. Every actual declaration, including unvisited
+uses, checks capability/provider identity. `Report::fault_source_uses()` exposes
+immutable revision/site/policy/source/profile/provider rows sharing all emission
+metadata, never accepted faults, current eligibility or handler data. Unused
+policies verify metadata but yield no use row; null source never proves no faults.
+IR 0.2, prior captures/retries and finite metadata closure remain inherited; explicit
+source/native integration and typed fault entry are separate dependencies.
+
+[ADR-0054](../../docs/decisions/0054-owned-request-retention.md) adds exact raw
+IR 0.4/core 0.8 original-request retention declarations. Static rows and the
+conditional owned snapshot relation never contain values. Pre-entry access,
+source/control protection and strict invalidation remain mandatory. Later legacy
+reconciliation retains that prior proof separately; ordinary coverage is unchanged.
+Readable selection, permitted new work and all actual host/storage/authority /
+handoff/cutoff/settlement obligations remain open.
+
+[Core 0.12 / ADR-0070](../../docs/decisions/0070-compensation-identity-contract.md)
+allows only the `compensates` exact activity identity to cross lexical scope within
+one definition. Ordinary private references and the finite owned-work immediate-
+source restriction remain checked; actual eligible prior effects/new command keys /
+authority/ownership are not supplied. All eleven bases and IR 0.4 are required;
+no readable/native selection or benchmark adoption occurs implicitly.

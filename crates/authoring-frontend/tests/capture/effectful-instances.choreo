@@ -1,0 +1,121 @@
+Choreoform authoring "0.16.0".
+Process "Main".
+Start at "Use A".
+Inputs ["Request" uses "Launch request"]. Outputs ["First" uses "First result", "Second" uses "Second result"]. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Unhandled faults", closure "Close" and races "Race".
+Require actor "Operator" under "Authority".
+Rule for actor "Authority". Permit when ((the fact "principal") equals ("synthetic-operator")). End policy.
+Rule for protection "Protection". Permit access when ((the fact "purpose") equals ("test")). End policy.
+Rule for cancel "Cancel". Authority "Operator". For children use "Settlement". End policy.
+Rule for settlement "Settlement". Unfinished work cancel. End policy.
+Rule for closure "Close". Fully terminal. End policy.
+Rule for faults "Unhandled faults". Handle empty. End policy.
+Rule for race "Race". Accept in acceptance order. End policy.
+Keep "Launch request" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Request work" in "A service" in "A caller" in "Main", "Request work" in "B service" in "B caller" in "Main"]. Initially unavailable. End data.
+Keep "First result" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Request work" in "B service" in "B caller" in "Main"]. Initially unavailable. End data.
+Keep "Second result" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate empty. Initially unavailable. End data.
+Let "Launch input" mean (the value of "Launch request") as record with ["request revision" as text, "amount" as whole number] with parameters empty.
+Scope "A caller" within "Main".
+Start at "Run service".
+Inputs ["Request" uses "Caller request"]. Outputs ["Result" uses "Caller result"]. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Unhandled faults", closure "Close" and races "Race".
+Keep "Caller request" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Request work" in "A service" in "A caller" in "Main"]. Initially unavailable. End data.
+Keep "Caller result" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate empty. Initially unavailable. End data.
+Let "Caller input" mean (the value of "Caller request") as record with ["request revision" as text, "amount" as whole number] with parameters empty.
+Scope "A service" within "A caller".
+Start at "Request work".
+Inputs ["Request" uses "Service request"]. Outputs ["Result" uses "Service result"]. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Unhandled faults", closure "Service close" and races "Race".
+Keep "Service request" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Request work"]. Initially unavailable. End data.
+Keep "Service result" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate empty. Initially unavailable. End data.
+Let "Service input" mean (the value of "Service request") as record with ["request revision" as text, "amount" as whole number] with parameters empty.
+Rule for closure "Service close". Reconcile in "Recovery". End policy.
+Rule for work "Work". Instructions "Synthetic receipt matching; no dispatch authorization". Authority "Operator". Recognise faults from "Fault facts". Attempts 1. Delays empty. Retry faults empty. Timeout none. Complete when ((the fact "result") equals (the value of "Service request")). Compensates none. End policy.
+Step "Request work". Request "A capability" using "Service input" under "Work" and record in "Service result". On "done", continue with "Service done". End step.
+Step "Service done". Finish as "complete".  End step.
+Scope "Recovery" within "A service".
+Start at "Observe work".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Unhandled faults", closure "Close" and races "Race".
+Retain the original request from "Request work" and record in "Original request".
+Keep "Original request" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Observe work", "Recovery done"]. Initially unavailable. End data.
+Keep "Captured" as choice with ["confirmed" as record with ["request revision" as text, "amount" as whole number]] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Observe work", "Recovery done"]. Initially unavailable. End data.
+Step "Observe work". Wait under "A observations" for observations from "Terminal facts" about "Request work" and record in "Captured". On "observed", continue with "Recovery done". End step.
+Step "Recovery done". Finish as "complete".  End step.
+End scope.
+End scope.
+Step "Run service". Run "A service" with inputs ["Request" uses "Caller input"] and outputs ["Result" uses "Caller result"]. On "complete", continue with "Caller done". End step.
+Step "Caller done". Finish as "complete".  End step.
+End scope.
+Use capability "A capability" from "Provider" with input record with ["request revision" as text, "amount" as whole number] and output record with ["request revision" as text, "amount" as whole number], authority "Operator" and effects "A effects".
+Rule for effect "A effects". Effect is compensatable. Idempotency is stable-key. Reconcile under "A observations". End policy.
+Rule for wait "A observations". Observe choice with ["confirmed" as record with ["request revision" as text, "amount" as whole number]]. Match when ((the case of (the fact "payload")) equals ("confirmed")). Authority "Operator". Timer none. On observation outcome "observed" of "Observe work" in "Recovery" in "A service" in "A caller" in "Main". On timer none. End policy.
+Step "Use A". Run "A caller" with inputs ["Request" uses "Launch input"] and outputs ["Result" uses "First result"]. On "complete", continue with "Use B". End step.
+Scope "B caller" within "Main".
+Start at "Run service".
+Inputs ["Request" uses "Caller request"]. Outputs ["Result" uses "Caller result"]. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Unhandled faults", closure "Close" and races "Race".
+Keep "Caller request" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Request work" in "B service" in "B caller" in "Main"]. Initially unavailable. End data.
+Keep "Caller result" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate empty. Initially unavailable. End data.
+Let "Caller input" mean (the value of "Caller request") as record with ["request revision" as text, "amount" as whole number] with parameters empty.
+Scope "B service" within "B caller".
+Start at "Request work".
+Inputs ["Request" uses "Service request"]. Outputs ["Result" uses "Service result"]. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Unhandled faults", closure "Service close" and races "Race".
+Keep "Service request" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Request work"]. Initially unavailable. End data.
+Keep "Service result" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate empty. Initially unavailable. End data.
+Let "Service input" mean (the value of "Service request") as record with ["request revision" as text, "amount" as whole number] with parameters empty.
+Rule for closure "Service close". Reconcile in "Recovery". End policy.
+Rule for work "Work". Instructions "Synthetic receipt matching; no dispatch authorization". Authority "Operator". Recognise faults from "Fault facts". Attempts 1. Delays empty. Retry faults empty. Timeout none. Complete when ((the fact "result") equals (the value of "Service request")). Compensates none. End policy.
+Step "Request work". Request "B capability" using "Service input" under "Work" and record in "Service result". On "done", continue with "Service done". End step.
+Step "Service done". Finish as "complete".  End step.
+Scope "Recovery" within "B service".
+Start at "Observe work".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Unhandled faults", closure "Close" and races "Race".
+Retain the original request from "Request work" and record in "Original request".
+Keep "Original request" as record with ["request revision" as text, "amount" as whole number] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Observe work", "Recovery done"]. Initially unavailable. End data.
+Keep "Captured" as choice with ["confirmed" as record with ["request revision" as text, "amount" as whole number]] under "Protection".
+Sensitivity "test". Purposes ["Test"]. Participants ["Operator"].
+Capabilities ["A capability", "B capability"]. Invalidate ["Observe work", "Recovery done"]. Initially unavailable. End data.
+Step "Observe work". Wait under "B observations" for observations from "Terminal facts" about "Request work" and record in "Captured". On "observed", continue with "Recovery done". End step.
+Step "Recovery done". Finish as "complete".  End step.
+End scope.
+End scope.
+Step "Run service". Run "B service" with inputs ["Request" uses "Caller input"] and outputs ["Result" uses "Caller result"]. On "complete", continue with "Caller done". End step.
+Step "Caller done". Finish as "complete".  End step.
+End scope.
+Use capability "B capability" from "Provider" with input record with ["request revision" as text, "amount" as whole number] and output record with ["request revision" as text, "amount" as whole number], authority "Operator" and effects "B effects".
+Rule for effect "B effects". Effect is compensatable. Idempotency is stable-key. Reconcile under "B observations". End policy.
+Rule for wait "B observations". Observe choice with ["confirmed" as record with ["request revision" as text, "amount" as whole number]]. Match when ((the case of (the fact "payload")) equals ("confirmed")). Authority "Operator". Timer none. On observation outcome "observed" of "Observe work" in "Recovery" in "B service" in "B caller" in "Main". On timer none. End policy.
+Step "Use B". Run "B caller" with inputs ["Request" uses "Launch input"] and outputs ["Result" uses "Second result"]. On "complete", continue with "Main done". End step.
+Step "Main done". Finish as "complete".  End step.
+End process.

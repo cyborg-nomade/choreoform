@@ -124,3 +124,30 @@ table. Reject before recursive evaluation exceeds these limits. Host budgets may
 be stricter and must produce explicit resource refusal, never silent truncation.
 Budgets do not change the population of a fan-out or settle remaining work.
 Resource limits are not claims of production performance or memory bounds.
+
+[Core 0.9](core-owned-readonly-v0.9.md) explicitly reuses IR 0.4 for distinct finite
+read-only surviving continuation proofs, with all eight exact inherited bases.
+Conditional query recipients and source/control/access/provenance/invalidation
+are checked separately from ordinary and legacy coverage. Current authority,
+registration/cutoff/atomic handoff/all-settlement and actual host evidence remain
+open; source/native selection follows a separate explicit profile increment.
+
+[Core 0.10](core-owned-pre-capture-v0.10.md) adds only finite intermediate owned
+read-only entry before the original capture, preserving its actual-use reachable
+wait and exclusive uninitialized capture target. It requires all nine exact bases
+on IR 0.4; older paths stay fixed. Readable selection and live host gates remain
+separate. See [ADR-0060](../decisions/0060-owned-pre-capture-entry.md).
+
+[Core 0.11](core-owned-work-v0.11.md) selects finite owned work/pure local inputs
+on existing IR 0.4 and all ten prior bases. Non-read-only commands and explicit
+compensators require capturing-first entry; old query meanings and ordinary/legacy
+coverage stay fixed. New work/class/input/compensation relations are immutable
+conditional SDK declarations, not live authorization. See
+[ADR-0063](../decisions/0063-finite-owned-work.md).
+
+[Core 0.12](core-compensation-identity-v0.12.md) changes only the P1 compensation
+activity identity slot to exact same-definition lookup, requiring eleven bases on
+IR 0.4. Ordinary lexical privacy, C11 immediate-source owned-work proof and live
+eligible effect/new-key/authority/handoff/settlement premises stay fixed. Raw SDK
+only; readable selection follows separately. See
+[ADR-0070](../decisions/0070-compensation-identity-contract.md).

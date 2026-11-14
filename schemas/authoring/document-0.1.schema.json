@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:authoring:document:0.1.0",
+  "title": "Reversible authoring document 0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "source",
+    "bindings",
+    "integrity",
+    "projection",
+    "layout"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-authoring-document"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "source": {
+      "type": "string",
+      "maxLength": 1048576
+    },
+    "bindings": {
+      "type": "string",
+      "maxLength": 1048576
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "bindings",
+        "package"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "bindings": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "package": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "version",
+        "definition",
+        "revision"
+      ],
+      "properties": {
+        "format": {
+          "const": "choreoform-ir"
+        },
+        "version": {
+          "const": "0.4.0"
+        },
+        "definition": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "layout": {
+      "$ref": "urn:choreoform:authoring:layout:0.1.0"
+    }
+  }
+}

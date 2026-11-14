@@ -1,0 +1,1685 @@
+{
+  "premise": "Synthetic pure values only; None means no confirmed local record, never proof that an effect is absent. No accepted event, dispatch, handoff or process execution.",
+  "cases": [
+    {
+      "id": "default-stock-failure-does-not-offer-partial",
+      "rule": "check_partial",
+      "cells": {
+        "Original order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "Reserve first line record": {
+          "tag": "some",
+          "value": {
+            "tag": "reserved",
+            "value": {
+              "operation": "reserve_a",
+              "phase": "reserved",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "reserve_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Reserve second line record": {
+          "tag": "some",
+          "value": {
+            "tag": "unavailable",
+            "value": {
+              "operation": "reserve_b",
+              "phase": "unavailable",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-b",
+              "scope revision": "line-b-v1",
+              "request revision": "reserve_b-pure-instruction-v1",
+              "amount": "8000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "2"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-b"
+              }
+            }
+          }
+        },
+        "Authorize order payment record": {
+          "tag": "none"
+        },
+        "Release first reservation record": {
+          "tag": "none"
+        },
+        "Release second reservation record": {
+          "tag": "none"
+        },
+        "Void authorization record": {
+          "tag": "none"
+        },
+        "Pack first line record": {
+          "tag": "none"
+        },
+        "Pack second line record": {
+          "tag": "none"
+        },
+        "Purchase first label record": {
+          "tag": "none"
+        },
+        "Purchase second label record": {
+          "tag": "none"
+        },
+        "Hand over first parcel record": {
+          "tag": "none"
+        },
+        "Hand over second parcel record": {
+          "tag": "none"
+        },
+        "Observe first delivery record": {
+          "tag": "none"
+        },
+        "Observe second delivery record": {
+          "tag": "none"
+        },
+        "Stop first warehouse work record": {
+          "tag": "none"
+        },
+        "Stop second warehouse work record": {
+          "tag": "none"
+        },
+        "Void first label record": {
+          "tag": "none"
+        },
+        "Void second label record": {
+          "tag": "none"
+        },
+        "Capture committed amount record": {
+          "tag": "none"
+        },
+        "Refund captured amount record": {
+          "tag": "none"
+        },
+        "Request first intercept record": {
+          "tag": "none"
+        },
+        "Request second intercept record": {
+          "tag": "none"
+        },
+        "Notify customer of order record": {
+          "tag": "none"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "explicit-opt-in-offers-new-customer-choice",
+      "rule": "check_partial",
+      "cells": {
+        "Original order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "offer partial",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "Reserve first line record": {
+          "tag": "some",
+          "value": {
+            "tag": "reserved",
+            "value": {
+              "operation": "reserve_a",
+              "phase": "reserved",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "reserve_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Reserve second line record": {
+          "tag": "some",
+          "value": {
+            "tag": "unavailable",
+            "value": {
+              "operation": "reserve_b",
+              "phase": "unavailable",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-b",
+              "scope revision": "line-b-v1",
+              "request revision": "reserve_b-pure-instruction-v1",
+              "amount": "8000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "2"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-b"
+              }
+            }
+          }
+        },
+        "Authorize order payment record": {
+          "tag": "none"
+        },
+        "Release first reservation record": {
+          "tag": "none"
+        },
+        "Release second reservation record": {
+          "tag": "none"
+        },
+        "Void authorization record": {
+          "tag": "none"
+        },
+        "Pack first line record": {
+          "tag": "none"
+        },
+        "Pack second line record": {
+          "tag": "none"
+        },
+        "Purchase first label record": {
+          "tag": "none"
+        },
+        "Purchase second label record": {
+          "tag": "none"
+        },
+        "Hand over first parcel record": {
+          "tag": "none"
+        },
+        "Hand over second parcel record": {
+          "tag": "none"
+        },
+        "Observe first delivery record": {
+          "tag": "none"
+        },
+        "Observe second delivery record": {
+          "tag": "none"
+        },
+        "Stop first warehouse work record": {
+          "tag": "none"
+        },
+        "Stop second warehouse work record": {
+          "tag": "none"
+        },
+        "Void first label record": {
+          "tag": "none"
+        },
+        "Void second label record": {
+          "tag": "none"
+        },
+        "Capture committed amount record": {
+          "tag": "none"
+        },
+        "Refund captured amount record": {
+          "tag": "none"
+        },
+        "Request first intercept record": {
+          "tag": "none"
+        },
+        "Request second intercept record": {
+          "tag": "none"
+        },
+        "Notify customer of order record": {
+          "tag": "none"
+        }
+      },
+      "expected": true
+    },
+    {
+      "id": "unknown-stop-does-not-authorize-second-release",
+      "rule": "cancel_release_a_guard",
+      "cells": {
+        "Original order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "Reserve first line record": {
+          "tag": "some",
+          "value": {
+            "tag": "reserved",
+            "value": {
+              "operation": "reserve_a",
+              "phase": "reserved",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "reserve_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Reserve second line record": {
+          "tag": "none"
+        },
+        "Authorize order payment record": {
+          "tag": "none"
+        },
+        "Release first reservation record": {
+          "tag": "none"
+        },
+        "Release second reservation record": {
+          "tag": "none"
+        },
+        "Void authorization record": {
+          "tag": "none"
+        },
+        "Pack first line record": {
+          "tag": "none"
+        },
+        "Pack second line record": {
+          "tag": "none"
+        },
+        "Purchase first label record": {
+          "tag": "none"
+        },
+        "Purchase second label record": {
+          "tag": "none"
+        },
+        "Hand over first parcel record": {
+          "tag": "none"
+        },
+        "Hand over second parcel record": {
+          "tag": "none"
+        },
+        "Observe first delivery record": {
+          "tag": "none"
+        },
+        "Observe second delivery record": {
+          "tag": "none"
+        },
+        "Stop first warehouse work record": {
+          "tag": "none"
+        },
+        "Stop second warehouse work record": {
+          "tag": "none"
+        },
+        "Void first label record": {
+          "tag": "none"
+        },
+        "Void second label record": {
+          "tag": "none"
+        },
+        "Capture committed amount record": {
+          "tag": "none"
+        },
+        "Refund captured amount record": {
+          "tag": "none"
+        },
+        "Request first intercept record": {
+          "tag": "none"
+        },
+        "Request second intercept record": {
+          "tag": "none"
+        },
+        "Notify customer of order record": {
+          "tag": "none"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "positive-stop-permits-release-proposal",
+      "rule": "cancel_release_a_guard",
+      "cells": {
+        "Original order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "Reserve first line record": {
+          "tag": "some",
+          "value": {
+            "tag": "reserved",
+            "value": {
+              "operation": "reserve_a",
+              "phase": "reserved",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "reserve_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Reserve second line record": {
+          "tag": "none"
+        },
+        "Authorize order payment record": {
+          "tag": "none"
+        },
+        "Release first reservation record": {
+          "tag": "none"
+        },
+        "Release second reservation record": {
+          "tag": "none"
+        },
+        "Void authorization record": {
+          "tag": "none"
+        },
+        "Pack first line record": {
+          "tag": "none"
+        },
+        "Pack second line record": {
+          "tag": "none"
+        },
+        "Purchase first label record": {
+          "tag": "none"
+        },
+        "Purchase second label record": {
+          "tag": "none"
+        },
+        "Hand over first parcel record": {
+          "tag": "none"
+        },
+        "Hand over second parcel record": {
+          "tag": "none"
+        },
+        "Observe first delivery record": {
+          "tag": "none"
+        },
+        "Observe second delivery record": {
+          "tag": "none"
+        },
+        "Stop first warehouse work record": {
+          "tag": "some",
+          "value": {
+            "tag": "stopped",
+            "value": {
+              "operation": "stop_a",
+              "phase": "stopped",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "stop_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Stop second warehouse work record": {
+          "tag": "none"
+        },
+        "Void first label record": {
+          "tag": "none"
+        },
+        "Void second label record": {
+          "tag": "none"
+        },
+        "Capture committed amount record": {
+          "tag": "none"
+        },
+        "Refund captured amount record": {
+          "tag": "none"
+        },
+        "Request first intercept record": {
+          "tag": "none"
+        },
+        "Request second intercept record": {
+          "tag": "none"
+        },
+        "Notify customer of order record": {
+          "tag": "none"
+        }
+      },
+      "expected": true
+    },
+    {
+      "id": "capture-alone-proves-no-refund-eligibility",
+      "rule": "refund_guard",
+      "cells": {
+        "Original order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "Reserve first line record": {
+          "tag": "none"
+        },
+        "Reserve second line record": {
+          "tag": "none"
+        },
+        "Authorize order payment record": {
+          "tag": "none"
+        },
+        "Release first reservation record": {
+          "tag": "none"
+        },
+        "Release second reservation record": {
+          "tag": "none"
+        },
+        "Void authorization record": {
+          "tag": "none"
+        },
+        "Pack first line record": {
+          "tag": "none"
+        },
+        "Pack second line record": {
+          "tag": "none"
+        },
+        "Purchase first label record": {
+          "tag": "none"
+        },
+        "Purchase second label record": {
+          "tag": "none"
+        },
+        "Hand over first parcel record": {
+          "tag": "none"
+        },
+        "Hand over second parcel record": {
+          "tag": "none"
+        },
+        "Observe first delivery record": {
+          "tag": "none"
+        },
+        "Observe second delivery record": {
+          "tag": "none"
+        },
+        "Stop first warehouse work record": {
+          "tag": "none"
+        },
+        "Stop second warehouse work record": {
+          "tag": "none"
+        },
+        "Void first label record": {
+          "tag": "none"
+        },
+        "Void second label record": {
+          "tag": "none"
+        },
+        "Capture committed amount record": {
+          "tag": "some",
+          "value": {
+            "tag": "captured",
+            "value": {
+              "operation": "capture",
+              "phase": "captured",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "rp03-fictional-order",
+              "scope revision": "order-v1",
+              "request revision": "capture-pure-instruction-v1",
+              "amount": "20000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "none"
+              },
+              "target warehouse": {
+                "tag": "none"
+              }
+            }
+          }
+        },
+        "Refund captured amount record": {
+          "tag": "none"
+        },
+        "Request first intercept record": {
+          "tag": "none"
+        },
+        "Request second intercept record": {
+          "tag": "none"
+        },
+        "Notify customer of order record": {
+          "tag": "none"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "unknown-interception-does-not-authorize-refund",
+      "rule": "refund_guard",
+      "cells": {
+        "Original order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "Reserve first line record": {
+          "tag": "none"
+        },
+        "Reserve second line record": {
+          "tag": "none"
+        },
+        "Authorize order payment record": {
+          "tag": "none"
+        },
+        "Release first reservation record": {
+          "tag": "none"
+        },
+        "Release second reservation record": {
+          "tag": "none"
+        },
+        "Void authorization record": {
+          "tag": "none"
+        },
+        "Pack first line record": {
+          "tag": "none"
+        },
+        "Pack second line record": {
+          "tag": "none"
+        },
+        "Purchase first label record": {
+          "tag": "none"
+        },
+        "Purchase second label record": {
+          "tag": "none"
+        },
+        "Hand over first parcel record": {
+          "tag": "some",
+          "value": {
+            "tag": "handed",
+            "value": {
+              "operation": "handover_a",
+              "phase": "handed",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "handover_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Hand over second parcel record": {
+          "tag": "some",
+          "value": {
+            "tag": "handed",
+            "value": {
+              "operation": "handover_b",
+              "phase": "handed",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-b",
+              "scope revision": "line-b-v1",
+              "request revision": "handover_b-pure-instruction-v1",
+              "amount": "8000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "2"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-b"
+              }
+            }
+          }
+        },
+        "Observe first delivery record": {
+          "tag": "none"
+        },
+        "Observe second delivery record": {
+          "tag": "none"
+        },
+        "Stop first warehouse work record": {
+          "tag": "none"
+        },
+        "Stop second warehouse work record": {
+          "tag": "none"
+        },
+        "Void first label record": {
+          "tag": "none"
+        },
+        "Void second label record": {
+          "tag": "none"
+        },
+        "Capture committed amount record": {
+          "tag": "some",
+          "value": {
+            "tag": "captured",
+            "value": {
+              "operation": "capture",
+              "phase": "captured",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "rp03-fictional-order",
+              "scope revision": "order-v1",
+              "request revision": "capture-pure-instruction-v1",
+              "amount": "20000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "none"
+              },
+              "target warehouse": {
+                "tag": "none"
+              }
+            }
+          }
+        },
+        "Refund captured amount record": {
+          "tag": "none"
+        },
+        "Request first intercept record": {
+          "tag": "none"
+        },
+        "Request second intercept record": {
+          "tag": "none"
+        },
+        "Notify customer of order record": {
+          "tag": "none"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "matched-capture-and-positive-intercepts-permit-proposal",
+      "rule": "refund_guard",
+      "cells": {
+        "Original order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "Reserve first line record": {
+          "tag": "none"
+        },
+        "Reserve second line record": {
+          "tag": "none"
+        },
+        "Authorize order payment record": {
+          "tag": "none"
+        },
+        "Release first reservation record": {
+          "tag": "none"
+        },
+        "Release second reservation record": {
+          "tag": "none"
+        },
+        "Void authorization record": {
+          "tag": "none"
+        },
+        "Pack first line record": {
+          "tag": "none"
+        },
+        "Pack second line record": {
+          "tag": "none"
+        },
+        "Purchase first label record": {
+          "tag": "none"
+        },
+        "Purchase second label record": {
+          "tag": "none"
+        },
+        "Hand over first parcel record": {
+          "tag": "some",
+          "value": {
+            "tag": "handed",
+            "value": {
+              "operation": "handover_a",
+              "phase": "handed",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "handover_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Hand over second parcel record": {
+          "tag": "some",
+          "value": {
+            "tag": "handed",
+            "value": {
+              "operation": "handover_b",
+              "phase": "handed",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-b",
+              "scope revision": "line-b-v1",
+              "request revision": "handover_b-pure-instruction-v1",
+              "amount": "8000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "2"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-b"
+              }
+            }
+          }
+        },
+        "Observe first delivery record": {
+          "tag": "none"
+        },
+        "Observe second delivery record": {
+          "tag": "none"
+        },
+        "Stop first warehouse work record": {
+          "tag": "none"
+        },
+        "Stop second warehouse work record": {
+          "tag": "none"
+        },
+        "Void first label record": {
+          "tag": "none"
+        },
+        "Void second label record": {
+          "tag": "none"
+        },
+        "Capture committed amount record": {
+          "tag": "some",
+          "value": {
+            "tag": "captured",
+            "value": {
+              "operation": "capture",
+              "phase": "captured",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "rp03-fictional-order",
+              "scope revision": "order-v1",
+              "request revision": "capture-pure-instruction-v1",
+              "amount": "20000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "none"
+              },
+              "target warehouse": {
+                "tag": "none"
+              }
+            }
+          }
+        },
+        "Refund captured amount record": {
+          "tag": "none"
+        },
+        "Request first intercept record": {
+          "tag": "some",
+          "value": {
+            "tag": "intercepted",
+            "value": {
+              "operation": "intercept_a",
+              "phase": "intercepted",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "intercept_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Request second intercept record": {
+          "tag": "some",
+          "value": {
+            "tag": "intercepted",
+            "value": {
+              "operation": "intercept_b",
+              "phase": "intercepted",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-b",
+              "scope revision": "line-b-v1",
+              "request revision": "intercept_b-pure-instruction-v1",
+              "amount": "8000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "2"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-b"
+              }
+            }
+          }
+        },
+        "Notify customer of order record": {
+          "tag": "none"
+        }
+      },
+      "expected": true
+    },
+    {
+      "id": "wrong-capture-total-does-not-authorize-refund",
+      "rule": "refund_guard",
+      "cells": {
+        "Original order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "Reserve first line record": {
+          "tag": "none"
+        },
+        "Reserve second line record": {
+          "tag": "none"
+        },
+        "Authorize order payment record": {
+          "tag": "none"
+        },
+        "Release first reservation record": {
+          "tag": "none"
+        },
+        "Release second reservation record": {
+          "tag": "none"
+        },
+        "Void authorization record": {
+          "tag": "none"
+        },
+        "Pack first line record": {
+          "tag": "none"
+        },
+        "Pack second line record": {
+          "tag": "none"
+        },
+        "Purchase first label record": {
+          "tag": "none"
+        },
+        "Purchase second label record": {
+          "tag": "none"
+        },
+        "Hand over first parcel record": {
+          "tag": "some",
+          "value": {
+            "tag": "handed",
+            "value": {
+              "operation": "handover_a",
+              "phase": "handed",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "handover_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Hand over second parcel record": {
+          "tag": "some",
+          "value": {
+            "tag": "handed",
+            "value": {
+              "operation": "handover_b",
+              "phase": "handed",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-b",
+              "scope revision": "line-b-v1",
+              "request revision": "handover_b-pure-instruction-v1",
+              "amount": "8000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "2"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-b"
+              }
+            }
+          }
+        },
+        "Observe first delivery record": {
+          "tag": "none"
+        },
+        "Observe second delivery record": {
+          "tag": "none"
+        },
+        "Stop first warehouse work record": {
+          "tag": "none"
+        },
+        "Stop second warehouse work record": {
+          "tag": "none"
+        },
+        "Void first label record": {
+          "tag": "none"
+        },
+        "Void second label record": {
+          "tag": "none"
+        },
+        "Capture committed amount record": {
+          "tag": "some",
+          "value": {
+            "tag": "captured",
+            "value": {
+              "operation": "capture",
+              "phase": "captured",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "rp03-fictional-order",
+              "scope revision": "order-v1",
+              "request revision": "capture-pure-instruction-v1",
+              "amount": "19999",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "none"
+              },
+              "target warehouse": {
+                "tag": "none"
+              }
+            }
+          }
+        },
+        "Refund captured amount record": {
+          "tag": "none"
+        },
+        "Request first intercept record": {
+          "tag": "some",
+          "value": {
+            "tag": "intercepted",
+            "value": {
+              "operation": "intercept_a",
+              "phase": "intercepted",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-a",
+              "scope revision": "line-a-v1",
+              "request revision": "intercept_a-pure-instruction-v1",
+              "amount": "12000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "1"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-a"
+              }
+            }
+          }
+        },
+        "Request second intercept record": {
+          "tag": "some",
+          "value": {
+            "tag": "intercepted",
+            "value": {
+              "operation": "intercept_b",
+              "phase": "intercepted",
+              "order ID": "rp03-fictional-order",
+              "order revision": "order-v1",
+              "scope key": "line-b",
+              "scope revision": "line-b-v1",
+              "request revision": "intercept_b-pure-instruction-v1",
+              "amount": "8000",
+              "currency": "EUR",
+              "basis reference": "synthetic-prior-resource",
+              "reference": "synthetic-command-receipt",
+              "provider event": "synthetic-event-not-accepted",
+              "address revision": "address-v1",
+              "expiry": "10000000",
+              "reason": "Pure synthetic guard input",
+              "subject reference": {
+                "tag": "some",
+                "value": "synthetic-subject"
+              },
+              "target quantity": {
+                "tag": "some",
+                "value": "2"
+              },
+              "target warehouse": {
+                "tag": "some",
+                "value": "fictional-warehouse-b"
+              }
+            }
+          }
+        },
+        "Notify customer of order record": {
+          "tag": "none"
+        }
+      },
+      "expected": false
+    }
+  ]
+}

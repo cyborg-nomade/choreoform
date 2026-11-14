@@ -213,7 +213,7 @@ fn cases() -> Vec<Case> {
         cases.push(c);
     }
     for (name, pointer, value, expected) in [
-        ("unsupported-version", "/version", json!("0.2.0"), "version"),
+        ("unsupported-version", "/version", json!("0.5.0"), "version"),
         ("wrong-format", "/format", json!("other"), "envelope"),
         ("wrong-artifact", "/kind", json!("plan"), "envelope"),
         (
@@ -398,6 +398,47 @@ fn cases() -> Vec<Case> {
             node.as_object_mut().unwrap().extend(extra.as_object().unwrap().clone());
             d["body"]["nodes"]["review"] = node;
         }));
+    }
+    // IR-0.2 structural cases remain illustrative/inert, not semantic captures.
+    // The origin is deliberately a human declaration: only reference roles are
+    // projected here; core-0.5 semantic tests separately reject that context.
+    for mutation in [
+        "null",
+        "capture",
+        "missing",
+        "extra",
+        "origin-role",
+        "result-role",
+        "source-digest",
+        "old-wire",
+    ] {
+        let mut c = revised(&format!("wire2-structural-{mutation}"), |d| {
+            d["version"] = "0.2.0".into();
+            let n = &mut d["body"]["nodes"]["reconcile"];
+            n["capture"] = serde_json::Value::Null;
+            if !matches!(mutation, "null" | "missing" | "old-wire") {
+                n["capture"] = json!({"source":{"id":"urn:structural:unbound-observation-source","revision":format!("sha256:{}","0".repeat(64))},"origin":"review","result":"expense"});
+            }
+            match mutation {
+                "missing" => {
+                    n.as_object_mut().unwrap().remove("capture");
+                }
+                "extra" => n["capture"]["trusted"] = true.into(),
+                "origin-role" => n["capture"]["origin"] = "expense".into(),
+                "result-role" => n["capture"]["result"] = "review".into(),
+                "source-digest" => n["capture"]["source"]["revision"] = "wrong".into(),
+                _ => {}
+            }
+            if mutation == "old-wire" {
+                d["version"] = "0.1.0".into();
+            }
+        });
+        c.expected = match mutation {
+            "null" | "capture" => "ok",
+            "origin-role" | "result-role" => "reference",
+            _ => "shape",
+        };
+        cases.push(c);
     }
     // Literal expected JCS vector, independently of the implementation under test.
     let vector_body = r#"{"\ue000":1,"\ud83d\ude00":2,"z":"\u000f\n\"\\/","numbers":[-0,9007199254740991,-9007199254740991],"combining":["é","é"]}"#;

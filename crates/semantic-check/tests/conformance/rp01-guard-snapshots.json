@@ -1,0 +1,1528 @@
+{
+  "format": "choreoform-rp01-guard-snapshots",
+  "version": "0.1.0",
+  "candidateRevision": "sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829",
+  "candidateDigest": "sha256:d96b6398e6856a1e34916046a6ca61ee0e09339f59c5c3664c524a5b43a801de",
+  "values": {
+    "claim_v1": {
+      "claim ID": "rp01-fictional-claim",
+      "revision": "claim-v1",
+      "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+      "employee": "fictional-employee",
+      "date": "2026-11-06",
+      "amount": "12345",
+      "currency": "EUR",
+      "category": "travel",
+      "business purpose": "Fictional corpus meeting",
+      "cost allocation": "fictional-project",
+      "receipt": {
+        "tag": "provided",
+        "value": {
+          "identity": "urn:choreoform:benchmarks:rp01:receipt",
+          "revision": "receipt-v1",
+          "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+          "provenance": "synthetic fixture"
+        }
+      }
+    },
+    "claim_v2": {
+      "claim ID": "rp01-fictional-claim",
+      "revision": "claim-v2",
+      "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+      "employee": "fictional-employee",
+      "date": "2026-11-06",
+      "amount": "12000",
+      "currency": "EUR",
+      "category": "travel",
+      "business purpose": "Fictional corpus meeting",
+      "cost allocation": "fictional-project",
+      "receipt": {
+        "tag": "provided",
+        "value": {
+          "identity": "urn:choreoform:benchmarks:rp01:receipt",
+          "revision": "receipt-v1",
+          "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+          "provenance": "synthetic fixture"
+        }
+      }
+    },
+    "manager": "fictional-manager",
+    "finance": "fictional-finance",
+    "employee": "fictional-employee",
+    "outsider": "fictional-outsider",
+    "approved": "approved",
+    "rejected": "rejected",
+    "none": {
+      "tag": "none"
+    },
+    "manager_roles": [
+      "expense.manager"
+    ],
+    "employee_roles": [
+      "expense.employee"
+    ],
+    "no_roles": [],
+    "submitter": [
+      "request.submitter"
+    ],
+    "no_relationships": [],
+    "manager_some_v1": {
+      "tag": "some",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_approved_v1": {
+      "tag": "approved",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "finance_some_v1": {
+      "tag": "some",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-finance",
+        "assignment": "fictional-assignment-fictional-finance-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "finance_approved_v1": {
+      "tag": "approved",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-finance",
+        "assignment": "fictional-assignment-fictional-finance-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_some_v2": {
+      "tag": "some",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v2",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "finance_some_v2": {
+      "tag": "some",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-finance",
+        "assignment": "fictional-assignment-fictional-finance-claim-v2",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_rejected": {
+      "tag": "rejected",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_self": {
+      "tag": "approved",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-employee",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_wrong_claim": {
+      "tag": "approved",
+      "value": {
+        "claim ID": "other-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_wrong_revision": {
+      "tag": "approved",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "other-revision",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_wrong_policy": {
+      "tag": "approved",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "other-policy",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_wrong_principal": {
+      "tag": "approved",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "other-principal",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "finance_same_manager": {
+      "tag": "approved",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_some_wrong_policy": {
+      "tag": "some",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "other-policy",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "manager_some_wrong_claim": {
+      "tag": "some",
+      "value": {
+        "claim ID": "other-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "pay_request_v1": {
+      "claim": {
+        "claim ID": "rp01-fictional-claim",
+        "revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "fictional-employee",
+        "date": "2026-11-06",
+        "amount": "12345",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      },
+      "manager": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      },
+      "finance": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-finance",
+        "assignment": "fictional-assignment-fictional-finance-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "pay_request_old_manager": {
+      "claim": {
+        "claim ID": "rp01-fictional-claim",
+        "revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "fictional-employee",
+        "date": "2026-11-06",
+        "amount": "12000",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      },
+      "manager": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      },
+      "finance": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-finance",
+        "assignment": "fictional-assignment-fictional-finance-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "pay_request_wrong_policy": {
+      "claim": {
+        "claim ID": "rp01-fictional-claim",
+        "revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "fictional-employee",
+        "date": "2026-11-06",
+        "amount": "12345",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      },
+      "manager": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "other-policy",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      },
+      "finance": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-finance",
+        "assignment": "fictional-assignment-fictional-finance-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "pay_request_v2": {
+      "claim": {
+        "claim ID": "rp01-fictional-claim",
+        "revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "fictional-employee",
+        "date": "2026-11-06",
+        "amount": "12000",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      },
+      "manager": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v2",
+        "reason": "Fictional attributable reason"
+      },
+      "finance": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-finance",
+        "assignment": "fictional-assignment-fictional-finance-claim-v2",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "paid": {
+      "tag": "paid",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "command reference": "command-1",
+        "payable reference": "payable-1",
+        "amount": "12345",
+        "currency": "EUR"
+      }
+    },
+    "paid_wrong_amount": {
+      "tag": "paid",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "command reference": "command-1",
+        "payable reference": "payable-1",
+        "amount": "1",
+        "currency": "EUR"
+      }
+    },
+    "paid_wrong_currency": {
+      "tag": "paid",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "command reference": "command-1",
+        "payable reference": "payable-1",
+        "amount": "12345",
+        "currency": "USD"
+      }
+    },
+    "paid_wrong_claim": {
+      "tag": "paid",
+      "value": {
+        "claim ID": "other-claim",
+        "claim revision": "claim-v1",
+        "command reference": "command-1",
+        "payable reference": "payable-1",
+        "amount": "12345",
+        "currency": "EUR"
+      }
+    },
+    "paid_wrong_revision": {
+      "tag": "paid",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "other-revision",
+        "command reference": "command-1",
+        "payable reference": "payable-1",
+        "amount": "12345",
+        "currency": "EUR"
+      }
+    },
+    "problem": {
+      "tag": "problem",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "command reference": "command-1",
+        "reason": "Confirmed fictional terminal problem"
+      }
+    },
+    "corrected": {
+      "tag": "resubmitted",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "fictional-employee",
+        "date": "2026-11-06",
+        "amount": "12000",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      }
+    },
+    "same_revision": {
+      "tag": "resubmitted",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "fictional-employee",
+        "date": "2026-11-06",
+        "amount": "12345",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      }
+    },
+    "corrected_wrong_identity": {
+      "tag": "resubmitted",
+      "value": {
+        "claim ID": "other-claim",
+        "revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "fictional-employee",
+        "date": "2026-11-06",
+        "amount": "12000",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      }
+    },
+    "corrected_wrong_employee": {
+      "tag": "resubmitted",
+      "value": {
+        "claim ID": "rp01-fictional-claim",
+        "revision": "claim-v2",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "other-employee",
+        "date": "2026-11-06",
+        "amount": "12000",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      }
+    },
+    "invalid_claim": {
+      "claim ID": "rp01-fictional-claim",
+      "revision": "claim-v1",
+      "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+      "employee": "fictional-employee",
+      "date": "2026-11-06",
+      "amount": "-1",
+      "currency": "EUR",
+      "category": "travel",
+      "business purpose": "Fictional corpus meeting",
+      "cost allocation": "fictional-project",
+      "receipt": {
+        "tag": "provided",
+        "value": {
+          "identity": "urn:choreoform:benchmarks:rp01:receipt",
+          "revision": "receipt-v1",
+          "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+          "provenance": "synthetic fixture"
+        }
+      }
+    },
+    "pay_request_wrong_finance_policy": {
+      "claim": {
+        "claim ID": "rp01-fictional-claim",
+        "revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "employee": "fictional-employee",
+        "date": "2026-11-06",
+        "amount": "12345",
+        "currency": "EUR",
+        "category": "travel",
+        "business purpose": "Fictional corpus meeting",
+        "cost allocation": "fictional-project",
+        "receipt": {
+          "tag": "provided",
+          "value": {
+            "identity": "urn:choreoform:benchmarks:rp01:receipt",
+            "revision": "receipt-v1",
+            "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+            "provenance": "synthetic fixture"
+          }
+        }
+      },
+      "manager": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+        "principal": "fictional-manager",
+        "assignment": "fictional-assignment-fictional-manager-claim-v1",
+        "reason": "Fictional attributable reason"
+      },
+      "finance": {
+        "claim ID": "rp01-fictional-claim",
+        "claim revision": "claim-v1",
+        "policy revision": "other-policy",
+        "principal": "fictional-finance",
+        "assignment": "fictional-assignment-fictional-finance-claim-v1",
+        "reason": "Fictional attributable reason"
+      }
+    },
+    "claim_policy_v2": {
+      "claim ID": "rp01-fictional-claim",
+      "revision": "claim-v1",
+      "policy revision": "other-policy",
+      "employee": "fictional-employee",
+      "date": "2026-11-06",
+      "amount": "12345",
+      "currency": "EUR",
+      "category": "travel",
+      "business purpose": "Fictional corpus meeting",
+      "cost allocation": "fictional-project",
+      "receipt": {
+        "tag": "provided",
+        "value": {
+          "identity": "urn:choreoform:benchmarks:rp01:receipt",
+          "revision": "receipt-v1",
+          "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+          "provenance": "synthetic fixture"
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "manager_approved",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_review_work",
+        "field": "completion",
+        "site": "manager_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "manager_approved_v1",
+        "principal": "manager"
+      },
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "manager_rejected",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_review_work",
+        "field": "completion",
+        "site": "manager_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "manager_rejected",
+        "principal": "manager"
+      },
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "manager_self",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_review_work",
+        "field": "completion",
+        "site": "manager_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "manager_self",
+        "principal": "employee"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "manager_wrong_claim",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_review_work",
+        "field": "completion",
+        "site": "manager_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "manager_wrong_claim",
+        "principal": "manager"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "manager_wrong_revision",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_review_work",
+        "field": "completion",
+        "site": "manager_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "manager_wrong_revision",
+        "principal": "manager"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "manager_wrong_policy",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_review_work",
+        "field": "completion",
+        "site": "manager_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "manager_wrong_policy",
+        "principal": "manager"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "manager_wrong_principal",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_review_work",
+        "field": "completion",
+        "site": "manager_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "manager_wrong_principal",
+        "principal": "manager"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "finance_approved",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "finance_review_work",
+        "field": "completion",
+        "site": "finance_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "manager_some_v1"
+      },
+      "facts": {
+        "result": "finance_approved_v1",
+        "principal": "finance"
+      },
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "finance_same_manager",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "finance_review_work",
+        "field": "completion",
+        "site": "finance_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "manager_some_v1"
+      },
+      "facts": {
+        "result": "finance_same_manager",
+        "principal": "manager"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "finance_no_manager",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "finance_review_work",
+        "field": "completion",
+        "site": "finance_review"
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "none"
+      },
+      "facts": {
+        "result": "finance_approved_v1",
+        "principal": "finance"
+      },
+      "expect": {
+        "phase": "evaluation",
+        "code": "evaluation-tag"
+      }
+    },
+    {
+      "id": "current_approvals",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "manager_some_v1",
+        "finance_evidence": "finance_some_v1",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "old_manager_cannot_approve_v2",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v2",
+        "manager_evidence": "manager_some_v1",
+        "finance_evidence": "finance_some_v2",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "old_finance_cannot_approve_v2",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v2",
+        "manager_evidence": "manager_some_v2",
+        "finance_evidence": "finance_some_v1",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "fresh_v2_approvals",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v2",
+        "manager_evidence": "manager_some_v2",
+        "finance_evidence": "finance_some_v2",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "absent_manager_short_circuits",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "none",
+        "finance_evidence": "finance_some_v1",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "absent_finance_short_circuits",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "manager_some_v1",
+        "finance_evidence": "none",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "rejection_short_circuits",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "none",
+        "finance_evidence": "none",
+        "disposition": "rejected"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "wrong_approval_policy",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "manager_some_wrong_policy",
+        "finance_evidence": "finance_some_v1",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "wrong_approval_claim",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "claim_v1",
+        "manager_evidence": "manager_some_wrong_claim",
+        "finance_evidence": "finance_some_v1",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "correction_new_revision",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "policies",
+        "id": "correction_work",
+        "field": "completion",
+        "site": "correct_claim"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "corrected",
+        "principal": "employee"
+      },
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "correction_same_revision",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "policies",
+        "id": "correction_work",
+        "field": "completion",
+        "site": "correct_claim"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "same_revision",
+        "principal": "employee"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "correction_changed_identity",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "policies",
+        "id": "correction_work",
+        "field": "completion",
+        "site": "correct_claim"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "corrected_wrong_identity",
+        "principal": "employee"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "correction_changed_employee",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "policies",
+        "id": "correction_work",
+        "field": "completion",
+        "site": "correct_claim"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "corrected_wrong_employee",
+        "principal": "employee"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "correction_wrong_principal",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "policies",
+        "id": "correction_work",
+        "field": "completion",
+        "site": "correct_claim"
+      },
+      "cells": {
+        "current_claim": "claim_v1"
+      },
+      "facts": {
+        "result": "corrected",
+        "principal": "outsider"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "payment_paid",
+      "scenario": "RP-01-C",
+      "subject": {
+        "map": "policies",
+        "id": "payment_work",
+        "field": "completion",
+        "site": "payment_request_step"
+      },
+      "cells": {
+        "payment_request": "pay_request_v1"
+      },
+      "facts": {
+        "result": "paid"
+      },
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "payment_problem",
+      "scenario": "RP-01-C",
+      "subject": {
+        "map": "policies",
+        "id": "payment_work",
+        "field": "completion",
+        "site": "payment_request_step"
+      },
+      "cells": {
+        "payment_request": "pay_request_v1"
+      },
+      "facts": {
+        "result": "problem"
+      },
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "payment_wrong_amount",
+      "scenario": "RP-01-C",
+      "subject": {
+        "map": "policies",
+        "id": "payment_work",
+        "field": "completion",
+        "site": "payment_request_step"
+      },
+      "cells": {
+        "payment_request": "pay_request_v1"
+      },
+      "facts": {
+        "result": "paid_wrong_amount"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "payment_wrong_currency",
+      "scenario": "RP-01-C",
+      "subject": {
+        "map": "policies",
+        "id": "payment_work",
+        "field": "completion",
+        "site": "payment_request_step"
+      },
+      "cells": {
+        "payment_request": "pay_request_v1"
+      },
+      "facts": {
+        "result": "paid_wrong_currency"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "payment_wrong_claim",
+      "scenario": "RP-01-C",
+      "subject": {
+        "map": "policies",
+        "id": "payment_work",
+        "field": "completion",
+        "site": "payment_request_step"
+      },
+      "cells": {
+        "payment_request": "pay_request_v1"
+      },
+      "facts": {
+        "result": "paid_wrong_claim"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "payment_wrong_revision",
+      "scenario": "RP-01-C",
+      "subject": {
+        "map": "policies",
+        "id": "payment_work",
+        "field": "completion",
+        "site": "payment_request_step"
+      },
+      "cells": {
+        "payment_request": "pay_request_v1"
+      },
+      "facts": {
+        "result": "paid_wrong_revision"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "commit_current",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "payment_commits",
+        "field": "invariant",
+        "site": null
+      },
+      "cells": {
+        "payment_request": "pay_request_v1",
+        "current_claim": "claim_v1"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "commit_stale_root",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "payment_commits",
+        "field": "invariant",
+        "site": null
+      },
+      "cells": {
+        "payment_request": "pay_request_v1",
+        "current_claim": "claim_v2"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "commit_old_witness",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "payment_commits",
+        "field": "invariant",
+        "site": null
+      },
+      "cells": {
+        "payment_request": "pay_request_old_manager",
+        "current_claim": "claim_v2"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "commit_fresh_v2",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "payment_commits",
+        "field": "invariant",
+        "site": null
+      },
+      "cells": {
+        "payment_request": "pay_request_v2",
+        "current_claim": "claim_v2"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "commit_wrong_policy",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "payment_commits",
+        "field": "invariant",
+        "site": null
+      },
+      "cells": {
+        "payment_request": "pay_request_wrong_policy",
+        "current_claim": "claim_v1"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "authority_assigned_role",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_authority",
+        "field": "permit",
+        "site": null
+      },
+      "cells": {},
+      "facts": {
+        "roles": "manager_roles"
+      },
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "authority_no_role",
+      "scenario": "RP-01-A",
+      "subject": {
+        "map": "policies",
+        "id": "manager_authority",
+        "field": "permit",
+        "site": null
+      },
+      "cells": {},
+      "facts": {
+        "roles": "no_roles"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "withdraw_submitter",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "employee_authority",
+        "field": "permit",
+        "site": null
+      },
+      "cells": {},
+      "facts": {
+        "roles": "employee_roles",
+        "relationships": "submitter"
+      },
+      "expect": {
+        "phase": "value",
+        "value": true
+      }
+    },
+    {
+      "id": "withdraw_wrong_relationship",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "employee_authority",
+        "field": "permit",
+        "site": null
+      },
+      "cells": {},
+      "facts": {
+        "roles": "employee_roles",
+        "relationships": "no_relationships"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "withdraw_no_role",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "employee_authority",
+        "field": "permit",
+        "site": null
+      },
+      "cells": {},
+      "facts": {
+        "roles": "no_roles",
+        "relationships": "submitter"
+      },
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "missing_claim_binding",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "manager_evidence": "manager_some_v1",
+        "finance_evidence": "finance_some_v1",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "binding",
+        "code": "snapshot-binding"
+      }
+    },
+    {
+      "id": "invalid_nominal_claim",
+      "scenario": "RP-01-B",
+      "subject": {
+        "map": "expressions",
+        "id": "may_pay",
+        "field": "body",
+        "site": null
+      },
+      "cells": {
+        "current_claim": "invalid_claim",
+        "manager_evidence": "manager_some_v1",
+        "finance_evidence": "finance_some_v1",
+        "disposition": "approved"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "binding",
+        "code": "invalid-nominal-value"
+      }
+    },
+    {
+      "id": "commit_wrong_finance_policy",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "payment_commits",
+        "field": "invariant",
+        "site": null
+      },
+      "cells": {
+        "payment_request": "pay_request_wrong_finance_policy",
+        "current_claim": "claim_v1"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "commit_changed_current_policy",
+      "scenario": "RP-01-D",
+      "subject": {
+        "map": "policies",
+        "id": "payment_commits",
+        "field": "invariant",
+        "site": null
+      },
+      "cells": {
+        "payment_request": "pay_request_v1",
+        "current_claim": "claim_policy_v2"
+      },
+      "facts": {},
+      "expect": {
+        "phase": "value",
+        "value": false
+      }
+    }
+  ]
+}

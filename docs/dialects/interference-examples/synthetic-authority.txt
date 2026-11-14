@@ -1,0 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2026 Choreoform contributors -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
+Synthetic authority contract for standalone metadata tests only.
+No host has registered this authority. No actual physical keys, provider consent,
+normalizer, non-alias guarantee or execution authorization are supplied here.
