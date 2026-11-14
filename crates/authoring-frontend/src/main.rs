@@ -9,6 +9,7 @@ use std::io::{Read, Write};
 mod static_output;
 use static_output::static_output;
 mod continuation_output;
+mod document_cli;
 mod fault_entry_output;
 mod fault_use_output;
 mod owned_output;
@@ -112,6 +113,9 @@ fn read(input: impl Read) -> Result<Vec<u8>, String> {
 }
 fn run() -> Result<String, String> {
     let args: Vec<_> = std::env::args().skip(1).collect();
+    if args.first().is_some_and(|arg| arg.starts_with("document-")) {
+        return document_cli::run(&args);
+    }
     if args.len() == 2 && args[0] == "parse-fragment" {
         let raw = read(std::io::stdin().lock())?;
         let syntax =

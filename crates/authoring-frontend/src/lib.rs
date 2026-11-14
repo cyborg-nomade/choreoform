@@ -4,9 +4,11 @@
 //! Bounded Candidate A frontend. Produces candidate IR, never semantic admission.
 //! No filesystem/network, implicit ID allocation, IO or execution in the library.
 
+mod authoring;
 mod ledger;
 mod lower;
 mod syntax;
+pub use authoring::{AuthoringComponent, AuthoringDiagnostic, AuthoringDocument, AuthoringResult};
 pub use ledger::Ledger;
 pub use lower::{Candidate, Integrity, Package};
 pub use syntax::{Syntax, Tree, parse, parse_fragment};

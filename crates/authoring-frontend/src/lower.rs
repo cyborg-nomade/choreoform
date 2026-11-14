@@ -203,10 +203,17 @@ impl Candidate {
 }
 impl<'a> Package<'a> {
     pub fn parse(source: &'a [u8], companion: &[u8]) -> Result<Self> {
-        let syntax = parse(source)?;
-        let ledger = Ledger::decode(companion)?;
+        Self::parse_located(source, companion).map_err(|(_, diagnostic)| diagnostic)
+    }
+    // The tag distinguishes companion failures without parsing either input twice.
+    pub(crate) fn parse_located(
+        source: &'a [u8],
+        companion: &[u8],
+    ) -> std::result::Result<Self, (bool, crate::Diagnostic)> {
+        let syntax = parse(source).map_err(|e| (false, e))?;
+        let ledger = Ledger::decode(companion).map_err(|e| (true, e))?;
         if ledger.document["profile"] != syntax.profile() {
-            return Err(error("package-profile", 0..0));
+            return Err((true, error("package-profile", 0..0)));
         }
         Ok(Self { syntax, ledger })
     }
