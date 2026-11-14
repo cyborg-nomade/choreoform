@@ -1,0 +1,17 @@
+{
+  "stage": "native-authoring-operations-only",
+  "observations": [
+    [
+      "rp01",
+      120223,
+      105823,
+      "sha256:93a9c4ac66e7d896a4549f03e893553b63e4571588507b45c7ec37b3a84752f9"
+    ],
+    [
+      "rp03",
+      588290,
+      526719,
+      "sha256:e7d1bf721b257b88b2df578e9775df420134428610a73292ba5351d1147c76fb"
+    ]
+  ]
+}

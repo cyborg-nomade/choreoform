@@ -148,7 +148,13 @@ def admit(raw, resources=()):
     source, bindings = document['source'].encode(), document['bindings'].encode()
     if len(source) > MIB or len(bindings) > MIB:
         refuse('component-limit')
-    ledger = strict(bindings, MIB, 'bindings-format')
+    # The outer item/container counter does not traverse the opaque companion
+    # string. Existing native integrity parsing below enforces its OWN exact
+    # byte/depth/number/duplicate rules before any successful admission.
+    try:
+        ledger = json.loads(bindings)
+    except (ValueError, UnicodeError, RecursionError):
+        refuse('bindings-format')
     if not isinstance(ledger, dict):
         refuse('bindings-format')
     if ledger.get('profile') != '0.19.0' or ledger.get('version') != '0.18.0':
@@ -266,6 +272,14 @@ class ReversibleAuthoringContract(unittest.TestCase):
         self.assertNotEqual(authoring(state[0]), authoring(self.base[0]))
         self.assertEqual(state[0]['integrity'], self.base[0]['integrity'])
         self.assertEqual(state[2], original)
+        many = deepcopy(self.base[0]); ledger = json.loads(many['bindings'])
+        ledger['annotations']['example:many-values'] = [0] * 270000
+        many['bindings'] = json.dumps(ledger, separators=(',', ':'))
+        many['integrity'] = native(many, (), 'integrity')
+        # Actual native IR keeps these annotations outside semantic revision.
+        state = admit(encoded(many))
+        self.assertEqual(len(state[2]['annotations']['example:many-values']), 270000)
+        self.assertEqual(state[2]['revision'], original['revision'])
 
     def test_worked_refusals_and_same_semantics_stale_base_are_private(self):
         for name, code in self.vectors['refusals'].items():

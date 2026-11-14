@@ -52,6 +52,21 @@ managed operations with real native outputs/limits/whole RP-01/03 preservation.
 Existing compiler/profile/contracts/benchmarks remain fixed. Later paired accessible
 prototype, complete operation profiles and real cycles require dedicated scopes.
 
+Exact [native bindings](../authoring/native-reversible-v0.1.md) and inspection schema
+were signed in4568b0e72e7f37b61f5ecfa6aaad62c67bbb9222 before native implementation.
+[ADR-0095](../decisions/0095-native-reversible-authoring.md) /
+[native evidence](0095-native-reversible-authoring.md) record immutable admission /
+import/inspection/export and all0.1.0 operations with real native outputs. Ten new
+native integration and two transport groups pass; all six golden changes are
+byte-exact, nested/qualified/opaque/stale/UTF-8/resource/output-growth cases refuse
+or preserve their proper meaning. Three CLI groups replay whole RP01/RP03/raw
+components, actual cycles/all target categories and all11 checking outcomes. Source /
+companion1MiB and every old API/profile/core/benchmark byte remain exact. Optional
+diagnostics do not echo unknown ID-shaped tokens. Full local700 Rust + eight
+compile-fail/native/Wasm/all90 Python commands pass. Final-head CI, separate full
+diff review/all comment audit/expected-head signed merge remain pending. Next
+paired accessible prototype and full later operation mappings need separate scopes.
+
 Full RP-08 design/coverage/package, complete diagnostics/validator/conformance,
 protected accessible inspection/editing/export, three-process text/visual cycles
 and actual representative users remain Phase1 work. Actual host/browser/independent

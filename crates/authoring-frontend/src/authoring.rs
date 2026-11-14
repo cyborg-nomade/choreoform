@@ -150,7 +150,14 @@ fn layout(value: &Value, ledger: &crate::Ledger) -> AuthoringResult<()> {
                 || generated.contains(id))
         {
             let mut d = diagnostic("layout-reference", Layout, "/layout/entries");
-            d.entity = Some(id.into());
+            // A syntactically valid but unknown token is still untrusted data,
+            // not an established managed identity suitable for diagnostics.
+            if ledger.declarations.contains_key(id)
+                || ledger.symbols.contains_key(id)
+                || generated.contains(id)
+            {
+                d.entity = Some(id.into());
+            }
             return Err(d);
         }
         previous = Some(id);
@@ -238,13 +245,16 @@ impl AuthoringDocument {
         Self::checked(document, candidate)
     }
     fn checked(document: Value, candidate: Candidate) -> AuthoringResult<Self> {
-        let raw = bytes(&document, DOCUMENT_BYTES, AuthoringComponent::Document)?;
-        let mut framed = b"choreoform-authoring-document:0.1.0\0".to_vec();
-        framed.extend_from_slice(&raw);
+        // Serialize once into the framed hash input, avoiding a second full
+        // canonical bundle allocation. The prefix is outside the document quota.
+        let prefix = b"choreoform-authoring-document:0.1.0\0".to_vec();
+        let mut framed = LimitedWriter::new(prefix, DOCUMENT_BYTES);
+        serde_json::to_writer(&mut framed, &document)
+            .map_err(|_| diagnostic("authoring-size", AuthoringComponent::Document, ""))?;
         Ok(Self {
             document,
             candidate,
-            authoring_digest: digest(&framed),
+            authoring_digest: digest(&framed.into_inner()),
         })
     }
     pub fn from_package(

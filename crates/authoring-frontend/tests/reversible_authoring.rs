@@ -239,3 +239,225 @@ fn unicode_and_quoted_names_preserve_other_source_bytes_and_opaque_annotations()
         assert_eq!(error.component, AuthoringComponent::Change);
     }
 }
+
+#[test]
+fn qualified_ancestor_uses_rename_and_private_descendants_cannot_be_imported() {
+    let d = base();
+    let (mut s, mut l) = parts(&d);
+    let child = "Scope \"Child\" within \"Terminal example\". Start at \"Child done\". Inputs empty. Outputs empty. Outcomes [\"complete\"]. Use cancellation \"Stop\", faults \"Fault handling\", closure \"Close\" and races \"Commit order\". Step \"Child done\". Finish as \"complete\". End step. End scope.";
+    let owner = l["root"].clone();
+    for (id, kind, scope, name) in [
+        ("child", "scope", owner.as_str().unwrap(), "Child"),
+        ("child_done", "node", "child", "Child done"),
+    ] {
+        l["declarations"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({"id":id,"kind":kind,"scope":scope,"name":name}));
+    }
+    l["symbols"].as_array_mut().unwrap().push(json!({"id":"child_complete","owner":"child","role":"outcome","name":"complete","wire":"complete"}));
+    s = s.replace("End process.", &format!("{child} End process."));
+    let expression = "Let \"Read condition\" mean (test \"Same\" using [\"Value\" is (the value of \"Value\")]) as truth value with parameters empty.";
+    assert_eq!(s.matches(expression).count(), 1);
+    let qualified = expression.replace(
+        "test \"Same\" using",
+        "test \"Same\" in \"Terminal example\" using",
+    );
+    let nested = s.replace(expression, "").replace(
+        "Step \"Child done\"",
+        &format!("{qualified} Step \"Child done\""),
+    );
+    let mut n = l.clone();
+    n["declarations"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|x| x["id"] == "read_condition")
+        .unwrap()["scope"] = "child".into();
+    let before = import(&nested, &n);
+    let after = before
+        .apply(
+            &request(
+                &before,
+                json!({"kind":"rename","target":"same","name":"Equal values"}),
+            ),
+            &[],
+        )
+        .unwrap();
+    assert!(
+        after
+            .source()
+            .contains("test \"Equal values\" in \"Terminal example\" using")
+    );
+    assert_eq!(after.candidate().document(), before.candidate().document());
+    let definition = "Define test \"Same\" with inputs [\"Value\" as whole number]. It holds when ((the parameter \"Value\") equals (the parameter \"Value\")). End test.";
+    assert_eq!(s.matches(definition).count(), 1);
+    let hidden = s
+        .replace(definition, "")
+        .replace(
+            "Step \"Child done\"",
+            &format!("{definition} Step \"Child done\""),
+        )
+        .replace(
+            "test \"Same\" using",
+            "test \"Same\" in \"Child\" in \"Terminal example\" using",
+        );
+    l["declarations"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|x| x["id"] == "same")
+        .unwrap()["scope"] = "child".into();
+    let error = Document::from_package(
+        hidden.as_bytes(),
+        &serde_json::to_vec(&l).unwrap(),
+        br#"{"format":"choreoform-authoring-layout","version":"0.1.0","entries":[]}"#,
+        &[],
+    )
+    .unwrap_err();
+    assert_eq!(error.code, "reference-missing");
+    assert_eq!(error.component, AuthoringComponent::Source);
+}
+#[test]
+fn untrusted_formats_registries_and_decoded_component_bytes_refuse_privately() {
+    use choreoform_ir_probe_core::{Resource, digest};
+    let d = base();
+    for raw in [
+        b"[]".as_slice(),
+        b"null",
+        b"{\"SECRET\":0,\"SECRET\":1}",
+        b"{\"x\":-0}",
+        b"{\"x\":1.0}",
+        b"\"\\ud800\"",
+        b"\xef\xbb\xbf{}",
+        b"{} trailing",
+    ] {
+        let e = Document::admit(raw, &[]).unwrap_err();
+        assert_eq!(e.code, "document-format");
+        assert!(!format!("{e:?}").contains("SECRET"));
+    }
+    for raw in ["[]", "null", "true", "\"SECRET\""] {
+        let mut v = d.document().clone();
+        v["bindings"] = raw.into();
+        let e = Document::admit(&serde_json::to_vec(&v).unwrap(), &[]).unwrap_err();
+        assert_eq!(e.component, AuthoringComponent::Bindings);
+        assert!(!format!("{e:?}").contains("SECRET"));
+    }
+    let mut v = d.document().clone();
+    v["source"] = "é".repeat(524289).into();
+    assert_eq!(
+        Document::admit(&serde_json::to_vec(&v).unwrap(), &[])
+            .unwrap_err()
+            .code,
+        "component-limit"
+    );
+    let mut r: Value = serde_json::from_slice(&request(&d, json!({"kind":"format"}))).unwrap();
+    r["base"] = "SECRET".into();
+    assert_eq!(
+        d.apply(&serde_json::to_vec(&r).unwrap(), &[])
+            .unwrap_err()
+            .code,
+        "change-format"
+    );
+    let digest = digest(b"x");
+    let wrong = [Resource {
+        id: "SECRET",
+        revision: &digest,
+        bytes: b"y",
+    }];
+    assert_eq!(
+        Document::admit(BASE, &wrong).unwrap_err().code,
+        "resource-integrity"
+    );
+    let duplicate = [
+        Resource {
+            id: "a",
+            revision: &digest,
+            bytes: b"x",
+        },
+        Resource {
+            id: "a",
+            revision: &digest,
+            bytes: b"x",
+        },
+    ];
+    assert_eq!(
+        Document::admit(BASE, &duplicate).unwrap_err().code,
+        "resource-integrity"
+    );
+    let too_many: Vec<_> = (0..129)
+        .map(|_| Resource {
+            id: "a",
+            revision: &digest,
+            bytes: b"x",
+        })
+        .collect();
+    assert_eq!(
+        Document::admit(BASE, &too_many).unwrap_err().code,
+        "registry-limit"
+    );
+    assert_eq!(
+        d.apply(&vec![b' '; 1048577], &[]).unwrap_err().code,
+        "change-format"
+    );
+}
+#[test]
+fn source_only_state_stales_requests_and_outer_item_limits_do_not_count_decoded_bindings() {
+    let d = base();
+    let (mut s, mut l) = parts(&d);
+    s = s.replace(
+        "End process.",
+        "Describe type \"Unused type\" as text. End process.",
+    );
+    let owner = l["root"].clone();
+    l["declarations"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"id":"unused_type","kind":"type-alias","scope":owner,"name":"Unused type"}));
+    let changed = import(&s, &l);
+    assert_eq!(changed.candidate().document(), d.candidate().document());
+    assert_ne!(changed.authoring_digest(), d.authoring_digest());
+    assert_eq!(
+        changed
+            .apply(&request(&d, json!({"kind":"format"})), &[])
+            .unwrap_err()
+            .code,
+        "stale-base"
+    );
+    // Opaque bindings are separately bounded by the ORIGINAL native1MiB contract.
+    // Its JSON values are not extra values in the outer document's JSON tree.
+    l["annotations"]["example:many-values"] = json!(vec![0; 270000]);
+    let many = import(&s, &l);
+    assert!(many.bindings().len() < 1048576);
+    let reopened = Document::admit(&many.export().unwrap(), &[]).unwrap();
+    assert_eq!(reopened.authoring_digest(), many.authoring_digest());
+}
+#[test]
+fn cumulative_rename_output_growth_refuses_instead_of_allocating_partial_source() {
+    let d = base();
+    let (mut s, mut l) = parts(&d);
+    let mut extra = String::new();
+    let owner = l["root"].clone();
+    for i in 0..500 {
+        let name = format!("Repeated {i}");
+        extra.push_str(&format!("Let \"{name}\" mean (test \"Same\" using [\"Value\" is (1)]) as truth value with parameters empty.\n"));
+        l["declarations"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({"id":format!("extra_{i}"),"kind":"expression","scope":owner,"name":name}));
+    }
+    s = s.replace("End process.", &format!("{extra} End process."));
+    let before = import(&s, &l);
+    let exact = before.export().unwrap();
+    let e = before
+        .apply(
+            &request(
+                &before,
+                json!({"kind":"rename","target":"same","name":"X".repeat(4096)}),
+            ),
+            &[],
+        )
+        .unwrap_err();
+    assert_eq!(e.code, "authoring-size");
+    assert_eq!(before.export().unwrap(), exact);
+}

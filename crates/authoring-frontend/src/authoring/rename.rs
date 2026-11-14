@@ -217,9 +217,11 @@ pub(super) fn rename(
     {
         &s.name
     } else {
-        let mut d = diagnostic("unsupported-target", Change, "/operation/target");
-        d.entity = Some(target.into());
-        return Err(d);
+        return Err(diagnostic(
+            "unsupported-target",
+            Change,
+            "/operation/target",
+        ));
     };
     if old == caption {
         return Ok((package.syntax().source().into(), original_bindings.into()));
