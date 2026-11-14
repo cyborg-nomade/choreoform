@@ -1,0 +1,83 @@
+{
+  "rawPins": {
+    "schemas/authoring/change-0.1.schema.json": "sha256:48317385bfed0e43aad8102d835886192b04c454762589589b8f017b3395faec",
+    "schemas/authoring/document-0.1.schema.json": "sha256:ab0dea852d3744e1505e746e9a3b196f256094e42d9f65c6b9522fbc741c741e",
+    "schemas/authoring/layout-0.1.schema.json": "sha256:83618506fe0d4d7d8feaba179863b5b238d49b75e847389195380e3efa063a4f",
+    "docs/authoring/reversible-0.1/authority-claim.json": "sha256:b61c521c53076859e80ed2b8ce9db5c2b055da04b144486079effe506a20f616",
+    "docs/authoring/reversible-0.1/bad-revision.json": "sha256:1b6270aba86a40ca291429a8843b01a70d2880f011b1655ae25701a2e710f702",
+    "docs/authoring/reversible-0.1/bad-source-pin.json": "sha256:1350116c577aaa6f6c0755eeba8e059d8887eb9e5b5bd7561e10545ac2b38628",
+    "docs/authoring/reversible-0.1/base.json": "sha256:240dd8b2c1591a93775fbb9158b99cf275cbfad9f8bb41b3a06371c7ca4827f2",
+    "docs/authoring/reversible-0.1/collision.change.json": "sha256:814670d68795e049fcc04cdc19993df6c2ca0b3fc439c431dff7ea52bd20a245",
+    "docs/authoring/reversible-0.1/copy-refused.change.json": "sha256:31357d541c6359efef60a80f2fe26e0c68c022c34b380e149a6942e8f1511c8f",
+    "docs/authoring/reversible-0.1/duplicate-layout.json": "sha256:76197f31c1e44cc4cb5da76bf969a0efacf89212d82f7d45f648674533b394fe",
+    "docs/authoring/reversible-0.1/expanded.json": "sha256:5a62686af2b4075a3546a31507be804ccf1062e6407da08045bbef6b8aafd37c",
+    "docs/authoring/reversible-0.1/format.change.json": "sha256:003ad9571b12e3f54aa7b50b8fd800a1867218521a0ab385f3ac71bb1536ac55",
+    "docs/authoring/reversible-0.1/formatted.json": "sha256:c8cccceb600967b68a0e7b0a70f792cbb02b4478410d3a5e42487bed212577a1",
+    "docs/authoring/reversible-0.1/input-rename.change.json": "sha256:a4f272ba8914ff9ab5a6e9bf6d6c66b16c69c56e6804ebd90ea57732e9345000",
+    "docs/authoring/reversible-0.1/input-renamed.json": "sha256:0e58b04c877b6fdf335c07ac92f563119305879803c17326ffa1c6c3dec53544",
+    "docs/authoring/reversible-0.1/layout.change.json": "sha256:79715f395bf89643c19aa46a8bd877156212659668191e41214094621e5a5a0a",
+    "docs/authoring/reversible-0.1/layout.json": "sha256:6be0c98bf883be91cd0fc5cb79102364274a667af6b0a2f2130f0e1f10c91c44",
+    "docs/authoring/reversible-0.1/protection-rename.change.json": "sha256:ec094d6cf9ea3c30b309fcfdc63b76507af876eef23267bbb99c227996b03150",
+    "docs/authoring/reversible-0.1/protection-renamed.json": "sha256:b608db140666c27b2e9ceaa48b1a8574231e16d1f349cf6f2caf75bf2504cd66",
+    "docs/authoring/reversible-0.1/rename.change.json": "sha256:534a7259a52a54b7b2f09cc7e898dc1ca84721a0e1727230265eb2c13f890b79",
+    "docs/authoring/reversible-0.1/renamed.json": "sha256:241bec5f817dfe8548497efede6d9b488e1402c0e8167bc8d950c3b95edd671a",
+    "docs/authoring/reversible-0.1/retired-layout.json": "sha256:b74192fe069d1ceb7af9fd8ab00337ab9d25ccc9c8898e3632bd5ced86b27d33",
+    "docs/authoring/reversible-0.1/retired-target.change.json": "sha256:e3fc24ba334c28a00b0c0293d57c4679cd62b3d26c9c2620ae837cc35390195e",
+    "docs/authoring/reversible-0.1/type-rename.change.json": "sha256:58720c974bcb2e8c7cd064bce32a9c1c23df173c42b68463db829d49d7a68fd1",
+    "docs/authoring/reversible-0.1/type-renamed.json": "sha256:c3e40805001e442b8fa9dc27e88d826cd6e36999d860be1c1ffedc15a35d16fc",
+    "docs/authoring/reversible-0.1/unsupported-target.change.json": "sha256:2515f1c98fef6b02d677b624d28a4963cc3d0b9a198cd2324a7e846fdd4e5314"
+  },
+  "authoring": {
+    "base": "sha256:51373968dec3664800c77aa685076556a27417790989a086132da19aad4826a2",
+    "renamed": "sha256:8f4a9b705861fe869ce8c9dd00039d60eed9149c4bd4354561cbb3786832cb90",
+    "input-renamed": "sha256:c0a5aa57783fab75d2979287779e0b49e6231fafff8eff3e1fcb8d1409ff25cd",
+    "type-renamed": "sha256:71c4443cc0d55daf4c876623ba9f867748a2992c2f97aea3523ee7dc4d8c148d",
+    "protection-renamed": "sha256:6326f44ac7406943626725bfb882e19b1ad37367b779283d8a43e1670ae2b69a",
+    "layout": "sha256:ddec307160592114b34568666a77822edf93a63fcee132c0a6e2d58e95ef6905",
+    "formatted": "sha256:e0a58718822c3461ecdadf37dea564fb6e75b0042d377d356d022c53b69226e7",
+    "expanded": "sha256:3a236d58659da56754d3582ea810f163b10418d1572c5b070182db7077a32697"
+  },
+  "semanticRevision": "sha256:d22e32a3a7a212510c90b7a04526ebacfae4416845a1fe1a505df717aecf8a8f",
+  "pairs": [
+    {
+      "request": "rename.change.json",
+      "after": "renamed.json"
+    },
+    {
+      "request": "input-rename.change.json",
+      "after": "input-renamed.json"
+    },
+    {
+      "request": "type-rename.change.json",
+      "after": "type-renamed.json"
+    },
+    {
+      "request": "protection-rename.change.json",
+      "after": "protection-renamed.json"
+    },
+    {
+      "request": "format.change.json",
+      "after": "formatted.json"
+    },
+    {
+      "request": "layout.change.json",
+      "after": "layout.json"
+    }
+  ],
+  "refusals": {
+    "bad-revision.json": "projection-mismatch",
+    "bad-source-pin.json": "integrity-mismatch",
+    "retired-layout.json": "layout-reference",
+    "duplicate-layout.json": "layout-reference",
+    "authority-claim.json": "document-format",
+    "unsupported-target.change.json": "unsupported-target",
+    "retired-target.change.json": "retired-target",
+    "collision.change.json": "name-conflict",
+    "copy-refused.change.json": "change-format"
+  },
+  "stalePair": {
+    "base": "layout.json",
+    "request": "rename.change.json",
+    "code": "stale-base"
+  }
+}
