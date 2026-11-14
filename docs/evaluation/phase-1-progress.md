@@ -48,7 +48,16 @@ steps. Write/sign the critique before any new support-tool implementation. No ne
 production syntax/API/semantics/quota or benchmark byte change belongs to this
 scope; new contracts require separate exact publication before later code.
 
-The next direction is not accepted yet. Actual users/hosts/browsers/independent
+Signed critiquec364bd168503023ef0c83e4a5429789b5fd50221 precedes new support-tool
+code. [ADR-0093](../decisions/0093-authoring-completion-sequence.md) accepts the
+working direction under delegation: separately publish a reversible authoring-
+package/managed-change contract, then bounded native operations and a paired
+text/visual prototype. Native observations show identical IR but different source
+structures, remaining291309-byte navigation scope and an actual private685-byte
+policy diagnostic. Four new read-only oracle groups and full local688 Rust+6 compile-fail/native/
+Wasm/portability/all88 Python commands pass. Final-head CI/separate review/full
+audit/signed merge remain pending; no production or benchmark bytes change. Full RP-08/diagnostic/user and
+aggregate gates stay explicit within Phase1. Actual users/hosts/browsers/independent
 review and every complete semantic/region/G1–G4/scenario/Phase1 criterion remain
 open. All40 scenarios Partial, parent46 draft; no Phase2 or phase completion.
 

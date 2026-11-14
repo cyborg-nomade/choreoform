@@ -4,7 +4,7 @@
 # Remaining authoring completion: critique before further implementation
 
 **Date:** 2026-11-14<br>
-**Status:** measured critique; direction/integration verification pending.<br>
+**Status:** direction accepted under delegation; local verification complete; final-head CI/review/integration pending.<br>
 **Authority:** signed [scope93](0093-authoring-completion-critique-plan.md)c30eb10,
 after verified PR #107 integration4042081c3b8ea990ad1d4e93357ad368889cdaf8;
 CI43581960139 atdd809f4568bd0642a5ec5376da9360a303339d66, automated COMMENT
@@ -131,8 +131,9 @@ change contract, including source/companion/resource/semantic pins, stable ident
 operations, layout/authoring-only representation, consistency checks, unsupported
 cases and protection/authority boundaries. Compare alternatives before publication.
 Then implement the bounded native operations and paired prototype in subsequent
-dedicated scopes. A source annotation, report or digest must never grant live host
-permission. Untrusted or inconsistent authoring metadata must not change or hide
+dedicated scopes. Required human instructions and policy meaning remain in the semantic body under
+ADR-0009; editorial/layout metadata has no separate execution authority. A source
+annotation, report or digest must never grant live host permission. Untrusted or inconsistent authoring metadata must not change or hide
 the actual semantic model through an unchecked visual projection.
 
 Complete RP-08 design/coverage, general work reuse, diagnostic refinement and full
@@ -141,3 +142,14 @@ silently deferred to Phase2/3. Freeze/publish any new language/IR/API contract b
 its production implementation. No headline box or conditional gate closes here.
 All40 scenarios remain Partial and parent46 draft; stop only at an honest Phase1
 report for owner approval, without starting Phase2.
+
+## Local verification after the signed critique
+
+Four new read-only oracle groups pass: exact native captures and965-file inventory,
+real same-IR/different-authoring structure with native format/reparse, actual private
+685-byte diagnostic and explicit open-gate/document/CI checks. Full688 Rust tests
+plus6 compile-fail tests, native workspace lint/five Wasm library lints/two release
+Wasm builds/native portability and all88 Python commands pass locally. No production,
+accepted publication, benchmark or raw prior evidence bytes change. Final-head CI,
+separate completed-diff automated review, full comment audit and signed merge are
+still required before integration. This is no independent/human/user/host proof.
