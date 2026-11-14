@@ -369,6 +369,26 @@ fn untrusted_formats_registries_and_decoded_component_bytes_refuse_privately() {
         Document::admit(BASE, &wrong).unwrap_err().code,
         "resource-integrity"
     );
+    for id in [String::new(), "x".repeat(16385), "β".repeat(4097)] {
+        let invalid = [Resource {
+            id: &id,
+            revision: &digest,
+            bytes: b"x",
+        }];
+        let error = Document::admit(BASE, &invalid).unwrap_err();
+        assert_eq!(error.code, "resource-integrity");
+        assert!(error.entity.is_none());
+    }
+    let oversized_revision = "r".repeat(100000);
+    let invalid = [Resource {
+        id: "a",
+        revision: &oversized_revision,
+        bytes: b"x",
+    }];
+    assert_eq!(
+        Document::admit(BASE, &invalid).unwrap_err().code,
+        "resource-integrity"
+    );
     let duplicate = [
         Resource {
             id: "a",

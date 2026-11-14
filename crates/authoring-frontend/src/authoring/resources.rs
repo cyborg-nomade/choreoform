@@ -116,7 +116,15 @@ pub(super) fn registry<'a>(supplied: &[Resource<'a>]) -> AuthoringResult<Vec<Res
                 "",
             ));
         }
-        if !seen.insert((row.id, row.revision)) || digest(row.bytes) != row.revision {
+        // Registry keys are inherited contract pins too. Bound their metadata
+        // before comparisons/indexing, including unused caller-supplied rows.
+        if row.id.is_empty()
+            || row.id.len() > 4 * 4096
+            || row.id.chars().count() > 4096
+            || row.revision.len() != 71
+            || digest(row.bytes) != row.revision
+            || !seen.insert((row.id, row.revision))
+        {
             return Err(fail());
         }
     }

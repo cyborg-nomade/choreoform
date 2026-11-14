@@ -100,3 +100,13 @@ package, complete diagnostics/validator/conformance/negative examples, three-pro
 both-form cycles and actual representative users/hosts/browsers/independent evidence
 remain Phase1 requirements. All40 scenarios Partial, G1–G4 conditional, parent46
 draft; no phase gate, Phase2/new phase chat or execution grant follows.
+
+Separate completed-diff review found unbounded caller registry key metadata before
+indexed comparison. Enforce inherited contract-pin bounds (nonempty/max4096 Unicode
+characters, at most16384 UTF-8 bytes; exact71-byte digest) before hashing/indexing,
+including unused rows. Empty/oversized ASCII/Unicode contract keys and oversized
+digests have actual native refusal regressions. All ten native groups, strict
+workspace all-target lints and all three CLI groups pass after this correction.
+The complete local700+8/native/Wasm/90-command suite passed before this narrower
+fix; required CI repeats the full suite at the final head. No normative pin, old
+API/SDK behavior, quota or benchmark bytes change.
