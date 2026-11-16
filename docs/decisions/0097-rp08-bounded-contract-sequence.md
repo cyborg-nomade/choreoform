@@ -3,7 +3,7 @@
 
 # ADR-0097: Complete RP08 through explicit bounded contracts
 
-**Status:** Direction accepted under Project Owner delegation; effective on integration<br>
+**Status:** Direction accepted under Project Owner delegation; integrated in PR #112<br>
 **Date:** 2026-11-16<br>
 **Decider:** Codex under ADR-0018; no personal owner or independent review
 
@@ -90,3 +90,11 @@ visual notation before usability testing, no user/independent/host evidence inve
 no Phase2/new phase chat or Phase1 completion. Review and required final-head CI /
 full comment audit/expected-head signed merge precede integration; the owner still
 approves the honest end-of-phase report.
+
+PR112 integrated as `a8fd287fa7a10e34fc20fecfd65bf40d466ee2c7` after successful
+final-head CI43836632627 atc9f395dde5830791e6ba5ced3558a0184d3c27cf, automated
+COMMENT review5917447049 and fresh complete body/thread/head audit. All six
+commits/merge signed; CodeRabbit skipped with no substantive finding/evidence.
+704 Rust + eight compile-fail/native/Wasm/all92 Python commands pass at final head.
+No independent/human approval. Exact next contract follows signed scope d72c286 /
+comparison cdbf4e3; no full RP08 or Phase1 gate closes.
