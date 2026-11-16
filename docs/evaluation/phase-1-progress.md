@@ -48,13 +48,15 @@ There is no work/storage/authority sharing or executable/phase promotion.
 
 Active `codex/rp08-coverage-design` follows signed scope
 `8830ae7`, [plan97](0097-rp08-coverage-design-plan.md), after verified111 integration.
-Inventory the complete fictional RP08 brief/all four scenarios and actual current
-contract/code evidence; compare bounded declared templates and minimal missing
-batch/history/audience contracts against general adaptive machinery. Publish a
-reviewable gap inventory/critique and ADR direction before any later exact new
-contract/implementation. No full RP08 package or result exists yet. Generic wait
-payloads are not a history importer, fanout outputs remain closed, and complete
-prototype readers are not redacted audiences. Keep those gaps explicit.
+The [complete critique](0097-rp08-coverage-design.md), signed `f5bac2c`, inventories
+all30 responsibility groups/all four scenarios against actual contracts/native code.
+[ADR-0097](../decisions/0097-rp08-bounded-contract-sequence.md) selects a bounded
+whole-case/minimal-contract sequence; exact foreign evidence/history representation
+and admission is the next separately published contract. Batch/result/retention /
+controlled ad hoc-work/parallel guard, audience projections, full package and broader
+editing/validator/user evidence remain explicit. Scope97 adds no code/profile /
+benchmark or claimed whole-process result; required final-head CI, separate review /
+full comment audit and signed integration are pending.
 
 Full lowerable RP08, broader managed operations, full structural/link/semantic
 validation/stable field/argument diagnostics/conformance/negative examples,
