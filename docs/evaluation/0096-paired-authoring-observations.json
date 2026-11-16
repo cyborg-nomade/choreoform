@@ -1,0 +1,82 @@
+{
+  "observed": "2026-11-16",
+  "stage": "experimental-paired-browser-mechanics",
+  "method": "Automated agent operating actual Chromium through CUA; iterative development checks, not representative users or independent review",
+  "implementation": "8a50215",
+  "publication": "ccc49254cb9813a210e76127b42546053b0ed1b2",
+  "browserUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "wasm": {
+    "bytes": 2630314,
+    "digest": "sha256:a19cad664527c24b5504ecd4d29a70c3202a574faf9ea852d95cfbe4676482c3",
+    "actualImports": [
+      {
+        "module": "./choreoform_authoring_prototype_bg.js",
+        "name": "__wbindgen_init_externref_table",
+        "kind": "function"
+      },
+      {
+        "module": "./choreoform_authoring_prototype_bg.js",
+        "name": "__wbindgen_cast_0000000000000001",
+        "kind": "function"
+      }
+    ]
+  },
+  "finalAssets": {
+    "tools/authoring-prototype/web/app.mjs": "sha256:10ec14fb65605002dfd2037ac73d70b6318defe1e5855d68397f352be036ff81",
+    "tools/authoring-prototype/web/index.html": "sha256:ba1133f6f522c491aab2e81d98e3a994b09974d85108c482523110070e659ea6",
+    "tools/authoring-prototype/web/style.css": "sha256:21d96a88ca954b1d8bb9334d298b4a3f5a1600487f05d49cb26181be8fdfd90c"
+  },
+  "originalSnapshots": [
+    {
+      "key": "example",
+      "entities": 21,
+      "flows": 0,
+      "documentBytes": 6831,
+      "authoringDigest": "sha256:fbc67affa586fecae6656740f49752ab575c1640ad84521e7d6308915a0e333d",
+      "nativeDocumentParity": true,
+      "nativeViewParity": true
+    },
+    {
+      "key": "rp01",
+      "entities": 340,
+      "flows": 53,
+      "documentBytes": 120223,
+      "authoringDigest": "sha256:93a9c4ac66e7d896a4549f03e893553b63e4571588507b45c7ec37b3a84752f9",
+      "nativeDocumentParity": true,
+      "nativeViewParity": true
+    },
+    {
+      "key": "rp03",
+      "entities": 1442,
+      "flows": 192,
+      "documentBytes": 588290,
+      "authoringDigest": "sha256:e7d1bf721b257b88b2df578e9775df420134428610a73292ba5351d1147c76fb",
+      "nativeDocumentParity": true,
+      "nativeViewParity": true
+    }
+  ],
+  "finalRP03": {
+    "advancedPages": 27,
+    "maxRenderedCharacters": 32768,
+    "reconstructedCharacters": 883289,
+    "reconstructedWireDigest": "sha256:6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4",
+    "semanticRevision": "sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa",
+    "formattedDocumentBytes": 526719,
+    "formattedAuthoringDigest": "sha256:a2d26c27a4ed3c305cd1336f2e8c50164ab1e559488e2064fe168e1620dc7cc2",
+    "nativeParity": true,
+    "exportReadmittedThroughRust": true,
+    "malformedDocumentRefusedPrivately": true,
+    "consoleWarningsOrErrorsObserved": 0
+  },
+  "sessionChecks": [
+    "viewer read visible; rename/format/placement/export disabled",
+    "exporter read/export visible; format disabled; real export prepared",
+    "same-tab viewer-to-exporter launcher link reinitializes session",
+    "fragment removed; no-session page discloses no source or items"
+  ],
+  "representativeUsers": false,
+  "independentReview": false,
+  "processExecution": false,
+  "productionIdentityOrDLP": false,
+  "phaseExit": false
+}

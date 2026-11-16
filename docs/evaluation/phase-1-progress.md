@@ -3,11 +3,22 @@
 
 # Phase 1 execution checkpoint
 
-**Updated:** 2026-11-14<br>
+**Updated:** 2026-11-16<br>
 **Phase:** Semantic core and language prototype — incomplete<br>
 **Workflow:** [ADR-0018](../decisions/0018-phase-review-delegation.md)
 
 ## Current focus
+
+Active scope96 has signed exact publication
+`ccc49254cb9813a210e76127b42546053b0ed1b2` before implementation `8a50215`.
+The [native/browser evidence](0096-paired-authoring-prototype.md) records complete
+views, shared Rust/Wasm changes, actual Chromium parity/session/keyboard/export
+checks and unchanged965 benchmark bytes. All704 Rust + eight compile-fail and92
+Python commands pass locally with native/Wasm controls. Final UI pagination also
+passes real browser reconstruction of all27 RP03 IR pages. Required final-head CI,
+separate completed-diff COMMENT review, full review-body/thread audit and signed
+expected-head integration remain pending. Last integrated dependency is still110.
+
 
 [PR #110](https://github.com/cyborg-nomade/choreoform/pull/110) integrated native
 reversible authoring as `aebca078354c847602c937e131d6b899edf4e368`. Successful
@@ -57,13 +68,11 @@ Active `codex/paired-authoring-prototype` follows signed
 `9174cb6ef706eade0c1a3a023f342473e3de4796`,
 [scope96](0096-paired-authoring-prototype-plan.md), and signed
 [comparison604337c](0096-paired-authoring-prototype-design.md). PR #110 dependency
-is verified. Publish/sign exact experimental mapping/view/bridge/integration
-contracts before code, then implement a bounded paired accessible prototype using
-the same Rust semantics and native operations. Compare/observe real browser/Wasm
-parity with a separately enforced artifact/session boundary. The Manifest forbids
-standardizing notation before usability testing; this is experimental, not a visual
-standard or user-comprehension result. No second Python/JS compiler or fake browser
-proof. General editing and full Phase1 gates do not close with this bounded slice.
+is verified. Exact experimental mapping/view/bridge/integration contracts are now
+published and the bounded paired prototype implemented on this branch. Finish final
+review/CI/merge before the next dependency. The Manifest forbids standardizing
+notation before usability testing; the observed browser experiment is not a visual
+standard or user-comprehension result. General editing and Phase1 gates remain open.
 
 Full RP-08 design/coverage/lowerable package, broader managed operations, complete
 validation/actionable diagnostics/conformance/negative examples, three-process

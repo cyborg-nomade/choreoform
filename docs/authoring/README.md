@@ -3,6 +3,13 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [experimental paired prototype](../../tools/authoring-prototype/README.md)
+now drives readable text and diagrams from one Rust model, with exact native/Wasm
+parity and a local read/edit/export boundary. Its [browser/native evidence](../evaluation/0096-paired-authoring-prototype.md)
+is mechanical verification, not notation standardization or a representative-user
+study. Only the published first operation profile is supported; broader editing,
+full validation and three-process/user evidence remain Phase1 work.
+
 [ADR-0093](../decisions/0093-authoring-completion-sequence.md) selects the next
 bounded direction: a separately published reversible authoring-package and managed-
 change contract, then native managed operations and a small paired text/visual
