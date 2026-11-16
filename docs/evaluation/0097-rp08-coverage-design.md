@@ -48,8 +48,9 @@ preserves identity, changed retained items revise/invalidate, removals settle,
 and committed seal requires a new occurrence for later membership changes. The
 missing work is complete data/operational/proof/interface evidence, not permission
 to redefine those rules. Generic runtime history import is explicitly absent in
-the original RP08 authoring treatment; a typed wait only authenticates/correlates
-its own observation acceptance and cannot turn a foreign decision into history.
+the original RP08 authoring treatment. P5 requires authentication/correlation for
+its own observation acceptance; a typed wait declaration does not itself supply
+that evidence or turn a foreign decision into history.
 
 ## Complete requirement inventory
 
