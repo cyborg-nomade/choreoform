@@ -40,7 +40,14 @@ worked vectors before later production code. Preserve source claims/known assert
 links/unknown time separately from authenticated truth/current acceptance and
 process decisions/effects. No replay, dispatch, engine state/history rewrite or
 permission grant. Opaque originals cannot hide unsupported semantics; exact native
-value/resource rules should be reused. Normative publication/implementation pending.
+value/resource rules should be reused. Exact [ADR-0098](../decisions/0098-recorded-evidence-typed-claims.md) publication
+`8f4cd2243ff70381d10904b76ed1f02565d81a5f` now precedes committed reference tooling /
+all production reader code. [Three reference groups](0098-recorded-evidence-contract.md)
+pass after signing, including actual old native literal/transport facts and all965
+benchmark bytes. Draft clock-core binding/global-identity corrections are frozen;
+preliminary draft checks before publication are explicitly recorded. Required
+final-head704+8/native/Wasm/93-command CI, separate review/full comment audit and
+integration remain pending. Production evidence reader remains unimplemented.
 
 [PR111 browser/native evidence](0096-paired-authoring-prototype.md) remains verified:
 merge92b83cf794cf3cca9c94045b41d424190c3f515b, CI43832249540 at215e55cd5917cbaa484601facecdc3674d6f8868,

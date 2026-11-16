@@ -175,3 +175,4 @@ jobs:
           .tools/ir-check/bin/python tools/check_native_reversible_authoring.py
           .tools/ir-check/bin/python tools/check_paired_authoring_contract.py
           .tools/ir-check/bin/python tools/check_paired_authoring_boundary.py
+          .tools/ir-check/bin/python tools/check_recorded_evidence_contract.py
