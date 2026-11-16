@@ -4,6 +4,31 @@
 use super::*;
 
 impl<'a, 's> Lower<'a, 's> {
+    fn compensation_reference(&mut self, tree: &Tree, scope: &str, policy: &str) -> Result<Value> {
+        if !matches!(
+            self.syntax.profile(),
+            "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
+        ) {
+            return self.optional_reference(tree, scope, "node");
+        }
+        let Some(reference) = tree.all("reference").first().copied() else {
+            return Ok(Value::Null);
+        };
+        let parts = self.parts(reference)?;
+        let row = if parts.len() == 1 {
+            self.ledger.resolve(scope, &parts, "node")
+        } else {
+            self.ledger.compensation_identity(&parts)
+        }
+        .map_err(|mut e| {
+            e.span = self.syntax.span(reference);
+            e
+        })?;
+        let id = row.id.clone();
+        self.compensation_spans
+            .insert(policy.into(), self.syntax.span(reference));
+        Ok(id.into())
+    }
     pub(super) fn optional_reference(&self, tree: &Tree, scope: &str, kind: &str) -> Result<Value> {
         if let Some(reference) = tree.all("reference").first() {
             Ok(self.reference(reference, scope, kind)?.into())
@@ -50,6 +75,27 @@ impl<'a, 's> Lower<'a, 's> {
             "work" => {
                 body["instructions"] = self.syntax.text(tree.all("NAME")[1])?.into();
                 body["authority"] = self.r(tree, scope, "actor", 0)?.into();
+                if matches!(
+                    self.syntax.profile(),
+                    "0.9.0"
+                        | "0.10.0"
+                        | "0.11.0"
+                        | "0.12.0"
+                        | "0.13.0"
+                        | "0.14.0"
+                        | "0.15.0"
+                        | "0.16.0"
+                        | "0.17.0"
+                        | "0.18.0"
+                        | "0.19.0"
+                ) {
+                    body["faultSource"] = if let Some(binding) = tree.all("fault_binding").first() {
+                        let source = self.r(binding, scope, "resource", 0)?;
+                        self.ledger.pin(&source, "provider-fault-source")?
+                    } else {
+                        Value::Null
+                    };
+                }
                 let attempts = self
                     .syntax
                     .text(tree.one("NAT")?)?
@@ -83,11 +129,59 @@ impl<'a, 's> Lower<'a, 's> {
                     };
                     body["retry"]["clock"] = clock;
                     body["retry"]["basis"] = basis;
+                    if matches!(
+                        self.syntax.profile(),
+                        "0.7.0"
+                            | "0.8.0"
+                            | "0.9.0"
+                            | "0.10.0"
+                            | "0.11.0"
+                            | "0.12.0"
+                            | "0.13.0"
+                            | "0.14.0"
+                            | "0.15.0"
+                            | "0.16.0"
+                            | "0.17.0"
+                            | "0.18.0"
+                            | "0.19.0"
+                    ) {
+                        body["retry"]["faultSource"] = if matches!(
+                            self.syntax.profile(),
+                            "0.9.0"
+                                | "0.10.0"
+                                | "0.11.0"
+                                | "0.12.0"
+                                | "0.13.0"
+                                | "0.14.0"
+                                | "0.15.0"
+                                | "0.16.0"
+                                | "0.17.0"
+                                | "0.18.0"
+                                | "0.19.0"
+                        ) {
+                            if attempts > 1 {
+                                if body["faultSource"].is_null() {
+                                    return Err(error(
+                                        "fault-source-required",
+                                        self.syntax.span(tree),
+                                    ));
+                                }
+                                body["faultSource"].clone()
+                            } else {
+                                Value::Null
+                            }
+                        } else if let Some(binding) = bindings.first() {
+                            let source = self.r(binding, scope, "resource", 2)?;
+                            self.ledger.pin(&source, "provider-fault-source")?
+                        } else {
+                            Value::Null
+                        };
+                    }
                 }
                 body["timeout"] = self.timer(tree.one("timer")?, scope)?;
                 body["completion"] = self.expression(tree.one("expression")?, scope, true, 0)?;
                 body["compensates"] =
-                    self.optional_reference(tree.one("optional_reference")?, scope, "node")?;
+                    self.compensation_reference(tree.one("optional_reference")?, scope, &id)?;
             }
             "faults" => {
                 let mut handlers = Map::new();
@@ -106,7 +200,25 @@ impl<'a, 's> Lower<'a, 's> {
                 body["match"] = self.expression(tree.one("expression")?, scope, true, 0)?;
                 body["authority"] = self.r(tree, scope, "actor", 0)?.into();
                 body["timer"] = self.timer(tree.one("timer")?, scope)?;
-                if self.syntax.profile() == "0.4.0" {
+                if matches!(
+                    self.syntax.profile(),
+                    "0.4.0"
+                        | "0.5.0"
+                        | "0.6.0"
+                        | "0.7.0"
+                        | "0.8.0"
+                        | "0.9.0"
+                        | "0.10.0"
+                        | "0.11.0"
+                        | "0.12.0"
+                        | "0.13.0"
+                        | "0.14.0"
+                        | "0.15.0"
+                        | "0.16.0"
+                        | "0.17.0"
+                        | "0.18.0"
+                        | "0.19.0"
+                ) {
                     self.pending_waits.push((tree, scope.into(), id.clone()));
                 } else {
                     let (observation, timer) = self.wait_outcomes(tree, scope, &id, false)?;

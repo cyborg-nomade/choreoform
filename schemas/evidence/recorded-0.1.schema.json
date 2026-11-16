@@ -1,0 +1,607 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:schema:recorded-evidence:0.1.0",
+  "title": "Inert recorded evidence typed claims 0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "profile",
+    "core",
+    "id",
+    "namespace",
+    "sources",
+    "clocks",
+    "records",
+    "boundaries",
+    "relations"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-recorded-evidence"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "profile": {
+      "const": {
+        "id": "urn:choreoform:recorded-evidence:typed-claims:0.1.0",
+        "revision": "sha256:c01a6aaf6291ece728425f83eda5e3edaa64b6fc6b964a0b5bf8151561bba30c"
+      }
+    },
+    "core": {
+      "const": {
+        "id": "urn:choreoform:contracts:core-profile:0.12.0",
+        "revision": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007"
+      }
+    },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "namespace": {
+      "$ref": "#/$defs/name"
+    },
+    "sources": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/source"
+      },
+      "maxProperties": 128
+    },
+    "clocks": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/clock"
+      },
+      "maxProperties": 128
+    },
+    "records": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/record"
+      },
+      "maxProperties": 1024
+    },
+    "boundaries": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/boundary"
+      },
+      "maxProperties": 256
+    },
+    "relations": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/relation"
+      },
+      "maxProperties": 4096
+    }
+  },
+  "$defs": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f\\ud800-\\udfff\\u2028\\u2029]+$"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "integer": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$"
+    },
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "revision"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/name"
+        },
+        "revision": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "type": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "text"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "integer"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "scale"
+          ],
+          "properties": {
+            "kind": {
+              "const": "decimal"
+            },
+            "scale": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "fields"
+          ],
+          "properties": {
+            "kind": {
+              "const": "record"
+            },
+            "fields": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/type"
+              },
+              "minProperties": 0,
+              "maxProperties": 10000
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "cases"
+          ],
+          "properties": {
+            "kind": {
+              "const": "variant"
+            },
+            "cases": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/type"
+              },
+              "minProperties": 1,
+              "maxProperties": 10000
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "element"
+          ],
+          "properties": {
+            "kind": {
+              "const": "list"
+            },
+            "element": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "element"
+          ],
+          "properties": {
+            "kind": {
+              "const": "option"
+            },
+            "element": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "contract",
+            "name"
+          ],
+          "properties": {
+            "kind": {
+              "const": "named"
+            },
+            "contract": {
+              "$ref": "#/$defs/ref"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          }
+        }
+      ]
+    },
+    "time": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "instant"
+      ],
+      "properties": {
+        "basis": {
+          "$ref": "#/$defs/id"
+        },
+        "instant": {
+          "$ref": "#/$defs/integer"
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "definitionRevision",
+        "instance",
+        "scopeOccurrence",
+        "site",
+        "occurrence",
+        "attempt",
+        "inputRevisions"
+      ],
+      "properties": {
+        "definitionRevision": {
+          "$ref": "#/$defs/digest"
+        },
+        "instance": {
+          "$ref": "#/$defs/name"
+        },
+        "scopeOccurrence": {
+          "$ref": "#/$defs/name"
+        },
+        "site": {
+          "$ref": "#/$defs/name"
+        },
+        "occurrence": {
+          "$ref": "#/$defs/name"
+        },
+        "attempt": {
+          "$ref": "#/$defs/integer"
+        },
+        "inputRevisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "cell",
+              "revision"
+            ],
+            "properties": {
+              "cell": {
+                "$ref": "#/$defs/name"
+              },
+              "revision": {
+                "$ref": "#/$defs/name"
+              }
+            }
+          },
+          "maxItems": 1024
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "caption"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/name"
+        },
+        "caption": {
+          "$ref": "#/$defs/name"
+        }
+      }
+    },
+    "clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "basis",
+        "unit",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/id"
+        },
+        "basis": {
+          "$ref": "#/$defs/name"
+        },
+        "unit": {
+          "const": "microseconds"
+        },
+        "origin": {
+          "$ref": "#/$defs/name"
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "subject",
+        "context",
+        "reportedTime",
+        "payload",
+        "original"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "observation",
+            "hypothesis",
+            "decision",
+            "action"
+          ]
+        },
+        "subject": {
+          "$ref": "#/$defs/name"
+        },
+        "context": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/context"
+            }
+          ]
+        },
+        "reportedTime": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/time"
+            }
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "value"
+          ],
+          "properties": {
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "value": {}
+          }
+        },
+        "original": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text",
+            "digest"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "maxLength": 65536
+            },
+            "digest": {
+              "$ref": "#/$defs/digest"
+            }
+          }
+        }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt",
+        "channel",
+        "recorder",
+        "reportedTime"
+      ],
+      "properties": {
+        "receipt": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/name"
+            }
+          ]
+        },
+        "channel": {
+          "$ref": "#/$defs/name"
+        },
+        "recorder": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ]
+        },
+        "reportedTime": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/time"
+            }
+          ]
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "event",
+        "claim",
+        "delivery"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/id"
+        },
+        "event": {
+          "$ref": "#/$defs/name"
+        },
+        "claim": {
+          "$ref": "#/$defs/claim"
+        },
+        "delivery": {
+          "$ref": "#/$defs/delivery"
+        }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "namespace",
+        "source",
+        "event",
+        "digest"
+      ],
+      "properties": {
+        "namespace": {
+          "$ref": "#/$defs/name"
+        },
+        "source": {
+          "$ref": "#/$defs/name"
+        },
+        "event": {
+          "$ref": "#/$defs/name"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "from",
+        "to",
+        "basis"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "asserted-precedes",
+            "asserted-causes",
+            "asserted-disputes"
+          ]
+        },
+        "from": {
+          "$ref": "#/$defs/id"
+        },
+        "to": {
+          "$ref": "#/$defs/id"
+        },
+        "basis": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    }
+  }
+}

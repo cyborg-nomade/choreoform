@@ -1,0 +1,304 @@
+{
+  "premise": "Finite raw SDK cases with prevalidated matching synthetic metadata. Setup selectors are not serialized IR or general admission and supply no actual observations, values, grants or accepted gates.",
+  "base": "owned-readonly-definition.json",
+  "core": {
+    "id": "urn:choreoform:contracts:core-profile:0.11.0",
+    "revision": "sha256:246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e"
+  },
+  "additionalBase": {
+    "id": "urn:choreoform:contracts:core-profile:0.10.0",
+    "revision": "sha256:74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f"
+  },
+  "cases": [
+    {
+      "id": "read-only-before-capture",
+      "setup": {
+        "class": "read-only",
+        "compensates": false,
+        "capturing": false,
+        "input": "original",
+        "idempotency": "none"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "read-only-after-capture",
+      "setup": {
+        "class": "read-only",
+        "compensates": false,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "none"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "irreversible-after-capture",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "compensatable-after-capture",
+      "setup": {
+        "class": "compensatable",
+        "compensates": false,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "read-only-explicit-compensator",
+      "setup": {
+        "class": "read-only",
+        "compensates": true,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "none"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "irreversible-explicit-compensator",
+      "setup": {
+        "class": "irreversible",
+        "compensates": true,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "compensatable-explicit-compensator",
+      "setup": {
+        "class": "compensatable",
+        "compensates": true,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "irreversible-before-capture",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": false,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [],
+      "expect": "owned-continuation-work-entry"
+    },
+    {
+      "id": "compensatable-before-capture",
+      "setup": {
+        "class": "compensatable",
+        "compensates": false,
+        "capturing": false,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [],
+      "expect": "owned-continuation-work-entry"
+    },
+    {
+      "id": "read-only-compensator-before-capture",
+      "setup": {
+        "class": "read-only",
+        "compensates": true,
+        "capturing": false,
+        "input": "original",
+        "idempotency": "none"
+      },
+      "put": [],
+      "expect": "owned-continuation-work-entry"
+    },
+    {
+      "id": "self-compensation",
+      "setup": {
+        "class": "irreversible",
+        "compensates": true,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [
+        {
+          "path": "/policies/lookup_work/body/compensates",
+          "value": "lookup"
+        }
+      ],
+      "expect": "owned-continuation-compensation-source"
+    },
+    {
+      "id": "missing-general-source",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [
+        {
+          "path": "/policies/lookup_work/body/faultSource",
+          "value": null
+        }
+      ],
+      "expect": "owned-continuation-work-policy"
+    },
+    {
+      "id": "missing-request-map",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [
+        {
+          "path": "/scopes/recovery/retainedRequests",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-request-unproved"
+    },
+    {
+      "id": "missing-request-invalidation",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [
+        {
+          "path": "/data/original_request/invalidates",
+          "value": {}
+        }
+      ],
+      "expect": "owned-continuation-invalidation-coverage"
+    },
+    {
+      "id": "unvisited-original-source",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "stable-key"
+      },
+      "put": [
+        {
+          "path": "/scopes/root/entry",
+          "value": "owner_done"
+        }
+      ],
+      "expect": "owned-continuation-source-unproved"
+    },
+    {
+      "id": "constant-new-command",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": true,
+        "input": "constant",
+        "idempotency": "stable-key"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "capture-derived-query",
+      "setup": {
+        "class": "read-only",
+        "compensates": false,
+        "capturing": true,
+        "input": "captured",
+        "idempotency": "none"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "capture-derived-command",
+      "setup": {
+        "class": "irreversible",
+        "compensates": true,
+        "capturing": true,
+        "input": "captured",
+        "idempotency": "stable-key"
+      },
+      "put": [],
+      "expect": "covered"
+    },
+    {
+      "id": "capture-derived-early-query",
+      "setup": {
+        "class": "read-only",
+        "compensates": false,
+        "capturing": false,
+        "input": "captured",
+        "idempotency": "none"
+      },
+      "put": [],
+      "expect": "owned-continuation-availability-unproved"
+    },
+    {
+      "id": "non-stable-key-command",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": true,
+        "input": "original",
+        "idempotency": "none"
+      },
+      "put": [],
+      "expect": "owned-continuation-work-idempotency"
+    },
+    {
+      "id": "constant-input-retained-recipient",
+      "setup": {
+        "class": "irreversible",
+        "compensates": false,
+        "capturing": true,
+        "input": "constant",
+        "idempotency": "stable-key"
+      },
+      "put": [
+        {
+          "path": "/data/original_request/protection/capabilities",
+          "value": {
+            "adapter": true
+          }
+        },
+        {
+          "path": "/data/captured/protection/capabilities",
+          "value": {
+            "adapter": true
+          }
+        }
+      ],
+      "expect": "owned-continuation-recipient"
+    }
+  ]
+}

@@ -3,14 +3,21 @@
 //! Ordinary parallel independence only; no arbitrary invariant or host safety proof.
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource};
+mod owned;
+pub use owned::{OwnedLocalFollowup, OwnedLocalReport, OwnedRequestSnapshot};
 mod summary;
+mod survivors;
 use summary::Summary;
+pub use survivors::IsolatedFollowup;
 
 #[derive(Debug)]
 pub struct ConcurrencyReport {
     invalidation: InvalidationReport,
     checked: BTreeSet<String>,
     uncovered: BTreeSet<String>,
+    isolated: BTreeSet<IsolatedFollowup>,
+    owned_local: Option<OwnedLocalReport>,
+    owned_continuations: Option<OwnedContinuationReport>,
 }
 impl ConcurrencyReport {
     pub fn revision(&self) -> &str {
@@ -25,6 +32,17 @@ impl ConcurrencyReport {
     pub fn uncovered_forks(&self) -> &BTreeSet<String> {
         &self.uncovered
     }
+    pub fn isolated_followups(&self) -> &BTreeSet<IsolatedFollowup> {
+        &self.isolated
+    }
+    /// Conditional fresh-local checks, without changing ordinary coverage.
+    pub fn owned_local(&self) -> Option<&OwnedLocalReport> {
+        self.owned_local.as_ref()
+    }
+    /// Distinct finite conditional ownership proof; no ordinary coverage promotion.
+    pub fn owned_continuations(&self) -> Option<&OwnedContinuationReport> {
+        self.owned_continuations.as_ref()
+    }
     pub fn remaining(&self) -> &'static [&'static str] {
         &[
             "parallel-and-exceptional-availability-proofs",
@@ -33,7 +51,9 @@ impl ConcurrencyReport {
             "domain-and-irreversible-race-invariant-proofs",
             "exceptional-and-reconciliation-concurrency",
             "live-membership-sealing-and-lifecycle-enforcement",
+            "conditional-isolated-followup-ownership-correlation-and-terminal-settlement",
             "exceptional-and-non-data-invalidation-and-lifecycle-enforcement",
+            "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "host-trust-and-atomic-runtime-enforcement",
             "full-benchmark-and-conformance-evidence",
         ]
@@ -51,6 +71,11 @@ pub fn check_concurrency(
     let covered = invalidation.protection().control().covered_nodes();
     let mut checked = BTreeSet::new();
     let mut uncovered = BTreeSet::new();
+    let mut isolated = BTreeSet::new();
+    let mut survivor_index = None;
+    let mut owned_candidates = None;
+    let mut continuation_candidates = None;
+    let advanced_continuation = continuation_core(b);
     for (id, n) in object(&b["nodes"])? {
         budget.tick(0)?;
         let kind = text(&n["kind"])?;
@@ -61,7 +86,45 @@ pub fn check_concurrency(
             continue;
         }
         if matches!(kind, "invoke" | "repeat") {
-            terminal(b, text(&n["body"])?, id)?;
+            let body = text(&n["body"])?;
+            let closure = text(&b["scopes"][body]["closure"])?;
+            if b["policies"][closure]["body"]["mode"] != "terminal" {
+                if survivor_index.is_none() {
+                    survivor_index = Some(survivors::Index::build(b, &mut budget)?);
+                }
+                let index = survivor_index.as_mut().unwrap();
+                if index.has_storage_followup(b, body)? {
+                    let followup = text(&b["policies"][closure]["body"]["followup"])?;
+                    let next_closure = text(&b["scopes"][followup]["closure"])?;
+                    if advanced_continuation
+                        && b["policies"][next_closure]["body"]["mode"] == "reconcile"
+                    {
+                        if continuation_candidates.is_none() {
+                            continuation_candidates =
+                                Some(crate::owned_continuation::Candidates::new(b, &mut budget)?);
+                        }
+                        continuation_candidates.as_mut().unwrap().consider(
+                            index.graph(),
+                            body,
+                            id,
+                            &mut budget,
+                        )?;
+                    } else {
+                        if owned_candidates.is_none() {
+                            owned_candidates = Some(owned::Candidates::new(b, &mut budget)?);
+                        }
+                        owned_candidates.as_mut().unwrap().consider(
+                            b,
+                            index.graph(),
+                            body,
+                            id,
+                            &mut budget,
+                        )?;
+                    }
+                } else {
+                    isolated.insert(index.check(b, body, id, &mut budget)?);
+                }
+            }
         }
         if !matches!(kind, "split" | "fanout") {
             continue;
@@ -81,6 +144,8 @@ pub fn check_concurrency(
             return Err(at("parallel-lifetime-unproved", join));
         }
         let mut previous = Summary::default();
+        #[cfg(test)]
+        let mut audit_peers = (Vec::new(), 0);
         for child in children {
             terminal(b, child, id)?;
             let shared = summaries[child].shared(b, child, &mut budget)?;
@@ -89,7 +154,19 @@ pub fn check_concurrency(
             } else {
                 // Comparing against accumulated sets detects exactly the same
                 // pair hazards without quadratic scans of empty/read-only peers.
-                independent(&shared, &previous, id, &mut budget)?;
+                let independence = independent(&shared, &previous, id, &mut budget);
+                #[cfg(test)]
+                if let Err(error) = &independence {
+                    effects_audit::record(id, child, &audit_peers, &shared, &previous, error);
+                }
+                independence?;
+                #[cfg(test)]
+                {
+                    if audit_peers.0.len() < 64 {
+                        audit_peers.0.push(child);
+                    }
+                    audit_peers.1 += 1;
+                }
                 previous.reads.extend(shared.reads);
                 previous.writes.extend(shared.writes);
                 previous.observations |= shared.observations;
@@ -98,10 +175,19 @@ pub fn check_concurrency(
         }
         checked.insert(id.clone());
     }
+    let owned_local = owned_candidates
+        .map(|c| c.check(envelope, supplied, invalidation.protection(), &mut budget))
+        .transpose()?;
+    let owned_continuations = continuation_candidates
+        .map(|c| c.check(envelope, supplied, invalidation.protection(), &mut budget))
+        .transpose()?;
     Ok(ConcurrencyReport {
         invalidation,
         checked,
         uncovered,
+        isolated,
+        owned_local,
+        owned_continuations,
     })
 }
 
@@ -165,3 +251,6 @@ fn at(code: &'static str, site: &str) -> Diagnostic {
         path: format!("/body/nodes/{site}"),
     }
 }
+
+#[cfg(test)]
+mod effects_audit;

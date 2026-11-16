@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:schema:recorded-evidence-report:0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "stage",
+    "executable",
+    "authenticated",
+    "acceptedHistory",
+    "integrity",
+    "counts"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-recorded-evidence-report"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "stage": {
+      "const": "representation-checked"
+    },
+    "executable": {
+      "const": false
+    },
+    "authenticated": {
+      "const": false
+    },
+    "acceptedHistory": {
+      "const": false
+    },
+    "integrity": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sources",
+        "clocks",
+        "records",
+        "claims",
+        "boundaries",
+        "relations"
+      ],
+      "properties": {
+        "sources": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 128
+        },
+        "clocks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 128
+        },
+        "records": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1024
+        },
+        "claims": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1024
+        },
+        "boundaries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 256
+        },
+        "relations": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "kind": "clock",
+  "version": "0.1.0",
+  "id": "urn:choreoform:benchmarks:rp03:clock:0.1.0",
+  "profile": {
+    "id": "urn:choreoform:clock-profile:instance-microseconds:0.1.0",
+    "revision": "sha256:8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9"
+  },
+  "source": {
+    "id": "urn:choreoform:benchmarks:rp03:clock-source:0.1.0",
+    "revision": "sha256:4c3938cdf3fac63b29df61e83514bd3bcba0664f0f6a8f196154338511053b33"
+  }
+}

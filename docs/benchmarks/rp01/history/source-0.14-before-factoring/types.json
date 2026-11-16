@@ -1,0 +1,1155 @@
+{
+  "kind": "named-types",
+  "version": "0.1.0",
+  "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+  "definitions": {
+    "Claim": {
+      "representation": {
+        "kind": "record",
+        "fields": {
+          "claim ID": {
+            "kind": "text"
+          },
+          "revision": {
+            "kind": "text"
+          },
+          "policy revision": {
+            "kind": "text"
+          },
+          "employee": {
+            "kind": "text"
+          },
+          "date": {
+            "kind": "text"
+          },
+          "amount": {
+            "kind": "decimal",
+            "scale": 2
+          },
+          "currency": {
+            "kind": "text"
+          },
+          "category": {
+            "kind": "text"
+          },
+          "business purpose": {
+            "kind": "text"
+          },
+          "cost allocation": {
+            "kind": "text"
+          },
+          "receipt": {
+            "kind": "variant",
+            "cases": {
+              "provided": {
+                "kind": "record",
+                "fields": {
+                  "identity": {
+                    "kind": "text"
+                  },
+                  "revision": {
+                    "kind": "text"
+                  },
+                  "digest": {
+                    "kind": "text"
+                  },
+                  "provenance": {
+                    "kind": "text"
+                  }
+                }
+              },
+              "missing": {
+                "kind": "record",
+                "fields": {
+                  "reason": {
+                    "kind": "text"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "invariant": {
+        "op": "and",
+        "left": {
+          "op": "and",
+          "left": {
+            "op": "and",
+            "left": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "claim ID"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            },
+            "right": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "revision"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            }
+          },
+          "right": {
+            "op": "and",
+            "left": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "policy revision"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            },
+            "right": {
+              "op": "and",
+              "left": {
+                "op": "not",
+                "value": {
+                  "op": "eq",
+                  "left": {
+                    "op": "field",
+                    "value": {
+                      "op": "param",
+                      "name": "value"
+                    },
+                    "name": "employee"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": ""
+                  }
+                }
+              },
+              "right": {
+                "op": "not",
+                "value": {
+                  "op": "eq",
+                  "left": {
+                    "op": "field",
+                    "value": {
+                      "op": "param",
+                      "name": "value"
+                    },
+                    "name": "date"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "right": {
+          "op": "and",
+          "left": {
+            "op": "and",
+            "left": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "category"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            },
+            "right": {
+              "op": "and",
+              "left": {
+                "op": "not",
+                "value": {
+                  "op": "eq",
+                  "left": {
+                    "op": "field",
+                    "value": {
+                      "op": "param",
+                      "name": "value"
+                    },
+                    "name": "business purpose"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": ""
+                  }
+                }
+              },
+              "right": {
+                "op": "not",
+                "value": {
+                  "op": "eq",
+                  "left": {
+                    "op": "field",
+                    "value": {
+                      "op": "param",
+                      "name": "value"
+                    },
+                    "name": "cost allocation"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": ""
+                  }
+                }
+              }
+            }
+          },
+          "right": {
+            "op": "and",
+            "left": {
+              "op": "not",
+              "value": {
+                "op": "lt",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "amount"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "decimal",
+                    "scale": 2
+                  },
+                  "value": "0"
+                }
+              }
+            },
+            "right": {
+              "op": "and",
+              "left": {
+                "op": "contains",
+                "list": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "list",
+                    "element": {
+                      "kind": "text"
+                    }
+                  },
+                  "value": [
+                    "EUR",
+                    "USD"
+                  ]
+                },
+                "value": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "currency"
+                }
+              },
+              "right": {
+                "op": "if",
+                "condition": {
+                  "op": "eq",
+                  "left": {
+                    "op": "tag",
+                    "value": {
+                      "op": "field",
+                      "value": {
+                        "op": "param",
+                        "name": "value"
+                      },
+                      "name": "receipt"
+                    }
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": "provided"
+                  }
+                },
+                "then": {
+                  "op": "and",
+                  "left": {
+                    "op": "and",
+                    "left": {
+                      "op": "not",
+                      "value": {
+                        "op": "eq",
+                        "left": {
+                          "op": "field",
+                          "value": {
+                            "op": "payload",
+                            "value": {
+                              "op": "field",
+                              "value": {
+                                "op": "param",
+                                "name": "value"
+                              },
+                              "name": "receipt"
+                            },
+                            "tag": "provided"
+                          },
+                          "name": "identity"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "type": {
+                            "kind": "text"
+                          },
+                          "value": ""
+                        }
+                      }
+                    },
+                    "right": {
+                      "op": "not",
+                      "value": {
+                        "op": "eq",
+                        "left": {
+                          "op": "field",
+                          "value": {
+                            "op": "payload",
+                            "value": {
+                              "op": "field",
+                              "value": {
+                                "op": "param",
+                                "name": "value"
+                              },
+                              "name": "receipt"
+                            },
+                            "tag": "provided"
+                          },
+                          "name": "revision"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "type": {
+                            "kind": "text"
+                          },
+                          "value": ""
+                        }
+                      }
+                    }
+                  },
+                  "right": {
+                    "op": "and",
+                    "left": {
+                      "op": "not",
+                      "value": {
+                        "op": "eq",
+                        "left": {
+                          "op": "field",
+                          "value": {
+                            "op": "payload",
+                            "value": {
+                              "op": "field",
+                              "value": {
+                                "op": "param",
+                                "name": "value"
+                              },
+                              "name": "receipt"
+                            },
+                            "tag": "provided"
+                          },
+                          "name": "digest"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "type": {
+                            "kind": "text"
+                          },
+                          "value": ""
+                        }
+                      }
+                    },
+                    "right": {
+                      "op": "not",
+                      "value": {
+                        "op": "eq",
+                        "left": {
+                          "op": "field",
+                          "value": {
+                            "op": "payload",
+                            "value": {
+                              "op": "field",
+                              "value": {
+                                "op": "param",
+                                "name": "value"
+                              },
+                              "name": "receipt"
+                            },
+                            "tag": "provided"
+                          },
+                          "name": "provenance"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "type": {
+                            "kind": "text"
+                          },
+                          "value": ""
+                        }
+                      }
+                    }
+                  }
+                },
+                "else": {
+                  "op": "not",
+                  "value": {
+                    "op": "eq",
+                    "left": {
+                      "op": "field",
+                      "value": {
+                        "op": "payload",
+                        "value": {
+                          "op": "field",
+                          "value": {
+                            "op": "param",
+                            "name": "value"
+                          },
+                          "name": "receipt"
+                        },
+                        "tag": "missing"
+                      },
+                      "name": "reason"
+                    },
+                    "right": {
+                      "op": "literal",
+                      "type": {
+                        "kind": "text"
+                      },
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Check evidence": {
+      "representation": {
+        "kind": "record",
+        "fields": {
+          "claim ID": {
+            "kind": "text"
+          },
+          "claim revision": {
+            "kind": "text"
+          },
+          "policy revision": {
+            "kind": "text"
+          },
+          "reasons": {
+            "kind": "list",
+            "element": {
+              "kind": "text"
+            }
+          },
+          "duplicate claim": {
+            "kind": "option",
+            "element": {
+              "kind": "text"
+            }
+          }
+        }
+      },
+      "invariant": {
+        "op": "and",
+        "left": {
+          "op": "not",
+          "value": {
+            "op": "eq",
+            "left": {
+              "op": "field",
+              "value": {
+                "op": "param",
+                "name": "value"
+              },
+              "name": "claim ID"
+            },
+            "right": {
+              "op": "literal",
+              "type": {
+                "kind": "text"
+              },
+              "value": ""
+            }
+          }
+        },
+        "right": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "claim revision"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "policy revision"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "Review evidence": {
+      "representation": {
+        "kind": "record",
+        "fields": {
+          "claim ID": {
+            "kind": "text"
+          },
+          "claim revision": {
+            "kind": "text"
+          },
+          "policy revision": {
+            "kind": "text"
+          },
+          "principal": {
+            "kind": "text"
+          },
+          "assignment": {
+            "kind": "text"
+          },
+          "reason": {
+            "kind": "text"
+          }
+        }
+      },
+      "invariant": {
+        "op": "and",
+        "left": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "claim ID"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "and",
+            "left": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "claim revision"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            },
+            "right": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "policy revision"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            }
+          }
+        },
+        "right": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "principal"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "and",
+            "left": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "assignment"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            },
+            "right": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "reason"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Paid evidence": {
+      "representation": {
+        "kind": "record",
+        "fields": {
+          "claim ID": {
+            "kind": "text"
+          },
+          "claim revision": {
+            "kind": "text"
+          },
+          "command reference": {
+            "kind": "text"
+          },
+          "payable reference": {
+            "kind": "text"
+          },
+          "amount": {
+            "kind": "decimal",
+            "scale": 2
+          },
+          "currency": {
+            "kind": "text"
+          }
+        }
+      },
+      "invariant": {
+        "op": "and",
+        "left": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "claim ID"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "and",
+            "left": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "claim revision"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            },
+            "right": {
+              "op": "not",
+              "value": {
+                "op": "eq",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "command reference"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": ""
+                }
+              }
+            }
+          }
+        },
+        "right": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "payable reference"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "and",
+            "left": {
+              "op": "not",
+              "value": {
+                "op": "lt",
+                "left": {
+                  "op": "field",
+                  "value": {
+                    "op": "param",
+                    "name": "value"
+                  },
+                  "name": "amount"
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "decimal",
+                    "scale": 2
+                  },
+                  "value": "0"
+                }
+              }
+            },
+            "right": {
+              "op": "contains",
+              "list": {
+                "op": "literal",
+                "type": {
+                  "kind": "list",
+                  "element": {
+                    "kind": "text"
+                  }
+                },
+                "value": [
+                  "EUR",
+                  "USD"
+                ]
+              },
+              "value": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "currency"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Problem evidence": {
+      "representation": {
+        "kind": "record",
+        "fields": {
+          "claim ID": {
+            "kind": "text"
+          },
+          "claim revision": {
+            "kind": "text"
+          },
+          "command reference": {
+            "kind": "text"
+          },
+          "reason": {
+            "kind": "text"
+          }
+        }
+      },
+      "invariant": {
+        "op": "and",
+        "left": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "claim ID"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "claim revision"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          }
+        },
+        "right": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "command reference"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "reason"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "Notice evidence": {
+      "representation": {
+        "kind": "record",
+        "fields": {
+          "claim ID": {
+            "kind": "text"
+          },
+          "claim revision": {
+            "kind": "text"
+          },
+          "recipient": {
+            "kind": "text"
+          },
+          "message reference": {
+            "kind": "text"
+          }
+        }
+      },
+      "invariant": {
+        "op": "and",
+        "left": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "claim ID"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "claim revision"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          }
+        },
+        "right": {
+          "op": "and",
+          "left": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "recipient"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          },
+          "right": {
+            "op": "not",
+            "value": {
+              "op": "eq",
+              "left": {
+                "op": "field",
+                "value": {
+                  "op": "param",
+                  "name": "value"
+                },
+                "name": "message reference"
+              },
+              "right": {
+                "op": "literal",
+                "type": {
+                  "kind": "text"
+                },
+                "value": ""
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

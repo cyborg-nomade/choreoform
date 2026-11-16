@@ -1,0 +1,669 @@
+{
+  "premise": "Synthetic pure value inputs only; not authenticated observations, accepted effect history, current grants or a running instance.",
+  "expression": {
+    "op": "if",
+    "condition": {
+      "op": "eq",
+      "left": {
+        "op": "tag",
+        "value": {
+          "op": "read",
+          "cell": "audit_payment_capture"
+        }
+      },
+      "right": {
+        "op": "literal",
+        "type": {
+          "kind": "text"
+        },
+        "value": "confirmed"
+      }
+    },
+    "then": {
+      "op": "if",
+      "condition": {
+        "condition": {
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "payload",
+              "value": {
+                "op": "read",
+                "cell": "audit_payment_capture"
+              },
+              "tag": "confirmed"
+            }
+          },
+          "op": "eq",
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "paid"
+          }
+        },
+        "else": {
+          "condition": {
+            "left": {
+              "op": "tag",
+              "value": {
+                "op": "payload",
+                "value": {
+                  "op": "read",
+                  "cell": "audit_payment_capture"
+                },
+                "tag": "confirmed"
+              }
+            },
+            "op": "eq",
+            "right": {
+              "op": "literal",
+              "type": {
+                "kind": "text"
+              },
+              "value": "problem"
+            }
+          },
+          "else": {
+            "op": "literal",
+            "type": {
+              "kind": "boolean"
+            },
+            "value": false
+          },
+          "op": "if",
+          "then": {
+            "left": {
+              "left": {
+                "name": "claim ID",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "op": "payload",
+                    "tag": "problem",
+                    "value": {
+                      "op": "payload",
+                      "value": {
+                        "op": "read",
+                        "cell": "audit_payment_capture"
+                      },
+                      "tag": "confirmed"
+                    }
+                  }
+                }
+              },
+              "op": "eq",
+              "right": {
+                "name": "claim ID",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "name": "claim",
+                    "op": "field",
+                    "value": {
+                      "op": "read",
+                      "cell": "audit_payment_request"
+                    }
+                  }
+                }
+              }
+            },
+            "op": "and",
+            "right": {
+              "left": {
+                "name": "claim revision",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "op": "payload",
+                    "tag": "problem",
+                    "value": {
+                      "op": "payload",
+                      "value": {
+                        "op": "read",
+                        "cell": "audit_payment_capture"
+                      },
+                      "tag": "confirmed"
+                    }
+                  }
+                }
+              },
+              "op": "eq",
+              "right": {
+                "name": "revision",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "name": "claim",
+                    "op": "field",
+                    "value": {
+                      "op": "read",
+                      "cell": "audit_payment_request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "op": "if",
+        "then": {
+          "left": {
+            "left": {
+              "left": {
+                "name": "claim ID",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "op": "payload",
+                    "tag": "paid",
+                    "value": {
+                      "op": "payload",
+                      "value": {
+                        "op": "read",
+                        "cell": "audit_payment_capture"
+                      },
+                      "tag": "confirmed"
+                    }
+                  }
+                }
+              },
+              "op": "eq",
+              "right": {
+                "name": "claim ID",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "name": "claim",
+                    "op": "field",
+                    "value": {
+                      "op": "read",
+                      "cell": "audit_payment_request"
+                    }
+                  }
+                }
+              }
+            },
+            "op": "and",
+            "right": {
+              "left": {
+                "name": "claim revision",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "op": "payload",
+                    "tag": "paid",
+                    "value": {
+                      "op": "payload",
+                      "value": {
+                        "op": "read",
+                        "cell": "audit_payment_capture"
+                      },
+                      "tag": "confirmed"
+                    }
+                  }
+                }
+              },
+              "op": "eq",
+              "right": {
+                "name": "revision",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "name": "claim",
+                    "op": "field",
+                    "value": {
+                      "op": "read",
+                      "cell": "audit_payment_request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "op": "and",
+          "right": {
+            "left": {
+              "left": {
+                "name": "amount",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "op": "payload",
+                    "tag": "paid",
+                    "value": {
+                      "op": "payload",
+                      "value": {
+                        "op": "read",
+                        "cell": "audit_payment_capture"
+                      },
+                      "tag": "confirmed"
+                    }
+                  }
+                }
+              },
+              "op": "eq",
+              "right": {
+                "name": "amount",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "name": "claim",
+                    "op": "field",
+                    "value": {
+                      "op": "read",
+                      "cell": "audit_payment_request"
+                    }
+                  }
+                }
+              }
+            },
+            "op": "and",
+            "right": {
+              "left": {
+                "name": "currency",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "op": "payload",
+                    "tag": "paid",
+                    "value": {
+                      "op": "payload",
+                      "value": {
+                        "op": "read",
+                        "cell": "audit_payment_capture"
+                      },
+                      "tag": "confirmed"
+                    }
+                  }
+                }
+              },
+              "op": "eq",
+              "right": {
+                "name": "currency",
+                "op": "field",
+                "value": {
+                  "op": "unwrapNamed",
+                  "value": {
+                    "name": "claim",
+                    "op": "field",
+                    "value": {
+                      "op": "read",
+                      "cell": "audit_payment_request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "op": "tag",
+        "value": {
+          "op": "payload",
+          "value": {
+            "op": "read",
+            "cell": "audit_payment_capture"
+          },
+          "tag": "confirmed"
+        }
+      },
+      "else": {
+        "op": "literal",
+        "type": {
+          "kind": "text"
+        },
+        "value": "mismatched-evidence"
+      }
+    },
+    "else": {
+      "op": "tag",
+      "value": {
+        "op": "read",
+        "cell": "audit_payment_capture"
+      }
+    }
+  },
+  "request": {
+    "claim": {
+      "claim ID": "rp01-fictional-claim",
+      "revision": "claim-v1",
+      "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+      "employee": "fictional-employee",
+      "date": "2026-11-06",
+      "amount": "12345",
+      "currency": "EUR",
+      "category": "travel",
+      "business purpose": "Fictional corpus meeting",
+      "cost allocation": "fictional-project",
+      "receipt": {
+        "tag": "provided",
+        "value": {
+          "identity": "urn:choreoform:benchmarks:rp01:receipt",
+          "revision": "receipt-v1",
+          "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+          "provenance": "synthetic fixture"
+        }
+      }
+    },
+    "manager": {
+      "claim ID": "rp01-fictional-claim",
+      "claim revision": "claim-v1",
+      "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+      "principal": "fictional-manager",
+      "assignment": "fictional-assignment-fictional-manager-claim-v1",
+      "reason": "Fictional attributable reason"
+    },
+    "finance": {
+      "claim ID": "rp01-fictional-claim",
+      "claim revision": "claim-v1",
+      "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+      "principal": "fictional-finance",
+      "assignment": "fictional-assignment-fictional-finance-claim-v1",
+      "reason": "Fictional attributable reason"
+    }
+  },
+  "cases": [
+    {
+      "id": "confirmed-paid",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "paid",
+          "value": {
+            "claim ID": "rp01-fictional-claim",
+            "claim revision": "claim-v1",
+            "command reference": "command-1",
+            "payable reference": "payable-1",
+            "amount": "12345",
+            "currency": "EUR"
+          }
+        }
+      },
+      "expected": "paid"
+    },
+    {
+      "id": "confirmed-problem",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "problem",
+          "value": {
+            "claim ID": "rp01-fictional-claim",
+            "claim revision": "claim-v1",
+            "command reference": "command-1",
+            "reason": "Confirmed fictional terminal problem"
+          }
+        }
+      },
+      "expected": "problem"
+    },
+    {
+      "id": "confirmed-paid_wrong_amount",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "paid",
+          "value": {
+            "claim ID": "rp01-fictional-claim",
+            "claim revision": "claim-v1",
+            "command reference": "command-1",
+            "payable reference": "payable-1",
+            "amount": "1",
+            "currency": "EUR"
+          }
+        }
+      },
+      "expected": "mismatched-evidence"
+    },
+    {
+      "id": "confirmed-paid_wrong_currency",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "paid",
+          "value": {
+            "claim ID": "rp01-fictional-claim",
+            "claim revision": "claim-v1",
+            "command reference": "command-1",
+            "payable reference": "payable-1",
+            "amount": "12345",
+            "currency": "USD"
+          }
+        }
+      },
+      "expected": "mismatched-evidence"
+    },
+    {
+      "id": "confirmed-paid_wrong_claim",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "paid",
+          "value": {
+            "claim ID": "other-claim",
+            "claim revision": "claim-v1",
+            "command reference": "command-1",
+            "payable reference": "payable-1",
+            "amount": "12345",
+            "currency": "EUR"
+          }
+        }
+      },
+      "expected": "mismatched-evidence"
+    },
+    {
+      "id": "confirmed-paid_wrong_revision",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "paid",
+          "value": {
+            "claim ID": "rp01-fictional-claim",
+            "claim revision": "other-revision",
+            "command reference": "command-1",
+            "payable reference": "payable-1",
+            "amount": "12345",
+            "currency": "EUR"
+          }
+        }
+      },
+      "expected": "mismatched-evidence"
+    },
+    {
+      "id": "problem-wrong-claim-ID",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "problem",
+          "value": {
+            "claim ID": "synthetic-mismatch",
+            "claim revision": "claim-v1",
+            "command reference": "command-1",
+            "reason": "Confirmed fictional terminal problem"
+          }
+        }
+      },
+      "expected": "mismatched-evidence"
+    },
+    {
+      "id": "problem-wrong-claim-revision",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "problem",
+          "value": {
+            "claim ID": "rp01-fictional-claim",
+            "claim revision": "synthetic-mismatch",
+            "command reference": "command-1",
+            "reason": "Confirmed fictional terminal problem"
+          }
+        }
+      },
+      "expected": "mismatched-evidence"
+    },
+    {
+      "id": "noeffect",
+      "value": {
+        "tag": "noeffect",
+        "value": {
+          "logical effect": "synthetic-effect",
+          "request digest": "synthetic-digest",
+          "observation": "synthetic-noeffect"
+        }
+      },
+      "expected": "noeffect"
+    },
+    {
+      "id": "rejected",
+      "value": {
+        "tag": "rejected",
+        "value": {
+          "logical effect": "synthetic-effect",
+          "request digest": "synthetic-digest",
+          "observation": "synthetic-rejected"
+        }
+      },
+      "expected": "rejected"
+    },
+    {
+      "id": "cancelled",
+      "value": {
+        "tag": "cancelled",
+        "value": {
+          "logical effect": "synthetic-effect",
+          "request digest": "synthetic-digest",
+          "observation": "synthetic-cancelled"
+        }
+      },
+      "expected": "cancelled"
+    },
+    {
+      "id": "old-paid-does-not-match-other-retained-revision",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "paid",
+          "value": {
+            "claim ID": "rp01-fictional-claim",
+            "claim revision": "claim-v1",
+            "command reference": "command-1",
+            "payable reference": "payable-1",
+            "amount": "12345",
+            "currency": "EUR"
+          }
+        }
+      },
+      "request": {
+        "claim": {
+          "claim ID": "rp01-fictional-claim",
+          "revision": "claim-v2",
+          "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+          "employee": "fictional-employee",
+          "date": "2026-11-06",
+          "amount": "12000",
+          "currency": "EUR",
+          "category": "travel",
+          "business purpose": "Fictional corpus meeting",
+          "cost allocation": "fictional-project",
+          "receipt": {
+            "tag": "provided",
+            "value": {
+              "identity": "urn:choreoform:benchmarks:rp01:receipt",
+              "revision": "receipt-v1",
+              "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+              "provenance": "synthetic fixture"
+            }
+          }
+        },
+        "manager": {
+          "claim ID": "rp01-fictional-claim",
+          "claim revision": "claim-v2",
+          "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+          "principal": "fictional-manager",
+          "assignment": "fictional-assignment-fictional-manager-claim-v2",
+          "reason": "Fictional attributable reason"
+        },
+        "finance": {
+          "claim ID": "rp01-fictional-claim",
+          "claim revision": "claim-v2",
+          "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+          "principal": "fictional-finance",
+          "assignment": "fictional-assignment-fictional-finance-claim-v2",
+          "reason": "Fictional attributable reason"
+        }
+      },
+      "expected": "mismatched-evidence"
+    },
+    {
+      "id": "paid-matches-its-own-retained-revision",
+      "value": {
+        "tag": "confirmed",
+        "value": {
+          "tag": "paid",
+          "value": {
+            "claim ID": "rp01-fictional-claim",
+            "claim revision": "claim-v2",
+            "command reference": "command-1",
+            "payable reference": "payable-1",
+            "amount": "12000",
+            "currency": "EUR"
+          }
+        }
+      },
+      "request": {
+        "claim": {
+          "claim ID": "rp01-fictional-claim",
+          "revision": "claim-v2",
+          "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+          "employee": "fictional-employee",
+          "date": "2026-11-06",
+          "amount": "12000",
+          "currency": "EUR",
+          "category": "travel",
+          "business purpose": "Fictional corpus meeting",
+          "cost allocation": "fictional-project",
+          "receipt": {
+            "tag": "provided",
+            "value": {
+              "identity": "urn:choreoform:benchmarks:rp01:receipt",
+              "revision": "receipt-v1",
+              "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498",
+              "provenance": "synthetic fixture"
+            }
+          }
+        },
+        "manager": {
+          "claim ID": "rp01-fictional-claim",
+          "claim revision": "claim-v2",
+          "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+          "principal": "fictional-manager",
+          "assignment": "fictional-assignment-fictional-manager-claim-v2",
+          "reason": "Fictional attributable reason"
+        },
+        "finance": {
+          "claim ID": "rp01-fictional-claim",
+          "claim revision": "claim-v2",
+          "policy revision": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5",
+          "principal": "fictional-finance",
+          "assignment": "fictional-assignment-fictional-finance-claim-v2",
+          "reason": "Fictional attributable reason"
+        }
+      },
+      "expected": "paid"
+    }
+  ]
+}

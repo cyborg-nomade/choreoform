@@ -1,0 +1,17 @@
+{
+  "kind": "synthetic-rp01-policy-data",
+  "version": "0.1.0",
+  "currencies": [
+    "EUR",
+    "USD"
+  ],
+  "categories": [
+    "travel",
+    "supplies"
+  ],
+  "amountScale": 2,
+  "ordinaryAmountLimit": "100000",
+  "missingReceipt": "requires-finance-reasoned-review",
+  "duplicate": "requires-attributable-human-resolution",
+  "meaning": "Fictional benchmark inputs, not organizational policy or financial guidance."
+}

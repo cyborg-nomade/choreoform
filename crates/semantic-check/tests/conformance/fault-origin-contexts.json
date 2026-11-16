@@ -1,0 +1,152 @@
+{
+  "format": "choreoform-fault-origin-context-vectors",
+  "version": "0.1.0",
+  "premise": "Finite selection over prevalidated lexical declarations; no fault events, source truth or entry values",
+  "scopes": {
+    "root": {
+      "parent": null,
+      "handlers": {
+        "f": "outer"
+      }
+    },
+    "work": {
+      "parent": "root",
+      "handlers": {
+        "f": "first"
+      }
+    },
+    "first": {
+      "parent": "work",
+      "handlers": {
+        "f": "second"
+      }
+    },
+    "second": {
+      "parent": "first",
+      "handlers": {}
+    },
+    "outer": {
+      "parent": "root",
+      "handlers": {}
+    },
+    "inner": {
+      "parent": "second",
+      "handlers": {
+        "f": "local"
+      }
+    },
+    "local": {
+      "parent": "inner",
+      "handlers": {}
+    },
+    "orphan": {
+      "parent": "root",
+      "handlers": {}
+    }
+  },
+  "cases": [
+    {
+      "id": "first-local",
+      "origin": "work",
+      "fault": "f",
+      "active": [],
+      "selected": "work:f",
+      "after": [
+        "work:f"
+      ]
+    },
+    {
+      "id": "nested-local-before-escape",
+      "origin": "first",
+      "fault": "f",
+      "active": [
+        "work:f"
+      ],
+      "selected": "first:f",
+      "after": [
+        "work:f",
+        "first:f"
+      ]
+    },
+    {
+      "id": "exclude-both-failed-selections",
+      "origin": "second",
+      "fault": "f",
+      "active": [
+        "work:f",
+        "first:f"
+      ],
+      "selected": "root:f",
+      "after": [
+        "root:f"
+      ]
+    },
+    {
+      "id": "retain-full-three-deep-context",
+      "origin": "inner",
+      "fault": "f",
+      "active": [
+        "work:f",
+        "first:f"
+      ],
+      "selected": "inner:f",
+      "after": [
+        "work:f",
+        "first:f",
+        "inner:f"
+      ]
+    },
+    {
+      "id": "exclude-three-then-root",
+      "origin": "local",
+      "fault": "f",
+      "active": [
+        "work:f",
+        "first:f",
+        "inner:f"
+      ],
+      "selected": "root:f",
+      "after": [
+        "root:f"
+      ]
+    },
+    {
+      "id": "outer-failure-unhandled",
+      "origin": "outer",
+      "fault": "f",
+      "active": [
+        "root:f"
+      ],
+      "selected": null,
+      "after": []
+    },
+    {
+      "id": "root-selection",
+      "origin": "root",
+      "fault": "f",
+      "active": [],
+      "selected": "root:f",
+      "after": [
+        "root:f"
+      ]
+    },
+    {
+      "id": "other-known-name-unhandled",
+      "origin": "work",
+      "fault": "g",
+      "active": [],
+      "selected": null,
+      "after": []
+    },
+    {
+      "id": "ordinary-context-not-an-entry-proof",
+      "origin": "first",
+      "fault": "f",
+      "active": [],
+      "selected": "first:f",
+      "after": [
+        "first:f"
+      ]
+    }
+  ]
+}

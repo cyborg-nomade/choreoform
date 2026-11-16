@@ -1,0 +1,197 @@
+{
+  "kind": "provider-contract",
+  "version": "0.1.0",
+  "id": "urn:choreoform:benchmarks:rp03:authorize:0.1.0",
+  "input": {
+    "kind": "record",
+    "fields": {
+      "order": {
+        "kind": "named",
+        "contract": {
+          "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+          "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+        },
+        "name": "Order"
+      },
+      "scope key": {
+        "kind": "text"
+      },
+      "scope revision": {
+        "kind": "text"
+      },
+      "request revision": {
+        "kind": "text"
+      },
+      "amount": {
+        "kind": "decimal",
+        "scale": 2
+      },
+      "currency": {
+        "kind": "text"
+      },
+      "basis reference": {
+        "kind": "text"
+      },
+      "address revision": {
+        "kind": "text"
+      },
+      "target quantity": {
+        "kind": "option",
+        "element": {
+          "kind": "integer"
+        }
+      },
+      "target warehouse": {
+        "kind": "option",
+        "element": {
+          "kind": "text"
+        }
+      }
+    }
+  },
+  "output": {
+    "kind": "variant",
+    "cases": {
+      "authorized": {
+        "kind": "named",
+        "contract": {
+          "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+          "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+        },
+        "name": "Authorization evidence"
+      },
+      "declined": {
+        "kind": "named",
+        "contract": {
+          "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+          "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+        },
+        "name": "Authorization evidence"
+      }
+    }
+  },
+  "outcomes": {
+    "authorized": true,
+    "declined": true
+  },
+  "resultProtection": {
+    "policy": "order_access",
+    "sensitivity": "order",
+    "purposes": {
+      "fulfillment": true
+    },
+    "participants": {
+      "customer_actor": true,
+      "commerce_actor": true,
+      "warehouse_actor": true,
+      "support_actor": true,
+      "clock_actor": true
+    },
+    "capabilities": {
+      "reserve_a_capability": true,
+      "reserve_b_capability": true,
+      "authorize_capability": true,
+      "release_a_capability": true,
+      "release_b_capability": true,
+      "void_capability": true,
+      "pack_a_capability": true,
+      "pack_b_capability": true,
+      "label_a_capability": true,
+      "label_b_capability": true,
+      "handover_a_capability": true,
+      "handover_b_capability": true,
+      "deliver_a_capability": true,
+      "deliver_b_capability": true,
+      "stop_a_capability": true,
+      "stop_b_capability": true,
+      "void_label_a_capability": true,
+      "void_label_b_capability": true,
+      "capture_capability": true,
+      "refund_capability": true,
+      "intercept_a_capability": true,
+      "intercept_b_capability": true,
+      "notify_capability": true,
+      "cancel_release_a_capability": true,
+      "cancel_release_b_capability": true
+    }
+  },
+  "observations": {
+    "result-authorized": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "authorized": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Authorization evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Authorization evidence"
+          }
+        }
+      },
+      "outcome": "authorized"
+    },
+    "result-declined": {
+      "state": "succeeded",
+      "result": {
+        "kind": "variant",
+        "cases": {
+          "authorized": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Authorization evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Authorization evidence"
+          }
+        }
+      },
+      "outcome": "declined"
+    },
+    "acknowledged": {
+      "state": "acknowledged",
+      "result": null,
+      "outcome": null
+    },
+    "rejected": {
+      "state": "rejected",
+      "result": null,
+      "outcome": null
+    },
+    "cancelled": {
+      "state": "cancelled",
+      "result": null,
+      "outcome": null
+    },
+    "unknown": {
+      "state": "unknown",
+      "result": null,
+      "outcome": null
+    },
+    "no-effect": {
+      "state": "no-effect",
+      "result": null,
+      "outcome": null
+    }
+  },
+  "idempotency": "stable-key",
+  "effectClass": "compensatable"
+}

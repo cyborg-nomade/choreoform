@@ -208,3 +208,11 @@ The observed desk comparison is therefore about wording and exposed obligations,
 not successful full-process construction. All three benchmarks retain material
 gaps; the next iteration of this same Roadmap item must produce complete source
 and matching IR before claiming it is satisfied.
+
+The [current full RP08 critique](../evaluation/0097-rp08-coverage-design.md) inventories
+all30 responsibility groups against actual accepted contracts/native code and keeps
+all four scenarios Partial. [ADR-0097](../decisions/0097-rp08-bounded-contract-sequence.md)
+selects definition-bounded whole-case evidence and separately published minimal
+missing contracts, beginning with foreign evidence/history representation and
+admission. This later audit does not rewrite the original A/B observations or
+supply a nonexistent complete package/runtime/user result.

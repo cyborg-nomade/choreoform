@@ -1,0 +1,217 @@
+{
+  "format": "choreoform-conditional-fault-entry-vectors",
+  "version": "0.1.0",
+  "premise": "Finite declarations with prevalidated exact types/resources and routing premises; no actual history or host entry",
+  "cases": [
+    {
+      "id": "baseline",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "passed"
+    },
+    {
+      "id": "old-wire",
+      "premises": {
+        "wire": "0.2.0",
+        "incoming": true,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "fault-entry-wire-version"
+    },
+    {
+      "id": "other-source",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "other",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "fault-entry-source"
+    },
+    {
+      "id": "unsupported-source",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "unsupported",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "fault-entry-origin-unproved"
+    },
+    {
+      "id": "no-incoming",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": false,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "uncovered"
+    },
+    {
+      "id": "self-precheck",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [
+          "fault_history"
+        ],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "fault-entry-access-precheck"
+    },
+    {
+      "id": "public-history",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "public",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "control-information-flow"
+    },
+    {
+      "id": "public-initializer",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "public",
+        "invalidates": true
+      },
+      "expect": "control-information-flow"
+    },
+    {
+      "id": "missing-invalidates",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": false
+      },
+      "expect": "fault-entry-invalidation-coverage"
+    },
+    {
+      "id": "ancestor-read",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": true,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "fault-entry-storage-unproved"
+    },
+    {
+      "id": "uninitialized-local",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "flat",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": false,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "fault-entry-availability-unproved"
+    },
+    {
+      "id": "child-body",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "child",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "fault-entry-body-unproved"
+    },
+    {
+      "id": "wait-body",
+      "premises": {
+        "wire": "0.3.0",
+        "incoming": true,
+        "source": "same",
+        "body": "wait",
+        "ancestorRead": false,
+        "entryAccessReads": [],
+        "localValueAvailable": true,
+        "historySensitivity": "expense",
+        "initializerSensitivity": "expense",
+        "invalidates": true
+      },
+      "expect": "fault-entry-body-unproved"
+    }
+  ]
+}

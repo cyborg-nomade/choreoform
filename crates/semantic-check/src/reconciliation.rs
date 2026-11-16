@@ -78,6 +78,7 @@ impl ReconciliationReport {
     }
     pub fn remaining(&self) -> &'static [&'static str] {
         &[
+            "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
             "all-prior-exceptional-fault-route-and-timing-obligations",
             "reconciliation-entry-data-protection-and-invalidation",
             "live-obligation-subscription-and-occurrence-ownership",

@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+
+Scope "Payment recovery" within "Payment".
+Start at "Observe Payment".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Stop work", faults "Unhandled faults", closure "Ordinary close" and races "Acceptance order".
+Retain the original request from "Request Payment" and record in "Original request".
+Keep "Original request" as record with ["claim" as type "Claim" from "Expense types", "manager" as type "Review evidence" from "Expense types", "finance" as type "Review evidence" from "Expense types"] under "Expense access".
+Sensitivity "expense". Purposes ["Reimbursement"]. Participants ["Employee", "Manager", "Finance reviewer", "Payment operator", "Clock observer"].
+Capabilities ["Check the claim", "Create the payable", "Notify the employee"]. Invalidate ["Observe Payment", "Inspect original request", "Finish Payment recovery"]. Initially unavailable. End data.
+Keep "Request copy" as record with ["claim" as type "Claim" from "Expense types", "manager" as type "Review evidence" from "Expense types", "finance" as type "Review evidence" from "Expense types"] under "Expense access".
+Sensitivity "expense". Purposes ["Reimbursement"]. Participants ["Employee", "Manager", "Finance reviewer", "Payment operator", "Clock observer"].
+Capabilities ["Check the claim", "Create the payable", "Notify the employee"]. Invalidate empty. Initially (the value of "Original request"). End data.
+Let "Original revision is stable" mean ((field "revision" of (the representation of (field "claim" of (the value of "Original request")))) equals (field "revision" of (the representation of (field "claim" of (the value of "Original request"))))) as truth value with parameters empty.
+Step "Inspect original request". Choose by ["same" when "Original revision is stable"]; otherwise "other". On "same", continue with "Finish Payment recovery". On "other", continue with "Finish Payment recovery". End step.
+
+Keep "Local terminal result" as choice with ["cancelled" as record with ["logical effect" as text, "request digest" as text, "observation" as text], "confirmed" as choice with ["paid" as type "Paid evidence" from "Expense types", "problem" as type "Problem evidence" from "Expense types"], "noeffect" as record with ["logical effect" as text, "request digest" as text, "observation" as text], "rejected" as record with ["logical effect" as text, "request digest" as text, "observation" as text]] under "Expense access". Sensitivity "expense". Purposes ["Reimbursement"]. Participants ["Employee", "Manager", "Finance reviewer", "Payment operator", "Clock observer"]. Capabilities ["Create the payable"]. Invalidate ["Observe Payment", "Inspect original request", "Finish Payment recovery"]. Initially unavailable. End data. Step "Observe Payment". Wait under "Payment reconciliation" for observations from "Terminal facts" about "Request Payment" and record in "Local terminal result". On "observed", continue with "Inspect original request". End step.
+Step "Finish Payment recovery". Finish as "complete".  End step.
+End scope.

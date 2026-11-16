@@ -1,0 +1,88 @@
+{
+  "premise": "Synthetic static metadata and type schemas only; no actual observations, accepted inputs, grants, storage or handoff.",
+  "normative": [
+    {
+      "id": "urn:choreoform:semantics:adr-0008",
+      "revision": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.1.0",
+      "revision": "sha256:26eb773b4444f5af7c4ec3406f46ab7da95e87457bf7b0c2bfbea36ea3bbcb58"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.2.0",
+      "revision": "sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.3.0",
+      "revision": "sha256:30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.4.0",
+      "revision": "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.5.0",
+      "revision": "sha256:50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7"
+    },
+    {
+      "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+      "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.6.0",
+      "revision": "sha256:27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.7.0",
+      "revision": "sha256:e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.8.0",
+      "revision": "sha256:edc8195ba0c31536ab2cdc95089e8aecc3ff402489639b4435277f0a38e7b603"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.9.0",
+      "revision": "sha256:5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f"
+    },
+    {
+      "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
+      "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.10.0",
+      "revision": "sha256:74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f"
+    },
+    {
+      "id": "urn:choreoform:contracts:core-profile:0.11.0",
+      "revision": "sha256:246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e"
+    }
+  ],
+  "resources": [
+    {
+      "id": "urn:test:readable-owned-payable",
+      "revision": "sha256:882c601a27125da3fd652cac458fa740b61d496a766bf5be5c69f6b78c7b2aa7",
+      "bytes": "{\"effectClass\":\"compensatable\",\"id\":\"urn:test:readable-owned-payable\",\"idempotency\":\"stable-key\",\"input\":{\"fields\":{},\"kind\":\"record\"},\"kind\":\"provider-contract\",\"observations\":{\"done\":{\"outcome\":\"done\",\"result\":{\"kind\":\"integer\"},\"state\":\"succeeded\"},\"unknown\":{\"outcome\":null,\"result\":null,\"state\":\"unknown\"}},\"outcomes\":{\"done\":true},\"output\":{\"kind\":\"integer\"},\"resultProtection\":{\"capabilities\":{\"adapter\":true,\"adapter_lookup\":true},\"participants\":{\"operator\":true},\"policy\":\"protection\",\"purposes\":{\"test\":true},\"sensitivity\":\"internal\"},\"version\":\"0.1.0\"}"
+    },
+    {
+      "id": "urn:test:readable-owned-adjustment",
+      "revision": "sha256:8c8f11a2a00083903b754792268c0d3ae18c6858ff6b0e95c54e610ea0db2a3c",
+      "bytes": "{\"effectClass\":\"irreversible\",\"id\":\"urn:test:readable-owned-adjustment\",\"idempotency\":\"stable-key\",\"input\":{\"kind\":\"integer\"},\"kind\":\"provider-contract\",\"observations\":{\"done\":{\"outcome\":\"done\",\"result\":{\"kind\":\"integer\"},\"state\":\"succeeded\"},\"unknown\":{\"outcome\":null,\"result\":null,\"state\":\"unknown\"}},\"outcomes\":{\"done\":true},\"output\":{\"kind\":\"integer\"},\"resultProtection\":{\"capabilities\":{\"adapter\":true,\"adapter_lookup\":true},\"participants\":{\"operator\":true},\"policy\":\"protection\",\"purposes\":{\"test\":true},\"sensitivity\":\"internal\"},\"version\":\"0.1.0\"}"
+    },
+    {
+      "id": "urn:test:readable-payable-terminal",
+      "revision": "sha256:8ad3ccbed9a862ef573ccf6b551bd8ec1b5a6d1d00a13d58cf9436c3231583ef",
+      "bytes": "{\"id\":\"urn:test:readable-payable-terminal\",\"kind\":\"provider-terminal-observation-source\",\"profile\":{\"id\":\"urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0\",\"revision\":\"sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead\"},\"provider\":{\"id\":\"urn:test:readable-owned-payable\",\"revision\":\"sha256:882c601a27125da3fd652cac458fa740b61d496a766bf5be5c69f6b78c7b2aa7\"},\"version\":\"0.1.0\"}"
+    },
+    {
+      "id": "urn:test:readable-adjustment-terminal",
+      "revision": "sha256:cdfefdf143d45fa4d20348a89cd569c6ccba0acb7e5c7c94665ccf6e77f0dc98",
+      "bytes": "{\"id\":\"urn:test:readable-adjustment-terminal\",\"kind\":\"provider-terminal-observation-source\",\"profile\":{\"id\":\"urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0\",\"revision\":\"sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead\"},\"provider\":{\"id\":\"urn:test:readable-owned-adjustment\",\"revision\":\"sha256:8c8f11a2a00083903b754792268c0d3ae18c6858ff6b0e95c54e610ea0db2a3c\"},\"version\":\"0.1.0\"}"
+    },
+    {
+      "id": "urn:test:readable-adjustment-faults",
+      "revision": "sha256:c2f6512257b922c1499c3165a84a721756501de6154dcaf092d0de74ea4cb7ef",
+      "bytes": "{\"emissions\":{\"lookup uncertainty\":{\"evidence\":\"unresolved\",\"observations\":{\"unknown\":true}}},\"id\":\"urn:test:readable-adjustment-faults\",\"kind\":\"provider-fault-source\",\"profile\":{\"id\":\"urn:choreoform:fault-source-profile:provider-observations:0.1.0\",\"revision\":\"sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0\"},\"provider\":{\"id\":\"urn:test:readable-owned-adjustment\",\"revision\":\"sha256:8c8f11a2a00083903b754792268c0d3ae18c6858ff6b0e95c54e610ea0db2a3c\"},\"version\":\"0.1.0\"}"
+    }
+  ]
+}

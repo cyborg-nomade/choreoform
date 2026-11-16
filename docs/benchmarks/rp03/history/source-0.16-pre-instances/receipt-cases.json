@@ -1,0 +1,2291 @@
+{
+  "premise": "Synthetic pure inputs only, never accepted observations, authenticated provider facts or a running order.",
+  "cases": [
+    {
+      "id": "reserve_a-matched",
+      "operation": "reserve_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "reserve_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "reserved",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "reserve_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "reserve_a",
+          "phase": "reserved",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": true
+    },
+    {
+      "id": "reserve_a-wrong-order-revision",
+      "operation": "reserve_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "reserve_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "reserved",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "reserve_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "reserve_a",
+          "phase": "reserved",
+          "order ID": "rp03-fictional-order",
+          "order revision": "other-revision",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "reserve_a-wrong-request-revision",
+      "operation": "reserve_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "reserve_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "reserved",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "other-instruction",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "reserve_a",
+          "phase": "reserved",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "reserve_a-wrong-amount",
+      "operation": "reserve_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "reserve_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "reserved",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "reserve_a-pure-instruction-v1",
+          "amount": "11999",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "reserve_a",
+          "phase": "reserved",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "reserve_a-wrong-currency",
+      "operation": "reserve_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "reserve_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "reserved",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "reserve_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "USD",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "reserve_a",
+          "phase": "reserved",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "reserve_a-wrong-basis-reference",
+      "operation": "reserve_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "reserve_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "reserved",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "reserve_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "other-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "reserve_a",
+          "phase": "reserved",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "reserve_a-wrong-target-quantity",
+      "operation": "reserve_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "reserve_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "reserved",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "reserve_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "2"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "reserve_a",
+          "phase": "reserved",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "reserve_a-wrong-target-warehouse",
+      "operation": "reserve_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "reserve_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "reserved",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "reserve_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "other-warehouse"
+          },
+          "operation": "reserve_a",
+          "phase": "reserved",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "capture-matched",
+      "operation": "capture",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "rp03-fictional-order",
+        "scope revision": "order-v1",
+        "request revision": "capture-pure-instruction-v1",
+        "amount": "20000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "none"
+        },
+        "target warehouse": {
+          "tag": "none"
+        }
+      },
+      "result": {
+        "tag": "captured",
+        "value": {
+          "scope key": "rp03-fictional-order",
+          "scope revision": "order-v1",
+          "request revision": "capture-pure-instruction-v1",
+          "amount": "20000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "none"
+          },
+          "target warehouse": {
+            "tag": "none"
+          },
+          "operation": "capture",
+          "phase": "captured",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": true
+    },
+    {
+      "id": "capture-wrong-order-revision",
+      "operation": "capture",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "rp03-fictional-order",
+        "scope revision": "order-v1",
+        "request revision": "capture-pure-instruction-v1",
+        "amount": "20000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "none"
+        },
+        "target warehouse": {
+          "tag": "none"
+        }
+      },
+      "result": {
+        "tag": "captured",
+        "value": {
+          "scope key": "rp03-fictional-order",
+          "scope revision": "order-v1",
+          "request revision": "capture-pure-instruction-v1",
+          "amount": "20000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "none"
+          },
+          "target warehouse": {
+            "tag": "none"
+          },
+          "operation": "capture",
+          "phase": "captured",
+          "order ID": "rp03-fictional-order",
+          "order revision": "other-revision",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "capture-wrong-request-revision",
+      "operation": "capture",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "rp03-fictional-order",
+        "scope revision": "order-v1",
+        "request revision": "capture-pure-instruction-v1",
+        "amount": "20000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "none"
+        },
+        "target warehouse": {
+          "tag": "none"
+        }
+      },
+      "result": {
+        "tag": "captured",
+        "value": {
+          "scope key": "rp03-fictional-order",
+          "scope revision": "order-v1",
+          "request revision": "other-instruction",
+          "amount": "20000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "none"
+          },
+          "target warehouse": {
+            "tag": "none"
+          },
+          "operation": "capture",
+          "phase": "captured",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "capture-wrong-amount",
+      "operation": "capture",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "rp03-fictional-order",
+        "scope revision": "order-v1",
+        "request revision": "capture-pure-instruction-v1",
+        "amount": "20000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "none"
+        },
+        "target warehouse": {
+          "tag": "none"
+        }
+      },
+      "result": {
+        "tag": "captured",
+        "value": {
+          "scope key": "rp03-fictional-order",
+          "scope revision": "order-v1",
+          "request revision": "capture-pure-instruction-v1",
+          "amount": "11999",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "none"
+          },
+          "target warehouse": {
+            "tag": "none"
+          },
+          "operation": "capture",
+          "phase": "captured",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "capture-wrong-currency",
+      "operation": "capture",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "rp03-fictional-order",
+        "scope revision": "order-v1",
+        "request revision": "capture-pure-instruction-v1",
+        "amount": "20000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "none"
+        },
+        "target warehouse": {
+          "tag": "none"
+        }
+      },
+      "result": {
+        "tag": "captured",
+        "value": {
+          "scope key": "rp03-fictional-order",
+          "scope revision": "order-v1",
+          "request revision": "capture-pure-instruction-v1",
+          "amount": "20000",
+          "currency": "USD",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "none"
+          },
+          "target warehouse": {
+            "tag": "none"
+          },
+          "operation": "capture",
+          "phase": "captured",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "capture-wrong-basis-reference",
+      "operation": "capture",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "rp03-fictional-order",
+        "scope revision": "order-v1",
+        "request revision": "capture-pure-instruction-v1",
+        "amount": "20000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "none"
+        },
+        "target warehouse": {
+          "tag": "none"
+        }
+      },
+      "result": {
+        "tag": "captured",
+        "value": {
+          "scope key": "rp03-fictional-order",
+          "scope revision": "order-v1",
+          "request revision": "capture-pure-instruction-v1",
+          "amount": "20000",
+          "currency": "EUR",
+          "basis reference": "other-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "none"
+          },
+          "target warehouse": {
+            "tag": "none"
+          },
+          "operation": "capture",
+          "phase": "captured",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "deliver_a-matched",
+      "operation": "deliver_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "deliver_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "delivered",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "deliver_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "deliver_a",
+          "phase": "delivered",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": true
+    },
+    {
+      "id": "deliver_a-wrong-order-revision",
+      "operation": "deliver_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "deliver_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "delivered",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "deliver_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "deliver_a",
+          "phase": "delivered",
+          "order ID": "rp03-fictional-order",
+          "order revision": "other-revision",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "deliver_a-wrong-request-revision",
+      "operation": "deliver_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "deliver_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "delivered",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "other-instruction",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "deliver_a",
+          "phase": "delivered",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "deliver_a-wrong-amount",
+      "operation": "deliver_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "deliver_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "delivered",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "deliver_a-pure-instruction-v1",
+          "amount": "11999",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "deliver_a",
+          "phase": "delivered",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "deliver_a-wrong-currency",
+      "operation": "deliver_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "deliver_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "delivered",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "deliver_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "USD",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "deliver_a",
+          "phase": "delivered",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "deliver_a-wrong-basis-reference",
+      "operation": "deliver_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "deliver_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "delivered",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "deliver_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "other-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "deliver_a",
+          "phase": "delivered",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "deliver_a-wrong-target-quantity",
+      "operation": "deliver_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "deliver_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "delivered",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "deliver_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "2"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "fictional-warehouse-a"
+          },
+          "operation": "deliver_a",
+          "phase": "delivered",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    },
+    {
+      "id": "deliver_a-wrong-target-warehouse",
+      "operation": "deliver_a",
+      "request": {
+        "order": {
+          "order ID": "rp03-fictional-order",
+          "revision": "order-v1",
+          "customer reference": "fictional-customer",
+          "contact reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+            "revision": "contact-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "address reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+            "revision": "address-v1",
+            "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "payment reference": "fictional-provider-token-reference",
+          "terms reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+            "revision": "terms-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "pricing reference": {
+            "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+            "revision": "pricing-v1",
+            "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "provenance": "synthetic reference only, not verified evidence"
+          },
+          "delivery choice": "separate shipments",
+          "first line": {
+            "line ID": "line-a",
+            "revision": "line-a-v1",
+            "sku": "fictional-sku-a",
+            "quantity": "1",
+            "amount": "12000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-a"
+          },
+          "second line": {
+            "line ID": "line-b",
+            "revision": "line-b-v1",
+            "sku": "fictional-sku-b",
+            "quantity": "2",
+            "amount": "8000",
+            "currency": "EUR",
+            "warehouse": "fictional-warehouse-b"
+          },
+          "amount": "20000",
+          "currency": "EUR"
+        },
+        "scope key": "line-a",
+        "scope revision": "line-a-v1",
+        "request revision": "deliver_a-pure-instruction-v1",
+        "amount": "12000",
+        "currency": "EUR",
+        "basis reference": "fictional-prior-resource",
+        "address revision": "address-v1",
+        "target quantity": {
+          "tag": "some",
+          "value": "1"
+        },
+        "target warehouse": {
+          "tag": "some",
+          "value": "fictional-warehouse-a"
+        }
+      },
+      "result": {
+        "tag": "delivered",
+        "value": {
+          "scope key": "line-a",
+          "scope revision": "line-a-v1",
+          "request revision": "deliver_a-pure-instruction-v1",
+          "amount": "12000",
+          "currency": "EUR",
+          "basis reference": "fictional-prior-resource",
+          "address revision": "address-v1",
+          "target quantity": {
+            "tag": "some",
+            "value": "1"
+          },
+          "target warehouse": {
+            "tag": "some",
+            "value": "other-warehouse"
+          },
+          "operation": "deliver_a",
+          "phase": "delivered",
+          "order ID": "rp03-fictional-order",
+          "order revision": "order-v1",
+          "reference": "fictional-command-receipt",
+          "subject reference": {
+            "tag": "some",
+            "value": "fictional-subject-reference"
+          },
+          "provider event": "synthetic-pure-event-not-accepted",
+          "expiry": "10000000",
+          "reason": "Pure synthetic case"
+        }
+      },
+      "expected": false
+    }
+  ]
+}

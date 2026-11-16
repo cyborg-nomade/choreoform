@@ -1,0 +1,16 @@
+{
+  "kind": "external-region-namespace",
+  "version": "0.1.0",
+  "id": "urn:test:standalone:namespace",
+  "profile": {
+    "id": "urn:choreoform:interference-profile:provider-regions:0.1.0",
+    "revision": "sha256:0b10eb4dbb19caace45b93f35dec44aa5f26458d631393932caddb5589210250"
+  },
+  "authority": {
+    "id": "urn:test:standalone:authority",
+    "revision": "sha256:fdfda252a357624eb2ae874685eeee05044522885d6af919a642a1b586cdac63"
+  },
+  "keyTypes": [
+    "integer"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "format": "choreoform-authoring-change",
+  "version": "0.1.0",
+  "base": "sha256:51373968dec3664800c77aa685076556a27417790989a086132da19aad4826a2",
+  "operation": {
+    "kind": "replace-layout",
+    "layout": {
+      "format": "choreoform-authoring-layout",
+      "version": "0.1.0",
+      "entries": [
+        {
+          "entity": "same",
+          "x": -12,
+          "y": 30,
+          "collapsed": true
+        },
+        {
+          "entity": "same_value",
+          "x": 50,
+          "y": 30,
+          "collapsed": false
+        }
+      ]
+    }
+  }
+}

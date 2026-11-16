@@ -136,7 +136,7 @@ class GrammarTests(unittest.TestCase):
                        SOURCE.replace('End step.', 'End rule.'),
                        SOURCE.replace('Outcomes ["complete"].', 'Outcomes [].'),
                        SOURCE.replace('Process "Terminal example".', 'Process "".'),
-                       SOURCE.replace('"0.2.0"', '"0.5.0"'),
+                       SOURCE.replace('"0.2.0"', '"1.0.0"'),
                        SOURCE.replace('Inputs empty.\n  Outputs empty.', 'Outputs empty.\n  Inputs empty.')):
             with self.subTest(source=source), self.assertRaises(ValueError):
                 probe.recognize(source)

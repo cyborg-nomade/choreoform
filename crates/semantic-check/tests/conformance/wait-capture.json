@@ -1,0 +1,812 @@
+{
+  "format": "choreoform-wait-capture-conformance",
+  "version": "0.1.0",
+  "definition": {
+    "annotations": {},
+    "body": {
+      "actors": {
+        "operator": {
+          "requirement": "authority",
+          "scope": "root"
+        }
+      },
+      "capabilities": {
+        "adapter": {
+          "authority": "operator",
+          "contract": "provider_policy",
+          "effects": "effects",
+          "input": {
+            "body": {
+              "fields": {},
+              "kind": "record"
+            },
+            "dialect": "core"
+          },
+          "output": {
+            "body": {
+              "kind": "integer"
+            },
+            "dialect": "core"
+          },
+          "scope": "root"
+        }
+      },
+      "data": {
+        "captured": {
+          "invalidates": {
+            "read_capture": true
+          },
+          "protection": {
+            "capabilities": {
+              "adapter": true
+            },
+            "participants": {
+              "operator": true
+            },
+            "policy": "protection",
+            "purposes": {
+              "test": true
+            },
+            "sensitivity": "internal"
+          },
+          "scope": "root",
+          "type": {
+            "body": {
+              "cases": {
+                "confirmed": {
+                  "kind": "integer"
+                }
+              },
+              "kind": "variant"
+            },
+            "dialect": "core"
+          }
+        },
+        "origin_value": {
+          "invalidates": {
+            "capture_wait": true,
+            "read_capture": true
+          },
+          "protection": {
+            "capabilities": {
+              "adapter": true
+            },
+            "participants": {
+              "operator": true
+            },
+            "policy": "protection",
+            "purposes": {
+              "test": true
+            },
+            "sensitivity": "internal"
+          },
+          "scope": "root",
+          "type": {
+            "body": {
+              "kind": "integer"
+            },
+            "dialect": "core"
+          }
+        }
+      },
+      "dialects": {
+        "core": {
+          "id": "urn:choreoform:contracts:core-profile:0.5.0",
+          "revision": "sha256:50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7"
+        }
+      },
+      "expressions": {
+        "capture_is_confirmed": {
+          "body": {
+            "left": {
+              "op": "tag",
+              "value": {
+                "cell": "captured",
+                "op": "read"
+              }
+            },
+            "op": "eq",
+            "right": {
+              "op": "literal",
+              "type": {
+                "kind": "text"
+              },
+              "value": "confirmed"
+            }
+          },
+          "dialect": "core",
+          "parameters": {},
+          "reads": {
+            "captured": true
+          },
+          "resultType": {
+            "body": {
+              "kind": "boolean"
+            },
+            "dialect": "core"
+          },
+          "scope": "root"
+        },
+        "request": {
+          "body": {
+            "fields": {},
+            "op": "record"
+          },
+          "dialect": "core",
+          "parameters": {},
+          "reads": {},
+          "resultType": {
+            "body": {
+              "fields": {},
+              "kind": "record"
+            },
+            "dialect": "core"
+          },
+          "scope": "root"
+        }
+      },
+      "flows": {
+        "capture_next": {
+          "outcome": "observed",
+          "source": "capture_wait",
+          "target": "read_capture"
+        },
+        "origin_next": {
+          "outcome": "done",
+          "source": "origin",
+          "target": "capture_wait"
+        },
+        "read_no": {
+          "outcome": "no",
+          "source": "read_capture",
+          "target": "done"
+        },
+        "read_yes": {
+          "outcome": "yes",
+          "source": "read_capture",
+          "target": "done"
+        },
+        "recover_next": {
+          "outcome": "observed",
+          "source": "recover_wait",
+          "target": "recover_done"
+        }
+      },
+      "id": "timerless_capture_fixture",
+      "nodes": {
+        "capture_wait": {
+          "capture": {
+            "origin": "origin",
+            "result": "captured",
+            "source": {
+              "id": "urn:test:capture-source",
+              "revision": "sha256:51c4b04d4a7a6484e279219de296fab792fad7588a3fad80a95e7928456ab562"
+            }
+          },
+          "kind": "wait",
+          "outcomes": {
+            "observed": true
+          },
+          "policy": "ordinary_wait",
+          "reads": {},
+          "scope": "root",
+          "writes": {
+            "captured": true
+          }
+        },
+        "done": {
+          "kind": "finish",
+          "outcome": "complete",
+          "outcomes": {},
+          "reads": {},
+          "scope": "root",
+          "writes": {}
+        },
+        "origin": {
+          "input": "request",
+          "kind": "activity",
+          "mode": "capability",
+          "outcomes": {
+            "done": true
+          },
+          "policy": "work",
+          "reads": {},
+          "result": "origin_value",
+          "scope": "root",
+          "target": "adapter",
+          "writes": {
+            "origin_value": true
+          }
+        },
+        "read_capture": {
+          "default": "no",
+          "guards": {
+            "yes": "capture_is_confirmed"
+          },
+          "kind": "decision",
+          "outcomes": {
+            "no": true,
+            "yes": true
+          },
+          "reads": {
+            "captured": true
+          },
+          "scope": "root",
+          "writes": {}
+        },
+        "recover_done": {
+          "kind": "finish",
+          "outcome": "complete",
+          "outcomes": {},
+          "reads": {},
+          "scope": "recovery",
+          "writes": {}
+        },
+        "recover_wait": {
+          "capture": null,
+          "kind": "wait",
+          "outcomes": {
+            "observed": true
+          },
+          "policy": "recovery_wait",
+          "reads": {},
+          "scope": "recovery",
+          "writes": {}
+        }
+      },
+      "policies": {
+        "authority": {
+          "body": {
+            "kind": "actor",
+            "permit": {
+              "op": "literal",
+              "type": {
+                "kind": "boolean"
+              },
+              "value": true
+            },
+            "reads": {}
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "cancel": {
+          "body": {
+            "authority": "operator",
+            "children": "settlement",
+            "kind": "cancel",
+            "reads": {}
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "close": {
+          "body": {
+            "followup": null,
+            "kind": "closure",
+            "mode": "terminal",
+            "reads": {}
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "effects": {
+          "body": {
+            "class": "read-only",
+            "idempotency": "none",
+            "kind": "effect",
+            "reads": {},
+            "reconciliation": "recovery_wait"
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "faults": {
+          "body": {
+            "handlers": {},
+            "kind": "faults",
+            "reads": {}
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "keep": {
+          "body": {
+            "followup": "recovery",
+            "kind": "closure",
+            "mode": "reconcile",
+            "reads": {}
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "ordinary_wait": {
+          "body": {
+            "authority": "operator",
+            "kind": "wait",
+            "match": {
+              "op": "literal",
+              "type": {
+                "kind": "boolean"
+              },
+              "value": true
+            },
+            "observationType": {
+              "cases": {
+                "confirmed": {
+                  "kind": "integer"
+                }
+              },
+              "kind": "variant"
+            },
+            "onObservation": "observed",
+            "onTimer": null,
+            "reads": {},
+            "timer": null
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "protection": {
+          "body": {
+            "kind": "protection",
+            "permit": {
+              "op": "literal",
+              "type": {
+                "kind": "boolean"
+              },
+              "value": true
+            },
+            "reads": {}
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "provider_policy": {
+          "body": {
+            "kind": "capability",
+            "provider": {
+              "id": "urn:test:capture-provider",
+              "revision": "sha256:68bc2fd820aa56078bfc6653ba02d1493756fcb88788ffc8692c04f596401bdf"
+            },
+            "reads": {}
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "race": {
+          "body": {
+            "invariant": null,
+            "kind": "race",
+            "mode": "acceptance",
+            "reads": {}
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "recovery_wait": {
+          "body": {
+            "authority": "operator",
+            "kind": "wait",
+            "match": {
+              "op": "literal",
+              "type": {
+                "kind": "boolean"
+              },
+              "value": true
+            },
+            "observationType": {
+              "cases": {
+                "confirmed": {
+                  "kind": "integer"
+                }
+              },
+              "kind": "variant"
+            },
+            "onObservation": "observed",
+            "onTimer": null,
+            "reads": {},
+            "timer": null
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "settlement": {
+          "body": {
+            "kind": "settlement",
+            "owner": null,
+            "reads": {},
+            "unfinished": "cancel"
+          },
+          "dialect": "core",
+          "scope": "root"
+        },
+        "work": {
+          "body": {
+            "authority": "operator",
+            "compensates": null,
+            "completion": {
+              "op": "literal",
+              "type": {
+                "kind": "boolean"
+              },
+              "value": true
+            },
+            "instructions": "Synthetic declaration",
+            "kind": "work",
+            "reads": {},
+            "retry": {
+              "basis": null,
+              "clock": null,
+              "delays": [],
+              "faultSource": null,
+              "faults": {},
+              "maxAttempts": 1
+            },
+            "timeout": null
+          },
+          "dialect": "core",
+          "scope": "root"
+        }
+      },
+      "root": "root",
+      "scopes": {
+        "recovery": {
+          "cancellation": "cancel",
+          "closure": "close",
+          "entry": "recover_wait",
+          "faults": "faults",
+          "inputs": {},
+          "outcomes": {
+            "complete": true
+          },
+          "outputs": {},
+          "parent": "root",
+          "race": "race"
+        },
+        "root": {
+          "cancellation": "cancel",
+          "closure": "keep",
+          "entry": "origin",
+          "faults": "faults",
+          "inputs": {},
+          "outcomes": {
+            "complete": true
+          },
+          "outputs": {},
+          "parent": null,
+          "race": "race"
+        }
+      },
+      "semantics": {
+        "id": "urn:choreoform:semantics:adr-0008",
+        "revision": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+      }
+    },
+    "format": "choreoform-ir",
+    "kind": "definition",
+    "revision": "sha256:1e56e06815769c00f8fac99a463712bdf3544bbec115c57c4d48dc9acf5f9296",
+    "version": "0.2.0"
+  },
+  "resources": {
+    "provider": {
+      "effectClass": "read-only",
+      "id": "urn:test:capture-provider",
+      "idempotency": "none",
+      "input": {
+        "fields": {},
+        "kind": "record"
+      },
+      "kind": "provider-contract",
+      "observations": {
+        "done": {
+          "outcome": "done",
+          "result": {
+            "kind": "integer"
+          },
+          "state": "succeeded"
+        },
+        "unknown": {
+          "outcome": null,
+          "result": null,
+          "state": "unknown"
+        }
+      },
+      "outcomes": {
+        "done": true
+      },
+      "output": {
+        "kind": "integer"
+      },
+      "resultProtection": {
+        "capabilities": {
+          "adapter": true
+        },
+        "participants": {
+          "operator": true
+        },
+        "policy": "protection",
+        "purposes": {
+          "test": true
+        },
+        "sensitivity": "internal"
+      },
+      "version": "0.1.0"
+    },
+    "source": {
+      "id": "urn:test:capture-source",
+      "kind": "provider-terminal-observation-source",
+      "profile": {
+        "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+        "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead"
+      },
+      "provider": {
+        "id": "urn:test:capture-provider",
+        "revision": "sha256:68bc2fd820aa56078bfc6653ba02d1493756fcb88788ffc8692c04f596401bdf"
+      },
+      "version": "0.1.0"
+    }
+  },
+  "cases": [
+    {
+      "id": "ordinary_capture",
+      "wire": "0.2.0",
+      "changes": [],
+      "stage": "static",
+      "expect": {
+        "passed": true
+      }
+    },
+    {
+      "id": "older_policy",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/dialects/core",
+          "value": {
+            "id": "urn:choreoform:contracts:core-profile:0.4.0",
+            "revision": "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3"
+          }
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "wait-capture-dialect"
+      }
+    },
+    {
+      "id": "target_type",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/data/captured/type/body",
+          "value": {
+            "kind": "variant",
+            "cases": {
+              "confirmed": {
+                "kind": "text"
+              }
+            }
+          }
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "wait-capture-type"
+      }
+    },
+    {
+      "id": "policy_type",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/policies/ordinary_wait/body/observationType",
+          "value": {
+            "kind": "variant",
+            "cases": {
+              "confirmed": {
+                "kind": "text"
+              }
+            }
+          }
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "wait-capture-type"
+      }
+    },
+    {
+      "id": "missing_write",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/nodes/capture_wait/writes",
+          "value": {}
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "wait-capture-writes"
+      }
+    },
+    {
+      "id": "widen_label",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/data/captured/protection/sensitivity",
+          "value": "public"
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "information-flow"
+      }
+    },
+    {
+      "id": "origin_is_finish",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/nodes/capture_wait/capture/origin",
+          "value": "done"
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "wait-capture-origin-unproved"
+      }
+    },
+    {
+      "id": "unvisited_declaration",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/scopes/root/entry",
+          "value": "done"
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "passed": true
+      }
+    },
+    {
+      "id": "read_before_capture",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/scopes/root/entry",
+          "value": "read_capture"
+        }
+      ],
+      "stage": "control",
+      "expect": {
+        "code": "data-availability-unproved"
+      }
+    },
+    {
+      "id": "missing_invalidation",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/data/captured/invalidates",
+          "value": {}
+        }
+      ],
+      "stage": "invalidation",
+      "expect": {
+        "code": "invalidation-coverage"
+      }
+    },
+    {
+      "id": "unknown_capture_field",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/nodes/capture_wait/capture/trusted",
+          "value": true
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "structure"
+      }
+    },
+    {
+      "id": "old_wire",
+      "wire": "0.1.0",
+      "changes": [],
+      "stage": "static",
+      "expect": {
+        "code": "structure"
+      }
+    },
+    {
+      "id": "missing_source",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/nodes/capture_wait/capture/source/revision",
+          "value": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "resource-missing"
+      }
+    },
+    {
+      "id": "wrong_origin_role",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/nodes/capture_wait/capture/origin",
+          "value": "captured"
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "structure"
+      }
+    },
+    {
+      "id": "missing_node_read",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/nodes/read_capture/reads",
+          "value": {}
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "node-reads"
+      }
+    },
+    {
+      "id": "human_origin",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/nodes/origin/mode",
+          "value": "human"
+        },
+        {
+          "path": "/nodes/origin/target",
+          "value": "operator"
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "code": "wait-capture-origin-unproved"
+      }
+    },
+    {
+      "id": "older_null_capture",
+      "wire": "0.2.0",
+      "changes": [
+        {
+          "path": "/dialects/core",
+          "value": {
+            "id": "urn:choreoform:contracts:core-profile:0.4.0",
+            "revision": "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3"
+          }
+        },
+        {
+          "path": "/nodes/capture_wait/capture",
+          "value": null
+        },
+        {
+          "path": "/nodes/capture_wait/writes",
+          "value": {}
+        }
+      ],
+      "stage": "static",
+      "expect": {
+        "passed": true
+      }
+    }
+  ]
+}

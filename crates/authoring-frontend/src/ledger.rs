@@ -6,6 +6,9 @@ use choreoform_ir_probe_core::{Resource, digest, transport};
 use serde_json::{Map, Value};
 use std::collections::{BTreeMap, BTreeSet};
 
+#[cfg(test)]
+mod symbol_audit;
+
 pub(crate) const SEMANTICS: (&str, &str) = choreoform_ir_probe_core::SUPPORTED_CONTRACTS[0];
 pub(crate) const CORE: (&str, &str) = (
     "urn:choreoform:contracts:core-profile:0.1.0",
@@ -151,6 +154,21 @@ impl Ledger {
             (Some("0.2.0"), Some("0.1.0")) => CORE,
             (Some("0.3.0"), Some("0.2.0")) => choreoform_semantic_check::CORE_V2,
             (Some("0.4.0"), Some("0.3.0")) => choreoform_semantic_check::CORE_V2,
+            (Some("0.5.0"), Some("0.4.0")) => choreoform_semantic_check::CORE_V2,
+            (Some("0.6.0"), Some("0.5.0")) => choreoform_semantic_check::CORE_V3,
+            (Some("0.7.0"), Some("0.6.0")) => choreoform_semantic_check::CORE_V4,
+            (Some("0.8.0"), Some("0.7.0")) => choreoform_semantic_check::CORE_V5,
+            (Some("0.9.0"), Some("0.8.0")) => choreoform_semantic_check::CORE_V6,
+            (Some("0.10.0"), Some("0.9.0")) => choreoform_semantic_check::CORE_V7,
+            (Some("0.11.0"), Some("0.10.0")) => choreoform_semantic_check::CORE_V8,
+            (Some("0.12.0"), Some("0.11.0")) => choreoform_semantic_check::CORE_V9,
+            (Some("0.13.0"), Some("0.12.0")) => choreoform_semantic_check::CORE_V10,
+            (Some("0.14.0"), Some("0.13.0")) => choreoform_semantic_check::CORE_V11,
+            (Some("0.15.0"), Some("0.14.0")) => choreoform_semantic_check::CORE_V11,
+            (Some("0.16.0"), Some("0.15.0"))
+            | (Some("0.17.0"), Some("0.16.0"))
+            | (Some("0.18.0"), Some("0.17.0"))
+            | (Some("0.19.0"), Some("0.18.0")) => choreoform_semantic_check::CORE_V12,
             _ => return Err(error("ledger-profile", 0..0)),
         };
         let mut used = BTreeSet::from([id(&document["definition"])?]);
@@ -184,17 +202,24 @@ impl Ledger {
                 scope: nullable_id(&row["scope"])?,
                 name: name(&row["name"])?,
             };
-            if ![
-                "scope",
-                "data",
-                "expression",
-                "actor",
-                "capability",
-                "policy",
-                "node",
-                "resource",
-            ]
-            .contains(&declaration.kind.as_str())
+            if !(matches!(
+                document["profile"].as_str(),
+                Some("0.17.0" | "0.18.0" | "0.19.0")
+            ) && declaration.kind == "data-protection")
+                && !(matches!(document["profile"].as_str(), Some("0.18.0" | "0.19.0"))
+                    && declaration.kind == "type-alias")
+                && !(document["profile"] == "0.19.0" && declaration.kind == "predicate")
+                && ![
+                    "scope",
+                    "data",
+                    "expression",
+                    "actor",
+                    "capability",
+                    "policy",
+                    "node",
+                    "resource",
+                ]
+                .contains(&declaration.kind.as_str())
             {
                 return Err(error("binding-kind", 0..0));
             }
@@ -256,7 +281,14 @@ impl Ledger {
                 "outcome" => matches!(kind, Some("scope" | "node")),
                 "branch" => kind == Some("node"),
                 "input" | "output" => kind == Some("scope"),
-                "purpose" => kind == Some("data"),
+                "predicate-input" => document["profile"] == "0.19.0" && kind == Some("predicate"),
+                "purpose" => {
+                    kind == Some("data")
+                        || (matches!(
+                            document["profile"].as_str(),
+                            Some("0.17.0" | "0.18.0" | "0.19.0")
+                        ) && kind == Some("data-protection"))
+                }
                 _ => false,
             };
             if !valid {
@@ -336,7 +368,59 @@ impl Ledger {
             {
                 return Err(error("resource-binding", 0..0));
             }
-            if !["provider", "named-type", "clock", "calendar"].contains(&string(&row["kind"])?) {
+            let resource_kind = string(&row["kind"])?;
+            if !["provider", "named-type", "clock", "calendar"].contains(&resource_kind)
+                && !(matches!(
+                    document["profile"].as_str(),
+                    Some(
+                        "0.7.0"
+                            | "0.8.0"
+                            | "0.9.0"
+                            | "0.10.0"
+                            | "0.11.0"
+                            | "0.12.0"
+                            | "0.13.0"
+                            | "0.14.0"
+                            | "0.15.0"
+                            | "0.16.0"
+                            | "0.17.0"
+                            | "0.18.0"
+                            | "0.19.0"
+                    )
+                ) && resource_kind == "provider-fault-source")
+                && !(matches!(
+                    document["profile"].as_str(),
+                    Some(
+                        "0.8.0"
+                            | "0.9.0"
+                            | "0.10.0"
+                            | "0.11.0"
+                            | "0.12.0"
+                            | "0.13.0"
+                            | "0.14.0"
+                            | "0.15.0"
+                            | "0.16.0"
+                            | "0.17.0"
+                            | "0.18.0"
+                            | "0.19.0"
+                    )
+                ) && resource_kind == "provider-terminal-observation-source")
+                && !(matches!(
+                    document["profile"].as_str(),
+                    Some(
+                        "0.10.0"
+                            | "0.11.0"
+                            | "0.12.0"
+                            | "0.13.0"
+                            | "0.14.0"
+                            | "0.15.0"
+                            | "0.16.0"
+                            | "0.17.0"
+                            | "0.18.0"
+                            | "0.19.0"
+                    )
+                ) && resource_kind == "provider-fault-history")
+            {
                 return Err(error("resource-kind", 0..0));
             }
             let contract = string(&row["contract"])?;
@@ -432,6 +516,180 @@ impl Ledger {
         {
             verify(string(&pin["contract"])?, string(&pin["digest"])?)?;
         }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some("0.16.0" | "0.17.0" | "0.18.0" | "0.19.0")
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V11.0,
+                choreoform_semantic_check::CORE_V11.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some("0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0")
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V10.0,
+                choreoform_semantic_check::CORE_V10.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some("0.13.0" | "0.14.0" | "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0")
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V9.0,
+                choreoform_semantic_check::CORE_V9.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some(
+                "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            )
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V8.0,
+                choreoform_semantic_check::CORE_V8.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some(
+                "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            )
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V7.0,
+                choreoform_semantic_check::CORE_V7.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some(
+                "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            )
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V6.0,
+                choreoform_semantic_check::CORE_V6.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some(
+                "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            )
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V5.0,
+                choreoform_semantic_check::CORE_V5.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some(
+                "0.8.0"
+                    | "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            )
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V4.0,
+                choreoform_semantic_check::CORE_V4.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some(
+                "0.7.0"
+                    | "0.8.0"
+                    | "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            )
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V3.0,
+                choreoform_semantic_check::CORE_V3.1,
+            )?;
+        }
+        if matches!(
+            self.document["profile"].as_str(),
+            Some(
+                "0.6.0"
+                    | "0.7.0"
+                    | "0.8.0"
+                    | "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            )
+        ) {
+            verify(
+                choreoform_semantic_check::CORE_V2.0,
+                choreoform_semantic_check::CORE_V2.1,
+            )?;
+        }
         if self.document["profile"] != "0.2.0" {
             verify(CORE.0, CORE.1)?;
         }
@@ -492,17 +750,93 @@ impl Ledger {
         }
         Err(error("reference-missing", 0..0))
     }
+    /// Exact path lookup ONLY for source 0.16's compensation identity slot.
+    /// This names a declaration, never private values or a dynamic occurrence.
+    pub(crate) fn compensation_identity(&self, parts: &[&str]) -> Result<&Declaration> {
+        let root = &self.declarations[self.root()];
+        if parts.len() < 2
+            || parts.len() > MAX_DEPTH + 1
+            || parts.last().copied() != Some(root.name.as_str())
+        {
+            return Err(error("reference-qualification", 0..0));
+        }
+        let mut scope = root;
+        for name in parts[1..].iter().rev().skip(1) {
+            scope = self
+                .names
+                .get(&(Some(scope.id.clone()), (*name).into()))
+                .and_then(|id| self.declarations.get(id))
+                .ok_or_else(|| error("reference-missing", 0..0))?;
+            if scope.kind != "scope" {
+                return Err(error("reference-kind", 0..0));
+            }
+        }
+        // Direct membership is deliberate: no ancestor fallback or caption scan.
+        self.names
+            .get(&(Some(scope.id.clone()), parts[0].into()))
+            .and_then(|id| self.declarations.get(id))
+            .ok_or_else(|| error("reference-missing", 0..0))
+            .and_then(|row| {
+                if row.kind == "node" {
+                    Ok(row)
+                } else {
+                    Err(error("reference-kind", 0..0))
+                }
+            })
+    }
+    /// Tentative scope lookup ONLY for the versioned wait-endpoint exception.
+    /// The lowering pass must validate the actual wait/policy/activity use before
+    /// returning a candidate. This is not general descendant visibility.
+    pub(crate) fn endpoint_scope(&self, context: &str, parts: &[&str]) -> Result<&Declaration> {
+        let root = &self.declarations[self.root()];
+        if parts.last().copied() != Some(root.name.as_str()) {
+            return Err(error("reference-qualification", 0..0));
+        }
+        let mut target = root;
+        for name in parts.iter().rev().skip(1) {
+            target = self
+                .names
+                .get(&(Some(target.id.clone()), (*name).into()))
+                .and_then(|id| self.declarations.get(id))
+                .ok_or_else(|| error("reference-missing", 0..0))?;
+            if target.kind != "scope" {
+                return Err(error("reference-kind", 0..0));
+            }
+        }
+        let mut parent = target.scope.as_deref();
+        while let Some(id) = parent {
+            if id == context {
+                return Ok(target);
+            }
+            parent = self.declarations[id].scope.as_deref();
+        }
+        Err(error("wait-endpoint-boundary", 0..0))
+    }
     pub(crate) fn symbol(&self, owner: &str, role: &str, name: &str) -> Result<&Symbol> {
-        self.symbol_names
+        let symbol = self
+            .symbol_names
             .get(&(owner.into(), role.into(), name.into()))
-            .and_then(|id| self.symbols.get(id))
-            .ok_or_else(|| error("symbol-mismatch", 0..0))
+            .and_then(|id| self.symbols.get(id));
+        #[cfg(test)]
+        if symbol.is_none() {
+            symbol_audit::record(owner, role, name);
+        }
+        symbol.ok_or_else(|| error("symbol-mismatch", 0..0))
     }
     pub(crate) fn slot(&self, owner: &str, role: &str, key: Option<&str>) -> Result<&Slot> {
         self.slot_keys
             .get(&(owner.into(), role.into(), key.map(str::to_owned)))
             .and_then(|i| self.slots.get(*i))
             .ok_or_else(|| error("slot-mismatch", 0..0))
+    }
+    pub(crate) fn purpose_symbols<'a>(
+        &'a self,
+        owner: &'a str,
+    ) -> impl Iterator<Item = &'a Symbol> {
+        self.symbol_names
+            .range((owner.to_owned(), "purpose".to_owned(), String::new())..)
+            .take_while(move |((o, role, _), _)| o == owner && role == "purpose")
+            .map(|(_, id)| &self.symbols[id])
     }
     pub(crate) fn pin(&self, identity: &str, kind: &str) -> Result<Value> {
         let row = self.document["resources"]

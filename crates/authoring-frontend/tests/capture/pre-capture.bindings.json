@@ -1,0 +1,527 @@
+{
+  "format": "choreoform-authoring-bindings",
+  "version": "0.12.0",
+  "profile": "0.13.0",
+  "definition": "timerless_capture_fixture",
+  "root": "main",
+  "contracts": {
+    "semantics": {
+      "contract": "urn:choreoform:semantics:adr-0008",
+      "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "core": {
+      "contract": "urn:choreoform:contracts:core-profile:0.10.0",
+      "digest": "sha256:74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f",
+      "dialect": "core"
+    }
+  },
+  "declarations": [
+    {
+      "id": "lookup_recovery",
+      "kind": "scope",
+      "scope": "recovery",
+      "name": "Lookup recovery"
+    },
+    {
+      "id": "main",
+      "kind": "scope",
+      "scope": null,
+      "name": "Main"
+    },
+    {
+      "id": "recovery",
+      "kind": "scope",
+      "scope": "root",
+      "name": "Recovery"
+    },
+    {
+      "id": "root",
+      "kind": "scope",
+      "scope": "main",
+      "name": "Root"
+    },
+    {
+      "id": "operator",
+      "kind": "actor",
+      "scope": "main",
+      "name": "Operator"
+    },
+    {
+      "id": "adapter",
+      "kind": "capability",
+      "scope": "main",
+      "name": "Adapter"
+    },
+    {
+      "id": "adapter_lookup",
+      "kind": "capability",
+      "scope": "main",
+      "name": "Adapter lookup"
+    },
+    {
+      "id": "captured",
+      "kind": "data",
+      "scope": "recovery",
+      "name": "Captured"
+    },
+    {
+      "id": "lookup_captured",
+      "kind": "data",
+      "scope": "lookup_recovery",
+      "name": "Lookup captured"
+    },
+    {
+      "id": "lookup_request",
+      "kind": "data",
+      "scope": "lookup_recovery",
+      "name": "Lookup request"
+    },
+    {
+      "id": "lookup_result",
+      "kind": "data",
+      "scope": "recovery",
+      "name": "Lookup result"
+    },
+    {
+      "id": "origin_value",
+      "kind": "data",
+      "scope": "root",
+      "name": "Origin value"
+    },
+    {
+      "id": "original_request",
+      "kind": "data",
+      "scope": "recovery",
+      "name": "Original request"
+    },
+    {
+      "id": "capture_is_confirmed",
+      "kind": "expression",
+      "scope": "recovery",
+      "name": "Capture is confirmed"
+    },
+    {
+      "id": "lookup_confirmed",
+      "kind": "expression",
+      "scope": "lookup_recovery",
+      "name": "Lookup confirmed"
+    },
+    {
+      "id": "lookup_input",
+      "kind": "expression",
+      "scope": "recovery",
+      "name": "Lookup input"
+    },
+    {
+      "id": "request",
+      "kind": "expression",
+      "scope": "root",
+      "name": "Request"
+    },
+    {
+      "id": "authority",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Authority"
+    },
+    {
+      "id": "cancel",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Cancel"
+    },
+    {
+      "id": "close",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Close"
+    },
+    {
+      "id": "effects",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Effects"
+    },
+    {
+      "id": "faults",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Faults"
+    },
+    {
+      "id": "keep",
+      "kind": "policy",
+      "scope": "root",
+      "name": "Keep"
+    },
+    {
+      "id": "lookup_effects",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Lookup effects"
+    },
+    {
+      "id": "lookup_keep",
+      "kind": "policy",
+      "scope": "recovery",
+      "name": "Lookup keep"
+    },
+    {
+      "id": "lookup_work",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Lookup work"
+    },
+    {
+      "id": "ordinary_wait",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Ordinary wait"
+    },
+    {
+      "id": "protection",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Protection"
+    },
+    {
+      "id": "provider_policy",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Provider policy"
+    },
+    {
+      "id": "race",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Race"
+    },
+    {
+      "id": "recovery_wait",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Recovery wait"
+    },
+    {
+      "id": "settlement",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Settlement"
+    },
+    {
+      "id": "work",
+      "kind": "policy",
+      "scope": "main",
+      "name": "Work"
+    },
+    {
+      "id": "capture_wait",
+      "kind": "node",
+      "scope": "recovery",
+      "name": "Capture wait"
+    },
+    {
+      "id": "done",
+      "kind": "node",
+      "scope": "recovery",
+      "name": "Done"
+    },
+    {
+      "id": "lookup",
+      "kind": "node",
+      "scope": "recovery",
+      "name": "Lookup"
+    },
+    {
+      "id": "lookup_branch",
+      "kind": "node",
+      "scope": "lookup_recovery",
+      "name": "Lookup branch"
+    },
+    {
+      "id": "lookup_done",
+      "kind": "node",
+      "scope": "lookup_recovery",
+      "name": "Lookup done"
+    },
+    {
+      "id": "main_done",
+      "kind": "node",
+      "scope": "main",
+      "name": "Main done"
+    },
+    {
+      "id": "origin",
+      "kind": "node",
+      "scope": "root",
+      "name": "Origin"
+    },
+    {
+      "id": "owner_done",
+      "kind": "node",
+      "scope": "root",
+      "name": "Owner done"
+    },
+    {
+      "id": "read_capture",
+      "kind": "node",
+      "scope": "recovery",
+      "name": "Read capture"
+    },
+    {
+      "id": "run_owner",
+      "kind": "node",
+      "scope": "main",
+      "name": "Run owner"
+    },
+    {
+      "id": "unused_lookup_wait",
+      "kind": "node",
+      "scope": "lookup_recovery",
+      "name": "Unused lookup wait"
+    },
+    {
+      "id": "provider_resource",
+      "kind": "resource",
+      "scope": "main",
+      "name": "Provider"
+    },
+    {
+      "id": "terminal_resource",
+      "kind": "resource",
+      "scope": "main",
+      "name": "Terminal facts"
+    },
+    {
+      "id": "fault_resource",
+      "kind": "resource",
+      "scope": "main",
+      "name": "Query faults"
+    }
+  ],
+  "generated": [
+    {
+      "id": "capture_next",
+      "owner": "capture_wait",
+      "role": "flow",
+      "key": "capture_wait_outcome_observed"
+    },
+    {
+      "id": "lookup_branch_no",
+      "owner": "lookup_branch",
+      "role": "flow",
+      "key": "lookup_branch_outcome_no"
+    },
+    {
+      "id": "lookup_branch_yes",
+      "owner": "lookup_branch",
+      "role": "flow",
+      "key": "lookup_branch_outcome_yes"
+    },
+    {
+      "id": "lookup_next",
+      "owner": "lookup",
+      "role": "flow",
+      "key": "lookup_outcome_done"
+    },
+    {
+      "id": "main_next",
+      "owner": "run_owner",
+      "role": "flow",
+      "key": "run_owner_outcome_complete"
+    },
+    {
+      "id": "origin_next",
+      "owner": "origin",
+      "role": "flow",
+      "key": "origin_outcome_done"
+    },
+    {
+      "id": "read_no",
+      "owner": "read_capture",
+      "role": "flow",
+      "key": "read_capture_outcome_no"
+    },
+    {
+      "id": "read_yes",
+      "owner": "read_capture",
+      "role": "flow",
+      "key": "read_capture_outcome_yes"
+    },
+    {
+      "id": "unused_lookup_next",
+      "owner": "unused_lookup_wait",
+      "role": "flow",
+      "key": "unused_lookup_wait_outcome_observed"
+    },
+    {
+      "id": "adapter_provider",
+      "owner": "adapter",
+      "role": "provider-policy",
+      "key": null
+    },
+    {
+      "id": "adapter_lookup_provider",
+      "owner": "adapter_lookup",
+      "role": "provider-policy",
+      "key": null
+    }
+  ],
+  "symbols": [
+    {
+      "id": "lookup_recovery_outcome_complete",
+      "owner": "lookup_recovery",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "main_outcome_complete",
+      "owner": "main",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "recovery_outcome_complete",
+      "owner": "recovery",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "root_outcome_complete",
+      "owner": "root",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "capture_wait_outcome_observed",
+      "owner": "capture_wait",
+      "role": "outcome",
+      "name": "observed",
+      "wire": "observed"
+    },
+    {
+      "id": "lookup_outcome_done",
+      "owner": "lookup",
+      "role": "outcome",
+      "name": "done",
+      "wire": "done"
+    },
+    {
+      "id": "lookup_branch_outcome_no",
+      "owner": "lookup_branch",
+      "role": "outcome",
+      "name": "no",
+      "wire": "no"
+    },
+    {
+      "id": "lookup_branch_outcome_yes",
+      "owner": "lookup_branch",
+      "role": "outcome",
+      "name": "yes",
+      "wire": "yes"
+    },
+    {
+      "id": "origin_outcome_done",
+      "owner": "origin",
+      "role": "outcome",
+      "name": "done",
+      "wire": "done"
+    },
+    {
+      "id": "read_capture_outcome_no",
+      "owner": "read_capture",
+      "role": "outcome",
+      "name": "no",
+      "wire": "no"
+    },
+    {
+      "id": "read_capture_outcome_yes",
+      "owner": "read_capture",
+      "role": "outcome",
+      "name": "yes",
+      "wire": "yes"
+    },
+    {
+      "id": "run_owner_outcome_complete",
+      "owner": "run_owner",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "unused_lookup_wait_outcome_observed",
+      "owner": "unused_lookup_wait",
+      "role": "outcome",
+      "name": "observed",
+      "wire": "observed"
+    },
+    {
+      "id": "captured_purpose_test",
+      "owner": "captured",
+      "role": "purpose",
+      "name": "test",
+      "wire": "test"
+    },
+    {
+      "id": "lookup_captured_purpose_test",
+      "owner": "lookup_captured",
+      "role": "purpose",
+      "name": "test",
+      "wire": "test"
+    },
+    {
+      "id": "lookup_request_purpose_test",
+      "owner": "lookup_request",
+      "role": "purpose",
+      "name": "test",
+      "wire": "test"
+    },
+    {
+      "id": "lookup_result_purpose_test",
+      "owner": "lookup_result",
+      "role": "purpose",
+      "name": "test",
+      "wire": "test"
+    },
+    {
+      "id": "origin_value_purpose_test",
+      "owner": "origin_value",
+      "role": "purpose",
+      "name": "test",
+      "wire": "test"
+    },
+    {
+      "id": "original_request_purpose_test",
+      "owner": "original_request",
+      "role": "purpose",
+      "name": "test",
+      "wire": "test"
+    }
+  ],
+  "retired": [],
+  "resources": [
+    {
+      "binding": "provider_resource",
+      "kind": "provider",
+      "contract": "urn:test:continuation-audit-provider",
+      "digest": "sha256:f59de50daa1482e4b6e7dff697e49b4bab2923d80292f089441a8b3d16b8a719"
+    },
+    {
+      "binding": "terminal_resource",
+      "kind": "provider-terminal-observation-source",
+      "contract": "urn:test:continuation-audit-terminal",
+      "digest": "sha256:adad1ce6621d605e1fb752d9b998c182527dd88aef59f10be84835224a929acc"
+    },
+    {
+      "binding": "fault_resource",
+      "kind": "provider-fault-source",
+      "contract": "urn:test:owned-query-faults",
+      "digest": "sha256:10bd104388469dddc2e2a0913b2630388168a75cc5852a812111d612e5c360a6"
+    }
+  ],
+  "annotations": {}
+}

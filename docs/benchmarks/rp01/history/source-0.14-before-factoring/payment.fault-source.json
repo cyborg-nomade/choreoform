@@ -1,0 +1,27 @@
+{
+  "kind": "provider-fault-source",
+  "version": "0.1.0",
+  "id": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+  "profile": {
+    "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
+    "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0"
+  },
+  "provider": {
+    "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+    "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d"
+  },
+  "emissions": {
+    "confirmed no effect": {
+      "observations": {
+        "no-effect": true
+      },
+      "evidence": "definitive-no-effect"
+    },
+    "provider unknown": {
+      "observations": {
+        "unknown": true
+      },
+      "evidence": "unresolved"
+    }
+  }
+}

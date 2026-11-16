@@ -9,14 +9,47 @@ pub const MAX_BYTES: usize = 1024 * 1024;
 pub const MAX_DEPTH: usize = 64;
 const MAX_INT: i64 = 9_007_199_254_740_991;
 
+/// Limits for raw JSON only; never relaxes an IR admission entry point.
+#[derive(Debug, Clone, Copy)]
+pub struct DecodeLimits {
+    pub max_bytes: usize,
+    pub max_containers: usize,
+    pub max_items: usize,
+    pub reject_negative_zero: bool,
+}
+
+/// Strict bounded transport for authoring bundles. No semantic authority follows.
+pub fn decode_with_limits(raw: &[u8], limits: DecodeLimits) -> Result<Value> {
+    if limits.max_bytes == 0
+        || limits.max_bytes > 16 * MAX_BYTES
+        || limits.max_containers == 0
+        || limits.max_containers > MAX_DEPTH
+        || limits.max_items == 0
+        || limits.max_items > 262_144
+        || raw.len() > limits.max_bytes
+    {
+        return Err(Error::Size);
+    }
+    decode_inner(raw, Some(limits))
+}
+
 /// Strict wire decoder, before any information-losing Value conversion.
 /// Root depth is zero; object keys and values both occupy the next depth.
 pub fn decode(raw: &[u8]) -> Result<Value> {
     if raw.len() > MAX_BYTES {
         return Err(Error::Size);
     }
+    decode_inner(raw, None)
+}
+
+fn decode_inner(raw: &[u8], limits: Option<DecodeLimits>) -> Result<Value> {
     let text = std::str::from_utf8(raw).map_err(|_| Error::Utf8)?;
-    let mut parser = Parser { text, pos: 0 };
+    let mut parser = Parser {
+        text,
+        pos: 0,
+        limits,
+        items: 0,
+    };
     let value = parser.value(0)?;
     parser.space();
     if parser.pos != raw.len() {
@@ -28,9 +61,20 @@ pub fn decode(raw: &[u8]) -> Result<Value> {
 struct Parser<'a> {
     text: &'a str,
     pos: usize,
+    limits: Option<DecodeLimits>,
+    items: usize,
 }
 
 impl Parser<'_> {
+    fn item(&mut self) -> Result<()> {
+        if let Some(limits) = self.limits {
+            if self.items >= limits.max_items {
+                return Err(Error::Size);
+            }
+            self.items += 1;
+        }
+        Ok(())
+    }
     fn byte(&self) -> Option<u8> {
         self.text.as_bytes().get(self.pos).copied()
     }
@@ -76,10 +120,16 @@ impl Parser<'_> {
     }
 
     fn value(&mut self, depth: usize) -> Result<Value> {
+        self.item()?;
         if depth > MAX_DEPTH {
             return Err(Error::Depth);
         }
         self.space();
+        if self.limits.is_some_and(|l| depth >= l.max_containers)
+            && matches!(self.byte(), Some(b'{' | b'['))
+        {
+            return Err(Error::Depth);
+        }
         match self.byte() {
             Some(b'{') => {
                 self.pos += 1;
@@ -90,6 +140,7 @@ impl Parser<'_> {
                         if depth == MAX_DEPTH {
                             return Err(Error::Depth);
                         }
+                        self.item()?;
                         let key = self.string()?;
                         // Compare decoded names: "a" and "\u0061" duplicate.
                         if map.contains_key(&key) {
@@ -166,6 +217,11 @@ impl Parser<'_> {
             .map_err(|_| Error::IntegerRange)?;
         if !(-MAX_INT..=MAX_INT).contains(&number) {
             return Err(Error::IntegerRange);
+        }
+        if self.limits.is_some_and(|l| l.reject_negative_zero)
+            && &self.text[start..self.pos] == "-0"
+        {
+            return Err(Error::NumberToken);
         }
         // Integer token -0 is permitted and canonicalizes to 0.
         Ok(Value::from(number))
@@ -282,6 +338,77 @@ pub fn admit_value(value: &Value) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn authoring_limits() -> DecodeLimits {
+        DecodeLimits {
+            max_bytes: 16 * MAX_BYTES,
+            max_containers: 64,
+            max_items: 262_144,
+            reject_negative_zero: true,
+        }
+    }
+    #[test]
+    fn bounded_decoder_keeps_legacy_admission_fixed_and_charges_keys_and_values() {
+        let limits = authoring_limits();
+        let large = format!("\"{}\"", "x".repeat(MAX_BYTES));
+        assert!(decode_with_limits(large.as_bytes(), limits).is_ok());
+        assert_eq!(decode(large.as_bytes()), Err(Error::Size));
+        assert_eq!(decode_with_limits(b"-0", limits), Err(Error::NumberToken));
+        assert_eq!(decode(b"-0").unwrap(), Value::from(0));
+        let mut small = limits;
+        small.max_items = 3;
+        assert!(decode_with_limits(b"{\"k\":0}", small).is_ok());
+        small.max_items = 2;
+        assert_eq!(decode_with_limits(b"{\"k\":0}", small), Err(Error::Size));
+        for raw in [
+            b"{\"a\":0,\"\\u0061\":1}".as_slice(),
+            b"0.0",
+            b"NaN",
+            b"9007199254740992",
+            b"\"\\ud800\"",
+            b"\xef\xbb\xbf{}",
+            b"{} trailing",
+        ] {
+            assert!(decode_with_limits(raw, limits).is_err());
+        }
+    }
+    #[test]
+    fn bounded_container_and_configuration_boundaries_are_exact() {
+        let limits = authoring_limits();
+        for terminal in ["0", ""] {
+            let at = format!("{}{}{}", "[".repeat(64), terminal, "]".repeat(64));
+            assert!(decode_with_limits(at.as_bytes(), limits).is_ok());
+            let beyond = format!("{}{}{}", "[".repeat(65), terminal, "]".repeat(65));
+            assert_eq!(
+                decode_with_limits(beyond.as_bytes(), limits),
+                Err(Error::Depth)
+            );
+        }
+        let legacy_empty = format!("{}{}", "[".repeat(65), "]".repeat(65));
+        assert!(decode(legacy_empty.as_bytes()).is_ok());
+        for bound in [0, 16 * MAX_BYTES + 1] {
+            let mut bad = limits;
+            bad.max_bytes = bound;
+            assert_eq!(decode_with_limits(b"0", bad), Err(Error::Size));
+        }
+        for bound in [0, 65] {
+            let mut bad = limits;
+            bad.max_containers = bound;
+            assert_eq!(decode_with_limits(b"0", bad), Err(Error::Size));
+        }
+        for bound in [0, 262145] {
+            let mut bad = limits;
+            bad.max_items = bound;
+            assert_eq!(decode_with_limits(b"0", bad), Err(Error::Size));
+        }
+        let mut tiny = limits;
+        tiny.max_bytes = 1;
+        assert!(decode_with_limits(b"0", tiny).is_ok());
+        assert_eq!(decode_with_limits(b"0 ", tiny), Err(Error::Size));
+        let mut legacy_zero = limits;
+        legacy_zero.reject_negative_zero = false;
+        assert!(decode_with_limits(b"-0", legacy_zero).is_ok());
+    }
 
     #[test]
     fn generated_string_roundtrips() {

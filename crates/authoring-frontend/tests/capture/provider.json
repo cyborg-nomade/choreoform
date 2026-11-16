@@ -1,0 +1,43 @@
+{
+  "kind": "provider-contract",
+  "version": "0.1.0",
+  "id": "urn:test:terminal-provider",
+  "input": {
+    "kind": "record",
+    "fields": {}
+  },
+  "output": {
+    "kind": "integer"
+  },
+  "outcomes": {
+    "done": true
+  },
+  "observations": {
+    "done": {
+      "state": "succeeded",
+      "result": {
+        "kind": "integer"
+      },
+      "outcome": "done"
+    }
+  },
+  "resultProtection": {
+    "policy": "expense_access",
+    "sensitivity": "expense",
+    "purposes": {
+      "reimbursement": true
+    },
+    "participants": {
+      "employee_actor": true,
+      "manager_actor": true,
+      "finance_actor": true,
+      "operator_actor": true,
+      "clock_actor": true
+    },
+    "capabilities": {
+      "capture_cap": true
+    }
+  },
+  "effectClass": "read-only",
+  "idempotency": "none"
+}

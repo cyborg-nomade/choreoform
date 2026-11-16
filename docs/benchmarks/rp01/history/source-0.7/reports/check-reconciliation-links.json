@@ -1,0 +1,971 @@
+{
+  "conditionalExceptionalNodes": [],
+  "executable": false,
+  "historicalOrigins": [
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "check_rejection"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "check_rejection"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "corrected_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "check_rejection"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "correction_reasons",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "check_rejection"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "cycle_checks",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "check_rejection"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "duplicate_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "check_rejection"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "finance_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "check_rejection"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "manager_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "check_rejection"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "choose_check"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "choose_check"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "corrected_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "correction_reasons",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "cycle_checks",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "duplicate_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "finance_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "manager_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_deadline",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_request",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_result",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "choose_paid"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "choose_payment"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "choose_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "corrected_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "correction_reasons",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "cycle_checks",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "duplicate_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "finance_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "manager_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "choose_payment"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "correct_claim"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "correct_claim"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "duplicate_review"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "duplicate_review"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "finance_review"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "finance_review"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "manager_review"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "manager_review"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "corrected_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "correction_reasons",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "cycle_checks",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "duplicate_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "finance_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "manager_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_deadline",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_request",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_result",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "notice_request_step"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "payment_request_step"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "payment_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "corrected_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "payment_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "correction_reasons",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "payment_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "cycle_checks",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "payment_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "duplicate_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "payment_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "finance_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "payment_request_step"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "manager_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "payment_request_step"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "checks_service",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "corrected_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "correction_reasons",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "cycle_checks",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "duplicate_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "finance_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "manager_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "review_cycle",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "run_notice",
+      "cell": "notice_request",
+      "closure": "notice_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "notice_service",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "run_notice",
+      "cell": "notice_result",
+      "closure": "notice_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "notice_service",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_deadline",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_request",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_result",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "scope": "payment_service",
+      "site": "publish_outcome"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "checks_service",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "checks_service",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "corrected_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "review_cycle",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "correction_reasons",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "review_cycle",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "cycle_checks",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "review_cycle",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "duplicate_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "review_cycle",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "finance_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "review_cycle",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "manager_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "review_cycle",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_deadline",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "payment_service",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_request",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "payment_service",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "run_payment",
+      "cell": "payment_result",
+      "closure": "payment_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "notice_service",
+      "scope": "payment_service",
+      "site": "run_notice"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_request",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "payment_service",
+      "scope": "checks_service",
+      "site": "run_payment"
+    },
+    {
+      "boundary": "run_checks",
+      "cell": "checks_result",
+      "closure": "checks_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "payment_service",
+      "scope": "checks_service",
+      "site": "run_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "corrected_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "payment_service",
+      "scope": "review_cycle",
+      "site": "run_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "correction_reasons",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "payment_service",
+      "scope": "review_cycle",
+      "site": "run_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "cycle_checks",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "payment_service",
+      "scope": "review_cycle",
+      "site": "run_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "duplicate_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "payment_service",
+      "scope": "review_cycle",
+      "site": "run_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "finance_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "payment_service",
+      "scope": "review_cycle",
+      "site": "run_payment"
+    },
+    {
+      "boundary": "review_again",
+      "cell": "manager_result",
+      "closure": "ordinary_close",
+      "condition": "ordinary-completion-with-no-declared-descendant-writer",
+      "contextScope": "payment_service",
+      "scope": "review_cycle",
+      "site": "run_payment"
+    }
+  ],
+  "isolatedFollowups": [
+    {
+      "body": "checks_service",
+      "closure": "checks_close",
+      "creator": "run_checks",
+      "followup": "checks_recovery",
+      "hostRequirements": [
+        "occurrence-bound-followup-created-before-owner-disposal",
+        "exact-authenticated-obligation-request-and-observation-correlation",
+        "fresh-authority-and-accepted-atomic-single-owner-handoff",
+        "retain-all-transitive-obligations-and-subscriptions-until-settled",
+        "durable-late-fact-deduplication-and-contradiction-handling",
+        "all-owned-obligations-settled-before-terminal-disposal"
+      ],
+      "waits": [
+        "checks_observe"
+      ]
+    },
+    {
+      "body": "notice_service",
+      "closure": "notice_close",
+      "creator": "run_notice",
+      "followup": "notice_recovery",
+      "hostRequirements": [
+        "occurrence-bound-followup-created-before-owner-disposal",
+        "exact-authenticated-obligation-request-and-observation-correlation",
+        "fresh-authority-and-accepted-atomic-single-owner-handoff",
+        "retain-all-transitive-obligations-and-subscriptions-until-settled",
+        "durable-late-fact-deduplication-and-contradiction-handling",
+        "all-owned-obligations-settled-before-terminal-disposal"
+      ],
+      "waits": [
+        "notice_observe"
+      ]
+    },
+    {
+      "body": "payment_service",
+      "closure": "payment_close",
+      "creator": "run_payment",
+      "followup": "payment_recovery",
+      "hostRequirements": [
+        "occurrence-bound-followup-created-before-owner-disposal",
+        "exact-authenticated-obligation-request-and-observation-correlation",
+        "fresh-authority-and-accepted-atomic-single-owner-handoff",
+        "retain-all-transitive-obligations-and-subscriptions-until-settled",
+        "durable-late-fact-deduplication-and-contradiction-handling",
+        "all-owned-obligations-settled-before-terminal-disposal"
+      ],
+      "waits": [
+        "payment_observe"
+      ]
+    }
+  ],
+  "ordinaryCoveredNodes": [
+    "check_rejection",
+    "checks_correction_reason",
+    "checks_done",
+    "checks_rejection_reason",
+    "checks_request_step",
+    "choose_check",
+    "choose_paid",
+    "choose_payment",
+    "correct_claim",
+    "cycle_done",
+    "duplicate_correction_reason",
+    "duplicate_rejection_reason",
+    "duplicate_review",
+    "finance_correction_reason",
+    "finance_rejection_reason",
+    "finance_review",
+    "finish_paid",
+    "finish_problem",
+    "finish_rejected",
+    "manager_correction_reason",
+    "manager_rejection_reason",
+    "manager_review",
+    "notice_done",
+    "notice_request_step",
+    "payment_done",
+    "payment_request_step",
+    "publish_correction",
+    "publish_outcome",
+    "record_finance",
+    "record_manager",
+    "record_paid",
+    "record_problem",
+    "reject_claim",
+    "review_again",
+    "run_checks",
+    "run_notice",
+    "run_payment",
+    "stale_payment"
+  ],
+  "ordinaryUnvisitedReconciliationSites": [],
+  "priorExceptionalObligations": [
+    "all-prior-fault-route-and-timing-obligations",
+    "live-ancestor-input-revisions-and-successful-activation-premises",
+    "fault-site-specific-snapshot-and-reconciliation-entry-proofs",
+    "exceptional-fault-control-protection-and-invalidation",
+    "current-principal-purpose-capability-and-policy-enforcement",
+    "concurrent-handler-occurrence-lifetime-and-owned-settlement",
+    "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
+    "host-trust-and-atomic-runtime-enforcement",
+    "full-benchmark-conformance-cross-form-and-user-evidence"
+  ],
+  "priorFaultRouteObligations": [
+    "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
+    "all-prior-timing-stage-obligations",
+    "exceptional-handler-entry-availability-protection-and-invalidation",
+    "concurrent-handler-activation-and-occurrence-lifetime-proofs",
+    "truthful-business-versus-engine-fault-classification",
+    "authenticated-fault-source-occurrence-cause-and-input-revisions",
+    "runtime-selection-exclusion-and-cancellation-monotonicity",
+    "live-handler-reconciliation-ownership-and-atomic-settlement",
+    "full-benchmark-cross-form-and-user-evidence"
+  ],
+  "priorTimingObligations": [
+    "parallel-and-exceptional-availability-proofs",
+    "exceptional-and-observable-channel-information-flow",
+    "current-principal-purpose-capability-and-policy-enforcement",
+    "domain-and-irreversible-race-invariant-proofs",
+    "exceptional-and-reconciliation-concurrency",
+    "live-calendar-activation-and-retry-domain-fault-basis-bindings",
+    "live-clock-pause-reschedule-membership-and-lifecycle-enforcement",
+    "exceptional-and-non-data-invalidation-and-lifecycle-enforcement",
+    "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
+    "host-trust-and-atomic-runtime-enforcement",
+    "full-benchmark-and-conformance-evidence"
+  ],
+  "reconciliationUses": [
+    {
+      "capability": "checks_capability",
+      "closure": "checks_close",
+      "effects": "checks_effects",
+      "followup": "checks_recovery",
+      "hostRequirements": [
+        "create-followup-before-disposing-the-current-obligation-owner",
+        "live-followup-entry-snapshot-availability-and-current-authority",
+        "exact-effect-request-input-and-observation-correlation",
+        "accepted-authorized-atomic-obligation-and-subscription-handoff",
+        "durable-late-fact-deduplication-and-conflict-reconciliation",
+        "all-owned-obligations-settled-before-followup-terminal-closure"
+      ],
+      "scope": "checks_service",
+      "site": "checks_request_step",
+      "waitNode": "checks_observe",
+      "waitPolicy": "checks_wait"
+    },
+    {
+      "capability": "notice_capability",
+      "closure": "notice_close",
+      "effects": "notice_effects",
+      "followup": "notice_recovery",
+      "hostRequirements": [
+        "create-followup-before-disposing-the-current-obligation-owner",
+        "live-followup-entry-snapshot-availability-and-current-authority",
+        "exact-effect-request-input-and-observation-correlation",
+        "accepted-authorized-atomic-obligation-and-subscription-handoff",
+        "durable-late-fact-deduplication-and-conflict-reconciliation",
+        "all-owned-obligations-settled-before-followup-terminal-closure"
+      ],
+      "scope": "notice_service",
+      "site": "notice_request_step",
+      "waitNode": "notice_observe",
+      "waitPolicy": "notice_wait"
+    },
+    {
+      "capability": "payment_capability",
+      "closure": "payment_close",
+      "effects": "payment_effects",
+      "followup": "payment_recovery",
+      "hostRequirements": [
+        "create-followup-before-disposing-the-current-obligation-owner",
+        "live-followup-entry-snapshot-availability-and-current-authority",
+        "exact-effect-request-input-and-observation-correlation",
+        "accepted-authorized-atomic-obligation-and-subscription-handoff",
+        "durable-late-fact-deduplication-and-conflict-reconciliation",
+        "all-owned-obligations-settled-before-followup-terminal-closure"
+      ],
+      "scope": "payment_service",
+      "site": "payment_request_step",
+      "waitNode": "payment_observe",
+      "waitPolicy": "payment_wait"
+    }
+  ],
+  "remaining": [
+    "occurrence-bound-ordinary-closure-and-snapshot-enforcement",
+    "all-prior-exceptional-fault-route-and-timing-obligations",
+    "reconciliation-entry-data-protection-and-invalidation",
+    "live-obligation-subscription-and-occurrence-ownership",
+    "current-authority-accepted-transfer-and-atomic-settlement",
+    "exact-provider-truth-request-key-and-observation-correlation",
+    "multiple-obligation-wait-progress-and-terminal-disposal",
+    "full-validator-benchmark-cross-form-and-user-evidence"
+  ],
+  "retryFaultBindings": [
+    {
+      "faults": {
+        "confirmed no effect": {
+          "evidence": "definitive-no-effect",
+          "observations": [
+            "no-effect"
+          ]
+        }
+      },
+      "hostRequirements": [
+        "supported-authenticated-provider-observation-and-non-engine-fault-emission",
+        "exact-original-attempt-occurrence-request-key-and-input-revision-correlation",
+        "current-work-target-source-protection-and-access-authority",
+        "actual-stable-key-or-definitive-correlated-no-effect-as-required",
+        "accepted-eligible-fault-budget-delay-and-unchanged-basis",
+        "atomic-no-retry-after-success-cancellation-or-ordinary-closure",
+        "owned-reconciliation-deduplication-contradictions-and-terminal-settlement"
+      ],
+      "profile": {
+        "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
+        "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0"
+      },
+      "provider": {
+        "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+        "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d"
+      },
+      "revision": "sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4",
+      "site": "payment_request_step",
+      "source": {
+        "id": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+        "revision": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223"
+      }
+    }
+  ],
+  "revision": "sha256:97e5c346442d5b051e40bc91d2c3014be1bd990688324be846739c5d35a265c4",
+  "status": "reconciliation-links-checked",
+  "uncoveredNodes": [
+    "checks_observe",
+    "checks_recovered",
+    "notice_observe",
+    "notice_recovered",
+    "payment_observe",
+    "payment_recovered",
+    "remaining_done"
+  ],
+  "unusedEffectContexts": []
+}

@@ -131,7 +131,34 @@ impl<'a, 's> Lower<'a, 's> {
                 self.join_selections.insert(id.clone(), selected);
                 node["remaining"] = self.r(action, scope, "policy", 1)?.into();
             }
-            "wait" => node["policy"] = self.r(action, scope, "policy", 0)?.into(),
+            "wait" => {
+                node["policy"] = self.r(action, scope, "policy", 0)?.into();
+                if matches!(
+                    self.syntax.profile(),
+                    "0.8.0"
+                        | "0.9.0"
+                        | "0.10.0"
+                        | "0.11.0"
+                        | "0.12.0"
+                        | "0.13.0"
+                        | "0.14.0"
+                        | "0.15.0"
+                        | "0.16.0"
+                        | "0.17.0"
+                        | "0.18.0"
+                        | "0.19.0"
+                ) {
+                    node["capture"] = if action.all("reference").len() > 1 {
+                        let source = self.r(action, scope, "resource", 1)?;
+                        let origin = self.r(action, scope, "node", 2)?;
+                        let result = self.r(action, scope, "data", 3)?;
+                        node["writes"] = set([result.clone()]);
+                        json!({"source":self.ledger.pin(&source, "provider-terminal-observation-source")?,"origin":origin,"result":result})
+                    } else {
+                        Value::Null
+                    };
+                }
+            }
             "repeat" => {
                 node["condition"] = self.r(action, scope, "expression", 0)?.into();
                 node["body"] = self.r(action, scope, "scope", 1)?.into();

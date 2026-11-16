@@ -113,3 +113,10 @@ The error-category names are probe-local, not the future stable diagnostics
 contract. The adapter must bound inputs before a Wasm transfer; the core's
 1 MiB/depth-64 checks happen after the binding has copied the input into Wasm.
 This test page supplies only bounded fixtures and fixed negative byte arrays.
+
+The shared native/browser suite now includes eight IR-0.2 structural cases, for
+97 cases total. The new source reference is deliberately unbound and its origin
+is human: structural projection checks roles/shape only, while the semantic crate
+separately rejects unsupported capture context. The native oracle checks 17 JCS/hash
+comparisons and nine CLI operations; compiling the shared suite to Wasm supplies
+no actual browser execution evidence. All three original fixtures/hashes remain.

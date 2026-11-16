@@ -1,0 +1,63 @@
+Choreoform authoring "0.14.0".
+Process "Main".
+Start at "Run owner".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Faults", closure "Close" and races "Race".
+Rule for actor "Authority". Permit when (true). End policy.
+Rule for cancel "Cancel". Authority "Operator". For children use "Settlement". End policy.
+Rule for closure "Close". Fully terminal. End policy.
+Rule for effect "Effects". Effect is compensatable. Idempotency is stable-key. Reconcile under "Ordinary wait". End policy.
+Rule for faults "Faults". Handle empty. End policy.
+Rule for effect "Adjustment effects". Effect is irreversible. Idempotency is stable-key. Reconcile under "Recovery wait". End policy.
+Rule for wait "Ordinary wait". Observe choice with ["confirmed" as whole number]. Match when (true). Authority "Operator". Timer none. On observation outcome "observed" of "Capture wait" in "Recovery" in "Root" in "Main". On timer none. End policy.
+Rule for protection "Protection". Permit access when (true). End policy.
+Rule for capability "Provider policy". Provider contract "Payable provider". End policy.
+Rule for race "Race". Accept in acceptance order. End policy.
+Rule for wait "Recovery wait". Observe choice with ["confirmed" as whole number]. Match when (true). Authority "Operator". Timer none. On observation outcome "observed" of "Adjustment wait" in "Adjustment recovery" in "Recovery" in "Root" in "Main". On timer none. End policy.
+Rule for settlement "Settlement". Unfinished work cancel. End policy.
+Rule for work "Work". Instructions "Synthetic declaration". Authority "Operator". Attempts 1. Delays empty. Retry faults empty. Timeout none. Complete when (true). Compensates none. End policy.
+Require actor "Operator" under "Authority".
+Use capability "Payable service" from "Payable provider" with input record with empty and output whole number, authority "Operator" and effects "Effects".
+Use capability "Adjustment service" from "Adjustment provider" with input whole number and output whole number, authority "Operator" and effects "Adjustment effects".
+Step "Main done". Finish as "complete".  End step.
+Step "Run owner". Run "Root" with inputs empty and outputs empty. On "complete", continue with "Main done". End step.
+Scope "Root" within "Main".
+Start at "Create payable".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Faults", closure "Keep" and races "Race".
+Rule for closure "Keep". Reconcile in "Recovery". End policy.
+Keep "Origin value" as whole number under "Protection". Sensitivity "internal". Purposes ["test"]. Participants ["Operator"]. Capabilities ["Payable service", "Adjustment service"]. Invalidate empty. Initially unavailable. End data.
+Let "Request" mean (record with empty) as record with empty with parameters empty.
+Step "Create payable". Request "Payable service" using "Request" under "Work" and record in "Origin value". On "done", continue with "Owner done". End step.
+Step "Owner done". Finish as "complete".  End step.
+Scope "Recovery" within "Root".
+Start at "Capture wait".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Faults", closure "Lookup keep" and races "Race".
+Retain the original request from "Create payable" and record in "Original request".
+Rule for work "Adjustment work". Instructions "Synthetic declaration". Authority "Operator". Recognise faults from "Adjustment faults". Attempts 1. Delays empty. Retry faults empty. Timeout none. Complete when (true). Compensates "Create payable". End policy.
+Rule for closure "Lookup keep". Reconcile in "Adjustment recovery". End policy.
+Keep "Captured" as choice with ["confirmed" as whole number] under "Protection". Sensitivity "internal". Purposes ["test"]. Participants ["Operator"]. Capabilities ["Payable service", "Adjustment service"]. Invalidate ["Capture wait", "Done", "Adjust account", "Read capture"]. Initially unavailable. End data.
+Keep "Adjustment result" as whole number under "Protection". Sensitivity "internal". Purposes ["test"]. Participants ["Operator"]. Capabilities ["Payable service", "Adjustment service"]. Invalidate ["Capture wait", "Done", "Adjust account", "Read capture"]. Initially unavailable. End data.
+Keep "Original request" as record with empty under "Protection". Sensitivity "internal". Purposes ["test"]. Participants ["Operator"]. Capabilities ["Payable service", "Adjustment service"]. Invalidate ["Capture wait", "Done", "Adjust account", "Read capture"]. Initially unavailable. End data.
+Let "Capture is confirmed" mean ((the case of (the value of "Captured")) equals ("confirmed")) as truth value with parameters empty.
+Let "Adjustment input" mean (the payload of (the value of "Captured") for "confirmed") as whole number with parameters empty.
+Step "Capture wait". Wait under "Ordinary wait" for observations from "Payable facts" about "Create payable" and record in "Captured". On "observed", continue with "Read capture". End step.
+Step "Done". Finish as "complete".  End step.
+Step "Adjust account". Request "Adjustment service" using "Adjustment input" under "Adjustment work" and record in "Adjustment result". On "done", continue with "Done". End step.
+Step "Read capture". Choose by ["yes" when "Capture is confirmed"]; otherwise "no". On "no", continue with "Done". On "yes", continue with "Adjust account". End step.
+Scope "Adjustment recovery" within "Recovery".
+Start at "Adjustment wait".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Cancel", faults "Faults", closure "Close" and races "Race".
+Retain the original request from "Adjust account" and record in "Adjustment request".
+Keep "Adjustment captured" as choice with ["confirmed" as whole number] under "Protection". Sensitivity "internal". Purposes ["test"]. Participants ["Operator"]. Capabilities ["Payable service", "Adjustment service"]. Invalidate ["Adjustment branch", "Adjustment done", "Adjustment wait"]. Initially unavailable. End data.
+Keep "Adjustment request" as whole number under "Protection". Sensitivity "internal". Purposes ["test"]. Participants ["Operator"]. Capabilities ["Payable service", "Adjustment service"]. Invalidate ["Adjustment branch", "Adjustment done", "Adjustment wait"]. Initially unavailable. End data.
+Let "Adjustment confirmed" mean ((the case of (the value of "Adjustment captured")) equals ("confirmed")) as truth value with parameters empty.
+Step "Adjustment branch". Choose by ["yes" when "Adjustment confirmed"]; otherwise "no". On "no", continue with "Adjustment done". On "yes", continue with "Adjustment done". End step.
+Step "Adjustment done". Finish as "complete".  End step.
+Step "Adjustment wait". Wait under "Recovery wait" for observations from "Adjustment facts" about "Adjust account" and record in "Adjustment captured". On "observed", continue with "Adjustment branch". End step.
+End scope.
+End scope.
+End scope.
+End process.

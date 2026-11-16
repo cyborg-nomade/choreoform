@@ -9,31 +9,65 @@ mod control;
 mod definition;
 mod exceptional;
 mod expression;
+mod expression_assertions;
+pub use expression_assertions::ExpressionTypeAssertion;
+mod fault_entry;
 mod faults;
 mod initialization;
 mod invalidation;
+mod owned_continuation;
+mod policy_reads;
 mod protection;
 mod reconciliation;
 mod reconciliation_entry;
+pub use owned_continuation::{
+    OwnedContinuation, OwnedContinuationGate, OwnedContinuationReport, OwnedContinuationScope,
+    OwnedContinuationWork, OwnedPreCaptureEntry, OwnedWorkEffect,
+};
 mod resources;
+mod source_wait;
 mod timing;
 mod types;
-pub use concurrency::{ConcurrencyReport, check_concurrency};
+pub use concurrency::{
+    ConcurrencyReport, IsolatedFollowup, OwnedLocalFollowup, OwnedLocalReport,
+    OwnedRequestSnapshot, check_concurrency,
+};
 pub use control::{ControlReport, check_control};
-pub use definition::{Report, check};
+pub use definition::{
+    DeclaredFaultEntry, DeclaredFaultSourceUse, DeclaredInterferenceUse, DeclaredRetainedRequest,
+    DeclaredWaitCapture, Report, check, check_with_expression_type_assertions,
+};
 pub use exceptional::{ExceptionalReport, check_exceptional_availability};
 pub use expression::{Context, Judgment};
-pub use faults::{FaultReport, FaultRoute, FaultSelection, check_fault_routes};
-pub use invalidation::{InvalidationObligation, InvalidationReport, check_invalidation};
-pub use protection::{AccessObligation, ProtectionReport, check_protection};
+pub use fault_entry::{FaultEntryReport, check_fault_entries};
+pub use faults::{
+    FaultOriginReport, FaultOriginRoute, FaultOriginSite, FaultReport, FaultRoute, FaultSelection,
+    check_fault_origins, check_fault_routes,
+};
+pub use invalidation::{
+    HistoricalOrigin, InvalidationObligation, InvalidationReport, InvalidationRequirements,
+    check_invalidation, derive_invalidation_requirements,
+};
+pub use policy_reads::{PolicyReadClosure, PolicyReadDependencies, policy_read_closure};
+pub use protection::{
+    AccessObligation, ProtectionReport, RequiredProtectionProvenance, check_protection,
+};
 pub use reconciliation::{ReconciliationReport, ReconciliationUse, check_reconciliation_links};
 pub use reconciliation_entry::{
     ReconciliationEntry, ReconciliationEntryReport, check_reconciliation_availability,
 };
 pub use resources::{
-    CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, InstanceCalendar, Provider, Resources,
+    CALENDAR_PROFILE, CLOCK_PROFILE, Calendar, Clock, ExternalFootprint, ExternalRegion,
+    ExternalRegionNamespace, FAULT_HISTORY_PROFILE, FAULT_HISTORY_TYPES, FAULT_SOURCE_PROFILE,
+    FaultEmission, FaultEvidence, INTERFERENCE_PROFILE, InstanceCalendar, Provider,
+    ProviderFaultHistory, ProviderFaultSource, ProviderInterference, ProviderObservationState,
+    ProviderTerminalSource, RegionKeyType, RequestSelector, RequestSelectorStep, Resources,
+    TERMINAL_OBSERVATION_PROFILE, TerminalFactTag, TerminalObservation,
 };
-pub use timing::{CalendarUse, RetryUse, TimerUse, TimingReport, check_timing};
+pub use timing::{
+    CalendarUse, RetryFaultBinding, RetryFaultDeclaration, RetryUse, TimerUse, TimingReport,
+    check_timing,
+};
 pub use types::{Nominal, Pin, Type};
 
 use serde_json::{Map, Value};
@@ -48,6 +82,111 @@ pub const CORE_V2: (&str, &str) = (
     "urn:choreoform:contracts:core-profile:0.2.0",
     "sha256:5f3c08648ea19d82251c63d24d15b9639eb28dab9eeb254121520f1d6b9a4623",
 );
+pub const CORE_V3: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.3.0",
+    "sha256:30d9fbfe7e308dc8bb41c6c5bb67fc7b2533e2a84985d2342335e697147757e3",
+);
+pub const CORE_V4: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.4.0",
+    "sha256:0a80458ee083a987da47f90e5a1ef2cb107a0380b8736f0d734b345a4eec24b3",
+);
+
+pub const CORE_V5: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.5.0",
+    "sha256:50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7",
+);
+
+pub const CORE_V6: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.6.0",
+    "sha256:27bce3fde9a0393abb6bf760a8588af9268de65069b73f4cb946144f5d30cb85",
+);
+pub const CORE_V7: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.7.0",
+    "sha256:e286e54441b3d785ae823eef359c12d64fb8405829c70709227282e5af62f54b",
+);
+pub const CORE_V8: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.8.0",
+    "sha256:edc8195ba0c31536ab2cdc95089e8aecc3ff402489639b4435277f0a38e7b603",
+);
+pub const CORE_V9: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.9.0",
+    "sha256:5faaf24217bcc5644a9ce5975b2c6ad7074d0197d39a73ab648d6cb3a9ced87f",
+);
+pub const CORE_V10: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.10.0",
+    "sha256:74c3d5bfe2a880259bc13f521127aa1dd84977ae9e6f83b339e3a0629964e60f",
+);
+pub const CORE_V11: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.11.0",
+    "sha256:246bf3835eef25f8adf76bce39e6b887715e098761e675f821bf745a8111d29e",
+);
+pub const CORE_V12: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.12.0",
+    "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007",
+);
+pub const CORE_V13: (&str, &str) = (
+    "urn:choreoform:contracts:core-profile:0.13.0",
+    "sha256:dd8667135d1c801683d48d8410867b37d5d6f71c7016b8b716016bce92e77428",
+);
+const CORE_PROFILES: &[(&str, &str)] = &[
+    CORE, CORE_V2, CORE_V3, CORE_V4, CORE_V5, CORE_V6, CORE_V7, CORE_V8, CORE_V9, CORE_V10,
+    CORE_V11, CORE_V12, CORE_V13,
+];
+fn general_source_core(id: &Value) -> bool {
+    matches!(id.as_str(), Some(id) if id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0 || id==CORE_V13.0)
+}
+fn retry_source_core(id: &Value) -> bool {
+    matches!(id.as_str(), Some(id) if id==CORE_V4.0 || id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0 || id==CORE_V13.0)
+}
+fn capture_core(id: &Value) -> bool {
+    matches!(id.as_str(), Some(id) if id==CORE_V5.0 || id==CORE_V6.0 || id==CORE_V7.0 || id==CORE_V8.0 || id==CORE_V9.0 || id==CORE_V10.0 || id==CORE_V11.0 || id==CORE_V12.0 || id==CORE_V13.0)
+}
+
+fn metadata_core(id: &Value) -> bool {
+    matches!(id.as_str(), Some(id) if id == CORE_V3.0 || id == CORE_V4.0 || id == CORE_V5.0 || id == CORE_V6.0 || id == CORE_V7.0 || id == CORE_V8.0 || id == CORE_V9.0 || id == CORE_V10.0 || id == CORE_V11.0 || id == CORE_V12.0 || id == CORE_V13.0)
+}
+
+fn continuation_core(b: &Value) -> bool {
+    b["dialects"].as_object().is_some_and(|m| {
+        m.values().any(|p| {
+            p["id"] == CORE_V9.0
+                || p["id"] == CORE_V10.0
+                || p["id"] == CORE_V11.0
+                || p["id"] == CORE_V12.0
+                || p["id"] == CORE_V13.0
+        })
+    })
+}
+fn pre_capture_core(b: &Value) -> bool {
+    b["dialects"].as_object().is_some_and(|m| {
+        m.values().any(|p| {
+            p["id"] == CORE_V10.0
+                || p["id"] == CORE_V11.0
+                || p["id"] == CORE_V12.0
+                || p["id"] == CORE_V13.0
+        })
+    })
+}
+fn work_core(b: &Value) -> bool {
+    b["dialects"].as_object().is_some_and(|m| {
+        m.values()
+            .any(|p| p["id"] == CORE_V11.0 || p["id"] == CORE_V12.0 || p["id"] == CORE_V13.0)
+    })
+}
+
+fn compensation_identity_core(b: &Value) -> bool {
+    b["dialects"].as_object().is_some_and(|m| {
+        m.values()
+            .any(|p| p["id"] == CORE_V12.0 || p["id"] == CORE_V13.0)
+    })
+}
+
+fn interference_binding_core(b: &Value) -> bool {
+    b["dialects"]
+        .as_object()
+        .is_some_and(|m| m.values().any(|p| p["id"] == CORE_V13.0))
+}
+
 const MAX_DEPTH: usize = 64;
 const MAX_ITEMS: usize = 10_000;
 
@@ -58,6 +197,12 @@ pub struct Diagnostic {
     pub path: String,
 }
 impl Diagnostic {
+    fn at_record(mut self, path: String) -> Self {
+        if !self.path.starts_with("/sourceTypes/") {
+            self.path = path;
+        }
+        self
+    }
     fn at_path(mut self, path: String) -> Self {
         if self.path.is_empty() {
             self.path = path;

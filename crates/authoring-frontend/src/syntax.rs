@@ -6,6 +6,22 @@ use std::{collections::BTreeMap, ops::Range, sync::OnceLock};
 
 const GRAMMAR: &str = include_str!("../../../docs/authoring/candidate-a.ebnf");
 const GRAMMAR_V3: &str = include_str!("../../../docs/authoring/candidate-a-v0.3.ebnf");
+const GRAMMAR_V7: &str = include_str!("../../../docs/authoring/candidate-a-v0.7.ebnf");
+const GRAMMAR_V8: &str = include_str!("../../../docs/authoring/candidate-a-v0.8.ebnf");
+const GRAMMAR_V19: &str = include_str!("../../../docs/authoring/candidate-a-v0.19.ebnf");
+const GRAMMAR_V18: &str = include_str!("../../../docs/authoring/candidate-a-v0.18.ebnf");
+const GRAMMAR_V17: &str = include_str!("../../../docs/authoring/candidate-a-v0.17.ebnf");
+const GRAMMAR_V16: &str = include_str!("../../../docs/authoring/candidate-a-v0.16.ebnf");
+const GRAMMAR_V15: &str = include_str!("../../../docs/authoring/candidate-a-v0.15.ebnf");
+const GRAMMAR_V14: &str = include_str!("../../../docs/authoring/candidate-a-v0.14.ebnf");
+const GRAMMAR_V13: &str = include_str!("../../../docs/authoring/candidate-a-v0.13.ebnf");
+const GRAMMAR_V12: &str = include_str!("../../../docs/authoring/candidate-a-v0.12.ebnf");
+const GRAMMAR_V11: &str = include_str!("../../../docs/authoring/candidate-a-v0.11.ebnf");
+const GRAMMAR_V10: &str = include_str!("../../../docs/authoring/candidate-a-v0.10.ebnf");
+const GRAMMAR_V9: &str = include_str!("../../../docs/authoring/candidate-a-v0.9.ebnf");
+const V5_TOKENS: usize = 16_384;
+const V15_TOKENS: usize = 131_072;
+const V5_WORK: usize = 1_000_000;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Kind {
@@ -56,11 +72,20 @@ pub struct Syntax<'a> {
     profile: &'static str,
     tokens: Vec<Token>,
     tree: Tree,
+    parser_work: usize,
 }
 
 impl Syntax<'_> {
     pub fn profile(&self) -> &'static str {
         self.profile
+    }
+    /// Deterministic lexical size, not semantic complexity or execution evidence.
+    pub fn token_count(&self) -> usize {
+        self.tokens.len()
+    }
+    /// Recognizer pattern visits; neither wall time nor a semantic proof.
+    pub fn parser_work(&self) -> usize {
+        self.parser_work
     }
     pub fn source(&self) -> &str {
         self.source
@@ -118,10 +143,11 @@ impl Syntax<'_> {
     }
 }
 
-fn lex(source: &str) -> Result<Vec<Token>> {
+fn lex(source: &str, program: bool) -> Result<Vec<Token>> {
     let mut tokens = Vec::new();
     let mut i = 0;
     let mut delimiters = Vec::new();
+    let mut token_limit = MAX_TOKENS;
     while i < source.len() {
         let start = i;
         let c = source[i..].chars().next().expect("nonempty UTF-8 suffix");
@@ -238,7 +264,44 @@ fn lex(source: &str) -> Result<Vec<Token>> {
             value,
             span: start..i,
         });
-        if tokens.len() > MAX_TOKENS {
+        // Only a complete explicit known header prefix selects the new closed
+        // quota. Fragments and arbitrary third strings retain legacy limits.
+        if program
+            && tokens.len() == 3
+            && tokens[0].kind == Kind::Word
+            && tokens[0].value == "Choreoform"
+            && tokens[1].kind == Kind::Word
+            && tokens[1].value == "authoring"
+            && tokens[2].kind == Kind::Text
+            && matches!(
+                tokens[2].value.as_str(),
+                "0.5.0"
+                    | "0.6.0"
+                    | "0.7.0"
+                    | "0.8.0"
+                    | "0.9.0"
+                    | "0.10.0"
+                    | "0.11.0"
+                    | "0.12.0"
+                    | "0.13.0"
+                    | "0.14.0"
+                    | "0.15.0"
+                    | "0.16.0"
+                    | "0.17.0"
+                    | "0.18.0"
+                    | "0.19.0"
+            )
+        {
+            token_limit = if matches!(
+                tokens[2].value.as_str(),
+                "0.15.0" | "0.16.0" | "0.17.0" | "0.18.0" | "0.19.0"
+            ) {
+                V15_TOKENS
+            } else {
+                V5_TOKENS
+            };
+        }
+        if tokens.len() > token_limit {
             return Err(error("tokens", start..i));
         }
     }
@@ -337,10 +400,49 @@ impl Meta {
 }
 
 type Grammar = BTreeMap<&'static str, Pattern>;
-fn grammar(v3: bool) -> &'static Grammar {
+fn grammar(profile: &str) -> &'static Grammar {
     static COMPILED: OnceLock<Grammar> = OnceLock::new();
     static COMPILED_V3: OnceLock<Grammar> = OnceLock::new();
-    let (cache, source) = if v3 {
+    static COMPILED_V7: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V8: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V9: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V10: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V11: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V12: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V13: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V14: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V15: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V19: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V18: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V17: OnceLock<Grammar> = OnceLock::new();
+    static COMPILED_V16: OnceLock<Grammar> = OnceLock::new();
+    let (cache, source) = if profile == "0.19.0" {
+        (&COMPILED_V19, GRAMMAR_V19)
+    } else if profile == "0.18.0" {
+        (&COMPILED_V18, GRAMMAR_V18)
+    } else if profile == "0.17.0" {
+        (&COMPILED_V17, GRAMMAR_V17)
+    } else if profile == "0.16.0" {
+        (&COMPILED_V16, GRAMMAR_V16)
+    } else if profile == "0.15.0" {
+        (&COMPILED_V15, GRAMMAR_V15)
+    } else if profile == "0.14.0" {
+        (&COMPILED_V14, GRAMMAR_V14)
+    } else if profile == "0.13.0" {
+        (&COMPILED_V13, GRAMMAR_V13)
+    } else if profile == "0.12.0" {
+        (&COMPILED_V12, GRAMMAR_V12)
+    } else if profile == "0.11.0" {
+        (&COMPILED_V11, GRAMMAR_V11)
+    } else if profile == "0.10.0" {
+        (&COMPILED_V10, GRAMMAR_V10)
+    } else if profile == "0.9.0" {
+        (&COMPILED_V9, GRAMMAR_V9)
+    } else if profile == "0.8.0" {
+        (&COMPILED_V8, GRAMMAR_V8)
+    } else if profile == "0.7.0" {
+        (&COMPILED_V7, GRAMMAR_V7)
+    } else if profile != "0.2.0" {
         (&COMPILED_V3, GRAMMAR_V3)
     } else {
         (&COMPILED, GRAMMAR)
@@ -372,6 +474,7 @@ struct Recognizer<'a> {
     position: usize,
     work: usize,
     furthest: usize,
+    work_limit: usize,
 }
 impl Recognizer<'_> {
     fn rule(&mut self, name: &'static str, depth: usize) -> Result<Option<Tree>> {
@@ -410,7 +513,7 @@ impl Recognizer<'_> {
     }
     fn pattern(&mut self, p: &Pattern, depth: usize) -> Result<Option<Vec<Tree>>> {
         self.work += 1;
-        if self.work > MAX_WORK || depth > 512 {
+        if self.work > self.work_limit || depth > 512 {
             return Err(error(
                 "parse-budget",
                 self.tokens
@@ -500,7 +603,7 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
     if source.starts_with('\u{feff}') {
         return Err(error("bom", 0..3));
     }
-    let tokens = lex(source)?;
+    let tokens = lex(source, rule == "program")?;
     let profile = if rule == "program" {
         match tokens
             .get(2)
@@ -510,12 +613,27 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
             Some("0.2.0") => "0.2.0",
             Some("0.3.0") => "0.3.0",
             Some("0.4.0") => "0.4.0",
+            Some("0.5.0") => "0.5.0",
+            Some("0.6.0") => "0.6.0",
+            Some("0.7.0") => "0.7.0",
+            Some("0.8.0") => "0.8.0",
+            Some("0.9.0") => "0.9.0",
+            Some("0.10.0") => "0.10.0",
+            Some("0.11.0") => "0.11.0",
+            Some("0.12.0") => "0.12.0",
+            Some("0.13.0") => "0.13.0",
+            Some("0.14.0") => "0.14.0",
+            Some("0.15.0") => "0.15.0",
+            Some("0.16.0") => "0.16.0",
+            Some("0.17.0") => "0.17.0",
+            Some("0.18.0") => "0.18.0",
+            Some("0.19.0") => "0.19.0",
             _ => return Err(error("profile", 0..source.len())),
         }
     } else {
         "0.2.0"
     };
-    let grammar = grammar(profile != "0.2.0");
+    let grammar = grammar(profile);
     let (&name, _) = grammar
         .get_key_value(rule)
         .ok_or_else(|| error("grammar-rule", 0..0))?;
@@ -525,6 +643,28 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
         position: 0,
         work: 0,
         furthest: 0,
+        work_limit: if matches!(
+            profile,
+            "0.5.0"
+                | "0.6.0"
+                | "0.7.0"
+                | "0.8.0"
+                | "0.9.0"
+                | "0.10.0"
+                | "0.11.0"
+                | "0.12.0"
+                | "0.13.0"
+                | "0.14.0"
+                | "0.15.0"
+                | "0.16.0"
+                | "0.17.0"
+                | "0.18.0"
+                | "0.19.0"
+        ) {
+            V5_WORK
+        } else {
+            MAX_WORK
+        },
     };
     let tree = recognizer
         .rule(name, 0)?
@@ -537,10 +677,38 @@ pub fn parse_fragment<'a>(raw: &'a [u8], rule: &str) -> Result<Syntax<'a>> {
                     .map_or(source.len()..source.len(), |t| t.span.clone()),
             )
         })?;
+    let parser_work = recognizer.work;
     Ok(Syntax {
         source,
         profile,
         tokens,
         tree,
+        parser_work,
     })
+}
+
+#[cfg(test)]
+mod capacity_tests {
+    use super::*;
+    #[test]
+    fn exact_token_limits_are_explicit_per_program_profile_and_fragments_stay_legacy() {
+        for (profile, limit) in [
+            ("0.4.0", MAX_TOKENS),
+            ("0.14.0", V5_TOKENS),
+            ("0.15.0", V15_TOKENS),
+            ("0.16.0", V15_TOKENS),
+            ("0.17.0", V15_TOKENS),
+            ("0.18.0", V15_TOKENS),
+        ] {
+            let source = format!(
+                "Choreoform authoring \"{profile}\". {}",
+                "x ".repeat(limit - 4)
+            );
+            assert_eq!(lex(&source, true).unwrap().len(), limit);
+            assert_eq!(lex(&(source + "x"), true).unwrap_err().code, "tokens");
+        }
+        let fragment = "x ".repeat(MAX_TOKENS);
+        assert_eq!(lex(&fragment, false).unwrap().len(), MAX_TOKENS);
+        assert_eq!(lex(&(fragment + "x"), false).unwrap_err().code, "tokens");
+    }
 }

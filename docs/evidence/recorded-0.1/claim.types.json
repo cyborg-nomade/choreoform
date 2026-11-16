@@ -1,0 +1,30 @@
+{
+  "kind": "named-types",
+  "version": "0.1.0",
+  "id": "urn:choreoform:examples:recorded-claims:0.1.0",
+  "definitions": {
+    "Incident claim": {
+      "representation": {
+        "kind": "record",
+        "fields": {
+          "incident": {
+            "kind": "text"
+          },
+          "summary": {
+            "kind": "text"
+          },
+          "confidence": {
+            "kind": "text"
+          }
+        }
+      },
+      "invariant": {
+        "op": "literal",
+        "type": {
+          "kind": "boolean"
+        },
+        "value": true
+      }
+    }
+  }
+}

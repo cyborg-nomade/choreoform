@@ -2,7 +2,17 @@
 // SPDX-License-Identifier: MPL-2.0
 use super::*;
 use choreoform_ir_probe_core::{DefinitionEnvelope, Resource, digest};
+mod capture;
 mod creation;
+mod fault_entry;
+mod fault_source;
+mod retained_request;
+pub use capture::DeclaredWaitCapture;
+pub use fault_entry::DeclaredFaultEntry;
+pub use fault_source::DeclaredFaultSourceUse;
+pub use retained_request::DeclaredRetainedRequest;
+mod interference;
+pub use interference::DeclaredInterferenceUse;
 mod lifecycle;
 mod nodes;
 mod policies;
@@ -13,6 +23,11 @@ pub struct Report {
     revision: String,
     expressions: usize,
     policies: usize,
+    captures: Vec<DeclaredWaitCapture>,
+    fault_sources: Vec<DeclaredFaultSourceUse>,
+    fault_entries: Vec<DeclaredFaultEntry>,
+    retained_requests: Vec<DeclaredRetainedRequest>,
+    interference: Vec<DeclaredInterferenceUse>,
 }
 impl Report {
     pub fn revision(&self) -> &str {
@@ -23,6 +38,26 @@ impl Report {
     }
     pub fn policies(&self) -> usize {
         self.policies
+    }
+    /// Every declared capture, including unvisited sites; no activation/acceptance.
+    pub fn capture_bindings(&self) -> &[DeclaredWaitCapture] {
+        &self.captures
+    }
+    /// All declared general provider-source uses, even unvisited; no actual faults.
+    pub fn fault_source_uses(&self) -> &[DeclaredFaultSourceUse] {
+        &self.fault_sources
+    }
+    /// Reserved local history declarations, not initialized values or entry proof.
+    pub fn fault_entries(&self) -> &[DeclaredFaultEntry] {
+        &self.fault_entries
+    }
+    /// Immutable original-input declarations, not actual retained values.
+    pub fn retained_requests(&self) -> &[DeclaredRetainedRequest] {
+        &self.retained_requests
+    }
+    /// Exact declared wrapper selections, including unused ones; no actual calls.
+    pub fn interference_bindings(&self) -> &[DeclaredInterferenceUse] {
+        &self.interference
     }
     /// Explicit residual obligations: a static-stage report cannot close these.
     pub fn remaining(&self) -> &'static [&'static str] {
@@ -39,6 +74,15 @@ impl Report {
 /// Check closed suite payloads and selected links/types/dependencies. Never return
 /// an executable/admitted definition; see Report::remaining for residual gates.
 pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result<Report> {
+    check_with_expression_type_assertions(envelope, supplied, &[])
+}
+/// Ordinary partial static checks plus source-only exact expression types in all
+/// actual contexts. Additional assertions can only reject. No execution grant.
+pub fn check_with_expression_type_assertions(
+    envelope: &DefinitionEnvelope,
+    supplied: &[Resource<'_>],
+    assertions: &[ExpressionTypeAssertion<'_>],
+) -> Result<Report> {
     envelope.check_structure().map_err(|_| err("structure"))?;
     require(
         envelope.document()["revision"] == digest(envelope.canonical().as_bytes()),
@@ -52,20 +96,84 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         "semantic-contract",
     )?;
     resources.verify(&semantics)?;
+    let advanced_continuation = continuation_core(b);
+    let pre_capture = pre_capture_core(b);
+    let finite_work = work_core(b);
+    let compensation_identity = compensation_identity_core(b);
+    let interference_selection = interference_binding_core(b);
     for pin in object(&b["dialects"])?.values() {
         let p = Pin::decode(pin)?;
+        // Wire 0.3 entry fields must never be ignored by an older dialect.
+        // The new core is admitted only once its exact contract is implemented.
+        if envelope.document()["version"] == "0.4.0" {
+            require(
+                p.id == if interference_selection {
+                    CORE_V13.0
+                } else if compensation_identity {
+                    CORE_V12.0
+                } else if finite_work {
+                    CORE_V11.0
+                } else if pre_capture {
+                    CORE_V10.0
+                } else if advanced_continuation {
+                    CORE_V9.0
+                } else {
+                    CORE_V8.0
+                },
+                "retained-request-wire-version",
+            )?;
+        }
+        if envelope.document()["version"] == "0.3.0" {
+            require(p.id == CORE_V7.0, "fault-entry-wire-version")?;
+        }
         let contract = (p.id.as_str(), p.revision.as_str());
-        require(contract == CORE || contract == CORE_V2, "dialect-contract")?;
+        let level = CORE_PROFILES
+            .iter()
+            .position(|known| *known == contract)
+            .ok_or_else(|| err("dialect-contract"))?;
         resources.verify(&p)?;
-        if contract == CORE_V2 {
+        if p.id == CORE_V8.0
+            || p.id == CORE_V9.0
+            || p.id == CORE_V10.0
+            || p.id == CORE_V11.0
+            || p.id == CORE_V12.0
+            || p.id == CORE_V13.0
+        {
+            require(
+                envelope.document()["version"] == "0.4.0",
+                "retained-request-wire-version",
+            )?;
+        } else if p.id == CORE_V7.0 {
+            require(
+                envelope.document()["version"] == "0.3.0",
+                "fault-entry-wire-version",
+            )?;
+        } else if level >= 4 {
+            require(
+                envelope.document()["version"] == "0.2.0",
+                "capture-wire-version",
+            )?;
+        }
+        // Exact closed list, newest inherited artifact first; preserve old order.
+        for base in CORE_PROFILES[..level].iter().rev() {
             resources.verify(&Pin {
-                id: CORE.0.into(),
-                revision: CORE.1.into(),
+                id: base.0.into(),
+                revision: base.1.into(),
             })?;
         }
     }
+    if interference_selection {
+        resources.verify(&Pin {
+            id: INTERFERENCE_PROFILE.0.into(),
+            revision: INTERFERENCE_PROFILE.1.into(),
+        })?;
+    }
     let mut c = Check {
         b,
+        compensation_identity,
+        interference_selection,
+        interference_choices: BTreeMap::new(),
+        pending_interference: Vec::new(),
         resources,
         cells: BTreeMap::new(),
         expressions: BTreeMap::new(),
@@ -73,16 +181,43 @@ pub fn check(envelope: &DefinitionEnvelope, supplied: &[Resource<'_>]) -> Result
         protection_refs: BTreeMap::new(),
         creation_reads: BTreeMap::new(),
         provider_refs: BTreeMap::new(),
+        captures: Vec::new(),
+        capture_types: BTreeSet::new(),
+        fault_sources: Vec::new(),
+        fault_entries: Vec::new(),
+        retained_requests: Vec::new(),
     };
+    c.resources
+        .install_expression_assertions(envelope.document(), assertions)?;
     c.run()?;
-    Ok(Report {
+    if matches!(
+        envelope.document()["version"].as_str(),
+        Some("0.3.0" | "0.4.0")
+    ) {
+        c.fault_entry_declarations()?;
+    }
+    if envelope.document()["version"] == "0.4.0" {
+        c.retained_request_declarations()?;
+    }
+    let report = Report {
         revision: text(&envelope.document()["revision"])?.into(),
         expressions: c.expressions.len(),
         policies: c.policy_reads.len(),
-    })
+        captures: c.capture_bindings(text(&envelope.document()["revision"])?)?,
+        fault_sources: c.fault_source_bindings(text(&envelope.document()["revision"])?)?,
+        fault_entries: c.fault_entry_bindings(text(&envelope.document()["revision"])?)?,
+        retained_requests: c.retained_request_bindings(text(&envelope.document()["revision"])?)?,
+        interference: c.interference_bindings(text(&envelope.document()["revision"])?)?,
+    };
+    c.resources.finish_expression_assertions()?;
+    Ok(report)
 }
 struct Check<'a, 'r> {
     b: &'a Value,
+    compensation_identity: bool,
+    interference_selection: bool,
+    interference_choices: BTreeMap<Pin, Option<Pin>>,
+    pending_interference: Vec<interference::PendingInterference>,
     resources: Resources<'r>,
     cells: BTreeMap<String, Type>,
     expressions: BTreeMap<String, Judgment>,
@@ -90,15 +225,19 @@ struct Check<'a, 'r> {
     protection_refs: BTreeMap<String, BTreeSet<String>>,
     creation_reads: BTreeMap<String, BTreeSet<String>>,
     provider_refs: BTreeMap<String, BTreeMap<Pin, BTreeSet<String>>>,
+    captures: Vec<capture::PendingCapture>,
+    fault_sources: Vec<fault_source::PendingFaultSource>,
+    fault_entries: Vec<fault_entry::PendingFaultEntry>,
+    capture_types: BTreeSet<(capture::CaptureTypeSubject, Pin, Pin)>,
+    retained_requests: Vec<retained_request::PendingRetainedRequest>,
 }
 impl Check<'_, '_> {
     fn run(&mut self) -> Result<()> {
         // Structural inspection guarantees all fixed record fields/maps exist.
         for (id, record) in object(&self.b["data"])? {
-            let ty = self.wrapped(&record["type"]).map_err(|mut e| {
-                e.path = format!("/body/data/{id}/type");
-                e
-            })?;
+            let ty = self
+                .wrapped(&record["type"])
+                .map_err(|e| e.at_record(format!("/body/data/{id}/type")))?;
             self.cells.insert(id.clone(), ty);
         }
         for scope in object(&self.b["scopes"])?.keys() {
@@ -146,10 +285,7 @@ impl Check<'_, '_> {
             })();
             self.expressions.insert(
                 id.clone(),
-                result.map_err(|mut e: Diagnostic| {
-                    e.path = format!("/body/expressions/{id}");
-                    e
-                })?,
+                result.map_err(|e: Diagnostic| e.at_record(format!("/body/expressions/{id}")))?,
             );
         }
         self.policies()?;

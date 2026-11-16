@@ -4,9 +4,11 @@
 //! Bounded Candidate A frontend. Produces candidate IR, never semantic admission.
 //! No filesystem/network, implicit ID allocation, IO or execution in the library.
 
+mod authoring;
 mod ledger;
 mod lower;
 mod syntax;
+pub use authoring::{AuthoringComponent, AuthoringDiagnostic, AuthoringDocument, AuthoringResult};
 pub use ledger::Ledger;
 pub use lower::{Candidate, Integrity, Package};
 pub use syntax::{Syntax, Tree, parse, parse_fragment};
@@ -15,7 +17,9 @@ use std::ops::Range;
 
 pub const MAX_BYTES: usize = 1024 * 1024;
 pub const MAX_DEPTH: usize = 64;
+/// Legacy/fragment quota; sources 0.5–0.14 use 16,384, sources 0.15–0.18 use 131,072.
 pub const MAX_TOKENS: usize = 4096;
+/// Legacy parser/current lowering quota; sources 0.5–0.18 parse with 1,000,000 work.
 pub const MAX_WORK: usize = 100_000;
 
 /// Frontend-local codes and half-open UTF-8 byte spans, not validator diagnostics.

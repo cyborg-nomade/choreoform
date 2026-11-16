@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:authoring:layout:0.1.0",
+  "title": "Non-semantic managed authoring layout 0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "entries"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-authoring-layout"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "entries": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entity",
+          "x",
+          "y",
+          "collapsed"
+        ],
+        "properties": {
+          "entity": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+          },
+          "x": {
+            "type": "integer",
+            "minimum": -1000000,
+            "maximum": 1000000
+          },
+          "y": {
+            "type": "integer",
+            "minimum": -1000000,
+            "maximum": 1000000
+          },
+          "collapsed": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

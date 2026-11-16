@@ -1,0 +1,105 @@
+{
+  "declarations": [
+    {
+      "id": "terminal_binding",
+      "kind": "resource",
+      "scope": "expense",
+      "name": "Terminal facts"
+    },
+    {
+      "id": "recovery_local",
+      "kind": "data",
+      "scope": "payment_recovery",
+      "name": "Local terminal result"
+    },
+    {
+      "id": "original_request",
+      "kind": "data",
+      "scope": "payment_recovery",
+      "name": "Original request"
+    },
+    {
+      "id": "request_copy",
+      "kind": "data",
+      "scope": "payment_recovery",
+      "name": "Request copy"
+    },
+    {
+      "id": "request_guard",
+      "kind": "expression",
+      "scope": "payment_recovery",
+      "name": "Original revision is stable"
+    },
+    {
+      "id": "request_branch",
+      "kind": "node",
+      "scope": "payment_recovery",
+      "name": "Inspect original request"
+    }
+  ],
+  "generated": [
+    {
+      "id": "request_copy_initial",
+      "owner": "request_copy",
+      "role": "initial",
+      "key": null
+    },
+    {
+      "id": "request_branch_flow_same",
+      "owner": "request_branch",
+      "role": "flow",
+      "key": "request_branch_outcome_same"
+    },
+    {
+      "id": "request_branch_flow_other",
+      "owner": "request_branch",
+      "role": "flow",
+      "key": "request_branch_outcome_other"
+    }
+  ],
+  "symbols": [
+    {
+      "id": "recovery_purpose",
+      "owner": "recovery_local",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "original_request_purpose_reimbursement",
+      "owner": "original_request",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "request_copy_purpose_reimbursement",
+      "owner": "request_copy",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "request_branch_outcome_same",
+      "owner": "request_branch",
+      "role": "outcome",
+      "name": "same",
+      "wire": "same"
+    },
+    {
+      "id": "request_branch_outcome_other",
+      "owner": "request_branch",
+      "role": "outcome",
+      "name": "other",
+      "wire": "other"
+    }
+  ],
+  "resources": [
+    {
+      "binding": "terminal_binding",
+      "kind": "provider-terminal-observation-source",
+      "contract": "urn:test:terminal-source",
+      "digest": "sha256:c5cd06afa3251b655ce977bc227e6ed83e24cb9de263fab4616444669d2dd3fa"
+    }
+  ]
+}

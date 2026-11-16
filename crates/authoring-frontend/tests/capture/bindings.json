@@ -1,0 +1,369 @@
+{
+  "format": "choreoform-authoring-bindings",
+  "version": "0.7.0",
+  "profile": "0.8.0",
+  "definition": "rp01_benchmark",
+  "root": "expense",
+  "contracts": {
+    "semantics": {
+      "contract": "urn:choreoform:semantics:adr-0008",
+      "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "core": {
+      "contract": "urn:choreoform:contracts:core-profile:0.5.0",
+      "digest": "sha256:50007ac05e5e71df91bb9997a40a06c7a8993df04b1a673421e4a987014299d7",
+      "dialect": "core"
+    }
+  },
+  "declarations": [
+    {
+      "id": "expense",
+      "kind": "scope",
+      "scope": null,
+      "name": "Capture example"
+    },
+    {
+      "id": "employee_actor",
+      "kind": "actor",
+      "scope": "expense",
+      "name": "Employee"
+    },
+    {
+      "id": "employee_authority",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Employee authority"
+    },
+    {
+      "id": "manager_actor",
+      "kind": "actor",
+      "scope": "expense",
+      "name": "Manager"
+    },
+    {
+      "id": "manager_authority",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Manager authority"
+    },
+    {
+      "id": "finance_actor",
+      "kind": "actor",
+      "scope": "expense",
+      "name": "Finance reviewer"
+    },
+    {
+      "id": "finance_authority",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Finance reviewer authority"
+    },
+    {
+      "id": "operator_actor",
+      "kind": "actor",
+      "scope": "expense",
+      "name": "Payment operator"
+    },
+    {
+      "id": "operator_authority",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Payment operator authority"
+    },
+    {
+      "id": "clock_actor",
+      "kind": "actor",
+      "scope": "expense",
+      "name": "Clock observer"
+    },
+    {
+      "id": "clock_authority",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Clock observer authority"
+    },
+    {
+      "id": "fixed_deadline_actor",
+      "kind": "actor",
+      "scope": "expense",
+      "name": "Keep the deadline fixed"
+    },
+    {
+      "id": "fixed_deadline_authority",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "No deadline extension"
+    },
+    {
+      "id": "expense_access",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Expense access"
+    },
+    {
+      "id": "settle_children",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Settle children"
+    },
+    {
+      "id": "stop_work",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Stop work"
+    },
+    {
+      "id": "withdraw_request",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Withdraw request"
+    },
+    {
+      "id": "no_handlers",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Unhandled faults"
+    },
+    {
+      "id": "ordinary_close",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Ordinary close"
+    },
+    {
+      "id": "acceptance_order",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Acceptance order"
+    },
+    {
+      "id": "preserve_remaining",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Preserve remaining work"
+    },
+    {
+      "id": "remaining",
+      "kind": "scope",
+      "scope": "expense",
+      "name": "Remaining work"
+    },
+    {
+      "id": "remaining_done",
+      "kind": "node",
+      "scope": "remaining",
+      "name": "Release remaining owner"
+    },
+    {
+      "id": "provider_binding",
+      "kind": "resource",
+      "scope": "expense",
+      "name": "Provider"
+    },
+    {
+      "id": "terminal_binding",
+      "kind": "resource",
+      "scope": "expense",
+      "name": "Terminal facts"
+    },
+    {
+      "id": "capture_cap",
+      "kind": "capability",
+      "scope": "expense",
+      "name": "Capture service"
+    },
+    {
+      "id": "effect",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Effects"
+    },
+    {
+      "id": "recovery_wait",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Recovery observations"
+    },
+    {
+      "id": "work",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Request work"
+    },
+    {
+      "id": "request_input",
+      "kind": "expression",
+      "scope": "expense",
+      "name": "Request input"
+    },
+    {
+      "id": "captured",
+      "kind": "data",
+      "scope": "expense",
+      "name": "Captured result"
+    },
+    {
+      "id": "tag",
+      "kind": "expression",
+      "scope": "expense",
+      "name": "Captured tag"
+    },
+    {
+      "id": "origin",
+      "kind": "node",
+      "scope": "expense",
+      "name": "Request"
+    },
+    {
+      "id": "wait0",
+      "kind": "policy",
+      "scope": "expense",
+      "name": "Capture policy 0"
+    },
+    {
+      "id": "capture0",
+      "kind": "node",
+      "scope": "expense",
+      "name": "Capture 0"
+    },
+    {
+      "id": "guard",
+      "kind": "expression",
+      "scope": "expense",
+      "name": "Confirmed result"
+    },
+    {
+      "id": "inspect",
+      "kind": "node",
+      "scope": "expense",
+      "name": "Inspect"
+    },
+    {
+      "id": "done",
+      "kind": "node",
+      "scope": "expense",
+      "name": "Done"
+    },
+    {
+      "id": "observe",
+      "kind": "node",
+      "scope": "remaining",
+      "name": "Observe"
+    }
+  ],
+  "generated": [
+    {
+      "id": "capture_cap_provider",
+      "owner": "capture_cap",
+      "role": "provider-policy",
+      "key": null
+    },
+    {
+      "id": "origin_flow_done",
+      "owner": "origin",
+      "role": "flow",
+      "key": "origin_outcome_done"
+    },
+    {
+      "id": "capture0_flow_observed",
+      "owner": "capture0",
+      "role": "flow",
+      "key": "capture0_outcome_observed"
+    },
+    {
+      "id": "inspect_flow_known",
+      "owner": "inspect",
+      "role": "flow",
+      "key": "inspect_outcome_known"
+    },
+    {
+      "id": "inspect_flow_other",
+      "owner": "inspect",
+      "role": "flow",
+      "key": "inspect_outcome_other"
+    },
+    {
+      "id": "observe_flow_observed",
+      "owner": "observe",
+      "role": "flow",
+      "key": "observe_outcome_observed"
+    }
+  ],
+  "symbols": [
+    {
+      "id": "expense_outcome_complete",
+      "owner": "expense",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "remaining_outcome_complete",
+      "owner": "remaining",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "captured_purpose_reimbursement",
+      "owner": "captured",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "origin_outcome_done",
+      "owner": "origin",
+      "role": "outcome",
+      "name": "done",
+      "wire": "done"
+    },
+    {
+      "id": "capture0_outcome_observed",
+      "owner": "capture0",
+      "role": "outcome",
+      "name": "observed",
+      "wire": "observed"
+    },
+    {
+      "id": "inspect_outcome_known",
+      "owner": "inspect",
+      "role": "outcome",
+      "name": "known",
+      "wire": "known"
+    },
+    {
+      "id": "inspect_outcome_other",
+      "owner": "inspect",
+      "role": "outcome",
+      "name": "other",
+      "wire": "other"
+    },
+    {
+      "id": "observe_outcome_observed",
+      "owner": "observe",
+      "role": "outcome",
+      "name": "observed",
+      "wire": "observed"
+    }
+  ],
+  "retired": [],
+  "resources": [
+    {
+      "binding": "provider_binding",
+      "kind": "provider",
+      "contract": "urn:test:terminal-provider",
+      "digest": "sha256:e1725782ff9fe756a8c708982d773ff8d129b6e9642e16d49c48ed1015f7e1c3"
+    },
+    {
+      "binding": "terminal_binding",
+      "kind": "provider-terminal-observation-source",
+      "contract": "urn:test:terminal-source",
+      "digest": "sha256:e237a16a83b1845cdbaefb869f76151baf05c78ace32b9ce0ceed3e3fb1e899a"
+    }
+  ],
+  "annotations": {
+    "benchmark": "RP-01",
+    "synthetic": true
+  }
+}

@@ -1,0 +1,2315 @@
+{
+  "premise": "Pure emitted guard ASTs, not parsed full source or a process trace.",
+  "types": {
+    "Original order": {
+      "kind": "named",
+      "contract": {
+        "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+        "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+      },
+      "name": "Order"
+    },
+    "First line disposition": {
+      "kind": "variant",
+      "cases": {
+        "pending": {
+          "kind": "record",
+          "fields": {}
+        },
+        "fulfilled": {
+          "kind": "record",
+          "fields": {
+            "reference": {
+              "kind": "text"
+            }
+          }
+        },
+        "cancelled": {
+          "kind": "record",
+          "fields": {
+            "reason": {
+              "kind": "text"
+            }
+          }
+        },
+        "exception": {
+          "kind": "record",
+          "fields": {
+            "reason": {
+              "kind": "text"
+            }
+          }
+        }
+      }
+    },
+    "Second line disposition": {
+      "kind": "variant",
+      "cases": {
+        "pending": {
+          "kind": "record",
+          "fields": {}
+        },
+        "fulfilled": {
+          "kind": "record",
+          "fields": {
+            "reference": {
+              "kind": "text"
+            }
+          }
+        },
+        "cancelled": {
+          "kind": "record",
+          "fields": {
+            "reason": {
+              "kind": "text"
+            }
+          }
+        },
+        "exception": {
+          "kind": "record",
+          "fields": {
+            "reason": {
+              "kind": "text"
+            }
+          }
+        }
+      }
+    },
+    "Reserve first line record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "reserved": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Reservation A evidence"
+          },
+          "unavailable": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Reservation A evidence"
+          }
+        }
+      }
+    },
+    "Reserve second line record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "reserved": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Reservation B evidence"
+          },
+          "unavailable": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Reservation B evidence"
+          }
+        }
+      }
+    },
+    "Authorize order payment record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "authorized": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Authorization evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Authorization evidence"
+          }
+        }
+      }
+    },
+    "Release first reservation record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "released": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Release A evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Release A evidence"
+          }
+        }
+      }
+    },
+    "Release second reservation record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "released": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Release B evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Release B evidence"
+          }
+        }
+      }
+    },
+    "Void authorization record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "voided": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Void evidence"
+          },
+          "expired": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Void evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Void evidence"
+          }
+        }
+      }
+    },
+    "Pack first line record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "packed": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Packing A evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Packing A evidence"
+          }
+        }
+      }
+    },
+    "Pack second line record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "packed": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Packing B evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Packing B evidence"
+          }
+        }
+      }
+    },
+    "Purchase first label record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "labelled": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Label A evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Label A evidence"
+          }
+        }
+      }
+    },
+    "Purchase second label record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "labelled": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Label B evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Label B evidence"
+          }
+        }
+      }
+    },
+    "Hand over first parcel record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "handed": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Handover A evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Handover A evidence"
+          }
+        }
+      }
+    },
+    "Hand over second parcel record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "handed": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Handover B evidence"
+          },
+          "declined": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Handover B evidence"
+          }
+        }
+      }
+    },
+    "Observe first delivery record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "delivered": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Delivery A evidence"
+          },
+          "exception": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Delivery A evidence"
+          }
+        }
+      }
+    },
+    "Observe second delivery record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "delivered": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Delivery B evidence"
+          },
+          "exception": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Delivery B evidence"
+          }
+        }
+      }
+    },
+    "Stop first warehouse work record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "stopped": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Stop A evidence"
+          },
+          "cutoff": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Stop A evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Stop A evidence"
+          }
+        }
+      }
+    },
+    "Stop second warehouse work record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "stopped": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Stop B evidence"
+          },
+          "cutoff": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Stop B evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Stop B evidence"
+          }
+        }
+      }
+    },
+    "Void first label record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "voided": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Label void A evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Label void A evidence"
+          }
+        }
+      }
+    },
+    "Void second label record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "voided": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Label void B evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Label void B evidence"
+          }
+        }
+      }
+    },
+    "Capture committed amount record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "captured": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Capture evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Capture evidence"
+          }
+        }
+      }
+    },
+    "Refund captured amount record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "refunded": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Refund evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Refund evidence"
+          }
+        }
+      }
+    },
+    "Request first intercept record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "intercepted": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Intercept A evidence"
+          },
+          "unstoppable": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Intercept A evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Intercept A evidence"
+          }
+        }
+      }
+    },
+    "Request second intercept record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "intercepted": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Intercept B evidence"
+          },
+          "unstoppable": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Intercept B evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Intercept B evidence"
+          }
+        }
+      }
+    },
+    "Notify customer of order record": {
+      "kind": "option",
+      "element": {
+        "kind": "variant",
+        "cases": {
+          "notified": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Notification evidence"
+          },
+          "problem": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "name": "Notification evidence"
+          }
+        }
+      }
+    }
+  },
+  "rules": {
+    "check_authorization": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Authorize order payment record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Authorize order payment record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "authorized"
+        }
+      }
+    },
+    "check_stock": {
+      "op": "and",
+      "left": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Reserve first line record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Reserve first line record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "reserved"
+          }
+        }
+      },
+      "right": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Reserve second line record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Reserve second line record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "reserved"
+          }
+        }
+      }
+    },
+    "check_partial": {
+      "op": "and",
+      "left": {
+        "op": "or",
+        "left": {
+          "op": "and",
+          "left": {
+            "op": "isSome",
+            "value": {
+              "op": "read",
+              "cell": "Reserve first line record"
+            }
+          },
+          "right": {
+            "op": "eq",
+            "left": {
+              "op": "tag",
+              "value": {
+                "op": "unwrap",
+                "value": {
+                  "op": "read",
+                  "cell": "Reserve first line record"
+                }
+              }
+            },
+            "right": {
+              "op": "literal",
+              "type": {
+                "kind": "text"
+              },
+              "value": "reserved"
+            }
+          }
+        },
+        "right": {
+          "op": "and",
+          "left": {
+            "op": "isSome",
+            "value": {
+              "op": "read",
+              "cell": "Reserve second line record"
+            }
+          },
+          "right": {
+            "op": "eq",
+            "left": {
+              "op": "tag",
+              "value": {
+                "op": "unwrap",
+                "value": {
+                  "op": "read",
+                  "cell": "Reserve second line record"
+                }
+              }
+            },
+            "right": {
+              "op": "literal",
+              "type": {
+                "kind": "text"
+              },
+              "value": "reserved"
+            }
+          }
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "field",
+          "value": {
+            "op": "unwrapNamed",
+            "value": {
+              "op": "read",
+              "cell": "Original order"
+            }
+          },
+          "name": "delivery choice"
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "offer partial"
+        }
+      }
+    },
+    "prepare_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Reserve first line record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Reserve first line record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "reserved"
+        }
+      }
+    },
+    "pack_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Pack first line record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Pack first line record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "packed"
+        }
+      }
+    },
+    "label_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Purchase first label record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Purchase first label record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "labelled"
+        }
+      }
+    },
+    "prepare_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Reserve second line record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Reserve second line record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "reserved"
+        }
+      }
+    },
+    "pack_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Pack second line record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Pack second line record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "packed"
+        }
+      }
+    },
+    "label_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Purchase second label record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Purchase second label record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "labelled"
+        }
+      }
+    },
+    "capture_guard": {
+      "op": "and",
+      "left": {
+        "op": "and",
+        "left": {
+          "op": "and",
+          "left": {
+            "op": "isSome",
+            "value": {
+              "op": "read",
+              "cell": "Authorize order payment record"
+            }
+          },
+          "right": {
+            "op": "eq",
+            "left": {
+              "op": "tag",
+              "value": {
+                "op": "unwrap",
+                "value": {
+                  "op": "read",
+                  "cell": "Authorize order payment record"
+                }
+              }
+            },
+            "right": {
+              "op": "literal",
+              "type": {
+                "kind": "text"
+              },
+              "value": "authorized"
+            }
+          }
+        },
+        "right": {
+          "op": "lt",
+          "left": {
+            "op": "literal",
+            "type": {
+              "kind": "decimal",
+              "scale": 2
+            },
+            "value": "0"
+          },
+          "right": {
+            "op": "add",
+            "left": {
+              "op": "if",
+              "condition": {
+                "op": "and",
+                "left": {
+                  "op": "isSome",
+                  "value": {
+                    "op": "read",
+                    "cell": "Hand over first parcel record"
+                  }
+                },
+                "right": {
+                  "op": "eq",
+                  "left": {
+                    "op": "tag",
+                    "value": {
+                      "op": "unwrap",
+                      "value": {
+                        "op": "read",
+                        "cell": "Hand over first parcel record"
+                      }
+                    }
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": "handed"
+                  }
+                }
+              },
+              "then": {
+                "op": "field",
+                "value": {
+                  "op": "field",
+                  "value": {
+                    "op": "unwrapNamed",
+                    "value": {
+                      "op": "read",
+                      "cell": "Original order"
+                    }
+                  },
+                  "name": "first line"
+                },
+                "name": "amount"
+              },
+              "else": {
+                "op": "literal",
+                "type": {
+                  "kind": "decimal",
+                  "scale": 2
+                },
+                "value": "0"
+              }
+            },
+            "right": {
+              "op": "if",
+              "condition": {
+                "op": "and",
+                "left": {
+                  "op": "isSome",
+                  "value": {
+                    "op": "read",
+                    "cell": "Hand over second parcel record"
+                  }
+                },
+                "right": {
+                  "op": "eq",
+                  "left": {
+                    "op": "tag",
+                    "value": {
+                      "op": "unwrap",
+                      "value": {
+                        "op": "read",
+                        "cell": "Hand over second parcel record"
+                      }
+                    }
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": "handed"
+                  }
+                }
+              },
+              "then": {
+                "op": "field",
+                "value": {
+                  "op": "field",
+                  "value": {
+                    "op": "unwrapNamed",
+                    "value": {
+                      "op": "read",
+                      "cell": "Original order"
+                    }
+                  },
+                  "name": "second line"
+                },
+                "name": "amount"
+              },
+              "else": {
+                "op": "literal",
+                "type": {
+                  "kind": "decimal",
+                  "scale": 2
+                },
+                "value": "0"
+              }
+            }
+          }
+        }
+      },
+      "right": {
+        "op": "and",
+        "left": {
+          "op": "not",
+          "value": {
+            "op": "lt",
+            "left": {
+              "op": "field",
+              "value": {
+                "op": "unwrapNamed",
+                "value": {
+                  "op": "payload",
+                  "value": {
+                    "op": "unwrap",
+                    "value": {
+                      "op": "read",
+                      "cell": "Authorize order payment record"
+                    }
+                  },
+                  "tag": "authorized"
+                }
+              },
+              "name": "amount"
+            },
+            "right": {
+              "op": "add",
+              "left": {
+                "op": "if",
+                "condition": {
+                  "op": "and",
+                  "left": {
+                    "op": "isSome",
+                    "value": {
+                      "op": "read",
+                      "cell": "Hand over first parcel record"
+                    }
+                  },
+                  "right": {
+                    "op": "eq",
+                    "left": {
+                      "op": "tag",
+                      "value": {
+                        "op": "unwrap",
+                        "value": {
+                          "op": "read",
+                          "cell": "Hand over first parcel record"
+                        }
+                      }
+                    },
+                    "right": {
+                      "op": "literal",
+                      "type": {
+                        "kind": "text"
+                      },
+                      "value": "handed"
+                    }
+                  }
+                },
+                "then": {
+                  "op": "field",
+                  "value": {
+                    "op": "field",
+                    "value": {
+                      "op": "unwrapNamed",
+                      "value": {
+                        "op": "read",
+                        "cell": "Original order"
+                      }
+                    },
+                    "name": "first line"
+                  },
+                  "name": "amount"
+                },
+                "else": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "decimal",
+                    "scale": 2
+                  },
+                  "value": "0"
+                }
+              },
+              "right": {
+                "op": "if",
+                "condition": {
+                  "op": "and",
+                  "left": {
+                    "op": "isSome",
+                    "value": {
+                      "op": "read",
+                      "cell": "Hand over second parcel record"
+                    }
+                  },
+                  "right": {
+                    "op": "eq",
+                    "left": {
+                      "op": "tag",
+                      "value": {
+                        "op": "unwrap",
+                        "value": {
+                          "op": "read",
+                          "cell": "Hand over second parcel record"
+                        }
+                      }
+                    },
+                    "right": {
+                      "op": "literal",
+                      "type": {
+                        "kind": "text"
+                      },
+                      "value": "handed"
+                    }
+                  }
+                },
+                "then": {
+                  "op": "field",
+                  "value": {
+                    "op": "field",
+                    "value": {
+                      "op": "unwrapNamed",
+                      "value": {
+                        "op": "read",
+                        "cell": "Original order"
+                      }
+                    },
+                    "name": "second line"
+                  },
+                  "name": "amount"
+                },
+                "else": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "decimal",
+                    "scale": 2
+                  },
+                  "value": "0"
+                }
+              }
+            }
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "field",
+            "value": {
+              "op": "unwrapNamed",
+              "value": {
+                "op": "payload",
+                "value": {
+                  "op": "unwrap",
+                  "value": {
+                    "op": "read",
+                    "cell": "Authorize order payment record"
+                  }
+                },
+                "tag": "authorized"
+              }
+            },
+            "name": "currency"
+          },
+          "right": {
+            "op": "field",
+            "value": {
+              "op": "unwrapNamed",
+              "value": {
+                "op": "read",
+                "cell": "Original order"
+              }
+            },
+            "name": "currency"
+          }
+        }
+      }
+    },
+    "deliver_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Hand over first parcel record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Hand over first parcel record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "handed"
+        }
+      }
+    },
+    "deliver_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Hand over second parcel record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Hand over second parcel record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "handed"
+        }
+      }
+    },
+    "normal_release_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Reserve first line record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Reserve first line record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "reserved"
+        }
+      }
+    },
+    "normal_release_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Reserve second line record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Reserve second line record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "reserved"
+        }
+      }
+    },
+    "normal_void_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Authorize order payment record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Authorize order payment record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "authorized"
+        }
+      }
+    },
+    "check_exception": {
+      "op": "and",
+      "left": {
+        "op": "or",
+        "left": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "read",
+              "cell": "First line disposition"
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "fulfilled"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "read",
+              "cell": "First line disposition"
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "cancelled"
+          }
+        }
+      },
+      "right": {
+        "op": "or",
+        "left": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "read",
+              "cell": "Second line disposition"
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "fulfilled"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "read",
+              "cell": "Second line disposition"
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "cancelled"
+          }
+        }
+      }
+    },
+    "stop_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Pack first line record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Pack first line record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "packed"
+        }
+      }
+    },
+    "cutoff_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Stop first warehouse work record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Stop first warehouse work record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "cutoff"
+        }
+      }
+    },
+    "void_label_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Purchase first label record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Purchase first label record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "labelled"
+          }
+        }
+      },
+      "right": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Stop first warehouse work record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Stop first warehouse work record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "stopped"
+          }
+        }
+      }
+    },
+    "cancel_release_a_guard": {
+      "op": "and",
+      "left": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Reserve first line record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Reserve first line record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "reserved"
+          }
+        }
+      },
+      "right": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Stop first warehouse work record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Stop first warehouse work record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "stopped"
+          }
+        }
+      }
+    },
+    "stop_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Pack second line record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Pack second line record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "packed"
+        }
+      }
+    },
+    "cutoff_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "isSome",
+        "value": {
+          "op": "read",
+          "cell": "Stop second warehouse work record"
+        }
+      },
+      "right": {
+        "op": "eq",
+        "left": {
+          "op": "tag",
+          "value": {
+            "op": "unwrap",
+            "value": {
+              "op": "read",
+              "cell": "Stop second warehouse work record"
+            }
+          }
+        },
+        "right": {
+          "op": "literal",
+          "type": {
+            "kind": "text"
+          },
+          "value": "cutoff"
+        }
+      }
+    },
+    "void_label_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Purchase second label record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Purchase second label record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "labelled"
+          }
+        }
+      },
+      "right": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Stop second warehouse work record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Stop second warehouse work record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "stopped"
+          }
+        }
+      }
+    },
+    "cancel_release_b_guard": {
+      "op": "and",
+      "left": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Reserve second line record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Reserve second line record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "reserved"
+          }
+        }
+      },
+      "right": {
+        "op": "and",
+        "left": {
+          "op": "isSome",
+          "value": {
+            "op": "read",
+            "cell": "Stop second warehouse work record"
+          }
+        },
+        "right": {
+          "op": "eq",
+          "left": {
+            "op": "tag",
+            "value": {
+              "op": "unwrap",
+              "value": {
+                "op": "read",
+                "cell": "Stop second warehouse work record"
+              }
+            }
+          },
+          "right": {
+            "op": "literal",
+            "type": {
+              "kind": "text"
+            },
+            "value": "stopped"
+          }
+        }
+      }
+    },
+    "refund_guard": {
+      "op": "and",
+      "left": {
+        "op": "and",
+        "left": {
+          "op": "and",
+          "left": {
+            "op": "isSome",
+            "value": {
+              "op": "read",
+              "cell": "Capture committed amount record"
+            }
+          },
+          "right": {
+            "op": "eq",
+            "left": {
+              "op": "tag",
+              "value": {
+                "op": "unwrap",
+                "value": {
+                  "op": "read",
+                  "cell": "Capture committed amount record"
+                }
+              }
+            },
+            "right": {
+              "op": "literal",
+              "type": {
+                "kind": "text"
+              },
+              "value": "captured"
+            }
+          }
+        },
+        "right": {
+          "op": "lt",
+          "left": {
+            "op": "literal",
+            "type": {
+              "kind": "decimal",
+              "scale": 2
+            },
+            "value": "0"
+          },
+          "right": {
+            "op": "field",
+            "value": {
+              "op": "unwrapNamed",
+              "value": {
+                "op": "payload",
+                "value": {
+                  "op": "unwrap",
+                  "value": {
+                    "op": "read",
+                    "cell": "Capture committed amount record"
+                  }
+                },
+                "tag": "captured"
+              }
+            },
+            "name": "amount"
+          }
+        }
+      },
+      "right": {
+        "op": "and",
+        "left": {
+          "op": "eq",
+          "left": {
+            "op": "field",
+            "value": {
+              "op": "unwrapNamed",
+              "value": {
+                "op": "payload",
+                "value": {
+                  "op": "unwrap",
+                  "value": {
+                    "op": "read",
+                    "cell": "Capture committed amount record"
+                  }
+                },
+                "tag": "captured"
+              }
+            },
+            "name": "amount"
+          },
+          "right": {
+            "op": "add",
+            "left": {
+              "op": "if",
+              "condition": {
+                "op": "and",
+                "left": {
+                  "op": "isSome",
+                  "value": {
+                    "op": "read",
+                    "cell": "Hand over first parcel record"
+                  }
+                },
+                "right": {
+                  "op": "eq",
+                  "left": {
+                    "op": "tag",
+                    "value": {
+                      "op": "unwrap",
+                      "value": {
+                        "op": "read",
+                        "cell": "Hand over first parcel record"
+                      }
+                    }
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": "handed"
+                  }
+                }
+              },
+              "then": {
+                "op": "field",
+                "value": {
+                  "op": "field",
+                  "value": {
+                    "op": "unwrapNamed",
+                    "value": {
+                      "op": "read",
+                      "cell": "Original order"
+                    }
+                  },
+                  "name": "first line"
+                },
+                "name": "amount"
+              },
+              "else": {
+                "op": "literal",
+                "type": {
+                  "kind": "decimal",
+                  "scale": 2
+                },
+                "value": "0"
+              }
+            },
+            "right": {
+              "op": "if",
+              "condition": {
+                "op": "and",
+                "left": {
+                  "op": "isSome",
+                  "value": {
+                    "op": "read",
+                    "cell": "Hand over second parcel record"
+                  }
+                },
+                "right": {
+                  "op": "eq",
+                  "left": {
+                    "op": "tag",
+                    "value": {
+                      "op": "unwrap",
+                      "value": {
+                        "op": "read",
+                        "cell": "Hand over second parcel record"
+                      }
+                    }
+                  },
+                  "right": {
+                    "op": "literal",
+                    "type": {
+                      "kind": "text"
+                    },
+                    "value": "handed"
+                  }
+                }
+              },
+              "then": {
+                "op": "field",
+                "value": {
+                  "op": "field",
+                  "value": {
+                    "op": "unwrapNamed",
+                    "value": {
+                      "op": "read",
+                      "cell": "Original order"
+                    }
+                  },
+                  "name": "second line"
+                },
+                "name": "amount"
+              },
+              "else": {
+                "op": "literal",
+                "type": {
+                  "kind": "decimal",
+                  "scale": 2
+                },
+                "value": "0"
+              }
+            }
+          }
+        },
+        "right": {
+          "op": "and",
+          "left": {
+            "op": "if",
+            "condition": {
+              "op": "and",
+              "left": {
+                "op": "isSome",
+                "value": {
+                  "op": "read",
+                  "cell": "Hand over first parcel record"
+                }
+              },
+              "right": {
+                "op": "eq",
+                "left": {
+                  "op": "tag",
+                  "value": {
+                    "op": "unwrap",
+                    "value": {
+                      "op": "read",
+                      "cell": "Hand over first parcel record"
+                    }
+                  }
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": "handed"
+                }
+              }
+            },
+            "then": {
+              "op": "and",
+              "left": {
+                "op": "isSome",
+                "value": {
+                  "op": "read",
+                  "cell": "Request first intercept record"
+                }
+              },
+              "right": {
+                "op": "eq",
+                "left": {
+                  "op": "tag",
+                  "value": {
+                    "op": "unwrap",
+                    "value": {
+                      "op": "read",
+                      "cell": "Request first intercept record"
+                    }
+                  }
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": "intercepted"
+                }
+              }
+            },
+            "else": {
+              "op": "literal",
+              "type": {
+                "kind": "boolean"
+              },
+              "value": true
+            }
+          },
+          "right": {
+            "op": "if",
+            "condition": {
+              "op": "and",
+              "left": {
+                "op": "isSome",
+                "value": {
+                  "op": "read",
+                  "cell": "Hand over second parcel record"
+                }
+              },
+              "right": {
+                "op": "eq",
+                "left": {
+                  "op": "tag",
+                  "value": {
+                    "op": "unwrap",
+                    "value": {
+                      "op": "read",
+                      "cell": "Hand over second parcel record"
+                    }
+                  }
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": "handed"
+                }
+              }
+            },
+            "then": {
+              "op": "and",
+              "left": {
+                "op": "isSome",
+                "value": {
+                  "op": "read",
+                  "cell": "Request second intercept record"
+                }
+              },
+              "right": {
+                "op": "eq",
+                "left": {
+                  "op": "tag",
+                  "value": {
+                    "op": "unwrap",
+                    "value": {
+                      "op": "read",
+                      "cell": "Request second intercept record"
+                    }
+                  }
+                },
+                "right": {
+                  "op": "literal",
+                  "type": {
+                    "kind": "text"
+                  },
+                  "value": "intercepted"
+                }
+              }
+            },
+            "else": {
+              "op": "literal",
+              "type": {
+                "kind": "boolean"
+              },
+              "value": true
+            }
+          }
+        }
+      }
+    }
+  }
+}

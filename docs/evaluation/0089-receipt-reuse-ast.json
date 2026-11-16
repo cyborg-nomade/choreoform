@@ -1,0 +1,1129 @@
+{
+  "interpretation": "finite exact AST reconstruction only; no compiler, future byte savings, runtime or user evidence",
+  "candidateDigest": "6550ac457539457b6e48a452d17d95060db1a2f36fbcf74f8b3c7c1e7c11cfb4",
+  "revision": "sha256:a3b8c0f07cfc63d745376c3eb11b67690c98edc3e216d262c1542f00a05798aa",
+  "typesDigest": "48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac",
+  "capabilityActivities": 25,
+  "distinctRequestInputs": 1,
+  "distinctNominalResults": 23,
+  "distinctEvidenceRepresentations": 1,
+  "distinctResultInvariants": 23,
+  "cases": 55,
+  "templates": {
+    "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0": {
+      "digest": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+      "astBytes": 2968
+    },
+    "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857": {
+      "digest": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+      "astBytes": 2770
+    }
+  },
+  "rows": [
+    {
+      "activity": "authorize_activity",
+      "policy": "authorize_work",
+      "capability": "authorize_capability",
+      "request": "authorize_request",
+      "completionDigest": "b2dbd469e627fc44e1ca0ee58dc8e9e3c11fcb4fe2ffb95d78f85af950fdbb1a",
+      "cases": [
+        {
+          "tag": "authorized",
+          "operation": "authorize",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Authorization evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3805
+        },
+        {
+          "tag": "declined",
+          "operation": "authorize",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Authorization evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4044
+        }
+      ]
+    },
+    {
+      "activity": "cancel_release_a_activity",
+      "policy": "cancel_release_a_work",
+      "capability": "cancel_release_a_capability",
+      "request": "cancel_release_a_request",
+      "completionDigest": "66749a8dc717ee14c28757d926c7ce97ff27ad82a5b12f043b7cb94c9584767e",
+      "cases": [
+        {
+          "tag": "released",
+          "operation": "release_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Release A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3854
+        },
+        {
+          "tag": "problem",
+          "operation": "release_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Release A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4106
+        }
+      ]
+    },
+    {
+      "activity": "cancel_release_b_activity",
+      "policy": "cancel_release_b_work",
+      "capability": "cancel_release_b_capability",
+      "request": "cancel_release_b_request",
+      "completionDigest": "486881364227cdf7999208a9dd1d41cdefcd3d7f2cc5d7279c98af17c191a37f",
+      "cases": [
+        {
+          "tag": "released",
+          "operation": "release_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Release B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3854
+        },
+        {
+          "tag": "problem",
+          "operation": "release_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Release B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4106
+        }
+      ]
+    },
+    {
+      "activity": "capture_activity",
+      "policy": "capture_work",
+      "capability": "capture_capability",
+      "request": "capture_request",
+      "completionDigest": "a2a2d761659e43248a3c9558666002bd7b39fc68d42c62042b51187bed2e3bc1",
+      "cases": [
+        {
+          "tag": "captured",
+          "operation": "capture",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Capture evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3753
+        },
+        {
+          "tag": "problem",
+          "operation": "capture",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Capture evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4005
+        }
+      ]
+    },
+    {
+      "activity": "deliver_a_activity",
+      "policy": "deliver_a_work",
+      "capability": "deliver_a_capability",
+      "request": "deliver_a_request",
+      "completionDigest": "2f2d6af11c4358f165881114ea0a0edff623719d38a54e073875e409457e7554",
+      "cases": [
+        {
+          "tag": "delivered",
+          "operation": "deliver_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Delivery A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3791
+        },
+        {
+          "tag": "exception",
+          "operation": "deliver_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Delivery A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4059
+        }
+      ]
+    },
+    {
+      "activity": "deliver_b_activity",
+      "policy": "deliver_b_work",
+      "capability": "deliver_b_capability",
+      "request": "deliver_b_request",
+      "completionDigest": "b8cb340b97907ba60ff38ed046786cd1ffa0f55e5a9dcc68fa8e8be940ed15f9",
+      "cases": [
+        {
+          "tag": "delivered",
+          "operation": "deliver_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Delivery B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3791
+        },
+        {
+          "tag": "exception",
+          "operation": "deliver_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Delivery B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4059
+        }
+      ]
+    },
+    {
+      "activity": "handover_a_activity",
+      "policy": "handover_a_work",
+      "capability": "handover_a_capability",
+      "request": "handover_a_request",
+      "completionDigest": "8f029fdfa8e9931dc48caa593cbda727a5d17deccfb71e3efa16ab9742e78054",
+      "cases": [
+        {
+          "tag": "handed",
+          "operation": "handover_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Handover A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3761
+        },
+        {
+          "tag": "declined",
+          "operation": "handover_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Handover A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4056
+        }
+      ]
+    },
+    {
+      "activity": "handover_b_activity",
+      "policy": "handover_b_work",
+      "capability": "handover_b_capability",
+      "request": "handover_b_request",
+      "completionDigest": "49274e4ef5b4ce42642a56b237d65e7ccf4dd39d92a1fee2470ae7065dd866c1",
+      "cases": [
+        {
+          "tag": "handed",
+          "operation": "handover_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Handover B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3761
+        },
+        {
+          "tag": "declined",
+          "operation": "handover_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Handover B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4056
+        }
+      ]
+    },
+    {
+      "activity": "intercept_a_activity",
+      "policy": "intercept_a_work",
+      "capability": "intercept_a_capability",
+      "request": "intercept_a_request",
+      "completionDigest": "94d40e4c02b827d43be0fd990e12d93863b3ce3641677a48b1a6045c503e4bbb",
+      "cases": [
+        {
+          "tag": "intercepted",
+          "operation": "intercept_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Intercept A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3843
+        },
+        {
+          "tag": "unstoppable",
+          "operation": "intercept_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Intercept A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4113
+        },
+        {
+          "tag": "problem",
+          "operation": "intercept_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Intercept A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4053
+        }
+      ]
+    },
+    {
+      "activity": "intercept_b_activity",
+      "policy": "intercept_b_work",
+      "capability": "intercept_b_capability",
+      "request": "intercept_b_request",
+      "completionDigest": "a36d7afffb8977a3a62f802dc1c7578aafeca5e4cd341334808f06a4e9801252",
+      "cases": [
+        {
+          "tag": "intercepted",
+          "operation": "intercept_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Intercept B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3843
+        },
+        {
+          "tag": "unstoppable",
+          "operation": "intercept_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Intercept B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4113
+        },
+        {
+          "tag": "problem",
+          "operation": "intercept_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Intercept B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4053
+        }
+      ]
+    },
+    {
+      "activity": "label_a_activity",
+      "policy": "label_a_work",
+      "capability": "label_a_capability",
+      "request": "label_a_request",
+      "completionDigest": "66dde6a4bd37ea0b6b149bab81e93f760d95bdba7568843e4ae23b131e868e63",
+      "cases": [
+        {
+          "tag": "labelled",
+          "operation": "label_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Label A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3753
+        },
+        {
+          "tag": "declined",
+          "operation": "label_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Label A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4020
+        }
+      ]
+    },
+    {
+      "activity": "label_b_activity",
+      "policy": "label_b_work",
+      "capability": "label_b_capability",
+      "request": "label_b_request",
+      "completionDigest": "d268d082e35f94888be1a31bed226ec9a5a880707b3e9c94d035e9d108bff608",
+      "cases": [
+        {
+          "tag": "labelled",
+          "operation": "label_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Label B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3753
+        },
+        {
+          "tag": "declined",
+          "operation": "label_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Label B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4020
+        }
+      ]
+    },
+    {
+      "activity": "notify_activity",
+      "policy": "notify_work",
+      "capability": "notify_capability",
+      "request": "notify_request",
+      "completionDigest": "3b7574a519bb6159823fa47a02b234eda0ad11441facabfda8fe637e3e2a6af7",
+      "cases": [
+        {
+          "tag": "notified",
+          "operation": "notify",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Notification evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3741
+        },
+        {
+          "tag": "problem",
+          "operation": "notify",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Notification evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 3993
+        }
+      ]
+    },
+    {
+      "activity": "pack_a_activity",
+      "policy": "pack_a_work",
+      "capability": "pack_a_capability",
+      "request": "pack_a_request",
+      "completionDigest": "3d82c8729dec4d993b64fd2802ff00c08eee44cdad61ca50cf13eb0982988bc3",
+      "cases": [
+        {
+          "tag": "packed",
+          "operation": "pack_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Packing A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3713
+        },
+        {
+          "tag": "declined",
+          "operation": "pack_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Packing A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4008
+        }
+      ]
+    },
+    {
+      "activity": "pack_b_activity",
+      "policy": "pack_b_work",
+      "capability": "pack_b_capability",
+      "request": "pack_b_request",
+      "completionDigest": "43e7a7177cebc47a3c9f0523df18ee38e21df53751ac799b54954c7e6b075999",
+      "cases": [
+        {
+          "tag": "packed",
+          "operation": "pack_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Packing B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3713
+        },
+        {
+          "tag": "declined",
+          "operation": "pack_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Packing B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4008
+        }
+      ]
+    },
+    {
+      "activity": "refund_activity",
+      "policy": "refund_work",
+      "capability": "refund_capability",
+      "request": "refund_request",
+      "completionDigest": "6776e50fa7cb7ef8afa975ccb128025fc438e1d6945fc2b264f296203b0a9950",
+      "cases": [
+        {
+          "tag": "refunded",
+          "operation": "refund",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Refund evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3741
+        },
+        {
+          "tag": "problem",
+          "operation": "refund",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Refund evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 3993
+        }
+      ]
+    },
+    {
+      "activity": "release_a_activity",
+      "policy": "release_a_work",
+      "capability": "release_a_capability",
+      "request": "release_a_request",
+      "completionDigest": "5d136150cf637e94e5bc2348415c1b53972914ca3eaabd2ed748864154f64e67",
+      "cases": [
+        {
+          "tag": "released",
+          "operation": "release_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Release A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3777
+        },
+        {
+          "tag": "problem",
+          "operation": "release_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Release A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4029
+        }
+      ]
+    },
+    {
+      "activity": "release_b_activity",
+      "policy": "release_b_work",
+      "capability": "release_b_capability",
+      "request": "release_b_request",
+      "completionDigest": "cfc88e21fd82599cac1b7e0fcbeddcbc6afa1ba0d453bb7b4156f76f18478e4a",
+      "cases": [
+        {
+          "tag": "released",
+          "operation": "release_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Release B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3777
+        },
+        {
+          "tag": "problem",
+          "operation": "release_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Release B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4029
+        }
+      ]
+    },
+    {
+      "activity": "reserve_a_activity",
+      "policy": "reserve_a_work",
+      "capability": "reserve_a_capability",
+      "request": "reserve_a_request",
+      "completionDigest": "20eead272f40b7d46482c039f0fed99d4f53675c2c84ee60969de411424cce58",
+      "cases": [
+        {
+          "tag": "reserved",
+          "operation": "reserve_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Reservation A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3777
+        },
+        {
+          "tag": "unavailable",
+          "operation": "reserve_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Reservation A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4089
+        }
+      ]
+    },
+    {
+      "activity": "reserve_b_activity",
+      "policy": "reserve_b_work",
+      "capability": "reserve_b_capability",
+      "request": "reserve_b_request",
+      "completionDigest": "b0740d587a9e4758b7feaa31b29ca8a4e3b2f2ea1d73ee60c83dea9f8d066adc",
+      "cases": [
+        {
+          "tag": "reserved",
+          "operation": "reserve_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Reservation B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3777
+        },
+        {
+          "tag": "unavailable",
+          "operation": "reserve_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Reservation B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4089
+        }
+      ]
+    },
+    {
+      "activity": "stop_a_activity",
+      "policy": "stop_a_work",
+      "capability": "stop_a_capability",
+      "request": "stop_a_request",
+      "completionDigest": "cfd8c6510ffcec78c770f6092d1a3253c8df2c5a4491cbdca0662ce424a66c24",
+      "cases": [
+        {
+          "tag": "stopped",
+          "operation": "stop_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Stop A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3727
+        },
+        {
+          "tag": "cutoff",
+          "operation": "stop_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Stop A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 3978
+        },
+        {
+          "tag": "problem",
+          "operation": "stop_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Stop A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 3993
+        }
+      ]
+    },
+    {
+      "activity": "stop_b_activity",
+      "policy": "stop_b_work",
+      "capability": "stop_b_capability",
+      "request": "stop_b_request",
+      "completionDigest": "ce986376f16a9143b10514887418e1d4289859eecf7edf5152425a2662ec91da",
+      "cases": [
+        {
+          "tag": "stopped",
+          "operation": "stop_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Stop B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3727
+        },
+        {
+          "tag": "cutoff",
+          "operation": "stop_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Stop B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 3978
+        },
+        {
+          "tag": "problem",
+          "operation": "stop_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Stop B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 3993
+        }
+      ]
+    },
+    {
+      "activity": "void_activity",
+      "policy": "void_work",
+      "capability": "void_capability",
+      "request": "void_request",
+      "completionDigest": "a154d781ad5fe157e14637e45e8e64a9cf0252f5eb0c5438d112ee79de6ddbd8",
+      "cases": [
+        {
+          "tag": "voided",
+          "operation": "void",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Void evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3689
+        },
+        {
+          "tag": "expired",
+          "operation": "void",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Void evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3703
+        },
+        {
+          "tag": "problem",
+          "operation": "void",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Void evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 3969
+        }
+      ]
+    },
+    {
+      "activity": "void_label_a_activity",
+      "policy": "void_label_a_work",
+      "capability": "void_label_a_capability",
+      "request": "void_label_a_request",
+      "completionDigest": "134f251fe406dee38b1f30e53947a750cf2b43d085d991696dcbcab4839139be",
+      "cases": [
+        {
+          "tag": "voided",
+          "operation": "void_label_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Label void A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3785
+        },
+        {
+          "tag": "problem",
+          "operation": "void_label_a",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Label void A evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4065
+        }
+      ]
+    },
+    {
+      "activity": "void_label_b_activity",
+      "policy": "void_label_b_work",
+      "capability": "void_label_b_capability",
+      "request": "void_label_b_request",
+      "completionDigest": "49fa33e8289ee357de17b8ca6210ed8805e6f3939c7f3d80f105771ea913d9a8",
+      "cases": [
+        {
+          "tag": "voided",
+          "operation": "void_label_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Label void B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "b476b700e760e6282ae1d903a09e888f549008cfd0f228c9d31a750445617857",
+          "comparisonLeaves": 13,
+          "originalAstBytes": 3785
+        },
+        {
+          "tag": "problem",
+          "operation": "void_label_b",
+          "nominal": {
+            "contract": {
+              "id": "urn:choreoform:benchmarks:rp03:types:0.1.0",
+              "revision": "sha256:48d6fb2b99d8380d97831569f6079c82c5a55a864b683fa485dd42273d8da1ac"
+            },
+            "kind": "named",
+            "name": "Label void B evidence"
+          },
+          "representationDigest": "948da67170d16ecbd4da43ecfb60e34318dd1aa57428a784df9c3889b7360c6f",
+          "template": "1a8fa93d187dd3d6ca0d5d990ca0229d4b4fb0a118937e11a488c658ee7e1aa0",
+          "comparisonLeaves": 14,
+          "originalAstBytes": 4065
+        }
+      ]
+    }
+  ]
+}

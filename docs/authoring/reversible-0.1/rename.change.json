@@ -1,0 +1,10 @@
+{
+  "format": "choreoform-authoring-change",
+  "version": "0.1.0",
+  "base": "sha256:51373968dec3664800c77aa685076556a27417790989a086132da19aad4826a2",
+  "operation": {
+    "kind": "rename",
+    "target": "same",
+    "name": "Equal values"
+  }
+}

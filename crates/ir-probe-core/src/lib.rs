@@ -66,6 +66,8 @@ pub struct Resource<'a> {
     pub bytes: &'a [u8],
 }
 
+pub const SUPPORTED_WIRE_VERSIONS: &[&str] = &["0.1.0", "0.2.0", "0.3.0", "0.4.0"];
+
 pub const SUPPORTED_CONTRACTS: [(&str, &str); 2] = [
     (
         "urn:choreoform:semantics:adr-0008",
@@ -132,7 +134,7 @@ fn envelope(document: &Value) -> Result<()> {
     if document["format"] != "choreoform-ir" || document["kind"] != "definition" {
         return Err(Error::Envelope);
     }
-    if document["version"] != "0.1.0" {
+    if !SUPPORTED_WIRE_VERSIONS.contains(&document["version"].as_str().unwrap_or("")) {
         return Err(Error::Version);
     }
     object(&document["annotations"]).map_err(|_| Error::Envelope)?;
@@ -176,10 +178,14 @@ impl DefinitionEnvelope {
     /// Construct an envelope, admit the complete in-memory value and compute its
     /// revision without serializing and reparsing it. Body semantics stay opaque.
     pub fn from_parts(body: Value, annotations: Value) -> Result<Self> {
+        Self::from_parts_versioned("0.1.0", body, annotations)
+    }
+    /// Explicit known wire version; transport/envelope only, never semantic admission.
+    pub fn from_parts_versioned(version: &str, body: Value, annotations: Value) -> Result<Self> {
         let mut document = Value::Object(
             [
                 ("format".into(), Value::from("choreoform-ir")),
-                ("version".into(), Value::from("0.1.0")),
+                ("version".into(), Value::from(version)),
                 ("kind".into(), Value::from("definition")),
                 (
                     "revision".into(),
@@ -234,7 +240,10 @@ impl DefinitionEnvelope {
         if string(&body["id"])?.is_empty() {
             return Err(Error::Shape);
         }
-        model::Graph::read(body)
+        model::Graph::read(
+            body,
+            self.document["version"].as_str().ok_or(Error::Version)?,
+        )
     }
 }
 
@@ -295,7 +304,12 @@ pub fn inspect(raw: &[u8], resources: &[Resource<'_>]) -> Result<Inspected> {
     {
         return Err(Error::ContractUnsupported);
     }
-    let graph = model::Graph::read(body)?;
+    // The original illustrative-contract inspector has no handler-entry
+    // contract. Transport/structural projection remains available separately.
+    if matches!(document["version"].as_str(), Some("0.3.0" | "0.4.0")) {
+        return Err(Error::ContractUnsupported);
+    }
+    let graph = model::Graph::read(body, document["version"].as_str().ok_or(Error::Version)?)?;
     let canonical = canonical_definition(&document);
     let revision = digest(canonical.as_bytes());
     if document["revision"] != revision {

@@ -7,6 +7,53 @@ mod clock;
 pub use clock::{CLOCK_PROFILE, Clock};
 mod instance_calendar;
 pub use instance_calendar::{CALENDAR_PROFILE, InstanceCalendar};
+mod terminal_source;
+pub use terminal_source::{
+    ProviderTerminalSource, TERMINAL_OBSERVATION_PROFILE, TerminalFactTag, TerminalObservation,
+};
+mod fault_source;
+pub use fault_source::{FAULT_SOURCE_PROFILE, FaultEmission, FaultEvidence, ProviderFaultSource};
+mod fault_history;
+pub use fault_history::{FAULT_HISTORY_PROFILE, FAULT_HISTORY_TYPES, ProviderFaultHistory};
+mod interference;
+pub use interference::{
+    ExternalFootprint, ExternalRegion, ExternalRegionNamespace, INTERFERENCE_PROFILE,
+    ProviderInterference, RegionKeyType, RequestSelector, RequestSelectorStep,
+};
+
+/// Declared provider classification, never an authenticated observation.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum ProviderObservationState {
+    Acknowledged,
+    Succeeded,
+    Rejected,
+    Cancelled,
+    Unknown,
+    NoEffect,
+}
+impl ProviderObservationState {
+    fn decode(state: &str) -> Result<Self> {
+        match state {
+            "acknowledged" => Ok(Self::Acknowledged),
+            "succeeded" => Ok(Self::Succeeded),
+            "rejected" => Ok(Self::Rejected),
+            "cancelled" => Ok(Self::Cancelled),
+            "unknown" => Ok(Self::Unknown),
+            "no-effect" => Ok(Self::NoEffect),
+            _ => Err(err("provider-observation")),
+        }
+    }
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::Acknowledged => "acknowledged",
+            Self::Succeeded => "succeeded",
+            Self::Rejected => "rejected",
+            Self::Cancelled => "cancelled",
+            Self::Unknown => "unknown",
+            Self::NoEffect => "no-effect",
+        }
+    }
+}
 
 #[derive(Debug)]
 pub(crate) struct NamedDefinition {
@@ -22,6 +69,7 @@ pub struct Provider {
     pub(crate) protection: Value,
     pub(crate) effect: String,
     pub(crate) idempotency: String,
+    observations: BTreeMap<String, ProviderObservationState>,
 }
 impl Provider {
     /// Exact declared input type, not an adapter-support attestation.
@@ -37,6 +85,9 @@ impl Provider {
     /// Definition-context references still require visibility and policy checking.
     pub fn protection(&self) -> &Value {
         &self.protection
+    }
+    pub fn observations(&self) -> &BTreeMap<String, ProviderObservationState> {
+        &self.observations
     }
 }
 
@@ -124,7 +175,16 @@ pub struct Resources<'a> {
     checking_named: bool,
     providers: BTreeMap<Pin, Arc<Provider>>,
     instance_calendars: BTreeMap<Pin, Arc<InstanceCalendar>>,
+    fault_sources: BTreeMap<Pin, Arc<ProviderFaultSource>>,
+    fault_histories: BTreeMap<Pin, Arc<ProviderFaultHistory>>,
+    fault_history_type: Option<Arc<Type>>,
+    terminal_sources: BTreeMap<Pin, Arc<ProviderTerminalSource>>,
+    terminal_schemas: BTreeMap<(Pin, Pin), Arc<terminal_source::TerminalSchema>>,
+    external_namespaces: BTreeMap<Pin, Arc<ExternalRegionNamespace>>,
+    interference: BTreeMap<Pin, Arc<ProviderInterference>>,
     pub(crate) budget: Budget,
+    pub(crate) expression_source_context: bool,
+    pub(crate) expression_assertions: Option<crate::expression_assertions::ExpressionAssertions>,
 }
 impl<'a> Resources<'a> {
     /// Bound registry size before hashing/decoding; duplicate pins always refuse.
@@ -155,7 +215,16 @@ impl<'a> Resources<'a> {
             checking_named: false,
             providers: BTreeMap::new(),
             instance_calendars: BTreeMap::new(),
+            fault_sources: BTreeMap::new(),
+            fault_histories: BTreeMap::new(),
+            fault_history_type: None,
+            terminal_sources: BTreeMap::new(),
+            terminal_schemas: BTreeMap::new(),
+            external_namespaces: BTreeMap::new(),
+            interference: BTreeMap::new(),
             budget: Budget::default(),
+            expression_assertions: None,
+            expression_source_context: true,
         })
     }
     /// Verify exact stored bytes, without claiming their format or host meaning.
@@ -307,26 +376,15 @@ impl<'a> Resources<'a> {
         names(&p["participants"])?;
         names(&p["capabilities"])?;
         let mut succeeded = BTreeSet::new();
+        let mut states = BTreeMap::new();
         let observations = object(&v["observations"])?;
         require(observations.len() <= MAX_ITEMS, "collection")?;
         for (key, o) in observations {
             self.budget.tick(0)?;
             name(&Value::from(key.as_str()))?;
             fields(o, &["state", "result", "outcome"])?;
-            let state = text(&o["state"])?;
-            require(
-                [
-                    "acknowledged",
-                    "succeeded",
-                    "rejected",
-                    "cancelled",
-                    "unknown",
-                    "no-effect",
-                ]
-                .contains(&state),
-                "provider-observation",
-            )?;
-            if state == "succeeded" {
+            let state = ProviderObservationState::decode(text(&o["state"])?)?;
+            if state == ProviderObservationState::Succeeded {
                 let outcome = name(&o["outcome"])?;
                 require(
                     outcomes.contains(outcome) && self.type_descriptor(&o["result"])? == output,
@@ -339,6 +397,8 @@ impl<'a> Resources<'a> {
                     "provider-result",
                 )?;
             }
+            self.budget.charge(2)?;
+            states.insert(key.clone(), state);
         }
         require(succeeded == outcomes, "provider-outcomes")?;
         let effect = text(&v["effectClass"])?;
@@ -355,6 +415,7 @@ impl<'a> Resources<'a> {
             protection: p.clone(),
             effect: effect.into(),
             idempotency: idempotency.into(),
+            observations: states,
         });
         self.providers.insert(pin.clone(), provider.clone());
         Ok(provider)

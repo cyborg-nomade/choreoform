@@ -1,0 +1,13 @@
+{
+  "kind": "provider-fault-history",
+  "version": "0.1.0",
+  "id": "urn:test:readable-payment-history",
+  "profile": {
+    "id": "urn:choreoform:fault-history-profile:provider-observations:0.1.0",
+    "revision": "sha256:2f580f46eb6ef9b7fff42906f6b0b5cafc6c5fa71ae14365828935bfe2da070c"
+  },
+  "source": {
+    "id": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+    "revision": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223"
+  }
+}

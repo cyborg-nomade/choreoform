@@ -794,6 +794,35 @@ fn fanout_item_alias_resolves_to_the_child_owned_cell() {
         candidate.document()["body"]["nodes"]["node_done"]["changes"],
         "membership"
     );
+    // The current paired model must also retain the less common collection node.
+    let current = source.replace("authoring \"0.2.0\"", "authoring \"0.19.0\"");
+    let mut current_bindings = b.clone();
+    let base: Value = serde_json::from_slice(include_bytes!(
+        "../../../docs/authoring/reversible-0.1/base.json"
+    ))
+    .unwrap();
+    let current_ledger: Value = serde_json::from_str(base["bindings"].as_str().unwrap()).unwrap();
+    current_bindings["version"] = json!("0.18.0");
+    current_bindings["profile"] = json!("0.19.0");
+    current_bindings["contracts"] = current_ledger["contracts"].clone();
+    let document = choreoform_authoring_frontend::AuthoringDocument::from_package(
+        current.as_bytes(),
+        &bytes(&current_bindings),
+        br#"{"format":"choreoform-authoring-layout","version":"0.1.0","entries":[]}"#,
+        &[],
+    )
+    .unwrap();
+    let view = document.view().unwrap();
+    assert_eq!(
+        view["entities"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["id"] == "node_done")
+            .unwrap()["nodeKind"],
+        "fanout"
+    );
+    assert_eq!(view["ir"], *document.candidate().document());
     let renamed = source.replace("with item \"item\"", "with item \"missing\"");
     assert_eq!(
         Package::parse(renamed.as_bytes(), &bytes(&b))

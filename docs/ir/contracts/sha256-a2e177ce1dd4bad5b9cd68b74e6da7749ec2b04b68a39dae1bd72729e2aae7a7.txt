@@ -1,0 +1,72 @@
+{
+  "kind": "named-types",
+  "version": "0.1.0",
+  "id": "urn:choreoform:types:provider-fault-history:0.1.0",
+  "definitions": {
+    "Provider fault history": {
+      "representation": {
+        "kind": "record",
+        "fields": {
+          "type": {
+            "kind": "text"
+          },
+          "sourceOccurrence": {
+            "kind": "record",
+            "fields": {
+              "definitionRevision": {
+                "kind": "text"
+              },
+              "instance": {
+                "kind": "text"
+              },
+              "scopeOccurrence": {
+                "kind": "text"
+              },
+              "site": {
+                "kind": "text"
+              },
+              "occurrence": {
+                "kind": "text"
+              },
+              "attempt": {
+                "kind": "integer"
+              }
+            }
+          },
+          "cause": {
+            "kind": "record",
+            "fields": {
+              "observation": {
+                "kind": "text"
+              },
+              "record": {
+                "kind": "text"
+              }
+            }
+          },
+          "inputRevisions": {
+            "kind": "list",
+            "element": {
+              "kind": "record",
+              "fields": {
+                "cell": {
+                  "kind": "text"
+                },
+                "revision": {
+                  "kind": "text"
+                }
+              }
+            }
+          }
+        }
+      },
+      "invariant": {
+        "op": "literal",
+        "type": {
+          "kind": "boolean"
+        },
+        "value": true
+      }
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "declarations": [
+    {
+      "id": "payment_history_binding",
+      "kind": "resource",
+      "scope": "expense",
+      "name": "Payment history"
+    },
+    {
+      "id": "history_types_binding",
+      "kind": "resource",
+      "scope": "expense",
+      "name": "History types"
+    },
+    {
+      "id": "provider_handler",
+      "kind": "scope",
+      "scope": "payment_service",
+      "name": "Fault handling"
+    },
+    {
+      "id": "fault_history",
+      "kind": "data",
+      "scope": "provider_handler",
+      "name": "Fault history"
+    },
+    {
+      "id": "history_copy",
+      "kind": "data",
+      "scope": "provider_handler",
+      "name": "History copy"
+    },
+    {
+      "id": "history_guard",
+      "kind": "expression",
+      "scope": "provider_handler",
+      "name": "History has expected type"
+    },
+    {
+      "id": "history_branch",
+      "kind": "node",
+      "scope": "provider_handler",
+      "name": "Inspect history"
+    },
+    {
+      "id": "handler_done",
+      "kind": "node",
+      "scope": "provider_handler",
+      "name": "Done"
+    },
+    {
+      "id": "payment_faults",
+      "kind": "policy",
+      "scope": "payment_service",
+      "name": "Payment fault handling"
+    }
+  ],
+  "generated": [
+    {
+      "id": "history_copy_initial",
+      "owner": "history_copy",
+      "role": "initial",
+      "key": null
+    },
+    {
+      "id": "history_branch_flow_expected",
+      "owner": "history_branch",
+      "role": "flow",
+      "key": "history_branch_outcome_expected"
+    },
+    {
+      "id": "history_branch_flow_unexpected",
+      "owner": "history_branch",
+      "role": "flow",
+      "key": "history_branch_outcome_unexpected"
+    }
+  ],
+  "symbols": [
+    {
+      "id": "provider_handler_outcome_complete",
+      "owner": "provider_handler",
+      "role": "outcome",
+      "name": "complete",
+      "wire": "complete"
+    },
+    {
+      "id": "fault_history_purpose_reimbursement",
+      "owner": "fault_history",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "history_copy_purpose_reimbursement",
+      "owner": "history_copy",
+      "role": "purpose",
+      "name": "Reimbursement",
+      "wire": "reimbursement"
+    },
+    {
+      "id": "history_branch_outcome_expected",
+      "owner": "history_branch",
+      "role": "outcome",
+      "name": "expected",
+      "wire": "expected"
+    },
+    {
+      "id": "history_branch_outcome_unexpected",
+      "owner": "history_branch",
+      "role": "outcome",
+      "name": "unexpected",
+      "wire": "unexpected"
+    }
+  ],
+  "resources": [
+    {
+      "binding": "payment_history_binding",
+      "kind": "provider-fault-history",
+      "contract": "urn:test:readable-payment-history",
+      "digest": "sha256:153c51160c624c7a24fc88547ee69db5ef38da5052519a1a8d4261352a79399a"
+    },
+    {
+      "binding": "history_types_binding",
+      "kind": "named-type",
+      "contract": "urn:choreoform:types:provider-fault-history:0.1.0",
+      "digest": "sha256:a2e177ce1dd4bad5b9cd68b74e6da7749ec2b04b68a39dae1bd72729e2aae7a7"
+    }
+  ]
+}

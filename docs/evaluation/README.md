@@ -16,6 +16,71 @@ same frozen plan and benchmark inputs for every candidate in that comparison.
 
 ## In-progress evaluations
 
+- [Template parent/caller critique](0074-rp03-template-binding-audit.md) identifies
+  23 cross-parent invocations and the equivalent raw barrier; bounded effectful
+  instantiation must be proved before full source restructuring.
+
+- [Corrected RP-03 checkpoint and next template refusal](0073-rp03-corrected-checkpoint.md)
+  publishes the exact caption repair/current pair with full original history;
+  real lowering still refuses, with no candidate or semantic admission.
+
+- [Whole-order symbol-binding critique](0072-rp03-symbol-binding-audit.md) identifies
+  the original finish-caption mismatch and rejects companion aliases/normalization;
+  generator/source correction needs the next separate plan.
+
+- [Readable compensation identity and next binding gap](0071-compensation-authoring.md)
+  records source0.16's purpose-only paths and genuine later whole-order refusal;
+  no full candidate or semantic admission exists.
+
+- [Raw purpose-only compensation identity](0070-compensation-identity.md) versions
+  the narrow same-definition activity link while preserving lexical access and
+  immediate-source owned-work proof; readable selection remains a separate step.
+
+- [Compensation reference critique](0069-compensation-reference-audit.md) separates
+  raw and readable lexical identity restrictions from live prior-effect eligibility;
+  the next purpose-only contract/binding changes require separate plans.
+
+- [Measured source capacity and binding gap](0068-source-capacity.md) records
+  explicit source 0.15, unchanged old/other limits, real full grammar recognition
+  and the preserved compensation reference refusal; no benchmark admission.
+
+- [RP-03 whole-source draft and capacity refusal](0067-rp03-package-draft.md) records
+  the full declared two-line source, exact resources and actual token refusal;
+  pure resource/receipt evidence does not admit the order or close a phase gate.
+
+- [Full RP-01 typed late-capture checkpoint](0066-rp01-capture-adoption.md) publishes
+  the demonstrated existing-profile integration with exact historical evidence and
+  unchanged original guard meanings; all full scenario/phase gates stay open.
+
+- [Full RP-01 current-contract critique](0065-rp01-current-contract-audit.md)
+  demonstrates experimental profile promotion/capture/request/matched late records
+  without modifying benchmark bytes; adoption and all full scenario gates stay open.
+
+- [Readable finite work](0064-finite-work-authoring.md) records explicit source
+  selection/typed command-input integration and bounded distinct native work
+  disclosure; all actual host acceptance and phase exit gates remain open.
+
+
+- [Finite owned work/pure inputs](0063-finite-owned-work.md) records raw core 0.11
+  conditional SDK proof for capture-first commands/compensators and typed local
+  inputs; actual activation/authority/conflict/settlement and phase gates stay open.
+
+
+- [Owned command/input critique](0062-owned-command-audit.md) distinguishes
+  effect class, compensation link, typed input construction and finite ownership /
+  report barriers using actual SDK/frontend refusals; production remains fixed.
+
+
+- [Readable pre-capture entry](0061-pre-capture-authoring.md) records explicit
+  source selection, optional bounded native host-premise disclosure and unchanged
+  old reports; actual host activation and phase exit gates remain open.
+
+
+- [Finite read-only pre-capture entry](0060-owned-pre-capture-entry.md) records
+  raw core 0.10 conditional SDK proof, capture integrity and bounded conformance;
+  actual host activation and every phase exit gate remain open.
+
+
 - [Full benchmark readiness](0034-benchmark-readiness.md) and
   [current forty-scenario accountability](0034-corpus-accountability.md) relate
   the implemented slices to complete RP-01/03/08 requirements. All forty remain

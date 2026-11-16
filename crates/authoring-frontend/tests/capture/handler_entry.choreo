@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2026 Choreoform contributors
+# SPDX-License-Identifier: MPL-2.0
+
+Rule for faults "Payment fault handling". Handle ["provider unknown" by "Fault handling"]. End policy.
+Scope "Fault handling" within "Payment".
+Start at "Inspect history".
+Inputs empty. Outputs empty. Outcomes ["complete"].
+Use cancellation "Stop work", faults "Unhandled faults", closure "Ordinary close" and races "Acceptance order".
+Receive fault history from "Payment history" and record in "Fault history".
+Keep "Fault history" as type "Provider fault history" from "History types" under "Expense access".
+Sensitivity "expense". Purposes ["Reimbursement"]. Participants ["Employee", "Manager", "Finance reviewer", "Payment operator", "Clock observer"].
+Capabilities ["Check the claim", "Create the payable", "Notify the employee"]. Invalidate ["Inspect history"]. Initially unavailable. End data.
+Keep "History copy" as type "Provider fault history" from "History types" under "Expense access".
+Sensitivity "expense". Purposes ["Reimbursement"]. Participants ["Employee", "Manager", "Finance reviewer", "Payment operator", "Clock observer"].
+Capabilities ["Check the claim", "Create the payable", "Notify the employee"]. Invalidate empty. Initially (the value of "Fault history"). End data.
+Let "History has expected type" mean ((field "type" of (the representation of (the value of "Fault history"))) equals ("provider unknown")) as truth value with parameters empty.
+Step "Inspect history". Choose by ["expected" when "History has expected type"]; otherwise "unexpected". On "expected", continue with "Done". On "unexpected", continue with "Done". End step.
+Step "Done". Finish as "complete".  End step.
+End scope.

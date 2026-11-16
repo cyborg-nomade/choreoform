@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:authoring:inspection:0.1.0",
+  "title": "Read-only native authoring projection inspection0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "status",
+    "executable",
+    "definition",
+    "semanticRevision",
+    "authoringDigest",
+    "sourceBytes",
+    "bindingsBytes",
+    "layoutEntries"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-authoring-inspection"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "status": {
+      "const": "projection-matched"
+    },
+    "executable": {
+      "const": false
+    },
+    "definition": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+    },
+    "semanticRevision": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "authoringDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "sourceBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1048576
+    },
+    "bindingsBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1048576
+    },
+    "layoutEntries": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+    }
+  }
+}

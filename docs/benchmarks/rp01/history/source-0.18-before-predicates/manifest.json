@@ -1,0 +1,252 @@
+{
+  "format": "choreoform-rp01-benchmark-draft",
+  "version": "0.1.0",
+  "status": "lowered-candidate-with-partial-static-evidence",
+  "executable": false,
+  "sourceProfile": "0.18.0",
+  "companionVersion": "0.17.0",
+  "coreProfile": "0.12.0",
+  "sourceBytes": 55453,
+  "measuredTokens": 9455,
+  "tokenMeasurement": "whole-source bounded lexing; not semantic admission",
+  "sourceDigest": "sha256:95d223f9bef902cc93edbf830642e8af499e2e77071a80d40f01377c4ece6735",
+  "bindingsDigest": "sha256:e2757e1f6f3201a67de13aa16ec35a379180aa424a6805c0728e281957939360",
+  "packageDigest": "sha256:c26c9689b479566d07ed244ededcf9b3d6d1cda7fcbe1409a1e3be56442d2a7a",
+  "canonicalIR": {
+    "path": "candidate.ir.json",
+    "revision": "sha256:cd0a7b6923ccc8a0afa31a27fca3aff280c3da601089ba12946f2d768fa1a829",
+    "digest": "sha256:d96b6398e6856a1e34916046a6ca61ee0e09339f59c5c3664c524a5b43a801de"
+  },
+  "semanticStageResults": [
+    {
+      "stage": "check",
+      "result": "passed",
+      "report": "reports/check.json",
+      "reportDigest": "sha256:0fbfb53cb626cca5c2dcb2f51a9ae10ad5957f5079964583182a52ee7c6135a1"
+    },
+    {
+      "stage": "check-control",
+      "result": "passed",
+      "report": "reports/check-control.json",
+      "reportDigest": "sha256:38cde161d28f359b32eeab88686fb09a952269ac5ac2afe6af381f6e56fc139c"
+    },
+    {
+      "stage": "check-protection",
+      "result": "passed",
+      "report": "reports/check-protection.json",
+      "reportDigest": "sha256:7c16cff09dc51ec404ef5884a0282fa3208666a7ad2604227e3e9d1e7df0a76a"
+    },
+    {
+      "stage": "check-invalidation",
+      "result": "passed",
+      "report": "reports/check-invalidation.json",
+      "reportDigest": "sha256:acaab87529b16985155a4e6c0026c0905931e25474f086aa8db3d21f476f3304"
+    },
+    {
+      "stage": "invalidation-requirements",
+      "result": "passed",
+      "report": "reports/invalidation-requirements.json",
+      "reportDigest": "sha256:87301dfc8e51c45338541e1bcfa44e8b414a09c4c024f6d2ac1dcc0c5859e996"
+    },
+    {
+      "stage": "check-concurrency",
+      "result": "passed",
+      "report": "reports/check-concurrency.json",
+      "reportDigest": "sha256:ee8c60490aa2124ae01bd305b46d7dd23e96996f72853d0f58b98eaa0f7920b7"
+    },
+    {
+      "stage": "check-timing",
+      "result": "passed",
+      "report": "reports/check-timing.json",
+      "reportDigest": "sha256:06a17806210472a96f04c161784d87e4e3588fa574d859cd1b38bc4696d036b0"
+    },
+    {
+      "stage": "check-fault-routes",
+      "result": "passed",
+      "report": "reports/check-fault-routes.json",
+      "reportDigest": "sha256:8980debafcdd7cd17d740dba12287c03e4875028810848346ab07f285a7f59f9"
+    },
+    {
+      "stage": "check-exceptional-availability",
+      "result": "passed",
+      "report": "reports/check-exceptional-availability.json",
+      "reportDigest": "sha256:90401fbceb10146c9bad8f23727856130868bd0227b0bd8efb0726ca02fab281"
+    },
+    {
+      "stage": "check-reconciliation-links",
+      "result": "passed",
+      "report": "reports/check-reconciliation-links.json",
+      "reportDigest": "sha256:fa073de7e2dadacc688baf140e72d68d6cf9bf6f0f0e81ae7cca493ac8f62794"
+    },
+    {
+      "stage": "check-reconciliation-availability",
+      "result": "passed",
+      "report": "reports/check-reconciliation-availability.json",
+      "reportDigest": "sha256:049c3cb7b75f254db3bdd881e4b4521674e8334c3b0ba34d861a1824c80d3d68"
+    }
+  ],
+  "resources": [
+    {
+      "id": "urn:choreoform:benchmarks:rp01:types:0.1.0",
+      "revision": "sha256:4254dc7391adbee28c659798cc19ca631e35c75f608115e8ab548336643ab6fd",
+      "path": "docs/benchmarks/rp01/types.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp01:checks:0.1.0",
+      "revision": "sha256:a884fd9977b676ed4b82244ec1a91e43e5f947b225be12f6abb6ad33b15e3378",
+      "path": "docs/benchmarks/rp01/checks.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp01:payment:0.1.0",
+      "revision": "sha256:a96fe1eacab2c7e450551b6409e7a9a0feed6423e9b1cfc992fb7d301a069f3d",
+      "path": "docs/benchmarks/rp01/payment.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp01:notice:0.1.0",
+      "revision": "sha256:7ae8bce8e4b6881ff9b0472658e49376f392156acb467c261e1877b4df9b5f82",
+      "path": "docs/benchmarks/rp01/notice.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp01:clock-source:0.1.0",
+      "revision": "sha256:e5d530de89cf116c25fc174c8bfe820435e2eccb29b6e4359c24a5d14af0d45c",
+      "path": "docs/benchmarks/rp01/clock.provider.json"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp01:clock:0.1.0",
+      "revision": "sha256:32f46c291fe06f4248c44fc0aa802905ad4501c8fbcd714110689d922f832085",
+      "path": "docs/benchmarks/rp01/clock.json"
+    },
+    {
+      "id": "urn:choreoform:clock-profile:instance-microseconds:0.1.0",
+      "revision": "sha256:8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9",
+      "path": "docs/ir/contracts/sha256-8769ccd8eda0a11074662ad1d36aa843f1f951e15640e51beb30d1ab4b43e9c9.txt"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp01:payment-faults:0.1.0",
+      "revision": "sha256:e003ba4c9af4c8b6f5aaa1a4c6796c9446c77868034175bc0d6e811096898223",
+      "path": "docs/benchmarks/rp01/payment.fault-source.json"
+    },
+    {
+      "id": "urn:choreoform:fault-source-profile:provider-observations:0.1.0",
+      "revision": "sha256:f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0",
+      "path": "docs/ir/contracts/sha256-f894edd8fb524b4608d1d26791298eee8436bccc9b3101af553efcd03e1179d0.txt"
+    },
+    {
+      "id": "urn:choreoform:benchmarks:rp01:payment-terminal:0.1.0",
+      "revision": "sha256:20c093752af57f36ae4204e1a28687edcc7b66bb440aa6b4dd1fb4900ae74fe7",
+      "path": "docs/benchmarks/rp01/payment.terminal-source.json"
+    },
+    {
+      "id": "urn:choreoform:observation-source-profile:provider-terminal-facts:0.1.0",
+      "revision": "sha256:a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead",
+      "path": "docs/ir/contracts/sha256-a224fc2b8318af2ff8dfc9955b55af03f4d5b7bd0de719de0384421698d20ead.txt"
+    }
+  ],
+  "contracts": {
+    "semantics": {
+      "contract": "urn:choreoform:semantics:adr-0008",
+      "digest": "sha256:0d353f015c758acd70f01bba74724981932915947f54b135a58d3554f6411141"
+    },
+    "core": {
+      "contract": "urn:choreoform:contracts:core-profile:0.12.0",
+      "digest": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007",
+      "dialect": "core"
+    }
+  },
+  "inputArtifacts": [
+    {
+      "path": "policy.json",
+      "digest": "sha256:bd27a1b4a614fd347366765275027f1df07e136e3b4d02a7493b2a2921f998b5"
+    },
+    {
+      "path": "receipt.txt",
+      "digest": "sha256:bf2100a2304a83f03ac71dc3f629b44b1e20daa6f34fef620fb98e25ef044498"
+    },
+    {
+      "path": "claim-v1.json",
+      "digest": "sha256:e8e9828f7c473be5a0c5f00752e27fddfd703f08e34d15f9e72adf90e6ee0a88"
+    },
+    {
+      "path": "claim-v2.json",
+      "digest": "sha256:618a730812e1fd20803b3a9df7ae3b1be0263709a766e4791530591c06f0b47f"
+    },
+    {
+      "path": "launch-values.json",
+      "digest": "sha256:c6d6a48d2637a50a99ad21ab1ca30ff14b0ebc95a33221ef9a6dcf9c8c593133"
+    },
+    {
+      "path": "correction-value.json",
+      "digest": "sha256:9e510d8788f2d90c19560e79c0904ba64484bd5b8ed54fa73c838c64db940ce9"
+    }
+  ],
+  "hostRequirements": [
+    "authenticated-current-principal-role-relationship-and-assignment-binding",
+    "exact-input-policy-claim-and-evidence-revisions-before-acceptance",
+    "truthful-implemented-check-payment-notice-and-clock-contracts",
+    "confirmed-no-effect-fault-classification-before-eligible-retry",
+    "exact-original-request-digest-key-and-registered-clock-domain",
+    "authenticated-terminal-provider-fact-envelope-with-exact-obligation-correlation",
+    "accepted-authorized-atomic-surviving-ownership-and-subscription-handoff",
+    "transitive-lifetime-and-all-obligation-settlement-before-terminal-disposal",
+    "atomic-cancellation-order-and-provider-irrevocable-cutoff",
+    "history-retention-late-duplicate-and-contradictory-observation-handling",
+    "immutable-original-request-and-terminal-capture-lifetime",
+    "receipt-matching-and-accountable-contradictory-evidence-review"
+  ],
+  "scenarios": [
+    {
+      "id": "RP-01-A",
+      "status": "Partial",
+      "declarations": [
+        "review_again",
+        "run_checks",
+        "manager_review",
+        "finance_review",
+        "run_payment",
+        "record_paid",
+        "run_notice",
+        "finish_paid"
+      ]
+    },
+    {
+      "id": "RP-01-B",
+      "status": "Partial",
+      "declarations": [
+        "finance_review",
+        "correct_claim",
+        "publish_correction",
+        "review_again",
+        "may_pay"
+      ],
+      "inputs": [
+        "claim-v1.json",
+        "correction-value.json"
+      ]
+    },
+    {
+      "id": "RP-01-C",
+      "status": "Partial",
+      "declarations": [
+        "payment_request_step",
+        "payment_work",
+        "payment_close",
+        "payment_wait",
+        "payment_observe",
+        "retained_payment_request",
+        "late_payment_capture",
+        "classify_late_payment",
+        "late_payment_category"
+      ]
+    },
+    {
+      "id": "RP-01-D",
+      "status": "Partial",
+      "declarations": [
+        "withdraw_request",
+        "manager_review",
+        "payment_commits",
+        "payment_request_step"
+      ]
+    }
+  ]
+}

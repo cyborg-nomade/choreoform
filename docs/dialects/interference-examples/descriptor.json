@@ -1,0 +1,65 @@
+{
+  "kind": "external-interference",
+  "version": "0.1.0",
+  "id": "urn:test:standalone:descriptor",
+  "profile": {
+    "id": "urn:choreoform:interference-profile:provider-regions:0.1.0",
+    "revision": "sha256:0b10eb4dbb19caace45b93f35dec44aa5f26458d631393932caddb5589210250"
+  },
+  "providerProfile": {
+    "id": "urn:choreoform:contracts:core-profile:0.12.0",
+    "revision": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007"
+  },
+  "provider": {
+    "id": "urn:test:parallel-effects:a:compensatable",
+    "revision": "sha256:3f888c8cf633b21d5b0cf714c049fd320b3207d428ccf6bbbdff2314921200d4"
+  },
+  "coverage": "exhaustive",
+  "activity": {
+    "reads": [
+      {
+        "namespace": {
+          "id": "urn:test:standalone:namespace",
+          "revision": "sha256:6847bbfbd174833560c8f4517aa890757f4d237a8560ca9ba96ef442bdff9cfc"
+        },
+        "key": [
+          {
+            "path": [],
+            "type": "integer"
+          }
+        ]
+      }
+    ],
+    "writes": [
+      {
+        "namespace": {
+          "id": "urn:test:standalone:namespace",
+          "revision": "sha256:6847bbfbd174833560c8f4517aa890757f4d237a8560ca9ba96ef442bdff9cfc"
+        },
+        "key": [
+          {
+            "path": [],
+            "type": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  "terminal": {
+    "reads": [
+      {
+        "namespace": {
+          "id": "urn:test:standalone:namespace",
+          "revision": "sha256:6847bbfbd174833560c8f4517aa890757f4d237a8560ca9ba96ef442bdff9cfc"
+        },
+        "key": [
+          {
+            "path": [],
+            "type": "integer"
+          }
+        ]
+      }
+    ],
+    "writes": []
+  }
+}

@@ -5,6 +5,18 @@ use super::*;
 
 impl<'a, 's> Lower<'a, 's> {
     pub(super) fn type_value(&mut self, tree: &Tree, scope: &str, depth: usize) -> Result<Value> {
+        if matches!(self.syntax.profile(), "0.18.0" | "0.19.0") {
+            let cost = self.type_cost(tree, scope, 0)?;
+            self.expansion_charge(cost.work, cost.bytes, self.syntax.span(tree))?;
+        }
+        self.type_value_inner(tree, scope, depth)
+    }
+    pub(super) fn type_value_inner(
+        &mut self,
+        tree: &Tree,
+        scope: &str,
+        depth: usize,
+    ) -> Result<Value> {
         if depth > MAX_DEPTH {
             return Err(error("depth", self.syntax.span(tree)));
         }
@@ -19,21 +31,36 @@ impl<'a, 's> Lower<'a, 's> {
                 let fields = tree.one("type_fields")?;
                 let mut map = Map::new();
                 for (name, ty) in self.names(fields)?.into_iter().zip(fields.all("type")) {
-                    insert(&mut map, name, self.type_value(ty, scope, depth + 1)?)?;
+                    insert(&mut map, name, self.type_value_inner(ty, scope, depth + 1)?)?;
                 }
-                json!({"kind":"record", "fields": map})
+                let mut descriptor = json!({"kind":"record"});
+                descriptor["fields"] = Value::Object(map);
+                descriptor
             }
             "choice" => {
                 let mut cases = Map::new();
                 for (tag, ty) in tree.all("tag").into_iter().zip(tree.all("type")) {
                     let name = self.tag(tag, scope)?;
-                    let ty = self.type_value(ty, scope, depth + 1)?;
+                    let ty = self.type_value_inner(ty, scope, depth + 1)?;
                     insert(&mut cases, name, ty)?;
                 }
-                json!({"kind":"variant", "cases": cases})
+                let mut descriptor = json!({"kind":"variant"});
+                descriptor["cases"] = Value::Object(cases);
+                descriptor
             }
             "list" | "optional" => {
-                json!({"kind": if self.syntax.word(tree, 0)? == "list" {"list"} else {"option"}, "element": self.type_value(tree.one("type")?, scope, depth + 1)?})
+                let mut descriptor = json!({"kind": if self.syntax.word(tree, 0)? == "list" {"list"} else {"option"}});
+                descriptor["element"] =
+                    self.type_value_inner(tree.one("type")?, scope, depth + 1)?;
+                descriptor
+            }
+            "type" if !tree.all("local_type").is_empty() => {
+                let reference = tree.one("local_type")?.one("reference")?;
+                let id = self.reference(reference, scope, "type-alias")?;
+                self.type_values
+                    .get(&id)
+                    .ok_or_else(|| error("type-definition", self.syntax.span(reference)))?
+                    .clone()
             }
             "type" => {
                 let resource = self.r(tree, scope, "resource", 0)?;
@@ -47,7 +74,9 @@ impl<'a, 's> Lower<'a, 's> {
         })
     }
     pub(super) fn wrapped_type(&mut self, tree: &Tree, scope: &str) -> Result<Value> {
-        Ok(json!({"dialect": self.ledger.dialect(), "body": self.type_value(tree, scope, 0)?}))
+        let mut wrapped = json!({"dialect": self.ledger.dialect()});
+        wrapped["body"] = self.type_value(tree, scope, 0)?;
+        Ok(wrapped)
     }
     pub(super) fn tag(&mut self, tree: &Tree, scope: &str) -> Result<String> {
         if let Some(outcome) = tree.all("outcome_reference").first() {
@@ -126,6 +155,17 @@ impl<'a, 's> Lower<'a, 's> {
         facts: bool,
         depth: usize,
     ) -> Result<Value> {
+        if self.syntax.profile() == "0.19.0" {
+            return self
+                .predicate_expression(tree, scope, facts, depth)
+                .map(|e| e.value)
+                .map_err(|mut e| {
+                    if e.span == (0..0) {
+                        e.span = self.syntax.span(tree);
+                    }
+                    e
+                });
+        }
         if depth > MAX_DEPTH {
             return Err(error("depth", self.syntax.span(tree)));
         }
@@ -254,7 +294,7 @@ impl<'a, 's> Lower<'a, 's> {
 
     // Removing value markers must not silently reinterpret a decimal coefficient.
     // This checks that representational boundary, not general expression typing.
-    fn literal_markers(
+    pub(super) fn literal_markers(
         &mut self,
         tree: &Tree,
         ty: &Value,

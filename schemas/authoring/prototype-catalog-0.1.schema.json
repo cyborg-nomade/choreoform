@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:prototype:catalog:0.1.0",
+  "title": "Trusted local prototype catalog0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "permissions",
+    "items"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-prototype-catalog"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read",
+        "edit",
+        "export"
+      ],
+      "properties": {
+        "read": {
+          "const": true
+        },
+        "edit": {
+          "type": "boolean"
+        },
+        "export": {
+          "type": "boolean"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "caption"
+        ],
+        "properties": {
+          "key": {
+            "enum": [
+              "example",
+              "rp01",
+              "rp03"
+            ]
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f\\ud800-\\udfff\\u2028\\u2029]+$"
+          }
+        }
+      }
+    }
+  }
+}

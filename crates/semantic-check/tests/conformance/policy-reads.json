@@ -1,0 +1,374 @@
+[
+  {
+    "name": "empty",
+    "nodes": {},
+    "expected": {
+      "reads": {}
+    }
+  },
+  {
+    "name": "self-recipient",
+    "nodes": {
+      "a": {
+        "local": [
+          "claim"
+        ],
+        "strong": [],
+        "metadata": [
+          "a"
+        ],
+        "metadata_cycles": true
+      }
+    },
+    "expected": {
+      "reads": {
+        "a": [
+          "claim"
+        ]
+      }
+    }
+  },
+  {
+    "name": "mutual-recipients",
+    "nodes": {
+      "a": {
+        "local": [
+          "claim"
+        ],
+        "strong": [],
+        "metadata": [
+          "b"
+        ],
+        "metadata_cycles": true
+      },
+      "b": {
+        "local": [
+          "policy"
+        ],
+        "strong": [],
+        "metadata": [
+          "a"
+        ],
+        "metadata_cycles": true
+      }
+    },
+    "expected": {
+      "reads": {
+        "a": [
+          "claim",
+          "policy"
+        ],
+        "b": [
+          "claim",
+          "policy"
+        ]
+      }
+    }
+  },
+  {
+    "name": "diamond",
+    "nodes": {
+      "a": {
+        "local": [
+          "claim"
+        ],
+        "strong": [
+          "b",
+          "c"
+        ],
+        "metadata": [],
+        "metadata_cycles": true
+      },
+      "b": {
+        "local": [
+          "policy"
+        ],
+        "strong": [],
+        "metadata": [
+          "d"
+        ],
+        "metadata_cycles": true
+      },
+      "c": {
+        "local": [
+          "authority"
+        ],
+        "strong": [
+          "d"
+        ],
+        "metadata": [],
+        "metadata_cycles": true
+      },
+      "d": {
+        "local": [
+          "clock"
+        ],
+        "strong": [],
+        "metadata": [],
+        "metadata_cycles": true
+      }
+    },
+    "expected": {
+      "reads": {
+        "a": [
+          "authority",
+          "claim",
+          "clock",
+          "policy"
+        ],
+        "b": [
+          "clock",
+          "policy"
+        ],
+        "c": [
+          "authority",
+          "clock"
+        ],
+        "d": [
+          "clock"
+        ]
+      }
+    }
+  },
+  {
+    "name": "strong-duplicate-is-retained",
+    "nodes": {
+      "a": {
+        "local": [],
+        "strong": [
+          "b"
+        ],
+        "metadata": [
+          "b"
+        ],
+        "metadata_cycles": true
+      },
+      "b": {
+        "local": [],
+        "strong": [
+          "a"
+        ],
+        "metadata": [],
+        "metadata_cycles": true
+      }
+    },
+    "expected": {
+      "code": "policy-cycle"
+    }
+  },
+  {
+    "name": "legacy-self-metadata-is-strong",
+    "nodes": {
+      "a": {
+        "local": [],
+        "strong": [],
+        "metadata": [
+          "a"
+        ],
+        "metadata_cycles": false
+      }
+    },
+    "expected": {
+      "code": "policy-cycle"
+    }
+  },
+  {
+    "name": "mixed-cycle",
+    "nodes": {
+      "a": {
+        "local": [],
+        "strong": [],
+        "metadata": [
+          "b"
+        ],
+        "metadata_cycles": true
+      },
+      "b": {
+        "local": [],
+        "strong": [
+          "a"
+        ],
+        "metadata": [],
+        "metadata_cycles": false
+      }
+    },
+    "expected": {
+      "code": "policy-cycle"
+    }
+  },
+  {
+    "name": "strong-cycle",
+    "nodes": {
+      "a": {
+        "local": [],
+        "strong": [
+          "b"
+        ],
+        "metadata": [],
+        "metadata_cycles": true
+      },
+      "b": {
+        "local": [],
+        "strong": [
+          "a"
+        ],
+        "metadata": [],
+        "metadata_cycles": true
+      }
+    },
+    "expected": {
+      "code": "policy-cycle"
+    }
+  },
+  {
+    "name": "missing-reference",
+    "nodes": {
+      "a": {
+        "local": [],
+        "strong": [],
+        "metadata": [
+          "unknown"
+        ],
+        "metadata_cycles": true
+      }
+    },
+    "expected": {
+      "code": "policy-reference"
+    }
+  },
+  {
+    "name": "disconnected-legacy",
+    "nodes": {
+      "a": {
+        "local": [
+          "claim"
+        ],
+        "strong": [],
+        "metadata": [
+          "a"
+        ],
+        "metadata_cycles": true
+      },
+      "old": {
+        "local": [
+          "policy"
+        ],
+        "strong": [],
+        "metadata": [],
+        "metadata_cycles": false
+      }
+    },
+    "expected": {
+      "reads": {
+        "a": [
+          "claim"
+        ],
+        "old": [
+          "policy"
+        ]
+      }
+    }
+  },
+  {
+    "name": "component-dependency",
+    "nodes": {
+      "a": {
+        "local": [
+          "claim"
+        ],
+        "strong": [],
+        "metadata": [
+          "b"
+        ],
+        "metadata_cycles": true
+      },
+      "b": {
+        "local": [
+          "policy"
+        ],
+        "strong": [
+          "c"
+        ],
+        "metadata": [
+          "a"
+        ],
+        "metadata_cycles": true
+      },
+      "c": {
+        "local": [
+          "clock"
+        ],
+        "strong": [
+          "d"
+        ],
+        "metadata": [],
+        "metadata_cycles": true
+      },
+      "d": {
+        "local": [
+          "authority"
+        ],
+        "strong": [],
+        "metadata": [],
+        "metadata_cycles": true
+      }
+    },
+    "expected": {
+      "reads": {
+        "a": [
+          "authority",
+          "claim",
+          "clock",
+          "policy"
+        ],
+        "b": [
+          "authority",
+          "claim",
+          "clock",
+          "policy"
+        ],
+        "c": [
+          "authority",
+          "clock"
+        ],
+        "d": [
+          "authority"
+        ]
+      }
+    }
+  },
+  {
+    "name": "acyclic-legacy",
+    "nodes": {
+      "a": {
+        "local": [
+          "claim"
+        ],
+        "strong": [
+          "b"
+        ],
+        "metadata": [],
+        "metadata_cycles": false
+      },
+      "b": {
+        "local": [
+          "policy"
+        ],
+        "strong": [],
+        "metadata": [],
+        "metadata_cycles": false
+      }
+    },
+    "expected": {
+      "reads": {
+        "a": [
+          "claim",
+          "policy"
+        ],
+        "b": [
+          "policy"
+        ]
+      }
+    }
+  }
+]

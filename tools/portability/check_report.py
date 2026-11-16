@@ -62,6 +62,12 @@ def main():
         result = subprocess.run([str(binary), "inspect"], input=raw, capture_output=True, timeout=10)
         require(result.returncode != 0 and not result.stdout and result.stderr.strip() == category, f"CLI refusal: {category!r}")
 
+    for name in ("wire2-structural-null", "wire2-structural-capture"):
+        actual = rows[name]["actual"]
+        wire.check(actual["document"])
+        require(actual["document"]["version"] == "0.2.0", "explicit wire 0.2")
+        result = subprocess.run([str(binary), "inspect"], input=json.dumps(actual["document"]).encode(), capture_output=True, timeout=10)
+        require(result.returncode == 0 and result.stdout == actual["canonical"].encode(), f"wire2 CLI canonical: {name}")
     base = rows["reimbursement"]["actual"]
     for name in ("annotation-only", "map-order-and-whitespace"):
         require(rows[name]["actual"]["canonical"] == base["canonical"], name)
@@ -74,7 +80,7 @@ def main():
     require(len(array_rows) == 2 and array_rows[0]["actual"]["revision"] != array_rows[1]["actual"]["revision"], "array ordering")
     kinds = {kind for row in rows.values() for kind in row["actual"].get("nodeKinds", [])}
     require(kinds == {"activity", "compute", "invoke", "decision", "split", "join", "wait", "repeat", "fanout", "finish"}, "variant coverage")
-    print(f"Independent oracle passed: {len(rows)} case results, {canonical_count} JCS/hash comparisons, 3 unchanged fixtures, all 10 node variants, 7 native CLI checks.")
+    print(f"Independent oracle passed: {len(rows)} case results, {canonical_count} JCS/hash comparisons, 3 unchanged fixtures, all 10 node variants, 9 native CLI checks.")
 
 
 if __name__ == "__main__":

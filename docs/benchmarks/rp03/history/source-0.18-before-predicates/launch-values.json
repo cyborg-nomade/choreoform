@@ -1,0 +1,53 @@
+{
+  "order": {
+    "order ID": "rp03-fictional-order",
+    "revision": "order-v1",
+    "customer reference": "fictional-customer",
+    "contact reference": {
+      "identity": "urn:choreoform:benchmarks:rp03:fictional-contact",
+      "revision": "contact-v1",
+      "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "provenance": "synthetic reference only, not verified evidence"
+    },
+    "address reference": {
+      "identity": "urn:choreoform:benchmarks:rp03:fictional-address",
+      "revision": "address-v1",
+      "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "provenance": "synthetic reference only, not verified evidence"
+    },
+    "payment reference": "fictional-provider-token-reference",
+    "terms reference": {
+      "identity": "urn:choreoform:benchmarks:rp03:fictional-terms",
+      "revision": "terms-v1",
+      "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "provenance": "synthetic reference only, not verified evidence"
+    },
+    "pricing reference": {
+      "identity": "urn:choreoform:benchmarks:rp03:fictional-pricing",
+      "revision": "pricing-v1",
+      "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "provenance": "synthetic reference only, not verified evidence"
+    },
+    "delivery choice": "separate shipments",
+    "first line": {
+      "line ID": "line-a",
+      "revision": "line-a-v1",
+      "sku": "fictional-sku-a",
+      "quantity": "1",
+      "amount": "12000",
+      "currency": "EUR",
+      "warehouse": "fictional-warehouse-a"
+    },
+    "second line": {
+      "line ID": "line-b",
+      "revision": "line-b-v1",
+      "sku": "fictional-sku-b",
+      "quantity": "2",
+      "amount": "8000",
+      "currency": "EUR",
+      "warehouse": "fictional-warehouse-b"
+    },
+    "amount": "20000",
+    "currency": "EUR"
+  }
+}
