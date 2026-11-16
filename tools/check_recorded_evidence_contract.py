@@ -124,6 +124,21 @@ def check_reference_model(raw):
     return doc,dict(sources=len(sources),clocks=len(clocks),records=len(records),claims=len(identities),boundaries=len(boundaries),relations=len(doc['relations']))
 
 
+def check_fixture_registry(inputs, header):
+    """Exact developer fixture framing, not production path resolution or native admission."""
+    schema=json.loads((ROOT/'schemas/authoring/resource-registry-0.1.schema.json').read_bytes())
+    if not jsonschema.Draft202012Validator(schema).is_valid(header):refuse('evidence-registry')
+    rows=header['resources']
+    if len(rows)!=len(inputs) or len({(r['contract'],r['digest']) for r in rows})!=len(rows):refuse('evidence-registry')
+    offset=0
+    for row,framing in zip(inputs,rows):
+        raw=(ROOT/row['path']).read_bytes()
+        if pin(raw)!=row['digest']:refuse('evidence-resource')
+        if framing!=dict(contract=row['id'],digest=row['digest'],start=offset,length=len(raw)):refuse('evidence-registry')
+        offset+=len(raw)
+    return offset
+
+
 class RecordedEvidenceContract(unittest.TestCase):
     def test_publication_shapes_pins_and_exact_authored_results_without_native_reader_claim(self):
         manifest=json.loads((BASE/'vectors.json').read_bytes())
@@ -143,12 +158,15 @@ class RecordedEvidenceContract(unittest.TestCase):
         original=json.loads((BASE/'example.json').read_bytes());renamed=json.loads((BASE/'clock-id-renamed.json').read_bytes());changed=json.loads((BASE/'clock-origin-changed.json').read_bytes())
         self.assertEqual(claim_digest(original,original['records']['report']),claim_digest(renamed,renamed['records']['report']))
         self.assertNotEqual(claim_digest(original,original['records']['report']),claim_digest(changed,changed['records']['report']))
-        rows=json.loads((BASE/'resource-inputs.json').read_bytes());header=json.loads((BASE/'registry.json').read_bytes());offset=0
+        rows=json.loads((BASE/'resource-inputs.json').read_bytes());header=json.loads((BASE/'registry.json').read_bytes())
         self.assertEqual(len(rows),15)
-        for row,framing in zip(rows,header['resources']):
-            raw=(ROOT/row['path']).read_bytes();self.assertEqual(pin(raw),row['digest'])
-            self.assertEqual(framing,dict(contract=row['id'],digest=row['digest'],start=offset,length=len(raw)));offset+=len(raw)
-        self.assertEqual(offset,manifest['registryBytes'])
+        self.assertEqual(check_fixture_registry(rows,header),manifest['registryBytes'])
+        extra=deepcopy(header);extra['resources'].append(deepcopy(extra['resources'][-1]))
+        with self.assertRaisesRegex(Refusal,'^evidence-registry$'):check_fixture_registry(rows,extra)
+        gap=deepcopy(header);gap['resources'][0]['start']=1
+        with self.assertRaisesRegex(Refusal,'^evidence-registry$'):check_fixture_registry(rows,gap)
+        authority=deepcopy(header);authority['authorized']=True
+        with self.assertRaisesRegex(Refusal,'^evidence-registry$'):check_fixture_registry(rows,authority)
         for name in ['docs/evidence/recorded-v0.1.md','docs/evaluation/0098-recorded-evidence-contract-plan.md','docs/evaluation/0098-recorded-evidence-design.md']:check_links(ROOT/name)
     def test_reference_identity_order_refusals_and_cumulative_framing_with_incomparable_claims(self):
         manifest=json.loads((BASE/'vectors.json').read_bytes())

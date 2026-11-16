@@ -76,3 +76,14 @@ validator/actionable diagnostics/conformance/negative examples, three-process cy
 actual representative users/independent/provider/host/physical-alias/original-snapshot /
 accepted-surviving-work evidence remain Phase1 obligations. All40 scenarios Partial,
 G1–G4 conditional, parent46 draft; no notation standard/Phase2/phase completion.
+
+## Completed-diff review correction
+
+The full local704 Rust + eight compile-fail/native/Wasm/all93-command suite passed
+atcf9fc06. A separate review found that the developer registry check zipped input
+and header rows without asserting equal cardinality. The oracle now validates the
+closed header schema, exact row count/unique pins and every contiguous range, with
+extra-row/gap/forged-authority mutations refused. All three affected groups pass
+again after correction. Every frozen profile/schema/vector byte remains exactly
+8f4cd22; no production reader behavior is invented. Required final-head CI repeats
+the full suite at the corrected head before merge.
