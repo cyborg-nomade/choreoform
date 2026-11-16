@@ -1,0 +1,19 @@
+{
+  "format": "choreoform-recorded-evidence",
+  "version": "0.1.0",
+  "profile": {
+    "id": "urn:choreoform:recorded-evidence:typed-claims:0.1.0",
+    "revision": "sha256:c01a6aaf6291ece728425f83eda5e3edaa64b6fc6b964a0b5bf8151561bba30c"
+  },
+  "core": {
+    "id": "urn:choreoform:contracts:core-profile:0.12.0",
+    "revision": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007"
+  },
+  "id": "empty_claim_collection",
+  "namespace": "fictional:recorded-evidence-example",
+  "sources": {},
+  "clocks": {},
+  "records": {},
+  "boundaries": {},
+  "relations": {}
+}

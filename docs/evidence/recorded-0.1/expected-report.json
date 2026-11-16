@@ -1,0 +1,17 @@
+{
+  "format": "choreoform-recorded-evidence-report",
+  "version": "0.1.0",
+  "stage": "representation-checked",
+  "executable": false,
+  "authenticated": false,
+  "acceptedHistory": false,
+  "integrity": "sha256:e6de6c5ae88f128f8746c27d2bd0ad5434a1305aa98ffe8677af6e3b966f6ab9",
+  "counts": {
+    "sources": 3,
+    "clocks": 3,
+    "records": 5,
+    "claims": 4,
+    "boundaries": 1,
+    "relations": 3
+  }
+}
