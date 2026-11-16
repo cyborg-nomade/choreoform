@@ -7,6 +7,7 @@ use serde_json::{Map, Value, json};
 use std::ops::Range;
 mod rename;
 mod resources;
+mod view;
 
 const DOCUMENT_BYTES: usize = 16 * MAX_BYTES;
 const LAYOUT_BYTES: usize = 256 * 1024;
@@ -201,6 +202,10 @@ pub struct AuthoringDocument {
     authoring_digest: String,
 }
 impl AuthoringDocument {
+    /// Experimental complete source/IR view; never executable or access authority.
+    pub fn view(&self) -> AuthoringResult<Value> {
+        view::build(self)
+    }
     pub fn admit(raw: &[u8], supplied: &[Resource<'_>]) -> AuthoringResult<Self> {
         use AuthoringComponent::Document;
         let document = decode(raw, DOCUMENT_BYTES, Document, "document-format")?;
