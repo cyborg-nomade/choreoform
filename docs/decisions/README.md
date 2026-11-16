@@ -260,3 +260,5 @@ house style established by Choreoform’s first records.
 - [ADR-0096: Experimental paired authoring prototype](0096-experimental-paired-prototype.md) — exact mapping/interfaces published before implementation; [native/browser evidence](../evaluation/0096-paired-authoring-prototype.md) records the subsequent experiment. No notation standard or owner-personal/user/independent approval.
 
 - [ADR-0097: Complete RP08 through bounded contracts](0097-rp08-bounded-contract-sequence.md) — direction accepted under delegation after a complete requirements/code critique; exact foreign-evidence/history admission contract next, with batch/ad hoc-work/audience/whole-package and remaining Phase1 evidence explicit. No new runtime or gate upgrade.
+
+- [ADR-0098: Inert typed recorded evidence](0098-recorded-evidence-typed-claims.md) — exact1MiB profile/schema/SDK/bridge/vectors published and signed before production reader; [reference checks](../evaluation/0098-recorded-evidence-contract.md) distinguish native literal/transport facts from unimplemented evidence admission and actual history/trust.

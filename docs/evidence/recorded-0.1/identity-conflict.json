@@ -1,0 +1,280 @@
+{
+  "format": "choreoform-recorded-evidence",
+  "version": "0.1.0",
+  "profile": {
+    "id": "urn:choreoform:recorded-evidence:typed-claims:0.1.0",
+    "revision": "sha256:c01a6aaf6291ece728425f83eda5e3edaa64b6fc6b964a0b5bf8151561bba30c"
+  },
+  "core": {
+    "id": "urn:choreoform:contracts:core-profile:0.12.0",
+    "revision": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007"
+  },
+  "id": "example_incident_claims",
+  "namespace": "fictional:recorded-evidence-example",
+  "sources": {
+    "analyst": {
+      "identity": "fictional:analyst/notes",
+      "caption": "Analyst notes"
+    },
+    "commander": {
+      "identity": "fictional:commander/notes",
+      "caption": "Commander notes"
+    },
+    "collector": {
+      "identity": "fictional:collector/notes",
+      "caption": "Collection record"
+    }
+  },
+  "clocks": {
+    "analyst_clock": {
+      "source": "analyst",
+      "basis": "reported-basis-1",
+      "unit": "microseconds",
+      "origin": "Fictional stated origin, not a clock observation"
+    },
+    "commander_clock": {
+      "source": "commander",
+      "basis": "reported-basis-1",
+      "unit": "microseconds",
+      "origin": "Fictional stated origin, not a clock observation"
+    },
+    "collector_clock": {
+      "source": "collector",
+      "basis": "reported-basis-1",
+      "unit": "microseconds",
+      "origin": "Fictional stated origin, not a clock observation"
+    }
+  },
+  "records": {
+    "report": {
+      "source": "analyst",
+      "event": "entry-1",
+      "claim": {
+        "kind": "observation",
+        "subject": "Fictional incident 08",
+        "context": null,
+        "reportedTime": {
+          "basis": "analyst_clock",
+          "instant": "100"
+        },
+        "payload": {
+          "type": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:examples:recorded-claims:0.1.0",
+              "revision": "sha256:37a822ca6eaadc05ca27cdb9634485d82eda50fec35c2db5407c5529e4259ef4"
+            },
+            "name": "Incident claim"
+          },
+          "value": {
+            "incident": "Fictional incident 08",
+            "summary": "A service is reported affected; source truth is not established.",
+            "confidence": "reported"
+          }
+        },
+        "original": {
+          "text": "Authored contract fixture, not an actual incident record.\nA service is reported affected; source truth is not established.\n",
+          "digest": "sha256:e2c0844c0d5438bf395a033a3b5a9e0c8b65e2277f405105bf65175248d81767"
+        }
+      },
+      "delivery": {
+        "receipt": "receipt-1",
+        "channel": "Fictional alternate-channel export",
+        "recorder": "collector",
+        "reportedTime": {
+          "basis": "collector_clock",
+          "instant": "200"
+        }
+      }
+    },
+    "report_again": {
+      "source": "analyst",
+      "event": "entry-1",
+      "claim": {
+        "kind": "observation",
+        "subject": "Fictional incident 08",
+        "context": null,
+        "reportedTime": {
+          "basis": "analyst_clock",
+          "instant": "100"
+        },
+        "payload": {
+          "type": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:examples:recorded-claims:0.1.0",
+              "revision": "sha256:37a822ca6eaadc05ca27cdb9634485d82eda50fec35c2db5407c5529e4259ef4"
+            },
+            "name": "Incident claim"
+          },
+          "value": {
+            "incident": "Fictional incident 08",
+            "summary": "Different immutable claim under the same source/event identity.",
+            "confidence": "reported"
+          }
+        },
+        "original": {
+          "text": "Authored contract fixture, not an actual incident record.\nA service is reported affected; source truth is not established.\n",
+          "digest": "sha256:e2c0844c0d5438bf395a033a3b5a9e0c8b65e2277f405105bf65175248d81767"
+        }
+      },
+      "delivery": {
+        "receipt": "receipt-2",
+        "channel": "Fictional alternate-channel export",
+        "recorder": "collector",
+        "reportedTime": {
+          "basis": "collector_clock",
+          "instant": "201"
+        }
+      }
+    },
+    "decision": {
+      "source": "commander",
+      "event": "entry-1",
+      "claim": {
+        "kind": "decision",
+        "subject": "Fictional incident 08",
+        "context": null,
+        "reportedTime": {
+          "basis": "commander_clock",
+          "instant": "100"
+        },
+        "payload": {
+          "type": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:examples:recorded-claims:0.1.0",
+              "revision": "sha256:37a822ca6eaadc05ca27cdb9634485d82eda50fec35c2db5407c5529e4259ef4"
+            },
+            "name": "Incident claim"
+          },
+          "value": {
+            "incident": "Fictional incident 08",
+            "summary": "A containment proposal is recorded, not authorized or dispatched.",
+            "confidence": "reported"
+          }
+        },
+        "original": {
+          "text": "Authored contract fixture, not an actual incident record.\nA containment proposal is recorded, not authorized or dispatched.\n",
+          "digest": "sha256:15d57a6cb4d38d9a1915fad3b04287966252e9da395dc587607901e157e6b67e"
+        }
+      },
+      "delivery": {
+        "receipt": "receipt-3",
+        "channel": "Fictional alternate-channel export",
+        "recorder": "collector",
+        "reportedTime": {
+          "basis": "collector_clock",
+          "instant": "200"
+        }
+      }
+    },
+    "hypothesis": {
+      "source": "analyst",
+      "event": "entry-2",
+      "claim": {
+        "kind": "hypothesis",
+        "subject": "Fictional incident 08",
+        "context": null,
+        "reportedTime": null,
+        "payload": {
+          "type": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:examples:recorded-claims:0.1.0",
+              "revision": "sha256:37a822ca6eaadc05ca27cdb9634485d82eda50fec35c2db5407c5529e4259ef4"
+            },
+            "name": "Incident claim"
+          },
+          "value": {
+            "incident": "Fictional incident 08",
+            "summary": "An additional asset may be related; time and order remain unknown.",
+            "confidence": "reported"
+          }
+        },
+        "original": {
+          "text": "Authored contract fixture, not an actual incident record.\nAn additional asset may be related; time and order remain unknown.\n",
+          "digest": "sha256:486cb63b72350ad0c59775a9973d2f15f83fd3bf38c7a92dcac5d709ce5e453f"
+        }
+      },
+      "delivery": {
+        "receipt": "receipt-4",
+        "channel": "Fictional alternate-channel export",
+        "recorder": "collector",
+        "reportedTime": {
+          "basis": "collector_clock",
+          "instant": "200"
+        }
+      }
+    },
+    "action": {
+      "source": "commander",
+      "event": "entry-2",
+      "claim": {
+        "kind": "action",
+        "subject": "Fictional incident 08",
+        "context": null,
+        "reportedTime": {
+          "basis": "commander_clock",
+          "instant": "120"
+        },
+        "payload": {
+          "type": {
+            "kind": "named",
+            "contract": {
+              "id": "urn:choreoform:examples:recorded-claims:0.1.0",
+              "revision": "sha256:37a822ca6eaadc05ca27cdb9634485d82eda50fec35c2db5407c5529e4259ef4"
+            },
+            "name": "Incident claim"
+          },
+          "value": {
+            "incident": "Fictional incident 08",
+            "summary": "A recovery action is reported, not proven to have occurred.",
+            "confidence": "reported"
+          }
+        },
+        "original": {
+          "text": "Authored contract fixture, not an actual incident record.\nA recovery action is reported, not proven to have occurred.\n",
+          "digest": "sha256:fa4c10ad10dfde7d35a73d7fa65f1bfed75668da2b733ca19b5bef76cb12dab0"
+        }
+      },
+      "delivery": {
+        "receipt": "receipt-5",
+        "channel": "Fictional alternate-channel export",
+        "recorder": "collector",
+        "reportedTime": {
+          "basis": "collector_clock",
+          "instant": "200"
+        }
+      }
+    }
+  },
+  "boundaries": {
+    "other_team": {
+      "namespace": "fictional:other-team",
+      "source": "unavailable-notes",
+      "event": "entry-9",
+      "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "relations": {
+    "reported_cause": {
+      "kind": "asserted-causes",
+      "from": "report",
+      "to": "decision",
+      "basis": "decision"
+    },
+    "reported_order": {
+      "kind": "asserted-precedes",
+      "from": "decision",
+      "to": "action",
+      "basis": "action"
+    },
+    "outside_boundary": {
+      "kind": "asserted-precedes",
+      "from": "action",
+      "to": "other_team",
+      "basis": "action"
+    }
+  }
+}

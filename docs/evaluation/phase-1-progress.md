@@ -9,62 +9,72 @@
 
 ## Current focus
 
-[PR #111](https://github.com/cyborg-nomade/choreoform/pull/111) integrated the
-experimental paired authoring prototype as
-`92b83cf794cf3cca9c94045b41d424190c3f515b`. Required final-head CI43832249540 at
-`215e55cd5917cbaa484601facecdc3674d6f8868` passed all three jobs: native/Wasm,
-contract oracles and authoring oracles. Separate completed-diff automated COMMENT
-review5917100590 and fresh complete review-body/thread/head audit precede the
-expected-head signed merge. All seven commits/merge signed. CodeRabbit skipped
-(non-default target), no findings/review evidence; no independent/human approval.
+[PR #112](https://github.com/cyborg-nomade/choreoform/pull/112) integrated the full
+RP08 requirements/code critique and bounded-contract direction as
+`a8fd287fa7a10e34fc20fecfd65bf40d466ee2c7`. Required final-head CI43836632627 at
+`c9f395dde5830791e6ba5ced3558a0184d3c27cf` passes all three jobs,704 Rust + eight
+compile-fail/native/Wasm/all92 Python commands. Separate completed-diff automated
+COMMENT review5917447049 and fresh complete review-body/thread/head audit precede
+the expected-head signed merge. All six commits/merge signed. CodeRabbit skipped;
+no substantive findings/review evidence or independent/human approval. Superseded
+old-head CI was canceled; final corrected-head evidence alone governs integration.
 
-Signed scope9174cb6/comparison604337c and exact publication
-`ccc49254cb9813a210e76127b42546053b0ed1b2` precede production `8a50215`.
-[ADR-0096](../decisions/0096-experimental-paired-prototype.md) /
-[native/browser evidence](0096-paired-authoring-prototype.md) supply complete bounded
-identity/source/IR views, one Rust native/Wasm engine and separately enforced local
-artifact read/edit/export sessions. All704 Rust + eight compile-fail/native lint /
-report/six Wasm lints/three release builds/all92 Python commands pass at final head.
-All90 prior Python commands remain; independent jobs run in parallel under unchanged
-15m caps (native3m25s, contract1m05s, authoring12m09s). No old quota/API/profile or
-accepted publication/vector/965 benchmark byte changed.
+Signed scope8830ae7 and [critiquef5bac2c](0097-rp08-coverage-design.md) precede
+[ADR-0097](../decisions/0097-rp08-bounded-contract-sequence.md). All30 responsibility
+groups/all four scenarios map to actual accepted contracts/native code, missing
+package/contract work and external evidence. Current stable-key/seal support is
+retained, while closed fanout outputs, effectful-parallel/physical/snapshot/lifetime
+proof, ad hoc work, generic foreign history and protected audience gaps remain
+explicit. Review clarified P5 authentication/correlation as host obligations a
+wait declaration cannot itself perform. Scope97 changes documentation only, no
+schema/code/profile/quota/benchmark byte; links/SPDX/docs-only inventory and23
+existing authoring evidence/profile groups pass locally before full final-head CI.
 
-Actual Chromium157 executes the exact generated Wasm module, with two reviewed ABI
-imports, matching native complete documents/views for example21 entities, RP01
-340/53 routes and RP03 1442/192. Real rename/layout/collapse/format/export re-admission,
-keyboard/source/scope/paging and session-role mechanics were observed. All27 advanced
-RP03 IR pages reconstruct exact wire SHA6550ac…11cfb4; output is paginated without
-truncation. Development fixed session fragment reuse, idle HTTP reads and excessive
-accessibility text. Browser mechanics are not actual representative-user clarity,
-production identity/DLP or host/provider execution evidence. Notation stays experimental.
+Active `codex/recorded-evidence-contract` follows signed scope
+`d72c2863e5cd300f33fb0f559cc124ff6ca7ff20`,
+[plan98](0098-recorded-evidence-contract-plan.md), and signed
+[comparisoncdbf4e3](0098-recorded-evidence-design.md), after verified112 integration.
+Publish/sign the exact bounded inert evidence/history representation/admission
+artifact, supported payload/profile/resource/interface/stage rules and complete
+worked vectors before later production code. Preserve source claims/known asserted
+links/unknown time separately from authenticated truth/current acceptance and
+process decisions/effects. No replay, dispatch, engine state/history rewrite or
+permission grant. Opaque originals cannot hide unsupported semantics; exact native
+value/resource rules should be reused. Exact [ADR-0098](../decisions/0098-recorded-evidence-typed-claims.md) publication
+`8f4cd2243ff70381d10904b76ed1f02565d81a5f` now precedes committed reference tooling /
+all production reader code. [Three reference groups](0098-recorded-evidence-contract.md)
+pass after signing, including actual old native literal/transport facts and all965
+benchmark bytes. Draft clock-core binding/global-identity corrections are frozen;
+preliminary draft checks before publication are explicitly recorded. Required
+final-head704+8/native/Wasm/93-command CI, separate review/full comment audit and
+integration remain pending. Production evidence reader remains unimplemented.
 
-Whole RP01/RP03 cycles preserve exact IR/revision/all11 checking outcomes, resource
-pins, IDs, wires and opaque notes. Source19/companion18/C12/IR4 remain exact. RP01
-54172bytes/9145tokens/113796parser visits; all11 partial views pass. RP03 remains
-291309/41306/386333; four checking plus advisory pass, six later views retain
-parallel-effects-unproved at start_acceptance, source58784..58971. All965 files retain
-inventorya25c6de850fdaa51436023fffe011c8f96695e9d8660191e7598cd4f4bf2e9f7.
-There is no work/storage/authority sharing or executable/phase promotion.
+[PR111 browser/native evidence](0096-paired-authoring-prototype.md) remains verified:
+merge92b83cf794cf3cca9c94045b41d424190c3f515b, CI43832249540 at215e55cd5917cbaa484601facecdc3674d6f8868,
+automated COMMENT5917100590/fresh audit, all seven commits/merge signed. Real
+Chromium157 runs the shared Rust Wasm module with two reviewed ABI imports; exact
+complete documents/views match native for example21 entities, RP01 340/53 routes,
+RP03 1442/192. Real rename/layout/collapse/format/export re-admission, keyboard /
+source/scope/paging/session-role mechanics observed. All27 advanced RP03 IR pages
+reconstruct exact wire SHA6550ac…11cfb4. This is browser mechanics, not user clarity,
+production identity/DLP, redacted audiences, accepted notation or runtime authority.
 
-Active `codex/rp08-coverage-design` follows signed scope
-`8830ae7`, [plan97](0097-rp08-coverage-design-plan.md), after verified111 integration.
-The [complete critique](0097-rp08-coverage-design.md), signed `f5bac2c`, inventories
-all30 responsibility groups/all four scenarios against actual contracts/native code.
-[ADR-0097](../decisions/0097-rp08-bounded-contract-sequence.md) selects a bounded
-whole-case/minimal-contract sequence; exact foreign evidence/history representation
-and admission is the next separately published contract. Batch/result/retention /
-controlled ad hoc-work/parallel guard, audience projections, full package and broader
-editing/validator/user evidence remain explicit. Scope97 adds no code/profile /
-benchmark or claimed whole-process result; required final-head CI, separate review /
-full comment audit and signed integration are pending.
+All965 benchmark files retain inventory
+a25c6de850fdaa51436023fffe011c8f96695e9d8660191e7598cd4f4bf2e9f7. Source19 /
+companion18/C12/IR4 remain exact: RP01 54172bytes/9145tokens/113796parser visits,
+all11 partial views pass; RP03 291309/41306/386333, four checking plus advisory pass,
+six later views retain parallel-effects-unproved at start_acceptance, source58784..58971.
+No work/storage/authority sharing or execution/phase promotion. All90 previous
+Python commands remain in the92-command suite, parallel jobs keep15m caps.
 
-Full lowerable RP08, broader managed operations, full structural/link/semantic
-validation/stable field/argument diagnostics/conformance/negative examples,
-three-process both-form cycles and actual representative users/independent/provider/
-host/physical-alias/original-snapshot/accepted-surviving-work evidence remain Phase1
-obligations. The roadmap still has eight of14 headline deliverables checked;
-all40 scenarios Partial, G1–G4 conditional, parent46 draft. No Phase2/new phase chat
-or phase completion; stop at an honest phase report for owner approval.
+Full lowerable RP08, batch/result/retention/ad hoc-work/parallel guard/audience /
+broader managed operations, complete structural/link/semantic validation/stable
+field/argument diagnostics/conformance/negative examples, three-process both-form
+cycles and actual representative users/independent/provider/host/physical-alias /
+original-snapshot/accepted-surviving-work evidence remain Phase1 obligations.
+Eight of14 headline deliverables checked, all40 scenarios Partial, G1–G4 conditional,
+parent46 draft. No Phase2/new phase chat or completion; stop at the honest phase
+report for owner approval, identifying unmet criteria. Independent work continues.
 
 ## Verified baseline
 

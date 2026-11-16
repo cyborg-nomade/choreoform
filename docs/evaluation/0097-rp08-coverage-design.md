@@ -186,3 +186,16 @@ Full RP08 and all40 scenario statuses remain Partial, G1–G4 conditional; the s
 open Phase1 headline gates and owner phase-report approval remain. A metadata /
 representation contract cannot confer authority, liveness, accepted settlement,
 provider truth, executable admission or phase completion.
+
+## Verified integration
+
+PR112 merged as `a8fd287fa7a10e34fc20fecfd65bf40d466ee2c7` after final-head
+CI43836632627 atc9f395dde5830791e6ba5ced3558a0184d3c27cf, separate automated
+COMMENT review5917447049 and fresh complete review-body/thread/head audit. All six
+commits/merge signed. Review fixed the distinction between P5's host authentication
+obligation and what a typed wait declaration actually supplies. Full704 Rust +
+eight compile-fail/native/Wasm/all92 Python commands pass at the corrected final
+head; superseded old-head run canceled. Full CodeRabbit skip has no substantive
+finding/evidence; no independent/human approval. Earlier pending statements are
+historical, no RP08/native/user result or phase gate inferred. Next exact inert
+recorded-evidence contract follows signed plan d72c286 and comparison cdbf4e3.

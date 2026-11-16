@@ -1,0 +1,68 @@
+{
+  "publicationStage": "Authored synthetic contract data; no new native reader or actual received/accepted event",
+  "profile": {
+    "id": "urn:choreoform:recorded-evidence:typed-claims:0.1.0",
+    "revision": "sha256:c01a6aaf6291ece728425f83eda5e3edaa64b6fc6b964a0b5bf8151561bba30c"
+  },
+  "core": {
+    "id": "urn:choreoform:contracts:core-profile:0.12.0",
+    "revision": "sha256:73158731c33084fde009abcc86530926447902609fda9535f04daa7c768c2007"
+  },
+  "rawPins": {
+    "docs/evidence/recorded-v0.1.md": "sha256:c01a6aaf6291ece728425f83eda5e3edaa64b6fc6b964a0b5bf8151561bba30c",
+    "schemas/evidence/recorded-0.1.schema.json": "sha256:86c41afebcb8cc22b7da641060c80429b589066e52ad3ee400cf14d93025c530",
+    "schemas/evidence/report-0.1.schema.json": "sha256:efdda77dd7a89dedc417ddb9dc4a1fcb2568ad3d67db6bc29fbe5c07b1eb3e4f",
+    "docs/evidence/recorded-0.1/alias-self-order.json": "sha256:661bfc46a95662ef1dd97bff08c09b6929d0b17b7c617193fab08604169933fe",
+    "docs/evidence/recorded-0.1/authority-field.json": "sha256:cfe03da8e6811d3461db060b191bbed2f5e165b3908e956231edf8e77711940d",
+    "docs/evidence/recorded-0.1/boundary-local.json": "sha256:0ce592abe031ff09b68f71688234f685de4963a68f2b38cea42f8723618eca58",
+    "docs/evidence/recorded-0.1/claim.types.json": "sha256:37a822ca6eaadc05ca27cdb9634485d82eda50fec35c2db5407c5529e4259ef4",
+    "docs/evidence/recorded-0.1/clock-id-renamed.json": "sha256:6dd216e40be2ca804fee828c9596297eb2ed775672c1b0c907e692cdf286a459",
+    "docs/evidence/recorded-0.1/clock-origin-changed.json": "sha256:271d9e07a59f2f6821d8c47e6d3511f744f5600ff460e6a1749fe1eb7ff4c37e",
+    "docs/evidence/recorded-0.1/context-claim.json": "sha256:d3f7eb88e4c4ae20aa2669c6cd2e5e9433f3748fdcf7a1e86ddf3d2b060a092a",
+    "docs/evidence/recorded-0.1/dangling-reference.json": "sha256:8ff9e9f530f7aff34f2807da4d1ffc14f694d614b3e5f1478ae13ba502eda42a",
+    "docs/evidence/recorded-0.1/empty.json": "sha256:34f99b33f1b2473ea43c1c9cd5ba61fc6e71a8d0855d1eb76478c103c2e27b84",
+    "docs/evidence/recorded-0.1/example.json": "sha256:67adb6c5586afa80faaea1586dbda0f35e8e98bd7eb530ca34def2550235e9d9",
+    "docs/evidence/recorded-0.1/expected-claim-digests.json": "sha256:f368c9a591c20f7063321119a94dff5d4d7f841714d8e83ba5a4238d21479092",
+    "docs/evidence/recorded-0.1/expected-report.json": "sha256:14ccab0c3cd3399b83bc5b9bd68cddf096a57907f1e0f76a7be6d17dbb859abc",
+    "docs/evidence/recorded-0.1/identity-conflict.json": "sha256:420e26650a06cd8152c262b720b3a15931c7787709afd2ccda1e218451a04d49",
+    "docs/evidence/recorded-0.1/order-cycle.json": "sha256:0752147397dfb1e554250fc109f18b92a974a3f98b9ed304e35a07926ba33de8",
+    "docs/evidence/recorded-0.1/original-integrity.json": "sha256:ccae6e43cfa01970c33bd48b141523d2e6e2a3dbc15734ff7ab8bbc536c44e8b",
+    "docs/evidence/recorded-0.1/registry.json": "sha256:3fb9b8f4840ef7ddd55522af8b3c94d93cbc4c10d9dfabf13079370fdada17ef",
+    "docs/evidence/recorded-0.1/resource-inputs.json": "sha256:84c04eff213d115696248ac013b17f141f22c0ebd71396df40e57222ef42f707",
+    "docs/evidence/recorded-0.1/unsupported-core.json": "sha256:5798e62bdc5fbb7e88e603397dd3fc1cebf7d75454cb9265804441867d3fa4d0",
+    "docs/evidence/recorded-0.1/unsupported-type.json": "sha256:9d2212912dc9498b5275755c90f4ce27c032091a491d39281f16ce71dad23df1",
+    "docs/evidence/recorded-0.1/untyped-value.json": "sha256:f577403b80431ff04b4d82d094ea2fe02837524736c6d434ff4455b3d8b74599",
+    "docs/evidence/recorded-0.1/wrong-clock-owner.json": "sha256:1fe218d112ffd3f0ded322c00ba97d6072f42ea6fc6ce3b2eb97a8d0af916114",
+    "docs/evidence/recorded-0.1/wrong-profile.json": "sha256:1bd37b771b3a528a29edd197caa273733eab4a8ab6942613e550787bfb04d253"
+  },
+  "positive": [
+    "example.json",
+    "context-claim.json",
+    "empty.json",
+    "clock-id-renamed.json",
+    "clock-origin-changed.json"
+  ],
+  "refusals": {
+    "authority-field.json": "evidence-format",
+    "wrong-profile.json": "evidence-profile",
+    "identity-conflict.json": "evidence-identity",
+    "original-integrity.json": "evidence-integrity",
+    "alias-self-order.json": "evidence-order",
+    "order-cycle.json": "evidence-order",
+    "dangling-reference.json": "evidence-reference",
+    "wrong-clock-owner.json": "evidence-reference",
+    "untyped-value.json": "evidence-payload",
+    "unsupported-type.json": "evidence-payload",
+    "unsupported-core.json": "evidence-profile",
+    "boundary-local.json": "evidence-reference"
+  },
+  "expectedArtifactDigest": "sha256:e6de6c5ae88f128f8746c27d2bd0ad5434a1305aa98ffe8677af6e3b966f6ab9",
+  "registryBytes": 153593,
+  "nativePayloadCheck": "Existing Resources::type_descriptor/literal required; new native artifact reader not implemented",
+  "generatedBoundaryCases": [
+    "raw/JCS byte limit",
+    "depth/items/row/string/original/resource bounds",
+    "cumulative construction/hash framing/type resource work",
+    "malformed duplicate/number/BOM/Unicode/trailing transport"
+  ]
+}
