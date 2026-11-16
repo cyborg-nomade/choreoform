@@ -3,7 +3,7 @@
 
 # ADR-0095: Native reversible authoring binding and immutable operations
 
-**Status:** Exact binding accepted under Project Owner delegation; implementation pending<br>
+**Status:** Exact binding accepted under Project Owner delegation; native implementation integrated in PR #110<br>
 **Date:** 2026-11-14<br>
 **Decider:** Codex under ADR-0018; no personal owner or independent review
 
@@ -52,3 +52,11 @@ accessible/protected UI, real cycles, complete validation/diagnostics/conformanc
 full RP-08, three full representative processes or actual users/hosts/browsers/
 independent evidence. All full Phase1/G1–G4/scenario/external gates remain open,
 parent46 draft. No Phase2/new phase chat; owner approval still gates the phase report.
+
+PR #110 integrated asaebca078354c847602c937e131d6b899edf4e368 after successful
+CI43613364792 at1978088c3fd23d2c2154c8c0f2c1aa08ab7c4f58, automated COMMENT
+review5905656042 and fresh full audit. All eight commits/merge signed. Full700 Rust
++ eight compile-fail/native/Wasm/all90 Python commands pass at final head. Bot skip
+is no review evidence, no independent/human approval; earlier pending statements
+are historical. The raw binding/schema pins remain exact. All visual/general-edit /
+full Phase1 obligations and external evidence gates stay open.

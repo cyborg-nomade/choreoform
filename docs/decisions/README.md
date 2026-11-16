@@ -253,6 +253,8 @@ house style established by Choreoform’s first records.
 
 - [ADR-0093: Authoring completion sequence](0093-authoring-completion-sequence.md) — direction accepted under owner delegation; reversible managed authoring contract before broader work syntax; integrated with required CI/review/audit in PR #108.
 
-- [ADR-0094: Reversible authoring documents](0094-reversible-authoring-documents.md) — exact document/change/layout contract accepted under delegation; native operations and visual prototype pending.
+- [ADR-0094: Reversible authoring documents](0094-reversible-authoring-documents.md) — exact document/change/layout contract accepted under delegation; native operations integrated in PR #110, visual prototype pending.
 
-- [ADR-0095: Native reversible authoring](0095-native-reversible-authoring.md) — exact SDK/CLI binding accepted under delegation before implementation; native verification/review/CI pending.
+- [ADR-0095: Native reversible authoring](0095-native-reversible-authoring.md) — exact SDK/CLI binding published before implementation; native operations integrated with final checks/review/CI in PR #110.
+
+- [ADR-0096: Experimental paired authoring prototype](0096-experimental-paired-prototype.md) — exact mapping/interfaces published before implementation; [native/browser evidence](../evaluation/0096-paired-authoring-prototype.md) records the subsequent experiment. No notation standard or owner-personal/user/independent approval.

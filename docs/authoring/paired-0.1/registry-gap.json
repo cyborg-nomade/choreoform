@@ -1,0 +1,12 @@
+{
+  "format": "choreoform-authoring-resource-registry",
+  "version": "0.1.0",
+  "resources": [
+    {
+      "contract": "urn:choreoform:examples:number-types:0.1.0",
+      "digest": "sha256:f6bd253b88ec8732955e50cc0d9ac3ac0cff3a8975f61878075cf6eff1f0e644",
+      "start": 1,
+      "length": 561
+    }
+  ]
+}

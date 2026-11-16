@@ -1,0 +1,43 @@
+{
+  "rawPins": {
+    "schemas/authoring/view-0.1.schema.json": "sha256:41fa0195f72f6737d004b1cd0c231374b000f5d342e260ea10e1fb43d7c17623",
+    "schemas/authoring/resource-registry-0.1.schema.json": "sha256:de3c6b7c54531178385a9a35b7cc1b1ec982a751b6d3d507f02b5a1898115d56",
+    "schemas/authoring/prototype-catalog-0.1.schema.json": "sha256:69753de7de2e14f2ca3f73d03df30aa93e20bbed17bc088df65e670a86e26439",
+    "schemas/authoring/prototype-error-0.1.schema.json": "sha256:173784d46e1768f1a766bd2f58d9a8fa98742f462f2285124c8b98b9adf02079",
+    "docs/authoring/paired-0.1/catalog-exporter.json": "sha256:01b9e9f0b9094bcd3790918b63f4029c225129527ebb059209400ba0fa403b79",
+    "docs/authoring/paired-0.1/document.json": "sha256:c72b453c038a8cfdcd25f7a4a7cdd610fa4b1682b3be16c1f16b91a2158ec700",
+    "docs/authoring/paired-0.1/error-access.json": "sha256:1c434876335c63aef8fcdc395429f0b617a01c68f638393f3fbf84b6d43dc3ff",
+    "docs/authoring/paired-0.1/registry-authority-claim.json": "sha256:82e532f30e8d9190937a309e83d95ae9662fde1388c76610b0672938aa4db3c6",
+    "docs/authoring/paired-0.1/registry-gap.json": "sha256:f1ebb88e84778187cc969697e8f68422532d9cf05840e1039751d23bab7bce47",
+    "docs/authoring/paired-0.1/registry.json": "sha256:8b0586456e596f59648c981cca312fac28d5e1a0132fba2834a2ff8e630eb85c",
+    "docs/authoring/paired-0.1/view-guessed-resource-location.json": "sha256:147f6b552557bdc96558298cf850eee5de375d6f9dbc744a33d72c7aa88c0efd",
+    "docs/authoring/paired-0.1/view-missing-entity.json": "sha256:5bcdae1551a9d292c5c79ea16717e83e89795f0544a45cc049354b0c01052dcd",
+    "docs/authoring/paired-0.1/view-stale-binding.json": "sha256:cfe4d7f9259dda704886ecb5c4f797c9583d048184a3bbc886e516944272e665",
+    "docs/authoring/paired-0.1/view-unknown-node-kind.json": "sha256:0bbf59b461fd01c5f7de28e0c19bbc04908ab35330e994d7a3980fc2e6aa6406",
+    "docs/authoring/paired-0.1/view.json": "sha256:790d0b873526f5a26ca95780930fbe94cd9bb4a1c6ddc27f6ce7b0ef2047461e"
+  },
+  "registryBlob": "docs/authoring/examples/service.named-types.json",
+  "registryBlobDigest": "sha256:f6bd253b88ec8732955e50cc0d9ac3ac0cff3a8975f61878075cf6eff1f0e644",
+  "positive": {
+    "document": "document.json",
+    "view": "view.json",
+    "registry": "registry.json",
+    "catalog": "catalog-exporter.json",
+    "error": "error-access.json"
+  },
+  "refusals": {
+    "registry-gap.json": "registry-range",
+    "registry-authority-claim.json": "registry-format",
+    "view-missing-entity.json": "view-coverage",
+    "view-guessed-resource-location.json": "view-location",
+    "view-unknown-node-kind.json": "view-format",
+    "view-stale-binding.json": "view-binding"
+  },
+  "nativeSourceEvidence": "Existing PR110 API supplies exact IR/integrity/native source spans; finite view/layout after-state is authored contract data, not the proposed view/bridge/UI implementation.",
+  "counts": {
+    "entities": 21,
+    "declarations": 17,
+    "symbols": 4,
+    "generated": 0
+  }
+}

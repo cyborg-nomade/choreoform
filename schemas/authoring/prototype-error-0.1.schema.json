@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choreoform:prototype:error:0.1.0",
+  "title": "Private local prototype refusal0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "code",
+    "diagnostic"
+  ],
+  "properties": {
+    "format": {
+      "const": "choreoform-prototype-error"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "code": {
+      "enum": [
+        "access",
+        "not-found",
+        "request",
+        "conflict",
+        "native-refusal",
+        "io",
+        "size"
+      ]
+    },
+    "diagnostic": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "maxLength": 1024
+        }
+      ]
+    }
+  }
+}

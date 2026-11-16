@@ -3,6 +3,13 @@
 
 # Near-English authoring: a working design, not final syntax
 
+The [experimental paired prototype](../../tools/authoring-prototype/README.md)
+now drives readable text and diagrams from one Rust model, with exact native/Wasm
+parity and a local read/edit/export boundary. Its [browser/native evidence](../evaluation/0096-paired-authoring-prototype.md)
+is mechanical verification, not notation standardization or a representative-user
+study. Only the published first operation profile is supported; broader editing,
+full validation and three-process/user evidence remain Phase1 work.
+
 [ADR-0093](../decisions/0093-authoring-completion-sequence.md) selects the next
 bounded direction: a separately published reversible authoring-package and managed-
 change contract, then native managed operations and a small paired text/visual
@@ -256,6 +263,6 @@ remain. It recognizes the whole order grammar but retains an actual private
 compensation reference refusal. It supplies no benchmark adoption or readability /
 semantic/host/phase closure. See [measured evidence](../evaluation/0068-source-capacity.md).
 
-[Reversible authoring document/change/layout0.1.0](reversible-v0.1.md) preserves exact source19/companion18 and a checked C12/IR4 projection. Native admission/managed operations and paired accessible views are subsequent Phase1 work; the contract oracle is not an editor.
+[Reversible authoring document/change/layout0.1.0](reversible-v0.1.md) preserves exact source19/companion18 and a checked C12/IR4 projection. Native admission/managed operations are integrated in PR #110; paired accessible views remain subsequent Phase1 work. The contract oracle alone is not an editor.
 
 [Native reversible binding0.1.0](native-reversible-v0.1.md) specifies immutable native document admission/import/export and the complete bounded managed-change matrix. It does not supply an authorizing host or visual editor.

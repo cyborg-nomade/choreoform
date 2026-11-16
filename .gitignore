@@ -3,4 +3,5 @@
 /target/
 /.tools/
 /tools/portability/generated/
+/tools/authoring-prototype/web/generated/
 __pycache__/
