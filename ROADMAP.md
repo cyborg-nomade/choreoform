@@ -440,6 +440,14 @@ validated, and round-tripped.
   permission, exceptional protection/invalidation or accepted settlement.
 - [ ] Design an initial visual notation and serialization of layout metadata,
   using the same contracts and full benchmarks as the authoring language.
+  [ADR-0096](docs/decisions/0096-experimental-paired-prototype.md) publishes a faithful
+  experimental complete view and nonsemantic layout over one Rust authoring model.
+  [Real native/Chromium/Wasm evidence](docs/evaluation/0096-paired-authoring-prototype.md)
+  covers the example and full RP01/RP03, supported rename/format/layout/export,
+  keyboard/source/diagram mechanics and local read/edit/export enforcement.
+  It is not a standardized notation or representative-user result. Full RP08,
+  broader managed operations, protected audience views and actual users remain
+  explicit Phase1 dependencies; this item stays unchecked.
 - [ ] Implement complete structural/link/semantic validation of the accepted
   contracts and stable diagnostics; include negative cases and fail-closed
   handling of unknown dialects and unenforceable policies. Parsing/hashing and
@@ -454,6 +462,15 @@ validated, and round-tripped.
   checked consistency and stable managed identities. Original-package formatting
   alone is not reverse export; untrusted editorial metadata cannot override IR.
   Complete RP-01/03/08 cycles and actual author evaluation remain in Phase1.
+  Document/change/layout0.1.0 and native binding0.1.0 now supply real complete
+  source/companion-preserving import/export and the first format/source-only
+  rename/layout matrix, exercised through the paired prototype. General semantic /
+  structural/copy/retire/IR-only/redacted editing/export is still unsupported and
+  must receive exact contracts and implementation within Phase1, rather than being
+  silently deferred to the Phase3 studio. Signed
+  [RP08 scope97](docs/evaluation/0097-rp08-coverage-design-plan.md) prepares the missing
+  third case and concrete batch/history/audience dependencies; it does not close
+  broader editing or complete both-form cycles.
 - [ ] Publish small executable examples and negative examples.
 - [x] Start a language conformance suite. The
   [value-expression corpus](docs/conformance/README.md) begins with 69 exact

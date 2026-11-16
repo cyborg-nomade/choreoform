@@ -99,3 +99,15 @@ refusals remain legitimate. Full diagnostics/validator/conformance/negative case
 RP08, broader operations and real representative users/independent/provider-host /
 physical-alias/snapshot/accepted-surviving-work evidence remain Phase1 obligations.
 No Phase2, general Studio/runtime, deployment or phase-completion claim follows.
+
+## Verified integration
+
+PR #111 merged as `92b83cf794cf3cca9c94045b41d424190c3f515b` after successful
+CI43832249540 at `215e55cd5917cbaa484601facecdc3674d6f8868`, separate automated
+COMMENT review5917100590 and fresh complete body/thread/head audit. All seven
+commits/merge signed. All704 Rust + eight compile-fail/native/Wasm/all92 Python
+commands pass at final head. Jobs completed within unchanged15m caps: native3m25s,
+contract1m05s, authoring12m09s. The full CodeRabbit skip contains no substantive
+finding or review evidence; no human/independent approval. Prior pending statements
+are historical. Next signed scope8830ae7 inventories complete RP08 requirements /
+contract gaps before a new direction. All full Phase1/user/host gates remain open.

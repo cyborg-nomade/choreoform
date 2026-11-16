@@ -258,3 +258,5 @@ house style established by Choreoform’s first records.
 - [ADR-0095: Native reversible authoring](0095-native-reversible-authoring.md) — exact SDK/CLI binding published before implementation; native operations integrated with final checks/review/CI in PR #110.
 
 - [ADR-0096: Experimental paired authoring prototype](0096-experimental-paired-prototype.md) — exact mapping/interfaces published before implementation; [native/browser evidence](../evaluation/0096-paired-authoring-prototype.md) records the subsequent experiment. No notation standard or owner-personal/user/independent approval.
+
+- [ADR-0097: Complete RP08 through bounded contracts](0097-rp08-bounded-contract-sequence.md) — direction accepted under delegation after a complete requirements/code critique; exact foreign-evidence/history admission contract next, with batch/ad hoc-work/audience/whole-package and remaining Phase1 evidence explicit. No new runtime or gate upgrade.
